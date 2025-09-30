@@ -1,0 +1,57 @@
+{
+  "name": "Hotel Ensueños",
+  "location": {
+    "city": "Cuenca",
+    "country": "Ecuador",
+    "address": "Centro Histórico, Cuenca, Ecuador",
+    "coordinates": {
+      "lat": -2.9006,
+      "lng": -79.0045
+    }
+  },
+  "description": {
+    "es": "Hotel Ensueños es un hotel boutique ubicado en el corazón del centro histórico de Cuenca, Ecuador. Ofrecemos una experiencia única que combina el encanto colonial con comodidades modernas.",
+    "en": "Hotel Ensueños is a boutique hotel located in the heart of Cuenca's historic center, Ecuador. We offer a unique experience that combines colonial charm with modern amenities."
+  },
+  "amenities": [
+    {
+      "id": "wifi",
+      "name": {
+        "es": "Wi-Fi Gratis",
+        "en": "Free Wi-Fi"
+      },
+      "svgPath": "/icons/wifi.svg"
+    },
+    {
+      "id": "pool",
+      "name": {
+        "es": "Piscina",
+        "en": "Pool"
+      },
+      "svgPath": "/icons/pool.svg"
+    },
+    {
+      "id": "spa",
+      "name": {
+        "es": "Spa y Wellness",
+        "en": "Spa and Wellness"
+      },
+      "svgPath": "/icons/spa.svg"
+    },
+    {
+      "id": "restaurant",
+      "name": {
+        "es": "Restaurante",
+        "en": "Restaurant"
+      },
+      "svgPath": "/icons/restaurant.svg"
+    }
+  ],
+  "checkInTime": "15:00",
+  "checkOutTime": "12:00",
+  "contact": {
+    "phone": "+593999999999",
+    "email": "info@hotelensuenos.com",
+    "whatsapp": "+593999999999"
+  }
+}

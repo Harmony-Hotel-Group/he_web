@@ -1,0 +1,8 @@
+{
+  "enabled": false,
+  "botToken": "PLACEHOLDER",
+  "chatId": "PLACEHOLDER",
+  "criticalErrorsOnly": true,
+  "maxRetries": 3,
+  "ttl": 300000
+}

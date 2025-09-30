@@ -1,0 +1,52 @@
+---
+import { useI18n } from '@/i18n/useI18n';
+import { getAvailableCurrencies, getCurrencySymbol } from '@/lib/utils/currencyUtils';
+
+const { siteConfig } = await import('@/data/siteConfig.json');
+const { t } = useI18n();
+
+const currentCurrency = siteConfig.defaultCurrency || 'USD';
+const availableCurrencies = getAvailableCurrencies();
+
+const currencyNames = {
+  USD: 'USD ($)',
+  EUR: 'EUR (€)',
+  GBP: 'GBP (£)'
+};
+---
+
+<div class="relative">
+  <select
+    class="appearance-none bg-transparent border border-gray-300 rounded px-3 py-1 pr-8 text-sm focus:outline-none focus:ring-2 focus:ring-hotel-primary"
+    id="currency-selector"
+  >
+    {availableCurrencies.map(currency => (
+      <option value={currency} selected={currency === currentCurrency}>
+        {currencyNames[currency as keyof typeof currencyNames] || `${currency} (${getCurrencySymbol(currency)})`}
+      </option>
+    ))}
+  </select>
+
+  <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+    </svg>
+  </div>
+</div>
+
+<script>
+  const currencySelector = document.getElementById('currency-selector');
+  if (currencySelector) {
+    currencySelector.addEventListener('change', (e) => {
+      const newCurrency = (e.target as HTMLSelectElement).value;
+      // In a real app, this would update prices throughout the site
+      console.log('Currency changed to:', newCurrency);
+
+      // For now, just show a message
+      // In production, you would:
+      // 1. Update all prices on the page with new currency
+      // 2. Store preference in localStorage or cookie
+      // 3. Send preference to server for future visits
+    });
+  }
+</script>

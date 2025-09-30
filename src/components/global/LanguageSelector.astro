@@ -1,0 +1,50 @@
+---
+import { useI18n } from '@/i18n/useI18n';
+
+const { siteConfig } = await import('@/data/siteConfig.json');
+const { t } = useI18n();
+
+const currentLang = 'es'; // This would come from URL params or user preference
+const supportedLanguages = siteConfig.supportedLanguages || ['es', 'en'];
+
+const languageNames = {
+  es: 'Español',
+  en: 'English'
+};
+---
+
+<div class="relative">
+  <select
+    class="appearance-none bg-transparent border border-gray-300 rounded px-3 py-1 pr-8 text-sm focus:outline-none focus:ring-2 focus:ring-hotel-primary"
+    id="language-selector"
+  >
+    {supportedLanguages.map(lang => (
+      <option value={lang} selected={lang === currentLang}>
+        {languageNames[lang as keyof typeof languageNames]}
+      </option>
+    ))}
+  </select>
+
+  <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+    </svg>
+  </div>
+</div>
+
+<script>
+  const languageSelector = document.getElementById('language-selector');
+  if (languageSelector) {
+    languageSelector.addEventListener('change', (e) => {
+      const newLang = (e.target as HTMLSelectElement).value;
+      // In a real app, this would update the URL and reload content
+      console.log('Language changed to:', newLang);
+
+      // For now, just show a message
+      // In production, you would:
+      // 1. Update URL with new language parameter
+      // 2. Reload the page or update content dynamically
+      // 3. Store preference in localStorage or cookie
+    });
+  }
+</script>

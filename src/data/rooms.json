@@ -1,0 +1,55 @@
+[
+  {
+    "id": "standard",
+    "slug": "habitacion-estandar",
+    "name": {
+      "es": "Habitación Estándar",
+      "en": "Standard Room"
+    },
+    "shortDescription": {
+      "es": "Habitación con cama doble y vista al jardín. Ideal para parejas que buscan confort y tranquilidad.",
+      "en": "Room with double bed and garden view. Perfect for couples seeking comfort and tranquility."
+    },
+    "price": 85,
+    "mainImage": {
+      "url": "/rooms/standard/main.jpg",
+      "alt": {
+        "es": "Habitación con cama doble",
+        "en": "Room with double bed"
+      }
+    },
+    "gallery": [
+      {
+        "url": "/rooms/standard/gallery1.jpg",
+        "alt": {
+          "es": "Vista del baño",
+          "en": "Bathroom view"
+        }
+      }
+    ],
+    "amenities": [
+      {
+        "id": "wifi",
+        "name": {
+          "es": "Wi-Fi Gratis",
+          "en": "Free Wi-Fi"
+        },
+        "svgPath": "/icons/wifi.svg"
+      },
+      {
+        "id": "pool",
+        "name": {
+          "es": "Piscina",
+          "en": "Pool"
+        },
+        "svgPath": "/icons/pool.svg"
+      }
+    ],
+    "tags": ["romantic", "budget"],
+    "rating": 4.2,
+    "description": {
+      "es": "Nuestra habitación estándar ofrece todo lo necesario para una estancia confortable. Con una decoración elegante y vistas al jardín, esta habitación es perfecta para parejas que buscan una escapada romántica.",
+      "en": "Our standard room offers everything you need for a comfortable stay. With elegant decoration and garden views, this room is perfect for couples seeking a romantic getaway."
+    }
+  }
+]

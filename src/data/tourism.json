@@ -1,0 +1,56 @@
+[
+  {
+    "id": "cuenca-historic-center",
+    "slug": "centro-historico-cuenca",
+    "name": {
+      "es": "Centro Histórico de Cuenca",
+      "en": "Cuenca Historic Center"
+    },
+    "shortDescription": {
+      "es": "Patrimonio Cultural de la Humanidad por la UNESCO. Calles empedradas, arquitectura colonial y rica historia.",
+      "en": "UNESCO World Heritage Site. Cobblestone streets, colonial architecture and rich history."
+    },
+    "longDescription": {
+      "es": "El Centro Histórico de Cuenca es uno de los más bellos y mejor conservados de América Latina. Declarado Patrimonio Cultural de la Humanidad por la UNESCO en 1999, cuenta con más de 200 edificios históricos, plazas coloniales y una arquitectura impresionante que refleja la influencia española del siglo XVI.",
+      "en": "Cuenca's Historic Center is one of the most beautiful and well-preserved in Latin America. Declared a UNESCO World Heritage Site in 1999, it features over 200 historic buildings, colonial squares and impressive architecture reflecting 16th-century Spanish influence."
+    },
+    "image": {
+      "url": "/tourism/cuenca-historic-center.jpg",
+      "alt": {
+        "es": "Catedral de Cuenca en el centro histórico",
+        "en": "Cuenca Cathedral in the historic center"
+      }
+    },
+    "distance": "0.5 km",
+    "duration": "2-3 horas",
+    "category": "cultural",
+    "tags": ["unesco", "colonial", "walking-tour"]
+  },
+  {
+    "id": "cajas-national-park",
+    "slug": "parque-nacional-cajas",
+    "name": {
+      "es": "Parque Nacional Cajas",
+      "en": "Cajas National Park"
+    },
+    "shortDescription": {
+      "es": "Reserva natural con más de 200 lagunas. Perfecto para senderismo y observación de aves.",
+      "en": "Natural reserve with over 200 lagoons. Perfect for hiking and bird watching."
+    },
+    "longDescription": {
+      "es": "El Parque Nacional Cajas es una reserva natural ubicada a solo 30 minutos de Cuenca. Con más de 200 lagunas de origen glaciar, ofrece espectaculares rutas de senderismo, observación de aves endémicas y una biodiversidad única en los páramos andinos.",
+      "en": "Cajas National Park is a natural reserve located just 30 minutes from Cuenca. With over 200 glacial lagoons, it offers spectacular hiking routes, endemic bird watching and unique biodiversity in the Andean páramos."
+    },
+    "image": {
+      "url": "/tourism/cajas-national-park.jpg",
+      "alt": {
+        "es": "Laguna en el Parque Nacional Cajas",
+        "en": "Lagoon in Cajas National Park"
+      }
+    },
+    "distance": "30 km",
+    "duration": "Día completo",
+    "category": "nature",
+    "tags": ["hiking", "lagoons", "birds", "nature"]
+  }
+]

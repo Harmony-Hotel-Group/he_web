@@ -1,0 +1,785 @@
+/* Utility classes for Hotel Ensueños */
+
+/* Layout utilities */
+.hotel-container {
+  @apply container mx-auto px-4;
+}
+
+.hotel-section {
+  @apply py-16;
+}
+
+.hotel-section-sm {
+  @apply py-8;
+}
+
+.hotel-section-lg {
+  @apply py-24;
+}
+
+/* Grid utilities */
+.hotel-grid {
+  @apply grid gap-6;
+}
+
+.hotel-grid-cols-1 {
+  @apply grid-cols-1;
+}
+
+.hotel-grid-cols-2 {
+  @apply md:grid-cols-2;
+}
+
+.hotel-grid-cols-3 {
+  @apply md:grid-cols-3;
+}
+
+.hotel-grid-cols-4 {
+  @apply md:grid-cols-4;
+}
+
+/* Flex utilities */
+.hotel-flex {
+  @apply flex items-center;
+}
+
+.hotel-flex-center {
+  @apply flex items-center justify-center;
+}
+
+.hotel-flex-between {
+  @apply flex items-center justify-between;
+}
+
+.hotel-flex-col {
+  @apply flex flex-col;
+}
+
+.hotel-flex-wrap {
+  @apply flex flex-wrap;
+}
+
+/* Spacing utilities */
+.hotel-gap-2 {
+  @apply gap-2;
+}
+
+.hotel-gap-4 {
+  @apply gap-4;
+}
+
+.hotel-gap-6 {
+  @apply gap-6;
+}
+
+.hotel-gap-8 {
+  @apply gap-8;
+}
+
+.hotel-mb-4 {
+  @apply mb-4;
+}
+
+.hotel-mb-6 {
+  @apply mb-6;
+}
+
+.hotel-mb-8 {
+  @apply mb-8;
+}
+
+/* Text utilities */
+.hotel-text-center {
+  @apply text-center;
+}
+
+.hotel-text-left {
+  @apply text-left;
+}
+
+.hotel-text-right {
+  @apply text-right;
+}
+
+.hotel-text-primary {
+  @apply text-hotel-primary;
+}
+
+.hotel-text-secondary {
+  @apply text-hotel-secondary;
+}
+
+.hotel-text-gray-600 {
+  @apply text-gray-600;
+}
+
+.hotel-text-gray-700 {
+  @apply text-gray-700;
+}
+
+.hotel-text-white {
+  @apply text-white;
+}
+
+/* Background utilities */
+.hotel-bg-primary {
+  @apply bg-hotel-primary;
+}
+
+.hotel-bg-secondary {
+  @apply bg-hotel-secondary;
+}
+
+.hotel-bg-gray-50 {
+  @apply bg-gray-50;
+}
+
+.hotel-bg-gray-100 {
+  @apply bg-gray-100;
+}
+
+.hotel-bg-white {
+  @apply bg-white;
+}
+
+/* Border utilities */
+.hotel-border {
+  @apply border border-gray-200;
+}
+
+.hotel-border-primary {
+  @apply border-hotel-primary;
+}
+
+.hotel-rounded {
+  @apply rounded-lg;
+}
+
+.hotel-rounded-md {
+  @apply rounded-md;
+}
+
+.hotel-rounded-full {
+  @apply rounded-full;
+}
+
+/* Shadow utilities */
+.hotel-shadow {
+  @apply shadow-md;
+}
+
+.hotel-shadow-lg {
+  @apply shadow-lg;
+}
+
+.hotel-shadow-xl {
+  @apply shadow-xl;
+}
+
+/* Transition utilities */
+.hotel-transition {
+  @apply transition-all duration-200;
+}
+
+.hotel-transition-colors {
+  @apply transition-colors duration-200;
+}
+
+.hotel-transition-transform {
+  @apply transition-transform duration-200;
+}
+
+/* Hover utilities */
+.hotel-hover-lift:hover {
+  @apply transform -translate-y-1;
+}
+
+.hotel-hover-scale:hover {
+  @apply transform scale-105;
+}
+
+/* Responsive utilities */
+.hotel-hidden-mobile {
+  @apply hidden md:block;
+}
+
+.hotel-hidden-desktop {
+  @apply block md:hidden;
+}
+
+.hotel-mobile-full {
+  @apply w-full md:w-auto;
+}
+
+/* Component utilities */
+.hotel-card {
+  @apply bg-white rounded-lg shadow-md p-6;
+}
+
+.hotel-card-hover {
+  @apply hover:shadow-xl transition-shadow duration-200;
+}
+
+.hotel-button-primary {
+  @apply bg-hotel-primary text-white px-6 py-3 rounded-lg font-medium hover:bg-hotel-secondary transition-colors;
+}
+
+.hotel-button-secondary {
+  @apply bg-hotel-secondary text-white px-6 py-3 rounded-lg font-medium hover:bg-hotel-primary transition-colors;
+}
+
+.hotel-button-outline {
+  @apply border-2 border-hotel-primary text-hotel-primary px-6 py-3 rounded-lg font-medium hover:bg-hotel-primary hover:text-white transition-all;
+}
+
+/* Form utilities */
+.hotel-input {
+  @apply w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-hotel-primary focus:border-transparent;
+}
+
+.hotel-input-error {
+  @apply border-red-500 focus:ring-red-500;
+}
+
+.hotel-label {
+  @apply block text-sm font-medium mb-2;
+}
+
+.hotel-error-message {
+  @apply text-red-500 text-sm mt-1;
+}
+
+/* Loading states */
+.hotel-loading {
+  @apply opacity-50 pointer-events-none;
+}
+
+.hotel-spinner {
+  @apply animate-spin inline-block w-4 h-4 border-2 border-current border-t-transparent rounded-full;
+}
+
+/* Accessibility utilities */
+.hotel-sr-only {
+  @apply sr-only;
+}
+
+.hotel-focus-ring:focus {
+  @apply focus:outline-none focus:ring-2 focus:ring-hotel-primary focus:ring-offset-2;
+}
+
+/* Print utilities */
+.hotel-print-hidden {
+  @apply print:hidden;
+}
+
+.hotel-print-block {
+  @apply hidden print:block;
+}
+
+/* Animation utilities */
+.hotel-animate-fade-in {
+  @apply animate-pulse;
+}
+
+.hotel-animate-slide-in {
+  @apply animate-bounce;
+}
+
+/* Z-index utilities */
+.hotel-z-dropdown {
+  z-index: 1000;
+}
+
+.hotel-z-modal {
+  z-index: 2000;
+}
+
+.hotel-z-tooltip {
+  z-index: 3000;
+}
+
+/* Position utilities */
+.hotel-absolute-center {
+  @apply absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2;
+}
+
+.hotel-fixed-top {
+  @apply fixed top-0 left-0 right-0;
+}
+
+.hotel-sticky-top {
+  @apply sticky top-0;
+}
+
+/* Overflow utilities */
+.hotel-overflow-hidden {
+  @apply overflow-hidden;
+}
+
+.hotel-overflow-auto {
+  @apply overflow-auto;
+}
+
+.hotel-overflow-scroll {
+  @apply overflow-scroll;
+}
+
+/* Display utilities */
+.hotel-block {
+  @apply block;
+}
+
+.hotel-inline-block {
+  @apply inline-block;
+}
+
+.hotel-hidden {
+  @apply hidden;
+}
+
+/* Width and height utilities */
+.hotel-w-full {
+  @apply w-full;
+}
+
+.hotel-h-full {
+  @apply h-full;
+}
+
+.hotel-min-h-screen {
+  @apply min-h-screen;
+}
+
+/* Margin utilities */
+.hotel-m-0 {
+  @apply m-0;
+}
+
+.hotel-m-auto {
+  @apply m-auto;
+}
+
+.hotel-mx-auto {
+  @apply mx-auto;
+}
+
+.hotel-my-auto {
+  @apply my-auto;
+}
+
+/* Padding utilities */
+.hotel-p-0 {
+  @apply p-0;
+}
+
+.hotel-p-4 {
+  @apply p-4;
+}
+
+.hotel-p-6 {
+  @apply p-6;
+}
+
+.hotel-p-8 {
+  @apply p-8;
+}
+
+/* Custom utilities for hotel-specific components */
+.hotel-room-card {
+  @apply hotel-card hotel-card-hover hotel-transition;
+}
+
+.hotel-tourism-card {
+  @apply hotel-card hotel-card-hover hotel-transition;
+}
+
+.hotel-gastronomy-card {
+  @apply hotel-card hotel-card-hover hotel-transition;
+}
+
+/* Mobile menu utilities */
+.hotel-mobile-menu {
+  @apply md:hidden;
+}
+
+.hotel-mobile-menu-open {
+  @apply block;
+}
+
+.hotel-mobile-menu-closed {
+  @apply hidden;
+}
+
+/* Reservation bar utilities */
+.hotel-reservation-bar {
+  @apply bg-hotel-primary text-white;
+}
+
+/* Hero section utilities */
+.hotel-hero {
+  @apply relative h-screen flex items-center justify-center bg-black bg-opacity-40;
+}
+
+.hotel-hero-content {
+  @apply relative z-10 text-center text-white px-4;
+}
+
+/* Footer utilities */
+.hotel-footer {
+  @apply bg-gray-800 text-white;
+}
+
+.hotel-footer-section {
+  @apply grid grid-cols-1 md:grid-cols-4 gap-8;
+}
+
+/* Contact form utilities */
+.hotel-contact-form {
+  @apply space-y-6;
+}
+
+.hotel-contact-grid {
+  @apply grid grid-cols-1 md:grid-cols-2 gap-4;
+}
+
+/* Gallery utilities */
+.hotel-gallery {
+  @apply grid grid-cols-2 gap-4;
+}
+
+.hotel-gallery-item {
+  @apply w-full h-32 object-cover rounded-lg cursor-pointer hover:opacity-80 transition-opacity;
+}
+
+/* Price display utilities */
+.hotel-price {
+  @apply text-3xl font-bold text-hotel-primary;
+}
+
+.hotel-price-per-night {
+  @apply text-sm font-normal;
+}
+
+/* Amenity utilities */
+.hotel-amenity {
+  @apply flex items-center;
+}
+
+.hotel-amenity-icon {
+  @apply w-5 h-5 mr-2;
+}
+
+.hotel-amenity-text {
+  @apply text-sm text-gray-600;
+}
+
+/* Tag utilities */
+.hotel-tag {
+  @apply px-2 py-1 bg-hotel-primary text-white text-xs rounded-full;
+}
+
+.hotel-tag-container {
+  @apply flex flex-wrap gap-2;
+}
+
+/* Rating utilities */
+.hotel-rating {
+  @apply flex text-yellow-400;
+}
+
+.hotel-rating-star {
+  @apply w-5 h-5;
+}
+
+.hotel-rating-text {
+  @apply ml-2 text-sm text-gray-600;
+}
+
+/* Social media utilities */
+.hotel-social-links {
+  @apply flex space-x-4;
+}
+
+.hotel-social-link {
+  @apply text-gray-300 hover:text-white transition-colors;
+}
+
+/* Breadcrumb utilities */
+.hotel-breadcrumb {
+  @apply flex items-center space-x-2 text-sm text-gray-600;
+}
+
+.hotel-breadcrumb-link {
+  @apply hover:text-hotel-primary transition-colors;
+}
+
+.hotel-breadcrumb-separator {
+  @apply text-gray-400;
+}
+
+/* Pagination utilities */
+.hotel-pagination {
+  @apply flex items-center justify-center space-x-2;
+}
+
+.hotel-pagination-button {
+  @apply px-3 py-2 border border-gray-300 rounded-md hover:bg-gray-50 transition-colors;
+}
+
+.hotel-pagination-button-active {
+  @apply bg-hotel-primary text-white border-hotel-primary;
+}
+
+/* Search utilities */
+.hotel-search {
+  @apply relative;
+}
+
+.hotel-search-input {
+  @apply w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-hotel-primary;
+}
+
+.hotel-search-icon {
+  @apply absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400;
+}
+
+/* Filter utilities */
+.hotel-filter {
+  @apply flex items-center space-x-4;
+}
+
+.hotel-filter-button {
+  @apply px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50 transition-colors;
+}
+
+.hotel-filter-button-active {
+  @apply bg-hotel-primary text-white border-hotel-primary;
+}
+
+/* Sort utilities */
+.hotel-sort {
+  @apply flex items-center space-x-2;
+}
+
+.hotel-sort-select {
+  @apply px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-hotel-primary;
+}
+
+/* Modal utilities */
+.hotel-modal {
+  @apply fixed inset-0 z-50 overflow-y-auto;
+}
+
+.hotel-modal-backdrop {
+  @apply fixed inset-0 bg-black bg-opacity-50;
+}
+
+.hotel-modal-content {
+  @apply relative bg-white rounded-lg shadow-xl max-w-md mx-auto mt-16 p-6;
+}
+
+/* Tooltip utilities */
+.hotel-tooltip {
+  @apply relative;
+}
+
+.hotel-tooltip-text {
+  @apply absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-gray-800 text-white text-xs rounded opacity-0 pointer-events-none transition-opacity duration-200;
+}
+
+.hotel-tooltip:hover .hotel-tooltip-text {
+  @apply opacity-100;
+}
+
+/* Alert utilities */
+.hotel-alert {
+  @apply p-4 rounded-lg;
+}
+
+.hotel-alert-info {
+  @apply bg-blue-50 border border-blue-200 text-blue-800;
+}
+
+.hotel-alert-success {
+  @apply bg-green-50 border border-green-200 text-green-800;
+}
+
+.hotel-alert-warning {
+  @apply bg-yellow-50 border border-yellow-200 text-yellow-800;
+}
+
+.hotel-alert-error {
+  @apply bg-red-50 border border-red-200 text-red-800;
+}
+
+/* Badge utilities */
+.hotel-badge {
+  @apply inline-flex items-center px-2 py-1 rounded-full text-xs font-medium;
+}
+
+.hotel-badge-primary {
+  @apply bg-hotel-primary text-white;
+}
+
+.hotel-badge-secondary {
+  @apply bg-hotel-secondary text-white;
+}
+
+.hotel-badge-success {
+  @apply bg-green-500 text-white;
+}
+
+.hotel-badge-warning {
+  @apply bg-yellow-500 text-white;
+}
+
+.hotel-badge-error {
+  @apply bg-red-500 text-white;
+}
+
+/* Progress utilities */
+.hotel-progress {
+  @apply w-full bg-gray-200 rounded-full h-2;
+}
+
+.hotel-progress-bar {
+  @apply bg-hotel-primary h-2 rounded-full transition-all duration-300;
+}
+
+/* Tab utilities */
+.hotel-tabs {
+  @apply flex border-b border-gray-200;
+}
+
+.hotel-tab {
+  @apply px-4 py-2 border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 transition-all;
+}
+
+.hotel-tab-active {
+  @apply border-hotel-primary text-hotel-primary;
+}
+
+.hotel-tab-content {
+  @apply hidden;
+}
+
+.hotel-tab-content-active {
+  @apply block;
+}
+
+/* Accordion utilities */
+.hotel-accordion {
+  @apply border border-gray-200 rounded-lg;
+}
+
+.hotel-accordion-item {
+  @apply border-b border-gray-200 last:border-b-0;
+}
+
+.hotel-accordion-header {
+  @apply flex items-center justify-between p-4 cursor-pointer hover:bg-gray-50;
+}
+
+.hotel-accordion-content {
+  @apply hidden p-4;
+}
+
+.hotel-accordion-content-open {
+  @apply block;
+}
+
+/* Dropdown utilities */
+.hotel-dropdown {
+  @apply relative;
+}
+
+.hotel-dropdown-menu {
+  @apply absolute top-full left-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg hidden;
+}
+
+.hotel-dropdown-menu-open {
+  @apply block;
+}
+
+.hotel-dropdown-item {
+  @apply block px-4 py-2 text-gray-700 hover:bg-gray-50 transition-colors;
+}
+
+/* Carousel utilities */
+.hotel-carousel {
+  @apply relative overflow-hidden;
+}
+
+.hotel-carousel-container {
+  @apply flex transition-transform duration-300;
+}
+
+.hotel-carousel-item {
+  @apply flex-shrink-0 w-full;
+}
+
+.hotel-carousel-button {
+  @apply absolute top-1/2 transform -translate-y-1/2 bg-white bg-opacity-50 hover:bg-opacity-75 rounded-full p-2 transition-all;
+}
+
+.hotel-carousel-button-prev {
+  @apply left-4;
+}
+
+.hotel-carousel-button-next {
+  @apply right-4;
+}
+
+/* Lightbox utilities */
+.hotel-lightbox {
+  @apply fixed inset-0 z-50 bg-black bg-opacity-90 flex items-center justify-center;
+}
+
+.hotel-lightbox-content {
+  @apply max-w-4xl max-h-4xl;
+}
+
+.hotel-lightbox-close {
+  @apply absolute top-4 right-4 text-white text-2xl hover:text-gray-300;
+}
+
+/* Table utilities */
+.hotel-table {
+  @apply w-full border-collapse;
+}
+
+.hotel-table th {
+  @apply bg-gray-50 px-4 py-2 text-left font-semibold text-gray-700 border border-gray-200;
+}
+
+.hotel-table td {
+  @apply px-4 py-2 border border-gray-200;
+}
+
+/* Code utilities */
+.hotel-code {
+  @apply bg-gray-100 px-2 py-1 rounded text-sm font-mono;
+}
+
+.hotel-code-block {
+  @apply bg-gray-800 text-gray-100 p-4 rounded-lg overflow-x-auto;
+}
+
+/* Kbd utilities */
+.hotel-kbd {
+  @apply bg-gray-100 border border-gray-300 rounded px-2 py-1 text-xs font-mono;
+}
+
+/* Mark utilities */
+.hotel-mark {
+  @apply bg-yellow-200 px-1 rounded;
+}
+
+/* Ins and del utilities */
+.hotel-ins {
+  @apply bg-green-100 text-green-800 px-1 rounded;
+}
+
+.hotel-del {
+  @apply bg-red-100 text-red-800 px-1 rounded line-through;
+}

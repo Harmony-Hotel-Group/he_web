@@ -1,0 +1,137 @@
+---
+import { useI18n } from '@/i18n/useI18n';
+import HotelLayout from '@/layouts/HotelLayout.astro';
+import Button from '@/components/ui/Button.astro';
+import Rating from '@/components/ui/Rating.astro';
+
+const { rooms } = await import('@/data/rooms.json');
+const { t } = useI18n();
+
+// Get room by ID from URL params
+const { id } = Astro.params;
+const room = rooms.find(r => r.id === id || r.slug === id);
+
+if (!room) {
+  return Astro.redirect('/404');
+}
+
+const title = room.name.es;
+const description = room.shortDescription.es;
+---
+
+<HotelLayout {title} {description}>
+  <!-- Room Hero Section -->
+  <section class="relative h-96 bg-black">
+    <img
+      src={room.mainImage.url}
+      alt={room.mainImage.alt.es}
+      class="w-full h-full object-cover"
+    />
+    <div class="absolute inset-0 bg-black bg-opacity-40"></div>
+    <div class="absolute bottom-8 left-8 text-white">
+      <h1 class="text-4xl font-bold mb-2">{room.name.es}</h1>
+      <div class="flex items-center">
+        <Rating rating={room.rating} showValue={true} />
+      </div>
+    </div>
+  </section>
+
+  <!-- Room Details -->
+  <section class="py-16">
+    <div class="container mx-auto px-4">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <!-- Room Information -->
+        <div>
+          <h2 class="text-2xl font-bold mb-4">{t('rooms.details')}</h2>
+          <p class="text-gray-700 mb-6 text-lg">
+            {room.description.es}
+          </p>
+
+          <!-- Amenities -->
+          <div class="mb-8">
+            <h3 class="text-xl font-semibold mb-4">{t('rooms.amenities')}</h3>
+            <div class="grid grid-cols-2 gap-4">
+              {room.amenities.map(amenity => (
+                <div class="flex items-center">
+                  <img
+                    src={amenity.svgPath}
+                    alt={amenity.name.es}
+                    class="w-5 h-5 mr-2"
+                  />
+                  <span>{amenity.name.es}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <!-- Price and Booking -->
+          <div class="bg-gray-50 p-6 rounded-lg">
+            <div class="flex justify-between items-center mb-4">
+              <div>
+                <span class="text-3xl font-bold text-hotel-primary">
+                  ${room.price}
+                </span>
+                <span class="text-gray-600">/noche</span>
+              </div>
+            </div>
+            <Button variant="primary" size="lg" class="w-full">
+              {t('reservations.bookNow')}
+            </Button>
+          </div>
+        </div>
+
+        <!-- Room Gallery -->
+        <div>
+          <h3 class="text-xl font-semibold mb-4">{t('rooms.gallery')}</h3>
+          <div class="grid grid-cols-2 gap-4">
+            {room.gallery.map((image, index) => (
+              <img
+                src={image.url}
+                alt={image.alt.es}
+                class="w-full h-32 object-cover rounded-lg cursor-pointer hover:opacity-80 transition-opacity"
+                loading="lazy"
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Related Rooms -->
+  <section class="py-16 bg-gray-50">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl font-bold text-center mb-12">
+        {t('rooms.related')}
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {rooms.filter(r => r.id !== room.id).slice(0, 3).map(relatedRoom => (
+          <div class="bg-white rounded-lg shadow-md overflow-hidden">
+            <img
+              src={relatedRoom.mainImage.url}
+              alt={relatedRoom.mainImage.alt.es}
+              class="w-full h-48 object-cover"
+            />
+            <div class="p-4">
+              <h3 class="font-bold mb-2">{relatedRoom.name.es}</h3>
+              <p class="text-gray-600 mb-4">
+                {relatedRoom.shortDescription.es}
+              </p>
+              <div class="flex justify-between items-center">
+                <span class="font-bold text-hotel-primary">
+                  ${relatedRoom.price}/noche
+                </span>
+                <Button variant="outline" size="sm">
+                  <a href={`/rooms/${relatedRoom.id}`}>
+                    {t('common.view')}
+                  </a>
+                </Button>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</HotelLayout>

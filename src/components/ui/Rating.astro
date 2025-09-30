@@ -1,0 +1,90 @@
+---
+export interface Props {
+  rating: number;
+  maxRating?: number;
+  size?: 'sm' | 'md' | 'lg';
+  showValue?: boolean;
+  interactive?: boolean;
+  class?: string;
+}
+
+const {
+  rating,
+  maxRating = 5,
+  size = 'md',
+  showValue = false,
+  interactive = false,
+  class: className = ''
+} = Astro.props;
+
+const sizeClasses = {
+  sm: 'w-4 h-4',
+  md: 'w-5 h-5',
+  lg: 'w-6 h-6'
+};
+
+const textSizeClasses = {
+  sm: 'text-sm',
+  md: 'text-base',
+  lg: 'text-lg'
+};
+
+const baseClasses = 'inline-flex items-center';
+const classes = `${baseClasses} ${className}`.trim();
+
+// Generate star array
+const stars = Array.from({ length: maxRating }, (_, index) => {
+  const starValue = index + 1;
+  const isFilled = starValue <= rating;
+  const isPartial = starValue > rating && starValue - 1 < rating;
+
+  return {
+    value: starValue,
+    isFilled,
+    isPartial,
+    fillPercentage: isPartial ? ((rating - (starValue - 1)) * 100) : 0
+  };
+});
+---
+
+<div class={classes}>
+  <div class="flex items-center">
+    {stars.map((star) => (
+      <div class="relative">
+        <!-- Empty star background -->
+        <span
+          class={`inline-block ${sizeClasses[size]} text-gray-300`}
+          style={`clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);`}
+        >
+          ★
+        </span>
+
+        <!-- Filled star overlay -->
+        {star.isFilled && (
+          <span
+            class={`absolute top-0 left-0 inline-block ${sizeClasses[size]} text-yellow-400`}
+            style={`clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);`}
+          >
+            ★
+          </span>
+        )}
+
+        <!-- Partial fill for half stars -->
+        {star.isPartial && (
+          <span
+            class={`absolute top-0 left-0 inline-block ${sizeClasses[size]} text-yellow-400 overflow-hidden`}
+            style={`clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%, ${star.fillPercentage}% 0);`}
+          >
+            ★
+          </span>
+        )}
+      </div>
+    ))}
+  </div>
+
+  {showValue && (
+    <span class={`ml-2 ${textSizeClasses[size]} text-gray-600`}>
+      {rating.toFixed(1)}
+    </span>
+  )}
+</div>

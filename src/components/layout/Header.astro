@@ -14,23 +14,70 @@ const { t } = Astro.props;
       </a>
     </div>
 
-    <!-- Center: Navigation Links -->
+    <!-- Center: Navigation Links (Desktop) -->
     <div class="hidden md:flex justify-center space-x-3">
-      <a href="/rooms" class="px-4 py-2 rounded-md hover:bg-gray-700 transition-colors">{t('nav.rooms')}</a>
-      <a href="/destinations" class="px-4 py-2 rounded-md hover:bg-gray-700 transition-colors">{t('nav.destinations')}</a>
-      <a href="/gastronomy" class="px-4 py-2 rounded-md hover:bg-gray-700 transition-colors">{t('nav.gastronomy')}</a>
-      <a href="/tours" class="px-4 py-2 rounded-md hover:bg-gray-700 transition-colors">{t('nav.tours')}</a>
-      <a href="/about" class="px-4 py-2 rounded-md hover:bg-gray-700 transition-colors">{t('nav.about')}</a>
-      <a href="/contact" class="px-4 py-2 rounded-md hover:bg-gray-700 transition-colors">{t('nav.contact')}</a>
+      <a href="/rooms" class="px-4 py-2 rounded-md hover:bg-gray-700 transition-colors">
+        {t('nav.rooms')}
+      </a>
+      <a href="/destinations" class="px-4 py-2 rounded-md hover:bg-gray-700 transition-colors">
+        {t('nav.destinations')}
+      </a>
+      <a href="/gastronomy" class="px-4 py-2 rounded-md hover:bg-gray-700 transition-colors">
+        {t('nav.gastronomy')}
+      </a>
+      <a href="/tours" class="px-4 py-2 rounded-md hover:bg-gray-700 transition-colors">
+        {t('nav.tours')}
+      </a>
+      <a href="/about" class="px-4 py-2 rounded-md hover:bg-gray-700 transition-colors">
+        {t('nav.about')}
+      </a>
+      <a href="/contact" class="px-4 py-2 rounded-md hover:bg-gray-700 transition-colors">
+        {t('nav.contact')}
+      </a>
     </div>
 
-    <!-- Right: Controls -->
+    <!-- Right: Controls and Hamburger Button -->
     <div class="flex items-center space-x-4">
-      <LanguageSwitcher client:load class="mr-2" /> {/* Added mr-2 for separation */}
+      <LanguageSwitcher client:load class="mr-2" />
       <CurrencySwitcher client:load />
-      <a href="/booking" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg transition-colors">
+      <!-- Booking button se oculta por debajo de 'md' -->
+      <a href="/booking" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg transition-colors hidden md:block">
+        {t('nav.booking')}
+      </a>
+      <!-- Botón de hamburguesa para móvil, visible por debajo de 'md' y oculto a partir de 'md' -->
+      <button id="mobile-menu-button" class="text-white focus:outline-none md:hidden">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile menu container, oculto por debajo de 'md' y oculto a partir de 'md' -->
+  <div id="mobile-menu" class="hidden md:hidden bg-gray-800 bg-opacity-90 absolute top-full left-0 right-0 py-4 text-center">
+    <div class="flex flex-col space-y-2">
+      <a href="/rooms" class="block px-4 py-2 text-white hover:bg-gray-700 transition-colors">{t('nav.rooms')}</a>
+      <a href="/destinations" class="block px-4 py-2 text-white hover:bg-gray-700 transition-colors">{t('nav.destinations')}</a>
+      <a href="/gastronomy" class="block px-4 py-2 text-white hover:bg-gray-700 transition-colors">{t('nav.gastronomy')}</a>
+      <a href="/tours" class="block px-4 py-2 text-white hover:bg-gray-700 transition-colors">{t('nav.tours')}</a>
+      <a href="/about" class="block px-4 py-2 text-white hover:bg-gray-700 transition-colors">{t('nav.about')}</a>
+      <a href="/contact" class="block px-4 py-2 text-white hover:bg-gray-700 transition-colors">{t('nav.contact')}</a>
+      <a href="/booking" class="block bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg transition-colors mx-4 mt-2">
         {t('nav.booking')}
       </a>
     </div>
-  </nav>
+  </div>
 </header>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    if (mobileMenuButton && mobileMenu) {
+      mobileMenuButton.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+      });
+    }
+  });
+</script>

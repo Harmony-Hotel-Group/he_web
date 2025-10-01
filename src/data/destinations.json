@@ -1,0 +1,22 @@
+[
+  {
+    "id": "dest1",
+    "name": "Playa Paraíso",
+    "description": "Una hermosa playa de arena blanca y aguas cristalinas, ideal para relajarse y nadar.",
+    "location": "Costa Norte",
+    "images": [
+      "/images/destinations/beach1.jpg",
+      "/images/destinations/beach2.jpg"
+    ]
+  },
+  {
+    "id": "dest2",
+    "name": "Montañas Nubladas",
+    "description": "Impresionantes paisajes montañosos con senderos para caminatas y vistas espectaculares.",
+    "location": "Sierra Central",
+    "images": [
+      "/images/destinations/mountains1.jpg",
+      "/images/destinations/mountains2.jpg"
+    ]
+  }
+]

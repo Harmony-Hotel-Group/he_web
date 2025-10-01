@@ -1,0 +1,37 @@
+[
+  {
+    "id": "room1",
+    "name": "Habitación Estándar",
+    "description": "Una cómoda habitación con todas las comodidades básicas para una estancia agradable.",
+    "pricePerNight": 100,
+    "currency": "USD",
+    "images": [
+      "/images/rooms/standard1.jpg",
+      "/images/rooms/standard2.jpg"
+    ],
+    "amenities": [
+      "Cama doble",
+      "Baño privado",
+      "TV",
+      "Wi-Fi"
+    ]
+  },
+  {
+    "id": "room2",
+    "name": "Suite Deluxe",
+    "description": "Espaciosa suite con vistas panorámicas y servicios premium.",
+    "pricePerNight": 250,
+    "currency": "USD",
+    "images": [
+      "/images/rooms/deluxe1.jpg",
+      "/images/rooms/deluxe2.jpg"
+    ],
+    "amenities": [
+      "Cama King-size",
+      "Baño de lujo",
+      "Minibar",
+      "Balcón",
+      "Wi-Fi de alta velocidad"
+    ]
+  }
+]

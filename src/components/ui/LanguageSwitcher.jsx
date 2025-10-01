@@ -59,10 +59,10 @@ export default function LanguageSwitcher() {
         aria-haspopup="true"
         aria-expanded={isOpen}
       >
-        <img src={selectedLangData.flag} alt={`${selectedLangData.name} flag`} class="h-4 w-4" /> {/* Changed w-auto to w-4 */}
-        <span>{selectedLangData.name}</span>
+        <img src={selectedLangData.flag} alt={`${selectedLangData.name} flag`} class="h-4 w-4" />
+        <span class="hidden md:inline">{selectedLangData.name}</span> {/* Ocultar en móviles, mostrar en md y superior */}
         {/* Optional: Add a dropdown arrow icon */}
-        <svg class="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+        <svg class="w-3 h-3 ml-1 hidden md:inline" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
       </button>
 
       {/* Dropdown list */}
@@ -74,7 +74,7 @@ export default function LanguageSwitcher() {
               class="flex items-center space-x-2 w-full text-left px-3 py-2 text-sm text-white hover:bg-gray-600"
               onClick={() => handleLangChange(langCode)}
             >
-              <img src={data.flag} alt={`${data.name} flag`} class="h-4 w-4" /> {/* Changed w-auto to w-4 */}
+              <img src={data.flag} alt={`${data.name} flag`} class="h-4 w-4" />
               <span>{data.name}</span>
             </button>
           ))}

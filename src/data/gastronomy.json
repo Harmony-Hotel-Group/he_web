@@ -1,0 +1,37 @@
+[
+  {
+    "id": "dish1",
+    "name": "Ceviche Clásico",
+    "description": "Pescado fresco marinado en jugo de limón, ají, cebolla morada y cilantro.",
+    "category": "Plato Principal",
+    "price": 20,
+    "currency": "USD",
+    "images": [
+      "/images/gastronomy/ceviche1.jpg",
+      "/images/gastronomy/ceviche2.jpg"
+    ]
+  },
+  {
+    "id": "dish2",
+    "name": "Lomo Saltado",
+    "description": "Trozos de lomo salteados con cebolla, tomate, ají amarillo y papas fritas, acompañado de arroz.",
+    "category": "Plato Principal",
+    "price": 25,
+    "currency": "USD",
+    "images": [
+      "/images/gastronomy/lomo_saltado1.jpg",
+      "/images/gastronomy/lomo_saltado2.jpg"
+    ]
+  },
+  {
+    "id": "dessert1",
+    "name": "Suspiro a la Limeña",
+    "description": "Postre tradicional peruano a base de manjar blanco y merengue de oporto.",
+    "category": "Postre",
+    "price": 10,
+    "currency": "USD",
+    "images": [
+      "/images/gastronomy/suspiro1.jpg"
+    ]
+  }
+]

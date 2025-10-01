@@ -1,0 +1,18 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { useTranslations } from '../i18n/translation';
+import BookingForm from '../components/features/booking/BookingForm.jsx';
+
+const lang = Astro.cookies.get('lang')?.value || 'es';
+const t = useTranslations(lang);
+---
+
+<BaseLayout titleKey="nav.booking" lang={lang}>
+  <div class="container mx-auto py-12">
+    <h1 class="text-4xl font-bold mb-4 text-center">{t('nav.booking')}</h1>
+    <p class="text-lg text-center mb-8">
+      Completa el siguiente formulario para reservar tu estancia.
+    </p>
+    <BookingForm client:load />
+  </div>
+</BaseLayout>

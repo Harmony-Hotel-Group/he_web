@@ -1,0 +1,36 @@
+---
+import LanguageSwitcher from '../ui/LanguageSwitcher.jsx';
+import CurrencySwitcher from '../ui/CurrencySwitcher.jsx';
+const { t } = Astro.props;
+---
+
+<header class="absolute top-0 left-0 right-0 z-50 text-white">
+  <nav class="container mx-auto flex justify-between items-center p-4">
+    <!-- Left: Logo -->
+    <div class="flex-shrink-0">
+      <a href="/" class="flex items-center space-x-2">
+        <img src="/favicon.svg" alt="MiLogo" class="h-8 w-8" />
+        <span class="text-xl font-bold">MiLogo</span>
+      </a>
+    </div>
+
+    <!-- Center: Navigation Links -->
+    <div class="hidden md:flex justify-center space-x-3">
+      <a href="/rooms" class="px-4 py-2 rounded-md hover:bg-gray-700 transition-colors">{t('nav.rooms')}</a>
+      <a href="/destinations" class="px-4 py-2 rounded-md hover:bg-gray-700 transition-colors">{t('nav.destinations')}</a>
+      <a href="/gastronomy" class="px-4 py-2 rounded-md hover:bg-gray-700 transition-colors">{t('nav.gastronomy')}</a>
+      <a href="/tours" class="px-4 py-2 rounded-md hover:bg-gray-700 transition-colors">{t('nav.tours')}</a>
+      <a href="/about" class="px-4 py-2 rounded-md hover:bg-gray-700 transition-colors">{t('nav.about')}</a>
+      <a href="/contact" class="px-4 py-2 rounded-md hover:bg-gray-700 transition-colors">{t('nav.contact')}</a>
+    </div>
+
+    <!-- Right: Controls -->
+    <div class="flex items-center space-x-4">
+      <LanguageSwitcher client:load class="mr-2" /> {/* Added mr-2 for separation */}
+      <CurrencySwitcher client:load />
+      <a href="/booking" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg transition-colors">
+        {t('nav.booking')}
+      </a>
+    </div>
+  </nav>
+</header>

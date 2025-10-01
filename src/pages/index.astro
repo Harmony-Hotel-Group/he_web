@@ -1,11 +1,36 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { useTranslations } from '../i18n/translation';
+import VisualCarousel from '../components/features/carousel/VisualCarousel.astro';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const lang = Astro.cookies.get('lang')?.value || 'es';
+const t = useTranslations(lang);
+
+const carouselResources = [
+  { src: 'https://www.w3schools.com/html/mov_bbb.mp4', type: 'video', alt: 'Video de la naturaleza' },
+  { src: 'https://picsum.photos/id/237/1920/1080', type: 'image', alt: 'Perro mirando a la cámara' },
+  { src: 'https://picsum.photos/id/238/1920/1080', type: 'image', alt: 'Paisaje montañoso' },
+  { src: 'https://picsum.photos/id/239/1920/1080', type: 'image', alt: 'Ciudad de noche' },
+  { src: '', type: 'image', alt: 'Imagen rota de prueba' }, // Recurso inválido para probar el fallback
+];
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<BaseLayout titleKey="site.title" lang={lang}>
+  <div class="relative w-full h-screen overflow-hidden">
+    <VisualCarousel resources={carouselResources} class="absolute inset-0" />
+    <div class="absolute inset-0 flex items-center justify-center z-10 text-white text-center p-4">
+      <h1 class="text-5xl md:text-7xl font-extrabold drop-shadow-lg">
+        {t('home.greeting')}
+      </h1>
+    </div>
+  </div>
+
+  <div class="container mx-auto py-12 text-center">
+    <h2 class="text-3xl font-bold mb-4">Bienvenido a nuestro hotel</h2>
+    <p class="text-lg mb-8">
+      Experimenta una estancia inolvidable con nosotros. Disfruta de nuestras lujosas habitaciones,
+      exquisita gastronomía y las mejores excursiones.
+    </p>
+    <!-- Aquí puedes añadir más contenido para la página de inicio debajo del carrusel -->
+  </div>
+</BaseLayout>

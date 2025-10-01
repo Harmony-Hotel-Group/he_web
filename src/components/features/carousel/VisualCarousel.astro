@@ -1,0 +1,149 @@
+---
+// src/components/features/carousel/VisualCarousel.astro
+import VisualResource from '../../ui/VisualResource.astro';
+
+interface Resource {
+  src: string;
+  type: 'image' | 'video';
+  alt?: string;
+}
+
+interface Props {
+  resources: Resource[];
+  class?: string;
+}
+
+const { resources, class: className } = Astro.props;
+
+// Filter resources to ensure only one video or multiple images
+const videos = resources.filter(r => r.type === 'video');
+const images = resources.filter(r => r.type === 'image');
+
+let finalResources: Resource[] = [];
+let showVideoInitially = false;
+
+// Server-side user-agent detection for initial render
+const userAgent = Astro.request.headers.get('user-agent') || '';
+const isMobileDevice = /Mobile|Android|iPhone|iPad|iPod|Windows Phone/i.test(userAgent);
+
+if (videos.length > 0 && !isMobileDevice) {
+  // If there's a video and it's a desktop device, show the first video
+  finalResources = [videos[0]];
+  showVideoInitially = true;
+} else if (images.length > 0) {
+  // Otherwise, show images (either on mobile or if no video/desktop)
+  finalResources = images;
+}
+
+// If no valid resources, add a placeholder
+if (finalResources.length === 0) {
+  finalResources.push({ src: '', type: 'image', alt: 'No hay recursos' });
+  showVideoInitially = false; // Placeholder is always an image
+}
+
+// If we decided to show a video initially, but it's mobile, revert to images
+if (showVideoInitially && isMobileDevice) {
+  showVideoInitially = false;
+  finalResources = images.length > 0 ? images : [{ src: '', type: 'image', alt: 'No hay recursos' }];
+}
+
+// Determine the resource to display if it's a single video
+const singleVideoResource = showVideoInitially ? finalResources[0] : undefined;
+
+// Determine the resources for the image carousel
+const carouselImageResources = showVideoInitially ? [] : finalResources;
+
+---
+
+<div class:list={[className, 'relative w-full overflow-hidden']}>
+  {
+    singleVideoResource ? (
+      <VisualResource src={singleVideoResource.src} type="video" alt={singleVideoResource.alt} class="w-full h-screen object-cover" />
+    ) : (
+      <div class="relative w-full h-screen">
+        <div id="carousel-container" class="relative h-full">
+          {carouselImageResources.map((resource, index) => (
+            <div
+              class:list={[
+                'absolute inset-0 transition-opacity duration-700 ease-in-out',
+                index === 0 ? 'opacity-100' : 'opacity-0 hidden',
+              ]}
+              data-carousel-item
+            >
+              <VisualResource src={resource.src} type="image" alt={resource.alt} class="w-full h-full object-cover" />
+            </div>
+          ))}
+        </div>
+
+        <!-- Slider controls -->
+        {carouselImageResources.length > 1 && (
+          <div class="absolute inset-0"> {/* Wrapped buttons in a div */}
+            <button type="button" class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
+              <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 group-hover:bg-white/50 group-focus:ring-4 group-focus:ring-white group-focus:outline-none">
+                <svg class="w-4 h-4 text-white rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/>
+                </svg>
+                <span class="sr-only">Previous</span>
+              </span>
+            </button>
+            <button type="button" class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-next>
+              <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 group-hover:bg-white/50 group-focus:ring-4 group-focus:ring-white group-focus:outline-none">
+                <svg class="w-4 h-4 text-white rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
+                </svg>
+                <span class="sr-only">Next</span>
+              </span>
+            </button>
+          </div>
+        )}
+      </div>
+    )
+  }
+</div>
+
+<script is:inline>
+  // Client-side carousel logic
+  document.addEventListener('DOMContentLoaded', () => {
+    const carouselContainer = document.getElementById('carousel-container');
+    if (!carouselContainer) return;
+
+    const items = carouselContainer.querySelectorAll('[data-carousel-item]');
+    if (items.length <= 1) { // No need for controls if 0 or 1 item
+      const prevButton = document.querySelector('[data-carousel-prev]');
+      const nextButton = document.querySelector('[data-carousel-next]');
+      if (prevButton) prevButton.style.display = 'none';
+      if (nextButton) nextButton.style.display = 'none';
+      return;
+    }
+
+    const prevButton = document.querySelector('[data-carousel-prev]');
+    const nextButton = document.querySelector('[data-carousel-next]');
+    let currentIndex = 0;
+
+    function showItem(index) {
+      items.forEach((item, i) => {
+        if (i === index) {
+          item.classList.remove('opacity-0', 'hidden');
+          item.classList.add('opacity-100');
+        } else {
+          item.classList.remove('opacity-100');
+          item.classList.add('opacity-0', 'hidden');
+        }
+      });
+    }
+
+    if (prevButton) {
+      prevButton.addEventListener('click', () => {
+        currentIndex = (currentIndex - 1 + items.length) % items.length;
+        showItem(currentIndex);
+      });
+    }
+
+    if (nextButton) {
+      nextButton.addEventListener('click', () => {
+        currentIndex = (currentIndex + 1) % items.length;
+        showItem(currentIndex);
+      });
+    }
+  });
+</script>

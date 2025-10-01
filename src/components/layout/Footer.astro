@@ -1,0 +1,8 @@
+---
+const { t } = Astro.props;
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="bg-gray-200 text-center text-xs p-4 mt-8">
+  <p>&copy; {currentYear} Mi Empresa. {t('footer.rights')}</p>
+</footer>

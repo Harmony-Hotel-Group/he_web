@@ -17,9 +17,9 @@ const title = t(titleKey);
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
   </head>
-  <body class="flex flex-col min-h-screen overflow-x-hidden"> {/* Added overflow-x-hidden */}
+  <body class="flex flex-col min-h-screen overflow-x-hidden">
     <Header t={t} config={config} lang={lang} />
-    <main class="flex-grow">
+    <main class="flex-grow w-full overflow-x-hidden"> {/* Added w-full and overflow-x-hidden */}
       <slot />
     </main>
     <Footer t={t} />

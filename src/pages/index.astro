@@ -7,23 +7,20 @@ import { fetchData } from "../utils/apiService";
 const lang = Astro.cookies.get('lang')?.value || 'es';
 const t = useTranslations(lang);
 
+// Fetch the main config data. Astro.url.origin is needed for server-side fetch of local files.
 const dataConfig = await fetchData('config');
 
-const carouselResources = [
-  { src: 'src/resources/vid/Cuenca.mp4', type: 'video', alt: 'Video de la naturaleza' },
-  // { src: 'https://youtu.be/6lABBjfUL6M', type: 'video', alt: 'Video de la naturaleza' },
-  { src: 'https://picsum.photos/id/237/1920/1080', type: 'image', alt: 'Perro mirando a la cámara' },
-  { src: 'https://picsum.photos/id/238/1920/1080', type: 'image', alt: 'Paisaje montañoso' },
-  { src: 'https://picsum.photos/id/239/1920/1080', type: 'image', alt: 'Ciudad de noche' },
-  { src: '', type: 'image', alt: 'Imagen rota de prueba' }, // Recurso inválido para probar el fallback
-];
+// No more hardcoded resources. Use the ones from the config.
+const carouselResources = dataConfig?.carouselResources || [];
+
 ---
 
 <BaseLayout titleKey="site.title" lang={lang} config={dataConfig}>
   <div class="relative w-full min-h-screen">
-    <VisualCarousel resources={carouselResources} class="absolute inset-0"/>
+    {/* Pass the resources from the config to the carousel */}
+    <VisualCarousel resources={carouselResources} class="absolute inset-0" />
     <div class="absolute inset-0 flex items-center justify-center z-10 text-white text-center p-4">
-    <!-- Vamos a ingresar la barra de registro -->
+      {/* Restoring the greeting text */}
     </div>
   </div>
 

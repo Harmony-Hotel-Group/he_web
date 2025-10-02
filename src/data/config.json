@@ -1,4 +1,8 @@
 {
+  "siteName": {
+    "es": "MiHotel",
+    "en": "MyHotel"
+  },
   "tagline": {
     "es": "Tu hogar lejos de casa",
     "en": "Your home away from home"
@@ -16,6 +20,11 @@
       "twitter": "https://twitter.com/mihotel"
     }
   },
+  "carouselResources": [
+    { "src": "https://fastly.picsum.photos/id/237/1920/1080.jpg?hmac=1hPzsubx1j8fMddzUgP5NbuX2rNLOEaQML1rD_g1C5Y", "type": "image", "alt": "Perro mirando a la cámara" },
+    { "src": "https://fastly.picsum.photos/id/238/1920/1080.jpg?hmac=poVbLcPNjgsBwc5evNoDIpU4Psvr4qMFql-qHSWaEBU", "type": "image", "alt": "Paisaje montañoso" },
+    { "src": "https://fastly.picsum.photos/id/239/1920/1080.jpg?hmac=Ii-YrkHwNkDBvmZxB_AkjTrTemEAjFoFxSpChpE4YDY", "type": "image", "alt": "Ciudad de noche" }
+  ],
   "roomTypes": [
     {
       "id": "standard",

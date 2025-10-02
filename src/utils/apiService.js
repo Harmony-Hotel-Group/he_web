@@ -94,24 +94,6 @@ async function getLocalData(dataType) {
     const localFilePath = path.join(process.cwd(), "src", "data",`${localFileName}.json`);
     console.log("localFilePath:",localFilePath)
 
-    // try {
-    //     // const response = await fetch(localFilePath);
-    //     const response = fs.readFileSync(localFilePath, "utf-8");
-    //     console.log("Response:",response)
-    //
-    //     if (response.ok) {
-    //         // const data = await response.json();
-    //         const data = JSON.parse(content);
-    //         console.log(`Served local ${dataType} data from ${localFilePath}.`);
-    //         return data;
-    //     } else {
-    //         console.error(`Failed to fetch local ${dataType} data from ${localFilePath}: ${response.status} ${response.statusText}`);
-    //         return null;
-    //     }
-    // } catch (error) {
-    //     console.error(`Error fetching local ${dataType} data from ${localFilePath}:`, error);
-    //     return null;
-    // }
     try {
         const content = fs.readFileSync(localFilePath, "utf-8");
         const data = JSON.parse(content);

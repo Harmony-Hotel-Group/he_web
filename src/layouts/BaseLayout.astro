@@ -4,16 +4,9 @@ import Footer from '../components/layout/Footer.astro';
 import '../styles/global.css';
 import { useTranslations } from '../i18n/translation';
 
-interface Props {
-    titleKey: string;
-    config?: any; // Assuming config structure
-    lang: string;
-}
-
-const { titleKey, lang , config} = Astro.props;
+const { titleKey, lang, config } = Astro.props;
 const t = useTranslations(lang);
 const title = t(titleKey);
-
 ---
 
 <html lang={lang}>
@@ -24,8 +17,8 @@ const title = t(titleKey);
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
   </head>
-  <body class="flex flex-col min-h-screen">
-    <Header t={t} lang={lang} config={config}/>
+  <body class="flex flex-col min-h-screen overflow-x-hidden"> {/* Added overflow-x-hidden */}
+    <Header t={t} config={config} lang={lang} />
     <main class="flex-grow">
       <slot />
     </main>

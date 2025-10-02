@@ -54,16 +54,15 @@ export default function LanguageSwitcher() {
             {/* Current language display (button) */}
             <button
                 type="button"
-                class="flex items-center space-x-2 bg-transparent text-white py-1 px-2 rounded-md cursor-pointer focus:outline-none text-sm"
+                class="flex items-center bg-transparent text-white py-1 px-2 rounded-md cursor-pointer focus:outline-none text-sm"
                 onClick={toggleDropdown}
                 aria-haspopup="true"
                 aria-expanded={isOpen}
             >
-                <img src={selectedLangData.flag} alt={`${selectedLangData.name} flag`} class="h-4 w-4"/>
-                <span
-                    class="hidden md:inline">{selectedLangData.name}</span> {/* Ocultar en móviles, mostrar en md y superior */}
-                {/* Optional: Add a dropdown arrow icon */}
-                <svg class="w-3 h-3 ml-1 hidden md:inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                <img src={selectedLangData.flag} alt={`${selectedLangData.name} flag`} class="h-5 w-5"/> {/* Only show the flag */}
+                {/* Text and arrow are now hidden by default */}
+                <span class="hidden">{selectedLangData.name}</span>
+                <svg class="w-3 h-3 ml-1 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                      xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                 </svg>

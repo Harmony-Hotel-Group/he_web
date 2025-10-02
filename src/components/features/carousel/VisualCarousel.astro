@@ -4,61 +4,122 @@ import VisualResource from '../../ui/VisualResource.astro';
 
 interface Resource {
   src: string;
-  type: 'image' | 'video';
+  type: 'image' | 'video' | 'youtube'; // Added 'youtube' type
   alt?: string;
+  youtubeId?: string; // Added youtubeId
 }
 
 interface Props {
   resources: Resource[];
   class?: string;
+  maskOpacityClass?: string; // New prop for mask opacity
+  objectFitClass?: string; // New prop for object-fit control
+  videoZoomScale?: number; // New prop for additional video zoom
 }
 
-const { resources, class: className } = Astro.props;
+const { 
+  resources, 
+  class: className, 
+  maskOpacityClass = 'bg-black/50', 
+  objectFitClass = 'object-cover',
+  videoZoomScale = 1.15
+} = Astro.props; 
 
-// Filter resources to ensure only one video or multiple images
-const videos = resources.filter(r => r.type === 'video');
-const images = resources.filter(r => r.type === 'image');
+// Default placeholder images if no valid resources are provided
+const defaultPlaceholderResources: Resource[] = [
+  { src: '/images/placeholders/placeholder1.jpg', type: 'image', alt: 'Placeholder Image 1' },
+  { src: '/images/placeholders/placeholder2.jpg', type: 'image', alt: 'Placeholder Image 2' },
+  { src: '/images/placeholders/placeholder3.jpg', type: 'image', alt: 'Placeholder Image 3' },
+];
+
+// Function to extract YouTube video ID
+function getYouTubeVideoId(url: string): string | null {
+  const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+  const match = url.match(regExp);
+  return (match && match[2].length === 11) ? match[2] : null;
+}
+
+let processedResources: Resource[] = [];
+
+// Process incoming resources
+if (resources && resources.length > 0) {
+  processedResources = resources.map(res => {
+    if (res.type === 'video') {
+      const youtubeId = getYouTubeVideoId(res.src);
+      if (youtubeId) {
+        return { ...res, type: 'youtube', youtubeId: youtubeId };
+      }
+    }
+    return res;
+  });
+}
+
+// Filter resources for initial display logic
+const videos = processedResources.filter(r => r.type === 'video'); // General videos (not YouTube)
+const youtubeVideos = processedResources.filter(r => r.type === 'youtube');
+const images = processedResources.filter(r => r.type === 'image');
 
 let finalResources: Resource[] = [];
-let showVideoInitially = false;
+let showVideoInitially = false; // This will now refer to either general video or YouTube
 
 // Server-side user-agent detection for initial render
 const userAgent = Astro.request.headers.get('user-agent') || '';
 const isMobileDevice = /Mobile|Android|iPhone|iPad|iPod|Windows Phone/i.test(userAgent);
 
-if (videos.length > 0 && !isMobileDevice) {
-  // If there's a video and it's a desktop device, show the first video
+// Priority: YouTube -> General Video -> Images -> Placeholder
+if (youtubeVideos.length > 0 && !isMobileDevice) {
+  finalResources = [youtubeVideos[0]];
+  showVideoInitially = true;
+} else if (videos.length > 0 && !isMobileDevice) {
   finalResources = [videos[0]];
   showVideoInitially = true;
 } else if (images.length > 0) {
-  // Otherwise, show images (either on mobile or if no video/desktop)
   finalResources = images;
+} else {
+  // Fallback to default placeholders if no valid resources are found
+  finalResources = defaultPlaceholderResources;
+  showVideoInitially = false; // Placeholders are always images
 }
 
-// If no valid resources, add a placeholder
-if (finalResources.length === 0) {
-  finalResources.push({ src: '', type: 'image', alt: 'No hay recursos' });
-  showVideoInitially = false; // Placeholder is always an image
-}
-
-// If we decided to show a video initially, but it's mobile, revert to images
+// If we decided to show a video initially, but it's mobile, revert to images or placeholders
 if (showVideoInitially && isMobileDevice) {
   showVideoInitially = false;
-  finalResources = images.length > 0 ? images : [{ src: '', type: 'image', alt: 'No hay recursos' }];
+  finalResources = images.length > 0 ? images : defaultPlaceholderResources;
 }
 
-// Determine the resource to display if it's a single video
+// Determine the resource to display if it's a single video (YouTube or general)
 const singleVideoResource = showVideoInitially ? finalResources[0] : undefined;
 
 // Determine the resources for the image carousel
 const carouselImageResources = showVideoInitially ? [] : finalResources;
+
+// Ensure carouselImageResources always has items if it's meant to be an image carousel
+if (!singleVideoResource && carouselImageResources.length === 0) {
+    carouselImageResources.push(...defaultPlaceholderResources);
+}
 
 ---
 
 <div class:list={[className, 'relative w-full overflow-hidden']}>
   {
     singleVideoResource ? (
-      <VisualResource src={singleVideoResource.src} type="video" alt={singleVideoResource.alt} class="w-full h-screen object-cover" />
+      singleVideoResource.type === 'youtube' ? (
+        <div class="relative w-full h-screen"> {/* This is the container for the YouTube video */} 
+          <iframe
+            class:list={['absolute inset-0 w-full h-full z-0', objectFitClass]} 
+            style={`transform: scale(${videoZoomScale});`} // Apply zoom here
+            src={`https://www.youtube.com/embed/${singleVideoResource.youtubeId}?autoplay=1&mute=1&loop=1&playlist=${singleVideoResource.youtubeId}&controls=0&showinfo=0&autohide=1&modestbranding=1&rel=0`}
+            frameborder="0"
+            allow="autoplay; encrypted-media" 
+            allowfullscreen
+            title={singleVideoResource.alt || 'YouTube video'}
+          ></iframe>
+          {/* Opacity Mask - positioned over the iframe, z-index 1 */} 
+          <div class:list={['absolute inset-0 z-[1]', maskOpacityClass]}></div>
+        </div>
+      ) : ( // General video type
+        <VisualResource src={singleVideoResource.src} type="video" alt={singleVideoResource.alt} class:list={['w-full h-screen', objectFitClass]} />
+      )
     ) : (
       <div class="relative w-full h-screen">
         <div id="carousel-container" class="relative h-full">
@@ -70,7 +131,7 @@ const carouselImageResources = showVideoInitially ? [] : finalResources;
               ]}
               data-carousel-item
             >
-              <VisualResource src={resource.src} type="image" alt={resource.alt} class="w-full h-full object-cover" />
+              <VisualResource src={resource.src} type="image" alt={resource.alt} class:list={['w-full h-full', objectFitClass]} />
             </div>
           ))}
         </div>

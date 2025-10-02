@@ -1,8 +1,14 @@
 [
   {
     "id": "tour1",
-    "name": "Tour por la Ciudad Histórica",
-    "description": "Explora los monumentos y la rica historia de nuestra ciudad con un guía experto.",
+    "name": {
+      "es": "Tour por la Ciudad Histórica",
+      "en": "Historic City Tour"
+    },
+    "description": {
+      "es": "Explora los monumentos y la rica historia de nuestra ciudad con un guía experto.",
+      "en": "Explore the monuments and rich history of our city with an expert guide."
+    },
     "price": 50,
     "currency": "USD",
     "duration": "4 horas",
@@ -13,8 +19,14 @@
   },
   {
     "id": "tour2",
-    "name": "Aventura en la Naturaleza",
-    "description": "Senderismo y exploración de la flora y fauna local en un entorno natural impresionante.",
+    "name": {
+      "es": "Aventura en la Naturaleza",
+      "en": "Nature Adventure"
+    },
+    "description": {
+      "es": "Senderismo y exploración de la flora y fauna local en un entorno natural impresionante.",
+      "en": "Hiking and exploration of local flora and fauna in a stunning natural environment."
+    },
     "price": 75,
     "currency": "USD",
     "duration": "6 horas",

@@ -7,7 +7,7 @@ interface Props {
   class?: string; // Clases CSS adicionales
 }
 
-const { src, type, alt = '', class: className } = Astro.props;
+let { src, type, alt = '', class: className } = Astro.props;
 
 let finalSrc = src;
 let isPlaceholder = false;

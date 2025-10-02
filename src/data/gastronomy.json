@@ -1,9 +1,18 @@
 [
   {
     "id": "dish1",
-    "name": "Ceviche Clásico",
-    "description": "Pescado fresco marinado en jugo de limón, ají, cebolla morada y cilantro.",
-    "category": "Plato Principal",
+    "name": {
+      "es": "Ceviche Clásico",
+      "en": "Classic Ceviche"
+    },
+    "description": {
+      "es": "Pescado fresco marinado en jugo de limón, ají, cebolla morada y cilantro.",
+      "en": "Fresh fish marinated in lime juice, chili, red onion, and cilantro."
+    },
+    "category": {
+      "es": "Plato Principal",
+      "en": "Main Course"
+    },
     "price": 20,
     "currency": "USD",
     "images": [
@@ -13,9 +22,18 @@
   },
   {
     "id": "dish2",
-    "name": "Lomo Saltado",
-    "description": "Trozos de lomo salteados con cebolla, tomate, ají amarillo y papas fritas, acompañado de arroz.",
-    "category": "Plato Principal",
+    "name": {
+      "es": "Lomo Saltado",
+      "en": "Stir-fried Beef Loin"
+    },
+    "description": {
+      "es": "Trozos de lomo salteados con cebolla, tomate, ají amarillo y papas fritas, acompañado de arroz.",
+      "en": "Strips of beef loin stir-fried with onions, tomatoes, yellow chili, and french fries, served with rice."
+    },
+    "category": {
+      "es": "Plato Principal",
+      "en": "Main Course"
+    },
     "price": 25,
     "currency": "USD",
     "images": [
@@ -25,9 +43,18 @@
   },
   {
     "id": "dessert1",
-    "name": "Suspiro a la Limeña",
-    "description": "Postre tradicional peruano a base de manjar blanco y merengue de oporto.",
-    "category": "Postre",
+    "name": {
+      "es": "Suspiro a la Limeña",
+      "en": "Lima Sigh"
+    },
+    "description": {
+      "es": "Postre tradicional peruano a base de manjar blanco y merengue de oporto.",
+      "en": "Traditional Peruvian dessert made from dulce de leche and port meringue."
+    },
+    "category": {
+      "es": "Postre",
+      "en": "Dessert"
+    },
     "price": 10,
     "currency": "USD",
     "images": [

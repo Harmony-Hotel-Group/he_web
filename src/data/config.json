@@ -1,0 +1,107 @@
+{
+  "siteName": {
+    "es": "MiHotel",
+    "en": "MyHotel"
+  },
+  "tagline": {
+    "es": "Tu hogar lejos de casa",
+    "en": "Your home away from home"
+  },
+  "contactInfo": {
+    "address": {
+      "es": "Calle Falsa 123, Ciudad, País",
+      "en": "123 Fake Street, City, Country"
+    },
+    "phone": "+123456789",
+    "email": "info@mihotel.com",
+    "socialLinks": {
+      "facebook": "https://facebook.com/mihotel",
+      "instagram": "https://instagram.com/mihotel",
+      "twitter": "https://twitter.com/mihotel"
+    }
+  },
+  "roomTypes": [
+    {
+      "id": "standard",
+      "name": {
+        "es": "Estándar",
+        "en": "Standard"
+      }
+    },
+    {
+      "id": "deluxe",
+      "name": {
+        "es": "Deluxe",
+        "en": "Deluxe"
+      }
+    }
+  ],
+  "destinationCategories": [
+    {
+      "id": "beach",
+      "name": {
+        "es": "Playas",
+        "en": "Beaches"
+      }
+    },
+    {
+      "id": "mountain",
+      "name": {
+        "es": "Montañas",
+        "en": "Mountains"
+      }
+    }
+  ],
+  "tourCategories": [
+    {
+      "id": "city",
+      "name": {
+        "es": "Ciudad",
+        "en": "City"
+      }
+    },
+    {
+      "id": "nature",
+      "name": {
+        "es": "Naturaleza",
+        "en": "Nature"
+      }
+    }
+  ],
+  "gastronomyCategories": [
+    {
+      "id": "main-course",
+      "name": {
+        "es": "Platos Principales",
+        "en": "Main Courses"
+      }
+    },
+    {
+      "id": "dessert",
+      "name": {
+        "es": "Postres",
+        "en": "Desserts"
+      }
+    }
+  ],
+  "supportedLanguages": [
+    {
+      "code": "es",
+      "name": "Español"
+    },
+    {
+      "code": "en",
+      "name": "English"
+    }
+  ],
+  "supportedCurrencies": [
+    {
+      "code": "USD",
+      "symbol": "$"
+    },
+    {
+      "code": "EUR",
+      "symbol": "€"
+    }
+  ]
+}

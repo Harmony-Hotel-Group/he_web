@@ -1,15 +1,15 @@
 ---
 import LanguageSwitcher from '../ui/LanguageSwitcher.jsx';
 import CurrencySwitcher from '../ui/CurrencySwitcher.jsx';
-import { fetchData } from '../../utils/apiService.js'; // Ajustada la ruta
-const {t} = Astro.props;
+import { fetchData } from "../../utils/apiService";
 
-// Get current language from cookie
-const lang = Astro.cookies.get('lang')?.value || 'es';
+interface Props {
+    t: (key: string) => string;
+    config?: any; // Assuming config structure
+    lang: string;
+}
 
-// Fetch data on the server during page load
-const rooms = await fetchData('config');
-console.log("Rooms: ",rooms);
+const {t, config, lang} = Astro.props;
 ---
 
 <header class="absolute top-0 left-0 right-0 z-50 text-white">
@@ -17,8 +17,7 @@ console.log("Rooms: ",rooms);
         <!-- Left: Logo -->
         <div class="flex-shrink-0">
             <a href="/" class="flex items-center space-x-2">
-                <img src="/favicon.svg" alt="MiLogo" class="h-8 w-8"/>
-                <span class="text-xl font-bold">MiLogo</span>
+                <img src="/logo.png" alt="MiLogo" class="h-14 w-auto"/>
             </a>
         </div>
 
@@ -34,14 +33,14 @@ console.log("Rooms: ",rooms);
                     </svg>
                 </a>
                 <!-- Dropdown Menu -->
-                {rooms && (
+                {config?.roomTypes && (
                         <div id="rooms-dropdown"
                              class="absolute left-0 top-full w-48 bg-gray-700 rounded-md shadow-lg z-50 hidden">
-                            {rooms.map(room => (
-                                room.type ? (<a href={`/rooms/${room.id}`}
-                                                class="block px-4 py-2 text-sm text-white hover:bg-gray-600">
-                                    {room.type[lang]} {/* Muestra el tipo de habitación traducido */}
-                                </a>) : null
+                            {config.roomTypes.map(roomType => (
+                                    <a href={`/rooms/${roomType.id}`}
+                                       class="block px-4 py-2 text-sm text-white hover:bg-gray-600">
+                                        {roomType.name[lang]}
+                                    </a>
                             ))}
                         </div>
                 )}
@@ -56,14 +55,14 @@ console.log("Rooms: ",rooms);
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                     </svg>
                 </a>
-                {destinations && (
+                {config?.destinationCategories && (
                         <div id="destinations-dropdown"
                              class="absolute left-0 top-full w-48 bg-gray-700 rounded-md shadow-lg z-50 hidden">
-                            {destinations.map(destination => (
-                                destination.category ? (<a href={`/destinations/${destination.id}`}
-                                                           class="block px-4 py-2 text-sm text-white hover:bg-gray-600">
-                                    {destination.category[lang]} {/* Muestra el nombre del destino traducido */}
-                                </a>) : null
+                            {config.destinationCategories.map(category => (
+                                    <a href={`/destinations/${category.id}`}
+                                       class="block px-4 py-2 text-sm text-white hover:bg-gray-600">
+                                        {category.name[lang]}
+                                    </a>
                             ))}
                         </div>
                 )}
@@ -78,14 +77,14 @@ console.log("Rooms: ",rooms);
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                     </svg>
                 </a>
-                {gastronomy && (
+                {config?.gastronomyCategories && (
                         <div id="gastronomy-dropdown"
                              class="absolute left-0 top-full w-48 bg-gray-700 rounded-md shadow-lg z-50 hidden">
-                            {gastronomy.map(item => (
-                                item.category ? (<a href={`/gastronomy/${item.id}`}
-                                                    class="block px-4 py-2 text-sm text-white hover:bg-gray-600">
-                                    {item.name[lang]} {/* Muestra el nombre del plato traducido */}
-                                </a>) : null
+                            {config.gastronomyCategories.map(category => (
+                                    <a href={`/gastronomy/${category.id}`}
+                                       class="block px-4 py-2 text-sm text-white hover:bg-gray-600">
+                                        {category.name[lang]}
+                                    </a>
                             ))}
                         </div>
                 )}
@@ -100,14 +99,14 @@ console.log("Rooms: ",rooms);
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                     </svg>
                 </a>
-                {tours && (
+                {config?.tourCategories && (
                         <div id="tours-dropdown"
                              class="absolute left-0 top-full w-48 bg-gray-700 rounded-md shadow-lg z-50 hidden">
-                            {tours.map(tour => (
-                                tours ? (<a href={`/tours/${tour.id}`}
-                                            class="block px-4 py-2 text-sm text-white hover:bg-gray-600">
-                                    {tour.name[lang]} {/* Muestra el nombre del tour traducido */}
-                                </a>) : null
+                            {config.tourCategories.map(category => (
+                                    <a href={`/tours/${category.id}`}
+                                       class="block px-4 py-2 text-sm text-white hover:bg-gray-600">
+                                        {category.name[lang]}
+                                    </a>
                             ))}
                         </div>
                 )}

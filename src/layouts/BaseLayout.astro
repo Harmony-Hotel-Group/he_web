@@ -4,7 +4,13 @@ import Footer from '../components/layout/Footer.astro';
 import '../styles/global.css';
 import { useTranslations } from '../i18n/translation';
 
-const { titleKey, lang } = Astro.props;
+interface Props {
+    titleKey: string;
+    config?: any; // Assuming config structure
+    lang: string;
+}
+
+const { titleKey, lang , config} = Astro.props;
 const t = useTranslations(lang);
 const title = t(titleKey);
 
@@ -13,13 +19,13 @@ const title = t(titleKey);
 <html lang={lang}>
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href="/logo.png" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
   </head>
   <body class="flex flex-col min-h-screen">
-    <Header t={t} lang={lang} />
+    <Header t={t} lang={lang} config={config}/>
     <main class="flex-grow">
       <slot />
     </main>

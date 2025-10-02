@@ -1,4 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* src/styles/global.css */
 body {
+  @apply bg-background text-primary;
   font-family: sans-serif;
 }

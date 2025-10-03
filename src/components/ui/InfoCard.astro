@@ -1,0 +1,30 @@
+---
+// src/components/ui/InfoCard.astro
+import Imagen from './Imagen.astro'; // Import the new Image component
+
+interface Props {
+  href: string;
+  imageSrc: string;
+  imageAlt: string;
+  title: string;
+  description: string;
+}
+
+const { href, imageSrc, imageAlt, title, description } = Astro.props;
+---
+
+<a href={href} class="block group bg-white rounded-lg shadow-lg overflow-hidden transform transition-transform duration-300 hover:-translate-y-2">
+  <div class="relative pb-[66.66%]"> {/* 3:2 aspect ratio container */}
+    <Imagen
+      src={imageSrc} 
+      alt={imageAlt} 
+      width={600} 
+      height={400} 
+      class="absolute h-full w-full object-cover" 
+    />
+  </div>
+  <div class="p-6">
+    <h3 class="text-xl font-bold text-primary mb-2 group-hover:text-accent transition-colors">{title}</h3>
+    <p class="text-gray-600 text-sm">{description}</p>
+  </div>
+</a>

@@ -3,33 +3,95 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import { useTranslations } from '../i18n/translation';
 import VisualCarousel from '../components/features/carousel/VisualCarousel.astro';
 import { fetchData } from "../utils/apiService";
+import InfoCard from '../components/ui/InfoCard.astro'; // Import the new component
 
 const lang = Astro.cookies.get('lang')?.value || 'es';
 const t = useTranslations(lang);
 
-// Fetch the main config data. Astro.url.origin is needed for server-side fetch of local files.
 const dataConfig = await fetchData('config');
-
-// No more hardcoded resources. Use the ones from the config.
 const carouselResources = dataConfig?.carouselResources || [];
 
 ---
 
 <BaseLayout titleKey="site.title" lang={lang} config={dataConfig}>
   <div class="relative w-full min-h-screen">
-    {/* Pass the resources from the config to the carousel */}
     <VisualCarousel resources={carouselResources} videoZoomScale={1.2} class="absolute inset-0" />
     <div class="absolute inset-0 flex items-center justify-center z-10 text-white text-center p-4">
-      {/* Restoring the greeting text */}
+      {/* Content over the carousel */}
     </div>
   </div>
 
-  <div class="container mx-auto py-12 text-center">
-    <h2 class="text-3xl font-bold mb-4">Bienvenido a nuestro hotel</h2>
-    <p class="text-lg mb-8">
-      Experimenta una estancia inolvidable con nosotros. Disfruta de nuestras lujosas habitaciones,
-      exquisita gastronomía y las mejores excursiones.
-    </p>
-    <!-- Aquí puedes añadir más contenido para la página de inicio debajo del carrusel -->
+  <div class="py-16">
+    <!-- Rooms Section -->
+    {dataConfig?.roomTypes && (
+      <section class="container mx-auto px-6 mb-16">
+        <h2 class="text-3xl font-bold text-center text-primary mb-8">{t('nav.rooms')}</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {dataConfig.roomTypes.map(roomType => (
+            <InfoCard
+              href={`/rooms/${roomType.id}`}
+              imageSrc={roomType.src}
+              imageAlt={roomType.name[lang]}
+              title={roomType.name[lang]}
+              description={t('home.explore_category')}
+            />
+          ))}
+        </div>
+      </section>
+    )}
+
+    <!-- Destinations Section -->
+    {dataConfig?.destinationCategories && (
+      <section class="container mx-auto px-6 mb-16">
+        <h2 class="text-3xl font-bold text-center text-primary mb-8">{t('nav.destinations')}</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {dataConfig.destinationCategories.map(category => (
+            <InfoCard
+              href={`/destinations/${category.id}`}
+              imageSrc={category.src}
+              imageAlt={category.name[lang]}
+              title={category.name[lang]}
+              description={t('home.explore_category')}
+            />
+          ))}
+        </div>
+      </section>
+    )}
+
+    <!-- Gastronomy Section -->
+    {dataConfig?.gastronomyCategories && (
+      <section class="container mx-auto px-6 mb-16">
+        <h2 class="text-3xl font-bold text-center text-primary mb-8">{t('nav.gastronomy')}</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {dataConfig.gastronomyCategories.map(category => (
+            <InfoCard
+              href={`/gastronomy/${category.id}`}
+              imageSrc={category.src}
+              imageAlt={category.name[lang]}
+              title={category.name[lang]}
+              description={t('home.explore_category')}
+            />
+          ))}
+        </div>
+      </section>
+    )}
+
+    <!-- Tours Section -->
+    {dataConfig?.tourCategories && (
+      <section class="container mx-auto px-6">
+        <h2 class="text-3xl font-bold text-center text-primary mb-8">{t('nav.tours')}</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {dataConfig.tourCategories.map(category => (
+            <InfoCard
+              href={`/tours/${category.id}`}
+              imageSrc={category.src}
+              imageAlt={category.name[lang]}
+              title={category.name[lang]}
+              description={t('home.explore_category')}
+            />
+          ))}
+        </div>
+      </section>
+    )}
   </div>
 </BaseLayout>

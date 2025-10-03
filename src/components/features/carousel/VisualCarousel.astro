@@ -22,7 +22,7 @@ const {
   class: className, 
   maskOpacityClass = 'bg-black/50', 
   objectFitClass = 'object-cover',
-  videoZoomScale = 1.1 
+  videoZoomScale = 1.2
 } = Astro.props; 
 
 const defaultPlaceholderResources: Resource[] = [
@@ -55,7 +55,7 @@ const videos = processedResources.filter(r => r.type === 'video');
 const youtubeVideos = processedResources.filter(r => r.type === 'youtube');
 const images = processedResources.filter(r => r.type === 'image');
 
-let finalResources: Resource[] = [];
+let finalResources: Resource[];
 let showVideoInitially = false;
 
 const userAgent = Astro.request.headers.get('user-agent') || '';

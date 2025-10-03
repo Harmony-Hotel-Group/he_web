@@ -21,9 +21,31 @@
     }
   },
   "carouselResources": [
-    { "src": "https://fastly.picsum.photos/id/237/1920/1080.jpg?hmac=1hPzsubx1j8fMddzUgP5NbuX2rNLOEaQML1rD_g1C5Y", "type": "image", "alt": "Perro mirando a la cámara" },
-    { "src": "https://fastly.picsum.photos/id/238/1920/1080.jpg?hmac=poVbLcPNjgsBwc5evNoDIpU4Psvr4qMFql-qHSWaEBU", "type": "image", "alt": "Paisaje montañoso" },
-    { "src": "https://fastly.picsum.photos/id/239/1920/1080.jpg?hmac=Ii-YrkHwNkDBvmZxB_AkjTrTemEAjFoFxSpChpE4YDY", "type": "image", "alt": "Ciudad de noche" }
+    {
+      "src": "src/resources/vid/Cuenca.mp4",
+      "type": "video",
+      "alt": "Cuenca 4K Local"
+    },
+    {
+      "src": "https://www.youtube.com/watch?v=6lABBjfUL6M",
+      "type": "video",
+      "alt": "Cuenca 4K Youtube"
+    },
+    {
+      "src": "https://fastly.picsum.photos/id/237/1920/1080.jpg?hmac=1hPzsubx1j8fMddzUgP5NbuX2rNLOEaQML1rD_g1C5Y",
+      "type": "image",
+      "alt": "Perro mirando a la cámara"
+    },
+    {
+      "src": "https://fastly.picsum.photos/id/238/1920/1080.jpg?hmac=poVbLcPNjgsBwc5evNoDIpU4Psvr4qMFql-qHSWaEBU",
+      "type": "image",
+      "alt": "Paisaje montañoso"
+    },
+    {
+      "src": "https://fastly.picsum.photos/id/239/1920/1080.jpg?hmac=Ii-YrkHwNkDBvmZxB_AkjTrTemEAjFoFxSpChpE4YDY",
+      "type": "image",
+      "alt": "Ciudad de noche"
+    }
   ],
   "roomTypes": [
     {

@@ -1,0 +1,56 @@
+---
+// DEBUGGING VERSION of DateRangePicker.astro
+interface Props {
+    t: (key: string) => string;
+}
+const {t} = Astro.props;
+---
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+<div class="relative w-full">
+    <input
+            id="debug-date-picker"
+            type="text"
+            placeholder="Click me for debugging!"
+            readonly
+            class="w-full p-2 border rounded-md cursor-pointer"
+    />
+</div>
+
+<script>
+    import flatpickr from "flatpickr";
+
+    function runDatePicker() {
+
+        const input = document.getElementById("debug-date-picker");
+
+        if (!input) {
+            return;
+        }
+
+        if (input._flatpickr) {
+            return;
+        }
+
+
+        try {
+            flatpickr(input, {
+                mode: 'range',
+                numberOfMonths: 2,
+                appendTo: document.body,
+            });
+            alert("DEBUG: Step 4 - SUCCESS! Flatpickr initialized. The calendar should open now when you click the input.");
+        } catch (e) {
+            alert(`DEBUG ERROR: Step 4 - An error occurred during flatpickr initialization: ${e.message}`);
+        }
+    }
+
+    document.addEventListener('astro:page-load', () => {
+        runDatePicker();
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+        runDatePicker();
+    });
+</script>

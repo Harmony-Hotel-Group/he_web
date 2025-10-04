@@ -16,9 +16,6 @@ const carouselResources = dataConfig?.carouselResources || [];
 <BaseLayout titleKey="site.title" lang={lang} config={dataConfig}>
   <div class="relative w-full min-h-screen">
     <VisualCarousel resources={carouselResources} videoZoomScale={1.2} class="absolute inset-0" />
-    <div class="absolute inset-0 flex items-center justify-center z-10 text-white text-center p-4">
-      {/* Content over the carousel */}
-    </div>
   </div>
 
   <div class="py-16">

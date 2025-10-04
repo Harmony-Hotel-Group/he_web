@@ -86,7 +86,7 @@
   "tourCategories": [
     {
       "id": "city",
-      "src": "",
+      "src": "https://fastly.picsum.photos/id/237/1920/1080.jpg?hmac=1hPzsubx1j8fMddzUg",
       "name": {
         "es": "Ciudad",
         "en": "City"

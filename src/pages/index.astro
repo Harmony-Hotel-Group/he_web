@@ -3,7 +3,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import { useTranslations } from '../i18n/translation';
 import VisualCarousel from '../components/features/carousel/VisualCarousel.astro';
 import { fetchData } from "../utils/apiService";
-import InfoCard from '../components/ui/InfoCard.astro'; // Import the new component
+import InfoCard from '../components/ui/InfoCard.astro';
+import PhotoCollage from '../components/ui/PhotoCollage.astro';
 
 const lang = Astro.cookies.get('lang')?.value || 'es';
 const t = useTranslations(lang);
@@ -19,6 +20,25 @@ const carouselResources = dataConfig?.carouselResources || [];
   </div>
 
   <div class="py-16">
+    <!-- About Us Section -->
+    {dataConfig?.aboutUs && (
+      <section class="container mx-auto px-6 mb-24">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+          <!-- Left Column: Text -->
+          <div class="text-center md:text-left">
+            <h3 class="text-lg font-semibold text-accent mb-2">{dataConfig.aboutUs.subtitle[lang]}</h3>
+            <h1 class="text-4xl font-bold text-primary mb-4">{dataConfig.aboutUs.mainTitle[lang]}</h1>
+            <p class="text-gray-600 leading-relaxed mb-4">{dataConfig.aboutUs.welcomeParagraph[lang]}</p>
+            <p class="text-gray-600 leading-relaxed">{dataConfig.aboutUs.commitmentParagraph[lang]}</p>
+          </div>
+          <!-- Right Column: Image Collage -->
+          <div>
+            <PhotoCollage images={dataConfig.aboutUs.images} />
+          </div>
+        </div>
+      </section>
+    )}
+
     <!-- Rooms Section -->
     {dataConfig?.roomTypes && (
       <section class="container mx-auto px-6 mb-16">

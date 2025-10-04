@@ -1,0 +1,58 @@
+---
+import VisualResource from './VisualResource.astro';
+
+interface Image {
+    src: string;
+    alt: string;
+}
+
+interface Props {
+    images: Image[];
+    class?: string;
+}
+
+const { images = [], class: className } = Astro.props;
+
+// Rotaciones y desplazamientos únicos para cada imagen
+// (para dar el efecto de “pila desordenada”)
+const transformClasses = [
+    'rotate-[-8deg] translate-x-[-20%] translate-y-[5%] hover:rotate-[-10deg]',
+    'rotate-[5deg] translate-x-[15%] translate-y-[-2%] hover:rotate-[7deg]',
+    'rotate-[12deg] translate-x-[5%] translate-y-[20%] hover:rotate-[15deg]',
+    'rotate-[-3deg] translate-x-[-5%] translate-y-[-15%] hover:rotate-[-5deg]',
+    'rotate-[15deg] translate-x-[25%] translate-y-[8%] hover:rotate-[18deg]',
+];
+---
+
+
+<!-- CONTENEDOR PRINCIPAL -->
+<div class:list={[
+    "relative flex justify-center items-center w-full min-h-[350px]",
+    className,
+]}>
+    <!-- Contenedor centrado y responsivo -->
+    <div class="relative flex justify-center items-center w-[85%] max-w-[500px] aspect-square">
+        {images.slice(0, 5).map((image, index) => (
+                <div
+                        class:list={[
+                            "absolute w-52 h-36 sm:w-60 sm:h-40 md:w-72 md:h-48 lg:w-80 lg:h-56", // Increased image sizes
+                            "p-2 bg-white dark:bg-gray-800 shadow-xl rounded-md transition-transform duration-300 ease-in-out hover:scale-110 hover:z-10",
+                            "flex justify-center items-center",
+                            transformClasses[index % transformClasses.length],
+                        ]}
+                        style={{
+                            top: `${5 + (index * 5)}%`,
+                            left: `${50 + (index* 5)}%`,
+                            transformOrigin: "center center",
+                        }}
+                >
+                    <VisualResource
+                            src={image.src}
+                            alt={image.alt}
+                            type="image"
+                            class="rounded-sm w-full h-full object-cover transition-opacity duration-300 hover:opacity-100 opacity-90"
+                    />
+                </div>
+        ))}
+    </div>
+</div>

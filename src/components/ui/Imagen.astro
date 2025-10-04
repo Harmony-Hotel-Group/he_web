@@ -56,9 +56,7 @@ if (src && (src.startsWith('/') || src.startsWith('.'))) {
     if (images[imagePath]) {
         // If the image exists in our glob, we can use Astro's <Image> component.
         finalSrc = (await images[imagePath]()).default;
-    } else {
-        // If it's a local path but not in /src/assets, we assume it's in /public
-        // and will be handled by the standard <img> tag.
+    } else if (existeEnPublic(src)) {
         finalSrc = src;
     }
 } else if (src.startsWith('http')) {

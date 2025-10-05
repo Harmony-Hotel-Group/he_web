@@ -1,10 +1,11 @@
 ---
 interface Props {
+    forId: string;
     t: (key: string) => string;
     lang?: string; // 'en' o 'es'
 }
 
-const { t, lang = 'es' } = Astro.props;
+const { t , lang = 'es', forId} = Astro.props;
 ---
 
 <link
@@ -21,9 +22,8 @@ const { t, lang = 'es' } = Astro.props;
 </style>
 
 <div class="relative w-full">
-    {/* The <label> has been removed from here and will be handled by the parent molecule */}
     <input
-            id="date-range-picker"
+            id={forId}
             type="text"
             data-lang={lang}
     placeholder={t('booking.dateRangePlaceholder') || "Select a date range"}
@@ -37,7 +37,9 @@ const { t, lang = 'es' } = Astro.props;
     import "flatpickr/dist/l10n/es.js";
 
     function runDatePicker(input) {
+        console.log("Running date picker",input);
         const lang = input.dataset.lang || "es";
+        console.log("lang",lang);
         flatpickr(input, {
             mode: "range",
             minDate: "today",
@@ -45,6 +47,7 @@ const { t, lang = 'es' } = Astro.props;
             locale: lang === "es" ? flatpickr.l10ns.es : flatpickr.l10ns.default,
 
             onChange: function (selectedDates, dateStr, instance) {
+                console.log("onChange");
                 if (selectedDates.length === 0) {
                     input.value = "";
                     input.removeAttribute("title");

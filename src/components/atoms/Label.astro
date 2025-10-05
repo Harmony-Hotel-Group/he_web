@@ -1,0 +1,26 @@
+---
+// src/components/atoms/Label.astro
+interface Props {
+  for: string; // The ID of the input this label is for
+  t: (key: string) => string;
+  textKey: string; // The translation key for the label text
+  required?: boolean;
+  className?: string;
+}
+
+const { 
+  for: forId, 
+  t,
+  textKey,
+  required = false, 
+  className 
+} = Astro.props;
+---
+
+<label 
+  for={forId} 
+  class:list={['block text-sm font-medium text-primary', className]}
+>
+  {t(textKey)}
+  {required && <span class="text-red-500 ml-1">*</span>}
+</label>

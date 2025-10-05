@@ -1,0 +1,22 @@
+---
+// src/components/molecules/forms/DropdownField.astro
+import Label from '../../atoms/Label.astro';
+import Select from '../../atoms/Select.astro';
+
+interface Props {
+  label: string; // This will now be treated as a translation key
+  name: string;
+  id?: string;
+  options: { value: string | number; label: string }[];
+  required?: boolean;
+  className?: string;
+  t: (key: string) => string;
+}
+
+const { label, name, id = name, options, required, className, t } = Astro.props;
+---
+
+<div class:list={["flex flex-col", className]}>
+  <Label for={id} t={t} textKey={label} required={required} />
+  <Select id={id} name={name} options={options} required={required} />
+</div>

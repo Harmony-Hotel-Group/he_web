@@ -1,0 +1,91 @@
+---
+// src/components/organisms/booking/BookingForm.astro
+import { z } from "astro:content"; // Use Zod from Astro for schema creation
+
+import DatePickerForm from "../../molecules/forms/DatePickerForm.astro";
+import DropdownField from "../../molecules/forms/DropdownField.astro";
+import SwitchField from "../../molecules/forms/SwitchField.astro";
+import Button from "../../atoms/Button.astro";
+
+interface Props {
+  t: (key: string) => string;
+  lang: string;
+}
+
+const { t, lang } = Astro.props;
+
+// 1. Create a schema "factory" function that accepts the translation function `t`
+const createBookingSchema = (t) => z.object({
+  from: z.string().min(1, { message: t('validation.checkin_required') || "Check-in date is required." }),
+  to: z.string().min(1, { message: t('validation.checkout_required') || "Check-out date is required." }),
+  adults: z.preprocess(Number, z.number().min(1, { message: t('validation.one_adult') || "At least one adult is required." })),
+  children: z.preprocess(Number, z.number().min(0)),
+  rooms: z.preprocess(Number, z.number().min(1, { message: t('validation.one_room') || "At least one room is required." })),
+  breakfast: z.string().optional(),
+  vehicle: z.string().optional(),
+});
+
+// 2. Create the schema instance using the `t` function from props
+const bookingSchema = createBookingSchema(t);
+
+let errors: any = {}; // Initialize as an empty object for field errors
+
+if (Astro.request.method === "POST") {
+  try {
+    const formData = await Astro.request.formData();
+    const data = Object.fromEntries(formData);
+    // 3. Use the created schema for parsing
+    bookingSchema.parse(data);
+    // TODO: Handle successful submission
+  } catch (error) {
+    // Duck-typing check for Zod error. This is more robust than `instanceof`.
+    if (error.issues) {
+      // Flatten the errors to get a simple field-by-field object
+      errors = error.flatten().fieldErrors;
+    }
+  }
+}
+---
+
+<form method="POST" class="bg-white/20 backdrop-blur-md p-6 rounded-xl shadow-lg w-full space-y-6">
+  <DatePickerForm label={t('booking.dateRangePicker')} t={t} lang={lang} />
+  {/* Display error for the 'from' field (and implicitly 'to') */}
+  {errors.from && <p class="text-red-500 text-xs mt-1">{errors.from[0]}</p>}
+  {errors.to && !errors.from && <p class="text-red-500 text-xs mt-1">{errors.to[0]}</p>}
+
+  <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+    <div>
+      <DropdownField 
+        label={t('booking.adults')} 
+        name="adults" 
+        options={[{value: 1, label: '1'}, {value: 2, label: '2'}, {value: 3, label: '3'}, {value: 4, label: '4'}]} 
+      />
+      {errors.adults && <p class="text-red-500 text-xs mt-1">{errors.adults[0]}</p>}
+    </div>
+    <div>
+      <DropdownField 
+        label={t('booking.children')} 
+        name="children" 
+        options={[{value: 0, label: '0'}, {value: 1, label: '1'}, {value: 2, label: '2'}]} 
+      />
+      {errors.children && <p class="text-red-500 text-xs mt-1">{errors.children[0]}</p>}
+    </div>
+    <div>
+      <DropdownField 
+        label={t('booking.rooms')} 
+        name="rooms" 
+        options={[{value: 1, label: '1'}, {value: 2, label: '2'}, {value: 3, label: '3'}]} 
+      />
+      {errors.rooms && <p class="text-red-500 text-xs mt-1">{errors.rooms[0]}</p>}
+    </div>
+  </div>
+
+  <div class="flex items-center space-x-6">
+    <SwitchField label={t('booking.breakfast')} name="breakfast" />
+    <SwitchField label={t('booking.vehicle')} name="vehicle" />
+  </div>
+
+  <div class="text-center pt-4">
+    <Button type="submit" label={t('booking.search')} variant="accent" className="w-full md:w-auto px-12" />
+  </div>
+</form>

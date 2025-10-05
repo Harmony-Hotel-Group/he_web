@@ -9,5 +9,14 @@
   "nav.tours": "Tours",
   "nav.booking": "Reservar Ahora",
   "home.greeting": "¡Hola, Mundo!",
-  "footer.rights": "Todos los derechos reservados."
+  "footer.rights": "Todos los derechos reservados.",
+  "booking.search": "Reservar",
+  "booking.vehicle": "Voy con vehiculo",
+  "booking.breakfast": "Incluir desayuno",
+  "booking.date_placeholder": "Checkin - Checkout",
+  "booking.adults": "Adultos",
+  "booking.children": "Niños",
+  "booking.rooms": "Habitaciones",
+  "booking.dateRangePicker": "Selecciona tus fechas",
+  "booking.dateRangePlaceholder":  "Selecciona un rango de fechas"
 }

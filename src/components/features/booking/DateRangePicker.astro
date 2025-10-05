@@ -1,56 +1,104 @@
 ---
-// DEBUGGING VERSION of DateRangePicker.astro
 interface Props {
     t: (key: string) => string;
+    lang?: string; // 'en' o 'es'
 }
-const {t} = Astro.props;
+
+const { t, lang = 'es' } = Astro.props;
 ---
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"
+/>
+
+<style>
+    #date-range-picker {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+</style>
 
 <div class="relative w-full">
+    <label for="date-range-picker" class="block mb-1 text-sm font-medium text-gray-700">
+        {t('booking.dateRangePicker')}
+    </label>
     <input
-            id="debug-date-picker"
+            id="date-range-picker"
             type="text"
-            placeholder="Click me for debugging!"
-            readonly
-            class="w-full p-2 border rounded-md cursor-pointer"
+            data-lang={lang}
+    placeholder={t('booking.dateRangePlaceholder') || "Select a date range"}
+    readonly
+    class="w-full p-2 border rounded-md cursor-pointer"
     />
 </div>
 
 <script>
     import flatpickr from "flatpickr";
+    import "flatpickr/dist/l10n/es.js";
 
-    function runDatePicker() {
+    function runDatePicker(input) {
+        console.log("Running date picker",input);
+        const lang = input.dataset.lang || "es";
+        console.log("lang",lang);
+        flatpickr(input, {
+            mode: "range",
+            minDate: "today",
+            dateFormat: "Y/m/d",
+            locale: lang === "es" ? flatpickr.l10ns.es : flatpickr.l10ns.default,
 
-        const input = document.getElementById("debug-date-picker");
+            onChange: function (selectedDates, dateStr, instance) {
+                console.log("onChange");
+                if (selectedDates.length === 0) {
+                    input.value = "";
+                    input.removeAttribute("title");
+                    return;
+                }
 
-        if (!input) {
-            return;
-        }
+                const formatDate = (d) => {
+                    const y = d.getFullYear();
+                    const m = String(d.getMonth() + 1).padStart(2, "0");
+                    const day = String(d.getDate()).padStart(2, "0");
+                    return `${y}/${m}/${day}`;
+                };
 
-        if (input._flatpickr) {
-            return;
-        }
+                if (selectedDates.length === 1) {
+                    input.value = formatDate(selectedDates[0]);
+                    input.title = input.value;
+                }
 
+                if (selectedDates.length === 2) {
+                    const [start, end] = selectedDates;
 
-        try {
-            flatpickr(input, {
-                mode: 'range',
-                numberOfMonths: 2,
-                appendTo: document.body,
-            });
-            alert("DEBUG: Step 4 - SUCCESS! Flatpickr initialized. The calendar should open now when you click the input.");
-        } catch (e) {
-            alert(`DEBUG ERROR: Step 4 - An error occurred during flatpickr initialization: ${e.message}`);
-        }
+                    if (start.toDateString() === end.toDateString()) {
+                        instance.clear();
+                        const message =
+                            lang === "es"
+                                ? "Debes seleccionar al menos 2 días diferentes."
+                                : "You must select at least 2 different days.";
+                        alert(message);
+                        return;
+                    }
+
+                    const nights = Math.round((end - start) / (1000 * 60 * 60 * 24));
+
+                    const nightsLabel =
+                        lang === "es"
+                            ? `${nights} ${nights === 1 ? "noche" : "noches"}`
+                            : `${nights} ${nights === 1 ? "night" : "nights"}`;
+
+                    const text = `${formatDate(start)} -> ${formatDate(end)} (${nightsLabel})`;
+
+                    input.value = text;
+                    input.title = text;
+                }
+            },
+        });
     }
 
-    document.addEventListener('astro:page-load', () => {
-        runDatePicker();
-    });
-
-    document.addEventListener('DOMContentLoaded', () => {
-        runDatePicker();
+    document.addEventListener("DOMContentLoaded", () => {
+        const input = document.getElementById("date-range-picker");
+        if (input) runDatePicker(input);
     });
 </script>

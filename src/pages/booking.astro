@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { useTranslations } from '../i18n/translation';
-import BookingForm from '../components/features/booking/BookingForm.jsx';
+import BookingBar from '../components/features/booking/BookingBar.astro'; // Replaced BookingForm with BookingBar
 
 const lang = Astro.cookies.get('lang')?.value || 'es';
 const t = useTranslations(lang);
@@ -13,6 +13,11 @@ const t = useTranslations(lang);
     <p class="text-lg text-center mb-8">
       Completa el siguiente formulario para reservar tu estancia.
     </p>
-    <BookingForm client:load />
+    
+    {/* Container to set the width to 80% and center it */}
+    <div class="w-4/5 mx-auto">
+      <BookingBar t={t} />
+    </div>
+
   </div>
 </BaseLayout>

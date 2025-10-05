@@ -3,7 +3,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { useTranslations } from '../../i18n/translation';
 import { fetchData } from '../../utils/apiService.js';
-import VisualResource from '../../components/ui/VisualResource.astro';
+import VisualResource from '../../components/molecules/media/VisualResource.astro';
 
 export async function getStaticPaths() {
   const rooms = await fetchData('rooms');

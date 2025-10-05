@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { useTranslations } from '../i18n/translation';
-import BookingBar from '../components/features/booking/BookingBar.astro'; // Replaced BookingForm with BookingBar
+import BookingBar from '../components/organisms/booking/BookingBar.astro'; // Replaced BookingForm with BookingBar
 
 const lang = Astro.cookies.get('lang')?.value || 'es';
 const t = useTranslations(lang);

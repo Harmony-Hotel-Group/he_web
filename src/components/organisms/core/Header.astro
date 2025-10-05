@@ -1,0 +1,196 @@
+---
+import LanguageSwitcher from '../../molecules/controls/LanguageSwitcher.jsx';
+import CurrencySwitcher from '../../molecules/controls/CurrencySwitcher.jsx';
+import { fetchData } from "../../utils/apiService";
+
+interface Props {
+    t: (key: string) => string;
+    config?: any; // Assuming config structure
+    lang: string;
+}
+
+const {t, config, lang} = Astro.props;
+---
+
+<header class="absolute top-0 left-0 right-0 z-50 text-background"> {/* text-white -> text-background */}
+    <nav class="container mx-auto flex justify-between items-center p-4">
+        <!-- Left: Logo -->
+        <div class="flex-shrink-0">
+            <a href="/" class="flex items-center space-x-2">
+                <img src="/favicon.png" alt="MiLogo" class="h-14 w-auto"/>
+            </a>
+        </div>
+
+        <!-- Center: Navigation Links (Desktop) -->
+        <div class="hidden sm:flex justify-center items-center space-x-3"> 
+            <!-- Rooms Dropdown Container -->
+            <div id="rooms-nav-container" class="relative">
+                <a href="/rooms" class="px-3 py-2 hover:text-accent transition-colors flex items-center"> {/* hover:text-gray-300 -> hover:text-accent */}
+                    {t('nav.rooms')}
+                    <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </a>
+                <!-- Dropdown Menu -->
+                {config?.roomTypes && (
+                        <div id="rooms-dropdown"
+                             class="absolute left-0 top-full w-48 bg-primary rounded-md shadow-lg z-50 hidden"> {/* bg-gray-700 -> bg-primary */}
+                            {config.roomTypes.map(roomType => (
+                                    <a href={`/rooms/${roomType.id}`}
+                                       class="block px-4 py-2 text-sm text-background hover:bg-accent hover:text-primary"> {/* text-white -> text-background, hover colors updated */}
+                                        {roomType.name[lang]}
+                                    </a>
+                            ))}
+                        </div>
+                )}
+            </div>
+
+            <!-- Destinations Dropdown Container -->
+            <div id="destinations-nav-container" class="relative">
+                <a href="/destinations" class="px-3 py-2 hover:text-accent transition-colors flex items-center">
+                    {t('nav.destinations')}
+                    <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </a>
+                {config?.destinationCategories && (
+                        <div id="destinations-dropdown"
+                             class="absolute left-0 top-full w-48 bg-primary rounded-md shadow-lg z-50 hidden">
+                            {config.destinationCategories.map(category => (
+                                    <a href={`/destinations/${category.id}`}
+                                       class="block px-4 py-2 text-sm text-background hover:bg-accent hover:text-primary">
+                                        {category.name[lang]}
+                                    </a>
+                            ))}
+                        </div>
+                )}
+            </div>
+
+            <!-- Gastronomy Dropdown Container -->
+            <div id="gastronomy-nav-container" class="relative">
+                <a href="/gastronomy" class="px-3 py-2 hover:text-accent transition-colors flex items-center">
+                    {t('nav.gastronomy')}
+                    <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </a>
+                {config?.gastronomyCategories && (
+                        <div id="gastronomy-dropdown"
+                             class="absolute left-0 top-full w-48 bg-primary rounded-md shadow-lg z-50 hidden">
+                            {config.gastronomyCategories.map(category => (
+                                    <a href={`/gastronomy/${category.id}`}
+                                       class="block px-4 py-2 text-sm text-background hover:bg-accent hover:text-primary">
+                                        {category.name[lang]}
+                                    </a>
+                            ))}
+                        </div>
+                )}
+            </div>
+
+            <!-- Tours Dropdown Container -->
+            <div id="tours-nav-container" class="relative">
+                <a href="/tours" class="px-3 py-2 hover:text-accent transition-colors flex items-center">
+                    {t('nav.tours')}
+                    <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </a>
+                {config?.tourCategories && (
+                        <div id="tours-dropdown"
+                             class="absolute left-0 top-full w-48 bg-primary rounded-md shadow-lg z-50 hidden">
+                            {config.tourCategories.map(category => (
+                                    <a href={`/tours/${category.id}`}
+                                       class="block px-4 py-2 text-sm text-background hover:bg-accent hover:text-primary">
+                                        {category.name[lang]}
+                                    </a>
+                            ))}
+                        </div>
+                )}
+            </div>
+
+            <a href="/about" class="px-3 py-2 hover:text-accent transition-colors">{t('nav.about')}</a>
+            <a href="/contact" class="px-3 py-2 hover:text-accent transition-colors">{t('nav.contact')}</a>
+        </div>
+
+        <!-- Right: Controls and Hamburger Button -->
+        <div class="flex items-center space-x-4">
+            <LanguageSwitcher client:load class="mr-2"/>
+            <CurrencySwitcher client:load/>
+            <a href="/booking"
+               class="bg-accent text-primary font-bold py-2 px-4 rounded-lg transition-opacity hover:opacity-90 hidden sm:block"> {/* Updated colors */}
+                {t('nav.booking')}
+            </a>
+            <button id="mobile-menu-button" class="text-background focus:outline-none sm:hidden"> {/* text-white -> text-background */}
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                     xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile menu container -->
+    <div id="mobile-menu"
+         class="hidden sm:hidden bg-primary bg-opacity-95 absolute top-full left-0 right-0 py-4 text-center"> {/* Updated colors */}
+        <div class="flex flex-col space-y-2">
+            <a href="/rooms" class="block px-4 py-2 text-background hover:bg-accent hover:text-primary transition-colors">{t('nav.rooms')}</a>
+            <a href="/destinations"
+               class="block px-4 py-2 text-background hover:bg-accent hover:text-primary transition-colors">{t('nav.destinations')}</a>
+            <a href="/gastronomy"
+               class="block px-4 py-2 text-background hover:bg-accent hover:text-primary transition-colors">{t('nav.gastronomy')}</a>
+            <a href="/tours" class="block px-4 py-2 text-background hover:bg-accent hover:text-primary transition-colors">{t('nav.tours')}</a>
+            <a href="/about" class="block px-4 py-2 text-background hover:bg-accent hover:text-primary transition-colors">{t('nav.about')}</a>
+            <a href="/contact"
+               class="block px-4 py-2 text-background hover:bg-accent hover:text-primary transition-colors">{t('nav.contact')}</a>
+            <a href="/booking"
+               class="block bg-accent text-primary font-bold py-2 px-4 rounded-lg transition-opacity hover:opacity-90 mx-4 mt-2">
+                {t('nav.booking')}
+            </a>
+        </div>
+    </div>
+</header>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Hamburger menu logic
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (mobileMenuButton && mobileMenu) {
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+
+        // Generic dropdown logic function
+        function setupDropdown(containerId, dropdownId) {
+            const container = document.getElementById(containerId);
+            const dropdown = document.getElementById(dropdownId);
+            let leaveTimeout; // Variable para almacenar el ID del timeout
+
+            if (container && dropdown) {
+                container.addEventListener('mouseenter', () => {
+                    clearTimeout(leaveTimeout); // Limpiar cualquier acción de ocultar pendiente
+                    dropdown.classList.remove('hidden');
+                });
+
+                container.addEventListener('mouseleave', () => {
+                    // Añadir un pequeño retardo antes de ocultar el menú desplegable
+                    leaveTimeout = setTimeout(() => {
+                        dropdown.classList.add('hidden');
+                    }, 200); // Retardo de 200ms
+                });
+            }
+        }
+
+        // Setup dropdowns
+        setupDropdown('rooms-nav-container', 'rooms-dropdown');
+        setupDropdown('destinations-nav-container', 'destinations-dropdown');
+        setupDropdown('gastronomy-nav-container', 'gastronomy-dropdown');
+        setupDropdown('tours-nav-container', 'tours-dropdown');
+    });
+</script>

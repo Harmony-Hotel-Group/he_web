@@ -1,11 +1,11 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { useTranslations } from '../i18n/translation';
-import VisualCarousel from '../components/features/carousel/VisualCarousel.astro';
+import VisualCarousel from '../components/organisms/carousel/VisualCarousel.astro';
 import { fetchData } from "../utils/apiService";
-import InfoCard from '../components/ui/InfoCard.astro';
-import PhotoCollage from '../components/ui/PhotoCollage.astro';
-import BookingBar from '../components/features/booking/BookingBar.astro';
+import InfoCard from '../components/molecules/cards/InfoCard.astro';
+import PhotoCollage from '../components/organisms/collage/PhotoCollage.astro';
+import BookingBar from '../components/organisms/booking/BookingBar.astro';
 
 const lang = Astro.cookies.get('lang')?.value || 'es';
 const t = useTranslations(lang);

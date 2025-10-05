@@ -5,14 +5,13 @@ import VisualCarousel from '../components/features/carousel/VisualCarousel.astro
 import { fetchData } from "../utils/apiService";
 import InfoCard from '../components/ui/InfoCard.astro';
 import PhotoCollage from '../components/ui/PhotoCollage.astro';
-import BookingBar from '../components/features/booking/BookingBar.astro'; // Import the new BookingBar
+import BookingBar from '../components/features/booking/BookingBar.astro';
 
 const lang = Astro.cookies.get('lang')?.value || 'es';
 const t = useTranslations(lang);
 
 const dataConfig = await fetchData('config');
 const carouselResources = dataConfig?.carouselResources || [];
-
 ---
 
 <BaseLayout titleKey="site.title" lang={lang} config={dataConfig}>

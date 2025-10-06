@@ -9,14 +9,18 @@ export const translations = {
     es: es,
 };
 
-export function Translations(lang) {
+export function Translations(lang: string) {
     // Set the default language to 'es' if the selected lang is not available
     const langWithFallback = lang in translations ? lang : defaultLang;
     // Now, the translationFile directly holds the content of en.json or es.json
     const translationFile = translations[langWithFallback];
 
-    return function t(key, params?: Record<string, string | number>) {
-        // Acceder a traducciones anidadas usando notación de corchetes
+    return function t(key: string, params?: Record<string, string | number>) {
+        if (key===null || key === undefined){
+            console.error("Key is null or undefined", key)
+            return key
+        }
+        console.log(key, typeof(key))
         const keys = key.split(".");
         let result: TranslationObject | undefined = translationFile;
 

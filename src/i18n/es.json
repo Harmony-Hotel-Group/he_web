@@ -7,9 +7,14 @@
   "nav.destinations": "Destinos",
   "nav.gastronomy": "Gastronomía",
   "nav.tours": "Tours",
-  "nav.booking": "Reservar Ahora",
+  "nav": {
+    "booking": "Reservar Ahora"
+  },
   "home.greeting": "¡Hola, Mundo!",
   "footer.rights": "Todos los derechos reservados.",
+  "booking": {
+    "search": "Realizar una reserva"
+  },
   "booking.search": "Reservar",
   "booking.vehicle": "Voy con vehiculo",
   "booking.breakfast": "Incluir desayuno",

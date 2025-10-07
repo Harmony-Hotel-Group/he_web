@@ -20,7 +20,6 @@ export function Translations(lang: string) {
             console.error("Key is null or undefined", key)
             return key
         }
-        console.log(key, typeof(key))
         const keys = key.split(".");
         let result: TranslationObject | undefined = translationFile;
 

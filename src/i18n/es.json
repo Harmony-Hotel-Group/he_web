@@ -12,6 +12,15 @@
     "tours": "Tours",
     "booking": "Reservar Ahora"
   },
+  "components": {
+    "placeholders": {
+      "dateRangePicker": "Selecciona un rango de fechas"
+    },
+    "errors": {
+      "dateRangePicker": "Falta seleccionar un rango de fechas"
+    }
+  },
+
   "footer": {
     "rights": "Todos los derechos reservados."
   },

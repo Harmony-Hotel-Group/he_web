@@ -1,20 +1,21 @@
 ---
+import { Translations } from "~/i18n/translation.ts";
+
 interface Props {
     forId: string;
-    t: (key: string) => string;
-    lang?: string; // 'en' o 'es'
+    lang?: string;
+    name?: string;
 }
 
-const { t , lang = 'es', forId} = Astro.props;
+const {lang, forId, name} = Astro.props;
+const t = Translations(lang);
+console.log("DateRangePicker.astro Completely loaded");
 ---
 
-<link
-        rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"
-/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
 
 <style>
-    #date-range-picker {
+    .date-range-picker-input {
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -24,30 +25,34 @@ const { t , lang = 'es', forId} = Astro.props;
 <div class="relative w-full">
     <input
             id={forId}
+            name={name}
             type="text"
             data-lang={lang}
-    placeholder={t('booking.dateRangePlaceholder') || "Select a date range"}
-    readonly
-    class="w-full p-2 border rounded-md cursor-pointer"
+            data-for-id={forId}
+            placeholder=`${t('components.placeholders.dateRangePicker')}`
+            readonly
+            class="w-full p-2 border rounded-md cursor-pointer date-range-picker-input"
     />
+    <span id=`error_${forId}` class="hidden text-red-700">{t("components.errors.dateRangePicker")} *</span>
 </div>
 
 <script>
     import flatpickr from "flatpickr";
     import "flatpickr/dist/l10n/es.js";
+    import { defaultLang, Translations } from "~/i18n/translation.ts";
 
     function runDatePicker(input) {
-        console.log("Running date picker",input);
-        const lang = input.dataset.lang || "es";
-        console.log("lang",lang);
+        const lang = input.dataset.lang || defaultLang;
+        const t = Translations(lang);
+
         flatpickr(input, {
             mode: "range",
             minDate: "today",
             dateFormat: "Y/m/d",
-            locale: lang === "es" ? flatpickr.l10ns.es : flatpickr.l10ns.default,
+            // locale: lang === "es" ? flatpickr.l10ns.es : flatpickr.l10ns.default,
+            locale: flatpickr.l10ns[lang] ?? flatpickr.l10ns.default,
 
             onChange: function (selectedDates, dateStr, instance) {
-                console.log("onChange");
                 if (selectedDates.length === 0) {
                     input.value = "";
                     input.removeAttribute("title");
@@ -65,7 +70,6 @@ const { t , lang = 'es', forId} = Astro.props;
                     input.value = formatDate(selectedDates[0]);
                     input.title = input.value;
                 }
-
                 if (selectedDates.length === 2) {
                     const [start, end] = selectedDates;
 
@@ -86,7 +90,7 @@ const { t , lang = 'es', forId} = Astro.props;
                             ? `${nights} ${nights === 1 ? "noche" : "noches"}`
                             : `${nights} ${nights === 1 ? "night" : "nights"}`;
 
-                    const text = `${formatDate(start)} -> ${formatDate(end)} (${nightsLabel})`;
+                    const text = `${formatDate(start)} ➜ ${formatDate(end)} (${nightsLabel})`;
 
                     input.value = text;
                     input.title = text;
@@ -96,7 +100,10 @@ const { t , lang = 'es', forId} = Astro.props;
     }
 
     document.addEventListener("DOMContentLoaded", () => {
-        const input = document.getElementById("date-range-picker");
-        if (input) runDatePicker(input);
+        const inputs = document.querySelectorAll('input[data-for-id]');
+        inputs.forEach(input => {
+            console.log("input", input);
+            runDatePicker(input);
+        });
     });
 </script>

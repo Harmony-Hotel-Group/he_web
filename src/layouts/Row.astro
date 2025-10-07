@@ -3,6 +3,7 @@ interface Props {
     _id?: string;
     class?: string;
     alignX?: "start" | "center" | "end";
+    alignY?: "start" | "center" | "end" | "stretch"; // Nueva prop
     gap?: string;
     wrap?: boolean;
 }
@@ -11,6 +12,7 @@ const {
     _id,
     class: className = "",
     alignX = "start",
+    alignY = "center", // Valor por defecto centrado
     gap = "gap-2",
     wrap = false,
 } = Astro.props;
@@ -22,6 +24,15 @@ const justifyClass =
             ? "justify-end"
             : "justify-start";
 
+const itemsClass =
+    alignY === "start"
+        ? "items-start"
+        : alignY === "end"
+            ? "items-end"
+            : alignY === "stretch"
+                ? "items-stretch"
+                : "items-center";
+
 const wrapClass = wrap ? "flex-wrap" : "flex-nowrap";
 ---
 
@@ -30,12 +41,11 @@ const wrapClass = wrap ? "flex-wrap" : "flex-nowrap";
         class:list={[
             "flex flex-row",
             justifyClass,
+            itemsClass,
             wrapClass,
             gap,
             className,
         ]}
 >
-
-        <slot/>
-
+    <slot/>
 </div>

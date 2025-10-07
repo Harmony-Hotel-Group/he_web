@@ -1,4 +1,5 @@
 ---
+// src/components/atoms/Label.astro
 import { Translations, defaultLang } from "~/i18n/translation.ts";
 
 interface Props {
@@ -6,10 +7,10 @@ interface Props {
     forId: string;
     lblKey: string;
     lang?: string;
-    className?: string;
-    direction?: "vertical" | "horizontal"; // Dirección del layout
-    alignX?: "start" | "center" | "end";   // Alineación horizontal dentro del label
-    alignY?: "start" | "center" | "end";   // Alineación vertical dentro del label
+    classes?: string;
+    direction?: "vertical" | "horizontal";
+    alignX?: "start" | "center" | "end";
+    alignY?: "start" | "center" | "end";
 }
 
 const {
@@ -17,7 +18,7 @@ const {
     forId,
     lblKey,
     lang = defaultLang,
-    className = "",
+    classes = "",
     direction = "horizontal",
     alignX = "start",
     alignY = "center",
@@ -45,11 +46,11 @@ const verticalAlignClass =
 <label
         for={forId}
         class:list={[
-            "flex text-sm font-medium text-primary cursor-pointer",
+            "flex text-sm font-medium text-primary cursor-pointer mb-0",
             directionClass,
             horizontalAlignClass,
             verticalAlignClass,
-            className,
+            classes,
         ]}
 >
     {t(lblKey)}

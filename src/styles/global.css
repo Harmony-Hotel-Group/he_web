@@ -4,18 +4,22 @@
 
 /* src/styles/global.css */
 body {
-  @apply bg-background text-primary;
-  font-family: sans-serif;
+    @apply bg-background text-primary;
+    font-family: Arial, Helvetica, sans-serif;
+    /*font-family: sans-serif;*/
 }
 
 /* Custom styles for react-day-picker */
 :root {
-  --rdp-cell-size: 40px;
-  --rdp-accent-color: #BF953D; /* Dorado Antiguo */
-  --rdp-background-color: #29333B; /* Azul Marino Oscuro */
-  --rdp-selected-color: #EAEAEA; /* Gris Claro/Beige for text on selected days */
+    --rdp-cell-size: 40px;
+    --rdp-accent-color: #BF953D; /* Dorado Antiguo */
+    --rdp-background-color: #29333B; /* Azul Marino Oscuro */
+    --rdp-selected-color: #EAEAEA; /* Gris Claro/Beige for text on selected days */
+
+    --primary: 42 70% 50%; /* Gold */
+    --primary-foreground: 30 80% 10%; /* Dark brown/black for text on gold */
 }
 
 .rdp-button:hover:not([disabled]):not(.rdp-day_selected) {
-  background-color: #BF953D20; /* A lighter shade of accent for hover */
+    background-color: #BF953D20; /* A lighter shade of accent for hover */
 }

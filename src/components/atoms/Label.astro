@@ -1,25 +1,57 @@
 ---
 import { Translations, defaultLang } from "~/i18n/translation.ts";
 
-// src/components/atoms/Label.astro
 interface Props {
-    _id?:string
+    _id?: string;
     forId: string;
     lblKey: string;
     lang?: string;
     className?: string;
+    direction?: "vertical" | "horizontal"; // Dirección del layout
+    alignX?: "start" | "center" | "end";   // Alineación horizontal dentro del label
+    alignY?: "start" | "center" | "end";   // Alineación vertical dentro del label
 }
 
 const {
     _id,
+    forId,
     lblKey,
     lang = defaultLang,
-    className
+    className = "",
+    direction = "horizontal",
+    alignX = "start",
+    alignY = "center",
 } = Astro.props;
 
 const t = Translations(lang);
+
+// Construcción dinámica de clases usando flexbox
+const directionClass = direction === "horizontal" ? "flex-row space-x-2" : "flex-col";
+const horizontalAlignClass =
+    alignX === "center"
+        ? "justify-center"
+        : alignX === "end"
+            ? "justify-end"
+            : "justify-start";
+
+const verticalAlignClass =
+    alignY === "center"
+        ? "items-center"
+        : alignY === "end"
+            ? "items-end"
+            : "items-start";
 ---
 
-<label for={_id} class:list={['block text-sm font-medium text-primary', className]}>
-    {t(lblKey)}<span class="text-red-500 ml-1">*</span>
+<label
+        for={forId}
+        class:list={[
+            "flex text-sm font-medium text-primary cursor-pointer",
+            directionClass,
+            horizontalAlignClass,
+            verticalAlignClass,
+            className,
+        ]}
+>
+    {t(lblKey)}
+    <span class="text-red-500 ml-1">*</span>
 </label>

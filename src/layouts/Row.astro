@@ -1,0 +1,41 @@
+---
+interface Props {
+    _id?: string;
+    class?: string;
+    alignX?: "start" | "center" | "end";
+    gap?: string;
+    wrap?: boolean;
+}
+
+const {
+    _id,
+    class: className = "",
+    alignX = "start",
+    gap = "gap-2",
+    wrap = false,
+} = Astro.props;
+
+const justifyClass =
+    alignX === "center"
+        ? "justify-center"
+        : alignX === "end"
+            ? "justify-end"
+            : "justify-start";
+
+const wrapClass = wrap ? "flex-wrap" : "flex-nowrap";
+---
+
+<div
+        id={_id}
+        class:list={[
+            "flex flex-row",
+            justifyClass,
+            wrapClass,
+            gap,
+            className,
+        ]}
+>
+
+        <slot/>
+
+</div>

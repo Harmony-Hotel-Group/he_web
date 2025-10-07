@@ -1,0 +1,13 @@
+---
+// src/components/atoms/Icon.astro
+import { Icon } from 'astro-icon/components'
+
+interface Props {
+    name: string;
+    lang?: string
+}
+
+const {lang, name} = Astro.props;
+---
+
+<Icon name={name} class="w-6 h-6 p-1 m-1" />

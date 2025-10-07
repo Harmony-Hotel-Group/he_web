@@ -2,10 +2,10 @@
 import Header from '../components/organisms/core/Header.astro';
 import Footer from '../components/organisms/core/Footer.astro';
 import '../styles/global.css';
-import { useTranslations } from '../i18n/translation';
+import { Translations } from '../i18n/translation.ts';
 
 const { titleKey, lang, config } = Astro.props;
-const t = useTranslations(lang);
+const t = Translations(lang);
 const title = t(titleKey);
 ---
 

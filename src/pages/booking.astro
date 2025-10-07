@@ -1,10 +1,10 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { useTranslations } from '../i18n/translation';
+import { Translations } from '../i18n/translation.ts';
 import BookingBar from '../components/organisms/booking/BookingBar.astro'; // Replaced BookingForm with BookingBar
 
 const lang = Astro.cookies.get('lang')?.value || 'es';
-const t = useTranslations(lang);
+const t = Translations(lang);
 ---
 
 <BaseLayout titleKey="nav.booking" lang={lang}>

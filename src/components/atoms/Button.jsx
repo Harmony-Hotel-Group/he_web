@@ -1,0 +1,42 @@
+import { h } from 'preact';
+
+export default function Button({
+  label,
+  type = 'button',
+  onClick,
+  disabled = false,
+  className,
+  variant = 'accent'
+}) {
+  let baseClasses = 'inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 transition-colors duration-200';
+
+  switch (variant) {
+    case 'primary':
+      baseClasses += ' bg-primary text-background hover:bg-primary/90 focus:ring-primary';
+      break;
+    case 'accent':
+      baseClasses += ' bg-accent text-primary hover:bg-accent/90 focus:ring-accent';
+      break;
+    case 'outline':
+      baseClasses += ' border-primary text-primary hover:bg-primary/10 focus:ring-primary';
+      break;
+    case 'ghost':
+      baseClasses += ' text-primary hover:bg-primary/10 focus:ring-primary';
+      break;
+  }
+
+  if (disabled) {
+    baseClasses += ' opacity-50 cursor-not-allowed';
+  }
+
+  return (
+    <button
+      type={type}
+      onClick={onClick}
+      disabled={disabled}
+      className={`${baseClasses} ${className || ''}`}
+    >
+      {label}
+    </button>
+  );
+}

@@ -1,0 +1,28 @@
+---
+// src/components/molecules/forms/DatePickerForm.astro
+import DateRangePicker from '../../organisms/booking/DateRangePicker.astro';
+import Label from '../../atoms/Label.astro';
+
+interface Props {
+    _id?: string;
+    lblKey: string;
+    lang: string;
+    className?: string;
+}
+
+const {_id, lblKey, lang, className} = Astro.props;
+
+// The DateRangePicker has a known internal ID that we can link to for accessibility.
+const datePickerId = _id ? _id : 'date-range-picker';
+---
+
+<div class:list={["flex flex-col", className]}>
+    <Label
+            forId={datePickerId}
+            lblKey={lblKey}
+            lang={lang}
+            className="font-bold mb-2"
+    />
+
+    <DateRangePicker lang={lang}/>
+</div>

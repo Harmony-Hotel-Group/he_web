@@ -2,13 +2,12 @@
 // src/pages/test-ui.astro
 import BaseLayout from '../layouts/BaseLayout.astro';
 import BookingForm from '../components/organisms/booking/BookingForm.astro';
-import { useTranslations } from '../i18n/translation';
-import { fetchData } from "../utils/apiService";
+
+import { fetchData } from "~/utils/apiService";
 
 const lang = Astro.cookies.get('lang')?.value || 'es';
-const t = useTranslations(lang);
 
-// Fetch config data to pass to the layout
+// Fetch config data to pass to the layout and BookingForm
 const dataConfig = await fetchData('config');
 ---
 
@@ -18,7 +17,7 @@ const dataConfig = await fetchData('config');
     <p class="text-center text-gray-600 mb-12">This page is for testing the booking form with Zod validation.</p>
 
     <div class="max-w-2xl mx-auto">
-      <BookingForm t={t} lang={lang} />
+      <BookingForm lang={lang} config={dataConfig} />
     </div>
 
   </div>

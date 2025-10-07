@@ -1,12 +1,12 @@
 ---
 // src/pages/rooms.astro
 import BaseLayout from '../../../layouts/BaseLayout.js';
-import { useTranslations } from '../../i18n/translation';
+import { Translations } from '../../i18n/translation.ts';
 import { fetchData } from '../../utils/apiService.js';
 import VisualResource from '../../components/ui/VisualResource.js';
 
 const lang = Astro.cookies.get('lang')?.value || 'es';
-const t = useTranslations(lang);
+const t = Translations(lang);
 
 const rooms = await fetchData('rooms');
 ---

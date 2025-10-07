@@ -1,7 +1,7 @@
 ---
 // src/pages/rooms/[id].astro
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { useTranslations } from '../../i18n/translation';
+import { Translations } from '../../i18n/translation.ts';
 import { fetchData } from '../../utils/apiService.js';
 import VisualResource from '../../components/ui/VisualResource.astro';
 
@@ -14,7 +14,7 @@ export async function getStaticPaths() {
 }
 
 const lang = Astro.cookies.get('lang')?.value || 'es';
-const t = useTranslations(lang);
+const t = Translations(lang);
 
 const { id } = Astro.params;
 const { room } = Astro.props;

@@ -1,9 +1,9 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { useTranslations } from '../i18n/translation';
+import { Translations } from '../i18n/translation.ts';
 
 const lang = Astro.cookies.get('lang')?.value || 'es';
-const t = useTranslations(lang);
+const t = Translations(lang);
 ---
 
 <BaseLayout titleKey="nav.destinations" lang={lang}>

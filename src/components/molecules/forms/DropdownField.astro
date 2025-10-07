@@ -1,6 +1,6 @@
 ---
 // src/components/molecules/forms/DropdownField.astro
-import Label from '../../atoms/Label.astro';
+import Label from '../../atoms/Label.astro'; // Changed from .astro to .jsx
 import Select from '../../atoms/Select.astro';
 
 interface Props {
@@ -11,12 +11,22 @@ interface Props {
   required?: boolean;
   className?: string;
   t: (key: string) => string;
+  onChange?: (value: string | number) => void; // Add onChange prop
+  initialValue?: string | number; // Add initialValue prop
 }
 
-const { label, name, id = name, options, required, className, t } = Astro.props;
+const { label, name, id = name, options, required, className, t, onChange, initialValue } = Astro.props;
 ---
 
 <div class:list={["flex flex-col", className]}>
-  <Label for={id} t={t} textKey={label} required={required} />
-  <Select id={id} name={name} options={options} required={required} />
+  <Label for={id} t={t} textKey={label} required={required} client:load /> {/* Add client:load for the Preact component */}
+  <Select 
+    id={id} 
+    name={name} 
+    options={options} 
+    required={required} 
+    client:load 
+    onChange={onChange}
+    initialValue={initialValue}
+  />
 </div>

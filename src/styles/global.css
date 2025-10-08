@@ -18,6 +18,8 @@ body {
 
     --primary: 42 70% 50%; /* Gold */
     --primary-foreground: 30 80% 10%; /* Dark brown/black for text on gold */
+
+    --secondary: #29333B;
 }
 
 .rdp-button:hover:not([disabled]):not(.rdp-day_selected) {

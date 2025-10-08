@@ -9,7 +9,6 @@ interface Props {
     className?: string;
     size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl';
     color?: 'primary' | 'secondary' | 'white' | 'black' | 'gray' | 'current';
-    customColor?: string; // Para colores personalizados
     noPadding?: boolean;
     noMargin?: boolean;
 }
@@ -21,12 +20,11 @@ const {
     className = "",
     size = 'md',
     color = 'primary',
-    customColor,
     noPadding = false,
     noMargin = false
 } = Astro.props;
 
-// Mapeo de tamaños
+// Tamaños
 const sizeClasses = {
     'xs': 'w-3 h-3',
     'sm': 'w-4 h-4',
@@ -36,15 +34,6 @@ const sizeClasses = {
     '2xl': 'w-12 h-12'
 };
 
-// Mapeo de colores (ajusta según tu paleta de colores)
-const colorClasses = {
-    'primary': 'text-primary-600', // Ajusta según tu color primario
-    'secondary': 'text-secondary-600',
-    'white': 'text-white',
-    'black': 'text-black',
-    'gray': 'text-gray-600',
-    'current': 'text-current'
-};
 
 const paddingClass = noPadding ? '' : 'p-1';
 const marginClass = noMargin ? '' : 'm-1';
@@ -57,8 +46,7 @@ const marginClass = noMargin ? '' : 'm-1';
             sizeClasses[size],
             paddingClass,
             marginClass,
-            className
+            className,
         ]}
-        color='primary'
-        style={customColor ? `color: ${customColor}` : undefined}
+        color='#BF953D'
 />

@@ -19,12 +19,12 @@ const {fieldId = 'date-range-picker', name, lblKey, lang, className} = Astro.pro
 
 <div class:list={["flex flex-col", className]}>
     <Row class="items-end">
-        <Icono name="calendar" classes="text-primary"/>
+        <Icono name="calendar"/>
         <Label
                 forId={fieldId}
                 lblKey={lblKey}
                 lang={lang}
-                classes="font-bold mb-2"
+                classes="font-bold"
         />
     </Row>
 

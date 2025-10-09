@@ -33,11 +33,11 @@
   },
   "contactInfo": {
     "address": {
-      "es": "Calle Falsa 123, Ciudad, País",
-      "en": "123 Fake Street, City, Country"
+      "es": "Gran Colombia 182 y Manuel Vega, Cuenca, Ecuador",
+      "en": "Gran Colombia 182 y Manuel Vega, Cuenca, Ecuador"
     },
-    "phone": "+123456789",
-    "email": "info@mihotel.com",
+    "whatsapp": "+593978888020",
+    "email": "reservas@hotelensueños.com",
     "socialLinks": {
       "facebook": "https://facebook.com/mihotel",
       "instagram": "https://instagram.com/mihotel",

@@ -1,7 +1,7 @@
 ---
 // src/components/molecules/forms/DatePickerField.astro
+import { Translations, defaultLang } from '~/i18n/translation.ts';
 import Row from '~/layouts/Row.astro';
-
 import DateRangePicker from '../../atoms/DateRangePicker.astro';
 import Label from '../../atoms/Label.astro';
 import Icono from '../../atoms/Icono.astro';
@@ -10,16 +10,26 @@ interface Props {
     fieldId?: string;
     name: string;
     lblKey: string;
+    icon?: string;
     lang: string;
     className?: string;
 }
 
-const {fieldId = 'date-range-picker', name, lblKey, lang, className} = Astro.props;
+const {
+    fieldId = 'date-range-picker',
+    name,
+    lblKey,
+    lang,
+    icon='calendar',
+    className
+} = Astro.props;
+
+const t = Translations(lang ?? defaultLang);
 ---
 
 <div class:list={["flex flex-col", className]}>
     <Row class="items-end">
-        <Icono name="calendar"/>
+        <Icono name={icon}/>
         <Label
                 forId={fieldId}
                 lblKey={lblKey}
@@ -27,10 +37,11 @@ const {fieldId = 'date-range-picker', name, lblKey, lang, className} = Astro.pro
                 classes="font-bold"
         />
     </Row>
-
     <DateRangePicker
-            forId={fieldId}
+            id={fieldId}
             name={name}
             lang={lang}
+            placeholder={t('booking.dateRange.placeholder')}
     />
+    <span id={`error_${fieldId}`} class="hidden text-red-700 px-4">{t('booking.dateRange.error')}</span>
 </div>

@@ -1,9 +1,14 @@
 ---
 // src/components/organisms/booking/BookingForm.astro
 import Grid from "~/layouts/GridLayout.astro"
-import DatePickerField from "../../molecules/forms/DatePickerField.astro";
+import Row from "~/layouts/Row.astro";
+
+import DatePickerField from "~/components/molecules/forms/DatePickerField.astro";
+import DropDownField from "~/components/molecules/forms/DropdownField.astro";
+import SwitchField from "~/components/molecules/forms/SwitchField.astro";
 import Button from "../../atoms/Button.astro";
 
+import { range } from "~/utils/math.ts";
 import { Translations } from "~/i18n/translation.ts";
 
 interface Props {
@@ -13,28 +18,95 @@ interface Props {
 
 const {lang, config} = Astro.props;
 
+
 const t = Translations(lang);
-console.log("BookingForm.astro Completely loaded");
+
+const adultsOptions = range(1, 9).map((i, index, array) => {
+    if (index === array.length - 1) {
+        return {
+            "value": `${i}`,
+            "label": t('booking.dropdown.optGroup')
+        }
+    }
+    return {
+        "value": `${i}`,
+        "label": `${t("booking.dropdown.optAdults", {
+            "i": i,
+            "s": i > 1 ? "s" : ""
+        })}`
+    }
+});
+
+const childrenOptions = range(0, 8).map((i, index, array) => {
+    return {
+        "value": `${i}`,
+        "label": `${t("booking.dropdown.optChildren", {
+            "i": i === 0 ? "Sin" : i,
+            "s": i === 0 ? "s" : i > 1 ? "s" : ""
+        })}`
+    }
+})
+
+const roomsOptions = range(1, 5).map((i, index, array) => {
+    return {
+        "value": `${i}`,
+        "label": `${t("booking.dropdown.optRooms", {
+            "i": i,
+            "s": i > 1 ? "es" : ""
+        })}`
+    }
+})
+
+console.log("config", config);
+
+const whatsappNumber = config?.contactInfo?.whatsapp ?? "";
+const email = config?.contactInfo?.email ?? "";
 ---
 
-<form id="booking-form" method="post" class="bg-white/20 p-6 rounded-xl shadow-lg space-y-6">
+<form id="booking-form" method="post" class="rounded-xl  space-y-3" data-whatsapp={whatsappNumber}
+      data-email={email}>
     <Grid cols="3" autoAdjust="true">
         <DatePickerField
                 fieldId="dateRange"
                 name="dateRange"
-                lblKey="booking.dateRangePicker"
+                lblKey="booking.dateRange.title"
                 lang={lang}
         />
-        <DatePickerField
-                fieldId="dateRange"
-                name="dateRange"
-                lblKey="booking.dateRangePicker"
+        <DropDownField
+                fieldId="adults"
+                name="adults"
+                initialValue={2}
+                icon="adult"
+                lblKey="booking.dropdown.lblAdults"
                 lang={lang}
+                options={adultsOptions}
+        />
+
+        <DropDownField
+                fieldId="children"
+                name="children"
+                icon="teen"
+                lblKey="booking.dropdown.lblChildren"
+                lang={lang}
+                options={childrenOptions}
+        />
+
+        <DropDownField
+                fieldId="rooms"
+                name="rooms"
+                icon="bed"
+                lblKey="booking.dropdown.lblRooms"
+                lang={lang}
+                options={roomsOptions}
         />
     </Grid>
-
+    <Row>
+        <SwitchField fieldId="breakfast" name="breakfast" lblKey="booking.switch.breakfast" lang={lang}
+                     checked></SwitchField>
+        <SwitchField fieldId="vehicle" name="vehicle" lblKey="booking.switch.vehicle" lang={lang}></SwitchField>
+    </Row>
     <div class="text-center pt-4">
-        <Button _id="btnSubmit" type="button" lblKey="booking.search" lang={lang} variant="accent"
+        <Button _id="btnSubmit" type="button" lblKey="booking.btn.search" lang={lang} variant="accent"
                 className="w-full md:w-auto px-12"/>
     </div>
 </form>
@@ -42,24 +114,78 @@ console.log("BookingForm.astro Completely loaded");
 <script>
     import { actions } from 'astro:actions';
 
-    const form: HTMLElement = document.getElementById('booking-form');
-    const btn = document.getElementById('btnSubmit');
+    document.addEventListener("DOMContentLoaded", () => {
 
-    btn?.addEventListener('click', async () => {
-        const formData = new FormData(form as HTMLFormElement);
-        console.log('Formulario enviado:', formData);
+        const form: HTMLFormElement = document.getElementById('booking-form') as HTMLFormElement;
+        const btn = document.getElementById('btnSubmit');
 
-        try {
-            const {data, error} = await actions.booking(formData);
-            console.log('Respuesta del servidor:', data);
+        const whatsappNumber = form.dataset.whatsapp;
 
-            if (error) {
-                console.error('Error en booking:', error);
-                return;
+        function updateErrorMessages(errors) {
+            if (errors.length === 0) {
+                return
             }
+            // Oculta todos los mensajes antes de mostrar los nuevos
+            const errorElements = form.querySelectorAll("[id^='error_']");
+            errorElements.forEach((el) => el.classList.add("hidden"));
 
-        } catch (err) {
-            console.error('Error inesperado:', err);
+            // Mostrar errores específicos
+            Object.keys(errors.fields)?.forEach((field) => {
+                const errorEl = document.getElementById(`error_${field}`);
+                if (errorEl) {
+                    errorEl.classList.remove("hidden");
+                }
+            });
         }
-    });
+
+        btn?.addEventListener("click", async () => {
+            const formData = new FormData(form);
+
+            try {
+                const {data, error} = await actions.booking(formData);
+
+                if (error) {
+                    // console.error("Error en booking:", error);
+                    updateErrorMessages(error);
+                    return;
+                }
+
+                // Si el servidor devuelve data.errors (Zod no lanzó excepción pero validó manualmente)
+                if (error) {
+                    updateErrorMessages(error);
+                    return;
+                }
+
+                // Si todo salió bien
+                updateErrorMessages([]);
+
+                const processing = data.processing;
+
+                const message = `
+*Estimado Hotel Ensueños por favor necesito que me ayude con una reserva con los siguentes datos:*
+
+➢ Check In: ${processing.checkin}
+➢ Check Out: ${processing.checkout}
+➢ Cantidad de Noches: ${processing.nights}
+➢ Adultos: ${processing.adults}
+➢ Niños: ${processing.children}
+➢ Habitaciones: ${processing.rooms}
+➢ Desayuno incluido: ${processing.breakfast === "true" ? "Sí" : "No"}
+➢ Voy en Vehículo: ${processing.vehicle === "true" ? "Sí" : "No"}
+
+Si hace falta alguna informacion adicional, por favor no dude en responder a este mensaje.
+`.trim();
+
+                const encodedMessage = encodeURIComponent(message);
+
+                if (whatsappNumber !== "" || whatsappNumber !== null) {
+                    window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, "_blank");
+                    window.location.reload();
+                }
+
+            } catch (err) {
+                console.error("Error inesperado:", err);
+            }
+        });
+    })
 </script>

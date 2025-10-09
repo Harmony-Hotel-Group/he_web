@@ -1,32 +1,64 @@
 ---
 // src/components/molecules/forms/DropdownField.astro
-import Label from '../../atoms/Label.astro'; // Changed from .astro to .jsx
+import { Translations, defaultLang } from "~/i18n/translation.ts";
+
+import Label from '../../atoms/Label.astro';
 import Select from '../../atoms/Select.astro';
+import Row from "~/layouts/Row.astro";
+import Icono from "~/components/atoms/Icono.astro";
 
 interface Props {
-  label: string; // This will now be treated as a translation key
-  name: string;
-  id?: string;
-  options: { value: string | number; label: string }[];
-  required?: boolean;
-  className?: string;
-  t: (key: string) => string;
-  onChange?: (value: string | number) => void; // Add onChange prop
-  initialValue?: string | number; // Add initialValue prop
+    id?: string;
+    fieldId?: string;
+
+    name: string;
+    lblKey: string;
+    icon: string;
+
+    lang: string;
+    options: { value: string | number; label: string }[];
+    required?: boolean;
+    className?: string;
+
+    onChange?: (value: string | number) => void;
+    initialValue?: number;
 }
 
-const { label, name, id = name, options, required, className, t, onChange, initialValue } = Astro.props;
+const {
+    id,
+    fieldId,
+    lblKey,
+    name,
+    icon = 'default',
+    lang,
+    options,
+    required,
+    className,
+    onChange,
+    initialValue
+} = Astro.props;
+
+const t = Translations(lang ?? defaultLang);
 ---
 
-<div class:list={["flex flex-col", className]}>
-  <Label for={id} t={t} textKey={label} required={required} client:load /> {/* Add client:load for the Preact component */}
-  <Select 
-    id={id} 
-    name={name} 
-    options={options} 
-    required={required} 
-    client:load 
-    onChange={onChange}
-    initialValue={initialValue}
-  />
+<div id={id} class:list={["flex flex-col", className]}>
+    <Row class="items-end">
+        <Icono name={icon}/>
+        <Label
+            forId={fieldId}
+            lblKey={lblKey}
+            lang={lang}
+            classes="font-bold text-black"
+        />
+    </Row>
+    <Select
+            id={fieldId}
+            name={name}
+            options={options}
+            required={required}
+            value={initialValue}
+    >
+    </Select>
+    <span id={`error_${fieldId}`} class="hidden text-red-700 px-4">{t('booking.dropdown.error')}</span>
+
 </div>

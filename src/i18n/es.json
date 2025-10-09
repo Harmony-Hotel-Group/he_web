@@ -13,27 +13,35 @@
     "booking": "Reservar Ahora"
   },
   "components": {
-    "placeholders": {
-      "dateRangePicker": "Selecciona un rango de fechas"
-    },
     "errors": {
       "dateRangePicker": "Falta seleccionar un rango de fechas"
     }
   },
-
   "footer": {
     "rights": "Todos los derechos reservados."
   },
   "booking": {
-    "search": "Realizar una reserva",
-    "vehicle": "Voy con vehiculo",
-    "breakfast": "Incluir desayuno",
-    "date_placeholder": "Checkin - Checkout",
-    "adults": "Adultos",
-    "children": "Niños",
-    "rooms": "Habitaciones",
-    "dateRangePicker": "Selecciona tus fechas",
-    "dateRangePlaceholder":  "Selecciona un rango de fechas"
+    "dropdown": {
+      "lblAdults": "Adultos",
+      "optAdults": "{{i}} Adulto{{s}}",
+      "optGroup": "Grupo",
+      "lblChildren": "Niños",
+      "optChildren": "{{i}} Niño{{s}}",
+      "lblRooms": "Habitaciones",
+      "optRooms": "{{i}} Habitación{{s}}",
+      "error": "Falta seleccionar una opción"
+    },
+    "switch": {
+      "breakfast": "Incluir Desayuno",
+      "vehicle": "Voy con vehiculo"
+    },
+    "btn": {
+      "search": "Realizar una reserva"
+    },
+    "dateRange": {
+      "title": "Selecciona tus fechas",
+      "placeholder": "Selecciona un rango de fechas",
+      "error":"No hay fecha seleccionada"
+    }
   }
-
 }

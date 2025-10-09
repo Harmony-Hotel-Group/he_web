@@ -1,54 +1,59 @@
 ---
 // src/components/atoms/Select.astro
 interface Props {
-  label?: string;
-  name: string;
-  id?: string;
-  options: { value: string | number; label: string }[];
-  value?: string | number;
-  required?: boolean;
-  disabled?: boolean;
-  className?: string;
-  labelClass?: string;
-  selectClass?: string;
+    id?: string;
+    name: string;
+    options: { value: string | number; label: string }[];
+    value?: number;
+
+    lang?: string;
+    required?: boolean;
+    disabled?: boolean;
+    classes?: string;
 }
 
-const { 
-  label, 
-  name, 
-  id = name, 
-  options = [], 
-  value, 
-  required = false, 
-  disabled = false, 
-  className, 
-  labelClass, 
-  selectClass 
+const {
+    id,
+    name,
+    options = [],
+    value,
+    lang,
+    required = false,
+    disabled = false,
+    classes
 } = Astro.props;
+
 ---
 
-<div class:list={['flex flex-col', className]}>
-  {label && (
-    <label for={id} class:list={['block text-sm font-medium text-primary mb-1', labelClass]}>
-      {label}
-      {required && <span class="text-red-500">*</span>}
-    </label>
-  )}
-  <select
-    id={id}
-    name={name}
-    value={value}
-    required={required}
-    disabled={disabled}
-    class:list={[
-      'block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm ',
-      'text-primary focus:outline-none focus:ring-accent focus:border-accent sm:text-sm',
-      disabled ? 'bg-gray-100 cursor-not-allowed' : 'bg-white',
-      selectClass
-    ]}
-  >
-    {options.map(option => (
-      <option value={option.value}>{option.label}</option>
-    ))}
-  </select>
+<div class:list={['flex flex-col']}>
+    <select
+            id={id}
+            name={name}
+            required={required}
+            disabled={disabled}
+            class:list={[
+                'block w-full py-3 px-4 pr-8 border border-gray-300 rounded-md shadow-sm ',
+                'text-black focus:outline-none focus:ring-accent focus:border-accent sm:text-sm',
+                disabled ? 'bg-gray-100 cursor-not-allowed' : 'bg-white',
+                classes
+            ]}
+    >
+        {
+            options.map((i, index, array) => {
+                if (index === value - 1){
+                    return (
+                            <option value={i.value} selected>
+                                {i.label}
+                            </option>
+                    );
+                }
+                return (
+                        <option value={i.value}>
+                            {i.label}
+                        </option>
+                );
+            })
+        }
+
+    </select>
 </div>

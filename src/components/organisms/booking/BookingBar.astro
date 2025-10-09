@@ -3,15 +3,14 @@
 import BookingForm from './BookingForm.astro'; // Import the new BookingForm.jsx
 
 interface Props {
-    t: (key: string) => string;
     lang: string;
     config: any; // Add config prop
 }
 
-const {t, lang, config} = Astro.props;
+const {lang, config} = Astro.props;
 ---
 
 <div class="bg-white/20 backdrop-blur-md p-6 rounded-xl shadow-lg w-[80%] mx-auto"> {/* Added mx-auto to center it */}
-    {/* The entire booking logic is now encapsulated in BookingForm.jsx */}
-    <BookingForm t={t} lang={lang} config={config} client:load />
+    <h1>Hola Mundo</h1>
+    <BookingForm lang={lang} config={config} client:load/>
 </div>

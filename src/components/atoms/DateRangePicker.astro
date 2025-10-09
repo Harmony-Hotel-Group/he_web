@@ -1,18 +1,20 @@
 ---
-import { Translations } from "~/i18n/translation.ts";
-
 interface Props {
-    forId: string;
+    id: string;
     lang?: string;
     name?: string;
+    placeholder?: string;
 }
 
-const {lang, forId, name} = Astro.props;
-const t = Translations(lang);
-console.log("DateRangePicker.astro Completely loaded");
+const {
+    id,
+    name,
+    lang,
+    placeholder
+} = Astro.props;
 ---
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"/>
 
 <style>
     .date-range-picker-input {
@@ -24,16 +26,15 @@ console.log("DateRangePicker.astro Completely loaded");
 
 <div class="relative w-full">
     <input
-            id={forId}
+            id={id}
             name={name}
             type="text"
             data-lang={lang}
-            data-for-id={forId}
-            placeholder=`${t('components.placeholders.dateRangePicker')}`
+            data-for-id={id}
+            placeholder=`${placeholder}`
             readonly
             class="w-full p-2 border rounded-md cursor-pointer date-range-picker-input"
     />
-    <span id=`error_${forId}` class="hidden text-red-700">{t("components.errors.dateRangePicker")} *</span>
 </div>
 
 <script>
@@ -49,7 +50,6 @@ console.log("DateRangePicker.astro Completely loaded");
             mode: "range",
             minDate: "today",
             dateFormat: "Y/m/d",
-            // locale: lang === "es" ? flatpickr.l10ns.es : flatpickr.l10ns.default,
             locale: flatpickr.l10ns[lang] ?? flatpickr.l10ns.default,
 
             onChange: function (selectedDates, dateStr, instance) {

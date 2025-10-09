@@ -9,7 +9,6 @@ const lang = Astro.cookies.get('lang')?.value || 'es';
 
 // Fetch config data to pass to the layout and BookingForm
 const dataConfig = await fetchData('config');
-console.log("test-ui.astro Completely loaded");
 ---
 
 <BaseLayout titleKey="site.title" lang={lang} config={dataConfig}>

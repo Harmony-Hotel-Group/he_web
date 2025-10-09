@@ -3,7 +3,7 @@
 import { Translations, defaultLang } from "~/i18n/translation.ts";
 
 interface Props {
-    _id?: string;
+    id?: string;
     forId: string;
     lblKey: string;
     lang?: string;
@@ -14,7 +14,7 @@ interface Props {
 }
 
 const {
-    _id,
+    id,
     forId,
     lblKey,
     lang = defaultLang,
@@ -46,7 +46,7 @@ const verticalAlignClass =
 <label
         for={forId}
         class:list={[
-            "flex text-sm font-medium text-primary cursor-pointer mb-0",
+            "flex text-sm text-black font-medium cursor-pointer mb-0 ",
             directionClass,
             horizontalAlignClass,
             verticalAlignClass,

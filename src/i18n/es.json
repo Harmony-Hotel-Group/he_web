@@ -18,9 +18,25 @@
     }
   },
   "footer": {
-    "rights": "Todos los derechos reservados."
+    "description": "Hotel boutique en el corazón de Cuenca...",
+    "navigation": "Navegación",
+    "interest": "Información",
+    "legal": "Legal",
+    "social": "Síguenos",
+    "rights": "Todos los derechos reservados",
+    "developed": "Desarrollado por",
+    "about": "Sobre Nosotros",
+    "gallery": "Galería",
+    "contact": "Contacto",
+    "booking": "Reservar",
+    "privacy": "Política de Privacidad",
+    "terms": "Términos y Condiciones",
+    "cancellation": "Política de Cancelación",
+    "faq": "Preguntas Frecuentes"
   },
   "booking": {
+    "title": "Reserva tu Aventura",
+    "subtitle": "Encuentra y asegura tu lugar para la próxima gran experiencia.",
     "dropdown": {
       "lblAdults": "Adultos",
       "optAdults": "{{i}} Adulto{{s}}",
@@ -36,7 +52,7 @@
       "vehicle": "Voy con vehiculo"
     },
     "btn": {
-      "search": "Realizar una reserva"
+      "search": "Reservar con un Asesor"
     },
     "dateRange": {
       "title": "Selecciona tus fechas",

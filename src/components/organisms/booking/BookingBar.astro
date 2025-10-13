@@ -1,6 +1,7 @@
 ---
 // src/components/organisms/booking/BookingBar.astro
-import BookingForm from './BookingForm.astro'; // Import the new BookingForm.jsx
+import BookingForm from './BookingForm.astro';
+import { Translations } from '~/i18n/translation.ts';
 
 interface Props {
     lang: string;
@@ -8,9 +9,13 @@ interface Props {
 }
 
 const {lang, config} = Astro.props;
+const t = Translations(lang);
 ---
 
-<div class="bg-white/20 backdrop-blur-md p-6 rounded-xl shadow-lg w-[80%] mx-auto"> {/* Added mx-auto to center it */}
-    <h1>Hola Mundo</h1>
-    <BookingForm lang={lang} config={config} client:load/>
+<div class="bg-white/30 backdrop-blur-md p-6 md:p-8 rounded-xl shadow-lg w-[90%] mx-auto">
+    <div class="text-center mb-6">
+        <h1 class="text-3xl font-bold text-black">{t('booking.title')}</h1>
+        <p class="mt-2 text-md text-black">{t('booking.subtitle')}</p>
+    </div>
+    <BookingForm lang={lang} config={config}/>
 </div>

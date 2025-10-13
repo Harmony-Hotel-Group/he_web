@@ -1,5 +1,6 @@
 ---
 import { defaultLang, Translations } from "~/i18n/translation.ts";
+import Icono from "~/components/atoms/Icono.astro";
 
 interface Props {
     _id?: string;
@@ -10,7 +11,8 @@ interface Props {
     className?: string;
     variant?: 'primary' | 'accent' | 'outline' | 'ghost';
     fullWidth?: boolean;
-    icon?: string; // opcional para íconos SVG o lucide-react
+    icon?: string;
+    color?: string;
 }
 
 const {
@@ -23,6 +25,7 @@ const {
     variant = 'accent',
     fullWidth = false,
     icon,
+    color
 } = Astro.props;
 
 const t = Translations(lang);
@@ -60,13 +63,7 @@ if (fullWidth) baseClasses += ' w-full';
         aria-disabled={disabled ? "true" : undefined}
 >
     {icon && (
-            <img
-                    src={icon}
-                    alt=""
-                    class="w-4 h-4 opacity-90"
-                    aria-hidden="true"
-                    loading="lazy"
-            />
+            <Icono name={icon} color={color}></Icono>
     )}
     {t(lblKey)}
     <slot />

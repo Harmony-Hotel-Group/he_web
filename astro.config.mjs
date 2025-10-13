@@ -12,8 +12,10 @@ export default defineConfig({
     site: 'https://www.hotelensueños.com',
     build: {partialBuild: true},
     integrations: [
+        preact(
+            {compat: true}
+        ),
         tailwind(),
-        preact(),
         icon({iconSets: [{name: "astro", svg: {dir: "src/icons"}}]})
     ],
     adapter: isDevEnvironment

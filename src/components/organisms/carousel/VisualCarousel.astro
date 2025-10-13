@@ -3,52 +3,52 @@
 import VisualResource from '../../molecules/media/VisualResource.astro';
 
 interface Resource {
-  src: string;
-  type: 'image' | 'video' | 'youtube';
-  alt?: string;
-  youtubeId?: string;
+    src: string;
+    type: 'image' | 'video' | 'youtube';
+    alt?: string;
+    youtubeId?: string;
 }
 
 interface Props {
-  resources: Resource[];
-  class?: string;
-  maskOpacityClass?: string;
-  objectFitClass?: string;
-  videoZoomScale?: number;
+    resources: Resource[];
+    class?: string;
+    maskOpacityClass?: string;
+    objectFitClass?: string;
+    videoZoomScale?: number;
 }
 
-const { 
-  resources, 
-  class: className, 
-  maskOpacityClass = 'bg-black/50', 
-  objectFitClass = 'object-cover',
-  videoZoomScale = 1.1
-} = Astro.props; 
+const {
+    resources,
+    class: className,
+    maskOpacityClass = 'bg-black/50',
+    objectFitClass = 'object-cover',
+    videoZoomScale = 1.1
+} = Astro.props;
 
 const defaultPlaceholderResources: Resource[] = [
-  { src: '/images/placeholders/placeholder1.jpg', type: 'image', alt: 'Placeholder Image 1' },
-  { src: '/images/placeholders/placeholder2.jpg', type: 'image', alt: 'Placeholder Image 2' },
-  { src: '/images/placeholders/placeholder3.jpg', type: 'image', alt: 'Placeholder Image 3' },
+    { src: '/images/placeholders/placeholder1.jpg', type: 'image', alt: 'Placeholder Image 1' },
+    { src: '/images/placeholders/placeholder2.jpg', type: 'image', alt: 'Placeholder Image 2' },
+    { src: '/images/placeholders/placeholder3.jpg', type: 'image', alt: 'Placeholder Image 3' },
 ];
 
 function getYouTubeVideoId(url: string): string | null {
-  const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-  const match = url.match(regExp);
-  return (match && match[2].length === 11) ? match[2] : null;
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+    const match = url.match(regExp);
+    return (match && match[2].length === 11) ? match[2] : null;
 }
 
 let processedResources: Resource[] = [];
 
 if (resources && resources.length > 0) {
-  processedResources = resources.map(res => {
-    if (res.type === 'video') {
-      const youtubeId = getYouTubeVideoId(res.src);
-      if (youtubeId) {
-        return { ...res, type: 'youtube', youtubeId: youtubeId };
-      }
-    }
-    return res;
-  });
+    processedResources = resources.map(res => {
+        if (res.type === 'video') {
+            const youtubeId = getYouTubeVideoId(res.src);
+            if (youtubeId) {
+                return { ...res, type: 'youtube', youtubeId: youtubeId };
+            }
+        }
+        return res;
+    });
 }
 
 const videos = processedResources.filter(r => r.type === 'video');
@@ -62,21 +62,21 @@ const userAgent = Astro.request.headers.get('user-agent') || '';
 const isMobileDevice = /Mobile|Android|iPhone|iPad|iPod|Windows Phone/i.test(userAgent);
 
 if (youtubeVideos.length > 0 && !isMobileDevice) {
-  finalResources = [youtubeVideos[0]];
-  showVideoInitially = true;
+    finalResources = [youtubeVideos[0]];
+    showVideoInitially = true;
 } else if (videos.length > 0 && !isMobileDevice) {
-  finalResources = [videos[0]];
-  showVideoInitially = true;
+    finalResources = [videos[0]];
+    showVideoInitially = true;
 } else if (images.length > 0) {
-  finalResources = images;
+    finalResources = images;
 } else {
-  finalResources = defaultPlaceholderResources;
-  showVideoInitially = false;
+    finalResources = defaultPlaceholderResources;
+    showVideoInitially = false;
 }
 
 if (showVideoInitially && isMobileDevice) {
-  showVideoInitially = false;
-  finalResources = images.length > 0 ? images : defaultPlaceholderResources;
+    showVideoInitially = false;
+    finalResources = images.length > 0 ? images : defaultPlaceholderResources;
 }
 
 const singleVideoResource = showVideoInitially ? finalResources[0] : undefined;
@@ -88,113 +88,144 @@ if (!singleVideoResource && carouselImageResources.length === 0) {
 ---
 
 <div class:list={[className, 'relative w-full overflow-hidden']}>
-  {
-    singleVideoResource ? (
-      singleVideoResource.type === 'youtube' ? (
-        <div class="relative w-full h-screen">
-          <iframe
-            class:list={['absolute inset-0 w-full h-full z-0', objectFitClass]}
-            style={`transform: scale(${videoZoomScale});`}
-            src={`https://www.youtube.com/embed/${singleVideoResource.youtubeId}?autoplay=1&mute=1&loop=1&playlist=${singleVideoResource.youtubeId}&controls=0&showinfo=0&autohide=1&modestbranding=1&rel=0`}
-            frameborder="0"
-            allow="autoplay; encrypted-media"
-            allowfullscreen
-            title={singleVideoResource.alt || 'YouTube video'}
-          ></iframe>
-          <div class:list={['absolute inset-0 z-[1]', maskOpacityClass]}></div>
-        </div>
-      ) : (
-        <VisualResource src={singleVideoResource.src} type="video" alt={singleVideoResource.alt} class:list={['w-full h-screen', objectFitClass]} />
-      )
-    ) : (
-      <div class="relative w-full h-screen">
-        <div id="carousel-container" class="relative h-full">
-          {carouselImageResources.map((resource, index) => (
-            <div
-              class:list={[
-                'absolute inset-0 transition-opacity duration-1000 ease-in-out', // Slower transition
-                index === 0 ? 'opacity-100' : 'opacity-0',
-              ]}
-              data-carousel-item
-            >
-              <VisualResource src={resource.src} type="image" alt={resource.alt} class:list={['w-full h-full', objectFitClass]} />
-            </div>
-          ))}
-        </div>
+    {
+        singleVideoResource ? (
+            singleVideoResource.type === 'youtube' ? (
+                    <div class="relative w-full h-screen overflow-hidden">
+                        <!-- Wrapper para mantener el video centrado y cubriendo toda la pantalla -->
+                        <div class="absolute inset-0 w-full h-full">
+                            <iframe
+                                    class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 min-w-full min-h-full w-auto h-auto"
+                                    style={`aspect-ratio: 16/9; transform: translate(-50%, -50%) scale(${videoZoomScale});`}
+                                    src={`https://www.youtube.com/embed/${singleVideoResource.youtubeId}?autoplay=1&mute=1&loop=1&playlist=${singleVideoResource.youtubeId}&controls=0&showinfo=0&autohide=1&modestbranding=1&rel=0`}
+                                    frameborder="0"
+                                    allow="autoplay; encrypted-media"
+                                    allowfullscreen
+                                    title={singleVideoResource.alt || 'YouTube video'}
+                            ></iframe>
+                        </div>
+                        <div class:list={['absolute inset-0 z-[1] pointer-events-none', maskOpacityClass]}></div>
+                    </div>
+            ) : (
+                    <div class="relative w-full h-screen overflow-hidden">
+                        <VisualResource
+                                src={singleVideoResource.src}
+                                type="video"
+                                alt={singleVideoResource.alt}
+                                class="absolute top-0 left-0 w-full h-full object-cover"
+                        />
+                        <div class:list={['absolute inset-0 z-[1] pointer-events-none', maskOpacityClass]}></div>
+                    </div>
+            )
+        ) : (
+                <div class="relative w-full h-screen">
+                    <div id="carousel-container" class="relative h-full">
+                        {carouselImageResources.map((resource, index) => (
+                                <div
+                                        class:list={[
+                                            'absolute inset-0 transition-opacity duration-1000 ease-in-out',
+                                            index === 0 ? 'opacity-100' : 'opacity-0',
+                                        ]}
+                                        data-carousel-item
+                                >
+                                    <VisualResource
+                                            src={resource.src}
+                                            type="image"
+                                            alt={resource.alt}
+                                            class:list={['w-full h-full', objectFitClass]}
+                                    />
+                                </div>
+                        ))}
+                    </div>
 
-        <!-- Slider indicators -->
-        {carouselImageResources.length > 1 && (
-          <div class="absolute bottom-12 left-1/2 z-30 flex -translate-x-1/2 space-x-3 rtl:space-x-reverse">
-            {carouselImageResources.map((_, index) => (
-              <button
-                type="button"
-                class:list={['w-3 h-3 rounded-full', index === 0 ? 'bg-white' : 'bg-white/50']}
-                aria-current={index === 0}
-                aria-label={`Slide ${index + 1}`}
-                data-carousel-slide-to={index}
-              ></button>
-            ))}
-          </div>
-        )}
-      </div>
-    )
-  }
+                    <!-- Slider indicators -->
+                    {carouselImageResources.length > 1 && (
+                            <div class="absolute bottom-12 left-1/2 z-30 flex -translate-x-1/2 space-x-3 rtl:space-x-reverse">
+                                {carouselImageResources.map((_, index) => (
+                                        <button
+                                                type="button"
+                                                class:list={['w-3 h-3 rounded-full transition-colors duration-300', index === 0 ? 'bg-white' : 'bg-white/50 hover:bg-white/75']}
+                                                aria-current={index === 0}
+                                                aria-label={`Slide ${index + 1}`}
+                                                data-carousel-slide-to={index}
+                                        ></button>
+                                ))}
+                            </div>
+                    )}
+                </div>
+        )
+    }
 
-  <!-- Scroll Down Indicator -->
-  <div class="absolute bottom-4 left-1/2 -translate-x-1/2 z-30 animate-bounce">
-    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-    </svg>
-  </div>
+    <!-- Scroll Down Indicator -->
+    <div class="absolute bottom-4 left-1/2 -translate-x-1/2 z-30 animate-bounce">
+        <svg class="w-8 h-8 text-white drop-shadow-lg" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+        </svg>
+    </div>
 </div>
 
 <script is:inline>
-  document.addEventListener('DOMContentLoaded', () => {
-    const carouselContainer = document.getElementById('carousel-container');
-    if (!carouselContainer) return;
+    document.addEventListener('DOMContentLoaded', () => {
+        const carouselContainer = document.getElementById('carousel-container');
+        if (!carouselContainer) return;
 
-    const items = Array.from(carouselContainer.querySelectorAll('[data-carousel-item]'));
-    const indicators = Array.from(document.querySelectorAll('[data-carousel-slide-to]'));
-    let currentIndex = 0;
-    let intervalId = null;
+        const items = Array.from(carouselContainer.querySelectorAll('[data-carousel-item]'));
+        const indicators = Array.from(document.querySelectorAll('[data-carousel-slide-to]'));
+        let currentIndex = 0;
+        let intervalId = null;
 
-    if (items.length <= 1) return;
+        if (items.length <= 1) return;
 
-    function showItem(index) {
-      items.forEach((item, i) => {
-        item.classList.toggle('opacity-100', i === index);
-        item.classList.toggle('opacity-0', i !== index);
-      });
-      indicators.forEach((indicator, i) => {
-        indicator.classList.toggle('bg-white', i === index);
-        indicator.classList.toggle('bg-white/50', i !== index);
-        indicator.setAttribute('aria-current', i === index);
-      });
-      currentIndex = index;
-    }
+        function showItem(index) {
+            items.forEach((item, i) => {
+                item.classList.toggle('opacity-100', i === index);
+                item.classList.toggle('opacity-0', i !== index);
+            });
+            indicators.forEach((indicator, i) => {
+                indicator.classList.toggle('bg-white', i === index);
+                indicator.classList.toggle('bg-white/50', i !== index);
+                indicator.setAttribute('aria-current', i === index);
+            });
+            currentIndex = index;
+        }
 
-    function startCarousel() {
-      stopCarousel(); // Ensure no multiple intervals are running
-      intervalId = setInterval(() => {
-        const nextIndex = (currentIndex + 1) % items.length;
-        showItem(nextIndex);
-      }, 5000); // Change slide every 5 seconds
-    }
+        function startCarousel() {
+            stopCarousel();
+            intervalId = setInterval(() => {
+                const nextIndex = (currentIndex + 1) % items.length;
+                showItem(nextIndex);
+            }, 5000);
+        }
 
-    function stopCarousel() {
-      clearInterval(intervalId);
-    }
+        function stopCarousel() {
+            clearInterval(intervalId);
+        }
 
-    indicators.forEach((indicator, index) => {
-      indicator.addEventListener('click', () => {
-        showItem(index);
-        stopCarousel(); // Optional: stop auto-play on manual interaction
-        // Or restart it after a delay:
-        // stopCarousel();
-        // setTimeout(startCarousel, 10000); // Restart after 10s
-      });
+        indicators.forEach((indicator, index) => {
+            indicator.addEventListener('click', () => {
+                showItem(index);
+                stopCarousel();
+            });
+        });
+
+        startCarousel();
     });
-
-    startCarousel();
-  });
 </script>
+
+<style>
+    /* Estilos CSS para asegurar el comportamiento de cover en videos */
+    iframe {
+        /* Calcula el tamaño mínimo basado en el viewport */
+        width: 100vw;
+        height: 56.25vw; /* 16:9 aspect ratio */
+        min-height: 100vh;
+        min-width: 177.77vh; /* 16:9 aspect ratio */
+    }
+
+    @media (max-aspect-ratio: 16/9) {
+        iframe {
+            width: 177.77vh;
+            height: 100vh;
+        }
+    }
+</style>

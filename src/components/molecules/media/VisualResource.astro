@@ -1,53 +1,41 @@
 ---
+// src/components/ui/VisualResource.astro
 import Imagen from "../../atoms/Imagen.astro"
 
-// src/components/ui/VisualResource.astro
 interface Props {
-    src: string; // Path local o URL del recurso
-    type: 'image' | 'video'; // Tipo de recurso esperado
-    alt?: string; // Texto alternativo para imágenes
-    class?: string; // Clases CSS adicionales
+    src: string;
+    type: 'image' | 'video';
+    alt?: string;
+    classes?: string;
 }
 
-let {src, type, alt = '', class: className} = Astro.props;
+let {src, type, alt = '', classes} = Astro.props;
 
 let finalSrc = src;
 let isPlaceholder = false;
 
-// Validación en el servidor para recursos remotos (solo en SSR)
 if (src && src.startsWith('http')) {
     try {
         const response = await fetch(src, {method: 'HEAD'});
         if (!response.ok) {
-            console.warn(`[VisualResource] Recurso remoto no encontrado o falló al cargar: ${src}`);
+            console.warn(`[VisualResource] Recurso remoto no encontrado: ${src}`);
             isPlaceholder = true;
         }
     } catch (error) {
         console.error(`[VisualResource] Error al verificar recurso remoto ${src}:`, error);
         isPlaceholder = true;
     }
-} else if (!src) { // Si el src está vacío
+} else if (!src) {
     isPlaceholder = true;
 }
 
-// Si se determina que el recurso no es válido o no existe, usar placeholder
 if (isPlaceholder) {
     finalSrc = `https://placehold.co/600x400?text=${type === 'video' ? 'Video' : 'Imagen'}+no+encontrado`;
-    type = 'image'; // El placeholder siempre será una imagen
+    type = 'image';
 }
 ---
 
 {type === 'image' ? (
-    //   {/*
-  //   <img
-  //   src={finalSrc}
-  //   alt={alt || (isPlaceholder ? 'Recurso no encontrado' : '')}
-  //   class:list={[className, 'w-full h-auto object-cover']}
-  //   loading="lazy"
-  //   onError="this.onerror=null;this.src='https://placehold.co/600x400?text=Recurso+no+encontrado';"
-  // />
-  // */}
-
 <Imagen
         src={finalSrc}
         alt={alt || (isPlaceholder ? 'Recurso no encontrado' : '')}
@@ -55,17 +43,19 @@ if (isPlaceholder) {
         height={400}
         loading="lazy"
         class="w-full h-auto object-cover"
-></Imagen>
+/>
     ) : (
-<video
-        autoplay
-        loop
-        muted
-        playsinline
-        src={finalSrc}
-        class:list={[className, 'w-full h-auto object-cover']}
-        onError="this.onerror=null;this.src='https://placehold.co/600x400?text=Recurso+no+encontrado';"
->
-    Tu navegador no soporta el elemento de video.
-</video>
+<div class="relative w-full h-full">
+    <video
+            autoplay
+            loop
+            muted
+            playsinline
+            src={finalSrc}
+            class:list={['absolute inset-0 w-full h-full object-cover',classes]}
+            onError="this.onerror=null;this.src='https://placehold.co/600x400?text=Recurso+no+encontrado';"
+    >
+        Tu navegador no soporta el elemento de video.
+    </video>
+</div>
     )}

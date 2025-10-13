@@ -1,7 +1,6 @@
 ---
-import LanguageSwitcher from '../ui/LanguageSwitcher.jsx';
-import CurrencySwitcher from '../ui/CurrencySwitcher.jsx';
-import { fetchData } from "../../utils/apiService";
+import LanguageSwitcher from '../molecules/controls/LanguageSwitcher.jsx';
+import CurrencySwitcher from '../molecules/controls/CurrencySwitcher.jsx';
 
 interface Props {
     t: (key: string) => string;
@@ -22,7 +21,7 @@ const {t, config, lang} = Astro.props;
         </div>
 
         <!-- Center: Navigation Links (Desktop) -->
-        <div class="hidden sm:flex justify-center items-center space-x-3"> 
+        <div class="hidden sm:flex justify-center items-center space-x-3">
             <!-- Rooms Dropdown Container -->
             <div id="rooms-nav-container" class="relative">
                 <a href="/rooms" class="px-3 py-2 hover:text-accent transition-colors flex items-center"> {/* hover:text-gray-300 -> hover:text-accent */}

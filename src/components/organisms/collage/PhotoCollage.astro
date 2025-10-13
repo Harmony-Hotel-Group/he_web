@@ -13,46 +13,102 @@ interface Props {
 
 const { images = [], class: className } = Astro.props;
 
-// Rotaciones y desplazamientos únicos para cada imagen
-// (para dar el efecto de “pila desordenada”)
-const transformClasses = [
-    'rotate-[-8deg] translate-x-[-20%] translate-y-[5%] hover:rotate-[-10deg]',
-    'rotate-[5deg] translate-x-[15%] translate-y-[-2%] hover:rotate-[7deg]',
-    'rotate-[12deg] translate-x-[5%] translate-y-[20%] hover:rotate-[15deg]',
-    'rotate-[-3deg] translate-x-[-5%] translate-y-[-15%] hover:rotate-[-5deg]',
-    'rotate-[15deg] translate-x-[25%] translate-y-[8%] hover:rotate-[18deg]',
+// Configuración mejorada de transformaciones con valores responsivos
+const imageConfigs = [
+    {
+        rotation: '-rotate-6 hover:rotate-[-8deg]',
+        position: 'top-[5%] left-[10%] sm:top-[8%] sm:left-[5%] md:top-[10%] md:left-[8%]',
+        zIndex: 'z-[1]'
+    },
+    {
+        rotation: 'rotate-3 hover:rotate-[5deg]',
+        position: 'top-[15%] right-[8%] sm:top-[12%] sm:right-[10%] md:top-[8%] md:right-[12%]',
+        zIndex: 'z-[2]'
+    },
+    {
+        rotation: 'rotate-12 hover:rotate-[15deg]',
+        position: 'bottom-[8%] left-[15%] sm:bottom-[10%] sm:left-[12%] md:bottom-[12%] md:left-[10%]',
+        zIndex: 'z-[3]'
+    },
+    {
+        rotation: '-rotate-2 hover:rotate-[-4deg]',
+        position: 'top-[25%] left-[25%] sm:top-[22%] sm:left-[28%] md:top-[20%] md:left-[30%]',
+        zIndex: 'z-[4]'
+    },
+    {
+        rotation: 'rotate-8 hover:rotate-[11deg]',
+        position: 'bottom-[18%] right-[12%] sm:bottom-[15%] sm:right-[15%] md:bottom-[18%] md:right-[18%]',
+        zIndex: 'z-[5]'
+    },
 ];
 ---
 
-
 <!-- CONTENEDOR PRINCIPAL -->
 <div class:list={[
-    "relative flex justify-center items-center w-full min-h-[350px]",
+    "relative w-full overflow-hidden",
+    "min-h-[400px] sm:min-h-[450px] md:min-h-[500px] lg:min-h-[550px]",
+    "flex justify-center items-center",
+    "px-4 sm:px-6 md:px-8",
     className,
 ]}>
-    <!-- Contenedor centrado y responsivo -->
-    <div class="relative flex justify-center items-center w-[85%] max-w-[500px] aspect-square">
-        {images.slice(0, 5).map((image, index) => (
-                <div
-                        class:list={[
-                            "absolute w-52 h-36 sm:w-60 sm:h-40 md:w-72 md:h-48 lg:w-80 lg:h-56", // Increased image sizes
-                            "p-2 bg-white dark:bg-gray-800 shadow-xl rounded-md transition-transform duration-300 ease-in-out hover:scale-110 hover:z-10",
-                            "flex justify-center items-center",
-                            transformClasses[index % transformClasses.length],
-                        ]}
-                        style={{
-                            top: `${5 + (index * 5)}%`,
-                            left: `${50 + (index* 5)}%`,
-                            transformOrigin: "center center",
-                        }}
-                >
-                    <VisualResource
-                            src={image.src}
-                            alt={image.alt}
-                            type="image"
-                            class="rounded-sm w-full h-full object-cover transition-opacity duration-300 hover:opacity-100 opacity-90"
-                    />
-                </div>
-        ))}
+    <!-- Contenedor del collage con aspect ratio -->
+    <div class="relative w-full max-w-[900px] aspect-[4/3] md:aspect-[16/10]">
+        {images.slice(0, 5).map((image, index) => {
+            const config = imageConfigs[index % imageConfigs.length];
+            return (
+                    <div
+                            class:list={[
+                                // Posicionamiento absoluto
+                        "absolute",
+                                config.position,
+                                config.zIndex,
+
+                                // Tamaños responsivos más controlados
+                        "w-[45%] aspect-[4/3]",
+                                "sm:w-[42%]",
+                                "md:w-[38%]",
+                                "lg:w-[35%]",
+
+                                // Estilo de polaroid (borde mínimo)
+                        "p-0",
+                                "bg-white dark:bg-gray-800",
+                                "shadow-[0_4px_20px_rgba(0,0,0,0.15)] dark:shadow-[0_4px_20px_rgba(0,0,0,0.4)]",
+                                "rounded-sm",
+
+                                // Rotación y transformaciones
+                        config.rotation,
+                                "origin-center",
+
+                                // Transiciones y efectos hover
+                        "transition-all duration-300 ease-out",
+                                "hover:scale-110 hover:shadow-[0_8px_30px_rgba(0,0,0,0.25)]",
+                                "hover:z-[100]",
+
+                                // Cursor
+                        "cursor-pointer",
+                            ]}
+                    >
+                        <VisualResource
+                                src={image.src}
+                                alt={image.alt}
+                                type="image"
+                                class:list={[
+                                    "w-full h-full object-cover rounded-sm",
+                                    "transition-opacity duration-300",
+                                    "opacity-90 hover:opacity-100"
+                                ]}
+                        />
+                    </div>
+            );
+        })}
     </div>
 </div>
+
+<style>
+    /* Asegurar que las imágenes no se salgan en pantallas muy pequeñas */
+    @media (max-width: 380px) {
+        div[class*="aspect-"] > div {
+            width: 48% !important;
+        }
+    }
+</style>

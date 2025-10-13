@@ -25,10 +25,22 @@
       "en": "At Ensueños Hotel, we are committed to your satisfaction and comfort. From the moment you enter our cozy lobby, you will feel the warmth and personalized attention that sets us apart. Our 15 rooms and bar/restaurant are designed to provide you with a comfortable and relaxing stay. Our friendly staff is always at your disposal to attend to all your needs, from recommendations for local restaurants to organizing exciting city tours."
     },
     "images": [
-      { "src": "/img/about/collage1.jpg", "alt": "Vista de la fachada del hotel" },
-      { "src": "/img/about/collage2.jpg", "alt": "Interior del lobby del hotel" },
-      { "src": "/img/about/collage3.jpg", "alt": "Detalle decorativo de una habitación" },
-      { "src": "/img/about/collage4.jpg", "alt": "Jardines del hotel" }
+      {
+        "src": "/img/about/collage1.jpg",
+        "alt": "Vista de la fachada del hotel"
+      },
+      {
+        "src": "/img/about/collage2.jpg",
+        "alt": "Interior del lobby del hotel"
+      },
+      {
+        "src": "/img/about/collage3.jpg",
+        "alt": "Detalle decorativo de una habitación"
+      },
+      {
+        "src": "/img/about/collage4.jpg",
+        "alt": "Jardines del hotel"
+      }
     ]
   },
   "contactInfo": {
@@ -78,6 +90,18 @@
       "name": {
         "es": "Estándar",
         "en": "Standard"
+      },
+      "title": {
+        "es": "titulo",
+        "en": "title"
+      },
+      "description": {
+        "es": "descripcion",
+        "en": "description"
+      },
+      "tags": {
+        "es": "tags",
+        "en": "tags"
       }
     },
     {
@@ -86,6 +110,18 @@
       "name": {
         "es": "Deluxe",
         "en": "Deluxe"
+      },
+      "title": {
+        "es": "titulo",
+        "en": "title"
+      },
+      "description": {
+        "es": "descripcion",
+        "en": "description"
+      },
+      "tags": {
+        "es": "tags",
+        "en": "tags"
       }
     }
   ],
@@ -96,6 +132,18 @@
       "name": {
         "es": "Playas",
         "en": "Beaches"
+      },
+      "title": {
+        "es": "titulo",
+        "en": "title"
+      },
+      "description": {
+        "es": "descripcion",
+        "en": "description"
+      },
+      "tags": {
+        "es": "tags",
+        "en": "tags"
       }
     },
     {
@@ -104,6 +152,18 @@
       "name": {
         "es": "Montañas",
         "en": "Mountains"
+      },
+      "title": {
+        "es": "titulo",
+        "en": "title"
+      },
+      "description": {
+        "es": "descripcion",
+        "en": "description"
+      },
+      "tags": {
+        "es": "tags",
+        "en": "tags"
       }
     }
   ],
@@ -114,6 +174,18 @@
       "name": {
         "es": "Ciudad",
         "en": "City"
+      },
+      "title": {
+        "es": "titulo",
+        "en": "title"
+      },
+      "description": {
+        "es": "descripcion",
+        "en": "description"
+      },
+      "tags": {
+        "es": "tags",
+        "en": "tags"
       }
     },
     {
@@ -122,6 +194,18 @@
       "name": {
         "es": "Naturaleza",
         "en": "Nature"
+      },
+      "title": {
+        "es": "titulo",
+        "en": "title"
+      },
+      "description": {
+        "es": "descripcion",
+        "en": "description"
+      },
+      "tags": {
+        "es": "tags",
+        "en": "tags"
       }
     }
   ],
@@ -132,6 +216,17 @@
       "name": {
         "es": "Platos Principales",
         "en": "Main Courses"
+      },"title": {
+      "es": "titulo",
+      "en": "title"
+    },
+      "description": {
+        "es": "descripcion",
+        "en": "description"
+      },
+      "tags": {
+        "es": "tags",
+        "en": "tags"
       }
     },
     {
@@ -140,6 +235,17 @@
       "name": {
         "es": "Postres",
         "en": "Desserts"
+      },"title": {
+      "es": "titulo",
+      "en": "title"
+    },
+      "description": {
+        "es": "descripcion",
+        "en": "description"
+      },
+      "tags": {
+        "es": "tags",
+        "en": "tags"
       }
     }
   ],

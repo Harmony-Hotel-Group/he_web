@@ -8,9 +8,9 @@ interface Props {
     lang?: string;
     className?: string;
     size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl';
-    color?: 'primary' | 'secondary' | 'white' | 'black' | 'gray' | 'current';
     noPadding?: boolean;
     noMargin?: boolean;
+    color?: string;
 }
 
 const {
@@ -19,7 +19,7 @@ const {
     name,
     className = "",
     size = 'md',
-    color = 'primary',
+    color="#BF953D",
     noPadding = false,
     noMargin = false
 } = Astro.props;
@@ -48,5 +48,5 @@ const marginClass = noMargin ? '' : 'm-1';
             marginClass,
             className,
         ]}
-        color='#BF953D'
+        color={color}
 />

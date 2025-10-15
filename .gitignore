@@ -3,3 +3,5 @@
 .astro
 .env
 /pnpm-lock.yaml
+/dist/
+/.vercel/

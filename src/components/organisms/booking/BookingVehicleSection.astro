@@ -1,0 +1,112 @@
+---
+// src/components/organisms/booking/BookingVehicleSection.astro
+import { Translations } from "~/i18n/translation.ts";
+import Grid from "~/layouts/GridLayout.astro";
+import Row from "~/layouts/Row.astro";
+
+interface Props {
+    lang: string;
+    vehicleTypeOptions: { value: string; label: string }[];
+}
+
+const { lang, vehicleTypeOptions } = Astro.props;
+const t = Translations(lang);
+---
+
+<div id="vehicle-section-component"
+     class="space-y-3" 
+     data-lang={lang}
+     data-vehicle-options={JSON.stringify(vehicleTypeOptions)}>
+
+    <div class="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg p-4">
+        <h3 class="text-lg font-semibold text-amber-900 dark:text-amber-100 mb-3 flex items-center gap-2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0"/></svg>
+            {t('booking.vehicles.title')}
+        </h3>
+
+        <Grid cols="3" _id="vehicles-container" class="space-y-3">
+            <!-- Vehículo 1 (por defecto) -->
+            <div class="vehicle-item bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-3">
+                <div class="flex justify-between items-center mb-2">
+                    <span class="text-sm font-medium text-gray-700 dark:text-gray-300">{t('booking.vehicles.vehicle')} 1</span>
+                </div>
+                <Row>
+                    <div class="space-y-1">
+                        <label class="block text-xs font-medium text-gray-600 dark:text-gray-400">{t('booking.vehicles.type')}</label>
+                        <select name="vehicleType1" class="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-amber-500 focus:border-transparent">
+                            {vehicleTypeOptions.map(option => <option value={option.value}>{option.label}</option>)}
+                        </select>
+                    </div>
+                    <div class="space-y-1">
+                        <label class="block text-xs font-medium text-gray-600 dark:text-gray-400">{t('booking.vehicles.plate.title')}</label>
+                        <input type="text" name="vehiclePlate1" placeholder={t('booking.vehicles.plate.placeholder')} class="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-amber-500 focus:border-transparent uppercase" />
+                    </div>
+                </Row>
+            </div>
+        </Grid>
+
+        <div class="flex gap-2 mt-3">
+            <button type="button" id="addVehicleBtn" class="px-4 py-2 text-sm bg-amber-600 hover:bg-amber-700 text-white rounded-md transition-colors duration-200 flex items-center gap-2">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                {t('booking.vehicles.add')}
+            </button>
+            <button type="button" id="removeVehicleBtn" class="px-4 py-2 text-sm bg-red-600 hover:bg-red-700 text-white rounded-md transition-colors duration-200 flex items-center gap-2 hidden">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"/></svg>
+                {t('booking.vehicles.remove')}
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+    import { Translations } from "~/i18n/translation.ts";
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const component = document.getElementById('vehicle-section-component');
+        if (!component) return;
+
+        const lang = component.dataset.lang;
+        const vehicleTypeOptions = JSON.parse(component.dataset.vehicleOptions || '[]');
+        const t = Translations(lang);
+
+        const addVehicleBtn = component.querySelector('#addVehicleBtn');
+        const removeVehicleBtn = component.querySelector('#removeVehicleBtn');
+        const vehiclesContainer = component.querySelector('#vehicles-container');
+        let vehicleCount = 1;
+
+        addVehicleBtn?.addEventListener('click', () => {
+            vehicleCount++;
+            const optionsHTML = vehicleTypeOptions.map(opt => `<option value="${opt.value}">${opt.label}</option>`).join('');
+            const vehicleHTML = `
+                <div class="vehicle-item bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-3">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-sm font-medium text-gray-700 dark:text-gray-300">${t('booking.vehicles.vehicle')} ${vehicleCount}</span>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <div class="space-y-1">
+                            <label class="block text-xs font-medium text-gray-600 dark:text-gray-400">${t('booking.vehicles.type')}</label>
+                            <select name="vehicleType${vehicleCount}" class="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-amber-500 focus:border-transparent">
+                                ${optionsHTML}
+                            </select>
+                        </div>
+                        <div class="space-y-1">
+                            <label class="block text-xs font-medium text-gray-600 dark:text-gray-400">${t('booking.vehicles.plate.title')}</label>
+                            <input type="text" name="vehiclePlate${vehicleCount}" placeholder="ABC-1234" class="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-amber-500 focus:border-transparent uppercase" />
+                        </div>
+                    </div>
+                </div>`;
+            vehiclesContainer.insertAdjacentHTML('beforeend', vehicleHTML);
+            removeVehicleBtn.classList.remove('hidden');
+        });
+
+        removeVehicleBtn?.addEventListener('click', () => {
+            if (vehicleCount > 1) {
+                vehiclesContainer.lastElementChild?.remove();
+                vehicleCount--;
+                if (vehicleCount === 1) {
+                    removeVehicleBtn.classList.add('hidden');
+                }
+            }
+        });
+    });
+</script>

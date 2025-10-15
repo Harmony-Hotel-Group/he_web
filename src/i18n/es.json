@@ -58,6 +58,17 @@
       "title": "Selecciona tus fechas",
       "placeholder": "Selecciona un rango de fechas",
       "error":"No hay fecha seleccionada"
+    },
+    "vehicles": {
+      "title": "Reservar Vehiculo",
+      "vehicle": "Vehiculo",
+      "type": "Tipo de Vehiculo",
+      "add": "Agregar Vehiculo",
+      "remove": "Eliminar Vehiculo",
+      "plate": {
+        "title": "Placa",
+        "placeholder": "ABC-1234 (Opcional)"
+      }
     }
   }
 }

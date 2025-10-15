@@ -249,6 +249,9 @@
       }
     }
   ],
+
+  vehicleTypeOptions
+
   "supportedLanguages": [
     {
       "code": "es",

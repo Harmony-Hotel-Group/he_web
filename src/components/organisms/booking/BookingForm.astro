@@ -7,6 +7,8 @@ import DatePickerField from "~/components/molecules/forms/DatePickerField.astro"
 import DropDownField from "~/components/molecules/forms/DropdownField.astro";
 import SwitchField from "~/components/molecules/forms/SwitchField.astro";
 import Button from "../../atoms/Button.astro";
+import ModalBookingGroup from "./ModalBookingGroup.astro";
+import BookingVehicleSection from "./BookingVehicleSection.astro";
 
 import { range } from "~/utils/math.ts";
 import { Translations } from "~/i18n/translation.ts";
@@ -70,18 +72,21 @@ const whatsappNumber = config?.contactInfo?.whatsapp ?? "";
 const email = config?.contactInfo?.email ?? "";
 ---
 
-<form id="booking-form" method="post" class="rounded-xl space-y-3" data-whatsapp={whatsappNumber}
+<form id="booking-form" method="post" class="rounded-xl space-y-3" 
+      data-whatsapp={whatsappNumber}
       data-email={email}>
 
     <!-- Sección Normal -->
     <div id="normal-booking-section">
         <Grid cols="3" autoAdjust="true">
-            <DatePickerField
-                    fieldId="dateRange"
-                    name="dateRange"
-                    lblKey="booking.dateRange.title"
-                    lang={lang}
-            />
+            <div>
+                <DatePickerField
+                        fieldId="dateRange"
+                        name="dateRange"
+                        lblKey="booking.dateRange.title"
+                        lang={lang}
+                />
+            </div>
             <DropDownField
                     fieldId="adults"
                     name="adults"
@@ -112,96 +117,6 @@ const email = config?.contactInfo?.email ?? "";
         </Grid>
     </div>
 
-    <!-- Sección Grupo (inicialmente oculta) -->
-    <div id="group-booking-section" class="hidden space-y-4">
-        <div class="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 relative">
-            <!-- Botón para volver al formulario normal -->
-            <button
-                    type="button"
-                    id="exitGroupModeBtn"
-                    class="absolute top-3 right-3 w-8 h-8 flex items-center justify-center rounded-full bg-blue-600 hover:bg-blue-700 text-white transition-colors duration-200 shadow-lg hover:shadow-xl"
-                    title="Volver al formulario normal"
-            >
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                </svg>
-            </button>
-
-            <h3 class="text-lg font-semibold text-blue-900 dark:text-blue-100 mb-3 flex items-center gap-2 pr-10">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
-                </svg>
-                {t('booking.group.title') || 'Reserva Grupal'}
-            </h3>
-
-            <Grid cols="2" autoAdjust="true">
-                <!-- Fecha sigue visible -->
-                <DatePickerField
-                        fieldId="dateRangeGroup"
-                        name="dateRangeGroup"
-                        lblKey="booking.dateRange.title"
-                        lang={lang}
-                />
-
-                <!-- Input numéricos para grupo -->
-                <div class="space-y-1">
-                    <label for="groupAdults" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                        {t('booking.group.adults') || 'Adultos'}
-                    </label>
-                    <input
-                            type="number"
-                            id="groupAdults"
-                            name="groupAdults"
-                            min="1"
-                            value="10"
-                            class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    />
-                </div>
-
-                <div class="space-y-1">
-                    <label for="groupTeens" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                        {t('booking.group.teens') || 'Niños 12-17 años'}
-                    </label>
-                    <input
-                            type="number"
-                            id="groupTeens"
-                            name="groupTeens"
-                            min="0"
-                            value="0"
-                            class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    />
-                </div>
-
-                <div class="space-y-1">
-                    <label for="groupKids" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                        {t('booking.group.kids') || 'Niños 5-11 años'}
-                    </label>
-                    <input
-                            type="number"
-                            id="groupKids"
-                            name="groupKids"
-                            min="0"
-                            value="0"
-                            class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    />
-                </div>
-
-                <div class="space-y-1">
-                    <label for="groupInfants" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                        {t('booking.group.infants') || 'Menores de 5 años'}
-                    </label>
-                    <input
-                            type="number"
-                            id="groupInfants"
-                            name="groupInfants"
-                            min="0"
-                            value="0"
-                            class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    />
-                </div>
-            </Grid>
-        </div>
-    </div>
 
     <!-- Switches -->
     <Row>
@@ -210,76 +125,8 @@ const email = config?.contactInfo?.email ?? "";
     </Row>
 
     <!-- Sección de Vehículos (oculta inicialmente) -->
-    <div id="vehicle-section" class="hidden space-y-3">
-        <div class="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg p-4">
-            <h3 class="text-lg font-semibold text-amber-900 dark:text-amber-100 mb-3 flex items-center gap-2">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0"/>
-                </svg>
-                {t('booking.vehicles.title') || 'Información de Vehículos'}
-            </h3>
-
-            <div id="vehicles-container" class="space-y-3">
-                <!-- Vehículo 1 (por defecto) -->
-                <div class="vehicle-item bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-3">
-                    <div class="flex justify-between items-center mb-2">
-                        <span class="text-sm font-medium text-gray-700 dark:text-gray-300">
-                            {t('booking.vehicles.vehicle') || 'Vehículo'} 1
-                        </span>
-                    </div>
-                    <Grid cols="2" autoAdjust="true">
-                        <div class="space-y-1">
-                            <label class="block text-xs font-medium text-gray-600 dark:text-gray-400">
-                                {t('booking.vehicles.type') || 'Tipo'}
-                            </label>
-                            <select
-                                    name="vehicleType1"
-                                    class="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-amber-500 focus:border-transparent"
-                            >
-                                {vehicleTypeOptions.map(option => (
-                                        <option value={option.value}>{option.label}</option>
-                                ))}
-                            </select>
-                        </div>
-                        <div class="space-y-1">
-                            <label class="block text-xs font-medium text-gray-600 dark:text-gray-400">
-                                {t('booking.vehicles.plate') || 'Placa (opcional)'}
-                            </label>
-                            <input
-                                    type="text"
-                                    name="vehiclePlate1"
-                                    placeholder="ABC-1234"
-                                    class="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-amber-500 focus:border-transparent uppercase"
-                            />
-                        </div>
-                    </Grid>
-                </div>
-            </div>
-
-            <!-- Botones para agregar/quitar vehículos -->
-            <div class="flex gap-2 mt-3">
-                <button
-                        type="button"
-                        id="addVehicleBtn"
-                        class="px-4 py-2 text-sm bg-amber-600 hover:bg-amber-700 text-white rounded-md transition-colors duration-200 flex items-center gap-2"
-                >
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
-                    </svg>
-                    {t('booking.vehicles.add') || 'Agregar Vehículo'}
-                </button>
-                <button
-                        type="button"
-                        id="removeVehicleBtn"
-                        class="px-4 py-2 text-sm bg-red-600 hover:bg-red-700 text-white rounded-md transition-colors duration-200 flex items-center gap-2 hidden"
-                >
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"/>
-                    </svg>
-                    {t('booking.vehicles.remove') || 'Quitar Vehículo'}
-                </button>
-            </div>
-        </div>
+    <div id="vehicle-section" class="hidden">
+        <BookingVehicleSection lang={lang} vehicleTypeOptions={vehicleTypeOptions} />
     </div>
 
     <div class="text-center pt-4">
@@ -288,284 +135,81 @@ const email = config?.contactInfo?.email ?? "";
     </div>
 </form>
 
+<!-- Modal para reservas grupales -->
+<ModalBookingGroup lang={lang} config={config} isOpen={false} client:load />
+
 <script>
     import { actions } from 'astro:actions';
 
     document.addEventListener("DOMContentLoaded", () => {
-        const form = document.getElementById('booking-form') as HTMLFormElement;
-        const btn = document.getElementById('btnSubmit');
-        const adultsSelect = document.getElementById('adults') as HTMLSelectElement;
+        const form = document.getElementById('booking-form');
+        if (!form) return;
 
-        // Para el switch personalizado, buscar el button en lugar del input
-        const vehicleSwitchButton = document.querySelector('button[data-name="vehicle"]') as HTMLButtonElement;
-        const vehicleHiddenInput = document.querySelector('input[name="vehicle"]') as HTMLInputElement;
-
-        const exitGroupModeBtn = document.getElementById('exitGroupModeBtn');
-
-        const normalSection = document.getElementById('normal-booking-section');
-        const groupSection = document.getElementById('group-booking-section');
+        const bookingBar = form.closest('#booking-bar');
         const vehicleSection = document.getElementById('vehicle-section');
-        const vehiclesContainer = document.getElementById('vehicles-container');
-        const addVehicleBtn = document.getElementById('addVehicleBtn');
-        const removeVehicleBtn = document.getElementById('removeVehicleBtn');
+        const vehicleSwitchButton = form.querySelector('button[data-name="vehicle"]');
 
-        // Campos de fecha
-        const dateRangeInput = document.getElementById('dateRange') as HTMLInputElement;
-        const dateRangeGroupInput = document.getElementById('dateRangeGroup') as HTMLInputElement;
-
-        // Obtener los campos que deben ocultarse en modo grupo
-        const childrenFieldParent = document.getElementById('children')?.closest('div[class*="space-y"]');
-        const roomsFieldParent = document.getElementById('rooms')?.closest('div[class*="space-y"]');
-
-        const whatsappNumber = form.dataset.whatsapp;
-        let vehicleCount = 1;
-        let isGroupMode = false;
-
-        // Transiciones suaves
-        function fadeOut(element: HTMLElement) {
-            if (!element) return;
-            element.style.transition = 'opacity 0.3s ease-out, max-height 0.3s ease-out';
-            element.style.opacity = '0';
-            element.style.maxHeight = '0';
-            element.style.overflow = 'hidden';
-            setTimeout(() => {
-                element.classList.add('hidden');
-            }, 300);
-        }
-
-        function fadeIn(element: HTMLElement) {
-            if (!element) return;
-            element.classList.remove('hidden');
-            element.style.transition = 'opacity 0.3s ease-in, max-height 0.3s ease-in';
-            element.style.opacity = '0';
-            element.style.maxHeight = '2000px';
-            element.style.overflow = 'visible';
-            setTimeout(() => {
-                element.style.opacity = '1';
-            }, 10);
-        }
-
-        // Función para volver al modo normal
-        function switchToNormalMode() {
-            isGroupMode = false;
-            adultsSelect.value = '2'; // Resetear al valor por defecto
-            fadeOut(groupSection);
-            setTimeout(() => fadeIn(normalSection), 300);
-
-            // Sincronizar fecha de vuelta
-            if (dateRangeGroupInput?.value) {
-                dateRangeInput.value = dateRangeGroupInput.value;
-            }
-
-            // Mostrar children y rooms
-            if (childrenFieldParent) fadeIn(childrenFieldParent as HTMLElement);
-            if (roomsFieldParent) fadeIn(roomsFieldParent as HTMLElement);
-        }
-
-        // Detectar cambio en selector de adultos
-        adultsSelect?.addEventListener('change', (e) => {
-            const value = (e.target as HTMLSelectElement).value;
-
-            if (value === 'group') {
-                isGroupMode = true;
-
-                // Sincronizar fecha del formulario normal al de grupo
-                if (dateRangeInput?.value) {
-                    dateRangeGroupInput.value = dateRangeInput.value;
-                }
-
-                fadeOut(normalSection);
-                setTimeout(() => fadeIn(groupSection), 300);
-
-                // Ocultar children y rooms
-                if (childrenFieldParent) fadeOut(childrenFieldParent as HTMLElement);
-                if (roomsFieldParent) fadeOut(roomsFieldParent as HTMLElement);
-            } else {
-                switchToNormalMode();
-            }
-        });
-
-        // Botón para salir del modo grupo
-        exitGroupModeBtn?.addEventListener('click', () => {
-            switchToNormalMode();
-        });
-
-        // Detectar cambio en switch de vehículo con múltiples métodos
-        function handleVehicleSwitch() {
-            // Obtener estado del hidden input en lugar del checked
-            const isChecked = vehicleHiddenInput?.value === 'true';
-            console.log('Estado del switch de vehículo:', isChecked);
-
-            if (isChecked) {
-                console.log('Mostrando sección de vehículos');
-                if (vehicleSection) {
-                    vehicleSection.classList.remove('hidden');
-                    vehicleSection.style.transition = 'opacity 0.3s ease-in, max-height 0.3s ease-in';
-                    vehicleSection.style.opacity = '0';
-                    vehicleSection.style.maxHeight = '2000px';
-                    vehicleSection.style.overflow = 'visible';
-                    setTimeout(() => {
-                        vehicleSection.style.opacity = '1';
-                    }, 10);
-                }
-            } else {
-                console.log('Ocultando sección de vehículos');
-                if (vehicleSection) {
-                    vehicleSection.style.transition = 'opacity 0.3s ease-out, max-height 0.3s ease-out';
-                    vehicleSection.style.opacity = '0';
-                    vehicleSection.style.maxHeight = '0';
-                    vehicleSection.style.overflow = 'hidden';
-                    setTimeout(() => {
-                        vehicleSection.classList.add('hidden');
-                    }, 300);
-                }
-            }
-        }
-
-        // Escuchar clicks en el botón del switch personalizado
-        vehicleSwitchButton?.addEventListener('click', () => {
-            console.log('[BookingForm] Switch de vehículo clickeado');
-            // Esperar un poco para que el switch actualice su estado interno
-            setTimeout(handleVehicleSwitch, 100);
-        });
-
-        // Observar cambios en el hidden input con MutationObserver
-        if (vehicleHiddenInput) {
-            const observer = new MutationObserver((mutations) => {
-                mutations.forEach((mutation) => {
-                    if (mutation.type === 'attributes' && mutation.attributeName === 'value') {
-                        console.log('[BookingForm] Hidden input cambió de valor');
-                        handleVehicleSwitch();
-                    }
-                });
+        if (vehicleSwitchButton && vehicleSection) {
+            const observer = new MutationObserver(() => {
+                const isChecked = vehicleSwitchButton.getAttribute('aria-checked') === 'true';
+                vehicleSection.classList.toggle('hidden', !isChecked);
+                bookingBar?.classList.toggle('max-h-[80vh]', isChecked);
+                bookingBar?.classList.toggle('overflow-y-auto', isChecked);
             });
 
-            observer.observe(vehicleHiddenInput, {
+            observer.observe(vehicleSwitchButton, {
                 attributes: true,
-                attributeFilter: ['value']
+                attributeFilter: ['aria-checked']
             });
+        }
 
-            // También escuchar cambios directos en el value
-            let lastValue = vehicleHiddenInput.value;
-            setInterval(() => {
-                if (vehicleHiddenInput.value !== lastValue) {
-                    console.log('[BookingForm] Detectado cambio en hidden input (polling)');
-                    lastValue = vehicleHiddenInput.value;
-                    handleVehicleSwitch();
+        const adultsSelect = document.getElementById('adults');
+        const modalBookingGroup = new (window as any).ModalBookingGroup();
+        adultsSelect?.addEventListener('change', (e) => {
+            if ((e.target as HTMLSelectElement).value === 'group') {
+                modalBookingGroup.open();
+            }
+        });
+
+        function clearValidationErrors() {
+            form.querySelectorAll('[id^="error_"]').forEach(el => el.classList.add('hidden'));
+            form.querySelectorAll('.border-red-500').forEach(el => el.classList.remove('border-red-500'));
+        }
+
+        function handleValidationErrors(errors) {
+            for (const fieldError of errors) {
+                const fieldName = fieldError.path[0];
+                const inputElement = document.getElementById(fieldName);
+                const errorElement = document.getElementById(`error_${fieldName}`);
+
+                if (inputElement) {
+                    inputElement.classList.add('border-red-500');
                 }
-            }, 200);
+                if (errorElement) {
+                    errorElement.textContent = fieldError.message;
+                    errorElement.classList.remove('hidden');
+                }
+            }
         }
 
-        // Verificar estado inicial del switch al cargar
-        setTimeout(() => {
-            const initialState = vehicleHiddenInput?.value === 'true';
-            console.log('Estado inicial del switch de vehículo:', initialState);
-            if (initialState) {
-                console.log('Switch está checked al cargar - mostrando sección');
-                vehicleSection.classList.remove('hidden');
-                vehicleSection.style.opacity = '1';
-                vehicleSection.style.maxHeight = '2000px';
-            } else {
-                console.log('Switch NO está checked al cargar');
-            }
-        }, 100);
-
-        // Agregar vehículo
-        addVehicleBtn?.addEventListener('click', () => {
-            vehicleCount++;
-            const vehicleHTML = `
-                <div class="vehicle-item bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-3" style="opacity: 0; transition: opacity 0.3s ease-in;">
-                    <div class="flex justify-between items-center mb-2">
-                        <span class="text-sm font-medium text-gray-700 dark:text-gray-300">
-                            Vehículo ${vehicleCount}
-                        </span>
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                        <div class="space-y-1">
-                            <label class="block text-xs font-medium text-gray-600 dark:text-gray-400">Tipo</label>
-                            <select name="vehicleType${vehicleCount}" class="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-amber-500 focus:border-transparent">
-                                <option value="auto">Auto</option>
-                                <option value="suv">SUV</option>
-                                <option value="camioneta">Camioneta</option>
-                                <option value="furgoneta">Furgoneta</option>
-                                <option value="buseta">Buseta</option>
-                                <option value="bus">Bus</option>
-                                <option value="otro">Otro</option>
-                            </select>
-                        </div>
-                        <div class="space-y-1">
-                            <label class="block text-xs font-medium text-gray-600 dark:text-gray-400">Placa (opcional)</label>
-                            <input type="text" name="vehiclePlate${vehicleCount}" placeholder="ABC-1234" class="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-amber-500 focus:border-transparent uppercase" />
-                        </div>
-                    </div>
-                </div>
-            `;
-
-            vehiclesContainer.insertAdjacentHTML('beforeend', vehicleHTML);
-            const newVehicle = vehiclesContainer.lastElementChild as HTMLElement;
-            setTimeout(() => newVehicle.style.opacity = '1', 10);
-
-            removeVehicleBtn.classList.remove('hidden');
-        });
-
-        // Quitar vehículo
-        removeVehicleBtn?.addEventListener('click', () => {
-            if (vehicleCount > 1) {
-                const lastVehicle = vehiclesContainer.querySelector('.vehicle-item:last-child') as HTMLElement;
-                lastVehicle.style.opacity = '0';
-                setTimeout(() => {
-                    lastVehicle.remove();
-                    vehicleCount--;
-                    if (vehicleCount === 1) {
-                        removeVehicleBtn.classList.add('hidden');
-                    }
-                }, 300);
-            }
-        });
-
-        function updateErrorMessages(errors) {
-            if (errors.length === 0) return;
-            const errorElements = form.querySelectorAll("[id^='error_']");
-            errorElements.forEach((el) => el.classList.add("hidden"));
-            Object.keys(errors.fields)?.forEach((field) => {
-                const errorEl = document.getElementById(`error_${field}`);
-                if (errorEl) errorEl.classList.remove("hidden");
-            });
-        }
-
-        btn?.addEventListener("click", async () => {
+        const btn: HTMLFormElement = document.getElementById('btnSubmit');
+        btn?.addEventListener('click', async () => {
+            clearValidationErrors();
             const formData = new FormData(form);
+            const whatsappNumber = form.dataset.whatsapp;
 
             try {
-                const {data, error} = await actions.booking(formData);
+                const { data, error } = await actions.booking(formData);
 
                 if (error) {
-                    updateErrorMessages(error);
+                    console.error("Validation error:", error);
+                    handleValidationErrors(error.fields);
+                    window.showToast('Por favor, revisa los campos del formulario.', 'error');
                     return;
                 }
 
-                updateErrorMessages([]);
-                const processing = data.processing;
-
-                let message = '';
-
-                if (isGroupMode) {
-                    // Mensaje para reserva grupal
-                    message = `
-*Estimado Hotel Ensueños, necesito ayuda con una RESERVA GRUPAL:*
-
-➢ Check In: ${processing.checkin}
-➢ Check Out: ${processing.checkout}
-➢ Cantidad de Noches: ${processing.nights}
-➢ *Grupo:*
-   • Adultos: ${formData.get('groupAdults')}
-   • Adolescentes (12-17 años): ${formData.get('groupTeens')}
-   • Niños (5-11 años): ${formData.get('groupKids')}
-   • Infantes (< 5 años): ${formData.get('groupInfants')}
-➢ Desayuno incluido: ${processing.breakfast === "true" ? "Sí" : "No"}`;
-                } else {
-                    // Mensaje normal
-                    message = `
+                const { processing } = data;
+                let message = `
 *Estimado Hotel Ensueños por favor necesito que me ayude con una reserva:*
 
 ➢ Check In: ${processing.checkin}
@@ -575,43 +219,39 @@ const email = config?.contactInfo?.email ?? "";
 ➢ Niños: ${processing.children}
 ➢ Habitaciones: ${processing.rooms}
 ➢ Desayuno incluido: ${processing.breakfast === "true" ? "Sí" : "No"}`;
-                }
 
-                // Agregar información de vehículos si está activo
-                const vehicleActive = vehicleHiddenInput?.value === 'true';
-                if (vehicleActive) {
-                    message += `\n➢ *Vehículos:*\n`;
-                    for (let i = 1; i <= vehicleCount; i++) {
-                        const type = formData.get(`vehicleType${i}`);
-                        const plate = formData.get(`vehiclePlate${i}`) || 'No especificada';
-                        message += `   ${i}. Tipo: ${type}, Placa: ${plate}\n`;
-                    }
+                const isVehicleChecked = vehicleSwitchButton?.getAttribute('aria-checked') === 'true';
+                if (isVehicleChecked) {
+                    message += `\n➢ *Vehículos:*`;
+                    const vehicleItems = vehicleSection.querySelectorAll('.vehicle-item');
+                    vehicleItems.forEach((item, index) => {
+                        const type = (item.querySelector(`select[name^="vehicleType"]`) as HTMLSelectElement)?.value;
+                        const plate = (item.querySelector(`input[name^="vehiclePlate"]`) as HTMLInputElement)?.value;
+                        if (type) {
+                             message += `\n   ${index + 1}. Tipo: ${type}, Placa: ${plate || 'N/A'}`;
+                        }
+                    });
                 }
 
                 message += `\n\nSi hace falta información adicional, por favor responder a este mensaje.`;
-
                 const encodedMessage = encodeURIComponent(message.trim());
 
-                if (whatsappNumber !== "" && whatsappNumber !== null) {
+                if (whatsappNumber) {
                     window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, "_blank");
-                    window.location.reload();
+                    window.showToast('Tu solicitud de reserva ha sido enviada.', 'success');
+                } else {
+                    window.showToast('No se pudo enviar el mensaje, el número de WhatsApp no está configurado.', 'error');
                 }
 
             } catch (err) {
-                console.error("Error inesperado:", err);
+                console.error("Error inesperado al enviar la reserva:", err);
+                window.showToast('Ocurrió un error inesperado. Por favor, inténtalo de nuevo.', 'error');
             }
         });
     });
 </script>
 
 <style>
-    /* Transiciones suaves para elementos que aparecen/desaparecen */
-    #normal-booking-section,
-    #group-booking-section,
-    #vehicle-section {
-        transition: opacity 0.3s ease-in-out, max-height 0.3s ease-in-out;
-    }
-
     input[type="number"]::-webkit-inner-spin-button,
     input[type="number"]::-webkit-outer-spin-button {
         opacity: 1;

@@ -3,7 +3,7 @@
  * @module utils/send
  */
 
-import { config } from "~/data/config.json";
+import config  from "~/data/config.json";
 
 /**
  * Información de contacto desde configuración

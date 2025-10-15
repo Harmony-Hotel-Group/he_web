@@ -1,6 +1,6 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import { Translations } from '../i18n/translation.ts';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import { Translations } from '~/i18n/translation.ts';
 
 const lang = Astro.cookies.get('lang')?.value || 'es';
 const t = Translations(lang);

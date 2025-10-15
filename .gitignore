@@ -2,3 +2,4 @@
 .idea
 .astro
 .env
+/pnpm-lock.yaml

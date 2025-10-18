@@ -1,8 +1,17 @@
 {
-  "siteName": {
-    "es": "MiHotel",
-    "en": "MyHotel"
+  "siteName": "Hotel Ensueños",
+  "contactInfo": {
+    "address":  "Gran Colombia 182 y Manuel Vega, Cuenca, Ecuador",
+    "linkMap": "https://maps.app.goo.gl/gjBRk4A3TtLGPYGL7",
+    "whatsapp": "+593978888020",
+    "email": "reservas@hotelensueños.com",
+    "socialLinks": {
+      "facebook": "https://facebook.com/mihotel",
+      "instagram": "https://instagram.com/mihotel",
+      "twitter": "https://twitter.com/mihotel"
+    }
   },
+
   "tagline": {
     "es": "Tu hogar lejos de casa",
     "en": "Your home away from home"
@@ -42,19 +51,6 @@
         "alt": "Jardines del hotel"
       }
     ]
-  },
-  "contactInfo": {
-    "address": {
-      "es": "Gran Colombia 182 y Manuel Vega, Cuenca, Ecuador",
-      "en": "Gran Colombia 182 y Manuel Vega, Cuenca, Ecuador"
-    },
-    "whatsapp": "+593978888020",
-    "email": "reservas@hotelensueños.com",
-    "socialLinks": {
-      "facebook": "https://facebook.com/mihotel",
-      "instagram": "https://instagram.com/mihotel",
-      "twitter": "https://twitter.com/mihotel"
-    }
   },
   "carouselResources": [
     {
@@ -216,10 +212,11 @@
       "name": {
         "es": "Platos Principales",
         "en": "Main Courses"
-      },"title": {
-      "es": "titulo",
-      "en": "title"
-    },
+      },
+      "title": {
+        "es": "titulo",
+        "en": "title"
+      },
       "description": {
         "es": "descripcion",
         "en": "description"
@@ -235,10 +232,11 @@
       "name": {
         "es": "Postres",
         "en": "Desserts"
-      },"title": {
-      "es": "titulo",
-      "en": "title"
-    },
+      },
+      "title": {
+        "es": "titulo",
+        "en": "title"
+      },
       "description": {
         "es": "descripcion",
         "en": "description"
@@ -249,19 +247,43 @@
       }
     }
   ],
-
-  "vehicleTypeOptions":
-    [
-      { "value": "auto", "es": "Auto", "en":"Car" },
-      { "value": "suv", "es": "SUV", "en": "SUV" },
-      { "value": "camioneta", "es": "Camioneta", "en": "Truck" },
-      { "value": "furgoneta", "es": "Furgoneta", "en": "Van" },
-      { "value": "buseta", "es": "Buseta", "en": "Minibus" },
-      { "value": "bus", "es": "Bus", "en": "Bus" },
-      { "value": "otro", "es": "Otro", "en": "Other" }
-    ]
-  ,
-
+  "vehicleTypeOptions": [
+    {
+      "value": "auto",
+      "es": "Auto",
+      "en": "Car"
+    },
+    {
+      "value": "suv",
+      "es": "SUV",
+      "en": "SUV"
+    },
+    {
+      "value": "camioneta",
+      "es": "Camioneta",
+      "en": "Truck"
+    },
+    {
+      "value": "furgoneta",
+      "es": "Furgoneta",
+      "en": "Van"
+    },
+    {
+      "value": "buseta",
+      "es": "Buseta",
+      "en": "Minibus"
+    },
+    {
+      "value": "bus",
+      "es": "Bus",
+      "en": "Bus"
+    },
+    {
+      "value": "otro",
+      "es": "Otro",
+      "en": "Other"
+    }
+  ],
   "supportedLanguages": [
     {
       "code": "es",

@@ -8,32 +8,32 @@ import HomeSection from '../components/organisms/home/HomeSection.astro';
 
 const lang = Astro.cookies.get('lang')?.value || 'es';
 
-const dataConfig = await fetchData('config');
-const carouselResources = dataConfig?.carouselResources || [];
+const siteConfig = await fetchData('siteConfig');
+const carouselResources = siteConfig?.carouselResources || [];
 ---
 
-<BaseLayout titleKey="site.title" lang={lang} config={dataConfig}>
+<BaseLayout titleKey="site.title" lang={lang} config={siteConfig}>
   <div class="relative w-full h-screen overflow-hidden">
     <VisualCarousel resources={carouselResources} videoZoomScale={1.2} />
     <div class="absolute inset-0 flex items-center justify-center z-10 p-4">
-      <BookingBar lang={lang} config={dataConfig} />
+      <BookingBar lang={lang} config={siteConfig} />
     </div>
   </div>
 
   <div>
     <!-- About Us Section -->
-    {dataConfig?.aboutUs && (
+    {siteConfig?.aboutUs && (
       <section class="py-24">
         <div class="container mx-auto px-6">
           <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div class="text-center md:text-left">
-              <h3 class="text-lg font-semibold text-accent mb-2">{dataConfig.aboutUs.subtitle[lang]}</h3>
-              <h1 class="text-4xl font-bold text-primary mb-4">{dataConfig.aboutUs.mainTitle[lang]}</h1>
-              <p class="text-gray-600 leading-relaxed mb-4">{dataConfig.aboutUs.welcomeParagraph[lang]}</p>
-              <p class="text-gray-600 leading-relaxed">{dataConfig.aboutUs.commitmentParagraph[lang]}</p>
+              <h3 class="text-lg font-semibold text-accent mb-2">{siteConfig.aboutUs.subtitle[lang]}</h3>
+              <h1 class="text-4xl font-bold text-primary mb-4">{siteConfig.aboutUs.mainTitle[lang]}</h1>
+              <p class="text-gray-600 leading-relaxed mb-4">{siteConfig.aboutUs.welcomeParagraph[lang]}</p>
+              <p class="text-gray-600 leading-relaxed">{siteConfig.aboutUs.commitmentParagraph[lang]}</p>
             </div>
             <div>
-              <PhotoCollage images={dataConfig.aboutUs.images} />
+              <PhotoCollage images={siteConfig.aboutUs.images} />
             </div>
           </div>
         </div>
@@ -41,40 +41,40 @@ const carouselResources = dataConfig?.carouselResources || [];
     )}
 
     <!-- Sections -->
-    {dataConfig?.roomTypes && (
+    {siteConfig?.roomTypes && (
       <HomeSection
         lang={lang}
         titleKey="nav.rooms"
-        items={dataConfig.roomTypes}
+        items={siteConfig.roomTypes}
         baseHref="/rooms"
         bgColorClass="bg-gray-100"
       />
     )}
 
-    {dataConfig?.destinationCategories && (
+    {siteConfig?.destinationCategories && (
       <HomeSection
         lang={lang}
         titleKey="nav.destinations"
-        items={dataConfig.destinationCategories}
+        items={siteConfig.destinationCategories}
         baseHref="/destinations"
       />
     )}
 
-    {dataConfig?.gastronomyCategories && (
+    {siteConfig?.gastronomyCategories && (
       <HomeSection
         lang={lang}
         titleKey="nav.gastronomy"
-        items={dataConfig.gastronomyCategories}
+        items={siteConfig.gastronomyCategories}
         baseHref="/gastronomy"
         bgColorClass="bg-gray-100"
       />
     )}
 
-    {dataConfig?.tourCategories && (
+    {siteConfig?.tourCategories && (
       <HomeSection
         lang={lang}
         titleKey="nav.tours"
-        items={dataConfig.tourCategories}
+        items={siteConfig.tourCategories}
         baseHref="/tours"
       />
     )}

@@ -3,7 +3,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import BookingForm from '../components/organisms/booking/BookingForm.astro';
 
-import { fetchData } from "~/utils/apiService";
+import { fetchData } from "~/services/api";
 
 const lang = Astro.cookies.get('lang')?.value || 'es';
 

@@ -1,17 +1,33 @@
 {
   "siteName": "Hotel Ensueños",
   "contactInfo": {
-    "address":  "Gran Colombia 182 y Manuel Vega, Cuenca, Ecuador",
+    "address": "Gran Colombia 182 y Manuel Vega, Cuenca, Ecuador",
     "linkMap": "https://maps.app.goo.gl/gjBRk4A3TtLGPYGL7",
     "whatsapp": "+593978888020",
     "email": "reservas@hotelensueños.com",
-    "socialLinks": {
-      "facebook": "https://facebook.com/mihotel",
-      "instagram": "https://instagram.com/mihotel",
-      "twitter": "https://twitter.com/mihotel"
-    }
+    "socialLinks": [
+      {
+        "href": "https://facebook.com/hotelensuenos",
+        "label": "Facebook",
+        "icon": "footer/facebook"
+      },
+      {
+        "href": "https://instagram.com/hotelensuenos",
+        "label": "Instagram",
+        "icon": "footer/instagram"
+      },
+      {
+        "href": "https://twitter.com/hotelensuenos",
+        "label": "Twitter",
+        "icon": "footer/twitter"
+      },
+      {
+        "href": "https://tripadvisor.com",
+        "label": "TripAdvisor",
+        "icon": "footer/tripadvisor"
+      }
+    ]
   },
-
   "tagline": {
     "es": "Tu hogar lejos de casa",
     "en": "Your home away from home"

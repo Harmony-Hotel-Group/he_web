@@ -1,4 +1,5 @@
 ---
+import Icono from "~/components/atoms/Icono.astro";
 interface Props {
     t: any;
     config: any;
@@ -7,42 +8,38 @@ interface Props {
 
 const {t, config, lang} = Astro.props;
 const currentYear = new Date().getFullYear();
-const startYear = 2023;
+const startYear = 2021;
 
 // Navegación principal
 const mainLinks = [
-    {href: `/`, label: t('nav.home') || 'Inicio'},
-    {href: `/rooms`, label: t('nav.rooms') || 'Habitaciones'},
-    {href: `/destinations`, label: t('nav.destinations') || 'Destinos'},
-    {href: `/tours`, label: t('nav.tours') || 'Tours'},
-    {href: `/gastronomy`, label: t('nav.gastronomy') || 'Gastronomía'},
+    {href: `/`, label: t('nav.home')},
+    {href: `/rooms`, label: t('nav.rooms')},
+    {href: `/destinations`, label: t('nav.destinations') },
+    {href: `/tours`, label: t('nav.tours') },
+    {href: `/gastronomy`, label: t('nav.gastronomy')},
 ];
 
 // Páginas de interés
 const interestLinks = [
-    {href: `/about`, label: t('footer.about') || 'Sobre Nosotros'},
-    {href: `/gallery`, label: t('footer.gallery') || 'Galería'},
-    {href: `/contact`, label: t('footer.contact') || 'Contacto'},
-    {href: `/booking`, label: t('footer.booking') || 'Reservar'},
+    {href: `/about`, label: t('footer.about') },
+    {href: `/gallery`, label: t('footer.gallery') },
+    {href: `/contact`, label: t('footer.contact') },
+    {href: `/booking`, label: t('footer.booking') },
 ];
 
 // Información legal
 const legalLinks = [
-    {href: `/privacy`, label: t('footer.privacy') || 'Política de Privacidad'},
-    {href: `/terms`, label: t('footer.terms') || 'Términos y Condiciones'},
-    {href: `/cancellation`, label: t('footer.cancellation') || 'Política de Cancelación'},
-    {href: `/faq`, label: t('footer.faq') || 'Preguntas Frecuentes'},
+    {href: `/privacy`, label: t('footer.privacy')},
+    {href: `/terms`, label: t('footer.terms')},
+    {href: `/cancellation`, label: t('footer.cancellation') },
+    {href: `/faq`, label: t('footer.faq')},
 ];
 
 // Redes sociales (ajusta según tu config.json)
-const socialLinks = [
-    {href: 'https://facebook.com/hotelensueños', label: 'Facebook', icon: 'facebook'},
-    {href: 'https://instagram.com/hotelensueños', label: 'Instagram', icon: 'instagram'},
-    {href: 'https://twitter.com/hotelensueños', label: 'Twitter', icon: 'twitter'},
-    {href: 'https://tripadvisor.com', label: 'TripAdvisor', icon: 'tripadvisor'},
-];
+const socialLinks = config.contactInfo.socialLinks
 ---
 
+<!--suppress ALL -->
 <footer class="bg-gradient-to-b from-gray-900 to-gray-950 text-gray-300">
     <!-- Contenido principal del footer -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
@@ -140,7 +137,7 @@ const socialLinks = [
                         {t('footer.legal')}
                     </h3>
                     <ul class="space-y-2">
-                        {legalLinks.map(link => (
+                        {legalLinks && legalLinks?.map(link => (
                                 <li>
                                     <a
                                             href={link.href}
@@ -159,7 +156,7 @@ const socialLinks = [
                         {t('footer.social')}
                     </h3>
                     <div class="flex gap-3">
-                        {socialLinks.map(social => (
+                        {socialLinks && socialLinks.map(social => (
                                 <a
                                         href={social.href}
                                         target="_blank"
@@ -168,10 +165,7 @@ const socialLinks = [
                                         aria-label={social.label}
                                 >
                                 <span class="text-white text-lg">
-                                    {social.icon === 'facebook' && '📘'}
-                                    {social.icon === 'instagram' && '📷'}
-                                    {social.icon === 'twitter' && '🐦'}
-                                    {social.icon === 'tripadvisor' && '🦉'}
+                                    <Icono name=`${social.icon}` size="lg"></Icono>
                                 </span>
                                 </a>
                         ))}

@@ -54,7 +54,6 @@ const {
 
             const container = scriptTag.closest('div'); // Find the closest parent div
             if (!container) {
-                console.error("[Switch.astro] Script: Container not found for script.");
                 return;
             }
 
@@ -62,20 +61,16 @@ const {
             const hiddenInput = container.querySelector('input[type="hidden"]');
 
             if (!switchButton || !hiddenInput) {
-                console.error("[Switch.astro] Script: Button or hidden input not found within container.", container);
                 return;
             }
 
             // Prevent re-initialization
             if (switchButton.dataset.initialized) {
-                console.log("[Switch.astro] Script: Switch already initialized for this instance.");
                 return;
             }
             switchButton.dataset.initialized = 'true';
-            console.log("[Switch.astro] Script: Initializing switch for instance:", container);
 
             switchButton.addEventListener('click', () => {
-                console.log("[Switch.astro] Script: Click event fired for instance:", container);
                 let isChecked = switchButton.getAttribute('aria-checked') === 'true';
                 isChecked = !isChecked; // Flip the state
 
@@ -89,7 +84,6 @@ const {
                 if (handle) {
                     handle.classList.toggle('translate-x-5', isChecked);
                     handle.classList.toggle('translate-x-0', !isChecked);
-                    console.log("[Switch.astro] Script: Visual state toggled, isChecked:", isChecked);
                 } else {
                     console.error("[Switch.astro] Script: Handle element not found for instance.");
                 }

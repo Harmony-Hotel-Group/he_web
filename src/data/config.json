@@ -250,6 +250,18 @@
     }
   ],
 
+  "vehicleTypeOptions":
+    [
+      { "value": "auto", "es": "Auto", "en":"Car" },
+      { "value": "suv", "es": "SUV", "en": "SUV" },
+      { "value": "camioneta", "es": "Camioneta", "en": "Truck" },
+      { "value": "furgoneta", "es": "Furgoneta", "en": "Van" },
+      { "value": "buseta", "es": "Buseta", "en": "Minibus" },
+      { "value": "bus", "es": "Bus", "en": "Bus" },
+      { "value": "otro", "es": "Otro", "en": "Other" }
+    ]
+  ,
+
   "supportedLanguages": [
     {
       "code": "es",

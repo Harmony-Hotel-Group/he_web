@@ -1,14 +1,12 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { Translations } from '../i18n/translation.ts';
+import { fetchData } from "~/services/api";
 import VisualCarousel from '../components/organisms/carousel/VisualCarousel.astro';
-import { fetchData } from "~/utils/apiService";
 import PhotoCollage from '../components/organisms/collage/PhotoCollage.astro';
 import BookingBar from '../components/organisms/booking/BookingBar.astro';
 import HomeSection from '../components/organisms/home/HomeSection.astro';
 
 const lang = Astro.cookies.get('lang')?.value || 'es';
-const t = Translations(lang);
 
 const dataConfig = await fetchData('config');
 const carouselResources = dataConfig?.carouselResources || [];

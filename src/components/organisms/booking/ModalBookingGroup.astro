@@ -169,20 +169,17 @@ const t = Translations(lang);
                     }
                 }
 
-                const { sendBookingMessage } = await import('~/utils/send/index.ts');
+                const { sendBookingMessage } = await import('~/services/send/index.ts');
                 const type = isVehicleChecked ? 'vehicle' : 'group';
                 await sendBookingMessage(formData, type);
 
                 this.close();
-                window.showToast('Reserva confirmada con éxito', 'success');
 
             } catch (error) {
                 if (error.name === 'ActionInputError' && error.fields) {
                     this.handleValidationErrors(error.fields);
-                    window.showToast('Por favor, revisa los campos del formulario.', 'error');
                 } else {
                     console.error('Error al confirmar reserva:', error);
-                    window.showToast('Error al procesar la reserva. Por favor, inténtelo de nuevo.', 'error');
                 }
             }
         }

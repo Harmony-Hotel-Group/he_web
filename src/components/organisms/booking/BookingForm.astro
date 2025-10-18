@@ -58,16 +58,6 @@ const roomsOptions = range(1, 5).map((i, index, array) => {
     }
 })
 
-const vehicleTypeOptions = [
-    { value: "auto", label: "Auto" },
-    { value: "suv", label: "SUV" },
-    { value: "camioneta", label: "Camioneta" },
-    { value: "furgoneta", label: "Furgoneta" },
-    { value: "buseta", label: "Buseta" },
-    { value: "bus", label: "Bus" },
-    { value: "otro", label: "Otro" },
-];
-
 const whatsappNumber = config?.contactInfo?.whatsapp ?? "";
 const email = config?.contactInfo?.email ?? "";
 ---
@@ -126,7 +116,7 @@ const email = config?.contactInfo?.email ?? "";
 
     <!-- Sección de Vehículos (oculta inicialmente) -->
     <div id="vehicle-section" class="hidden">
-        <BookingVehicleSection lang={lang} vehicleTypeOptions={vehicleTypeOptions} />
+        <BookingVehicleSection lang={lang} config={config} />
     </div>
 
     <div class="text-center pt-4">

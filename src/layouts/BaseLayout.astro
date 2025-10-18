@@ -1,13 +1,15 @@
 ---
 import Header from '../components/core/Header.astro';
 import Footer from '../components/core/Footer.astro';
-import ToastContainer from '../components/organisms/notifications/ToastContainer.astro';
 import '../styles/global.css';
 import { Translations } from '../i18n/translation.ts';
+import { fetchData } from "~/services/api";
 
-const { titleKey, lang, config } = Astro.props;
+const { titleKey, lang } = Astro.props;
 const t = Translations(lang);
 const title = t(titleKey);
+
+const siteConfig = await fetchData('siteConfig');
 ---
 
 <html lang={lang}>
@@ -19,11 +21,10 @@ const title = t(titleKey);
     <title>{title}</title>
   </head>
   <body class="flex flex-col min-h-screen overflow-x-hidden">
-    <Header t={t} config={config} lang={lang} />
+    <Header t={t} config={siteConfig} lang={lang} />
     <main class="flex-grow w-full overflow-x-hidden"> {/* Added w-full and overflow-x-hidden */}
       <slot />
     </main>
-    <Footer t={t} />
-    <ToastContainer />
+    <Footer t={t} config={siteConfig} lang={lang}/>
   </body>
 </html>

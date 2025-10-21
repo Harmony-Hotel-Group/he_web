@@ -1,0 +1,13 @@
+---
+const isDev = import.meta.env.DEV;
+---
+
+{isDev && <slot />}
+
+{!isDev && (
+<script>
+    window.location.href = "/";
+</script>
+    )}
+
+

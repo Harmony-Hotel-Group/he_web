@@ -1,74 +1,222 @@
 ---
 // src/components/atoms/Imagen.astro
-import { Image } from 'astro:assets';
-import path from "node:path";
-import fs from "node:fs";
+/**
+    * Componente optimizado para imágenes
+    * Soporta: local (/src/resources/img/), public (/public/), y URLs remotas
+    * Con validación, cache y fallback automático
+    */
 
+import { Image } from 'astro:assets';
+import { promises as fs } from 'node:fs';
+import path from 'node:path';
 
 interface Props {
+    id?: string;
     src: string | null | undefined;
     alt: string;
     width: number;
     height: number;
     class?: string;
     loading?: 'lazy' | 'eager';
-    decoding?: 'async' | 'sync' | 'auto'; // Add decoding prop
+    decoding?: 'async' | 'sync' | 'auto';
+    quality?: number;
+    format?: 'webp' | 'avif' | 'png' | 'jpg';
 }
 
 const {
+    id,
     src,
     alt,
     width,
     height,
     class: className,
     loading = 'lazy',
-    decoding = 'async'
+    decoding = 'async',
+    quality = 80,
+    format,
 } = Astro.props;
 
+// ==================== CACHE ====================
 
-// Prepare the placeholder URL for fallbacks
-let finalSrc: string = `https://placehold.co/${width}x${height}/EAEAEA/29333B?text=${width}x${height}`;
+// Cache para validaciones (evita múltiples checks del mismo archivo)
+const validationCache = new Map<string, boolean>();
 
+// ==================== HELPERS ====================
 
-function existeEnPublic(rutaPublica: string): boolean {
-    // `rutaPublica` es algo como '/img/logo.png'
-    const rutaCompleta = path.join(process.cwd(), 'public', rutaPublica);
-    return fs.existsSync(rutaCompleta);
-}
+/**
+ * Verifica si un archivo existe en /public/
+ * Usa async para mejor performance
+ */
+async function existeEnPublic(rutaPublica: string): Promise<boolean> {
+    // Check cache primero
+    const cacheKey = `public:${rutaPublica}`;
+    if (validationCache.has(cacheKey)) {
+        return validationCache.get(cacheKey)!;
+    }
 
-async function urlExist(url: string): Promise<boolean> {
     try {
-        const res = await fetch(url, {method: 'HEAD'}); // solo cabecera, no descarga todo
-        if (!res.ok) return false; // status != 2xx
-        const contentType = res.headers.get('content-type') || '';
-        return contentType.startsWith('image/'); // valida que sea imagen
-    } catch (e) {
+        const rutaCompleta = path.join(process.cwd(), 'public', rutaPublica);
+        await fs.access(rutaCompleta);
+        validationCache.set(cacheKey, true);
+        return true;
+    } catch {
+        validationCache.set(cacheKey, false);
         return false;
     }
 }
 
-if (src && (src.startsWith('/') || src.startsWith('.'))) {
-    // --- Handle Local Images ---
-    // For optimization, local images must be in /src/assets/images/
-    const images = import.meta.glob('/src/resources/img/**/*.{jpeg,jpg,png,gif,webp,svg}');
-    const imagePath = `/src/resources${src.startsWith('/img') ? src : '/img' + src}`; // Normalize path
+/**
+ * Valida si una URL remota existe y es imagen
+ * Con timeout y cache
+ */
+async function urlExist(url: string): Promise<boolean> {
+    // Check cache primero
+    const cacheKey = `remote:${url}`;
+    if (validationCache.has(cacheKey)) {
+        return validationCache.get(cacheKey)!;
+    }
+
+    try {
+        // Solo validar en desarrollo, en producción asumir válido
+        if (import.meta.env.PROD) {
+            validationCache.set(cacheKey, true);
+            return true;
+        }
+
+        // Timeout de 3 segundos
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 3000);
+
+        const res = await fetch(url, {
+            method: 'HEAD',
+            signal: controller.signal,
+        });
+
+        clearTimeout(timeoutId);
+
+        if (!res.ok) {
+            validationCache.set(cacheKey, false);
+            return false;
+        }
+
+        const contentType = res.headers.get('content-type') || '';
+        const isImage = contentType.startsWith('image/');
+
+        validationCache.set(cacheKey, isImage);
+        return isImage;
+
+    } catch (error) {
+        // En caso de error (timeout, red), asumir que puede ser válido
+        // para no bloquear el render
+        if (import.meta.env.DEV) {
+            console.warn(`[Imagen] No se pudo validar URL: ${url}`, error);
+        }
+        validationCache.set(cacheKey, true);
+        return true;
+    }
+}
+
+/**
+ * Genera URL de placeholder
+ */
+function getPlaceholder(w: number, h: number, text?: string): string {
+    const displayText = text || `${w}x${h}`;
+    return `https://placehold.co/${w}x${h}/EAEAEA/29333B?text=${encodeURIComponent(displayText)}`;
+}
+
+// ==================== VALIDACIÓN DE SRC ====================
+
+let finalSrc: string | any = getPlaceholder(width, height);
+let useOptimizedImage = false; // Flag para usar <Image> o <img>
+
+if (!src) {
+    // Sin src, usar placeholder
+    if (import.meta.env.DEV) {
+        console.warn('[Imagen] No src provided, using placeholder');
+    }
+} else if (src.startsWith('/') || src.startsWith('.')) {
+    // --- Imágenes Locales ---
+
+    // 1. Intentar en /src/resources/img/ (optimizadas con astro:assets)
+    const images = import.meta.glob('/src/resources/img/**/*.{jpeg,jpg,png,gif,webp,svg,avif}');
+    const imagePath = `/src/resources${src.startsWith('/img') ? src : '/img' + src}`;
 
     if (images[imagePath]) {
-        // If the image exists in our glob, we can use Astro's <Image> component.
-        finalSrc = (await images[imagePath]()).default;
-    } else if (existeEnPublic(src)) {
-        finalSrc = src;
+        // Imagen en /src/resources/img/ - OPTIMIZABLE
+        try {
+            finalSrc = (await images[imagePath]()).default;
+            useOptimizedImage = true;
+
+            if (import.meta.env.DEV) {
+                console.log(`[Imagen] Usando imagen optimizada: ${imagePath}`);
+            }
+        } catch (error) {
+            console.error(`[Imagen] Error cargando imagen optimizada: ${imagePath}`, error);
+            finalSrc = getPlaceholder(width, height, 'Error');
+        }
+    } else {
+        // 2. Intentar en /public/ (no optimizable, pero válido)
+        const existsInPublic = await existeEnPublic(src);
+
+        if (existsInPublic) {
+            finalSrc = src;
+            useOptimizedImage = false;
+
+            if (import.meta.env.DEV) {
+                console.log(`[Imagen] Usando imagen de /public/: ${src}`);
+            }
+        } else {
+            // 3. No encontrada
+            if (import.meta.env.DEV) {
+                console.warn(`[Imagen] Imagen no encontrada: ${src}`);
+            }
+            finalSrc = getPlaceholder(width, height, 'No encontrada');
+        }
     }
-} else if (src.startsWith('http')) {
-    // Validamos que la URL exista y sea imagen
-    const validate = await urlExist(src);
-    if (validate) {
+} else if (src.startsWith('http://') || src.startsWith('https://')) {
+    // --- URL Remota ---
+    const isValid = await urlExist(src);
+
+    if (isValid) {
         finalSrc = src;
+        useOptimizedImage = false;
+
+        if (import.meta.env.DEV) {
+            console.log(`[Imagen] Usando URL remota: ${src}`);
+        }
+    } else {
+        if (import.meta.env.DEV) {
+            console.warn(`[Imagen] URL remota inválida: ${src}`);
+        }
+        finalSrc = getPlaceholder(width, height, 'URL inválida');
     }
+} else {
+    // Formato no reconocido
+    if (import.meta.env.DEV) {
+        console.warn(`[Imagen] Formato de src no reconocido: ${src}`);
+    }
+    finalSrc = getPlaceholder(width, height, 'Formato inválido');
 }
 ---
 
+{useOptimizedImage ? (
+    <!-- Imagen optimizada con astro:assets -->
 <Image
+        id={id}
+        src={finalSrc}
+        alt={alt}
+        width={width}
+        height={height}
+        class:list={[className]}
+        loading={loading}
+        decoding={decoding}
+        quality={quality}
+        format={format}
+/>
+    ) : (
+    <!-- Imagen estándar (public o remota) -->
+<img
+        id={id}
         src={finalSrc}
         alt={alt}
         width={width}
@@ -77,3 +225,63 @@ if (src && (src.startsWith('/') || src.startsWith('.'))) {
         loading={loading}
         decoding={decoding}
 />
+    )}
+
+<script>
+    /**
+     * Manejo de errores de carga en el cliente
+     * Fallback si la imagen falla después del render
+     */
+    class ImagenErrorHandler {
+        constructor() {
+            this.initErrorHandling();
+        }
+
+        private initErrorHandling() {
+            // Usar event delegation para mejor performance
+            document.addEventListener('error', (e) => {
+                const target = e.target as HTMLElement;
+
+                if (target.tagName === 'IMG') {
+                    this.handleImageError(target as HTMLImageElement);
+                }
+            }, true); // Usar capture phase
+        }
+
+        private handleImageError(img: HTMLImageElement) {
+            // Evitar loops infinitos
+            if (img.src.includes('placehold.co')) {
+                return;
+            }
+
+            const width = img.width || 600;
+            const height = img.height || 400;
+
+            console.error('[Imagen] Error cargando imagen:', img.src);
+
+            // Reemplazar con placeholder
+            img.src = `https://placehold.co/${width}x${height}/EAEAEA/29333B?text=Error+de+Carga`;
+            img.alt = 'Error cargando imagen';
+
+            // Agregar clase de error para estilos
+            img.classList.add('image-error');
+
+            // Prevenir más eventos de error
+            img.onerror = null;
+        }
+    }
+
+    // Inicializar una sola vez
+    if (typeof window !== 'undefined') {
+        new ImagenErrorHandler();
+    }
+</script>
+
+<style is:global>
+    /* Estilos para imágenes con error */
+    img.image-error {
+        border: 2px dashed #fcc;
+        background: #fee;
+        padding: 0.5rem;
+    }
+</style>

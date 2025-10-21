@@ -2,9 +2,9 @@
 // src/components/molecules/forms/DatePickerField.astro
 import { Translations, defaultLang } from '~/i18n/translation.ts';
 import Row from '~/layouts/Row.astro';
-import DateRangePicker from '../../atoms/DateRangePicker.astro';
 import Label from '../../atoms/Label.astro';
 import Icono from '../../atoms/Icono.astro';
+import NumberInput from "~/components/atoms/NumberInput.astro";
 
 interface Props {
     fieldId?: string;
@@ -16,11 +16,11 @@ interface Props {
 }
 
 const {
-    fieldId = 'date-range-picker',
+    fieldId = 'groupAdults',
     name,
     lblKey,
     lang,
-    icon='form/calendar',
+    icon,
     className
 } = Astro.props;
 
@@ -37,11 +37,11 @@ const t = Translations(lang ?? defaultLang);
                 classes="font-bold"
         />
     </Row>
-    <DateRangePicker
+    <NumberInput
             id={fieldId}
             name={name}
             lang={lang}
             placeholder={t('booking.dateRange.placeholder')}
     />
-    <span id={`error_${fieldId}`} class="hidden text-red-700 px-4">{t('booking.dateRange.error')}</span>
+    <span id={`error_${fieldId}`} class="hidden text-red-700 px-4">{t('booking.number.error')}</span>
 </div>

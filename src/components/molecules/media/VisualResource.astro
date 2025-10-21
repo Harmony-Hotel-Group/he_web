@@ -1,61 +1,107 @@
 ---
-// src/components/ui/VisualResource.astro
-import Imagen from "../../atoms/Imagen.astro"
+// src/components/media/VisualResource.astro
+/**
+    * Componente principal que delega a subcomponentes específicos
+    * Solo carga el componente necesario para mejor performance
+    */
+
+import {
+    detectResourceType,
+    validateResource,
+    type ResourceType
+} from '~/utils/visual-resource-utils.ts';
+
+import ImageResource from './ImageResource.astro';
+import VideoResource from './VideoResource.astro';
+import YouTubeResource from './YouTubeResource.astro';
 
 interface Props {
     src: string;
-    type: 'image' | 'video';
+    type?: 'image' | 'video' | 'youtube' | 'auto';
     alt?: string;
     classes?: string;
+    loading?: 'lazy' | 'eager';
+    width?: number;
+    height?: number;
+    autoplay?: boolean;
+    loop?: boolean;
+    muted?: boolean;
+    controls?: boolean;
+    placeholder?: string;
+    poster?: string;
+    srcset?: string;
+    sizes?: string;
 }
 
-let {src, type, alt = '', classes} = Astro.props;
+const {
+    src,
+    type = 'auto',
+    alt = '',
+    classes = '',
+    loading = 'lazy',
+    width = 600,
+    height = 400,
+    autoplay = false,
+    loop = false,
+    muted = true,
+    controls = true,
+    placeholder,
+    poster,
+    srcset,
+    sizes,
+} = Astro.props;
 
-let finalSrc = src;
-let isPlaceholder = false;
+const PlaceHolder = placeholder || `https://placehold.co/${width}x${height}?text=Recurso+No+Encontrado`;
 
-if (src && src.startsWith('http')) {
-    try {
-        const response = await fetch(src, {method: 'HEAD'});
-        if (!response.ok) {
-            console.warn(`[VisualResource] Recurso remoto no encontrado: ${src}`);
-            isPlaceholder = true;
-        }
-    } catch (error) {
-        console.error(`[VisualResource] Error al verificar recurso remoto ${src}:`, error);
-        isPlaceholder = true;
-    }
-} else if (!src) {
-    isPlaceholder = true;
+
+// Detectar tipo de recurso
+const detectedType: ResourceType = type === 'auto' ? detectResourceType(src) : type as ResourceType;
+
+if (import.meta.env.DEV) {
+    console.log(`[VisualResource] Recurso: ${src} | Tipo recibido: ${type} | Tipo detectado: ${detectedType}`);
 }
 
-if (isPlaceholder) {
-    finalSrc = `https://placehold.co/600x400?text=${type === 'video' ? 'Video' : 'Imagen'}+no+encontrado`;
-    type = 'image';
-}
+// Validar recurso (solo en build time, no en runtime)
+const validation = await validateResource(src, detectedType);
 ---
 
-{type === 'image' ? (
-<Imagen
-        src={finalSrc}
-        alt={alt || (isPlaceholder ? 'Recurso no encontrado' : '')}
-        width={600}
-        height={400}
-        loading="lazy"
-        class="w-full h-auto object-cover"
-/>
-    ) : (
-<div class="relative w-full h-full">
-    <video
-            autoplay
-            loop
-            muted
-            playsinline
-            src={finalSrc}
-            class:list={['absolute inset-0 w-full h-full object-cover',classes]}
-            onError="this.onerror=null;this.src='https://placehold.co/600x400?text=Recurso+no+encontrado';"
-    >
-        Tu navegador no soporta el elemento de video.
-    </video>
-</div>
-    )}
+{!src || !validation.isValid ? (
+    <ImageResource
+            src={PlaceHolder}
+            alt={alt || 'Recurso no encontrado'}
+    />) :
+    (detectedType === 'youtube') ? (
+        <YouTubeResource
+                src={src}
+                classes={classes}
+                autoplay={autoplay}
+                loop={loop}
+                muted={muted}
+                controls={controls}
+                title={alt}
+        />
+            ) : detectedType === 'video' ? (
+        <VideoResource
+                src={src}
+                classes={classes}
+                width={width}
+                height={height}
+                autoplay={autoplay}
+                loop={loop}
+                muted={muted}
+                controls={controls}
+                poster={poster}
+                placeholder={placeholder}
+        />
+            ) : (
+        <ImageResource
+                src={src}
+                alt={alt}
+                width={width}
+                height={height}
+                loading={loading}
+                classes={classes}
+                srcset={srcset}
+                sizes={sizes}
+        />
+            )}

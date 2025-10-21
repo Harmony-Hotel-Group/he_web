@@ -1,0 +1,256 @@
+---
+// src/components/ui/ImageResource.astro
+/**
+    * Componente especializado para imágenes
+    * Incluye lazy loading, srcset, y fallback automático
+    * Usa el componente Imagen.astro para optimización
+    */
+
+import Imagen from "../../atoms/Imagen.astro";
+
+interface Props {
+    src: string;
+    alt?: string;
+    width?: number;
+    height?: number;
+    loading?: 'lazy' | 'eager';
+    classes?: string;
+    srcset?: string;
+    sizes?: string;
+    decoding?: 'async' | 'sync' | 'auto';
+}
+
+const {
+    src,
+    alt = '',
+    width = 600,
+    height = 400,
+    loading = 'lazy',
+    classes = '',
+    srcset,
+    sizes,
+    decoding = 'async',
+} = Astro.props;
+
+// Generar ID único para el skeleton
+const imageId = `img-${Math.random().toString(36).substr(2, 9)}`;
+---
+
+<div class="image-resource-wrapper" data-image-id={imageId}>
+    <Imagen
+            id={imageId}
+            src={src}
+            alt={alt}
+            width={width}
+            height={height}
+            loading={loading}
+            decoding={decoding}
+            class={`image-resource ${classes}`}
+    />
+
+    <!-- Skeleton overlay (se oculta cuando carga) -->
+    <div class="image-skeleton" data-skeleton-for={imageId}>
+        <div class="skeleton-shimmer"></div>
+    </div>
+</div>
+
+<style>
+    .image-resource-wrapper {
+        position: relative;
+        width: 100%;
+        height: auto;
+        overflow: hidden;
+        background: #f5f5f5;
+    }
+
+    .image-resource {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+        display: block;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .image-resource.loaded {
+        opacity: 1;
+    }
+
+    /* Skeleton loading effect */
+    .image-skeleton {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #f0f0f0;
+        overflow: hidden;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+    }
+
+    .image-skeleton.hidden {
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    .skeleton-shimmer {
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+                90deg,
+                #f0f0f0 0%,
+                #e0e0e0 20%,
+                #f0f0f0 40%,
+                #f0f0f0 100%
+        );
+        background-size: 200% 100%;
+        animation: shimmer 1.5s infinite linear;
+    }
+
+    @keyframes shimmer {
+        0% {
+            background-position: -200% 0;
+        }
+        100% {
+            background-position: 200% 0;
+        }
+    }
+
+    /* Estado de error */
+    .image-resource-wrapper.error .image-skeleton {
+        background: #fee;
+        border: 2px dashed #fcc;
+    }
+
+    .image-resource-wrapper.error .skeleton-shimmer {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #c33;
+        font-size: 0.875rem;
+        animation: none;
+        background: transparent;
+    }
+
+    .image-resource-wrapper.error .skeleton-shimmer::before {
+        content: '⚠️ Imagen no disponible';
+    }
+</style>
+
+<script>
+    /**
+     * Manejo de carga de imágenes
+     * Detecta cuando la imagen carga y quita el skeleton
+     */
+    class ImageResourceManager {
+        private images: Map<string, HTMLImageElement> = new Map();
+        private skeletons: Map<string, HTMLElement> = new Map();
+
+        constructor() {
+            this.initImages();
+        }
+
+        private initImages() {
+            const wrappers = document.querySelectorAll('[data-image-id]');
+
+            wrappers.forEach(wrapper => {
+                const imageId = wrapper.getAttribute('data-image-id');
+                if (!imageId) return;
+
+                const img = wrapper.querySelector(`#${imageId}`) as HTMLImageElement;
+                const skeleton = wrapper.querySelector(`[data-skeleton-for="${imageId}"]`) as HTMLElement;
+
+                if (!img) return;
+
+                this.images.set(imageId, img);
+                if (skeleton) {
+                    this.skeletons.set(imageId, skeleton);
+                }
+
+                // Si la imagen ya está cargada (cached)
+                if (img.complete && img.naturalHeight !== 0) {
+                    this.handleImageLoad(imageId, img, skeleton);
+                } else {
+                    // Event listeners para carga
+                    img.addEventListener('load', () => {
+                        this.handleImageLoad(imageId, img, skeleton);
+                    });
+
+                    img.addEventListener('error', () => {
+                        this.handleImageError(imageId, wrapper as HTMLElement, skeleton);
+                    });
+                }
+            });
+
+            if (import.meta.env.DEV) {
+                console.log(`[ImageResource] Initialized ${this.images.size} image(s)`);
+            }
+        }
+
+        private handleImageLoad(
+            imageId: string,
+            img: HTMLImageElement,
+            skeleton: HTMLElement | null
+        ) {
+            // Ocultar skeleton
+            if (skeleton) {
+                skeleton.classList.add('hidden');
+            }
+
+            // Mostrar imagen con fade in
+            img.classList.add('loaded');
+
+            if (import.meta.env.DEV) {
+                console.log(`[ImageResource] Image loaded: ${imageId}`);
+            }
+        }
+
+        private handleImageError(
+            imageId: string,
+            wrapper: HTMLElement,
+            skeleton: HTMLElement | null
+        ) {
+            console.error(`[ImageResource] Failed to load image: ${imageId}`);
+
+            // Marcar wrapper como error
+            wrapper.classList.add('error');
+
+            // Mantener skeleton visible pero cambiar estilo
+            if (skeleton) {
+                skeleton.classList.remove('hidden');
+            }
+        }
+
+        public getImageCount(): number {
+            return this.images.size;
+        }
+
+        public getLoadedCount(): number {
+            let count = 0;
+            this.images.forEach(img => {
+                if (img.classList.contains('loaded')) {
+                    count++;
+                }
+            });
+            return count;
+        }
+    }
+
+    // Instancia global
+    let imageManager: ImageResourceManager;
+
+    // Inicializar cuando el DOM esté listo
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => {
+            imageManager = new ImageResourceManager();
+        });
+    } else {
+        imageManager = new ImageResourceManager();
+    }
+
+    // Exponer en desarrollo
+    if (import.meta.env.DEV) {
+        (window as any).__imageResourceManager = imageManager;
+    }
+</script>

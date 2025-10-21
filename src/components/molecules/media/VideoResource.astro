@@ -1,0 +1,447 @@
+---
+// src/components/ui/VideoResource.astro
+/**
+* Componente especializado para videos
+* Soporte para múltiples formatos, fallback y loading states
+*/
+
+interface Props {
+    src: string;
+    classes?: string;
+    width?: number;
+    height?: number;
+    autoplay?: boolean;
+    loop?: boolean;
+    muted?: boolean;
+    controls?: boolean;
+    poster?: string;
+    placeholder?: string;
+}
+
+const {
+    src,
+    classes = '',
+    width = 600,
+    height = 400,
+    autoplay = false,
+    loop = false,
+    muted = true,
+    controls = true,
+    poster,
+    placeholder,
+} = Astro.props;
+
+/**
+ * Obtiene el MIME type según la extensión
+ */
+function getVideoMimeType(url: string): string {
+    const ext = url.split('.').pop()?.toLowerCase() || '';
+    const mimeTypes: Record<string, string> = {
+        'mp4': 'video/mp4',
+        'webm': 'video/webm',
+        'ogg': 'video/ogg',
+        'ogv': 'video/ogg',
+        'mov': 'video/quicktime',
+        'avi': 'video/x-msvideo',
+        'm4v': 'video/mp4',
+    };
+
+    return mimeTypes[ext] || 'video/mp4';
+}
+
+/**
+ * Genera sources del video (solo el principal, sin variantes automáticas)
+ */
+function getVideoSources(srcUrl: string): Array<{src: string, type: string}> {
+    // Solo retornar el source principal
+    return [{
+        src: srcUrl,
+        type: getVideoMimeType(srcUrl)
+    }];
+}
+
+const videoId = `video-${Math.random().toString(36).substr(2, 9)}`;
+const videoSources = getVideoSources(src);
+const placeholderUrl = placeholder || `https://placehold.co/${width}x${height}?text=Video`;
+---
+
+<div
+        class:list={['video-resource-wrapper', classes]}
+        data-video-id={videoId}
+>
+    <video
+            id={videoId}
+            class="video-resource"
+            width={width}
+            height={height}
+            autoplay={autoplay}
+            loop={loop}
+            muted={muted}
+            controls={controls}
+            playsinline
+            poster={poster}
+            preload="metadata"
+            data-loaded="false"
+    >
+        {videoSources.map(source => (
+                <source src={source.src} type={source.type} />
+        ))}
+
+        <!-- Fallback para navegadores sin soporte -->
+        <p class="video-fallback-text">
+            Tu navegador no soporta videos HTML5.
+            <a href={src} download class="video-download-link">
+                Descargar video
+            </a>
+        </p>
+    </video>
+
+    <!-- Loading overlay -->
+    <div class="video-loading-overlay">
+        <div class="video-spinner"></div>
+        <p class="video-loading-text">Cargando video...</p>
+    </div>
+
+    <!-- Error overlay (oculto por defecto) -->
+    <div class="video-error-overlay hidden">
+        <div class="video-error-content">
+            <svg class="video-error-icon" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
+                <line x1="12" y1="9" x2="12" y2="13"/>
+                <line x1="12" y1="17" x2="12.01" y2="17"/>
+            </svg>
+            <h3 class="video-error-title">No se pudo cargar el video</h3>
+            <p class="video-error-message">El archivo de video no está disponible o el formato no es compatible.</p>
+            <a href={src} download class="video-error-download">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+                    <polyline points="7 10 12 15 17 10"/>
+                    <line x1="12" y1="15" x2="12" y2="3"/>
+                </svg>
+                Descargar video
+            </a>
+        </div>
+    </div>
+</div>
+
+<style>
+    .video-resource-wrapper {
+        position: relative;
+        width: 100%;
+        background: #000;
+        overflow: hidden;
+        border-radius: 0.5rem;
+    }
+
+    .video-resource {
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: cover;
+    }
+
+    /* Fallback text dentro del video */
+    .video-fallback-text {
+        padding: 2rem;
+        text-align: center;
+        color: #fff;
+        background: #1a1a1a;
+        font-size: 1rem;
+    }
+
+    .video-download-link {
+        color: #4a9eff;
+        text-decoration: underline;
+        margin-left: 0.5rem;
+    }
+
+    .video-download-link:hover {
+        color: #357abd;
+    }
+
+    /* Loading overlay */
+    .video-loading-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.8);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        opacity: 1;
+        transition: opacity 0.3s ease;
+        pointer-events: none;
+        z-index: 10;
+    }
+
+    .video-loading-overlay.hidden {
+        opacity: 0;
+    }
+
+    .video-spinner {
+        width: 50px;
+        height: 50px;
+        border: 4px solid rgba(255, 255, 255, 0.3);
+        border-top-color: #fff;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+    }
+
+    .video-loading-text {
+        color: #fff;
+        font-size: 0.875rem;
+    }
+
+    @keyframes spin {
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+    /* Error overlay */
+    .video-error-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: #1a1a1a;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 20;
+    }
+
+    .video-error-overlay.hidden {
+        display: none;
+    }
+
+    .video-error-content {
+        text-align: center;
+        padding: 2rem;
+        max-width: 400px;
+    }
+
+    .video-error-icon {
+        color: #ff6b6b;
+        margin: 0 auto 1rem;
+        display: block;
+    }
+
+    .video-error-title {
+        color: #fff;
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+    }
+
+    .video-error-message {
+        color: #aaa;
+        font-size: 0.875rem;
+        margin-bottom: 1.5rem;
+        line-height: 1.5;
+    }
+
+    .video-error-download {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.75rem 1.5rem;
+        background: #4a9eff;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 0.5rem;
+        font-weight: 500;
+        transition: background 0.2s;
+    }
+
+    .video-error-download:hover {
+        background: #357abd;
+    }
+</style>
+
+<script>
+    /**
+     * Manejo de eventos del video
+     * - Loading states
+     * - Error handling
+     * - Intersection Observer para autoplay inteligente
+     */
+    class VideoResourceManager {
+        private videos: Map<string, HTMLVideoElement> = new Map();
+        private observers: Map<string, IntersectionObserver> = new Map();
+
+        constructor() {
+            this.initVideos();
+        }
+
+        private initVideos() {
+            const wrappers = document.querySelectorAll('[data-video-id]');
+
+            wrappers.forEach(wrapper => {
+                const videoId = wrapper.getAttribute('data-video-id');
+                if (!videoId) return;
+
+                const video = wrapper.querySelector(`#${videoId}`) as HTMLVideoElement;
+                const loadingOverlay = wrapper.querySelector('.video-loading-overlay') as HTMLElement;
+                const errorOverlay = wrapper.querySelector('.video-error-overlay') as HTMLElement;
+
+                if (!video) return;
+
+                this.videos.set(videoId, video);
+
+                // Event: loadeddata - cuando el video está listo
+                video.addEventListener('loadeddata', () => {
+                    this.handleVideoLoad(video, loadingOverlay);
+                });
+
+                // Event: canplay - cuando puede empezar a reproducir
+                video.addEventListener('canplay', () => {
+                    loadingOverlay?.classList.add('hidden');
+                    video.setAttribute('data-loaded', 'true');
+                });
+
+                // Event: error - cuando falla la carga
+                video.addEventListener('error', (e) => {
+                    this.handleVideoError(video, wrapper as HTMLElement, loadingOverlay, errorOverlay);
+                });
+
+                // Intersection Observer para autoplay inteligente
+                if (video.autoplay) {
+                    this.setupIntersectionObserver(videoId, video);
+                }
+            });
+
+            if (import.meta.env.DEV) {
+                console.log(`[VideoResource] Initialized ${this.videos.size} video(s)`);
+            }
+        }
+
+        private handleVideoLoad(
+            video: HTMLVideoElement,
+            loadingOverlay: HTMLElement | null
+        ) {
+            loadingOverlay?.classList.add('hidden');
+            video.setAttribute('data-loaded', 'true');
+
+            if (import.meta.env.DEV) {
+                console.log(`[VideoResource] Video loaded: ${video.id}`);
+            }
+        }
+
+        private handleVideoError(
+            video: HTMLVideoElement,
+            wrapper: HTMLElement,
+            loadingOverlay: HTMLElement | null,
+            errorOverlay: HTMLElement | null
+        ) {
+            console.error('[VideoResource] Error loading video:', video.src);
+
+            // Ocultar loading, mostrar error
+            loadingOverlay?.classList.add('hidden');
+            errorOverlay?.classList.remove('hidden');
+
+            // Intentar con el siguiente source si hay
+            const sources = video.querySelectorAll('source');
+            let currentSourceIndex = -1;
+
+            sources.forEach((source, index) => {
+                if (source.src === video.currentSrc) {
+                    currentSourceIndex = index;
+                }
+            });
+
+            // Si hay más sources, intentar con el siguiente
+            if (currentSourceIndex < sources.length - 1) {
+                const nextSource = sources[currentSourceIndex + 1] as HTMLSourceElement;
+                if (nextSource && import.meta.env.DEV) {
+                    console.log(`[VideoResource] Trying next source: ${nextSource.src}`);
+                }
+                video.load();
+            }
+        }
+
+        private setupIntersectionObserver(
+            videoId: string,
+            video: HTMLVideoElement
+        ) {
+            const observer = new IntersectionObserver(
+                (entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting && video.paused) {
+                            // Video visible y pausado - intentar reproducir
+                            video.play().catch(err => {
+                                if (import.meta.env.DEV) {
+                                    console.warn('[VideoResource] Autoplay prevented:', err);
+                                }
+                            });
+                        } else if (!entry.isIntersecting && !video.paused) {
+                            // Video fuera de vista y reproduciéndose - pausar para ahorrar recursos
+                            video.pause();
+                        }
+                    });
+                },
+                {
+                    threshold: 0.5 // 50% visible
+                }
+            );
+
+            observer.observe(video);
+            this.observers.set(videoId, observer);
+        }
+
+        // API Pública
+        public playVideo(videoId: string) {
+            const video = this.videos.get(videoId);
+            if (video) {
+                video.play().catch(err => {
+                    console.error('[VideoResource] Error playing video:', err);
+                });
+            }
+        }
+
+        public pauseVideo(videoId: string) {
+            const video = this.videos.get(videoId);
+            if (video) {
+                video.pause();
+            }
+        }
+
+        public getVideoCount(): number {
+            return this.videos.size;
+        }
+
+        public cleanup() {
+            // Limpiar observers
+            this.observers.forEach(observer => observer.disconnect());
+            this.observers.clear();
+            this.videos.clear();
+        }
+    }
+
+    // Instancia global
+    let videoManager: VideoResourceManager;
+
+    // Inicializar cuando el DOM esté listo
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => {
+            videoManager = new VideoResourceManager();
+        });
+    } else {
+        videoManager = new VideoResourceManager();
+    }
+
+    // Cleanup al salir de la página
+    window.addEventListener('beforeunload', () => {
+        videoManager?.cleanup();
+    });
+
+    // Exponer en desarrollo
+    if (import.meta.env.DEV) {
+        (window as any).__videoResourceManager = videoManager;
+    }
+</script>

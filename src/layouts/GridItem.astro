@@ -1,0 +1,93 @@
+---
+/**
+    * GridItem Component - Helper para items dentro de GridLayout
+    * Simplifica el uso de data-attributes con props TypeScript
+    */
+
+interface Props {
+    // Column spanning
+    colSpan?: number | 'full';
+    colSpanSm?: number | 'full';
+    colSpanMd?: number | 'full';
+    colSpanLg?: number | 'full';
+    colSpanXl?: number | 'full';
+
+    // Row spanning
+    rowSpan?: number | 'full';
+    rowSpanSm?: number | 'full';
+    rowSpanMd?: number | 'full';
+    rowSpanLg?: number | 'full';
+
+    // Exact positioning
+    colStart?: number;
+    colEnd?: number | '-1';
+    rowStart?: number;
+    rowEnd?: number | '-1';
+
+    // Order
+    order?: number | 'first' | 'last';
+
+    // Standard HTML attributes
+    class?: string | string[];
+    style?: string;
+    id?: string;
+
+    // Accessibility
+    role?: string;
+    'aria-label'?: string;
+}
+
+const {
+    colSpan,
+    colSpanSm,
+    colSpanMd,
+    colSpanLg,
+    colSpanXl,
+    rowSpan,
+    rowSpanSm,
+    rowSpanMd,
+    rowSpanLg,
+    colStart,
+    colEnd,
+    rowStart,
+    rowEnd,
+    order,
+    class: className,
+    style,
+    id,
+    role,
+    'aria-label': ariaLabel,
+} = Astro.props;
+
+// Build data attributes object
+const dataAttrs: Record<string, string> = {};
+
+if (colSpan) dataAttrs['data-col-span'] = String(colSpan);
+if (colSpanSm) dataAttrs['data-col-span-sm'] = String(colSpanSm);
+if (colSpanMd) dataAttrs['data-col-span-md'] = String(colSpanMd);
+if (colSpanLg) dataAttrs['data-col-span-lg'] = String(colSpanLg);
+if (colSpanXl) dataAttrs['data-col-span-xl'] = String(colSpanXl);
+
+if (rowSpan) dataAttrs['data-row-span'] = String(rowSpan);
+if (rowSpanSm) dataAttrs['data-row-span-sm'] = String(rowSpanSm);
+if (rowSpanMd) dataAttrs['data-row-span-md'] = String(rowSpanMd);
+if (rowSpanLg) dataAttrs['data-row-span-lg'] = String(rowSpanLg);
+
+if (colStart) dataAttrs['data-col-start'] = String(colStart);
+if (colEnd) dataAttrs['data-col-end'] = String(colEnd);
+if (rowStart) dataAttrs['data-row-start'] = String(rowStart);
+if (rowEnd) dataAttrs['data-row-end'] = String(rowEnd);
+
+if (order) dataAttrs['data-order'] = String(order);
+---
+
+<div
+        id={id}
+        class:list={className}
+        style={style}
+        role={role}
+        aria-label={ariaLabel}
+        {...dataAttrs}
+>
+    <slot />
+</div>

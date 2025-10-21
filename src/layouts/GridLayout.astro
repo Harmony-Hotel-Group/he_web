@@ -1,21 +1,282 @@
 ---
+/**
+    * GridLayout Component - Sistema de grid flexible y optimizado
+    *
+    * @example
+    * <GridLayout cols={4}>
+    *   <div data-col-span="2">Ancho doble</div>
+    *   <div>Normal</div>
+    *   <div>Normal</div>
+    * </GridLayout>
+    */
+
+interface Props {
+    _id?: string;
+    lang?: string;
+    classes?: string | string[];
+
+    // Grid Configuration
+    cols?: number;                    // Número de columnas (ej: 3, 4, 6, 12)
+    rows?: number;                    // Número de filas (opcional)
+    gap?: string | number;            // Gap entre items (ej: "1rem", 16, "4")
+    rowGap?: string | number;         // Gap vertical específico
+    colGap?: string | number;         // Gap horizontal específico
+
+    // Auto Layout
+    autoAdjust?: boolean;             // Usar auto-fit para responsive
+    minColWidth?: string;             // Ancho mínimo de columna en auto-fit (ej: "250px")
+    maxColWidth?: string;             // Ancho máximo de columna en auto-fit (ej: "1fr")
+
+    // Responsive
+    responsive?: {
+        sm?: number;   // Cols en mobile (640px+)
+        md?: number;   // Cols en tablet (768px+)
+        lg?: number;   // Cols en desktop (1024px+)
+        xl?: number;   // Cols en large desktop (1280px+)
+    };
+
+    // Alignment
+    alignItems?: 'start' | 'center' | 'end' | 'stretch';
+    justifyItems?: 'start' | 'center' | 'end' | 'stretch';
+
+    // Dense packing
+    autoFlow?: 'row' | 'column' | 'dense' | 'row dense' | 'column dense';
+}
+
 const {
     _id,
     lang,
     classes,
-    cols,
+    cols = 12,
+    rows,
+    gap = 4,
+    rowGap,
+    colGap,
     autoAdjust = false,
-    minColWidth = '250px'
+    minColWidth = '250px',
+    maxColWidth = '1fr',
+    responsive,
+    alignItems,
+    justifyItems,
+    autoFlow,
 } = Astro.props;
 
-let gridStyle;
+// ==================== HELPERS ====================
 
-if (cols && !autoAdjust) {
-    gridStyle = `grid-template-columns: repeat(${cols}, minmax(0, 1fr));`;
-} else {
-    gridStyle = `grid-template-columns: repeat(auto-fit, minmax(${minColWidth}, 1fr));`;
+/**
+ * Convierte gap a formato CSS
+ */
+function formatGap(value: string | number): string {
+    if (typeof value === 'number') {
+        // Si es número, asumimos que son unidades de Tailwind (4 = 1rem)
+        return `${value * 0.25}rem`;
+    }
+    return value;
+}
+
+/**
+ * Genera el grid-template-columns
+ */
+function generateGridColumns(): string {
+    if (autoAdjust) {
+        return `repeat(auto-fit, minmax(${minColWidth}, ${maxColWidth}))`;
+    }
+    return `repeat(${cols}, minmax(0, 1fr))`;
+}
+
+/**
+ * Genera el grid-template-rows si está definido
+ */
+function generateGridRows(): string | undefined {
+    if (!rows) return undefined;
+    return `repeat(${rows}, minmax(0, 1fr))`;
+}
+
+// ==================== STYLES ====================
+
+const gridStyles: Record<string, string> = {
+    'grid-template-columns': generateGridColumns(),
+};
+
+// Rows
+if (rows) {
+    gridStyles['grid-template-rows'] = generateGridRows()!;
+}
+
+// Gap
+const finalRowGap = rowGap ?? gap;
+const finalColGap = colGap ?? gap;
+if (finalRowGap) gridStyles['row-gap'] = formatGap(finalRowGap);
+if (finalColGap) gridStyles['column-gap'] = formatGap(finalColGap);
+
+// Alignment
+if (alignItems) gridStyles['align-items'] = alignItems;
+if (justifyItems) gridStyles['justify-items'] = justifyItems;
+
+// Auto flow
+if (autoFlow) gridStyles['grid-auto-flow'] = autoFlow;
+
+const styleString = Object.entries(gridStyles)
+    .map(([key, value]) => `${key}: ${value}`)
+    .join('; ');
+
+// ==================== RESPONSIVE CLASSES ====================
+
+const responsiveClasses: string[] = [];
+
+if (responsive) {
+    // Generar classes de Tailwind para responsive
+    if (responsive.sm) responsiveClasses.push(`sm:grid-cols-${responsive.sm}`);
+    if (responsive.md) responsiveClasses.push(`md:grid-cols-${responsive.md}`);
+    if (responsive.lg) responsiveClasses.push(`lg:grid-cols-${responsive.lg}`);
+    if (responsive.xl) responsiveClasses.push(`xl:grid-cols-${responsive.xl}`);
 }
 ---
-<div id={_id} lang={lang} class:list={["grid gap-4", classes]} style={gridStyle}>
+
+<div
+        id={_id}
+        lang={lang}
+        class:list={[
+            "grid",
+            classes,
+            ...responsiveClasses
+        ]}
+        style={styleString}
+        data-grid-cols={cols}
+>
     <slot />
 </div>
+
+<style is:global>
+    /* Utilidades para grid-column span */
+    [data-col-span="1"] { grid-column: span 1; }
+    [data-col-span="2"] { grid-column: span 2; }
+    [data-col-span="3"] { grid-column: span 3; }
+    [data-col-span="4"] { grid-column: span 4; }
+    [data-col-span="5"] { grid-column: span 5; }
+    [data-col-span="6"] { grid-column: span 6; }
+    [data-col-span="7"] { grid-column: span 7; }
+    [data-col-span="8"] { grid-column: span 8; }
+    [data-col-span="9"] { grid-column: span 9; }
+    [data-col-span="10"] { grid-column: span 10; }
+    [data-col-span="11"] { grid-column: span 11; }
+    [data-col-span="12"] { grid-column: span 12; }
+    [data-col-span="full"] { grid-column: 1 / -1; }
+
+    /* Utilidades para grid-row span */
+    [data-row-span="1"] { grid-row: span 1; }
+    [data-row-span="2"] { grid-row: span 2; }
+    [data-row-span="3"] { grid-row: span 3; }
+    [data-row-span="4"] { grid-row: span 4; }
+    [data-row-span="5"] { grid-row: span 5; }
+    [data-row-span="6"] { grid-row: span 6; }
+    [data-row-span="full"] { grid-row: 1 / -1; }
+
+    /* Utilidades para posicionamiento exacto */
+    [data-col-start="1"] { grid-column-start: 1; }
+    [data-col-start="2"] { grid-column-start: 2; }
+    [data-col-start="3"] { grid-column-start: 3; }
+    [data-col-start="4"] { grid-column-start: 4; }
+    [data-col-start="5"] { grid-column-start: 5; }
+    [data-col-start="6"] { grid-column-start: 6; }
+
+    [data-col-end="2"] { grid-column-end: 2; }
+    [data-col-end="3"] { grid-column-end: 3; }
+    [data-col-end="4"] { grid-column-end: 4; }
+    [data-col-end="5"] { grid-column-end: 5; }
+    [data-col-end="6"] { grid-column-end: 6; }
+    [data-col-end="7"] { grid-column-end: 7; }
+    [data-col-end="-1"] { grid-column-end: -1; }
+
+    /* Responsive spans - Mobile first */
+    @media (min-width: 640px) {
+        [data-col-span-sm="1"] { grid-column: span 1; }
+        [data-col-span-sm="2"] { grid-column: span 2; }
+        [data-col-span-sm="3"] { grid-column: span 3; }
+        [data-col-span-sm="4"] { grid-column: span 4; }
+        [data-col-span-sm="full"] { grid-column: 1 / -1; }
+    }
+
+    @media (min-width: 768px) {
+        [data-col-span-md="1"] { grid-column: span 1; }
+        [data-col-span-md="2"] { grid-column: span 2; }
+        [data-col-span-md="3"] { grid-column: span 3; }
+        [data-col-span-md="4"] { grid-column: span 4; }
+        [data-col-span-md="6"] { grid-column: span 6; }
+        [data-col-span-md="full"] { grid-column: 1 / -1; }
+    }
+
+    @media (min-width: 1024px) {
+        [data-col-span-lg="1"] { grid-column: span 1; }
+        [data-col-span-lg="2"] { grid-column: span 2; }
+        [data-col-span-lg="3"] { grid-column: span 3; }
+        [data-col-span-lg="4"] { grid-column: span 4; }
+        [data-col-span-lg="6"] { grid-column: span 6; }
+        [data-col-span-lg="8"] { grid-column: span 8; }
+        [data-col-span-lg="full"] { grid-column: 1 / -1; }
+    }
+
+    /* Utilidades de orden */
+    [data-order="1"] { order: 1; }
+    [data-order="2"] { order: 2; }
+    [data-order="3"] { order: 3; }
+    [data-order="4"] { order: 4; }
+    [data-order="5"] { order: 5; }
+    [data-order="first"] { order: -1; }
+    [data-order="last"] { order: 9999; }
+</style>
+
+<script>
+    /**
+     * Inicialización del grid layout con soporte para responsive
+     */
+    class GridLayoutManager {
+        private gridElements: NodeListOf<HTMLElement>;
+
+        constructor() {
+            this.gridElements = document.querySelectorAll('[data-grid-cols]');
+            this.init();
+        }
+
+        private init() {
+            if (this.gridElements.length === 0) return;
+
+            // Log para debugging
+            if (import.meta.env.DEV) {
+                console.log(`[GridLayout] Initialized ${this.gridElements.length} grid(s)`);
+            }
+
+            // Agregar listeners para resize si hay grids responsive
+            this.setupResponsiveHandling();
+        }
+
+        private setupResponsiveHandling() {
+            // Observar cambios en el tamaño de la ventana
+            let resizeTimeout: number;
+
+            window.addEventListener('resize', () => {
+                clearTimeout(resizeTimeout);
+                resizeTimeout = window.setTimeout(() => {
+                    this.handleResize();
+                }, 150); // Debounce de 150ms
+            });
+        }
+
+        private handleResize() {
+            // Aquí puedes agregar lógica custom para resize
+            // Por ejemplo, recalcular layouts complejos
+            if (import.meta.env.DEV) {
+                console.log('[GridLayout] Window resized');
+            }
+        }
+    }
+
+    // Inicializar cuando el DOM esté listo
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => {
+            new GridLayoutManager();
+        });
+    } else {
+        new GridLayoutManager();
+    }
+</script>

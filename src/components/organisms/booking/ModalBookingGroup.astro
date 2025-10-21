@@ -16,7 +16,7 @@ const t = Translations(lang);
 
 <div id="groupModal"
      class={`fixed inset-0 z-[9999] flex items-center justify-center bg-black bg-opacity-50 transition-opacity duration-300 ${isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
-    <div class={`bg-white dark:bg-gray-900 rounded-lg shadow-xl w-[80vw] h-[70vh] flex flex-col overflow-hidden transform transition-transform duration-300 ${isOpen ? 'scale-100 translate-y-0' : 'scale-95 translate-y-4'}`}>
+    <div id="modal-container" class={`bg-white dark:bg-gray-900 rounded-lg shadow-xl w-[80vw] h-[70vh] flex flex-col overflow-hidden transform transition-transform duration-300 ${isOpen ? 'scale-100 translate-y-0' : 'scale-95 translate-y-4'}`}>
 
         <div class="bg-primary text-white px-6 py-4 flex justify-between items-center flex-shrink-0">
             <h2 class="text-xl font-semibold flex items-center gap-2">
@@ -54,7 +54,7 @@ const t = Translations(lang);
     class ModalBookingGroup {
         private modal: HTMLElement;
         private cancelBtn: HTMLElement;
-        private confirmBtn: HTMLElement;
+        private confirmBtn: HTMLButtonElement;
         private vehicleFormContainer: HTMLElement;
         private vehicleSwitchButton: HTMLButtonElement | null = null;
         private isOpen: boolean = false;
@@ -62,7 +62,7 @@ const t = Translations(lang);
         constructor() {
             this.modal = document.getElementById('groupModal')!;
             this.cancelBtn = document.getElementById('cancelModalBtn')!;
-            this.confirmBtn = document.getElementById('confirmModalBtn')!;
+            this.confirmBtn = document.getElementById('confirmModalBtn')! as HTMLButtonElement;
             this.vehicleFormContainer = document.getElementById('vehicleFormContainer')!;
             this.initEventListeners();
             this.setupSwitchObserver();
@@ -103,7 +103,7 @@ const t = Translations(lang);
         public open() {
             this.isOpen = true;
             this.modal.classList.remove('opacity-0', 'pointer-events-none');
-            const modalContainer = this.modal.querySelector('.w-\[80vw\]') as HTMLElement;
+            const modalContainer = this.modal.querySelector('#modal-container') as HTMLElement;
             modalContainer.classList.remove('scale-95', 'translate-y-4');
             modalContainer.classList.add('scale-100', 'translate-y-0');
             this.modal.focus();
@@ -113,7 +113,7 @@ const t = Translations(lang);
         public close() {
             this.isOpen = false;
             this.clearValidationErrors();
-            const modalContainer = this.modal.querySelector('.w-\[80vw\]') as HTMLElement;
+            const modalContainer = this.modal.querySelector('#modal-container') as HTMLElement;
             modalContainer.classList.add('scale-95', 'translate-y-4');
             modalContainer.classList.remove('scale-100', 'translate-y-0');
             setTimeout(() => this.modal.classList.add('opacity-0', 'pointer-events-none'), 300);
@@ -154,6 +154,10 @@ const t = Translations(lang);
 
         private async confirm() {
             this.clearValidationErrors();
+            const originalButtonHTML = this.confirmBtn.innerHTML;
+            this.confirmBtn.disabled = true;
+            this.confirmBtn.innerHTML = `<svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Confirmando...`;
+
             try {
                 const groupForm = document.getElementById('booking-group-form') as HTMLFormElement;
                 const formData = new FormData(groupForm);
@@ -174,13 +178,19 @@ const t = Translations(lang);
                 await sendBookingMessage(formData, type);
 
                 this.close();
+                window.showToast('Reserva confirmada con éxito', 'success');
 
             } catch (error) {
                 if (error.name === 'ActionInputError' && error.fields) {
                     this.handleValidationErrors(error.fields);
+                    window.showToast('Por favor, revisa los campos del formulario.', 'error');
                 } else {
                     console.error('Error al confirmar reserva:', error);
+                    window.showToast('Error al procesar la reserva. Por favor, inténtelo de nuevo.', 'error');
                 }
+            } finally {
+                this.confirmBtn.disabled = false;
+                this.confirmBtn.innerHTML = originalButtonHTML;
             }
         }
     }

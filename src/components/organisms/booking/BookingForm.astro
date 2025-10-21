@@ -1,6 +1,7 @@
 ---
 // src/components/organisms/booking/BookingForm.astro
 import Grid from "~/layouts/GridLayout.astro"
+import GridItem from "~/layouts/GridItem.astro";
 import Row from "~/layouts/Row.astro";
 
 import DatePickerField from "~/components/molecules/forms/DatePickerField.astro";
@@ -58,65 +59,78 @@ const roomsOptions = range(1, 5).map((i, index, array) => {
     }
 })
 
+const vehicleTypeOptions = [
+    {value: "auto", label: "Auto"},
+    {value: "suv", label: "SUV"},
+    {value: "camioneta", label: "Camioneta"},
+    {value: "furgoneta", label: "Furgoneta"},
+    {value: "buseta", label: "Buseta"},
+    {value: "bus", label: "Bus"},
+    {value: "otro", label: "Otro"},
+];
+
 const whatsappNumber = config?.contactInfo?.whatsapp ?? "";
 const email = config?.contactInfo?.email ?? "";
 ---
 
-<form id="booking-form" method="post" class="rounded-xl space-y-3" 
+<form id="booking-form" method="post" class="rounded-xl space-y-3"
       data-whatsapp={whatsappNumber}
       data-email={email}>
 
     <!-- Sección Normal -->
-    <div id="normal-booking-section">
-        <Grid cols="3" autoAdjust="true">
-            <div>
-                <DatePickerField
-                        fieldId="dateRange"
-                        name="dateRange"
-                        lblKey="booking.dateRange.title"
-                        lang={lang}
-                />
-            </div>
-            <DropDownField
-                    fieldId="adults"
-                    name="adults"
-                    initialValue={2}
-                    icon="adult"
-                    lblKey="booking.dropdown.lblAdults"
+    <Grid cols="5">
+        <div data-col-span="2">
+            <DatePickerField
+                    fieldId="dateRange"
+                    name="dateRange"
+                    lblKey="booking.dateRange.title"
                     lang={lang}
-                    options={adultsOptions}
             />
+        </div>
+        <DropDownField
+                fieldId="adults"
+                name="adults"
+                initialValue={2}
+                icon="adult"
+                lblKey="booking.dropdown.lblAdults"
+                lang={lang}
+                options={adultsOptions}
+        />
 
-            <DropDownField
-                    fieldId="children"
-                    name="children"
-                    icon="teen"
-                    lblKey="booking.dropdown.lblChildren"
-                    lang={lang}
-                    options={childrenOptions}
-            />
+        <DropDownField
+                fieldId="children"
+                name="children"
+                icon="teen"
+                lblKey="booking.dropdown.lblChildren"
+                lang={lang}
+                options={childrenOptions}
+        />
 
-            <DropDownField
-                    fieldId="rooms"
-                    name="rooms"
-                    icon="bed"
-                    lblKey="booking.dropdown.lblRooms"
-                    lang={lang}
-                    options={roomsOptions}
-            />
-        </Grid>
-    </div>
+        <DropDownField
+                fieldId="rooms"
+                name="rooms"
+                icon="bed"
+                lblKey="booking.dropdown.lblRooms"
+                lang={lang}
+                options={roomsOptions}
+        />
+    </Grid>
 
 
     <!-- Switches -->
     <Row>
-        <SwitchField fieldId="breakfast" name="breakfast" lblKey="booking.switch.breakfast" lang={lang} checked />
-        <SwitchField fieldId="vehicle" name="vehicle" lblKey="booking.switch.vehicle" lang={lang} />
+        <SwitchField fieldId="breakfast" name="breakfast" lblKey="booking.switch.breakfast" lang={lang} checked/>
+        <SwitchField fieldId="vehicle" name="vehicle" lblKey="booking.switch.vehicle" lang={lang}/>
+        <SwitchField fieldId="special_request" name="request" lblKey="booking.switch.special_request" lang={lang}/>
     </Row>
 
     <!-- Sección de Vehículos (oculta inicialmente) -->
     <div id="vehicle-section" class="hidden">
-        <BookingVehicleSection lang={lang} config={config} />
+        <BookingVehicleSection lang={lang} vehicleTypeOptions={vehicleTypeOptions}/>
+    </div>
+
+    <div id="special_request-section">
+
     </div>
 
     <div class="text-center pt-4">
@@ -126,7 +140,7 @@ const email = config?.contactInfo?.email ?? "";
 </form>
 
 <!-- Modal para reservas grupales -->
-<ModalBookingGroup lang={lang} config={config} isOpen={false} client:load />
+<ModalBookingGroup lang={lang} config={config} isOpen={false} client:load/>
 
 <script>
     import { actions } from 'astro:actions';
@@ -182,14 +196,17 @@ const email = config?.contactInfo?.email ?? "";
             }
         }
 
-        const btn: HTMLFormElement = document.getElementById('btnSubmit');
+        const btn = document.getElementById('btnSubmit') as HTMLButtonElement;
         btn?.addEventListener('click', async () => {
             clearValidationErrors();
-            const formData = new FormData(form);
-            const whatsappNumber = form.dataset.whatsapp;
+            const originalButtonHTML = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = `<svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Enviando...`;
 
             try {
-                const { data, error } = await actions.booking(formData);
+                const formData = new FormData(form);
+                const whatsappNumber = form.dataset.whatsapp;
+                const {data, error} = await actions.booking(formData);
 
                 if (error) {
                     console.error("Validation error:", error);
@@ -198,7 +215,7 @@ const email = config?.contactInfo?.email ?? "";
                     return;
                 }
 
-                const { processing } = data;
+                const {processing} = data;
                 let message = `
 *Estimado Hotel Ensueños por favor necesito que me ayude con una reserva:*
 
@@ -218,7 +235,7 @@ const email = config?.contactInfo?.email ?? "";
                         const type = (item.querySelector(`select[name^="vehicleType"]`) as HTMLSelectElement)?.value;
                         const plate = (item.querySelector(`input[name^="vehiclePlate"]`) as HTMLInputElement)?.value;
                         if (type) {
-                             message += `\n   ${index + 1}. Tipo: ${type}, Placa: ${plate || 'N/A'}`;
+                            message += `\n   ${index + 1}. Tipo: ${type}, Placa: ${plate || 'N/A'}`;
                         }
                     });
                 }
@@ -236,6 +253,9 @@ const email = config?.contactInfo?.email ?? "";
             } catch (err) {
                 console.error("Error inesperado al enviar la reserva:", err);
                 window.showToast('Ocurrió un error inesperado. Por favor, inténtalo de nuevo.', 'error');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = originalButtonHTML;
             }
         });
     });

@@ -71,73 +71,12 @@ const t = Translations(lang);
     </div>
 </div>
 
-<!--<script>-->
-<!--    import { Translations } from "~/i18n/translation.ts";-->
-
-<!--    document.addEventListener('DOMContentLoaded', () => {-->
-<!--        const component = document.getElementById('vehicle-section-component');-->
-<!--        if (!component) return;-->
-
-<!--        const lang = component.dataset.lang;-->
-<!--        const vehicleTypeOptions = JSON.parse(component.dataset.vehicleOptions || '[]');-->
-<!--        const t = Translations(lang);-->
-
-<!--        const addVehicleBtn = component.querySelector('#addVehicleBtn');-->
-<!--        const removeVehicleBtn = component.querySelector('#removeVehicleBtn');-->
-<!--        const vehiclesContainer = component.querySelector('#vehicles-container');-->
-<!--        let vehicleCount = 2;-->
-
-<!--        addVehicleBtn?.addEventListener('click', () => {-->
-<!--            const optionsHTML = vehicleTypeOptions.map(opt => `<option value="${opt.value}">${opt.es}</option>`).join('');-->
-<!--            const vehicleHTML = `-->
-<!--                <div class="vehicle-item bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-3">-->
-<!--                    <div class="flex justify-between items-center mb-2">-->
-<!--                        <span class="text-sm font-medium text-gray-700 dark:text-gray-300">${t('booking.vehicles.vehicle')} ${vehicleCount}</span>-->
-<!--                    </div>-->
-<!--                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">-->
-<!--                        <div class="space-y-1">-->
-<!--                            <label class="block text-xs font-medium text-gray-600 dark:text-gray-400">${t('booking.vehicles.type')}</label>-->
-<!--                            <select name="vehicleType${vehicleCount}" class="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-amber-500 focus:border-transparent">-->
-<!--                                ${optionsHTML}-->
-<!--                            </select>-->
-<!--                        </div>-->
-<!--                        <div class="space-y-1">-->
-<!--                            <label class="block text-xs font-medium text-gray-600 dark:text-gray-400">${t('booking.vehicles.plate.title')}</label>-->
-<!--                            <input type="text" name="vehiclePlate${vehicleCount}" placeholder="ABC-1234" class="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-amber-500 focus:border-transparent uppercase" />-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>`;-->
-<!--            if (vehicleCount <= 6) {-->
-<!--                vehiclesContainer.insertAdjacentHTML('beforeend', vehicleHTML);-->
-<!--                removeVehicleBtn.classList.remove('hidden');-->
-<!--                vehicleCount++;-->
-<!--            }-->
-<!--            // vehiclesContainer.insertAdjacentHTML('beforeend', vehicleHTML);-->
-<!--        });-->
-
-<!--        removeVehicleBtn?.addEventListener('click', () => {-->
-<!--            if (vehicleCount > 1) {-->
-<!--                vehiclesContainer.lastElementChild?.remove();-->
-<!--                vehicleCount&#45;&#45;;-->
-<!--                if (vehicleCount === 1) {-->
-<!--                    removeVehicleBtn.classList.add('hidden');-->
-<!--                }-->
-<!--            }-->
-<!--        });-->
-<!--    });-->
-<!--</script>-->
-
-
 <script is:inline define:vars={{config, lang}}>
-    // Nota: usamos `is:inline` porque este script depende de `lang` y `vehicleTypeOptions` del contexto de Astro
     document.addEventListener('DOMContentLoaded', () => {
         const component = document.getElementById('vehicle-section-component');
         if (!component || component.dataset.initialized) return; // 👈 Evita doble inicialización
         component.dataset.initialized = 'true'; // Marca como inicializado
         if (!component) return;
-
-        // const lang = component.dataset.lang;
-        // const vehicleTypeOptions = JSON.parse(component.dataset.vehicleOptions || '[]');
 
         // Simulamos la función de traducción solo para los tipos de vehículo
         // (No puedes importar Translations aquí si es código del lado del servidor)

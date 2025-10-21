@@ -13,6 +13,7 @@
     "booking": "Reservar Ahora"
   },
   "components": {
+    "dateRangePicker": "{{n}} noche{{s}}",
     "errors": {
       "dateRangePicker": "Falta seleccionar un rango de fechas"
     }
@@ -59,6 +60,9 @@
       "placeholder": "Selecciona un rango de fechas",
       "error":"No hay fecha seleccionada"
     },
+    "number": {
+      "error": "Eliga un numero valido"
+    },
     "vehicles": {
       "title": "Reservar Vehiculo",
       "vehicle": "Vehiculo",
@@ -73,13 +77,16 @@
       "notesPlaceHolder": "Describa notas adicionales"
     },
     "group": {
+      "title": "Informacion de grupo",
       "adults": "Cant. Adultos +18",
       "teens": "Cant. Adolescentes +12",
       "kids": "Cant. Niños +5",
       "infants": "Cant. Infantes -5",
       "notes": "Petición Especial",
       "notesPlaceholder": "Describa si desea alguna información adicional",
+      "vehicle": "Vamos con vehiculos",
       "modal": {
+        "title": "Reserva Grupal",
         "cancel": "Cancelar",
         "confirm": "Confirmar"
       }

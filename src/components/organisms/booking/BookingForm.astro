@@ -1,7 +1,6 @@
 ---
 // src/components/organisms/booking/BookingForm.astro
 import Grid from "~/layouts/GridLayout.astro"
-import GridItem from "~/layouts/GridItem.astro";
 import Row from "~/layouts/Row.astro";
 
 import DatePickerField from "~/components/molecules/forms/DatePickerField.astro";
@@ -78,12 +77,13 @@ const email = config?.contactInfo?.email ?? "";
       data-email={email}>
 
     <!-- Sección Normal -->
-    <Grid cols="5">
+    <Grid cols={5}>
         <div data-col-span="2">
             <DatePickerField
                     fieldId="dateRange"
                     name="dateRange"
                     lblKey="booking.dateRange.title"
+                    icon="form/calendar"
                     lang={lang}
             />
         </div>
@@ -91,7 +91,7 @@ const email = config?.contactInfo?.email ?? "";
                 fieldId="adults"
                 name="adults"
                 initialValue={2}
-                icon="adult"
+                icon="form/adult"
                 lblKey="booking.dropdown.lblAdults"
                 lang={lang}
                 options={adultsOptions}
@@ -100,7 +100,7 @@ const email = config?.contactInfo?.email ?? "";
         <DropDownField
                 fieldId="children"
                 name="children"
-                icon="teen"
+                icon="form/teen"
                 lblKey="booking.dropdown.lblChildren"
                 lang={lang}
                 options={childrenOptions}
@@ -109,7 +109,7 @@ const email = config?.contactInfo?.email ?? "";
         <DropDownField
                 fieldId="rooms"
                 name="rooms"
-                icon="bed"
+                icon="form/bed"
                 lblKey="booking.dropdown.lblRooms"
                 lang={lang}
                 options={roomsOptions}
@@ -121,7 +121,7 @@ const email = config?.contactInfo?.email ?? "";
     <Row>
         <SwitchField fieldId="breakfast" name="breakfast" lblKey="booking.switch.breakfast" lang={lang} checked/>
         <SwitchField fieldId="vehicle" name="vehicle" lblKey="booking.switch.vehicle" lang={lang}/>
-        <SwitchField fieldId="special_request" name="request" lblKey="booking.switch.special_request" lang={lang}/>
+        <!--<SwitchField fieldId="special_request" name="request" lblKey="booking.switch.special_request" lang={lang}/>-->
     </Row>
 
     <!-- Sección de Vehículos (oculta inicialmente) -->
@@ -129,9 +129,8 @@ const email = config?.contactInfo?.email ?? "";
         <BookingVehicleSection lang={lang} vehicleTypeOptions={vehicleTypeOptions}/>
     </div>
 
-    <div id="special_request-section">
-
-    </div>
+    <!--<div id="special_request-section">-->
+    <!--</div>-->
 
     <div class="text-center pt-4">
         <Button _id="btnSubmit" type="button" lblKey="booking.btn.search" lang={lang} variant="accent"

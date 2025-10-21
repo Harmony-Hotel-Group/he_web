@@ -12,7 +12,7 @@ const siteConfig = await fetchData('siteConfig');
 const carouselResources = siteConfig?.carouselResources || [];
 ---
 
-<BaseLayout titleKey="site.title" lang={lang} config={siteConfig}>
+<BaseLayout titleKey="site.title" lang={lang}>
   <div class="relative w-full h-screen overflow-hidden">
     <VisualCarousel resources={carouselResources} videoZoomScale={1.2} />
     <div class="absolute inset-0 flex items-center justify-center z-10 p-4">

@@ -1,0 +1,19 @@
+---
+interface Props {
+    id: string;
+    name?: string;
+    placeholder?: string;
+    min?: number;
+    max?: number;
+    step?: number;
+    lang?: string;
+}
+
+const {id, name, placeholder, min=0, max=20, step = 1, lang} = Astro.props;
+---
+
+<!--<div class="space-y-1">-->
+<div class="relative w-full">
+    <input type="number" id={id} name={name} min={min} max={max} step={step} placeholder={placeholder}
+           class="w-full px-3 py-2 border border-gray-300 rounded-md bg-white text-gray-900 focus:ring-2 focus:ring-primary focus:border-transparent"/>
+</div>

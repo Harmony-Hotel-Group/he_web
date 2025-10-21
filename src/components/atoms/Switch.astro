@@ -1,9 +1,11 @@
 ---
-// src/components/atoms/Switch.astro
+/**
+    * src/components/atoms/Switch.astro
+    * Componente atómico para un switch accesible y sin dependencias externas.
+    */
 interface Props {
     id?: string;
     name: string;
-
     checked?: boolean;
     disabled?: boolean;
     classes?: string;
@@ -12,79 +14,72 @@ interface Props {
 const {
     id,
     name,
-
     checked = false,
     disabled = false,
-    classes,
+    classes = "",
 } = Astro.props;
 ---
 
 <div class:list={["relative inline-block", classes]}>
     <button
+            id={id}
             type="button"
             role="switch"
             aria-checked={checked}
-            data-switch-button="true"
-            data-name={name}
+            data-switch={name}
             class:list={[
-                'relative inline-flex items-center h-4 w-9 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out',
-                'focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2',
-                checked ? 'bg-accent' : 'bg-gray-200',
-                disabled ? 'opacity-50 cursor-not-allowed' : ''
+                "relative inline-flex items-center h-4 w-9 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out",
+                "focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2",
+                checked ? "bg-accent" : "bg-gray-200",
+                disabled ? "opacity-50 cursor-not-allowed" : "",
             ]}
             disabled={disabled}
+            tabindex="0"
     >
-        <span
-                aria-hidden="true"
-                class:list={[
-                    'pointer-events-none inline-block h-3 w-3 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out',
-                    checked ? 'translate-x-5' : 'translate-x-0'
-                ]}
-        ></span>
+    <span
+            aria-hidden="true"
+            class:list={[
+                "pointer-events-none inline-block h-3 w-3 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out",
+                checked ? "translate-x-5" : "translate-x-0",
+            ]}
+    ></span>
     </button>
-    <input type="hidden" name={name} value={checked.toString()}/>
+
+    <input type="hidden" name={name} value={checked.toString()} />
 
     <script is:inline>
-        // This script runs immediately for each instance of the component
         (() => {
-            // Find the parent div of this script tag
-            const scriptTag = document.currentScript;
-            if (!scriptTag) return;
+            const script = document.currentScript;
+            const root = script?.closest('div');
+            if (!root) return;
 
-            const container = scriptTag.closest('div'); // Find the closest parent div
-            if (!container) {
-                return;
-            }
+            const button = root.querySelector('button[role="switch"]');
+            const input = root.querySelector('input[type="hidden"]');
+            const handle = button?.querySelector('span[aria-hidden="true"]');
+            if (!button || !input || !handle) return;
 
-            const switchButton = container.querySelector('button[role="switch"]');
-            const hiddenInput = container.querySelector('input[type="hidden"]');
+            if (button.dataset.initialized) return;
+            button.dataset.initialized = "true";
 
-            if (!switchButton || !hiddenInput) {
-                return;
-            }
+            const toggle = () => {
+                if (button.disabled) return;
+                const isChecked = button.getAttribute("aria-checked") === "true";
+                const newState = !isChecked;
+                button.setAttribute("aria-checked", String(newState));
+                input.value = String(newState);
 
-            // Prevent re-initialization
-            if (switchButton.dataset.initialized) {
-                return;
-            }
-            switchButton.dataset.initialized = 'true';
+                button.classList.toggle("bg-accent", newState);
+                button.classList.toggle("bg-gray-200", !newState);
+                handle.classList.toggle("translate-x-5", newState);
+                handle.classList.toggle("translate-x-0", !newState);
+            };
 
-            switchButton.addEventListener('click', () => {
-                let isChecked = switchButton.getAttribute('aria-checked') === 'true';
-                isChecked = !isChecked; // Flip the state
-
-                switchButton.setAttribute('aria-checked', String(isChecked));
-                hiddenInput.value = String(isChecked);
-
-                switchButton.classList.toggle('bg-accent', isChecked);
-                switchButton.classList.toggle('bg-gray-200', !isChecked);
-
-                const handle = switchButton.querySelector('span[aria-hidden="true"]');
-                if (handle) {
-                    handle.classList.toggle('translate-x-5', isChecked);
-                    handle.classList.toggle('translate-x-0', !isChecked);
-                } else {
-                    console.error("[Switch.astro] Script: Handle element not found for instance.");
+            // Click + teclado accesible
+            button.addEventListener("click", toggle);
+            button.addEventListener("keydown", (e) => {
+                if (e.key === " " || e.key === "Enter") {
+                    e.preventDefault();
+                    toggle();
                 }
             });
         })();

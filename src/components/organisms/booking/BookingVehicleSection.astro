@@ -26,28 +26,26 @@ const t = Translations(lang);
             {t('booking.vehicles.title')}
         </h3>
 
-        <Grid cols="3" _id="vehicles-container" class="space-y-3">
+        <Grid cols={3} _id="vehicles-container" classes="">
             <!-- Vehículo 1 (por defecto) -->
             <div class="vehicle-item bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-3">
                 <div class="flex justify-between items-center mb-2">
-                    <span class="text-sm font-medium text-gray-700 dark:text-gray-300">{t('booking.vehicles.vehicle')}
-                        1</span>
+                    <span class="text-sm font-medium text-gray-700 dark:text-gray-300">
+                        {t('booking.vehicles.vehicle')} 1</span>
                 </div>
-                <Row>
-                    <div class="space-y-1">
-                        <label for="vehicleType1"
-                               class="block text-xs font-medium text-gray-600 dark:text-gray-400">{t('booking.vehicles.type')}</label>
+                <Row class="grid grid-cols-2 ">
+                    <label for="vehicleType1" class="block text-xs font-medium text-gray-600 dark:text-gray-400">
+                        {t('booking.vehicles.type')}
                         <select name="vehicleType1"
                                 class="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-amber-500 focus:border-transparent">
                             {config?.vehicleTypeOptions.map(option =>
                                     <option value={option.value}>{option[lang]}</option>)}
                         </select>
-                    </div>
-                    <div class="space-y-1">
-                        <label class="block text-xs font-medium text-gray-600 dark:text-gray-400">{t('booking.vehicles.plate.title')}</label>
+                    </label>
+                    <label class="block text-xs font-medium text-gray-600 dark:text-gray-400">{t('booking.vehicles.plate.title')}
                         <input type="text" name="vehiclePlate1" placeholder={t('booking.vehicles.plate.placeholder')}
                                class="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-amber-500 focus:border-transparent uppercase"/>
-                    </div>
+                    </label>
                 </Row>
             </div>
         </Grid>
@@ -115,17 +113,14 @@ const t = Translations(lang);
           <div class="flex justify-between items-center mb-2">
             <span class="text-sm font-medium text-gray-700 dark:text-gray-300">${t_vehicle} ${nextIndex}</span>
           </div>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-            <div class="space-y-1">
-              <label class="block text-xs font-medium text-gray-600 dark:text-gray-400">${t_type}</label>
+          <div class="grid grid-cols-2 gap-3 flex justify-between items-center mb-2">
+              <label class="block text-xs font-medium text-gray-600 dark:text-gray-400">${t_type}
               <select name="vehicleType${nextIndex}" class="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-amber-500 focus:border-transparent">
                 ${optionsHTML}
-              </select>
-            </div>
-            <div class="space-y-1">
-              <label class="block text-xs font-medium text-gray-600 dark:text-gray-400">${t_plateTitle}</label>
+              </select></label>
+              <label class="block text-xs font-medium text-gray-600 dark:text-gray-400">${t_plateTitle}
               <input type="text" name="vehiclePlate${nextIndex}" placeholder="${t_platePlaceholder}" class="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-amber-500 focus:border-transparent uppercase" />
-            </div>
+              </label>
           </div>
         </div>`;
 

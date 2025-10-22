@@ -14,11 +14,10 @@ interface Props {
     icon?: string;
     checked?: boolean;
     className?: string;
-    onChange?: (value: string) => void; // Add onChange prop
+    onChange?: (value: boolean) => void; // Add onChange prop
 }
 
 const {fieldId, name, lblKey, checked, className, onChange, lang, icon} = Astro.props;
-const switchId = `switch-${fieldId}`;
 const t = Translations(lang);
 ---
 
@@ -32,7 +31,7 @@ const t = Translations(lang);
                 classes="font-bold"
         />
     <Switch
-            id={switchId}
+            id={fieldId}
             name={name}
             checked={checked}
             onChange={onChange}

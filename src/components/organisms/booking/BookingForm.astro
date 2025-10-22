@@ -70,13 +70,17 @@ const vehicleTypeOptions = [
 
 const whatsappNumber = config?.contactInfo?.whatsapp ?? "";
 const email = config?.contactInfo?.email ?? "";
+
+
+function changeVehicleSwicth(check: boolean) {
+    console.log(check);
+}
 ---
 
 <form id="booking-form" method="post" class="rounded-xl space-y-3"
       data-whatsapp={whatsappNumber}
       data-email={email}>
 
-    <!-- Sección Normal -->
     <Grid cols={5}>
         <div data-col-span="2">
             <DatePickerField
@@ -119,14 +123,15 @@ const email = config?.contactInfo?.email ?? "";
 
     <!-- Switches -->
     <Row>
-        <SwitchField fieldId="breakfast" name="breakfast" lblKey="booking.switch.breakfast" lang={lang} checked/>
-        <SwitchField fieldId="vehicle" name="vehicle" lblKey="booking.switch.vehicle" lang={lang}/>
+        <SwitchField fieldId="breakfast" name="breakfast" lblKey="booking.switch.breakfast" lang={lang} checked
+                     icon="form/breakfast"/>
+        <SwitchField fieldId="vehicle" name="vehicle" lblKey="booking.switch.vehicle" lang={lang} icon="form/vehicle"/>
         <!--<SwitchField fieldId="special_request" name="request" lblKey="booking.switch.special_request" lang={lang}/>-->
     </Row>
 
     <!-- Sección de Vehículos (oculta inicialmente) -->
     <div id="vehicle-section" class="hidden">
-        <BookingVehicleSection lang={lang} vehicleTypeOptions={vehicleTypeOptions}/>
+        <BookingVehicleSection lang={lang} config={config} client:load/>
     </div>
 
     <!--<div id="special_request-section">-->
@@ -143,14 +148,15 @@ const email = config?.contactInfo?.email ?? "";
 
 <script>
     import { actions } from 'astro:actions';
-
     document.addEventListener("DOMContentLoaded", () => {
         const form = document.getElementById('booking-form');
         if (!form) return;
 
         const bookingBar = form.closest('#booking-bar');
         const vehicleSection = document.getElementById('vehicle-section');
-        const vehicleSwitchButton = form.querySelector('button[data-name="vehicle"]');
+        const vehicleSwitchButton = form.querySelector('button[id="vehicle"]');
+
+        console.log("form",form);
 
         if (vehicleSwitchButton && vehicleSection) {
             const observer = new MutationObserver(() => {

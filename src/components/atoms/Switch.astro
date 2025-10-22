@@ -9,6 +9,7 @@ interface Props {
     checked?: boolean;
     disabled?: boolean;
     classes?: string;
+    onChange?: (checked: boolean) => void;
 }
 
 const {
@@ -17,6 +18,7 @@ const {
     checked = false,
     disabled = false,
     classes = "",
+    onChange,
 } = Astro.props;
 ---
 
@@ -45,9 +47,9 @@ const {
     ></span>
     </button>
 
-    <input type="hidden" name={name} value={checked.toString()} />
+    <input type="hidden" name={name} value={checked.toString()}/>
 
-    <script is:inline>
+    <script is:inline define:vars={{onChange}}>
         (() => {
             const script = document.currentScript;
             const root = script?.closest('div');
@@ -72,7 +74,14 @@ const {
                 button.classList.toggle("bg-gray-200", !newState);
                 handle.classList.toggle("translate-x-5", newState);
                 handle.classList.toggle("translate-x-0", !newState);
+
+                // Call the onChange callback if provided
+                console.log("onChange called with newState:", newState);
+                if (onChange) {
+                    onChange(newState);
+                }
             };
+
 
             // Click + teclado accesible
             button.addEventListener("click", toggle);

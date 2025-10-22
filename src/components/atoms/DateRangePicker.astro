@@ -1,28 +1,28 @@
 ---
+// src/components/atoms/DateRangePicker.astro
+/**
+    * DateRangePicker con sincronización automática
+    * Se sincroniza con otros DatePickers del mismo syncGroup
+    */
+
 interface Props {
     id: string;
     lang?: string;
     name?: string;
     placeholder?: string;
+    syncGroup?: string; // Grupo de sincronización (default: 'booking')
 }
 
 const {
     id,
     name,
     lang,
-    placeholder
+    placeholder,
+    syncGroup = 'booking', // Por defecto todos los date pickers de booking se sincronizan
 } = Astro.props;
 ---
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"/>
-
-<style>
-    .date-range-picker-input {
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-</style>
 
 <div class="relative w-full">
     <input
@@ -31,26 +31,52 @@ const {
             type="text"
             data-lang={lang}
             data-for-id={id}
-            placeholder=`${placeholder}`
+            data-sync-group={syncGroup}
+            placeholder={placeholder}
             readonly
             class="w-full p-2 border rounded-md cursor-pointer date-range-picker-input"
     />
 </div>
 
+<style>
+    .date-range-picker-input {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        background: white;
+        cursor: pointer;
+    }
+
+    .date-range-picker-input:focus {
+        outline: none;
+        ring: 2px;
+        ring-color: rgb(59 130 246);
+        border-color: rgb(59 130 246);
+    }
+</style>
+
 <script>
     import flatpickr from "flatpickr";
     import "flatpickr/dist/l10n/es.js";
     import { defaultLang, Translations } from "~/i18n/translation.ts";
+    import { datePickerSync } from "~/utils/date-picker-sync.ts";
 
-    function runDatePicker(input) {
+    function runDatePicker(input: HTMLInputElement) {
         const lang = input.dataset.lang || defaultLang;
+        const syncGroup = input.dataset.syncGroup || 'booking';
+        const pickerId = input.id;
         const t = Translations(lang);
 
-        flatpickr(input, {
+        // Configurar flatpickr
+        const pickerInstance = flatpickr(input, {
             mode: "range",
             minDate: "today",
             dateFormat: "Y/m/d",
             locale: flatpickr.l10ns[lang] ?? flatpickr.l10ns.default,
+
+            // Configuración adicional
+            showMonths: 1,
+            enableTime: false,
 
             onChange: function (selectedDates, dateStr, instance) {
                 if (selectedDates.length === 0) {
@@ -59,7 +85,7 @@ const {
                     return;
                 }
 
-                const formatDate = (d) => {
+                const formatDate = (d: Date): string => {
                     const y = d.getFullYear();
                     const m = String(d.getMonth() + 1).padStart(2, "0");
                     const day = String(d.getDate()).padStart(2, "0");
@@ -67,43 +93,109 @@ const {
                 };
 
                 if (selectedDates.length === 1) {
-                    input.value = formatDate(selectedDates[0]);
-                    input.title = input.value;
+                    const formatted = formatDate(selectedDates[0]);
+                    input.value = formatted;
+                    input.title = formatted;
+
+                    // Sincronizar con otros pickers
+                    datePickerSync.sync(pickerId, formatted, selectedDates, syncGroup);
                 }
+
                 if (selectedDates.length === 2) {
                     const [start, end] = selectedDates;
 
+                    // Validar que sean fechas diferentes
                     if (start.toDateString() === end.toDateString()) {
                         instance.clear();
-                        const message =
-                            lang === "es"
+                        const message = t('booking.dateRange.sameDayError') ||
+                            (lang === "es"
                                 ? "Debes seleccionar al menos 2 días diferentes."
-                                : "You must select at least 2 different days.";
+                                : "You must select at least 2 different days.");
                         alert(message);
                         return;
                     }
 
-                    const nights = Math.round((end - start) / (1000 * 60 * 60 * 24));
-
-                    const nightsLabel = `${t('components.dateRangePicker', {n: nights, s: nights === 1 ? "" : "s"})}`
-                    // lang === "es"
-                    //     ? `${nights} ${nights === 1 ? "noche" : "noches"}`
-                    //     : `${nights} ${nights === 1 ? "night" : "nights"}`;
+                    // Calcular noches
+                    const nights = Math.round((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24));
+                    const nightsLabel = t('components.dateRangePicker', {
+                        n: nights,
+                        s: nights === 1 ? "" : "s"
+                    }) || `${nights} ${nights === 1 ? "noche" : "noches"}`;
 
                     const text = `${formatDate(start)} ➜ ${formatDate(end)} (${nightsLabel})`;
 
                     input.value = text;
                     input.title = text;
+
+                    // Sincronizar con otros pickers
+                    datePickerSync.sync(pickerId, text, selectedDates, syncGroup);
+
+                    // Dispatch custom event para notificar cambios
+                    const changeEvent = new CustomEvent('datepicker:change', {
+                        detail: {
+                            pickerId,
+                            value: text,
+                            dates: selectedDates,
+                            nights,
+                            syncGroup
+                        },
+                        bubbles: true
+                    });
+                    input.dispatchEvent(changeEvent);
                 }
             },
+
+            onReady: function(selectedDates, dateStr, instance) {
+                // Registrar en el sistema de sincronización
+                datePickerSync.register(pickerId, instance, syncGroup);
+
+                if (import.meta.env.DEV) {
+                    console.log(`[DateRangePicker] Initialized: ${pickerId}`);
+                }
+            },
+
+            onDestroy: function() {
+                // Desregistrar cuando se destruye
+                datePickerSync.unregister(pickerId, syncGroup);
+            }
         });
+
+        return pickerInstance;
     }
 
+    // Inicializar todos los date pickers
     document.addEventListener("DOMContentLoaded", () => {
         const inputs = document.querySelectorAll('input[data-for-id]');
+
         inputs.forEach(input => {
-            console.log("input", input);
-            runDatePicker(input);
+            if (input instanceof HTMLInputElement) {
+                runDatePicker(input);
+            }
         });
+
+        if (import.meta.env.DEV) {
+            console.log(`[DateRangePicker] Initialized ${inputs.length} picker(s)`);
+        }
+    });
+
+    // Re-inicializar cuando se agregan nuevos inputs dinámicamente
+    const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+            mutation.addedNodes.forEach((node) => {
+                if (node instanceof HTMLElement) {
+                    const inputs = node.querySelectorAll('input[data-for-id]');
+                    inputs.forEach(input => {
+                        if (input instanceof HTMLInputElement && !input.dataset.flatpickr) {
+                            runDatePicker(input);
+                        }
+                    });
+                }
+            });
+        });
+    });
+
+    observer.observe(document.body, {
+        childList: true,
+        subtree: true
     });
 </script>

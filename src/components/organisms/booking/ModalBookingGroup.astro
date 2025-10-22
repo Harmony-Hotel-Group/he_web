@@ -2,6 +2,7 @@
 // src/components/organisms/booking/ModalBookingGroup.astro
 import BookingGroupForm from "./BookingGroupForm.astro";
 import BookingVehicleForm from "./BookingVehicleForm.astro";
+import Switch from "../../atoms/Switch.astro";
 import { Translations } from "~/i18n/translation.ts";
 
 interface Props {
@@ -14,186 +15,346 @@ const {lang, config, isOpen} = Astro.props;
 const t = Translations(lang);
 ---
 
+<!-- Modal Backdrop -->
 <div id="groupModal"
      class={`fixed inset-0 z-[9999] flex items-center justify-center bg-black bg-opacity-50 transition-opacity duration-300 ${isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
-    <div id="modal-container" class={`bg-white dark:bg-gray-900 rounded-lg shadow-xl w-[80vw] h-[70vh] flex flex-col overflow-hidden transform transition-transform duration-300 ${isOpen ? 'scale-100 translate-y-0' : 'scale-95 translate-y-4'}`}>
+    <!-- Modal Container -->
+    <div class={`bg-white dark:bg-gray-900 rounded-lg shadow-xl max-w-4xl w-full mx-4 max-h-[90vh] flex flex-col overflow-hidden transform transition-transform duration-300 ${isOpen ? 'scale-100 translate-y-0' : 'scale-95 translate-y-4'}`}>
 
-        <div class="bg-primary text-white px-6 py-4 flex justify-between items-center flex-shrink-0">
+        <!-- Modal Header -->
+        <div class="bg-blue-600 text-white px-6 py-4 flex justify-between items-center flex-shrink-0">
             <h2 class="text-xl font-semibold flex items-center gap-2">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                           d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
                 </svg>
-                {t('booking.group.modal.title')}
+                {t('booking.group.modal.title') || 'Reserva Grupal - Confirmación'}
             </h2>
         </div>
 
-        <div id="modalBody" class="flex-1 overflow-y-auto p-6 bg-gray-50">
-            <BookingGroupForm lang={lang} config={config}/>
-            <div id="vehicleFormContainer" class="hidden mt-4">
+        <!-- Modal Body -->
+        <div class="flex-1 overflow-y-auto p-6 bg-gray-100 dark:bg-gray-800">
+            <!-- Formulario de Grupo -->
+            <div id="groupTabContent" class="mb-6">
+                <BookingGroupForm lang={lang} config={config}/>
+            </div>
+
+            <!-- Switch para mostrar/ocultar formulario de vehículos -->
+            <div class="bg-white dark:bg-gray-700 rounded-lg p-4 mb-4 shadow-sm">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <svg class="w-5 h-5 text-gray-700 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0"/>
+                        </svg>
+                        <span class="font-medium text-gray-900 dark:text-gray-100">
+                            {t('booking.group.modal.includeVehicles') || '¿Incluir información de vehículos?'}
+                        </span>
+                    </div>
+                    <Switch
+                            id="vehicleToggleSwitch"
+                            name="includeVehicles"
+                            checked={false}
+                            classes="pl-0"
+                    />
+                </div>
+            </div>
+
+            <!-- Formulario de Vehículos (oculto por defecto) -->
+            <div id="vehicleTabContent" class="hidden transition-opacity duration-200 opacity-0">
                 <BookingVehicleForm lang={lang} config={config}/>
             </div>
         </div>
 
-        <div class="bg-white px-6 py-4 flex justify-end gap-3 border-t border-gray-200 flex-shrink-0">
-            <button id="cancelModalBtn"
-                    class="px-6 py-2 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-md transition-colors duration-200 font-medium">{t('booking.group.modal.cancel')}</button>
-            <button id="confirmModalBtn"
-                    class="px-6 py-2 bg-accent hover:bg-accent/90 text-white rounded-md transition-colors duration-200 font-medium flex items-center gap-2">
+        <!-- Modal Footer -->
+        <div class="bg-gray-50 dark:bg-gray-800 px-6 py-4 flex flex-wrap justify-end gap-3 border-t border-gray-200 dark:border-gray-700 flex-shrink-0">
+            <button
+                    id="cancelModalBtn"
+                    class="px-6 py-2 bg-gray-300 hover:bg-gray-400 dark:bg-gray-600 dark:hover:bg-gray-500 text-gray-800 dark:text-gray-200 rounded-md transition-colors duration-200 font-medium"
+            >
+                {t('booking.group.modal.cancel') || 'Cancelar'}
+            </button>
+            <button
+                    id="confirmModalBtn"
+                    class="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md transition-colors duration-200 font-medium flex items-center gap-2"
+            >
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                           d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
                 </svg>
-                {t('booking.group.modal.confirm')}
+                {t('booking.group.modal.confirm') || 'Confirmar Reserva'}
             </button>
         </div>
     </div>
 </div>
 
 <script>
-    class ModalBookingGroup {
-        private modal: HTMLElement;
-        private cancelBtn: HTMLElement;
-        private confirmBtn: HTMLButtonElement;
-        private vehicleFormContainer: HTMLElement;
-        private vehicleSwitchButton: HTMLButtonElement | null = null;
-        private isOpen: boolean = false;
+    document.addEventListener("DOMContentLoaded", () => {
+        class ModalBookingGroup {
+            private modal: HTMLElement | null = null;
+            private cancelBtn: HTMLElement | null = null;
+            private confirmBtn: HTMLElement | null = null;
+            private vehicleToggleSwitch: HTMLElement | null = null;
+            private vehicleToggleInput: HTMLInputElement | null = null;
+            private vehicleTabContent: HTMLElement | null = null;
+            private isOpen: boolean = false;
+            private vehiclesEnabled: boolean = false;
 
-        constructor() {
-            this.modal = document.getElementById('groupModal')!;
-            this.cancelBtn = document.getElementById('cancelModalBtn')!;
-            this.confirmBtn = document.getElementById('confirmModalBtn')! as HTMLButtonElement;
-            this.vehicleFormContainer = document.getElementById('vehicleFormContainer')!;
-            this.initEventListeners();
-            this.setupSwitchObserver();
-        }
-
-        private initEventListeners() {
-            this.cancelBtn.addEventListener('click', () => this.close());
-            this.confirmBtn.addEventListener('click', async () => await this.confirm());
-        }
-
-        private setupSwitchObserver() {
-            const findAndObserveSwitch = () => {
-                const switchButton = this.modal.querySelector('button[data-name="vehicle"]') as HTMLButtonElement;
-                if (switchButton && !this.vehicleSwitchButton) {
-                    this.vehicleSwitchButton = switchButton;
-                    const switchObserver = new MutationObserver(() => this.toggleVehicleForm());
-                    switchObserver.observe(switchButton, {attributes: true, attributeFilter: ['aria-checked']});
-                    this.toggleVehicleForm(); // Initial check
-                    return true;
-                }
-                return false;
-            };
-
-            if (findAndObserveSwitch()) return;
-
-            const modalObserver = new MutationObserver((_, obs) => {
-                if (findAndObserveSwitch()) obs.disconnect();
-            });
-            modalObserver.observe(this.modal, {childList: true, subtree: true});
-        }
-
-        private toggleVehicleForm() {
-            if (!this.vehicleSwitchButton) return;
-            const isChecked = this.vehicleSwitchButton.getAttribute('aria-checked') === 'true';
-            this.vehicleFormContainer.classList.toggle('hidden', !isChecked);
-        }
-
-        public open() {
-            this.isOpen = true;
-            this.modal.classList.remove('opacity-0', 'pointer-events-none');
-            const modalContainer = this.modal.querySelector('#modal-container') as HTMLElement;
-            modalContainer.classList.remove('scale-95', 'translate-y-4');
-            modalContainer.classList.add('scale-100', 'translate-y-0');
-            this.modal.focus();
-            this.syncDateFromMainForm();
-        }
-
-        public close() {
-            this.isOpen = false;
-            this.clearValidationErrors();
-            const modalContainer = this.modal.querySelector('#modal-container') as HTMLElement;
-            modalContainer.classList.add('scale-95', 'translate-y-4');
-            modalContainer.classList.remove('scale-100', 'translate-y-0');
-            setTimeout(() => this.modal.classList.add('opacity-0', 'pointer-events-none'), 300);
-
-            if (this.vehicleSwitchButton && this.vehicleSwitchButton.getAttribute('aria-checked') === 'true') {
-                this.vehicleSwitchButton.click();
+            constructor() {
+                this.init();
             }
-        }
 
-        private syncDateFromMainForm() {
-            const mainDateInput = document.getElementById('dateRange') as HTMLInputElement;
-            const groupDateInput = document.getElementById('dateRangeGroup') as HTMLInputElement;
-            if (mainDateInput?.value && groupDateInput) {
-                groupDateInput.value = mainDateInput.value;
-            }
-        }
+            private init() {
+                this.modal = document.getElementById('groupModal');
+                this.cancelBtn = document.getElementById('cancelModalBtn');
+                this.confirmBtn = document.getElementById('confirmModalBtn');
 
-        private clearValidationErrors() {
-            this.modal.querySelectorAll('[id^="error_"]').forEach(el => el.classList.add('hidden'));
-            this.modal.querySelectorAll('.border-red-500').forEach(el => el.classList.remove('border-red-500'));
-        }
+                // Buscar el switch button y su input hidden
+                this.vehicleToggleSwitch = document.querySelector('#vehicleToggleSwitch button[role="switch"]') as HTMLElement;
+                this.vehicleToggleInput = document.querySelector('input[name="includeVehicles"]') as HTMLInputElement;
+                this.vehicleTabContent = document.getElementById('vehicleTabContent');
 
-        private handleValidationErrors(errors) {
-            for (const fieldError of errors) {
-                const fieldName = fieldError.path[0];
-                const inputElement = this.modal.querySelector(`[name="${fieldName}"]`);
-                const errorElement = this.modal.querySelector(`#error_${fieldName}`);
-
-                if (inputElement) {
-                    inputElement.classList.add('border-red-500');
+                // Verificar que los elementos esenciales existen
+                if (!this.modal || !this.cancelBtn || !this.confirmBtn) {
+                    console.error('[ModalBookingGroup] Error: No se pudieron encontrar elementos esenciales del modal');
+                    return;
                 }
-                if (errorElement) {
-                    errorElement.textContent = fieldError.message;
-                    errorElement.classList.remove('hidden');
+
+                // Verificar switch
+                if (this.vehicleToggleSwitch && this.vehicleToggleInput && this.vehicleTabContent) {
+                    console.log('[ModalBookingGroup] Switch de vehículos encontrado y listo');
+                } else {
+                    console.error('[ModalBookingGroup] Error: Elementos del switch no encontrados', {
+                        switch: this.vehicleToggleSwitch,
+                        input: this.vehicleToggleInput,
+                        content: this.vehicleTabContent
+                    });
                 }
+
+                this.initEventListeners();
             }
-        }
 
-        private async confirm() {
-            this.clearValidationErrors();
-            const originalButtonHTML = this.confirmBtn.innerHTML;
-            this.confirmBtn.disabled = true;
-            this.confirmBtn.innerHTML = `<svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Confirmando...`;
+            private initEventListeners() {
+                if (!this.cancelBtn || !this.confirmBtn || !this.modal) {
+                    return;
+                }
 
-            try {
-                const groupForm = document.getElementById('booking-group-form') as HTMLFormElement;
-                const formData = new FormData(groupForm);
-                const isVehicleChecked = this.vehicleSwitchButton?.getAttribute('aria-checked') === 'true';
+                // Botón cancelar
+                this.cancelBtn.addEventListener('click', () => {
+                    this.close();
+                });
 
-                if (isVehicleChecked) {
-                    const vehicleForm = this.vehicleFormContainer.querySelector('form');
-                    if (vehicleForm) {
-                        const vehicleFormData = new FormData(vehicleForm);
-                        for (const [key, value] of vehicleFormData.entries()) {
-                            formData.append(key, value);
-                        }
+                // Botón confirmar
+                this.confirmBtn.addEventListener('click', async () => {
+                    await this.confirm();
+                });
+
+                // Observar cambios en el input hidden del switch
+                if (this.vehicleToggleInput && this.vehicleTabContent) {
+                    // Usar MutationObserver para detectar cambios en el atributo value
+                    const observer = new MutationObserver(() => {
+                        this.handleSwitchChange();
+                    });
+
+                    observer.observe(this.vehicleToggleInput, {
+                        attributes: true,
+                        attributeFilter: ['value']
+                    });
+
+                    // También escuchar el evento change
+                    this.vehicleToggleInput.addEventListener('change', () => {
+                        this.handleSwitchChange();
+                    });
+
+                    // Escuchar clicks en el botón del switch directamente
+                    if (this.vehicleToggleSwitch) {
+                        this.vehicleToggleSwitch.addEventListener('click', () => {
+                            // Esperar un tick para que el switch actualice su valor
+                            setTimeout(() => {
+                                this.handleSwitchChange();
+                            }, 10);
+                        });
                     }
                 }
 
-                const { sendBookingMessage } = await import('~/services/send/index.ts');
-                const type = isVehicleChecked ? 'vehicle' : 'group';
-                await sendBookingMessage(formData, type);
+                // Prevenir cierre al hacer clic dentro del modal
+                this.modal.addEventListener('click', (e) => {
+                    if (e.target === this.modal) {
+                        // No cerrar el modal
+                    }
+                });
+            }
 
-                this.close();
-                window.showToast('Reserva confirmada con éxito', 'success');
-
-            } catch (error) {
-                if (error.name === 'ActionInputError' && error.fields) {
-                    this.handleValidationErrors(error.fields);
-                    window.showToast('Por favor, revisa los campos del formulario.', 'error');
-                } else {
-                    console.error('Error al confirmar reserva:', error);
-                    window.showToast('Error al procesar la reserva. Por favor, inténtelo de nuevo.', 'error');
+            private handleSwitchChange() {
+                if (!this.vehicleToggleInput || !this.vehicleTabContent) {
+                    return;
                 }
-            } finally {
-                this.confirmBtn.disabled = false;
-                this.confirmBtn.innerHTML = originalButtonHTML;
+
+                const isChecked = this.vehicleToggleInput.value === 'true';
+                this.vehiclesEnabled = isChecked;
+
+                console.log('[ModalBookingGroup] Switch cambió a:', isChecked);
+
+                if (isChecked) {
+                    // Mostrar formulario de vehículos con animación
+                    this.vehicleTabContent.classList.remove('hidden');
+                    // Pequeño delay para la animación
+                    setTimeout(() => {
+                        this.vehicleTabContent?.classList.add('opacity-100');
+                    }, 10);
+                } else {
+                    // Ocultar formulario de vehículos
+                    this.vehicleTabContent.classList.remove('opacity-100');
+                    setTimeout(() => {
+                        this.vehicleTabContent?.classList.add('hidden');
+                    }, 200);
+                }
+            }
+
+            public open() {
+                if (!this.modal) {
+                    console.error('[ModalBookingGroup] Error: Modal element not found');
+                    return;
+                }
+
+                this.isOpen = true;
+                this.modal.classList.remove('opacity-0', 'pointer-events-none');
+                this.modal.classList.add('opacity-100');
+
+                const modalContainer = this.modal.querySelector('.max-w-4xl') as HTMLElement;
+                if (modalContainer) {
+                    modalContainer.classList.remove('scale-95', 'translate-y-4');
+                    modalContainer.classList.add('scale-100', 'translate-y-0');
+                }
+
+                // Enfocar el modal para accesibilidad
+                this.modal.setAttribute('tabindex', '-1');
+                this.modal.focus();
+
+                // Sincronizar fechas si hay información previa
+                this.syncDateFromMainForm();
+            }
+
+            public close() {
+                if (!this.modal) {
+                    return;
+                }
+
+                this.isOpen = false;
+
+                const modalContainer = this.modal.querySelector('.max-w-4xl') as HTMLElement;
+                if (modalContainer) {
+                    modalContainer.classList.add('scale-95', 'translate-y-4');
+                    modalContainer.classList.remove('scale-100', 'translate-y-0');
+                }
+
+                setTimeout(() => {
+                    if (this.modal) {
+                        this.modal.classList.add('opacity-0', 'pointer-events-none');
+                        this.modal.classList.remove('opacity-100');
+                    }
+                }, 300);
+
+                // Resetear el switch de vehículos si está activo
+                if (this.vehiclesEnabled && this.vehicleToggleSwitch) {
+                    // Simular click para apagar el switch
+                    this.vehicleToggleSwitch.click();
+                }
+            }
+
+            private syncDateFromMainForm() {
+                // Sincronizar fecha del formulario principal si existe
+                const mainDateInput = document.getElementById('dateRange') as HTMLInputElement;
+                const groupDateInput = document.getElementById('dateRangeGroup') as HTMLInputElement;
+
+                if (mainDateInput?.value && groupDateInput) {
+                    groupDateInput.value = mainDateInput.value;
+                }
+            }
+
+            private async confirm() {
+                try {
+                    // Obtener datos del formulario de grupo (siempre presente)
+                    const groupForm = document.getElementById('booking-group-form') as HTMLFormElement;
+
+                    if (!groupForm) {
+                        throw new Error('No se encontró formulario de grupo');
+                    }
+
+                    const formData = new FormData(groupForm);
+
+                    // Si los vehículos están habilitados, agregar esos datos también
+                    if (this.vehiclesEnabled) {
+                        const vehicleForm = document.getElementById('booking-vehicle-form') as HTMLFormElement;
+                        if (vehicleForm) {
+                            const vehicleFormData = new FormData(vehicleForm);
+                            vehicleFormData.forEach((value, key) => {
+                                formData.append(key, value);
+                            });
+                        }
+                    }
+
+                    // Usar la función de envío desde utils
+                    const {sendBookingMessage} = await import('~/services/send/index.ts');
+
+                    // Determinar el tipo de booking
+                    const bookingType = this.vehiclesEnabled ? 'vehicle' : 'group';
+                    await sendBookingMessage(formData, bookingType);
+
+                    // Limpiar datos temporales después del envío exitoso
+                    this.clearTempData();
+
+                    // Cerrar modal después del envío exitoso
+                    this.close();
+
+                } catch (error) {
+                    console.error('Error al confirmar reserva:', error);
+                    alert('Error al procesar la reserva. Por favor, inténtelo de nuevo.');
+                }
+            }
+
+            private clearTempData() {
+                // Limpiar datos temporales almacenados
+                if ((window as any).tempFormData) {
+                    (window as any).tempFormData.clear();
+                }
+            }
+
+            public isModalOpen(): boolean {
+                return this.isOpen;
             }
         }
+
+        // Hacer la clase disponible globalmente
+        (window as any).ModalBookingGroup = ModalBookingGroup;
+    });
+</script>
+
+<style>
+    /* Estilos adicionales para el modal */
+    .tab-content {
+        transition: opacity 0.2s ease-in-out;
     }
 
-    (window as any).ModalBookingGroup = ModalBookingGroup;
-</script>
+    /* Scroll suave para el contenido del modal */
+    #groupModal .flex-1.overflow-y-auto {
+        scrollbar-width: thin;
+        scrollbar-color: rgba(156, 163, 175, 0.5) transparent;
+    }
+
+    #groupModal .flex-1.overflow-y-auto::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    #groupModal .flex-1.overflow-y-auto::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    #groupModal .flex-1.overflow-y-auto::-webkit-scrollbar-thumb {
+        background-color: rgba(156, 163, 175, 0.5);
+        border-radius: 3px;
+    }
+
+    #groupModal .flex-1.overflow-y-auto::-webkit-scrollbar-thumb:hover {
+        background-color: rgba(156, 163, 175, 0.7);
+    }
+</style>

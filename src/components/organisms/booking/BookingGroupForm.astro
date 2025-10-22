@@ -17,50 +17,131 @@ const t = Translations(lang);
 ---
 
 <form id="booking-group-form" method="post" class="space-y-4">
-    <div class="bg-gray-100 border border-gray-200 rounded-lg p-4">
-        <h3 class="text-lg font-semibold text-gray-800 mb-3 flex items-center gap-2">
+    <div class="bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg p-4">
+        <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-3 flex items-center gap-2">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                       d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
             </svg>
             {t('booking.group.title')}
         </h3>
-        <Grid cols={3} autoAdjust={true}>
-            <DatePickerField fieldId="dateRange" name="dateRange" lblKey="booking.dateRange.title"
-                             lang={lang}/>
-            <NumberField fieldId="groupAdults" name="groupAdults" lblKey="booking.group.adults" lang={lang}
-                         icon="form/adult"/>
-            <NumberField fieldId="groupTeens" name="groupTeens" lblKey="booking.group.teens" lang={lang}
-                         icon="form/teen"/>
-            <NumberField fieldId="groupKinds" name="groupKinds" lblKey="booking.group.kids" lang={lang}
-                         icon="form/child"/>            <!--<div class="space-y-1">-->
-            <NumberField fieldId="groupInfants" name="groupInfants" lblKey="booking.group.infants" lang={lang}
-                         icon="form/baby"/>
+
+        <Grid cols={3} autoAdjust={true} gap={4}>
+            <!-- DatePicker sincronizado con el formulario principal -->
+            <div data-col-span="full" data-col-span-md="full">
+                <DatePickerField
+                        fieldId="dateRangeGroup"
+                        name="dateRangeGroup"
+                        lblKey="booking.dateRange.title"
+                        lang={lang}
+                        syncGroup="booking"
+                />
+            </div>
+
+            <NumberField
+                    fieldId="groupAdults"
+                    name="groupAdults"
+                    lblKey="booking.group.adults"
+                    lang={lang}
+                    icon="form/adult"
+                    min={1}
+                    defaultValue={10}
+            />
+
+            <NumberField
+                    fieldId="groupTeens"
+                    name="groupTeens"
+                    lblKey="booking.group.teens"
+                    lang={lang}
+                    icon="form/teen"
+                    min={0}
+                    defaultValue={0}
+            />
+
+            <NumberField
+                    fieldId="groupKids"
+                    name="groupKids"
+                    lblKey="booking.group.kids"
+                    lang={lang}
+                    icon="form/child"
+                    min={0}
+                    defaultValue={0}
+            />
+
+            <NumberField
+                    fieldId="groupInfants"
+                    name="groupInfants"
+                    lblKey="booking.group.infants"
+                    lang={lang}
+                    icon="form/baby"
+                    min={0}
+                    defaultValue={0}
+            />
         </Grid>
     </div>
 
     <Row>
-        <SwitchField fieldId="breakfast" name="breakfast" lblKey="booking.switch.breakfast" lang={lang} checked/>
-        <SwitchField fieldId="vehicleToggleSwitch" name="vehicle" lblKey="booking.group.vehicle" lang={lang}/>
+        <SwitchField
+                fieldId="breakfast"
+                name="breakfast"
+                lblKey="booking.switch.breakfast"
+                lang={lang}
+                checked
+        />
+        <SwitchField
+                fieldId="vehicleToggleSwitch"
+                name="vehicle"
+                lblKey="booking.group.vehicle"
+                lang={lang}
+        />
     </Row>
 
     <div class="space-y-1">
-        <label for="groupNotes"
-               class="block text-sm font-medium text-gray-700">{t('booking.group.notes') || 'Información adicional (opcional)'}</label>
-        <textarea id="groupNotes" name="groupNotes" rows="3"
-                  placeholder={t('booking.group.notesPlaceholder') || 'Especificaciones especiales, requerimientos especiales, etc.'}
-                  class="w-full px-3 py-2 border border-gray-300 rounded-md bg-white text-gray-900 focus:ring-2 focus:ring-primary focus:border-transparent"></textarea>
+        <label
+                for="groupNotes"
+                class="block text-sm font-medium text-gray-700 dark:text-gray-300"
+        >
+            {t('booking.group.notes') || 'Información adicional (opcional)'}
+        </label>
+        <textarea
+                id="groupNotes"
+                name="groupNotes"
+                rows="3"
+                placeholder={t('booking.group.notesPlaceholder') || 'Especificaciones especiales, requerimientos especiales, etc.'}
+                class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-primary focus:border-transparent"
+        ></textarea>
     </div>
 </form>
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         const vehicleSwitch = document.getElementById('vehicleToggleSwitch');
+
         vehicleSwitch?.addEventListener('change', (event) => {
             const isChecked = (event.target as HTMLInputElement).checked;
+
             if (isChecked) {
-                const customEvent = new CustomEvent('switch-to-vehicle', {bubbles: true, composed: true});
+                // Dispatch event para notificar que se debe mostrar formulario de vehículos
+                const customEvent = new CustomEvent('switch-to-vehicle', {
+                    bubbles: true,
+                    composed: true,
+                    detail: { source: 'group-form' }
+                });
                 vehicleSwitch.dispatchEvent(customEvent);
+            }
+        });
+
+        // Escuchar cambios en el date picker para validación
+        const dateInput = document.getElementById('dateRangeGroup');
+
+        dateInput?.addEventListener('datepicker:change', (event: any) => {
+            const { nights, dates } = event.detail;
+
+            if (import.meta.env.DEV) {
+                console.log('[BookingGroupForm] Fechas cambiadas:', {
+                    nights,
+                    dates: dates.map((d: Date) => d.toLocaleDateString())
+                });
             }
         });
     });
@@ -70,5 +151,10 @@ const t = Translations(lang);
     input[type="number"]::-webkit-inner-spin-button,
     input[type="number"]::-webkit-outer-spin-button {
         opacity: 1;
+    }
+
+    textarea {
+        resize: vertical;
+        min-height: 60px;
     }
 </style>

@@ -13,6 +13,7 @@ interface Props {
     icon?: string;
     lang: string;
     className?: string;
+    syncGroup?: string; // Grupo de sincronización
 }
 
 const {
@@ -20,8 +21,9 @@ const {
     name,
     lblKey,
     lang,
-    icon='form/calendar',
-    className
+    icon = 'form/calendar',
+    className,
+    syncGroup = 'booking', // Por defecto todos se sincronizan
 } = Astro.props;
 
 const t = Translations(lang ?? defaultLang);
@@ -42,6 +44,9 @@ const t = Translations(lang ?? defaultLang);
             name={name}
             lang={lang}
             placeholder={t('booking.dateRange.placeholder')}
+            syncGroup={syncGroup}
     />
-    <span id={`error_${fieldId}`} class="hidden text-red-700 px-4">{t('booking.dateRange.error')}</span>
+    <span id={`error_${fieldId}`} class="hidden text-red-700 px-4 text-sm">
+        {t('booking.dateRange.error')}
+    </span>
 </div>

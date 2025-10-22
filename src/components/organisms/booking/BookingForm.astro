@@ -70,11 +70,6 @@ const vehicleTypeOptions = [
 
 const whatsappNumber = config?.contactInfo?.whatsapp ?? "";
 const email = config?.contactInfo?.email ?? "";
-
-
-function changeVehicleSwicth(check: boolean) {
-    console.log(check);
-}
 ---
 
 <form id="booking-form" method="post" class="rounded-xl space-y-3"
@@ -148,15 +143,16 @@ function changeVehicleSwicth(check: boolean) {
 
 <script>
     import { actions } from 'astro:actions';
+
     document.addEventListener("DOMContentLoaded", () => {
-        const form = document.getElementById('booking-form');
+        const form: HTMLFormElement = document.getElementById('booking-form');
         if (!form) return;
 
         const bookingBar = form.closest('#booking-bar');
         const vehicleSection = document.getElementById('vehicle-section');
         const vehicleSwitchButton = form.querySelector('button[id="vehicle"]');
 
-        console.log("form",form);
+        console.log("form", form);
 
         if (vehicleSwitchButton && vehicleSection) {
             const observer = new MutationObserver(() => {

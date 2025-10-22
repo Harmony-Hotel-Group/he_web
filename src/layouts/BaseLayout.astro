@@ -4,6 +4,7 @@ import Footer from '../components/core/Footer.astro';
 import '../styles/global.css';
 import { Translations } from '../i18n/translation.ts';
 import { fetchData } from "~/services/api";
+import SizeIndicator from "~/components/dev/SizeIndicator.astro";
 
 const { titleKey, lang } = Astro.props;
 const t = Translations(lang);
@@ -26,5 +27,6 @@ const siteConfig = await fetchData('siteConfig');
       <slot />
     </main>
     <Footer t={t} config={siteConfig} lang={lang}/>
+    <SizeIndicator />
   </body>
 </html>

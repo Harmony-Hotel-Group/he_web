@@ -50,7 +50,8 @@
     },
     "switch": {
       "breakfast": "Incluir Desayuno",
-      "vehicle": "Voy con vehiculo"
+      "vehicle": "Voy con vehiculo",
+      "special_request": "Petición Especial"
     },
     "btn": {
       "search": "Reservar con un Asesor"

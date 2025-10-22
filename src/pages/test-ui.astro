@@ -1,5 +1,6 @@
 ---
 // src/pages/test-ui.astro
+import DevOnlyPage from "~/components/dev/DevOnlyPage.astro";
 import BaseLayout from '../layouts/BaseLayout.astro';
 import BookingForm from '../components/organisms/booking/BookingForm.astro';
 
@@ -8,21 +9,22 @@ import BookingGroupForm from "~/components/organisms/booking/BookingGroupForm.as
 import Card from "~/components/atoms/Card.astro";
 
 const lang = Astro.cookies.get('lang')?.value || 'es';
-
-// Fetch config data to pass to the layout and BookingForm
 const dataConfig = await fetchData('siteConfig');
 ---
 
-<BaseLayout titleKey="site.title" lang={lang} config={dataConfig}>
-    <div class="container mx-auto py-24 px-4">
-        <h1 class="text-4xl font-bold text-primary text-center mb-4">UI Test Page</h1>
-        <p class="text-center text-gray-600 mb-12">This page is for testing the booking form with Zod validation.</p>
-        <Card>
-            <BookingForm lang={lang} config={dataConfig}/>
-        </Card>
-        <br/>
-        <Card>
-            <BookingGroupForm lang={lang} config={dataConfig}/>
-        </Card>
-    </div>
-</BaseLayout>
+<DevOnlyPage>
+    <BaseLayout titleKey="site.title" lang={lang} config={dataConfig}>
+        <div class="container mx-auto py-24 px-4">
+            <h1 class="text-4xl font-bold text-primary text-center mb-4">UI Test Page</h1>
+            <p class="text-center text-gray-600 mb-12">This page is for testing the booking form with Zod
+                validation.</p>
+            <Card>
+                <BookingForm lang={lang} config={dataConfig}/>
+            </Card>
+            <br/>
+            <Card>
+                <BookingGroupForm lang={lang} config={dataConfig}/>
+            </Card>
+        </div>
+    </BaseLayout>
+</DevOnlyPage>

@@ -68,7 +68,6 @@ export async function sendBookingMessage(
 		// También enviar por email (opcional)
 		// await sendEmail(processedData, type);
 
-		console.log(`Mensaje de ${type} enviado exitosamente`);
 	} catch (error) {
 		console.error(`Error enviando mensaje de ${type}:`, error);
 		throw new Error(`Error al enviar mensaje: ${error.message}`);
@@ -284,10 +283,6 @@ export async function sendEmail(
 
 		// Aquí implementarías el envío real del email
 		// Por ahora solo mostramos en consola
-		console.log("Email enviado:");
-		console.log("Subject:", subject);
-		console.log("HTML:", htmlContent);
-		console.log("Text:", textContent);
 
 		// Ejemplo de implementación básica (necesitaría un servicio de email)
 		/*

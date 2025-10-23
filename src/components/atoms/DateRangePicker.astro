@@ -97,7 +97,6 @@ const { id, name, lang, placeholder } = Astro.props;
     document.addEventListener("DOMContentLoaded", () => {
         const inputs = document.querySelectorAll('input[data-for-id]');
         inputs.forEach(input => {
-            console.log("input", input);
             runDatePicker(input);
         });
     });

@@ -8,7 +8,6 @@ import VisualCarousel from "@/components/organisms/carousel/VisualCarousel.astro
 // import { Translations } from '../i18n/translation.ts';
 const lang = Astro.cookies.get("lang")?.value || "es";
 
-// console.log('Current language:', lang);
 // const t = Translations(lang);
 
 const dataConfig = await fetchData("config");

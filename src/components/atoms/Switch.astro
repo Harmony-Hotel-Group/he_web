@@ -72,10 +72,8 @@ const {
                 return;
             }
             switchButton.dataset.initialized = 'true';
-            console.log("[Switch.astro] Script: Initializing switch for instance:", container);
 
             switchButton.addEventListener('click', () => {
-                console.log("[Switch.astro] Script: Click event fired for instance:", container);
                 let isChecked = switchButton.getAttribute('aria-checked') === 'true';
                 isChecked = !isChecked; // Flip the state
 
@@ -89,7 +87,6 @@ const {
                 if (handle) {
                     handle.classList.toggle('translate-x-5', isChecked);
                     handle.classList.toggle('translate-x-0', !isChecked);
-                    console.log("[Switch.astro] Script: Visual state toggled, isChecked:", isChecked);
                 } else {
                     console.error("[Switch.astro] Script: Handle element not found for instance.");
                 }

@@ -14,7 +14,7 @@ const MAILGUN_API_KEY = import.meta.env.MAILGUN_API_KEY;
 const ADMIN_EMAIL = import.meta.env.ADMIN_EMAIL;
 const SENDER_EMAIL = import.meta.env.SENDER_EMAIL || "no-reply@yourdomain.com";
 const MAILGUN_DOMAIN = import.meta.env.MAILGUN_DOMAIN; // Nueva variable de entorno
-const IS_DEBUG_MODE = import.meta.env.DEBUG === "true"; // Leer la variable DEBUG
+const IS_DEBUG_MODE = false;
 
 async function sendAdminNotification(subject, text) {
 	if (IS_DEBUG_MODE) {
@@ -64,7 +64,6 @@ async function sendAdminNotification(subject, text) {
 async function checkApiStatus() {
 	const now = Date.now();
 	if (now - lastStatusCheckTime < STATUS_CHECK_INTERVAL) {
-		console.log("API status check throttled. Using last known status.");
 		return true; // Asumir OK si está en el intervalo de throttling
 	}
 
@@ -104,13 +103,11 @@ async function getLocalData(dataType) {
 		"data",
 		`${localFileName}.json`,
 	);
-	// console.log("localFilePath:", localFilePath);
 
 	try {
 		const content = fs.readFileSync(localFilePath, "utf-8");
 		const data = JSON.parse(content);
 
-		// console.log(`✅ Servido local ${dataType} desde ${localFilePath}.`);
 		return data;
 	} catch (error) {
 		console.error(`❌ Error leyendo ${dataType} en ${localFilePath}:`, error);
@@ -130,7 +127,6 @@ async function fetchData(dataType) {
 		// 		const response = await fetch(`${API_BASE_URL}/${dataType}`);
 		// 		if (response.ok) {
 		// 			const apiData = await response.json();
-		// 			console.log(`Fetched ${dataType} data from API.`);
 		// 			lastApiDataCache[dataType] = apiData; // Cache the successful API data
 		// 			lastDataUpdateTime[dataType] = now;
 		// 			return apiData;
@@ -151,9 +147,6 @@ async function fetchData(dataType) {
 		// 	}
 		// } else {
 		// 	// La API está activa, pero dentro del intervalo de actualización. Devuelve la data de la API en caché si está disponible, si no, la data local.
-		// 	console.log(
-		// 		`Using cached API data for ${dataType} (within update interval).`,
-		// 	);
 		// 	return lastApiDataCache[dataType] || (await getLocalData(dataType));
 		// }
 	// } else {

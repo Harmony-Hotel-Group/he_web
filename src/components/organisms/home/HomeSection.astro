@@ -1,23 +1,29 @@
 ---
 // src/components/organisms/home/HomeSection.astro
-import InfoCard from '~/components/molecules/cards/InfoCard.astro';
-import { Translations } from '~/i18n/translation';
+import InfoCard from "~/components/molecules/cards/InfoCard.astro";
+import { Translations } from "~/i18n/translation";
 
 interface Item {
-  id: string;
-  src: string;
-  name: { [key: string]: string };
+	id: string;
+	src: string;
+	name: { [key: string]: string };
 }
 
 interface Props {
-  lang: string;
-  titleKey: string;
-  items: Item[];
-  baseHref: string;
-  bgColorClass?: string;
+	lang: string;
+	titleKey: string;
+	items: Item[];
+	baseHref: string;
+	bgColorClass?: string;
 }
 
-const { lang, titleKey, items, baseHref, bgColorClass = 'bg-white' } = Astro.props;
+const {
+	lang,
+	titleKey,
+	items,
+	baseHref,
+	bgColorClass = "bg-white",
+} = Astro.props;
 const t = Translations(lang);
 ---
 

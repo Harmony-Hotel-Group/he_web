@@ -1,14 +1,14 @@
 ---
+import { Translations } from "~/i18n/translation.ts";
 // src/components/organisms/booking/BookingBar.astro
-import BookingForm from './BookingForm.astro';
-import { Translations } from '~/i18n/translation.ts';
+import BookingForm from "./BookingForm.astro";
 
 interface Props {
-    lang: string;
-    config: any; // Add config prop
+	lang: string;
+	config: any; // Add config prop
 }
 
-const {lang, config} = Astro.props;
+const { lang, config } = Astro.props;
 const t = Translations(lang);
 ---
 

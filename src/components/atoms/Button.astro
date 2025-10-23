@@ -1,58 +1,60 @@
 ---
-import { defaultLang, Translations } from "~/i18n/translation.ts";
 import Icono from "~/components/atoms/Icono.astro";
+import { defaultLang, Translations } from "~/i18n/translation.ts";
 
 interface Props {
-    _id?: string;
-    lblKey: string;
-    lang?: string;
-    type?: 'button' | 'submit' | 'reset';
-    disabled?: boolean;
-    className?: string;
-    variant?: 'primary' | 'accent' | 'outline' | 'ghost';
-    fullWidth?: boolean;
-    icon?: string;
-    color?: string;
+	_id?: string;
+	lblKey: string;
+	lang?: string;
+	type?: "button" | "submit" | "reset";
+	disabled?: boolean;
+	className?: string;
+	variant?: "primary" | "accent" | "outline" | "ghost";
+	fullWidth?: boolean;
+	icon?: string;
+	color?: string;
 }
 
 const {
-    _id,
-    lblKey,
-    lang = defaultLang,
-    type = 'button',
-    disabled = false,
-    className = '',
-    variant = 'accent',
-    fullWidth = false,
-    icon,
-    color
+	_id,
+	lblKey,
+	lang = defaultLang,
+	type = "button",
+	disabled = false,
+	className = "",
+	variant = "accent",
+	fullWidth = false,
+	icon,
+	color,
 } = Astro.props;
 
 const t = Translations(lang);
 
 let baseClasses =
-    "inline-flex items-center justify-center gap-2 px-5 py-2.5 text-sm font-medium rounded-2xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 shadow-sm";
+	"inline-flex items-center justify-center gap-2 px-5 py-2.5 text-sm font-medium rounded-2xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 shadow-sm";
 
 switch (variant) {
-    case 'primary':
-        baseClasses += ' bg-primary text-white hover:bg-primary/90 focus:ring-primary';
-        break;
-    case 'accent':
-        baseClasses += ' bg-accent text-white hover:bg-accent/90 focus:ring-accent';
-        break;
-    case 'outline':
-        baseClasses += ' border border-primary text-primary hover:bg-primary/10 focus:ring-primary';
-        break;
-    case 'ghost':
-        baseClasses += ' text-primary hover:bg-primary/10 focus:ring-primary';
-        break;
-    default:
-        baseClasses += ' bg-gray-800 text-white hover:bg-gray-700';
-        break;
+	case "primary":
+		baseClasses +=
+			" bg-primary text-white hover:bg-primary/90 focus:ring-primary";
+		break;
+	case "accent":
+		baseClasses += " bg-accent text-white hover:bg-accent/90 focus:ring-accent";
+		break;
+	case "outline":
+		baseClasses +=
+			" border border-primary text-primary hover:bg-primary/10 focus:ring-primary";
+		break;
+	case "ghost":
+		baseClasses += " text-primary hover:bg-primary/10 focus:ring-primary";
+		break;
+	default:
+		baseClasses += " bg-gray-800 text-white hover:bg-gray-700";
+		break;
 }
 
-if (disabled) baseClasses += ' opacity-50 cursor-not-allowed';
-if (fullWidth) baseClasses += ' w-full';
+if (disabled) baseClasses += " opacity-50 cursor-not-allowed";
+if (fullWidth) baseClasses += " w-full";
 ---
 
 <button

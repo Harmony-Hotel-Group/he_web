@@ -1,14 +1,13 @@
 ---
-// src/pages/test-ui.astro
-import BaseLayout from '../layouts/BaseLayout.astro';
-import BookingForm from '../components/organisms/booking/BookingForm.astro';
-
 import { fetchData } from "~/utils/apiService";
+import BookingForm from "../components/organisms/booking/BookingForm.astro";
+// src/pages/test-ui.astro
+import BaseLayout from "../layouts/BaseLayout.astro";
 
-const lang = Astro.cookies.get('lang')?.value || 'es';
+const lang = Astro.cookies.get("lang")?.value || "es";
 
 // Fetch config data to pass to the layout and BookingForm
-const dataConfig = await fetchData('config');
+const dataConfig = await fetchData("config");
 ---
 
 <BaseLayout titleKey="site.title" lang={lang} config={dataConfig}>

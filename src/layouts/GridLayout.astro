@@ -1,19 +1,19 @@
 ---
 const {
-    _id,
-    lang,
-    classes,
-    cols,
-    autoAdjust = false,
-    minColWidth = '250px'
+	_id,
+	lang,
+	classes,
+	cols,
+	autoAdjust = false,
+	minColWidth = "250px",
 } = Astro.props;
 
 let gridStyle;
 
 if (cols && !autoAdjust) {
-    gridStyle = `grid-template-columns: repeat(${cols}, minmax(0, 1fr));`;
+	gridStyle = `grid-template-columns: repeat(${cols}, minmax(0, 1fr));`;
 } else {
-    gridStyle = `grid-template-columns: repeat(auto-fit, minmax(${minColWidth}, 1fr));`;
+	gridStyle = `grid-template-columns: repeat(auto-fit, minmax(${minColWidth}, 1fr));`;
 }
 ---
 <div id={_id} lang={lang} class:list={["grid gap-4", classes]} style={gridStyle}>

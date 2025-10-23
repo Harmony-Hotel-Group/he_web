@@ -1,14 +1,14 @@
 ---
-import LanguageSwitcher from '../molecules/controls/LanguageSwitcher.jsx';
-import CurrencySwitcher from '../molecules/controls/CurrencySwitcher.jsx';
+import CurrencySwitcher from "../molecules/controls/CurrencySwitcher.jsx";
+import LanguageSwitcher from "../molecules/controls/LanguageSwitcher.jsx";
 
 interface Props {
-    t: (key: string) => string;
-    config?: any; // Assuming config structure
-    lang: string;
+	t: (key: string) => string;
+	config?: any; // Assuming config structure
+	lang: string;
 }
 
-const {t, config, lang} = Astro.props;
+const { t, config, lang } = Astro.props;
 ---
 
 <header class="absolute top-0 left-0 right-0 z-50 text-background"> {/* text-white -> text-background */}

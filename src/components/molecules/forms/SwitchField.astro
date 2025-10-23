@@ -1,20 +1,20 @@
 ---
+import Label from "../../atoms/Label.astro"; // Import Label.jsx
 // src/components/molecules/forms/SwitchField.astro
-import Switch from '../../atoms/Switch.astro'; // Changed from .astro to .jsx
-import Label from '../../atoms/Label.astro'; // Import Label.jsx
+import Switch from "../../atoms/Switch.astro"; // Changed from .astro to .jsx
 
 interface Props {
-    fieldId: string;
-    name: string;
-    lblKey: string; // This is the translation key
-    lang: string;
+	fieldId: string;
+	name: string;
+	lblKey: string; // This is the translation key
+	lang: string;
 
-    checked?: boolean;
-    className?: string;
-    onChange?: (value: string) => void; // Add onChange prop
+	checked?: boolean;
+	className?: string;
+	onChange?: (value: string) => void; // Add onChange prop
 }
 
-const {fieldId, name, lblKey, checked, className, onChange} = Astro.props;
+const { fieldId, name, lblKey, checked, className, onChange } = Astro.props;
 const switchId = `switch-${fieldId}`;
 ---
 

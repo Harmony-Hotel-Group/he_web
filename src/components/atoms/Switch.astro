@@ -1,22 +1,22 @@
 ---
 // src/components/atoms/Switch.astro
 interface Props {
-    id?: string;
-    name: string;
-    lblKey?: string;
+	id?: string;
+	name: string;
+	lblKey?: string;
 
-    checked?: boolean;
-    disabled?: boolean;
-    classes?: string;
+	checked?: boolean;
+	disabled?: boolean;
+	classes?: string;
 }
 
 const {
-    id,
-    name,
+	id,
+	name,
 
-    checked = false,
-    disabled = false,
-    classes,
+	checked = false,
+	disabled = false,
+	classes,
 } = Astro.props;
 ---
 

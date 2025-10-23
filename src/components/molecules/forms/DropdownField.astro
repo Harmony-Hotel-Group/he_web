@@ -1,41 +1,40 @@
 ---
-// src/components/molecules/forms/DropdownField.astro
-import { Translations, defaultLang } from "~/i18n/translation.ts";
-
-import Label from '../../atoms/Label.astro';
-import Select from '../../atoms/Select.astro';
-import Row from "~/layouts/Row.astro";
 import Icono from "~/components/atoms/Icono.astro";
+// src/components/molecules/forms/DropdownField.astro
+import { defaultLang, Translations } from "~/i18n/translation.ts";
+import Row from "~/layouts/Row.astro";
+import Label from "../../atoms/Label.astro";
+import Select from "../../atoms/Select.astro";
 
 interface Props {
-    id?: string;
-    fieldId?: string;
+	id?: string;
+	fieldId?: string;
 
-    name: string;
-    lblKey: string;
-    icon: string;
+	name: string;
+	lblKey: string;
+	icon: string;
 
-    lang: string;
-    options: { value: string | number; label: string }[];
-    required?: boolean;
-    className?: string;
+	lang: string;
+	options: { value: string | number; label: string }[];
+	required?: boolean;
+	className?: string;
 
-    onChange?: (value: string | number) => void;
-    initialValue?: number;
+	onChange?: (value: string | number) => void;
+	initialValue?: number;
 }
 
 const {
-    id,
-    fieldId,
-    lblKey,
-    name,
-    icon = 'default',
-    lang,
-    options,
-    required,
-    className,
-    onChange,
-    initialValue
+	id,
+	fieldId,
+	lblKey,
+	name,
+	icon = "default",
+	lang,
+	options,
+	required,
+	className,
+	onChange,
+	initialValue,
 } = Astro.props;
 
 const t = Translations(lang ?? defaultLang);

@@ -1,71 +1,69 @@
 ---
-// src/components/organisms/booking/BookingForm.astro
-import Grid from "~/layouts/GridLayout.astro"
-import Row from "~/layouts/Row.astro";
-
 import DatePickerField from "~/components/molecules/forms/DatePickerField.astro";
 import DropDownField from "~/components/molecules/forms/DropdownField.astro";
 import SwitchField from "~/components/molecules/forms/SwitchField.astro";
-import Button from "../../atoms/Button.astro";
-import ModalBookingGroup from "./ModalBookingGroup.astro";
-import BookingVehicleSection from "./BookingVehicleSection.astro";
-
-import { range } from "~/utils/math.ts";
 import { Translations } from "~/i18n/translation.ts";
+// src/components/organisms/booking/BookingForm.astro
+import Grid from "~/layouts/GridLayout.astro";
+import Row from "~/layouts/Row.astro";
+import { range } from "~/utils/math.ts";
+import Button from "../../atoms/Button.astro";
+import BookingVehicleSection from "./BookingVehicleSection.astro";
+import ModalBookingGroup from "./ModalBookingGroup.astro";
 
 interface Props {
-    lang: string;
-    config: any;
+	lang: string;
+	config: any;
 }
 
-const {lang, config} = Astro.props;
+const { lang, config } = Astro.props;
 
 const t = Translations(lang);
 
 const adultsOptions = range(1, 9).map((i, index, array) => {
-    if (index === array.length - 1) {
-        return {
-            "value": "group",
-            "label": t('booking.dropdown.optGroup')
-        }
-    }
-    return {
-        "value": `${i}`,
-        "label": `${t("booking.dropdown.optAdults", {
-            "i": i,
-            "s": i > 1 ? "s" : ""
-        })}`
-    }
+	if (index === array.length - 1) {
+		return {
+			value: "group",
+			label: t("booking.dropdown.optGroup"),
+		};
+	}
+	return {
+		value: `${i}`,
+		label: `${t("booking.dropdown.optAdults", {
+			i: i,
+			s: i > 1 ? "s" : "",
+		})}`,
+	};
 });
 
 const childrenOptions = range(0, 8).map((i, index, array) => {
-    return {
-        "value": `${i}`,
-        "label": `${t("booking.dropdown.optChildren", {
-            "i": i === 0 ? "Sin" : i,
-            "s": i === 0 ? "s" : i > 1 ? "s" : ""
-        })}`
-    }
-})
+	return {
+		value: `${i}`,
+		label: `${t("booking.dropdown.optChildren", {
+			i: i === 0 ? "Sin" : i,
+			s: i === 0 ? "s" : i > 1 ? "s" : "",
+		})}`,
+	};
+});
 
 const roomsOptions = range(1, 5).map((i, index, array) => {
-    return {
-        "value": `${i}`,
-        "label": `${t("booking.dropdown.optRooms", {
-            "i": i,
-            "s": i > 1 ? "es" : ""
-        })}`
-    }
-})
+	return {
+		value: `${i}`,
+		label: `${t("booking.dropdown.optRooms", {
+			i: i,
+			s: i > 1 ? "es" : "",
+		})}`,
+	};
+});
 
 const vehicleTypeOptions = [
-    { value: "auto", label: "Auto" },
-    { value: "suv", label: "SUV" },
-    { value: "camioneta", label: "Camioneta" },
-    { value: "furgoneta", label: "Furgoneta" },
-    { value: "buseta", label: "Buseta" },
-    { value: "bus", label: "Bus" },
-    { value: "otro", label: "Otro" },
+	{ value: "auto", label: "Auto" },
+	{ value: "suv", label: "SUV" },
+	{ value: "camioneta", label: "Camioneta" },
+	{ value: "furgoneta", label: "Furgoneta" },
+	{ value: "buseta", label: "Buseta" },
+	{ value: "bus", label: "Bus" },
+	{ value: "otro", label: "Otro" },
 ];
 
 const whatsappNumber = config?.contactInfo?.whatsapp ?? "";

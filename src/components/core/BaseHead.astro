@@ -1,0 +1,159 @@
+---
+// import { siteConfig } from "@/data/constants/site.config";
+import "@/styles/global.css";
+import { ClientRouter } from "astro:transitions";
+// import { createSchemaBusiness } from "src/utils/headData/createSchemaBussines";
+// import { createSchemeProduct } from "src/utils/headData/createSchemeProduct";
+// import { join } from "node:path";
+
+export interface Props {
+	title: string;
+	description?: string;
+	ogImage?: string | undefined;
+	articleDate?: string | undefined;
+	//   typeSchema?: "product" | "business";
+	//   productData?: {
+	//     title?: string;
+	//     image?: string[];
+	//     description?: string;
+	//     brand?: string;
+	//     model?: string;
+	//     category?: string;
+	//     url?: string;
+	//   };
+}
+
+const {
+	title,
+	//   description = siteConfig.seo.description,
+	description = "Hotel Ensueños, tu refugio ideal en el corazón de la ciudad. Disfruta de habitaciones cómodas, servicios excepcionales y una ubicación inmejorable para explorar lo mejor que ofrecemos.",
+	ogImage,
+	articleDate,
+	//   viewTransition = true,
+	//   typeSchema = "business",
+	//   productData,
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const socialImageURL = new URL(
+	ogImage ? ogImage : "/open-graph.webp",
+	Astro.url,
+).href;
+
+const titleSeparator = "•";
+
+// const siteTitle = `${title} ${titleSeparator} ${siteConfig.companyName}`;
+const siteTitle = `${title} ${titleSeparator} Hotel Ensueños`;
+
+// import { AstroFont } from "astro-font";
+
+const googleAnalyticsId = import.meta.env.VITE_GOOGLE_ANALYTICS_ID;
+---
+
+<head>
+  <!-- Global Metadata -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+  <!-- Sitemap -->
+  <link rel="sitemap" href="/sitemap-index.xml" />
+
+  <!-- Canonical URL -->
+  <link rel="canonical" href={canonicalURL} />
+
+  <!-- Primary Meta Tags -->
+  <title>{siteTitle}</title>
+
+  <!-- ViewTransitions  -->
+  <ClientRouter />
+
+  <!-- SEO -->
+  <meta name="title" content={siteTitle} />
+  <meta name="description" content={description} />
+  <!-- <meta name="author" content={siteConfig.companyName} /> -->
+  <meta name="author" content={"Hotel Ensueños"} />
+  <!-- Keywords -->
+  <meta
+    name="keywords"
+    content="motores para puertas automáticas, instalación de sistemas de seguridad, instalación de puertas automáticas, mantenimiento de sistemas de seguridad, reparación de cámaras de seguridad, puertas automáticas, porteros eléctricos inteligentes, cercas eléctricas para seguridad, cámaras de vigilancia, automatización de hogares, dvr para sistemas de seguridad"
+  />
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content={articleDate ? "article" : "website"} />
+  <meta property="og:url" content={Astro.url} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content={socialImageURL} />
+  {
+    articleDate && (
+      <>
+        {/* <meta property="article:author" content={siteConfig.author} /> */}
+        <meta property="article:author" content={"Hotel Ensueños"} />
+        <meta property="article:published_time" content={articleDate} />
+      </>
+    )
+  }
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content={Astro.url} />
+  <meta property="twitter:title" content={title} />
+  <meta property="twitter:description" content={description} />
+  <meta property="twitter:image" content={socialImageURL} />
+
+  <!-- <script
+    is:inline
+    src="https://www.google.com/recaptcha/enterprise.js?render=6LfR5cgqAAAAAJQzaAc7tWjDS1naOluqnlhtA6qU"
+  ></script>
+
+  <script
+    type="text/partytown"
+    async
+    src={`https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsId}`}
+  ></script> -->
+  <!-- <script is:inline type="text/partytown">
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function gtag() {
+      dataLayer.push(arguments);
+    };
+    window.gtag("js", new Date());
+
+    window.gtag("config", "G-RWBNLLD0HN");
+  </script> -->
+
+  <!-- Schema Markup -->
+  <!-- {typeSchema === "business" && <slot name="schema" set:html={createSchemaBusiness()} />}
+  {typeSchema === "product" && productData && <slot name="schema" set:html={createSchemeProduct(productData)} />} -->
+
+  <!-- <AstroFont
+    config={[
+      {
+        name: "Figtree",
+        src: [
+          {
+            style: 'normal',
+            path: join(process.cwd(), 'public', 'fonts', 'Figtree-VariableFont.ttf')
+            
+          }
+        ],
+        preload: false,
+        display: "swap",
+        selector: "body", 
+        fallback: "sans-serif",
+      },
+      {
+        name: "Lexend Deca",
+        src: [
+          {
+            style: 'normal',
+            path: join(process.cwd(), 'public', 'fonts', 'LexendDeca-VariableFont.ttf')
+          }
+        ],
+        preload: false,
+        display: "swap",
+        selector: 'body',
+        fallback: "sans-serif",
+      },
+    ]}
+  /> -->
+</head>

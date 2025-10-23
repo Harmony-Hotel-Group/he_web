@@ -1,27 +1,27 @@
 ---
 // src/components/molecules/forms/DatePickerField.astro
-import { Translations, defaultLang } from '~/i18n/translation.ts';
-import Row from '~/layouts/Row.astro';
-import DateRangePicker from '../../atoms/DateRangePicker.astro';
-import Label from '../../atoms/Label.astro';
-import Icono from '../../atoms/Icono.astro';
+import { defaultLang, Translations } from "~/i18n/translation.ts";
+import Row from "~/layouts/Row.astro";
+import DateRangePicker from "../../atoms/DateRangePicker.astro";
+import Icono from "../../atoms/Icono.astro";
+import Label from "../../atoms/Label.astro";
 
 interface Props {
-    fieldId?: string;
-    name: string;
-    lblKey: string;
-    icon?: string;
-    lang: string;
-    className?: string;
+	fieldId?: string;
+	name: string;
+	lblKey: string;
+	icon?: string;
+	lang: string;
+	className?: string;
 }
 
 const {
-    fieldId = 'date-range-picker',
-    name,
-    lblKey,
-    lang,
-    icon='calendar',
-    className
+	fieldId = "date-range-picker",
+	name,
+	lblKey,
+	lang,
+	icon = "calendar",
+	className,
 } = Astro.props;
 
 const t = Translations(lang ?? defaultLang);

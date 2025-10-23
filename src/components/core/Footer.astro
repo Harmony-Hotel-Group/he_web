@@ -1,44 +1,81 @@
 ---
 interface Props {
-    t: any;
-    currentLang?: string;
+	t: any;
+	currentLang?: string;
 }
 
-const { t, currentLang = 'es' } = Astro.props;
+const { t, currentLang = "es" } = Astro.props;
 const currentYear = new Date().getFullYear();
 const startYear = 2024;
 
 // Navegación principal
 const mainLinks = [
-    { href: `/${currentLang}`, label: t('nav.home') || 'Inicio' },
-    { href: `/${currentLang}/rooms`, label: t('nav.rooms') || 'Habitaciones' },
-    { href: `/${currentLang}/destinations`, label: t('nav.destinations') || 'Destinos' },
-    { href: `/${currentLang}/tours`, label: t('nav.tours') || 'Tours' },
-    { href: `/${currentLang}/gastronomy`, label: t('nav.gastronomy') || 'Gastronomía' },
+	{ href: `/${currentLang}`, label: t("nav.home") || "Inicio" },
+	{ href: `/${currentLang}/rooms`, label: t("nav.rooms") || "Habitaciones" },
+	{
+		href: `/${currentLang}/destinations`,
+		label: t("nav.destinations") || "Destinos",
+	},
+	{ href: `/${currentLang}/tours`, label: t("nav.tours") || "Tours" },
+	{
+		href: `/${currentLang}/gastronomy`,
+		label: t("nav.gastronomy") || "Gastronomía",
+	},
 ];
 
 // Páginas de interés
 const interestLinks = [
-    { href: `/${currentLang}/about`, label: t('footer.about') || 'Sobre Nosotros' },
-    { href: `/${currentLang}/gallery`, label: t('footer.gallery') || 'Galería' },
-    { href: `/${currentLang}/contact`, label: t('footer.contact') || 'Contacto' },
-    { href: `/${currentLang}/booking`, label: t('footer.booking') || 'Reservar' },
+	{
+		href: `/${currentLang}/about`,
+		label: t("footer.about") || "Sobre Nosotros",
+	},
+	{ href: `/${currentLang}/gallery`, label: t("footer.gallery") || "Galería" },
+	{ href: `/${currentLang}/contact`, label: t("footer.contact") || "Contacto" },
+	{ href: `/${currentLang}/booking`, label: t("footer.booking") || "Reservar" },
 ];
 
 // Información legal
 const legalLinks = [
-    { href: `/${currentLang}/privacy`, label: t('footer.privacy') || 'Política de Privacidad' },
-    { href: `/${currentLang}/terms`, label: t('footer.terms') || 'Términos y Condiciones' },
-    { href: `/${currentLang}/cancellation`, label: t('footer.cancellation') || 'Política de Cancelación' },
-    { href: `/${currentLang}/faq`, label: t('footer.faq') || 'Preguntas Frecuentes' },
+	{
+		href: `/${currentLang}/privacy`,
+		label: t("footer.privacy") || "Política de Privacidad",
+	},
+	{
+		href: `/${currentLang}/terms`,
+		label: t("footer.terms") || "Términos y Condiciones",
+	},
+	{
+		href: `/${currentLang}/cancellation`,
+		label: t("footer.cancellation") || "Política de Cancelación",
+	},
+	{
+		href: `/${currentLang}/faq`,
+		label: t("footer.faq") || "Preguntas Frecuentes",
+	},
 ];
 
 // Redes sociales (ajusta según tu config.json)
 const socialLinks = [
-    { href: 'https://facebook.com/hotelensueños', label: 'Facebook', icon: 'facebook' },
-    { href: 'https://instagram.com/hotelensueños', label: 'Instagram', icon: 'instagram' },
-    { href: 'https://twitter.com/hotelensueños', label: 'Twitter', icon: 'twitter' },
-    { href: 'https://tripadvisor.com', label: 'TripAdvisor', icon: 'tripadvisor' },
+	{
+		href: "https://facebook.com/hotelensueños",
+		label: "Facebook",
+		icon: "facebook",
+	},
+	{
+		href: "https://instagram.com/hotelensueños",
+		label: "Instagram",
+		icon: "instagram",
+	},
+	{
+		href: "https://twitter.com/hotelensueños",
+		label: "Twitter",
+		icon: "twitter",
+	},
+	{
+		href: "https://tripadvisor.com",
+		label: "TripAdvisor",
+		icon: "tripadvisor",
+	},
 ];
 ---
 

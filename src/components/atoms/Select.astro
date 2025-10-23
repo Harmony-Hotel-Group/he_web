@@ -1,28 +1,27 @@
 ---
 // src/components/atoms/Select.astro
 interface Props {
-    id?: string;
-    name: string;
-    options: { value: string | number; label: string }[];
-    value?: number;
+	id?: string;
+	name: string;
+	options: { value: string | number; label: string }[];
+	value?: number;
 
-    lang?: string;
-    required?: boolean;
-    disabled?: boolean;
-    classes?: string;
+	lang?: string;
+	required?: boolean;
+	disabled?: boolean;
+	classes?: string;
 }
 
 const {
-    id,
-    name,
-    options = [],
-    value,
-    lang,
-    required = false,
-    disabled = false,
-    classes
+	id,
+	name,
+	options = [],
+	value,
+	lang,
+	required = false,
+	disabled = false,
+	classes,
 } = Astro.props;
-
 ---
 
 <div class:list={['flex flex-col']}>

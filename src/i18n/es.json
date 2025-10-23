@@ -1,74 +1,74 @@
 {
-  "site": {
-    "title": "Hotel Ensueños by HHG"
-  },
-  "nav": {
-    "home": "Inicio",
-    "about": "Sobre nosotros",
-    "contact": "Contacto",
-    "rooms": "Habitaciones",
-    "destinations": "Destinos",
-    "gastronomy": "Gastronomía",
-    "tours": "Tours",
-    "booking": "Reservar Ahora"
-  },
-  "components": {
-    "errors": {
-      "dateRangePicker": "Falta seleccionar un rango de fechas"
-    }
-  },
-  "footer": {
-    "description": "Hotel boutique en el corazón de Cuenca...",
-    "navigation": "Navegación",
-    "interest": "Información",
-    "legal": "Legal",
-    "social": "Síguenos",
-    "rights": "Todos los derechos reservados",
-    "developed": "Desarrollado por",
-    "about": "Sobre Nosotros",
-    "gallery": "Galería",
-    "contact": "Contacto",
-    "booking": "Reservar",
-    "privacy": "Política de Privacidad",
-    "terms": "Términos y Condiciones",
-    "cancellation": "Política de Cancelación",
-    "faq": "Preguntas Frecuentes"
-  },
-  "booking": {
-    "title": "Reserva tu Aventura",
-    "subtitle": "Encuentra y asegura tu lugar para la próxima gran experiencia.",
-    "dropdown": {
-      "lblAdults": "Adultos",
-      "optAdults": "{{i}} Adulto{{s}}",
-      "optGroup": "Grupo",
-      "lblChildren": "Niños",
-      "optChildren": "{{i}} Niño{{s}}",
-      "lblRooms": "Habitaciones",
-      "optRooms": "{{i}} Habitación{{s}}",
-      "error": "Falta seleccionar una opción"
-    },
-    "switch": {
-      "breakfast": "Incluir Desayuno",
-      "vehicle": "Voy con vehiculo"
-    },
-    "btn": {
-      "search": "Reservar con un Asesor"
-    },
-    "dateRange": {
-      "title": "Selecciona tus fechas",
-      "placeholder": "Selecciona un rango de fechas",
-      "error":"No hay fecha seleccionada"
-    },
-    "vehicles": {
-      "title": "Reservar Vehiculo",
-      "vehicle": "Vehiculo",
-      "type": "Tipo de Vehiculo",
-      "add": "Agregar Vehiculo",
-      "remove": "Eliminar Vehiculo",
-      "plate": {
-        "title": "Placa",
-        "placeholder": "ABC-1234 (Opcional)"
-      }
-    }
-  }
+	"site": {
+		"title": "Hotel Ensueños by HHG"
+	},
+	"nav": {
+		"home": "Inicio",
+		"about": "Sobre nosotros",
+		"contact": "Contacto",
+		"rooms": "Habitaciones",
+		"destinations": "Destinos",
+		"gastronomy": "Gastronomía",
+		"tours": "Tours",
+		"booking": "Reservar Ahora"
+	},
+	"components": {
+		"errors": {
+			"dateRangePicker": "Falta seleccionar un rango de fechas"
+		}
+	},
+	"footer": {
+		"description": "Hotel boutique en el corazón de Cuenca...",
+		"navigation": "Navegación",
+		"interest": "Información",
+		"legal": "Legal",
+		"social": "Síguenos",
+		"rights": "Todos los derechos reservados",
+		"developed": "Desarrollado por",
+		"about": "Sobre Nosotros",
+		"gallery": "Galería",
+		"contact": "Contacto",
+		"booking": "Reservar",
+		"privacy": "Política de Privacidad",
+		"terms": "Términos y Condiciones",
+		"cancellation": "Política de Cancelación",
+		"faq": "Preguntas Frecuentes"
+	},
+	"booking": {
+		"title": "Reserva tu Aventura",
+		"subtitle": "Encuentra y asegura tu lugar para la próxima gran experiencia.",
+		"dropdown": {
+			"lblAdults": "Adultos",
+			"optAdults": "{{i}} Adulto{{s}}",
+			"optGroup": "Grupo",
+			"lblChildren": "Niños",
+			"optChildren": "{{i}} Niño{{s}}",
+			"lblRooms": "Habitaciones",
+			"optRooms": "{{i}} Habitación{{s}}",
+			"error": "Falta seleccionar una opción"
+		},
+		"switch": {
+			"breakfast": "Incluir Desayuno",
+			"vehicle": "Voy con vehiculo"
+		},
+		"btn": {
+			"search": "Reservar con un Asesor"
+		},
+		"dateRange": {
+			"title": "Selecciona tus fechas",
+			"placeholder": "Selecciona un rango de fechas",
+			"error": "No hay fecha seleccionada"
+		},
+		"vehicles": {
+			"title": "Reservar Vehiculo",
+			"vehicle": "Vehiculo",
+			"type": "Tipo de Vehiculo",
+			"add": "Agregar Vehiculo",
+			"remove": "Eliminar Vehiculo",
+			"plate": {
+				"title": "Placa",
+				"placeholder": "ABC-1234 (Opcional)"
+			}
+		}
+	}
 }

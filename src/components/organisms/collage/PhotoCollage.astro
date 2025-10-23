@@ -1,45 +1,50 @@
 ---
-import VisualResource from '../../molecules/media/VisualResource.astro';
+import VisualResource from "../../molecules/media/VisualResource.astro";
 
 interface Image {
-    src: string;
-    alt: string;
+	src: string;
+	alt: string;
 }
 
 interface Props {
-    images: Image[];
-    class?: string;
+	images: Image[];
+	class?: string;
 }
 
 const { images = [], class: className } = Astro.props;
 
 // Configuración mejorada de transformaciones con valores responsivos
 const imageConfigs = [
-    {
-        rotation: '-rotate-6 hover:rotate-[-8deg]',
-        position: 'top-[5%] left-[10%] sm:top-[8%] sm:left-[5%] md:top-[10%] md:left-[8%]',
-        zIndex: 'z-[1]'
-    },
-    {
-        rotation: 'rotate-3 hover:rotate-[5deg]',
-        position: 'top-[15%] right-[8%] sm:top-[12%] sm:right-[10%] md:top-[8%] md:right-[12%]',
-        zIndex: 'z-[2]'
-    },
-    {
-        rotation: 'rotate-12 hover:rotate-[15deg]',
-        position: 'bottom-[8%] left-[15%] sm:bottom-[10%] sm:left-[12%] md:bottom-[12%] md:left-[10%]',
-        zIndex: 'z-[3]'
-    },
-    {
-        rotation: '-rotate-2 hover:rotate-[-4deg]',
-        position: 'top-[25%] left-[25%] sm:top-[22%] sm:left-[28%] md:top-[20%] md:left-[30%]',
-        zIndex: 'z-[4]'
-    },
-    {
-        rotation: 'rotate-8 hover:rotate-[11deg]',
-        position: 'bottom-[18%] right-[12%] sm:bottom-[15%] sm:right-[15%] md:bottom-[18%] md:right-[18%]',
-        zIndex: 'z-[5]'
-    },
+	{
+		rotation: "-rotate-6 hover:rotate-[-8deg]",
+		position:
+			"top-[5%] left-[10%] sm:top-[8%] sm:left-[5%] md:top-[10%] md:left-[8%]",
+		zIndex: "z-[1]",
+	},
+	{
+		rotation: "rotate-3 hover:rotate-[5deg]",
+		position:
+			"top-[15%] right-[8%] sm:top-[12%] sm:right-[10%] md:top-[8%] md:right-[12%]",
+		zIndex: "z-[2]",
+	},
+	{
+		rotation: "rotate-12 hover:rotate-[15deg]",
+		position:
+			"bottom-[8%] left-[15%] sm:bottom-[10%] sm:left-[12%] md:bottom-[12%] md:left-[10%]",
+		zIndex: "z-[3]",
+	},
+	{
+		rotation: "-rotate-2 hover:rotate-[-4deg]",
+		position:
+			"top-[25%] left-[25%] sm:top-[22%] sm:left-[28%] md:top-[20%] md:left-[30%]",
+		zIndex: "z-[4]",
+	},
+	{
+		rotation: "rotate-8 hover:rotate-[11deg]",
+		position:
+			"bottom-[18%] right-[12%] sm:bottom-[15%] sm:right-[15%] md:bottom-[18%] md:right-[18%]",
+		zIndex: "z-[5]",
+	},
 ];
 ---
 

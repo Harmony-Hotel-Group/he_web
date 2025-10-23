@@ -1,16 +1,16 @@
 ---
+import { Translations } from "~/i18n/translation.ts";
 // src/components/organisms/booking/ModalBookingGroup.astro
 import BookingGroupForm from "./BookingGroupForm.astro";
 import BookingVehicleForm from "./BookingVehicleForm.astro";
-import { Translations } from "~/i18n/translation.ts";
 
 interface Props {
-    lang: string;
-    config: any;
-    isOpen: boolean;
+	lang: string;
+	config: any;
+	isOpen: boolean;
 }
 
-const {lang, config, isOpen} = Astro.props;
+const { lang, config, isOpen } = Astro.props;
 const t = Translations(lang);
 ---
 

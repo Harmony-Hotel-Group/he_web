@@ -1,46 +1,47 @@
 ---
 // src/components/atoms/Label.astro
-import { Translations, defaultLang } from "~/i18n/translation.ts";
+import { defaultLang, Translations } from "~/i18n/translation.ts";
 
 interface Props {
-    id?: string;
-    forId: string;
-    lblKey: string;
-    lang?: string;
-    classes?: string;
-    direction?: "vertical" | "horizontal";
-    alignX?: "start" | "center" | "end";
-    alignY?: "start" | "center" | "end";
+	id?: string;
+	forId: string;
+	lblKey: string;
+	lang?: string;
+	classes?: string;
+	direction?: "vertical" | "horizontal";
+	alignX?: "start" | "center" | "end";
+	alignY?: "start" | "center" | "end";
 }
 
 const {
-    id,
-    forId,
-    lblKey,
-    lang = defaultLang,
-    classes = "",
-    direction = "horizontal",
-    alignX = "start",
-    alignY = "center",
+	id,
+	forId,
+	lblKey,
+	lang = defaultLang,
+	classes = "",
+	direction = "horizontal",
+	alignX = "start",
+	alignY = "center",
 } = Astro.props;
 
 const t = Translations(lang);
 
 // Construcción dinámica de clases usando flexbox
-const directionClass = direction === "horizontal" ? "flex-row space-x-2" : "flex-col";
+const directionClass =
+	direction === "horizontal" ? "flex-row space-x-2" : "flex-col";
 const horizontalAlignClass =
-    alignX === "center"
-        ? "justify-center"
-        : alignX === "end"
-            ? "justify-end"
-            : "justify-start";
+	alignX === "center"
+		? "justify-center"
+		: alignX === "end"
+			? "justify-end"
+			: "justify-start";
 
 const verticalAlignClass =
-    alignY === "center"
-        ? "items-center"
-        : alignY === "end"
-            ? "items-end"
-            : "items-start";
+	alignY === "center"
+		? "items-center"
+		: alignY === "end"
+			? "items-end"
+			: "items-start";
 ---
 
 <label

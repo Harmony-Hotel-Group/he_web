@@ -1,78 +1,62 @@
 [
-  {
-    "id": "room1",
-    "name": {
-      "es": "Habitación Estándar",
-      "en": "Standard Room"
-    },
-    "type": {
-      "es": "Estándar",
-      "en": "Standard"
-    },
-    "description": {
-      "es": "Una cómoda habitación con todas las comodidades básicas para una estancia agradable.",
-      "en": "A comfortable room with all basic amenities for a pleasant stay."
-    },
-    "pricePerNight": 100,
-    "currency": "USD",
-    "images": [
-      "/images/rooms/standard1.jpg",
-      "/images/rooms/standard2.jpg"
-    ],
-    "amenities": {
-      "es": [
-        "Cama doble",
-        "Baño privado",
-        "TV",
-        "Wi-Fi"
-      ],
-      "en": [
-        "Double bed",
-        "Private bathroom",
-        "TV",
-        "Wi-Fi"
-      ]
-    },
-    "category": {
-      "es": "Estandar",
-      "en": "Standard"
-    }
-  },
-  {
-    "id": "room2",
-    "name": {
-      "es": "Suite Deluxe",
-      "en": "Deluxe Suite"
-    },
-    "type": {
-      "es": "Deluxe",
-      "en": "Deluxe"
-    },
-    "description": {
-      "es": "Espaciosa suite con vistas panorámicas y servicios premium.",
-      "en": "Spacious suite with panoramic views and premium services."
-    },
-    "pricePerNight": 250,
-    "currency": "USD",
-    "images": [
-      "/images/rooms/deluxe1.jpg",
-      "/images/rooms/deluxe2.jpg"
-    ],
-    "amenities": {
-      "es": [
-        "Cama King-size",
-        "Baño de lujo",
-        "Minibar",
-        "Balcón",
-        "Wi-Fi de alta velocidad"
-      ],
-      "en": [
-        "King-size bed",
-        "Luxury bathroom",
-        "Minibar",
-        "Balcony",
-        "High-speed Wi-Fi"
-      ]
-    }
-  }
+	{
+		"id": "room1",
+		"name": {
+			"es": "Habitación Estándar",
+			"en": "Standard Room"
+		},
+		"type": {
+			"es": "Estándar",
+			"en": "Standard"
+		},
+		"description": {
+			"es": "Una cómoda habitación con todas las comodidades básicas para una estancia agradable.",
+			"en": "A comfortable room with all basic amenities for a pleasant stay."
+		},
+		"pricePerNight": 100,
+		"currency": "USD",
+		"images": ["/images/rooms/standard1.jpg", "/images/rooms/standard2.jpg"],
+		"amenities": {
+			"es": ["Cama doble", "Baño privado", "TV", "Wi-Fi"],
+			"en": ["Double bed", "Private bathroom", "TV", "Wi-Fi"]
+		},
+		"category": {
+			"es": "Estandar",
+			"en": "Standard"
+		}
+	},
+	{
+		"id": "room2",
+		"name": {
+			"es": "Suite Deluxe",
+			"en": "Deluxe Suite"
+		},
+		"type": {
+			"es": "Deluxe",
+			"en": "Deluxe"
+		},
+		"description": {
+			"es": "Espaciosa suite con vistas panorámicas y servicios premium.",
+			"en": "Spacious suite with panoramic views and premium services."
+		},
+		"pricePerNight": 250,
+		"currency": "USD",
+		"images": ["/images/rooms/deluxe1.jpg", "/images/rooms/deluxe2.jpg"],
+		"amenities": {
+			"es": [
+				"Cama King-size",
+				"Baño de lujo",
+				"Minibar",
+				"Balcón",
+				"Wi-Fi de alta velocidad"
+			],
+			"en": [
+				"King-size bed",
+				"Luxury bathroom",
+				"Minibar",
+				"Balcony",
+				"High-speed Wi-Fi"
+			]
+		}
+	}
 ]

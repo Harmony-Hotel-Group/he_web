@@ -1,32 +1,32 @@
 ---
 // src/components/atoms/SearchInput.astro
 interface Option {
-  value: string;
-  label: string;
+	value: string;
+	label: string;
 }
 
 interface Props {
-  label?: string;
-  name: string;
-  id?: string;
-  placeholder?: string;
-  options: Option[];
-  className?: string;
-  labelClass?: string;
-  inputClass?: string;
-  dropdownClass?: string;
+	label?: string;
+	name: string;
+	id?: string;
+	placeholder?: string;
+	options: Option[];
+	className?: string;
+	labelClass?: string;
+	inputClass?: string;
+	dropdownClass?: string;
 }
 
-const { 
-  label, 
-  name, 
-  id = name, 
-  placeholder = '', 
-  options = [], 
-  className, 
-  labelClass, 
-  inputClass, 
-  dropdownClass 
+const {
+	label,
+	name,
+	id = name,
+	placeholder = "",
+	options = [],
+	className,
+	labelClass,
+	inputClass,
+	dropdownClass,
 } = Astro.props;
 
 const uniqueId = `search-input-${Math.random().toString(36).slice(2)}`;

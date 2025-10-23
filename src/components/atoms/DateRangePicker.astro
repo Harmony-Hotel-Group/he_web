@@ -1,17 +1,12 @@
 ---
 interface Props {
-    id: string;
-    lang?: string;
-    name?: string;
-    placeholder?: string;
+	id: string;
+	lang?: string;
+	name?: string;
+	placeholder?: string;
 }
 
-const {
-    id,
-    name,
-    lang,
-    placeholder
-} = Astro.props;
+const { id, name, lang, placeholder } = Astro.props;
 ---
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"/>

@@ -1,89 +1,103 @@
 ---
 // src/components/features/carousel/VisualCarousel.astro
-import VisualResource from '../../molecules/media/VisualResource.astro';
+import VisualResource from "../../molecules/media/VisualResource.astro";
 
 interface Resource {
-    src: string;
-    type: 'image' | 'video' | 'youtube';
-    alt?: string;
-    youtubeId?: string;
+	src: string;
+	type: "image" | "video" | "youtube";
+	alt?: string;
+	youtubeId?: string;
 }
 
 interface Props {
-    resources: Resource[];
-    class?: string;
-    maskOpacityClass?: string;
-    objectFitClass?: string;
-    videoZoomScale?: number;
+	resources: Resource[];
+	class?: string;
+	maskOpacityClass?: string;
+	objectFitClass?: string;
+	videoZoomScale?: number;
 }
 
 const {
-    resources,
-    class: className,
-    maskOpacityClass = 'bg-black/50',
-    objectFitClass = 'object-cover',
-    videoZoomScale = 1.1
+	resources,
+	class: className,
+	maskOpacityClass = "bg-black/50",
+	objectFitClass = "object-cover",
+	videoZoomScale = 1.1,
 } = Astro.props;
 
 const defaultPlaceholderResources: Resource[] = [
-    { src: '/images/placeholders/placeholder1.jpg', type: 'image', alt: 'Placeholder Image 1' },
-    { src: '/images/placeholders/placeholder2.jpg', type: 'image', alt: 'Placeholder Image 2' },
-    { src: '/images/placeholders/placeholder3.jpg', type: 'image', alt: 'Placeholder Image 3' },
+	{
+		src: "/images/placeholders/placeholder1.jpg",
+		type: "image",
+		alt: "Placeholder Image 1",
+	},
+	{
+		src: "/images/placeholders/placeholder2.jpg",
+		type: "image",
+		alt: "Placeholder Image 2",
+	},
+	{
+		src: "/images/placeholders/placeholder3.jpg",
+		type: "image",
+		alt: "Placeholder Image 3",
+	},
 ];
 
 function getYouTubeVideoId(url: string): string | null {
-    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-    const match = url.match(regExp);
-    return (match && match[2].length === 11) ? match[2] : null;
+	const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+	const match = url.match(regExp);
+	return match && match[2].length === 11 ? match[2] : null;
 }
 
 let processedResources: Resource[] = [];
 
 if (resources && resources.length > 0) {
-    processedResources = resources.map(res => {
-        if (res.type === 'video') {
-            const youtubeId = getYouTubeVideoId(res.src);
-            if (youtubeId) {
-                return { ...res, type: 'youtube', youtubeId: youtubeId };
-            }
-        }
-        return res;
-    });
+	processedResources = resources.map((res) => {
+		if (res.type === "video") {
+			const youtubeId = getYouTubeVideoId(res.src);
+			if (youtubeId) {
+				return { ...res, type: "youtube", youtubeId: youtubeId };
+			}
+		}
+		return res;
+	});
 }
 
-const videos = processedResources.filter(r => r.type === 'video');
-const youtubeVideos = processedResources.filter(r => r.type === 'youtube');
-const images = processedResources.filter(r => r.type === 'image');
+const videos = processedResources.filter((r) => r.type === "video");
+const youtubeVideos = processedResources.filter((r) => r.type === "youtube");
+const images = processedResources.filter((r) => r.type === "image");
 
 let finalResources: Resource[];
 let showVideoInitially = false;
 
-const userAgent = Astro.request.headers.get('user-agent') || '';
-const isMobileDevice = /Mobile|Android|iPhone|iPad|iPod|Windows Phone/i.test(userAgent);
+const userAgent = Astro.request.headers.get("user-agent") || "";
+const isMobileDevice = /Mobile|Android|iPhone|iPad|iPod|Windows Phone/i.test(
+	userAgent,
+);
 
 if (youtubeVideos.length > 0 && !isMobileDevice) {
-    finalResources = [youtubeVideos[0]];
-    showVideoInitially = true;
+	finalResources = [youtubeVideos[0]];
+	showVideoInitially = true;
 } else if (videos.length > 0 && !isMobileDevice) {
-    finalResources = [videos[0]];
-    showVideoInitially = true;
+	finalResources = [videos[0]];
+	showVideoInitially = true;
 } else if (images.length > 0) {
-    finalResources = images;
+	finalResources = images;
 } else {
-    finalResources = defaultPlaceholderResources;
-    showVideoInitially = false;
+	finalResources = defaultPlaceholderResources;
+	showVideoInitially = false;
 }
 
 if (showVideoInitially && isMobileDevice) {
-    showVideoInitially = false;
-    finalResources = images.length > 0 ? images : defaultPlaceholderResources;
+	showVideoInitially = false;
+	finalResources = images.length > 0 ? images : defaultPlaceholderResources;
 }
 
 const singleVideoResource = showVideoInitially ? finalResources[0] : undefined;
 const carouselImageResources = showVideoInitially ? [] : finalResources;
 
 if (!singleVideoResource && carouselImageResources.length === 0) {
-    carouselImageResources.push(...defaultPlaceholderResources);
+	carouselImageResources.push(...defaultPlaceholderResources);
 }
 ---
 
@@ -112,7 +126,7 @@ if (!singleVideoResource && carouselImageResources.length === 0) {
                                 src={singleVideoResource.src}
                                 type="video"
                                 alt={singleVideoResource.alt}
-                                class="absolute top-0 left-0 w-full h-full object-cover"
+                                classes="absolute top-0 left-0 w-full h-full object-cover"
                         />
                         <div class:list={['absolute inset-0 z-[1] pointer-events-none', maskOpacityClass]}></div>
                     </div>

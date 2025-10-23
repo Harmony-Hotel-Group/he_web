@@ -1,273 +1,275 @@
 {
-  "siteName": {
-    "es": "MiHotel",
-    "en": "MyHotel"
-  },
-  "tagline": {
-    "es": "Tu hogar lejos de casa",
-    "en": "Your home away from home"
-  },
-  "aboutUs": {
-    "subtitle": {
-      "es": "Sobre Nosotros",
-      "en": "About Us"
-    },
-    "mainTitle": {
-      "es": "Bienvenido a Hotel Ensueños",
-      "en": "Welcome to Ensueños Hotel"
-    },
-    "welcomeParagraph": {
-      "es": "Ubicado en el corazón del centro histórico de Cuenca, Ecuador, nuestro hotel boutique te invita a vivir una experiencia única. A pocos pasos de la majestuosa Catedral de la Inmaculada Concepción y rodeado de la vibrante vida cultural de la ciudad, Hotel Ensueños es el punto de partida perfecto para explorar los encantos de este Patrimonio de la Humanidad.",
-      "en": "Located in the heart of the historic center of Cuenca, Ecuador, our boutique hotel invites you to live a unique experience. Just a few steps from the majestic Cathedral of the Immaculate Conception and surrounded by the vibrant cultural life of the city, Ensueños Hotel is the perfect starting point to explore the charms of this World Heritage Site."
-    },
-    "commitmentParagraph": {
-      "es": "En Hotel Ensueños, estamos comprometidos con su satisfacción y comodidad. Desde el momento en que ingrese a nuestro acogedor vestíbulo, sentirá la calidez y la atención personalizada que nos distingue. Nuestras 15 habitaciones y bar/restaurante están diseñados para brindarle una estancia cómoda y relajante. Nuestro amable personal está siempre a su disposición para atender todas sus necesidades, desde recomendaciones de restaurantes locales hasta la organización de emocionantes tours por la ciudad.",
-      "en": "At Ensueños Hotel, we are committed to your satisfaction and comfort. From the moment you enter our cozy lobby, you will feel the warmth and personalized attention that sets us apart. Our 15 rooms and bar/restaurant are designed to provide you with a comfortable and relaxing stay. Our friendly staff is always at your disposal to attend to all your needs, from recommendations for local restaurants to organizing exciting city tours."
-    },
-    "images": [
-      {
-        "src": "/img/about/collage1.jpg",
-        "alt": "Vista de la fachada del hotel"
-      },
-      {
-        "src": "/img/about/collage2.jpg",
-        "alt": "Interior del lobby del hotel"
-      },
-      {
-        "src": "/img/about/collage3.jpg",
-        "alt": "Detalle decorativo de una habitación"
-      },
-      {
-        "src": "/img/about/collage4.jpg",
-        "alt": "Jardines del hotel"
-      }
-    ]
-  },
-  "contactInfo": {
-    "address": {
-      "es": "Gran Colombia 182 y Manuel Vega, Cuenca, Ecuador",
-      "en": "Gran Colombia 182 y Manuel Vega, Cuenca, Ecuador"
-    },
-    "whatsapp": "+593978888020",
-    "email": "reservas@hotelensueños.com",
-    "socialLinks": {
-      "facebook": "https://facebook.com/mihotel",
-      "instagram": "https://instagram.com/mihotel",
-      "twitter": "https://twitter.com/mihotel"
-    }
-  },
-  "carouselResources": [
-    {
-      "src": "src/resources/vid/Cuenca.mp4",
-      "type": "video",
-      "alt": "Cuenca 4K Local"
-    },
-    {
-      "src": "https://www.youtube.com/watch?v=6lABBjfUL6M",
-      "type": "video",
-      "alt": "Cuenca 4K Youtube"
-    },
-    {
-      "src": "https://fastly.picsum.photos/id/237/1920/1080.jpg?hmac=1hPzsubx1j8fMddzUgP5NbuX2rNLOEaQML1rD_g1C5Y",
-      "type": "image",
-      "alt": "Perro mirando a la cámara"
-    },
-    {
-      "src": "https://fastly.picsum.photos/id/238/1920/1080.jpg?hmac=poVbLcPNjgsBwc5evNoDIpU4Psvr4qMFql-qHSWaEBU",
-      "type": "image",
-      "alt": "Paisaje montañoso"
-    },
-    {
-      "src": "https://fastly.picsum.photos/id/239/1920/1080.jpg?hmac=Ii-YrkHwNkDBvmZxB_AkjTrTemEAjFoFxSpChpE4YDY",
-      "type": "image",
-      "alt": "Ciudad de noche"
-    }
-  ],
-  "roomTypes": [
-    {
-      "id": "standard",
-      "src": "portada/standard.jpg",
-      "name": {
-        "es": "Estándar",
-        "en": "Standard"
-      },
-      "title": {
-        "es": "titulo",
-        "en": "title"
-      },
-      "description": {
-        "es": "descripcion",
-        "en": "description"
-      },
-      "tags": {
-        "es": "tags",
-        "en": "tags"
-      }
-    },
-    {
-      "id": "deluxe",
-      "src": "https://fastly.picsum.photos/id/237/1920/1080.jpg?hmac=1hPzsubx1j8fMddzUgP5NbuX2rNLOEaQML1rD_g1C5Y",
-      "name": {
-        "es": "Deluxe",
-        "en": "Deluxe"
-      },
-      "title": {
-        "es": "titulo",
-        "en": "title"
-      },
-      "description": {
-        "es": "descripcion",
-        "en": "description"
-      },
-      "tags": {
-        "es": "tags",
-        "en": "tags"
-      }
-    }
-  ],
-  "destinationCategories": [
-    {
-      "id": "beach",
-      "src": "",
-      "name": {
-        "es": "Playas",
-        "en": "Beaches"
-      },
-      "title": {
-        "es": "titulo",
-        "en": "title"
-      },
-      "description": {
-        "es": "descripcion",
-        "en": "description"
-      },
-      "tags": {
-        "es": "tags",
-        "en": "tags"
-      }
-    },
-    {
-      "id": "mountain",
-      "src": "https://fastly.picsum.photos/id/237/1920/1080.jpg?hmac=1hPzsubx1j8fMddzUgP5NbuX2rNLOEaQML1rD_g1C5Y",
-      "name": {
-        "es": "Montañas",
-        "en": "Mountains"
-      },
-      "title": {
-        "es": "titulo",
-        "en": "title"
-      },
-      "description": {
-        "es": "descripcion",
-        "en": "description"
-      },
-      "tags": {
-        "es": "tags",
-        "en": "tags"
-      }
-    }
-  ],
-  "tourCategories": [
-    {
-      "id": "city",
-      "src": "https://fastly.picsum.photos/id/237/1920/1080.jpg?hmac=1hPzsubx1j8fMddzUg",
-      "name": {
-        "es": "Ciudad",
-        "en": "City"
-      },
-      "title": {
-        "es": "titulo",
-        "en": "title"
-      },
-      "description": {
-        "es": "descripcion",
-        "en": "description"
-      },
-      "tags": {
-        "es": "tags",
-        "en": "tags"
-      }
-    },
-    {
-      "id": "nature",
-      "src": "https://fastly.picsum.photos/id/237/1920/1080.jpg?hmac=1hPzsubx1j8fMddzUgP5NbuX2rNLOEaQML1rD_g1C5Y",
-      "name": {
-        "es": "Naturaleza",
-        "en": "Nature"
-      },
-      "title": {
-        "es": "titulo",
-        "en": "title"
-      },
-      "description": {
-        "es": "descripcion",
-        "en": "description"
-      },
-      "tags": {
-        "es": "tags",
-        "en": "tags"
-      }
-    }
-  ],
-  "gastronomyCategories": [
-    {
-      "id": "main-course",
-      "src": "",
-      "name": {
-        "es": "Platos Principales",
-        "en": "Main Courses"
-      },"title": {
-      "es": "titulo",
-      "en": "title"
-    },
-      "description": {
-        "es": "descripcion",
-        "en": "description"
-      },
-      "tags": {
-        "es": "tags",
-        "en": "tags"
-      }
-    },
-    {
-      "id": "dessert",
-      "src": "https://fastly.picsum.photos/id/237/1920/1080.jpg?hmac=1hPzsubx1j8fMddzUgP5NbuX2rNLOEaQML1rD_g1C5Y",
-      "name": {
-        "es": "Postres",
-        "en": "Desserts"
-      },"title": {
-      "es": "titulo",
-      "en": "title"
-    },
-      "description": {
-        "es": "descripcion",
-        "en": "description"
-      },
-      "tags": {
-        "es": "tags",
-        "en": "tags"
-      }
-    }
-  ],
+	"siteName": {
+		"es": "MiHotel",
+		"en": "MyHotel"
+	},
+	"tagline": {
+		"es": "Tu hogar lejos de casa",
+		"en": "Your home away from home"
+	},
+	"aboutUs": {
+		"subtitle": {
+			"es": "Sobre Nosotros",
+			"en": "About Us"
+		},
+		"mainTitle": {
+			"es": "Bienvenido a Hotel Ensueños",
+			"en": "Welcome to Ensueños Hotel"
+		},
+		"welcomeParagraph": {
+			"es": "Ubicado en el corazón del centro histórico de Cuenca, Ecuador, nuestro hotel boutique te invita a vivir una experiencia única. A pocos pasos de la majestuosa Catedral de la Inmaculada Concepción y rodeado de la vibrante vida cultural de la ciudad, Hotel Ensueños es el punto de partida perfecto para explorar los encantos de este Patrimonio de la Humanidad.",
+			"en": "Located in the heart of the historic center of Cuenca, Ecuador, our boutique hotel invites you to live a unique experience. Just a few steps from the majestic Cathedral of the Immaculate Conception and surrounded by the vibrant cultural life of the city, Ensueños Hotel is the perfect starting point to explore the charms of this World Heritage Site."
+		},
+		"commitmentParagraph": {
+			"es": "En Hotel Ensueños, estamos comprometidos con su satisfacción y comodidad. Desde el momento en que ingrese a nuestro acogedor vestíbulo, sentirá la calidez y la atención personalizada que nos distingue. Nuestras 15 habitaciones y bar/restaurante están diseñados para brindarle una estancia cómoda y relajante. Nuestro amable personal está siempre a su disposición para atender todas sus necesidades, desde recomendaciones de restaurantes locales hasta la organización de emocionantes tours por la ciudad.",
+			"en": "At Ensueños Hotel, we are committed to your satisfaction and comfort. From the moment you enter our cozy lobby, you will feel the warmth and personalized attention that sets us apart. Our 15 rooms and bar/restaurant are designed to provide you with a comfortable and relaxing stay. Our friendly staff is always at your disposal to attend to all your needs, from recommendations for local restaurants to organizing exciting city tours."
+		},
+		"images": [
+			{
+				"src": "/img/about/collage1.jpg",
+				"alt": "Vista de la fachada del hotel"
+			},
+			{
+				"src": "/img/about/collage2.jpg",
+				"alt": "Interior del lobby del hotel"
+			},
+			{
+				"src": "/img/about/collage3.jpg",
+				"alt": "Detalle decorativo de una habitación"
+			},
+			{
+				"src": "/img/about/collage4.jpg",
+				"alt": "Jardines del hotel"
+			}
+		]
+	},
+	"contactInfo": {
+		"address": {
+			"es": "Gran Colombia 182 y Manuel Vega, Cuenca, Ecuador",
+			"en": "Gran Colombia 182 y Manuel Vega, Cuenca, Ecuador"
+		},
+		"whatsapp": "+593978888020",
+		"email": "reservas@hotelensueños.com",
+		"socialLinks": {
+			"facebook": "https://facebook.com/mihotel",
+			"instagram": "https://instagram.com/mihotel",
+			"twitter": "https://twitter.com/mihotel"
+		}
+	},
+	"carouselResources": [
+		{
+			"src": "src/resources/vid/Cuenca.mp4",
+			"type": "video",
+			"alt": "Cuenca 4K Local"
+		},
+		{
+			"src": "https://www.youtube.com/watch?v=6lABBjfUL6M",
+			"type": "video",
+			"alt": "Cuenca 4K Youtube"
+		},
+		{
+			"src": "https://fastly.picsum.photos/id/237/1920/1080.jpg?hmac=1hPzsubx1j8fMddzUgP5NbuX2rNLOEaQML1rD_g1C5Y",
+			"type": "image",
+			"alt": "Perro mirando a la cámara"
+		},
+		{
+			"src": "https://fastly.picsum.photos/id/238/1920/1080.jpg?hmac=poVbLcPNjgsBwc5evNoDIpU4Psvr4qMFql-qHSWaEBU",
+			"type": "image",
+			"alt": "Paisaje montañoso"
+		},
+		{
+			"src": "https://fastly.picsum.photos/id/239/1920/1080.jpg?hmac=Ii-YrkHwNkDBvmZxB_AkjTrTemEAjFoFxSpChpE4YDY",
+			"type": "image",
+			"alt": "Ciudad de noche"
+		}
+	],
+	"roomTypes": [
+		{
+			"id": "standard",
+			"src": "portada/standard.jpg",
+			"name": {
+				"es": "Estándar",
+				"en": "Standard"
+			},
+			"title": {
+				"es": "titulo",
+				"en": "title"
+			},
+			"description": {
+				"es": "descripcion",
+				"en": "description"
+			},
+			"tags": {
+				"es": "tags",
+				"en": "tags"
+			}
+		},
+		{
+			"id": "deluxe",
+			"src": "https://fastly.picsum.photos/id/237/1920/1080.jpg?hmac=1hPzsubx1j8fMddzUgP5NbuX2rNLOEaQML1rD_g1C5Y",
+			"name": {
+				"es": "Deluxe",
+				"en": "Deluxe"
+			},
+			"title": {
+				"es": "titulo",
+				"en": "title"
+			},
+			"description": {
+				"es": "descripcion",
+				"en": "description"
+			},
+			"tags": {
+				"es": "tags",
+				"en": "tags"
+			}
+		}
+	],
+	"destinationCategories": [
+		{
+			"id": "beach",
+			"src": "",
+			"name": {
+				"es": "Playas",
+				"en": "Beaches"
+			},
+			"title": {
+				"es": "titulo",
+				"en": "title"
+			},
+			"description": {
+				"es": "descripcion",
+				"en": "description"
+			},
+			"tags": {
+				"es": "tags",
+				"en": "tags"
+			}
+		},
+		{
+			"id": "mountain",
+			"src": "https://fastly.picsum.photos/id/237/1920/1080.jpg?hmac=1hPzsubx1j8fMddzUgP5NbuX2rNLOEaQML1rD_g1C5Y",
+			"name": {
+				"es": "Montañas",
+				"en": "Mountains"
+			},
+			"title": {
+				"es": "titulo",
+				"en": "title"
+			},
+			"description": {
+				"es": "descripcion",
+				"en": "description"
+			},
+			"tags": {
+				"es": "tags",
+				"en": "tags"
+			}
+		}
+	],
+	"tourCategories": [
+		{
+			"id": "city",
+			"src": "https://fastly.picsum.photos/id/237/1920/1080.jpg?hmac=1hPzsubx1j8fMddzUg",
+			"name": {
+				"es": "Ciudad",
+				"en": "City"
+			},
+			"title": {
+				"es": "titulo",
+				"en": "title"
+			},
+			"description": {
+				"es": "descripcion",
+				"en": "description"
+			},
+			"tags": {
+				"es": "tags",
+				"en": "tags"
+			}
+		},
+		{
+			"id": "nature",
+			"src": "https://fastly.picsum.photos/id/237/1920/1080.jpg?hmac=1hPzsubx1j8fMddzUgP5NbuX2rNLOEaQML1rD_g1C5Y",
+			"name": {
+				"es": "Naturaleza",
+				"en": "Nature"
+			},
+			"title": {
+				"es": "titulo",
+				"en": "title"
+			},
+			"description": {
+				"es": "descripcion",
+				"en": "description"
+			},
+			"tags": {
+				"es": "tags",
+				"en": "tags"
+			}
+		}
+	],
+	"gastronomyCategories": [
+		{
+			"id": "main-course",
+			"src": "",
+			"name": {
+				"es": "Platos Principales",
+				"en": "Main Courses"
+			},
+			"title": {
+				"es": "titulo",
+				"en": "title"
+			},
+			"description": {
+				"es": "descripcion",
+				"en": "description"
+			},
+			"tags": {
+				"es": "tags",
+				"en": "tags"
+			}
+		},
+		{
+			"id": "dessert",
+			"src": "https://fastly.picsum.photos/id/237/1920/1080.jpg?hmac=1hPzsubx1j8fMddzUgP5NbuX2rNLOEaQML1rD_g1C5Y",
+			"name": {
+				"es": "Postres",
+				"en": "Desserts"
+			},
+			"title": {
+				"es": "titulo",
+				"en": "title"
+			},
+			"description": {
+				"es": "descripcion",
+				"en": "description"
+			},
+			"tags": {
+				"es": "tags",
+				"en": "tags"
+			}
+		}
+	],
 
-  "supportedLanguages": [
-    {
-      "code": "es",
-      "name": "Español"
-    },
-    {
-      "code": "en",
-      "name": "English"
-    }
-  ],
-  "supportedCurrencies": [
-    {
-      "code": "USD",
-      "symbol": "$"
-    },
-    {
-      "code": "EUR",
-      "symbol": "€"
-    }
-  ]
+	"supportedLanguages": [
+		{
+			"code": "es",
+			"name": "Español"
+		},
+		{
+			"code": "en",
+			"name": "English"
+		}
+	],
+	"supportedCurrencies": [
+		{
+			"code": "USD",
+			"symbol": "$"
+		},
+		{
+			"code": "EUR",
+			"symbol": "€"
+		}
+	]
 }

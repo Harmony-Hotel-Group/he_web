@@ -1,31 +1,31 @@
 ---
 // src/components/atoms/TextInput.astro
 interface Props {
-  label?: string;
-  name: string;
-  id?: string;
-  type?: 'text' | 'email' | 'password' | 'number' | 'tel' | 'url';
-  placeholder?: string;
-  value?: string;
-  required?: boolean;
-  disabled?: boolean;
-  className?: string;
-  labelClass?: string;
-  inputClass?: string;
+	label?: string;
+	name: string;
+	id?: string;
+	type?: "text" | "email" | "password" | "number" | "tel" | "url";
+	placeholder?: string;
+	value?: string;
+	required?: boolean;
+	disabled?: boolean;
+	className?: string;
+	labelClass?: string;
+	inputClass?: string;
 }
 
-const { 
-  label, 
-  name, 
-  id = name, 
-  type = 'text', 
-  placeholder = '', 
-  value, 
-  required = false, 
-  disabled = false, 
-  className, 
-  labelClass, 
-  inputClass 
+const {
+	label,
+	name,
+	id = name,
+	type = "text",
+	placeholder = "",
+	value,
+	required = false,
+	disabled = false,
+	className,
+	labelClass,
+	inputClass,
 } = Astro.props;
 ---
 

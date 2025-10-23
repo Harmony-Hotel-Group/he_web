@@ -4,21 +4,21 @@ import { Translations } from "~/i18n/translation.ts";
 import BookingVehicleSection from "./BookingVehicleSection.astro";
 
 interface Props {
-    lang: string;
-    config: any;
+	lang: string;
+	config: any;
 }
 
 const { lang, config } = Astro.props;
 const t = Translations(lang);
 
 const vehicleTypeOptions = [
-    { value: "auto", label: "Auto" },
-    { value: "suv", label: "SUV" },
-    { value: "camioneta", label: "Camioneta" },
-    { value: "furgoneta", label: "Furgoneta" },
-    { value: "buseta", label: "Buseta" },
-    { value: "bus", label: "Bus" },
-    { value: "otro", label: "Otro" },
+	{ value: "auto", label: "Auto" },
+	{ value: "suv", label: "SUV" },
+	{ value: "camioneta", label: "Camioneta" },
+	{ value: "furgoneta", label: "Furgoneta" },
+	{ value: "buseta", label: "Buseta" },
+	{ value: "bus", label: "Bus" },
+	{ value: "otro", label: "Otro" },
 ];
 ---
 

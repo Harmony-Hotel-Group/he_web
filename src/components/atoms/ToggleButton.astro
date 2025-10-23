@@ -1,23 +1,23 @@
 ---
 // src/components/atoms/ToggleButton.astro
 interface Props {
-  label: string;
-  name: string; // The name for the group of buttons
-  value: string;
-  id?: string;
-  checked?: boolean;
-  disabled?: boolean;
-  className?: string;
+	label: string;
+	name: string; // The name for the group of buttons
+	value: string;
+	id?: string;
+	checked?: boolean;
+	disabled?: boolean;
+	className?: string;
 }
 
-const { 
-  label, 
-  name, 
-  value, 
-  id = `${name}-${value}`,
-  checked = false, 
-  disabled = false, 
-  className 
+const {
+	label,
+	name,
+	value,
+	id = `${name}-${value}`,
+	checked = false,
+	disabled = false,
+	className,
 } = Astro.props;
 ---
 

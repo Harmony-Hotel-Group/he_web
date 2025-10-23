@@ -1,32 +1,32 @@
 ---
+import VisualResource from "~/components/molecules/media/VisualResource.astro";
+import { Translations } from "~/i18n/translation.ts";
 // src/pages/rooms/[id].astro
-import BaseLayout from '~/layouts/BaseLayout.astro';
-import { Translations } from '~/i18n/translation.ts';
-import { fetchData } from '~/utils/apiService.js';
-import VisualResource from '~/components/molecules/media/VisualResource.astro';
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import { fetchData } from "~/utils/apiService.js";
 
 export async function getStaticPaths() {
-  const rooms = await fetchData('rooms');
-  return rooms.map(room => ({
-    params: { id: room.id },
-    props: { room }
-  }));
+	const rooms = await fetchData("rooms");
+	return rooms.map((room) => ({
+		params: { id: room.id },
+		props: { room },
+	}));
 }
 
-const lang = Astro.cookies.get('lang')?.value || 'es';
+const lang = Astro.cookies.get("lang")?.value || "es";
 const t = Translations(lang);
 
 const { id } = Astro.params;
 const { room } = Astro.props;
 
-console.info('Room ID:', id);
-console.info('Room:', room);
+console.info("Room ID:", id);
+console.info("Room:", room);
 
 if (!room) {
-  return new Response(null, {
-    status: 404,
-    statusText: 'Not Found'
-  });
+	return new Response(null, {
+		status: 404,
+		statusText: "Not Found",
+	});
 }
 ---
 

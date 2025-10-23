@@ -4,7 +4,7 @@ import { bookingGroup } from "./bookingGroup";
 import { bookingVehicle } from "./bookingVehicle";
 
 export const server = {
-    booking,
-    bookingGroup,
-    bookingVehicle,
+	booking,
+	bookingGroup,
+	bookingVehicle,
 };

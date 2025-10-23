@@ -12,6 +12,8 @@ import BookingVehicleSection from "./BookingVehicleSection.astro";
 
 import { range } from "~/utils/math.ts";
 import { Translations } from "~/i18n/translation.ts";
+import TextAreaInput from "~/components/atoms/TextAreaInput.astro";
+import Label from "~/components/atoms/Label.astro";
 
 interface Props {
     lang: string;
@@ -129,8 +131,15 @@ const email = config?.contactInfo?.email ?? "";
         <BookingVehicleSection lang={lang} config={config} client:load/>
     </div>
 
-    <!--<div id="special_request-section">-->
-    <!--</div>-->
+    <div id="special_request-section" class="hidden">
+        <Label forId="groupNotes" lang={lang} lblKey="booking.group.notes" classes="pr-5"/>
+        <TextAreaInput
+                id="groupNotes"
+                name="groupNotes"
+                keyPlaceholder='booking.group.notesPlaceholder'
+                lang={lang}
+        />
+    </div>
 
     <div class="text-center pt-4">
         <Button _id="btnSubmit" type="button" lblKey="booking.btn.search" lang={lang} variant="accent"
@@ -145,14 +154,12 @@ const email = config?.contactInfo?.email ?? "";
     import { actions } from 'astro:actions';
 
     document.addEventListener("DOMContentLoaded", () => {
-        const form: HTMLFormElement = document.getElementById('booking-form');
+        const form: HTMLFormElement = document.getElementById('booking-form') as HTMLFormElement;
         if (!form) return;
 
         const bookingBar = form.closest('#booking-bar');
         const vehicleSection = document.getElementById('vehicle-section');
         const vehicleSwitchButton = form.querySelector('button[id="vehicle"]');
-
-        console.log("form", form);
 
         if (vehicleSwitchButton && vehicleSection) {
             const observer = new MutationObserver(() => {

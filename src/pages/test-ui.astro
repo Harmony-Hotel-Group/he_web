@@ -8,8 +8,8 @@ import { fetchData } from "~/services/api";
 import BookingGroupForm from "~/components/organisms/booking/BookingGroupForm.astro";
 import Card from "~/components/atoms/Card.astro";
 
-const lang = Astro.cookies.get('lang')?.value || 'es';
 const dataConfig = await fetchData('siteConfig');
+const lang = 'es'
 ---
 
 <DevOnlyPage>
@@ -20,10 +20,6 @@ const dataConfig = await fetchData('siteConfig');
                 validation.</p>
             <Card>
                 <BookingForm lang={lang} config={dataConfig}/>
-            </Card>
-            <br/>
-            <Card>
-                <BookingGroupForm lang={lang} config={dataConfig}/>
             </Card>
         </div>
     </BaseLayout>

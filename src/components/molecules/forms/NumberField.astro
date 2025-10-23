@@ -11,6 +11,10 @@ interface Props {
     name: string;
     lblKey: string;
     icon?: string;
+    min?: number;
+    max?: number;
+    step?: number;
+    value?: number;
     lang: string;
     className?: string;
 }
@@ -21,10 +25,14 @@ const {
     lblKey,
     lang,
     icon,
+    min = 0,
+    max,
+    step = 1,
+    value=0,
     className
 } = Astro.props;
 
-const t = Translations(lang ?? defaultLang);
+const t = Translations(lang);
 ---
 
 <div class:list={["flex flex-col", className]}>
@@ -41,6 +49,10 @@ const t = Translations(lang ?? defaultLang);
             id={fieldId}
             name={name}
             lang={lang}
+            min={min}
+            max={max}
+            step={step}
+            value={value}
             placeholder={t('booking.dateRange.placeholder')}
     />
     <span id={`error_${fieldId}`} class="hidden text-red-700 px-4">{t('booking.number.error')}</span>

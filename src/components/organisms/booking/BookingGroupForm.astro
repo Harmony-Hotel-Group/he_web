@@ -6,6 +6,9 @@ import DatePickerField from "~/components/molecules/forms/DatePickerField.astro"
 import SwitchField from "~/components/molecules/forms/SwitchField.astro";
 import { Translations } from "~/i18n/translation.ts";
 import NumberField from "~/components/molecules/forms/NumberField.astro";
+import TextAreaInput from "~/components/atoms/TextAreaInput.astro";
+import Label from "~/components/atoms/Label.astro";
+import BookingVehicleSection from "~/components/organisms/booking/BookingVehicleSection.astro";
 
 interface Props {
     lang: string;
@@ -45,7 +48,7 @@ const t = Translations(lang);
                     lang={lang}
                     icon="form/adult"
                     min={1}
-                    defaultValue={10}
+                    value={8}
             />
 
             <NumberField
@@ -55,7 +58,6 @@ const t = Translations(lang);
                     lang={lang}
                     icon="form/teen"
                     min={0}
-                    defaultValue={0}
             />
 
             <NumberField
@@ -65,7 +67,6 @@ const t = Translations(lang);
                     lang={lang}
                     icon="form/child"
                     min={0}
-                    defaultValue={0}
             />
 
             <NumberField
@@ -75,7 +76,6 @@ const t = Translations(lang);
                     lang={lang}
                     icon="form/baby"
                     min={0}
-                    defaultValue={0}
             />
         </Grid>
     </div>
@@ -87,55 +87,60 @@ const t = Translations(lang);
                 lblKey="booking.switch.breakfast"
                 lang={lang}
                 checked
+                icon="form/breakfast"
         />
         <SwitchField
-                fieldId="vehicleToggleSwitch"
-                name="vehicle"
+                fieldId="vehicle-group"
+                name="vehicle-group"
                 lblKey="booking.group.vehicle"
                 lang={lang}
+                icon="form/vehicle"
         />
     </Row>
 
-    <div class="space-y-1">
-        <label
-                for="groupNotes"
-                class="block text-sm font-medium text-gray-700 dark:text-gray-300"
-        >
-            {t('booking.group.notes') || 'Información adicional (opcional)'}
-        </label>
-        <textarea
+    <div id="special_request-group-section" class="hidden">
+        <Label forId="groupNotes" lang={lang} lblKey="booking.group.notes" classes="pr-5"/>
+        <TextAreaInput
                 id="groupNotes"
                 name="groupNotes"
-                rows="3"
-                placeholder={t('booking.group.notesPlaceholder') || 'Especificaciones especiales, requerimientos especiales, etc.'}
-                class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-primary focus:border-transparent"
-        ></textarea>
+                keyPlaceholder='booking.group.notesPlaceholder'
+                lang={lang}
+        />
     </div>
+
+    <div id="vehicle-group-section" class="hidden">
+        <BookingVehicleSection lang={lang} config={config} client:load/>
+    </div>
+
 </form>
 
 <script>
+    import { actions } from 'astro:actions';
+
     document.addEventListener('DOMContentLoaded', () => {
-        const vehicleSwitch = document.getElementById('vehicleToggleSwitch');
+        const form: HTMLFormElement = document.getElementById('booking-group-form') as HTMLFormElement;
+        if (!form) return;
 
-        vehicleSwitch?.addEventListener('change', (event) => {
-            const isChecked = (event.target as HTMLInputElement).checked;
+        const vehicleSection = document.getElementById('vehicle-group-section');
+        const vehicleSwitchButton = form.querySelector('button[id="vehicle-group"]');
 
-            if (isChecked) {
-                // Dispatch event para notificar que se debe mostrar formulario de vehículos
-                const customEvent = new CustomEvent('switch-to-vehicle', {
-                    bubbles: true,
-                    composed: true,
-                    detail: { source: 'group-form' }
-                });
-                vehicleSwitch.dispatchEvent(customEvent);
-            }
-        });
+
+        if (vehicleSwitchButton && vehicleSection) {
+            const observer = new MutationObserver(() => {
+                const isChecked = vehicleSwitchButton.getAttribute('aria-checked') === 'true';
+                vehicleSection.classList.toggle('hidden', !isChecked);
+            });
+            observer.observe(vehicleSwitchButton, {
+                attributes: true,
+                attributeFilter: ['aria-checked']
+            });
+        }
 
         // Escuchar cambios en el date picker para validación
         const dateInput = document.getElementById('dateRangeGroup');
 
         dateInput?.addEventListener('datepicker:change', (event: any) => {
-            const { nights, dates } = event.detail;
+            const {nights, dates} = event.detail;
 
             if (import.meta.env.DEV) {
                 console.log('[BookingGroupForm] Fechas cambiadas:', {

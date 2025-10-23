@@ -15,7 +15,7 @@ const dataConfig = await fetchData("config");
 const carouselResources = dataConfig?.carouselResources || [];
 ---
 
-<BaseLayout titleKey="site.title" lang={lang}>
+<BaseLayout config={dataConfig}>
   <div class="relative w-full h-screen overflow-hidden">
     <VisualCarousel resources={carouselResources} videoZoomScale={1.2} />
     <div class="absolute inset-0 flex items-center justify-center z-10 p-4">

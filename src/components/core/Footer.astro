@@ -1,25 +1,24 @@
 ---
 interface Props {
-	t: any;
 	currentLang?: string;
 }
 
-const { t, currentLang = "es" } = Astro.props;
+const { currentLang = "es" } = Astro.props;
 const currentYear = new Date().getFullYear();
 const startYear = 2024;
 
 // Navegación principal
 const mainLinks = [
-	{ href: `/${currentLang}`, label: t("nav.home") || "Inicio" },
-	{ href: `/${currentLang}/rooms`, label: t("nav.rooms") || "Habitaciones" },
+	{ href: `/${currentLang}`, label: "Inicio" },
+	{ href: `/${currentLang}/rooms`, label: "Habitaciones" },
 	{
 		href: `/${currentLang}/destinations`,
-		label: t("nav.destinations") || "Destinos",
+		label: "Destinos",
 	},
-	{ href: `/${currentLang}/tours`, label: t("nav.tours") || "Tours" },
+	{ href: `/${currentLang}/tours`, label: "Tours" },
 	{
 		href: `/${currentLang}/gastronomy`,
-		label: t("nav.gastronomy") || "Gastronomía",
+		label: "Gastronomía",
 	},
 ];
 
@@ -27,30 +26,30 @@ const mainLinks = [
 const interestLinks = [
 	{
 		href: `/${currentLang}/about`,
-		label: t("footer.about") || "Sobre Nosotros",
+		label: "Sobre Nosotros",
 	},
-	{ href: `/${currentLang}/gallery`, label: t("footer.gallery") || "Galería" },
-	{ href: `/${currentLang}/contact`, label: t("footer.contact") || "Contacto" },
-	{ href: `/${currentLang}/booking`, label: t("footer.booking") || "Reservar" },
+	{ href: `/${currentLang}/gallery`, label: "Galería" },
+	{ href: `/${currentLang}/contact`, label: "Contacto" },
+	{ href: `/${currentLang}/booking`, label: "Reservar" },
 ];
 
 // Información legal
 const legalLinks = [
 	{
 		href: `/${currentLang}/privacy`,
-		label: t("footer.privacy") || "Política de Privacidad",
+		label: "Política de Privacidad",
 	},
 	{
 		href: `/${currentLang}/terms`,
-		label: t("footer.terms") || "Términos y Condiciones",
+		label: "Términos y Condiciones",
 	},
 	{
 		href: `/${currentLang}/cancellation`,
-		label: t("footer.cancellation") || "Política de Cancelación",
+		label: "Política de Cancelación",
 	},
 	{
 		href: `/${currentLang}/faq`,
-		label: t("footer.faq") || "Preguntas Frecuentes",
+		label: "Preguntas Frecuentes",
 	},
 ];
 
@@ -90,7 +89,7 @@ const socialLinks = [
                     Hotel Ensueños
                 </h3>
                 <p class="text-sm text-gray-400 leading-relaxed">
-                    {t('footer.description') || 'Hotel boutique en el corazón de Cuenca, Ecuador. Experiencias únicas en el centro histórico.'}
+                    Hotel boutique en el corazón de Cuenca, Ecuador. Experiencias únicas en el centro histórico.
                 </p>
                 <div class="space-y-2 text-sm">
                     <p class="flex items-start gap-2">
@@ -122,7 +121,7 @@ const socialLinks = [
             <!-- Columna 2: Navegación Principal -->
             <div class="space-y-4">
                 <h3 class="text-white text-lg font-semibold mb-4 border-b border-gray-700 pb-2">
-                    {t('footer.navigation') || 'Navegación'}
+                    Navegación
                 </h3>
                 <ul class="space-y-2">
                     {mainLinks.map(link => (
@@ -141,7 +140,7 @@ const socialLinks = [
             <!-- Columna 3: Páginas de Interés -->
             <div class="space-y-4">
                 <h3 class="text-white text-lg font-semibold mb-4 border-b border-gray-700 pb-2">
-                    {t('footer.interest') || 'Información'}
+                    Información
                 </h3>
                 <ul class="space-y-2">
                     {interestLinks.map(link => (
@@ -161,7 +160,7 @@ const socialLinks = [
             <div class="space-y-6">
                 <div class="space-y-4">
                     <h3 class="text-white text-lg font-semibold mb-4 border-b border-gray-700 pb-2">
-                        {t('footer.legal') || 'Legal'}
+                        Legal
                     </h3>
                     <ul class="space-y-2">
                         {legalLinks.map(link => (
@@ -180,7 +179,7 @@ const socialLinks = [
                 <!-- Redes Sociales -->
                 <div class="space-y-4">
                     <h3 class="text-white text-lg font-semibold">
-                        {t('footer.social') || 'Síguenos'}
+                        Síguenos
                     </h3>
                     <div class="flex gap-3">
                         {socialLinks.map(social => (
@@ -217,14 +216,14 @@ const socialLinks = [
                     &copy; {startYear} - {currentYear} Harmony Hotel Group
                 </p>
                 <p class="text-xs mt-1">
-                    {t('footer.rights') || 'Todos los derechos reservados'}
+                    Todos los derechos reservados
                 </p>
             </div>
 
             <!-- Créditos de desarrollo -->
             <div class="text-center md:text-right">
                 <p class="text-xs text-gray-500">
-                    {t('footer.developed') || 'Desarrollado por'}
+                    Desarrollado por
                 </p>
                 <a
                         href="https://innotec-itsc.com"

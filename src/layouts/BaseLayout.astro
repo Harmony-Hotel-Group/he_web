@@ -6,16 +6,25 @@ import Header from "../components/core/Header.astro";
 
 import BaseHead from "@/components/core/BaseHead.astro";
 // import { Translations } from "../i18n/translation.ts";
+
+interface Props {
+  config: {
+    [key: string]: any;
+  };
+}
+
+const { config } = Astro.props;
+
 ---
 
 <html lang="es">
   <BaseHead title="Inicio"/>
   <body class="flex flex-col min-h-screen overflow-x-hidden">
-    <!-- <Header t={t} config={config} lang={lang} /> -->
+    <Header config={config} lang={"en"} />
     <main class="grow w-full overflow-x-hidden"> {/* Added w-full and overflow-x-hidden */}
       <slot />
     </main>
-    <!-- <Footer t={t} /> -->
+    <Footer />
     <!-- <ToastContainer /> -->
   </body>
 </html>

@@ -19,31 +19,31 @@ const imageConfigs = [
 		rotation: "-rotate-6 hover:rotate-[-8deg]",
 		position:
 			"top-[5%] left-[10%] sm:top-[8%] sm:left-[5%] md:top-[10%] md:left-[8%]",
-		zIndex: "z-[1]",
+		zIndex: "z-1",
 	},
 	{
 		rotation: "rotate-3 hover:rotate-[5deg]",
 		position:
 			"top-[15%] right-[8%] sm:top-[12%] sm:right-[10%] md:top-[8%] md:right-[12%]",
-		zIndex: "z-[2]",
+		zIndex: "z-2",
 	},
 	{
-		rotation: "rotate-12 hover:rotate-[15deg]",
+		rotation: "rotate-12 hover:rotate-15",
 		position:
 			"bottom-[8%] left-[15%] sm:bottom-[10%] sm:left-[12%] md:bottom-[12%] md:left-[10%]",
-		zIndex: "z-[3]",
+		zIndex: "z-3",
 	},
 	{
 		rotation: "-rotate-2 hover:rotate-[-4deg]",
 		position:
 			"top-[25%] left-[25%] sm:top-[22%] sm:left-[28%] md:top-[20%] md:left-[30%]",
-		zIndex: "z-[4]",
+		zIndex: "z-4",
 	},
 	{
-		rotation: "rotate-8 hover:rotate-[11deg]",
+		rotation: "rotate-8 hover:rotate-11",
 		position:
 			"bottom-[18%] right-[12%] sm:bottom-[15%] sm:right-[15%] md:bottom-[18%] md:right-[18%]",
-		zIndex: "z-[5]",
+		zIndex: "z-5",
 	},
 ];
 ---
@@ -57,7 +57,7 @@ const imageConfigs = [
     className,
 ]}>
     <!-- Contenedor del collage con aspect ratio -->
-    <div class="relative w-full max-w-[900px] aspect-[4/3] md:aspect-[16/10]">
+    <div class="relative w-full max-w-[900px] aspect-4/3 md:aspect-16/10">
         {images.slice(0, 5).map((image, index) => {
             const config = imageConfigs[index % imageConfigs.length];
             return (
@@ -69,7 +69,7 @@ const imageConfigs = [
                                 config.zIndex,
 
                                 // Tamaños responsivos más controlados
-                        "w-[45%] aspect-[4/3]",
+                        "w-[45%] aspect-4/3",
                                 "sm:w-[42%]",
                                 "md:w-[38%]",
                                 "lg:w-[35%]",
@@ -78,7 +78,7 @@ const imageConfigs = [
                         "p-0",
                                 "bg-white dark:bg-gray-800",
                                 "shadow-[0_4px_20px_rgba(0,0,0,0.15)] dark:shadow-[0_4px_20px_rgba(0,0,0,0.4)]",
-                                "rounded-sm",
+                                "rounded-xs",
 
                                 // Rotación y transformaciones
                         config.rotation,
@@ -87,7 +87,7 @@ const imageConfigs = [
                                 // Transiciones y efectos hover
                         "transition-all duration-300 ease-out",
                                 "hover:scale-110 hover:shadow-[0_8px_30px_rgba(0,0,0,0.25)]",
-                                "hover:z-[100]",
+                                "hover:z-100",
 
                                 // Cursor
                         "cursor-pointer",
@@ -98,7 +98,7 @@ const imageConfigs = [
                                 alt={image.alt}
                                 type="image"
                                 class:list={[
-                                    "w-full h-full object-cover rounded-sm",
+                                    "w-full h-full object-cover rounded-xs",
                                     "transition-opacity duration-300",
                                     "opacity-90 hover:opacity-100"
                                 ]}

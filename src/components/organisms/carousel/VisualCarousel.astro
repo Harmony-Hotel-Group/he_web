@@ -118,7 +118,7 @@ if (!singleVideoResource && carouselImageResources.length === 0) {
                                     title={singleVideoResource.alt || 'YouTube video'}
                             ></iframe>
                         </div>
-                        <div class:list={['absolute inset-0 z-[1] pointer-events-none', maskOpacityClass]}></div>
+                        <div class:list={['absolute inset-0 z-1 pointer-events-none', maskOpacityClass]}></div>
                     </div>
             ) : (
                     <div class="relative w-full h-screen overflow-hidden">
@@ -128,7 +128,7 @@ if (!singleVideoResource && carouselImageResources.length === 0) {
                                 alt={singleVideoResource.alt}
                                 classes="absolute top-0 left-0 w-full h-full object-cover"
                         />
-                        <div class:list={['absolute inset-0 z-[1] pointer-events-none', maskOpacityClass]}></div>
+                        <div class:list={['absolute inset-0 z-1 pointer-events-none', maskOpacityClass]}></div>
                     </div>
             )
         ) : (

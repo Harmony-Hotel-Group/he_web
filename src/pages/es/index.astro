@@ -2,7 +2,7 @@
 import BookingBar from "@/components/organisms/booking/BookingBar.astro";
 // import { Translations } from '../i18n/translation.ts';
 import VisualCarousel from "@/components/organisms/carousel/VisualCarousel.astro";
-// import { fetchData } from "~/utils/apiService";
+import { fetchData } from "@/utils/apiService.js";
 import PhotoCollage from "@/components/organisms/collage/PhotoCollage.astro";
 import HomeSection from "@/components/organisms/home/HomeSection.astro";
 import BaseLayout from "@/layouts/BaseLayout";
@@ -12,7 +12,8 @@ const lang = Astro.cookies.get("lang")?.value || "es";
 // console.log('Current language:', lang);
 // const t = Translations(lang);
 
-// const dataConfig = await fetchData('config');
+const dataConfig = await fetchData('config');
+console.log('Home Page Config Data:', dataConfig);
 // const carouselResources = dataConfig?.carouselResources || [];
 ---
 

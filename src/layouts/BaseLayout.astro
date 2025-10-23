@@ -5,14 +5,14 @@ import Header from "../components/core/Header.astro";
 // import ToastContainer from '../components/organisms/notifications/ToastContainer.astro';
 
 import BaseHead from "@/components/core/BaseHead.astro";
-import { Translations } from "../i18n/translation.ts";
+// import { Translations } from "../i18n/translation.ts";
 ---
 
 <html lang="es">
   <BaseHead title="Inicio"/>
   <body class="flex flex-col min-h-screen overflow-x-hidden">
     <!-- <Header t={t} config={config} lang={lang} /> -->
-    <main class="flex-grow w-full overflow-x-hidden"> {/* Added w-full and overflow-x-hidden */}
+    <main class="grow w-full overflow-x-hidden"> {/* Added w-full and overflow-x-hidden */}
       <slot />
     </main>
     <!-- <Footer t={t} /> -->

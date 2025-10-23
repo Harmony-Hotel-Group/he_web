@@ -1,8 +1,8 @@
 ---
 // src/components/organisms/booking/BookingVehicleSection.astro
-import { Translations } from "~/i18n/translation.ts";
-import Grid from "~/layouts/GridLayout.astro";
-import Row from "~/layouts/Row.astro";
+import { Translations } from "@/i18n/translation.ts";
+import Grid from "@/layouts/GridLayout.astro";
+import Row from "@/layouts/Row.astro";
 
 interface Props {
 	lang: string;
@@ -59,7 +59,7 @@ const t = Translations(lang);
 </div>
 
 <script>
-    import { Translations } from "~/i18n/translation.ts";
+    import { Translations } from "@/i18n/translation.ts";
 
     document.addEventListener('DOMContentLoaded', () => {
         const component = document.getElementById('vehicle-section-component');

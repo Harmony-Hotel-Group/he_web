@@ -1,7 +1,7 @@
 ---
 // src/components/organisms/home/HomeSection.astro
-import InfoCard from "~/components/molecules/cards/InfoCard.astro";
-import { Translations } from "~/i18n/translation";
+import InfoCard from "@/components/molecules/cards/InfoCard.astro";
+import { Translations } from "@/i18n/translation.ts";
 
 interface Item {
 	id: string;
@@ -38,7 +38,6 @@ const t = Translations(lang);
           imageAlt={item.name[lang]}
           title={item.name[lang]}
           description={t('home.explore_category')}
-          lang={lang}
         />
       ))}
     </div>

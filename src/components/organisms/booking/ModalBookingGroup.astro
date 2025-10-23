@@ -1,5 +1,5 @@
 ---
-import { Translations } from "~/i18n/translation.ts";
+import { Translations } from "@/i18n/translation.ts";
 // src/components/organisms/booking/ModalBookingGroup.astro
 import BookingGroupForm from "./BookingGroupForm.astro";
 import BookingVehicleForm from "./BookingVehicleForm.astro";
@@ -169,20 +169,20 @@ const t = Translations(lang);
                     }
                 }
 
-                const { sendBookingMessage } = await import('~/utils/send/index.ts');
+                const { sendBookingMessage } = await import('@/utils/send/index.ts');
                 const type = isVehicleChecked ? 'vehicle' : 'group';
                 await sendBookingMessage(formData, type);
 
                 this.close();
-                window.showToast('Reserva confirmada con éxito', 'success');
+                // window.showToast('Reserva confirmada con éxito', 'success');
 
             } catch (error) {
                 if (error.name === 'ActionInputError' && error.fields) {
                     this.handleValidationErrors(error.fields);
-                    window.showToast('Por favor, revisa los campos del formulario.', 'error');
+                    // window.showToast('Por favor, revisa los campos del formulario.', 'error');
                 } else {
                     console.error('Error al confirmar reserva:', error);
-                    window.showToast('Error al procesar la reserva. Por favor, inténtelo de nuevo.', 'error');
+                    // window.showToast('Error al procesar la reserva. Por favor, inténtelo de nuevo.', 'error');
                 }
             }
         }

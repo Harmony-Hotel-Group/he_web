@@ -20,7 +20,7 @@
 				"src/components/*"
 			],
 			"@/layouts/*": [
-				"src/layouts/*.astro"
+				"src/layouts/*"
 			],
 			"@/utils/*": [
 				"src/utils/*"

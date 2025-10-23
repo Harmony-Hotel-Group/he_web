@@ -104,13 +104,13 @@ async function getLocalData(dataType) {
 		"data",
 		`${localFileName}.json`,
 	);
-	console.log("localFilePath:", localFilePath);
+	// console.log("localFilePath:", localFilePath);
 
 	try {
 		const content = fs.readFileSync(localFilePath, "utf-8");
 		const data = JSON.parse(content);
 
-		console.log(`✅ Servido local ${dataType} desde ${localFilePath}.`);
+		// console.log(`✅ Servido local ${dataType} desde ${localFilePath}.`);
 		return data;
 	} catch (error) {
 		console.error(`❌ Error leyendo ${dataType} en ${localFilePath}:`, error);
@@ -119,48 +119,48 @@ async function getLocalData(dataType) {
 }
 
 async function fetchData(dataType) {
-	const apiIsUp = await checkApiStatus();
-	const now = Date.now();
+	// const apiIsUp = await checkApiStatus();
+	// const now = Date.now();
 
-	if (apiIsUp) {
+	// if (apiIsUp) {
 		// Si la API está activa, intentamos obtener la data de la API
 		// y la actualizamos si ha pasado el tiempo
-		if (now - (lastDataUpdateTime[dataType] || 0) > DATA_UPDATE_INTERVAL) {
-			try {
-				const response = await fetch(`${API_BASE_URL}/${dataType}`);
-				if (response.ok) {
-					const apiData = await response.json();
-					console.log(`Fetched ${dataType} data from API.`);
-					lastApiDataCache[dataType] = apiData; // Cache the successful API data
-					lastDataUpdateTime[dataType] = now;
-					return apiData;
-				} else {
-					console.warn(
-						`Failed to fetch ${dataType} from API (${response.status}). Falling back to cached API data or local data.`,
-					);
-					// Si la petición a la API falla, intenta devolver la última data de la API en caché, si no, la data local
-					return lastApiDataCache[dataType] || (await getLocalData(dataType));
-				}
-			} catch (error) {
-				console.error(
-					`Error fetching ${dataType} from API. Falling back to cached API data or local data.`,
-					error,
-				);
-				// Si la petición a la API falla, intenta devolver la última data de la API en caché, si no, la data local
-				return lastApiDataCache[dataType] || (await getLocalData(dataType));
-			}
-		} else {
-			// La API está activa, pero dentro del intervalo de actualización. Devuelve la data de la API en caché si está disponible, si no, la data local.
-			console.log(
-				`Using cached API data for ${dataType} (within update interval).`,
-			);
-			return lastApiDataCache[dataType] || (await getLocalData(dataType));
-		}
-	} else {
-		// Si la API está caída, siempre servimos la data local desde el endpoint
-		console.warn(`API is down. Serving local ${dataType} data.`);
-		return await getLocalData(dataType);
-	}
+		// if (now - (lastDataUpdateTime[dataType] || 0) > DATA_UPDATE_INTERVAL) {
+		// 	try {
+		// 		const response = await fetch(`${API_BASE_URL}/${dataType}`);
+		// 		if (response.ok) {
+		// 			const apiData = await response.json();
+		// 			console.log(`Fetched ${dataType} data from API.`);
+		// 			lastApiDataCache[dataType] = apiData; // Cache the successful API data
+		// 			lastDataUpdateTime[dataType] = now;
+		// 			return apiData;
+		// 		} else {
+		// 			console.warn(
+		// 				`Failed to fetch ${dataType} from API (${response.status}). Falling back to cached API data or local data.`,
+		// 			);
+		// 			// Si la petición a la API falla, intenta devolver la última data de la API en caché, si no, la data local
+		// 			return lastApiDataCache[dataType] || (await getLocalData(dataType));
+		// 		}
+		// 	} catch (error) {
+		// 		console.error(
+		// 			`Error fetching ${dataType} from API. Falling back to cached API data or local data.`,
+		// 			error,
+		// 		);
+		// 		// Si la petición a la API falla, intenta devolver la última data de la API en caché, si no, la data local
+		// 		return lastApiDataCache[dataType] || (await getLocalData(dataType));
+		// 	}
+		// } else {
+		// 	// La API está activa, pero dentro del intervalo de actualización. Devuelve la data de la API en caché si está disponible, si no, la data local.
+		// 	console.log(
+		// 		`Using cached API data for ${dataType} (within update interval).`,
+		// 	);
+		// 	return lastApiDataCache[dataType] || (await getLocalData(dataType));
+		// }
+	// } else {
+	// 	// Si la API está caída, siempre servimos la data local desde el endpoint
+	// 	console.warn(`API is down. Serving local ${dataType} data.`);
+	// }
+	return await getLocalData(dataType);
 }
 
 export { fetchData };

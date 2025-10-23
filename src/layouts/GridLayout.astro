@@ -8,7 +8,7 @@ const {
 	minColWidth = "250px",
 } = Astro.props;
 
-let gridStyle;
+let gridStyle: string;
 
 if (cols && !autoAdjust) {
 	gridStyle = `grid-template-columns: repeat(${cols}, minmax(0, 1fr));`;

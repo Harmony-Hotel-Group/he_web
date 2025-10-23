@@ -35,7 +35,7 @@ const { id, name, lang, placeholder } = Astro.props;
 <script>
     import flatpickr from "flatpickr";
     import "flatpickr/dist/l10n/es.js";
-    import { defaultLang, Translations } from "~/i18n/translation.ts";
+    import { defaultLang, Translations } from "@/i18n/translation.ts";
 
     function runDatePicker(input) {
         const lang = input.dataset.lang || defaultLang;
@@ -78,7 +78,7 @@ const { id, name, lang, placeholder } = Astro.props;
                         return;
                     }
 
-                    const nights = Math.round((end - start) / (1000 * 60 * 60 * 24));
+                    const nights = Math.round((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24));
 
                     const nightsLabel =
                         lang === "es"

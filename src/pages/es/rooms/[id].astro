@@ -1,9 +1,9 @@
 ---
-import VisualResource from "~/components/molecules/media/VisualResource.astro";
-import { Translations } from "~/i18n/translation.ts";
+import VisualResource from "@/components/molecules/media/VisualResource.astro";
+import { Translations } from "@/i18n/translation.ts";
 // src/pages/rooms/[id].astro
-import BaseLayout from "~/layouts/BaseLayout.astro";
-import { fetchData } from "~/utils/apiService.js";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { fetchData } from "@/utils/apiService.js";
 
 export async function getStaticPaths() {
 	const rooms = await fetchData("rooms");

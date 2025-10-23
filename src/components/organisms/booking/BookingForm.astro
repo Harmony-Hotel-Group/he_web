@@ -1,19 +1,23 @@
 ---
-import DatePickerField from "~/components/molecules/forms/DatePickerField.astro";
-import DropDownField from "~/components/molecules/forms/DropdownField.astro";
-import SwitchField from "~/components/molecules/forms/SwitchField.astro";
-import { Translations } from "~/i18n/translation.ts";
-// src/components/organisms/booking/BookingForm.astro
-import Grid from "~/layouts/GridLayout.astro";
-import Row from "~/layouts/Row.astro";
-import { range } from "~/utils/math.ts";
-import Button from "../../atoms/Button.astro";
+import { Translations } from "@/i18n/translation.ts";
+import Grid from "@/layouts/GridLayout.astro";
+import Row from "@/layouts/Row.astro";
+import { range } from "@/utils/math.ts";
+import Button from "@/components/atoms/Button.astro";
+import DatePickerField from "@/components/molecules/forms/DatePickerField.astro";
+import DropdownField from "@/components/molecules/forms/DropdownField.astro";
+import SwitchField from "@/components/molecules/forms/SwitchField.astro";
 import BookingVehicleSection from "./BookingVehicleSection.astro";
 import ModalBookingGroup from "./ModalBookingGroup.astro";
 
 interface Props {
 	lang: string;
-	config: any;
+	config: {
+		contactInfo?: {
+			whatsapp?: string;
+			email?: string;
+		};
+	};
 }
 
 const { lang, config } = Astro.props;
@@ -36,7 +40,7 @@ const adultsOptions = range(1, 9).map((i, index, array) => {
 	};
 });
 
-const childrenOptions = range(0, 8).map((i, index, array) => {
+const childrenOptions = range(0, 8).map((i) => {
 	return {
 		value: `${i}`,
 		label: `${t("booking.dropdown.optChildren", {
@@ -46,7 +50,7 @@ const childrenOptions = range(0, 8).map((i, index, array) => {
 	};
 });
 
-const roomsOptions = range(1, 5).map((i, index, array) => {
+const roomsOptions = range(1, 5).map((i) => {
 	return {
 		value: `${i}`,
 		label: `${t("booking.dropdown.optRooms", {
@@ -70,144 +74,177 @@ const whatsappNumber = config?.contactInfo?.whatsapp ?? "";
 const email = config?.contactInfo?.email ?? "";
 ---
 
-<form id="booking-form" method="post" class="rounded-xl space-y-3" 
-      data-whatsapp={whatsappNumber}
-      data-email={email}>
+<form
+  id="booking-form"
+  method="post"
+  class="rounded-xl space-y-3"
+  data-whatsapp={whatsappNumber}
+  data-email={email}
+>
+  <!-- Sección Normal -->
+  <div id="normal-booking-section">
+    <Grid cols="3" autoAdjust="true">
+      <div>
+        <DatePickerField
+          fieldId="dateRange"
+          name="dateRange"
+          lblKey="booking.dateRange.title"
+          lang={lang}
+        />
+      </div>
+      <DropdownField
+        fieldId="adults"
+        name="adults"
+        initialValue={2}
+        icon="adult"
+        lblKey="booking.dropdown.lblAdults"
+        lang={lang}
+        options={adultsOptions}
+      />
 
-    <!-- Sección Normal -->
-    <div id="normal-booking-section">
-        <Grid cols="3" autoAdjust="true">
-            <div>
-                <DatePickerField
-                        fieldId="dateRange"
-                        name="dateRange"
-                        lblKey="booking.dateRange.title"
-                        lang={lang}
-                />
-            </div>
-            <DropDownField
-                    fieldId="adults"
-                    name="adults"
-                    initialValue={2}
-                    icon="adult"
-                    lblKey="booking.dropdown.lblAdults"
-                    lang={lang}
-                    options={adultsOptions}
-            />
+      <DropdownField
+        fieldId="children"
+        name="children"
+        icon="teen"
+        lblKey="booking.dropdown.lblChildren"
+        lang={lang}
+        options={childrenOptions}
+      />
 
-            <DropDownField
-                    fieldId="children"
-                    name="children"
-                    icon="teen"
-                    lblKey="booking.dropdown.lblChildren"
-                    lang={lang}
-                    options={childrenOptions}
-            />
+      <DropdownField
+        fieldId="rooms"
+        name="rooms"
+        icon="bed"
+        lblKey="booking.dropdown.lblRooms"
+        lang={lang}
+        options={roomsOptions}
+      />
+    </Grid>
+  </div>
 
-            <DropDownField
-                    fieldId="rooms"
-                    name="rooms"
-                    icon="bed"
-                    lblKey="booking.dropdown.lblRooms"
-                    lang={lang}
-                    options={roomsOptions}
-            />
-        </Grid>
-    </div>
+  <!-- Switches -->
+  <Row>
+    <SwitchField
+      fieldId="breakfast"
+      name="breakfast"
+      lblKey="booking.switch.breakfast"
+      lang={lang}
+      checked
+    />
+    <SwitchField
+      fieldId="vehicle"
+      name="vehicle"
+      lblKey="booking.switch.vehicle"
+      lang={lang}
+    />
+  </Row>
 
+  <!-- Sección de Vehículos (oculta inicialmente) -->
+  <div id="vehicle-section" class="hidden">
+    <BookingVehicleSection
+      lang={lang}
+      vehicleTypeOptions={vehicleTypeOptions}
+    />
+  </div>
 
-    <!-- Switches -->
-    <Row>
-        <SwitchField fieldId="breakfast" name="breakfast" lblKey="booking.switch.breakfast" lang={lang} checked />
-        <SwitchField fieldId="vehicle" name="vehicle" lblKey="booking.switch.vehicle" lang={lang} />
-    </Row>
-
-    <!-- Sección de Vehículos (oculta inicialmente) -->
-    <div id="vehicle-section" class="hidden">
-        <BookingVehicleSection lang={lang} vehicleTypeOptions={vehicleTypeOptions} />
-    </div>
-
-    <div class="text-center pt-4">
-        <Button _id="btnSubmit" type="button" lblKey="booking.btn.search" lang={lang} variant="accent"
-                className="w-full md:w-auto px-12" icon="search" color="#FFFFFF"/>
-    </div>
+  <div class="text-center pt-4">
+    <Button
+      _id="btnSubmit"
+      type="button"
+      lblKey="booking.btn.search"
+      lang={lang}
+      variant="accent"
+      className="w-full md:w-auto px-12"
+      icon="search"
+      color="#FFFFFF"
+    />
+  </div>
 </form>
 
 <!-- Modal para reservas grupales -->
 <ModalBookingGroup lang={lang} config={config} isOpen={false} client:load />
 
 <script>
-    import { actions } from 'astro:actions';
+  import { actions } from "astro:actions";
 
-    document.addEventListener("DOMContentLoaded", () => {
-        const form = document.getElementById('booking-form');
-        if (!form) return;
+  document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById("booking-form");
+    if (!form) return;
 
-        const bookingBar = form.closest('#booking-bar');
-        const vehicleSection = document.getElementById('vehicle-section');
-        const vehicleSwitchButton = form.querySelector('button[data-name="vehicle"]');
+    const bookingBar = form.closest("#booking-bar");
+    const vehicleSection = document.getElementById("vehicle-section");
+    const vehicleSwitchButton = form.querySelector(
+      'button[data-name="vehicle"]'
+    );
 
-        if (vehicleSwitchButton && vehicleSection) {
-            const observer = new MutationObserver(() => {
-                const isChecked = vehicleSwitchButton.getAttribute('aria-checked') === 'true';
-                vehicleSection.classList.toggle('hidden', !isChecked);
-                bookingBar?.classList.toggle('max-h-[80vh]', isChecked);
-                bookingBar?.classList.toggle('overflow-y-auto', isChecked);
-            });
+    if (vehicleSwitchButton && vehicleSection) {
+      const observer = new MutationObserver(() => {
+        const isChecked =
+          vehicleSwitchButton.getAttribute("aria-checked") === "true";
+        vehicleSection.classList.toggle("hidden", !isChecked);
+        bookingBar?.classList.toggle("max-h-[80vh]", isChecked);
+        bookingBar?.classList.toggle("overflow-y-auto", isChecked);
+      });
 
-            observer.observe(vehicleSwitchButton, {
-                attributes: true,
-                attributeFilter: ['aria-checked']
-            });
+      observer.observe(vehicleSwitchButton, {
+        attributes: true,
+        attributeFilter: ["aria-checked"],
+      });
+    }
+
+    const adultsSelect = document.getElementById("adults");
+    const modalBookingGroup = new (window as any).ModalBookingGroup();
+    adultsSelect?.addEventListener("change", (e) => {
+      if ((e.target as HTMLSelectElement).value === "group") {
+        modalBookingGroup.open();
+      }
+    });
+
+    function clearValidationErrors() {
+      form
+        ?.querySelectorAll('[id^="error_"]')
+        .forEach((el) => el.classList.add("hidden"));
+      form
+        ?.querySelectorAll(".border-red-500")
+        .forEach((el) => el.classList.remove("border-red-500"));
+    }
+
+    function handleValidationErrors(errors) {
+      for (const fieldError of errors) {
+        const fieldName = fieldError.path[0];
+        const inputElement = document.getElementById(fieldName);
+        const errorElement = document.getElementById(`error_${fieldName}`);
+
+        if (inputElement) {
+          inputElement.classList.add("border-red-500");
+        }
+        if (errorElement) {
+          errorElement.textContent = fieldError.message;
+          errorElement.classList.remove("hidden");
+        }
+      }
+    }
+
+    const btn: HTMLFormElement = document.getElementById(
+      "btnSubmit"
+    ) as HTMLFormElement;
+    btn?.addEventListener("click", async () => {
+      clearValidationErrors();
+      const formData = new FormData(form as HTMLFormElement);
+      const whatsappNumber = form.dataset.whatsapp;
+
+      try {
+        const { data, error } = await actions.booking(formData);
+
+        if (error) {
+          console.error("Validation error:", error);
+          // handleValidationErrors(error.fields);
+          // window.showToast('Por favor, revisa los campos del formulario.', 'error');
+          return;
         }
 
-        const adultsSelect = document.getElementById('adults');
-        const modalBookingGroup = new (window as any).ModalBookingGroup();
-        adultsSelect?.addEventListener('change', (e) => {
-            if ((e.target as HTMLSelectElement).value === 'group') {
-                modalBookingGroup.open();
-            }
-        });
-
-        function clearValidationErrors() {
-            form.querySelectorAll('[id^="error_"]').forEach(el => el.classList.add('hidden'));
-            form.querySelectorAll('.border-red-500').forEach(el => el.classList.remove('border-red-500'));
-        }
-
-        function handleValidationErrors(errors) {
-            for (const fieldError of errors) {
-                const fieldName = fieldError.path[0];
-                const inputElement = document.getElementById(fieldName);
-                const errorElement = document.getElementById(`error_${fieldName}`);
-
-                if (inputElement) {
-                    inputElement.classList.add('border-red-500');
-                }
-                if (errorElement) {
-                    errorElement.textContent = fieldError.message;
-                    errorElement.classList.remove('hidden');
-                }
-            }
-        }
-
-        const btn: HTMLFormElement = document.getElementById('btnSubmit');
-        btn?.addEventListener('click', async () => {
-            clearValidationErrors();
-            const formData = new FormData(form);
-            const whatsappNumber = form.dataset.whatsapp;
-
-            try {
-                const { data, error } = await actions.booking(formData);
-
-                if (error) {
-                    console.error("Validation error:", error);
-                    handleValidationErrors(error.fields);
-                    window.showToast('Por favor, revisa los campos del formulario.', 'error');
-                    return;
-                }
-
-                const { processing } = data;
-                let message = `
+        const { processing } = data;
+        let message = `
 *Estimado Hotel Ensueños por favor necesito que me ayude con una reserva:*
 
 ➢ Check In: ${processing.checkin}
@@ -218,40 +255,52 @@ const email = config?.contactInfo?.email ?? "";
 ➢ Habitaciones: ${processing.rooms}
 ➢ Desayuno incluido: ${processing.breakfast === "true" ? "Sí" : "No"}`;
 
-                const isVehicleChecked = vehicleSwitchButton?.getAttribute('aria-checked') === 'true';
-                if (isVehicleChecked) {
-                    message += `\n➢ *Vehículos:*`;
-                    const vehicleItems = vehicleSection.querySelectorAll('.vehicle-item');
-                    vehicleItems.forEach((item, index) => {
-                        const type = (item.querySelector(`select[name^="vehicleType"]`) as HTMLSelectElement)?.value;
-                        const plate = (item.querySelector(`input[name^="vehiclePlate"]`) as HTMLInputElement)?.value;
-                        if (type) {
-                             message += `\n   ${index + 1}. Tipo: ${type}, Placa: ${plate || 'N/A'}`;
-                        }
-                    });
-                }
-
-                message += `\n\nSi hace falta información adicional, por favor responder a este mensaje.`;
-                const encodedMessage = encodeURIComponent(message.trim());
-
-                if (whatsappNumber) {
-                    window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, "_blank");
-                    window.showToast('Tu solicitud de reserva ha sido enviada.', 'success');
-                } else {
-                    window.showToast('No se pudo enviar el mensaje, el número de WhatsApp no está configurado.', 'error');
-                }
-
-            } catch (err) {
-                console.error("Error inesperado al enviar la reserva:", err);
-                window.showToast('Ocurrió un error inesperado. Por favor, inténtalo de nuevo.', 'error');
+        const isVehicleChecked =
+          vehicleSwitchButton?.getAttribute("aria-checked") === "true";
+        if (isVehicleChecked) {
+          message += `\n➢ *Vehículos:*`;
+          const vehicleItems =
+            vehicleSection?.querySelectorAll(".vehicle-item");
+          vehicleItems?.forEach((item, index) => {
+            const type = (
+              item.querySelector(
+                `select[name^="vehicleType"]`
+              ) as HTMLSelectElement
+            )?.value;
+            const plate = (
+              item.querySelector(
+                `input[name^="vehiclePlate"]`
+              ) as HTMLInputElement
+            )?.value;
+            if (type) {
+              message += `\n   ${index + 1}. Tipo: ${type}, Placa: ${plate || "N/A"}`;
             }
-        });
+          });
+        }
+
+        message += `\n\nSi hace falta información adicional, por favor responder a este mensaje.`;
+        const encodedMessage = encodeURIComponent(message.trim());
+
+        if (whatsappNumber) {
+          window.open(
+            `https://wa.me/${whatsappNumber}?text=${encodedMessage}`,
+            "_blank"
+          );
+          // window.showToast('Tu solicitud de reserva ha sido enviada.', 'success');
+        } else {
+          // window.showToast('No se pudo enviar el mensaje, el número de WhatsApp no está configurado.', 'error');
+        }
+      } catch (err) {
+        console.error("Error inesperado al enviar la reserva:", err);
+        // window.showToast('Ocurrió un error inesperado. Por favor, inténtalo de nuevo.', 'error');
+      }
     });
+  });
 </script>
 
 <style>
-    input[type="number"]::-webkit-inner-spin-button,
-    input[type="number"]::-webkit-outer-spin-button {
-        opacity: 1;
-    }
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    opacity: 1;
+  }
 </style>

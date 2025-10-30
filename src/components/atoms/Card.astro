@@ -1,12 +1,23 @@
 ---
 // src/components/atoms/Card.astro
 interface Props {
-  className?: string;
+  class?: string;
+  padding?: string;
+  id?: string;
 }
 
-const { className } = Astro.props;
+const { class: className, padding = 'p-6', id } = Astro.props;
 ---
 
-<div class:list={["bg-white dark:bg-gray-400 rounded-xl shadow-lg overflow-hidden p-6", className]}>
+<div
+  id={id}
+  class:list={[
+    'bg-white dark:bg-gray-800',
+    'rounded-lg shadow-lg',
+    'dark:border dark:border-gray-700',
+    padding,
+    className,
+  ]}
+>
   <slot />
 </div>

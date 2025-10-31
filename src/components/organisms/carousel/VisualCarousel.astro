@@ -213,7 +213,7 @@ const carouselId = `carousel-${Math.random().toString(36).substr(2, 9)}`;
 ---
 
 <div
-        class:list={[className, 'relative w-full h-screen overflow-hidden']}
+        class:list={[className, 'relative w-full min-h-[100dvh] overflow-hidden']}
         data-carousel-id={carouselId}
         data-display-mode={displayMode}
 >
@@ -260,6 +260,7 @@ const carouselId = `carousel-${Math.random().toString(36).substr(2, 9)}`;
                         </div>
                 ))}
             </div>
+        )}
 
         <!-- Indicators (dots) -->
         {showIndicators && finalResources.length > 1 && (
@@ -281,38 +282,35 @@ const carouselId = `carousel-${Math.random().toString(36).substr(2, 9)}`;
         )}
 
         <!-- Navigation arrows (opcional) -->
-        {
-            finalResources.length > 1 && (
-                    <>
-                        <!-- Previous button -->
-                        <button
-                                type="button"
-                                class="absolute top-1/2 left-4 z-30 -translate-y-1/2 flex items-center justify-center w-12 h-12 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-sm transition-all group"
-                                data-carousel-prev
-                                aria-label="Slide anterior"
-                        >
-                            <svg class="w-6 h-6 text-white group-hover:scale-110 transition-transform" fill="none"
-                                 stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                      d="M15 19l-7-7 7-7"/>
-                            </svg>
-                        </button>
+        {finalResources.length > 1 && (
+            <>
+                <!-- Previous button -->
+                <button
+                    type="button"
+                    class="absolute top-1/2 left-4 z-30 -translate-y-1/2 flex items-center justify-center w-12 h-12 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-sm transition-all group"
+                    data-carousel-prev
+                    aria-label="Slide anterior"
+                >
+                    <svg class="w-6 h-6 text-white group-hover:scale-110 transition-transform" fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M15 19l-7-7 7-7"/>
+                    </svg>
+                </button>
 
-                        <!-- Next button -->
-                        <button
-                                type="button"
-                                class="absolute top-1/2 right-4 z-30 -translate-y-1/2 flex items-center justify-center w-12 h-12 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-sm transition-all group"
-                                data-carousel-next
-                                aria-label="Slide siguiente"
-                        >
-                            <svg class="w-6 h-6 text-white group-hover:scale-110 transition-transform" fill="none"
-                                 stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                            </svg>
-                        </button>
-                    </>
-            )
-        }
+                <!-- Next button -->
+                <button
+                    type="button"
+                    class="absolute top-1/2 right-4 z-30 -translate-y-1/2 flex items-center justify-center w-12 h-12 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-sm transition-all group"
+                    data-carousel-next
+                    aria-label="Slide siguiente"
+                >
+                    <svg class="w-6 h-6 text-white group-hover:scale-110 transition-transform" fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                    </svg>
+                </button>
+            </>
         )}
 
     <!-- Scroll Down Indicator -->
@@ -372,6 +370,14 @@ const carouselId = `carousel-${Math.random().toString(36).substr(2, 9)}`;
             this.initEventListeners();
             this.initScrollIndicator(carousel);
             this.start();
+
+            // Respeta preferencias de movimiento reducido
+            try {
+                const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+                if (prefersReduced) {
+                    this.pause();
+                }
+            } catch {}
 
             if (import.meta.env.DEV) {
                 console.log(`[VisualCarousel] Initialized with ${this.items.length} slides`);

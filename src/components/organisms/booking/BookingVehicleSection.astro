@@ -6,10 +6,12 @@ import Row from "~/layouts/Row.astro";
 
 interface Props {
     lang: string;
-    config: any;
+    config?: any;
+    vehicleTypeOptions?: Array<{ value: string; [key: string]: any }>;
 }
 
-const {lang, config} = Astro.props;
+const { lang, config, vehicleTypeOptions: propVehicleTypeOptions = [] } = Astro.props as Props;
+const vehicleTypeOptions = (propVehicleTypeOptions ?? (config?.vehicleTypeOptions ?? [])) as Array<{ value: string; [key: string]: any }>;
 const t = Translations(lang);
 ---
 
@@ -26,6 +28,11 @@ const t = Translations(lang);
             {t('booking.vehicles.title')}
         </h3>
 
+        {vehicleTypeOptions.length === 0 && (
+            <div class="mb-3 text-sm text-amber-800 dark:text-amber-200 bg-amber-100/60 dark:bg-amber-900/30 border border-amber-200 dark:border-amber-800 rounded-md p-3">
+                {t('components.errors?.missingVehicleOptions') ?? 'No hay tipos de vehículo configurados aún. Continúa con tu reserva o contacta al administrador.'}
+            </div>
+        )}
         <Grid cols={3} _id="vehicles-container">
             <!-- Vehículo 1 (por defecto) -->
             <div class="vehicle-item bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-3">
@@ -37,9 +44,15 @@ const t = Translations(lang);
                     <label for="vehicleType1" class="block text-xs font-medium text-gray-600 dark:text-gray-400">
                         {t('booking.vehicles.type')}
                         <select name="vehicleType1"
-                                class="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-amber-500 focus:border-transparent">
-                            {config?.vehicleTypeOptions.map(option =>
-                                    <option value={option.value}>{option[lang]}</option>)}
+                                class="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                                disabled={vehicleTypeOptions.length === 0}>
+                            {vehicleTypeOptions.length > 0 ? (
+                                vehicleTypeOptions.map(option => (
+                                    <option value={option.value}>{option[lang] ?? option.label ?? option.value}</option>
+                                ))
+                            ) : (
+                                <option value="" disabled selected>— {t('booking.vehicles.type')} —</option>
+                            )}
                         </select>
                     </label>
                     <label class="block text-xs font-medium text-gray-600 dark:text-gray-400">{t('booking.vehicles.plate.title')}
@@ -69,7 +82,7 @@ const t = Translations(lang);
     </div>
 </div>
 
-<script is:inline define:vars={{config, lang}}>
+<script is:inline define:vars={{ lang, vehicleTypeOptions }}>
     document.addEventListener('DOMContentLoaded', () => {
         const component = document.getElementById('vehicle-section-component');
         if (!component || component.dataset.initialized) return; // 👈 Evita doble inicialización
@@ -104,9 +117,9 @@ const t = Translations(lang);
 
             const nextIndex = currentCount + 1;
 
-            const optionsHTML = config?.vehicleTypeOptions.map(opt =>
-                `<option value="${opt.value}">${opt[lang]}</option>`
-            ).join('');
+            const optionsHTML = (vehicleTypeOptions && vehicleTypeOptions.length > 0)
+                ? vehicleTypeOptions.map((opt) => `<option value="${opt.value}">${opt[lang] ?? opt.label ?? opt.value}</option>`).join('')
+                : '';
 
             const vehicleHTML = `
         <div class="vehicle-item bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-3">

@@ -53,6 +53,11 @@ const {
         ring-color: rgb(59 130 246);
         border-color: rgb(59 130 246);
     }
+
+    /* Asegurar que el calendario siempre quede por encima de overlays (hero, modales) */
+    .flatpickr-calendar {
+        z-index: 10000 !important;
+    }
 </style>
 
 <script>

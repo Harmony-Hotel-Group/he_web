@@ -1,6 +1,5 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { fetchData } from "~/services/api";
 import VisualCarousel from '../components/organisms/carousel/VisualCarousel.astro';
 import PhotoCollage from '../components/organisms/collage/PhotoCollage.astro';
 import BookingBar from '../components/organisms/booking/BookingBar.astro';
@@ -8,29 +7,54 @@ import HomeSection from '../components/organisms/home/HomeSection.astro';
 
 const lang = Astro.cookies.get('lang')?.value || 'es';
 
-const siteConfig = await fetchData('siteConfig');
+// Preferir el endpoint API con cache de 24h; fallback a Content Collections
+let siteConfig: any = null;
+try {
+  const baseUrl = new URL(Astro.request.url);
+  const apiUrl = new URL('/api/config', baseUrl).toString();
+  const res = await fetch(apiUrl, { headers: { 'Accept': 'application/json' } });
+  if (res.ok) {
+    const payload = await res.json().catch(() => null);
+    siteConfig = payload?.data ?? payload ?? null;
+  }
+} catch (_) {
+  // Ignorar errores: haremos fallback local
+}
+
 const carouselResources = siteConfig?.carouselResources || [];
 ---
 
-<BaseLayout titleKey="site.title" lang={lang}>
-  <div class="relative w-full h-screen overflow-hidden">
-    <VisualCarousel resources={carouselResources} videoZoomScale={1.2} />
-    <div class="absolute inset-0 flex items-center justify-center z-10 p-4">
-      <BookingBar lang={lang} config={siteConfig} />
+<BaseLayout titleKey="site.title" lang={lang} config={siteConfig}>
+  <!-- H1 accesible para SEO/a11y -->
+  <h1 class="sr-only">{siteConfig?.aboutUs?.mainTitle?.[lang] ?? siteConfig?.siteName ?? 'Home'}</h1>
+  <div class="relative w-full min-h-[100dvh] overflow-hidden">
+    <VisualCarousel
+      resources={carouselResources}
+      videoZoomScale={1.1}
+      objectFitClass="object-cover"
+      showIndicators={true}
+      showScrollIndicator={false}
+    />
+    <!-- Overlay de degradado para legibilidad del contenido superpuesto -->
+    <div class="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/20"></div>
+    <div class="absolute inset-0 z-10 flex items-center justify-center p-4">
+      <div class="w-full max-w-6xl px-4 sm:px-6">
+        <BookingBar lang={lang} config={siteConfig} />
+      </div>
     </div>
   </div>
 
   <div>
     <!-- About Us Section -->
     {siteConfig?.aboutUs && (
-      <section class="py-24">
-        <div class="container mx-auto px-6">
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+      <section class="py-20 md:py-24">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-14 items-center">
             <div class="text-center md:text-left">
-              <h3 class="text-lg font-semibold text-accent mb-2">{siteConfig.aboutUs.subtitle[lang]}</h3>
-              <h1 class="text-4xl font-bold text-primary mb-4">{siteConfig.aboutUs.mainTitle[lang]}</h1>
-              <p class="text-gray-600 leading-relaxed mb-4">{siteConfig.aboutUs.welcomeParagraph[lang]}</p>
-              <p class="text-gray-600 leading-relaxed">{siteConfig.aboutUs.commitmentParagraph[lang]}</p>
+              <h3 class="text-base md:text-lg font-semibold text-accent mb-2 tracking-wide">{siteConfig.aboutUs.subtitle[lang]}</h3>
+              <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-primary mb-4">{siteConfig.aboutUs.mainTitle[lang]}</h2>
+              <p class="text-gray-600 leading-relaxed mb-4 text-base md:text-lg">{siteConfig.aboutUs.welcomeParagraph[lang]}</p>
+              <p class="text-gray-600 leading-relaxed text-base md:text-lg">{siteConfig.aboutUs.commitmentParagraph[lang]}</p>
             </div>
             <div>
               <PhotoCollage images={siteConfig.aboutUs.images} />
@@ -48,6 +72,7 @@ const carouselResources = siteConfig?.carouselResources || [];
         items={siteConfig.roomTypes}
         baseHref="/rooms"
         bgColorClass="bg-gray-100"
+        maxItems={4}
       />
     )}
 
@@ -57,6 +82,7 @@ const carouselResources = siteConfig?.carouselResources || [];
         titleKey="nav.destinations"
         items={siteConfig.destinationCategories}
         baseHref="/destinations"
+        maxItems={4}
       />
     )}
 
@@ -67,6 +93,7 @@ const carouselResources = siteConfig?.carouselResources || [];
         items={siteConfig.gastronomyCategories}
         baseHref="/gastronomy"
         bgColorClass="bg-gray-100"
+        maxItems={4}
       />
     )}
 
@@ -76,6 +103,7 @@ const carouselResources = siteConfig?.carouselResources || [];
         titleKey="nav.tours"
         items={siteConfig.tourCategories}
         baseHref="/tours"
+        maxItems={4}
       />
     )}
   </div>

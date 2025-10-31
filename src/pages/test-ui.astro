@@ -4,10 +4,10 @@ import DevOnlyPage from "~/components/dev/DevOnlyPage.astro";
 import BaseLayout from '../layouts/BaseLayout.astro';
 import BookingForm from '../components/organisms/booking/BookingForm.astro';
 
-import { fetchData } from "~/services/api";
+import { Api } from "~/services/api.ts";
 import Card from "~/components/atoms/Card.astro";
 
-const dataConfig = await fetchData('siteConfig');
+const dataConfig = await Api.fetchData('config');
 const lang = 'es'
 ---
 

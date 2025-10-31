@@ -3,14 +3,23 @@ import Header from '../components/core/Header.astro';
 import Footer from '../components/core/Footer.astro';
 import '../styles/global.css';
 import { Translations } from '../i18n/translation.ts';
-import { fetchData } from "~/services/api";
 import SizeIndicator from "~/components/dev/SizeIndicator.astro";
 
-const { titleKey, lang } = Astro.props;
+
+let { titleKey, lang, config } = Astro.props;
 const t = Translations(lang);
 const title = t(titleKey);
-
-const siteConfig = await fetchData('siteConfig');
+try {
+    const baseUrl = new URL(Astro.request.url);
+    const apiUrl = new URL('/api/config', baseUrl).toString();
+    const res = await fetch(apiUrl, { headers: { 'Accept': 'application/json' } });
+    if (res.ok) {
+        const payload = await res.json().catch(() => null);
+        config = payload?.data ?? payload ?? null;
+    }
+} catch (_) {
+    // Ignorar errores: haremos fallback local
+}
 ---
 
 <html lang={lang}>
@@ -22,11 +31,11 @@ const siteConfig = await fetchData('siteConfig');
     <title>{title}</title>
   </head>
   <body class="flex flex-col min-h-screen overflow-x-hidden">
-    <Header t={t} config={siteConfig} lang={lang} />
+    <Header t={t} config={config} lang={lang} />
     <main class="flex-grow w-full overflow-x-hidden"> {/* Added w-full and overflow-x-hidden */}
       <slot />
     </main>
-    <Footer t={t} config={siteConfig} lang={lang}/>
+    <Footer t={t} config={config} lang={lang}/>
     <SizeIndicator />
   </body>
 </html>

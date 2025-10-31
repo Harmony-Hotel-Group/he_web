@@ -1,0 +1,63 @@
+---
+// src/pages/rooms/[slug].astro (unified route)
+export const prerender = false; // SSR dynamic
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import { Translations } from '~/i18n/translation.ts';
+import { fetchData } from '~/services/api.js';
+import VisualResource from '~/components/molecules/media/VisualResource.astro';
+
+const lang = Astro.cookies.get('lang')?.value || 'es';
+const t = Translations(lang);
+
+const { slug } = Astro.params;
+
+function toSlug(value) {
+  if (!value) return '';
+  return String(value)
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/\p{Diacritic}+/gu, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)+/g, '');
+}
+
+// Cargar rooms desde el servicio
+const rooms = await fetchData('rooms');
+let room = null;
+
+if (Array.isArray(rooms)) {
+  room = rooms.find(r => r.id === slug) ?? rooms.find(r => {
+    const byLang = r?.type?.[lang] || r?.type?.es || r?.type?.en || r?.type;
+    return toSlug(byLang) === toSlug(slug);
+  });
+}
+
+if (!room) {
+  // 404 limpio si no se encuentra
+  throw new Response('Not Found', { status: 404 });
+}
+---
+
+<BaseLayout title={room.type?.[lang] || 'Room'} lang={lang}>
+  <div class="container mx-auto py-24 px-4">
+    <!-- Galería de Imágenes (Ejemplo simple) -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+      {room.images?.slice(0, 4).map((image, index) => (
+        <div class:list={['rounded-lg overflow-hidden', { 'md:col-span-2': index === 0 }]}>
+          <VisualResource src={image.src} alt={image.alt?.[lang] || image.alt || ''} type="image" class="w-full h-full object-cover" />
+        </div>
+      ))}
+    </div>
+
+    <!-- Detalles de la Habitación -->
+    <div class="max-w-4xl mx-auto">
+      <h1 class="text-4xl md:text-5xl font-bold text-gray-800 dark:text-white mb-4">{room.type?.[lang] || room.type}</h1>
+      <p class="text-lg text-gray-600 dark:text-gray-300 mb-6">{room.description?.[lang] || room.description}</p>
+      
+      <h2 class="text-2xl font-semibold text-gray-800 dark:text-white mt-8 mb-4">{t('pages.roomDetails.features')}</h2>
+      <ul class="list-disc list-inside grid grid-cols-2 gap-x-8 gap-y-2 text-gray-700 dark:text-gray-300">
+        {room.features?.[lang]?.map(feature => <li>{feature}</li>)}
+      </ul>
+    </div>
+  </div>
+</BaseLayout>

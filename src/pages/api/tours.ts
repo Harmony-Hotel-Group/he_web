@@ -1,6 +1,6 @@
 import type { APIContext } from 'astro';
 import path from 'node:path';
-import { loadData, json200 } from '../../utils/apiHelpers';
+import { loadData, json200 } from '~/utils/apiHelpers';
 
 const UPSTREAM_URL = import.meta.env.TOURS_UPSTREAM_URL
   ?? (import.meta.env.API_BASE_URL ? `${String(import.meta.env.API_BASE_URL).replace(/\/$/, '')}/tours` : undefined);

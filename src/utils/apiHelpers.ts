@@ -3,7 +3,10 @@ import path from 'node:path';
 
 const ONE_DAY_MS = 24 * 60 * 60 * 1000;
 
-interface CacheEntry { data: any; timestamp: number }
+interface CacheEntry {
+    data: any;
+    timestamp: number
+}
 
 async function loadData<T>(
     cacheKey: string,
@@ -27,7 +30,10 @@ async function loadData<T>(
             try {
                 const controller = new AbortController();
                 const timeout = setTimeout(() => controller.abort(), 5000);
-                const res = await fetch(upstreamUrl, { signal: controller.signal, headers: { 'Accept': 'application/json' } });
+                const res = await fetch(upstreamUrl, {
+                    signal: controller.signal,
+                    headers: {'Accept': 'application/json'}
+                });
                 clearTimeout(timeout);
 
                 if (res.ok) {
@@ -46,7 +52,7 @@ async function loadData<T>(
             if (!deepEqual(localData, upstreamData)) {
                 await safeWriteLocal(localFile, upstreamData, processName);
             }
-            GLOBAL_CACHE.set(cacheKey, { data: upstreamData, timestamp: now });
+            GLOBAL_CACHE.set(cacheKey, {data: upstreamData, timestamp: now});
             return upstreamData;
         }
 
@@ -58,7 +64,7 @@ async function loadData<T>(
         const localData = await safeReadLocal(localFile, processName);
         if (localData) {
             if (import.meta.env.DEV) console.log(`[${processName}] Data source: Local file`);
-            GLOBAL_CACHE.set(cacheKey, { data: localData, timestamp: now });
+            GLOBAL_CACHE.set(cacheKey, {data: localData, timestamp: now});
             return localData;
         }
 
@@ -72,7 +78,7 @@ async function loadData<T>(
 }
 
 function json200(data: any, fromCache: boolean) {
-    return new Response(JSON.stringify({ data, meta: { fromCache, maxAgeSeconds: 86400 } }), {
+    return new Response(JSON.stringify({data, meta: {fromCache, maxAgeSeconds: 86400}}), {
         status: 200,
         headers: {
             'Content-Type': 'application/json; charset=utf-8',
@@ -106,8 +112,9 @@ async function safeWriteLocal(localFile: string, data: any, processName: string)
 
 async function ensureLocalDir(localFile: string) {
     try {
-        await fs.mkdir(path.dirname(localFile), { recursive: true });
-    } catch {}
+        await fs.mkdir(path.dirname(localFile), {recursive: true});
+    } catch {
+    }
 }
 
 function deepEqual(a: any, b: any): boolean {

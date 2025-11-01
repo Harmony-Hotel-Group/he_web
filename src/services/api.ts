@@ -157,13 +157,13 @@ export class Api {
             console.log(`[ApiService] Buscando fallback local para '${endpoint}'... (no implementado)`);
         }
         // Lógica para leer un archivo JSON local, ej:
-        // try {
-        //   const res = await fetch(`/data/${endpoint}.json`);
-        //   if (!res.ok) return null;
-        //   return await res.json();
-        // } catch {
-        //   return null;
-        // }
+        try {
+          const res = await fetch(`/data/${endpoint}.json`);
+          if (!res.ok) return null;
+          return await res.json();
+        } catch {
+          return null;
+        }
         return null; // Retorna null si no hay fallback
     }
 }

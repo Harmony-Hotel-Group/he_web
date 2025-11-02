@@ -1,11 +1,12 @@
 // api.service.ts
 
+// en milisegundos
 /**
  * Opciones de configuración para el constructor de ApiService.
  */
 interface ApiServiceOptions {
     baseUrl: string;
-    timeout?: number; // en milisegundos
+    timeout?: number;
 }
 
 /**
@@ -43,7 +44,7 @@ export class Api {
      * @param opts Opciones adicionales como parámetros de consulta y cabeceras.
      * @returns Una promesa que resuelve con los datos o null.
      */
-    public async fetchData<T>(key: string, opts: FetchOptions = {}): Promise<T | null> {
+    public async fetch<T>(key: string, opts: FetchOptions = {}): Promise<T | null> {
         const { params, headers } = opts;
         const endpoint = this.keyToEndpoint(key);
         const url = new URL(`/api/${endpoint}`, this.baseUrl);
@@ -84,7 +85,7 @@ export class Api {
      * @param inputs Un array de claves o un mapa de clave -> opciones.
      * @returns Un objeto con los datos solicitados, usando las claves proporcionadas.
      */
-    public async fetchMultipleData<T = any>(
+    public async multiFetch<T = any>(
         inputs: string[] | Record<string, FetchOptions>
     ): Promise<Record<string, T | null | Error>> {
         let entries: [string, FetchOptions][];
@@ -98,7 +99,7 @@ export class Api {
         }
 
         const promises = entries.map(([key, opt]) =>
-            this.fetchData<T>(key, opt).then(
+            this.fetch<T>(key, opt).then(
                 (data) => ({ key, data }),
                 (error) => ({ key, error })
             )
@@ -168,6 +169,8 @@ export class Api {
     }
 }
 
+
+export const api = new Api({baseUrl: import.meta.env.API_BASE_URL})
 // ============== Ejemplo de Uso ==============
 /*
 // En algún lugar de tu aplicación (por ejemplo, un archivo de configuración central)

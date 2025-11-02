@@ -78,13 +78,18 @@ async function loadData<T>(
 }
 
 function json200(data: any, fromCache: boolean) {
-    return new Response(JSON.stringify({data, meta: {fromCache, maxAgeSeconds: 86400}}), {
+    return new Response(JSON.stringify({data}), {
         status: 200,
-        headers: {
-            'Content-Type': 'application/json; charset=utf-8',
-            'Cache-Control': 'public, max-age=86400',
-        },
-    });
+        headers: {'Content-Type': 'application/json; charset=utf-8'}
+    })
+
+    // return new Response(JSON.stringify({data, meta: {fromCache, maxAgeSeconds: 86400}}), {
+    //     status: 200,
+    //     headers: {
+    //         'Content-Type': 'application/json; charset=utf-8',
+    //         'Cache-Control': 'public, max-age=86400',
+    //     },
+    // });
 }
 
 async function safeReadLocal(localFile: string, processName: string): Promise<any | null> {

@@ -1,556 +1,153 @@
 ---
-// src/components/features/carousel/VisualCarousel.astro
-/**
-    * Carousel optimizado que usa el nuevo sistema VisualResource
-    * Soporta: imágenes, videos, YouTube con detección automática
-    * Performance: Lazy loading + Intersection Observer + Validación de recursos
-    */
-
-import VisualResource from '~/components/molecules/media/VisualResource.astro';
-import { detectResourceType, isYouTubeUrl, validateResource } from '~/utils/visual-resource-utils.ts';
-
-interface Resource {
-    src: string;
-    type?: 'image' | 'video' | 'youtube' | 'auto';
-    alt?: string;
-    poster?: string;
-}
-
+// src/components/organisms/carousel/VisualCarousel.astro
 interface Props {
-    resources: Resource[];
     class?: string;
     maskOpacityClass?: string;
-    objectFitClass?: string;
-    videoZoomScale?: number;
     autoplayInterval?: number;
     showIndicators?: boolean;
     showScrollIndicator?: boolean;
-    prioritizeVideo?: boolean;
 }
 
 const {
-    resources = [],
     class: className = '',
     maskOpacityClass = 'bg-black/50',
-    objectFitClass = 'object-cover',
-    videoZoomScale = 1.1,
     autoplayInterval = 5000,
     showIndicators = true,
     showScrollIndicator = true,
-    prioritizeVideo = true,
 } = Astro.props;
-
-// ==================== HELPERS ====================
-
-/**
- * Placeholder resources por defecto
- */
-const defaultPlaceholderResources: Resource[] = [
-    {
-        src: 'https://placehold.co/1920x1080/1a1a1a/ffffff?text=Slide+1',
-        type: 'image',
-        alt: 'Placeholder 1'
-    },
-    {
-        src: 'https://placehold.co/1920x1080/2a2a2a/ffffff?text=Slide+2',
-        type: 'image',
-        alt: 'Placeholder 2'
-    },
-    {
-        src: 'https://placehold.co/1920x1080/3a3a3a/ffffff?text=Slide+3',
-        type: 'image',
-        alt: 'Placeholder 3'
-    },
-];
-
-/**
- * Detecta dispositivo móvil (server-side)
- */
-const userAgent = Astro.request.headers.get('user-agent') || '';
-const isMobileDevice = /Mobile|Android|iPhone|iPad|iPod|Windows Phone/i.test(userAgent);
-
-// ==================== VALIDACIÓN Y PROCESAMIENTO DE RECURSOS ====================
-
-/**
- * Valida y procesa recursos - continúa buscando hasta encontrar válidos
- */
-let validatedResources: Resource[] = [];
-let hasValidResources = false;
-
-if (resources && resources.length > 0) {
-    if (import.meta.env.DEV) {
-        console.log(`[VisualCarousel] Procesando ${resources.length} recursos...`);
-        console.log(`[VisualCarousel] Recursos recibidos:`, resources.map(r => `${r.src} (${r.type || 'no-type'})`));
-    }
-
-    // Procesar cada recurso
-    for (const res of resources) {
-        if (import.meta.env.DEV) {
-            console.log(`[VisualCarousel] Procesando recurso: ${res.src}, tipo recibido: ${res.type}`);
-        }
-
-        // Auto-detectar tipo si no está especificado
-        const originalType = res.type;
-        const type = (!res.type || res.type === 'auto')
-            ? detectResourceType(res.src)
-            : res.type;
-
-        if (import.meta.env.DEV) {
-            console.log(`[VisualCarousel] Recurso: ${res.src} | Tipo original: ${originalType} | Tipo final: ${type}`);
-        }
-
-        // Validar recurso
-        const validation = await validateResource(res.src, type);
-
-        if (validation.isValid) {
-            validatedResources.push({...res, type});
-            hasValidResources = true;
-
-            if (import.meta.env.DEV) {
-                console.log(`[VisualCarousel] ✓ Recurso válido: ${res.src} (${type})`);
-            }
-        } else {
-            if (import.meta.env.DEV) {
-                console.warn(`[VisualCarousel] ✗ Recurso inválido: ${res.src}`, validation.error);
-            }
-            // Continuar con el siguiente recurso incluso si este es inválido
-        }
-    }
-
-    if (import.meta.env.DEV) {
-        console.log(`[VisualCarousel] Recursos válidos encontrados: ${validatedResources.length}/${resources.length}`);
-    }
-}
-
-// Si no hay recursos válidos, usar placeholders
-if (!hasValidResources) {
-    if (import.meta.env.DEV) {
-        console.warn('[VisualCarousel] No hay recursos válidos, usando placeholders');
-    }
-    validatedResources = defaultPlaceholderResources;
-}
-
-// Clasificar por tipo
-const videos = validatedResources.filter(r => r.type === 'video');
-const youtubeVideos = validatedResources.filter(r => r.type === 'youtube');
-const images = validatedResources.filter(r => r.type === 'image');
-
-if (import.meta.env.DEV) {
-    console.log(`[VisualCarousel] Recursos clasificados:`, {
-        videos: videos.length,
-        youtube: youtubeVideos.length,
-        images: images.length,
-        total: validatedResources.length
-    });
-
-    // Log detallado de recursos válidos
-    if (validatedResources.length > 0) {
-        console.log(`[VisualCarousel] Recursos válidos:`,
-            validatedResources.map(r => `${r.src} (${r.type})`)
-        );
-    }
-
-    // Log detallado de cada categoría
-    if (videos.length > 0) {
-        console.log(`[VisualCarousel] Videos locales:`, videos.map(r => `${r.src} (${r.type})`));
-    }
-    if (youtubeVideos.length > 0) {
-        console.log(`[VisualCarousel] Videos de YouTube:`, youtubeVideos.map(r => `${r.src} (${r.type})`));
-    }
-    if (images.length > 0) {
-        console.log(`[VisualCarousel] Imágenes:`, images.map(r => `${r.src} (${r.type})`));
-    }
-}
-
-// ==================== LÓGICA DE PRIORIZACIÓN ====================
-
-let finalResources: Resource[];
-let displayMode: 'video' | 'carousel' = 'carousel';
-
-// Priorizar video solo en desktop y si está habilitado
-if (prioritizeVideo && !isMobileDevice) {
-    if (import.meta.env.DEV) {
-        console.log(`[VisualCarousel] Evaluando prioridades - prioritizeVideo: ${prioritizeVideo}, isMobileDevice: ${isMobileDevice}`);
-        console.log(`[VisualCarousel] Recursos disponibles - YouTube: ${youtubeVideos.length}, Videos: ${videos.length}, Imágenes: ${images.length}`);
-    }
-
-    if (youtubeVideos.length > 0) {
-        finalResources = [youtubeVideos[0]];
-        displayMode = 'video';
-
-        if (import.meta.env.DEV) {
-            console.log('[VisualCarousel] Modo: YouTube video');
-            console.log(`[VisualCarousel] Usando recurso YouTube: ${youtubeVideos[0].src} (${youtubeVideos[0].type})`);
-        }
-    } else if (videos.length > 0) {
-        finalResources = [videos[0]];
-        displayMode = 'video';
-
-        if (import.meta.env.DEV) {
-            console.log('[VisualCarousel] Modo: Video local');
-            console.log(`[VisualCarousel] Usando recurso de video local: ${videos[0].src} (${videos[0].type})`);
-        }
-    } else {
-        finalResources = images.length > 0 ? images : defaultPlaceholderResources;
-        displayMode = 'carousel';
-
-        if (import.meta.env.DEV) {
-            console.log('[VisualCarousel] Modo: Carousel (sin videos válidos)');
-        }
-    }
-} else {
-    // Mobile o sin prioridad de video: usar carousel de imágenes
-    finalResources = images.length > 0 ? images : defaultPlaceholderResources;
-    displayMode = 'carousel';
-
-    if (import.meta.env.DEV) {
-        console.log(`[VisualCarousel] Modo: Carousel (${isMobileDevice ? 'mobile' : 'prioridad desactivada'})`);
-        console.log(`[VisualCarousel] Recursos finales para carousel:`, finalResources.map(r => `${r.src} (${r.type})`));
-    }
-}
 
 const carouselId = `carousel-${Math.random().toString(36).substr(2, 9)}`;
 ---
 
 <div
-        class:list={[className, 'relative w-full min-h-[100dvh] overflow-hidden']}
-        data-carousel-id={carouselId}
-        data-display-mode={displayMode}
+    class:list={[className, 'relative w-full min-h-[100dvh] overflow-hidden']}
+    data-carousel-id={carouselId}
 >
-    {displayMode === 'video' ? (
-        <!-- Modo Video (single video fullscreen) -->
-            <div class="absolute inset-0 w-full h-full">
-                <VisualResource
-                        src={finalResources[0].src}
-                        type={finalResources[0].type}
-                        alt={finalResources[0].alt}
-                        autoplay={true}
-                        loop={true}
-                        muted={true}
-                        controls={false}
-                        poster={finalResources[0].poster}
-                        classes="absolute inset-0 w-full h-full object-cover"
-                />
+    <div class="absolute inset-0 w-full h-full" data-carousel-container>
+        <slot />
+    </div>
 
-                <!-- Mask overlay -->
-                <div class:list={['absolute inset-0 z-10 pointer-events-none', maskOpacityClass]}></div>
-            </div>
-    ) : (
-        <!-- Modo Carousel (múltiples imágenes) -->
-            <div class="absolute inset-0 w-full h-full" data-carousel-container>
-                {finalResources.map((resource, index) => (
-                        <div
-                                class:list={[
-                                    'absolute inset-0 transition-opacity duration-1000 ease-in-out',
-                                    index === 0 ? 'opacity-100 z-10' : 'opacity-0 z-0',
-                                ]}
-                                data-carousel-item
-                                data-slide-index={index}
-                        >
-                            <VisualResource
-                                    src={resource.src}
-                                    type={resource.type}
-                                    alt={resource.alt || `Slide ${index + 1}`}
-                                    loading={index === 0 ? 'eager' : 'lazy'}
-                                    classes={`w-full h-full ${objectFitClass}`}
-                            />
+    <!-- Indicators (dots) -->
+    {showIndicators && (
+        <div class="absolute bottom-16 left-1/2 z-30 flex -translate-x-1/2 space-x-3" data-carousel-indicators></div>
+    )}
 
-                            <!-- Mask overlay para cada slide -->
-                            <div class:list={['absolute inset-0 z-10 pointer-events-none', maskOpacityClass]}></div>
-                        </div>
-                ))}
-            </div>
-        )}
-
-        <!-- Indicators (dots) -->
-        {showIndicators && finalResources.length > 1 && (
-                    <div class="absolute bottom-16 left-1/2 z-30 flex -translate-x-1/2 space-x-3">
-                        {finalResources.map((_, index) => (
-                                <button
-                                        type="button"
-                                        class:list={[
-                                            'w-3 h-3 rounded-full transition-all duration-300',
-                                            index === 0 ? 'bg-white w-8' : 'bg-white/50 hover:bg-white/75'
-                                        ]}
-                                        aria-current={index === 0 ? 'true' : 'false'}
-                                        aria-label={`Ir a slide ${index + 1}`}
-                                        data-carousel-indicator
-                                        data-slide-to={index}
-                                ></button>
-                        ))}
-                    </div>
-        )}
-
-        <!-- Navigation arrows (opcional) -->
-        {finalResources.length > 1 && (
-            <>
-                <!-- Previous button -->
-                <button
-                    type="button"
-                    class="absolute top-1/2 left-4 z-30 -translate-y-1/2 flex items-center justify-center w-12 h-12 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-sm transition-all group"
-                    data-carousel-prev
-                    aria-label="Slide anterior"
-                >
-                    <svg class="w-6 h-6 text-white group-hover:scale-110 transition-transform" fill="none"
-                        stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M15 19l-7-7 7-7"/>
-                    </svg>
-                </button>
-
-                <!-- Next button -->
-                <button
-                    type="button"
-                    class="absolute top-1/2 right-4 z-30 -translate-y-1/2 flex items-center justify-center w-12 h-12 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-sm transition-all group"
-                    data-carousel-next
-                    aria-label="Slide siguiente"
-                >
-                    <svg class="w-6 h-6 text-white group-hover:scale-110 transition-transform" fill="none"
-                        stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                    </svg>
-                </button>
-            </>
-        )}
+    <!-- Navigation arrows -->
+    <button
+        type="button"
+        class="absolute top-1/2 left-4 z-30 -translate-y-1/2 flex items-center justify-center w-12 h-12 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-sm transition-all group"
+        data-carousel-prev
+        aria-label="Slide anterior"
+    >
+        <svg class="w-6 h-6 text-white group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+        </svg>
+    </button>
+    <button
+        type="button"
+        class="absolute top-1/2 right-4 z-30 -translate-y-1/2 flex items-center justify-center w-12 h-12 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-sm transition-all group"
+        data-carousel-next
+        aria-label="Slide siguiente"
+    >
+        <svg class="w-6 h-6 text-white group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+        </svg>
+    </button>
 
     <!-- Scroll Down Indicator -->
     {showScrollIndicator && (
-            <div class="absolute bottom-4 left-1/2 -translate-x-1/2 z-30 animate-bounce cursor-pointer"
-                 data-scroll-indicator>
-                <svg class="w-8 h-8 text-white drop-shadow-lg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                </svg>
-            </div>
+        <div class="absolute bottom-4 left-1/2 -translate-x-1/2 z-30 animate-bounce cursor-pointer" data-scroll-indicator>
+            <svg class="w-8 h-8 text-white drop-shadow-lg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+            </svg>
+        </div>
     )}
 </div>
 
 <script is:inline define:vars={{autoplayInterval, carouselId}}>
-    /**
-     * Carousel Manager - Gestiona navegación y autoplay
-     */
     class VisualCarouselManager {
         private container: HTMLElement | null = null;
         private items: HTMLElement[] = [];
+        private indicatorsContainer: HTMLElement | null = null;
         private indicators: HTMLElement[] = [];
-        private prevBtn: HTMLElement | null = null;
-        private nextBtn: HTMLElement | null = null;
-        private scrollIndicator: HTMLElement | null = null;
         private currentIndex: number = 0;
         private intervalId: number | null = null;
-        private isPlaying: boolean = true;
-        private autoplayInterval: number;
 
         constructor(carouselId: string, interval: number) {
-            this.autoplayInterval = interval;
-            this.init(carouselId);
+            this.init(carouselId, interval);
         }
 
-        private init(carouselId: string) {
+        private init(carouselId: string, interval: number) {
             const carousel = document.querySelector(`[data-carousel-id="${carouselId}"]`);
             if (!carousel) return;
-
-            const displayMode = carousel.getAttribute('data-display-mode');
-
-            // Solo inicializar carousel para modo carousel
-            if (displayMode !== 'carousel') {
-                this.initScrollIndicator(carousel);
-                return;
-            }
 
             this.container = carousel.querySelector('[data-carousel-container]');
             if (!this.container) return;
 
-            this.items = Array.from(this.container.querySelectorAll('[data-carousel-item]'));
-            this.indicators = Array.from(carousel.querySelectorAll('[data-carousel-indicator]'));
-            this.prevBtn = carousel.querySelector('[data-carousel-prev]');
-            this.nextBtn = carousel.querySelector('[data-carousel-next]');
+            this.items = Array.from(this.container.children) as HTMLElement[];
+            this.indicatorsContainer = carousel.querySelector('[data-carousel-indicators]');
 
-            if (this.items.length <= 1) return;
-
-            this.initEventListeners();
-            this.initScrollIndicator(carousel);
-            this.start();
-
-            // Respeta preferencias de movimiento reducido
-            try {
-                const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-                if (prefersReduced) {
-                    this.pause();
-                }
-            } catch {}
-
-            if (import.meta.env.DEV) {
-                console.log(`[VisualCarousel] Initialized with ${this.items.length} slides`);
+            if (this.items.length <= 1) {
+                carousel.querySelector('[data-carousel-prev]')?.remove();
+                carousel.querySelector('[data-carousel-next]')?.remove();
+                this.indicatorsContainer?.remove();
+                return;
             }
+
+            this.createIndicators();
+            this.initEventListeners();
+            this.updateSlide(0);
+            this.start(interval);
+        }
+
+        private createIndicators() {
+            if (!this.indicatorsContainer) return;
+            this.items.forEach((_, index) => {
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.classList.add('w-3', 'h-3', 'rounded-full', 'transition-all', 'duration-300');
+                button.setAttribute('aria-label', `Ir a slide ${index + 1}`);
+                button.dataset.slideTo = index.toString();
+                this.indicatorsContainer.appendChild(button);
+            });
+            this.indicators = Array.from(this.indicatorsContainer.children) as HTMLElement[];
         }
 
         private initEventListeners() {
-            // Indicators
-            this.indicators.forEach((indicator, index) => {
-                indicator.addEventListener('click', () => {
-                    this.goToSlide(index);
-                    this.pause();
-                });
-            });
-
-            // Navigation buttons
-            this.prevBtn?.addEventListener('click', () => {
-                this.prev();
-                this.pause();
-            });
-
-            this.nextBtn?.addEventListener('click', () => {
-                this.next();
-                this.pause();
-            });
-
-            // Keyboard navigation
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'ArrowLeft') {
-                    this.prev();
-                    this.pause();
-                } else if (e.key === 'ArrowRight') {
-                    this.next();
-                    this.pause();
-                }
-            });
-
-            // Pause on hover
-            this.container?.addEventListener('mouseenter', () => this.pause());
-            this.container?.addEventListener('mouseleave', () => this.start());
-
-            // Pause when tab is not visible
-            document.addEventListener('visibilitychange', () => {
-                if (document.hidden) {
-                    this.pause();
-                } else {
-                    this.start();
-                }
-            });
+            const carousel = document.querySelector(`[data-carousel-id="${carouselId}"]`);
+            carousel?.querySelector('[data-carousel-prev]')?.addEventListener('click', () => this.prev());
+            carousel?.querySelector('[data-carousel-next]')?.addEventListener('click', () => this.next());
+            this.indicators.forEach(ind => ind.addEventListener('click', (e) => this.goToSlide(parseInt((e.target as HTMLElement).dataset.slideTo || '0'))));
         }
 
-        private initScrollIndicator(carousel: Element) {
-            this.scrollIndicator = carousel.querySelector('[data-scroll-indicator]');
-
-            if (this.scrollIndicator) {
-                this.scrollIndicator.addEventListener('click', () => {
-                    window.scrollTo({
-                        top: window.innerHeight,
-                        behavior: 'smooth'
-                    });
-                });
-            }
-        }
-
-        private goToSlide(index: number) {
-            if (index < 0 || index >= this.items.length) return;
-
-            // Update items
+        private updateSlide(index: number) {
             this.items.forEach((item, i) => {
-                if (i === index) {
-                    item.classList.remove('opacity-0', 'z-0');
-                    item.classList.add('opacity-100', 'z-10');
-                } else {
-                    item.classList.remove('opacity-100', 'z-10');
-                    item.classList.add('opacity-0', 'z-0');
-                }
+                item.classList.toggle('opacity-100', i === index);
+                item.classList.toggle('opacity-0', i !== index);
+                item.classList.toggle('z-10', i === index);
+                item.classList.toggle('z-0', i !== index);
             });
-
-            // Update indicators
             this.indicators.forEach((indicator, i) => {
-                if (i === index) {
-                    indicator.classList.remove('bg-white/50', 'w-3');
-                    indicator.classList.add('bg-white', 'w-8');
-                    indicator.setAttribute('aria-current', 'true');
-                } else {
-                    indicator.classList.remove('bg-white', 'w-8');
-                    indicator.classList.add('bg-white/50', 'w-3');
-                    indicator.setAttribute('aria-current', 'false');
-                }
+                indicator.classList.toggle('bg-white', i === index);
+                indicator.classList.toggle('w-8', i === index);
+                indicator.classList.toggle('bg-white/50', i !== index);
+                indicator.classList.toggle('w-3', i !== index);
             });
-
             this.currentIndex = index;
         }
 
         private next() {
-            const nextIndex = (this.currentIndex + 1) % this.items.length;
-            this.goToSlide(nextIndex);
+            this.goToSlide((this.currentIndex + 1) % this.items.length);
         }
 
         private prev() {
-            const prevIndex = (this.currentIndex - 1 + this.items.length) % this.items.length;
-            this.goToSlide(prevIndex);
+            this.goToSlide((this.currentIndex - 1 + this.items.length) % this.items.length);
         }
 
-        public start() {
-            if (this.items.length <= 1) return;
-            if (this.isPlaying) return;
-
-            this.isPlaying = true;
-            this.intervalId = window.setInterval(() => {
-                this.next();
-            }, this.autoplayInterval);
-        }
-
-        public pause() {
-            this.isPlaying = false;
-            if (this.intervalId !== null) {
-                clearInterval(this.intervalId);
-                this.intervalId = null;
-            }
-        }
-
-        public destroy() {
-            this.pause();
-            this.items = [];
-            this.indicators = [];
+        private start(interval: number) {
+            this.intervalId = window.setInterval(() => this.next(), interval);
         }
     }
 
-    // Inicializar cuando el DOM esté listo
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', () => {
-            new VisualCarouselManager(carouselId, autoplayInterval);
-        });
-    } else {
-        new VisualCarouselManager(carouselId, autoplayInterval);
-    }
+    new VisualCarouselManager(carouselId, autoplayInterval);
 </script>
-
-<style>
-    /* Asegurar que el carousel ocupe todo el viewport */
-    [data-carousel-container] {
-        min-height: 100vh;
-    }
-
-    /* Smooth transitions */
-    [data-carousel-item] {
-        will-change: opacity;
-    }
-
-    /* Navigation buttons hover effect */
-    [data-carousel-prev]:hover,
-    [data-carousel-next]:hover {
-        transform: translateY(-50%) scale(1.1);
-    }
-
-    /* Indicators active state */
-    [data-carousel-indicator] {
-        cursor: pointer;
-        will-change: width, background-color;
-    }
-
-    /* Scroll indicator pulse effect */
-    [data-scroll-indicator] {
-        animation: bounce 2s infinite;
-    }
-
-    @keyframes bounce {
-        0%, 100% {
-            transform: translate(-50%, 0);
-        }
-        50% {
-            transform: translate(-50%, -10px);
-        }
-    }
-</style>

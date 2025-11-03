@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import VisualCarousel from '../components/organisms/carousel/VisualCarousel.astro';
+import HomeHero from '../components/organisms/hero/HomeHero.astro';
 import PhotoCollage from '../components/organisms/collage/PhotoCollage.astro';
 import BookingBar from '../components/organisms/booking/BookingBar.astro';
 import HomeSection from '../components/organisms/home/HomeSection.astro';
@@ -28,13 +28,7 @@ const carouselResources = siteConfig?.carouselResources || [];
   <!-- H1 accesible para SEO/a11y -->
   <h1 class="sr-only">{siteConfig?.aboutUs?.mainTitle?.[lang] ?? siteConfig?.siteName ?? 'Home'}</h1>
   <div class="relative w-full min-h-[100dvh] overflow-hidden">
-    <VisualCarousel
-      resources={carouselResources}
-      videoZoomScale={1.1}
-      objectFitClass="object-cover"
-      showIndicators={true}
-      showScrollIndicator={false}
-    />
+    <HomeHero resources={carouselResources} />
     <!-- Overlay de degradado para legibilidad del contenido superpuesto -->
     <div class="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/20"></div>
     <div class="absolute inset-0 z-10 flex items-center justify-center p-4">

@@ -121,6 +121,74 @@ npm run preview  # Preview production build
 - **Code Quality**: Qodana configuration for code analysis
 - **Environment**: Development and production environment configs
 
+## Debugging & Logging
+
+The project includes a centralized logging service (`src/services/logger.ts`) to control console output during development. This system allows developers to enable, disable, and filter logs without affecting the production build.
+
+### How It Works
+- The logger is only active in **development mode** (`pnpm run dev`).
+- It is controlled via an `.env` file in the root of the project.
+- Logs can be filtered by a `context` string, which typically corresponds to the file or module name.
+
+### Configuration (`.env` file)
+To configure the logger, create or edit the `.env` file in the project root. **You must restart the development server** after making changes to this file.
+
+**1. Create the `.env` file**
+If it doesn't exist, create it in the root directory.
+
+**2. Configure the variables**
+
+```env
+# ==================================================
+#      CONFIGURACIÓN DE LOGS PARA DESARROLLO
+# ==================================================
+
+# --- Control Global ---
+# Set to `false` to disable all logs. Defaults to `true` if commented out.
+LOG_ENABLED=true
+
+# --- Context Filtering ---
+# Comma-separated list of contexts to display.
+# Use `*` to show all logs.
+# Example: LOG_CONTEXTS=Api,Translation,ModalBookingGroup
+LOG_CONTEXTS=*
+```
+
+### Usage Examples
+
+- **To disable all logs:**
+  ```env
+  LOG_ENABLED=false
+  ```
+
+- **To show logs from ALL contexts:**
+  ```env
+  LOG_CONTEXTS=*
+  ```
+
+- **To show logs ONLY from the API service:**
+  ```env
+  LOG_CONTEXTS=Api
+  ```
+
+- **To show logs from MULTIPLE contexts (API and Translations):**
+  ```env
+  LOG_CONTEXTS=Api,Translation
+  ```
+
+### How to Add Logs in Code
+To add new logs, import the logger functions and use them with a specific context.
+
+```typescript
+import { log, warn, error } from '@/services/logger';
+
+const CONTEXT = 'MyNewComponent';
+
+log(CONTEXT, 'This is a standard log message.');
+warn(CONTEXT, 'This is a warning.');
+error(CONTEXT, 'This is an error message.');
+```
+
 ## Deployment
 
 ### Production Deployment

@@ -13,8 +13,8 @@ export const defaultLang: SupportedLang = 'es';
 export const supportedLangs: SupportedLang[] = ['en', 'es'];
 
 export const translations: Record<SupportedLang, TranslationObject> = {
-    en: en,
-    es: es,
+	en: en,
+	es: es,
 };
 
 // ==================== CACHE ====================
@@ -123,7 +123,7 @@ function normalizeLang(lang: string): SupportedLang {
  * Usa cache para evitar crear múltiples funciones
  */
 export function Translations(lang: string) {
-    const normalizedLang = normalizeLang(lang);
+	const normalizedLang = normalizeLang(lang);
 
     // Cache hit: retornar función existente
     if (translationFunctionCache.has(normalizedLang)) {
@@ -131,11 +131,11 @@ export function Translations(lang: string) {
     }
 
     // Obtener el archivo de traducción
-    const translationFile = translations[normalizedLang];
+	const translationFile = translations[normalizedLang];
     const fallbackFile = translations[defaultLang];
 
     // Crear la función de traducción
-    const t = (key: string, params?: TranslationParams): string => {
+	const t = (key: string, params?: TranslationParams): string => {
         // Validación de entrada
         if (!key || typeof key !== 'string') {
             console.error('[Translation] Invalid key:', key);
@@ -147,12 +147,15 @@ export function Translations(lang: string) {
             ? `${normalizedLang}:${key}:${JSON.stringify(params)}`
             : `${normalizedLang}:${key}`;
 
-        // Cache hit: retornar traducción ya resuelta
-        if (!params && translationCache.has(cacheKey)) {
-            return translationCache.get(cacheKey)!;
-        }
+	return function t(key: string, params?: Record<string, string | number>) {
+		if (key === null || key === undefined) {
+			console.error("Key is null or undefined", key);
+			return key;
+		}
+		const keys = key.split(".");
+		let result: TranslationObject | undefined = translationFile;
 
-        // Obtener path de la key
+		// Obtener path de la key
         const keyPath = getKeyPath(key);
 
         // Buscar en el idioma seleccionado
@@ -160,51 +163,35 @@ export function Translations(lang: string) {
 
         // Fallback al idioma por defecto si no se encuentra
         if (translation === null && normalizedLang !== defaultLang) {
-            translation = findTranslation(fallbackFile, keyPath);
+			translation = findTranslation(fallbackFile, keyPath);
 
             if (translation !== null && import.meta.env.DEV) {
                 console.warn(
                     `[Translation] Missing '${key}' in '${normalizedLang}', using '${defaultLang}'`
                 );
-            }
-        }
+			}
+		}
 
-        // Si aún no se encuentra, retornar la key
+		// Si aún no se encuentra, retornar la key
         if (translation === null) {
             if (import.meta.env.DEV) {
                 console.error(`[Translation] Missing translation for key: '${key}'`);
             }
-            return key;
-        }
+			return key;
+		}
 
-        // Reemplazar parámetros si existen
-        if (params) {
-            translation = replaceParams(translation, params);
-        } else {
-            // Solo cachear si no hay params
-            translationCache.set(cacheKey, translation);
-        }
-
-        return translation;
-    };
-
-    // Cachear la función
-    translationFunctionCache.set(normalizedLang, t);
-
-    return t;
-}
-
-// ==================== UTILITIES ====================
-
-/**
- * Verifica si una key de traducción existe
- */
-export function hasTranslation(lang: string, key: string): boolean {
-    const normalizedLang = normalizeLang(lang);
-    const translationFile = translations[normalizedLang];
-    const keyPath = getKeyPath(key);
-
-    return findTranslation(translationFile, keyPath) !== null;
+		let translation = String(result);
+		// Reemplazar parámetros de manera más eficiente
+		if (params) {
+			for (const [paramName, paramValue] of Object.entries(params)) {
+				translation = translation.replace(
+					new RegExp(`\\{\\{\\s*${paramName}\\s*\\}\\}`, "g"),
+					String(paramValue),
+				);
+			}
+		}
+		return translation;
+	};
 }
 
 /**

@@ -5,10 +5,10 @@ import { Translations } from '~/i18n/translation.ts';
 import { fetchData } from '~/services/api.js';
 import VisualResource from '~/components/molecules/media/VisualResource.astro';
 
-const lang = Astro.cookies.get('lang')?.value || 'es';
+const lang = Astro.cookies.get("lang")?.value || "es";
 const t = Translations(lang);
 
-const rooms = await fetchData('rooms');
+const rooms = await fetchData("rooms");
 ---
 
 <BaseLayout titleKey="nav.rooms" lang={lang}>

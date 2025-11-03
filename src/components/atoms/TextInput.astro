@@ -1,31 +1,31 @@
 ---
 // src/components/atoms/TextInput.astro
 interface Props {
-  label?: string;
-  name: string;
-  id?: string;
-  type?: 'text' | 'email' | 'password' | 'number' | 'tel' | 'url';
-  placeholder?: string;
-  value?: string;
-  required?: boolean;
-  disabled?: boolean;
-  className?: string;
-  labelClass?: string;
-  inputClass?: string;
+	label?: string;
+	name: string;
+	id?: string;
+	type?: "text" | "email" | "password" | "number" | "tel" | "url";
+	placeholder?: string;
+	value?: string;
+	required?: boolean;
+	disabled?: boolean;
+	className?: string;
+	labelClass?: string;
+	inputClass?: string;
 }
 
-const { 
-  label, 
-  name, 
-  id = name, 
-  type = 'text', 
-  placeholder = '', 
-  value, 
-  required = false, 
-  disabled = false, 
-  className, 
-  labelClass, 
-  inputClass 
+const {
+	label,
+	name,
+	id = name,
+	type = "text",
+	placeholder = "",
+	value,
+	required = false,
+	disabled = false,
+	className,
+	labelClass,
+	inputClass,
 } = Astro.props;
 ---
 
@@ -45,8 +45,8 @@ const {
     required={required}
     disabled={disabled}
     class:list={[
-      'block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm ',
-      'text-primary placeholder-gray-400 focus:outline-none focus:ring-accent focus:border-accent sm:text-sm',
+      'block w-full px-3 py-2 border border-gray-300 rounded-md shadow-xs ',
+      'text-primary placeholder-gray-400 focus:outline-hidden focus:ring-accent focus:border-accent sm:text-sm',
       disabled ? 'bg-gray-100 cursor-not-allowed' : 'bg-white',
       inputClass
     ]}

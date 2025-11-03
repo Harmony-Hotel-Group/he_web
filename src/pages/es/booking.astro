@@ -1,9 +1,10 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import { Translations } from '../i18n/translation.ts';
-import BookingBar from '../components/organisms/booking/BookingBar.astro'; // Replaced BookingForm with BookingBar
+import { Translations } from "../i18n/translation.ts";
+import BaseLayout from "../layouts/BaseLayout.astro";
 
-const lang = Astro.cookies.get('lang')?.value || 'es';
+// import BookingBar from '../components/organisms/booking/BookingBar.astro'; // Replaced BookingForm with BookingBar
+
+const lang = Astro.cookies.get("lang")?.value || "es";
 const t = Translations(lang);
 ---
 
@@ -16,7 +17,7 @@ const t = Translations(lang);
     
     {/* Container to set the width to 80% and center it */}
     <div class="w-4/5 mx-auto">
-      <BookingBar t={t} />
+      <!-- <BookingBar  /> -->
     </div>
 
   </div>

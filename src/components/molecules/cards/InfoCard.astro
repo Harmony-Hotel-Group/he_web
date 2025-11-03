@@ -1,35 +1,38 @@
 ---
 // src/components/molecules/cards/InfoCard.astro
-import Imagen from '../../atoms/Imagen.astro';
+import Imagen from "../../atoms/Imagen.astro";
 
 interface Props {
-  href: string;
-  imageSrc: string;
-  imageAlt: string;
-  title: string;
-  description: string;
-  category?: string;
-  tags?: string[];
-  value?: number;
-  valueLabel?: 'Valor' | 'Desde';
+	href: string;
+	imageSrc: string;
+	imageAlt: string;
+	title: string;
+	description: string;
+	category?: string;
+	tags?: string[];
+	value?: number;
+	valueLabel?: "Valor" | "Desde";
 }
 
-const { 
-  href, 
-  imageSrc, 
-  imageAlt, 
-  title, 
-  description, 
-  category, 
-  tags = [], 
-  value, 
-  valueLabel = 'Valor' 
+const {
+	href,
+	imageSrc,
+	imageAlt,
+	title,
+	description,
+	category,
+	tags = [],
+	value,
+	valueLabel = "Valor",
 } = Astro.props;
 
-const truncatedDescription = description.length > 200 ? description.substring(0, 200) + '...' : description;
+const truncatedDescription =
+	description.length > 200
+		? description.substring(0, 200) + "..."
+		: description;
 ---
 
-<a href={href} class="block group bg-white rounded-lg shadow-lg overflow-hidden transform transition-transform duration-300 hover:-translate-y-2 h-full flex flex-col">
+<a href={href} class="group bg-white rounded-lg shadow-lg overflow-hidden transform transition-transform duration-300 hover:-translate-y-2 h-full flex flex-col">
   <div class="relative pb-[66.66%]"> {/* 3:2 aspect ratio container */}
     <Imagen
       src={imageSrc} 
@@ -39,10 +42,10 @@ const truncatedDescription = description.length > 200 ? description.substring(0,
       class="absolute h-full w-full object-cover" 
     />
   </div>
-  <div class="p-6 flex-grow flex flex-col">
+  <div class="p-6 grow flex flex-col">
     {category && <p class="text-sm text-gray-500 mb-2">{category}</p>}
     <h3 class="text-xl font-bold text-primary mb-2 group-hover:text-accent transition-colors">{title}</h3>
-    <p class="text-gray-600 text-sm mb-4 flex-grow">{truncatedDescription}</p>
+    <p class="text-gray-600 text-sm mb-4 grow">{truncatedDescription}</p>
     
     {value && (
       <div class="mb-4">

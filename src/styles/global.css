@@ -1,27 +1,49 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+
+@theme {
+  --color-primary: #29333b;
+  --color-accent: #bf953d;
+  --color-background: #ffffff;
+}
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+}
 
 /* src/styles/global.css */
 body {
-    @apply bg-background text-primary;
-    font-family: Arial, Helvetica, sans-serif;
-    /*font-family: sans-serif;*/
+	@apply bg-background text-primary;
+	font-family: Arial, Helvetica, sans-serif;
+	/*font-family: sans-serif;*/
 }
 
 /* Custom styles for react-day-picker */
 :root {
-    --rdp-cell-size: 40px;
-    --rdp-accent-color: #BF953D; /* Dorado Antiguo */
-    --rdp-background-color: #29333B; /* Azul Marino Oscuro */
-    --rdp-selected-color: #EAEAEA; /* Gris Claro/Beige for text on selected days */
+	--rdp-cell-size: 40px;
+	--rdp-accent-color: #bf953d; /* Dorado Antiguo */
+	--rdp-background-color: #29333b; /* Azul Marino Oscuro */
+	--rdp-selected-color: #eaeaea; /* Gris Claro/Beige for text on selected days */
 
-    --primary: 42 70% 50%; /* Gold */
-    --primary-foreground: 30 80% 10%; /* Dark brown/black for text on gold */
+	--primary: 42 70% 50%; /* Gold */
+	--primary-foreground: 30 80% 10%; /* Dark brown/black for text on gold */
 
-    --secondary: #29333B;
+	--secondary: #29333b;
 }
 
 .rdp-button:hover:not([disabled]):not(.rdp-day_selected) {
-    background-color: #BF953D20; /* A lighter shade of accent for hover */
+	background-color: #bf953d20; /* A lighter shade of accent for hover */
 }

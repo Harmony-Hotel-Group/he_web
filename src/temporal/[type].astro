@@ -1,38 +1,35 @@
 ---
-// src/pages/rooms/[id].astro
-import BaseLayout from '~/layouts/BaseLayout.astro';
-import { Translations } from '~/i18n/translation.ts';
-import { fetchData } from '~/services/api.js';
-import VisualResource from '~/components/molecules/media/VisualResource.astro';
+// // src/pages/rooms/[id].astro
+// import BaseLayout from '~/layouts/BaseLayout.astro';
+// import { Translations } from '~/i18n/translation.ts';
+// import { fetchData } from '~/services/api.js';
+// import VisualResource from '~/components/molecules/media/VisualResource.astro';
 
-export async function getStaticPaths() {
-  const rooms = await fetchData('rooms');
-  return rooms.map(room => ({
-    params: { id: room.id },
-    props: { room }
-  }));
-}
+// export async function getStaticPaths() {
+//   const rooms = await fetchData('rooms');
+//   return rooms.map(room => ({
+//     params: { id: room.id },
+//     props: { room }
+//   }));
+// }
 
-const lang = Astro.cookies.get('lang')?.value || 'es';
-const t = Translations(lang);
+// const lang = Astro.cookies.get('lang')?.value || 'es';
+// const t = Translations(lang);
 
-const { id } = Astro.params;
-const { room } = Astro.props;
+// const { id } = Astro.params;
+// const { room } = Astro.props;
 
-console.info('Room ID:', id);
-console.info('Room:', room);
 
-if (!room) {
-  return new Response(null, {
-    status: 404,
-    statusText: 'Not Found'
-  });
-}
+// if (!room) {
+//   return new Response(null, {
+//     status: 404,
+//     statusText: 'Not Found'
+//   });
+// }
 ---
-
+<!--
 <BaseLayout title={room.type[lang]} lang={lang}>
   <div class="container mx-auto py-24 px-4">
-    <!-- Galería de Imágenes (Ejemplo simple) -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
       {room.images?.slice(0, 4).map((image, index) => (
         <div class:list={['rounded-lg overflow-hidden', {'md:col-span-2': index === 0}]}>
@@ -41,7 +38,6 @@ if (!room) {
       ))}
     </div>
 
-    <!-- Detalles de la Habitación -->
     <div class="max-w-4xl mx-auto">
       <h1 class="text-4xl md:text-5xl font-bold text-gray-800 dark:text-white mb-4">{room.type[lang]}</h1>
       <p class="text-lg text-gray-600 dark:text-gray-300 mb-6">{room.description[lang]}</p>
@@ -52,4 +48,4 @@ if (!room) {
       </ul>
     </div>
   </div>
-</BaseLayout>
+</BaseLayout> -->

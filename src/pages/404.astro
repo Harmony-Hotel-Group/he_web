@@ -1,7 +1,8 @@
 ---
 interface Props {
-    lang: string
+	lang: string;
 }
 
-const {lang} = Astro.props;
+const { lang } = Astro.props;
 ---
+<h1>{lang === "es" ? "Página no encontrada" : "Page not found"}</h1>

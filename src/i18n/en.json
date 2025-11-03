@@ -1,13 +1,13 @@
 {
-  "site.title": "My Modern Web Page",
-  "nav.home": "Home",
-  "nav.about": "About Us",
-  "nav.contact": "Contact",
-  "nav.rooms": "Rooms",
-  "nav.destinations": "Destinations",
-  "nav.gastronomy": "Gastronomy",
-  "nav.tours": "Tours",
-  "nav.booking": "Book Now",
-  "home.greeting": "Hello, World!",
-  "footer.rights": "All rights reserved."
+	"site.title": "My Modern Web Page",
+	"nav.home": "Home",
+	"nav.about": "About Us",
+	"nav.contact": "Contact",
+	"nav.rooms": "Rooms",
+	"nav.destinations": "Destinations",
+	"nav.gastronomy": "Gastronomy",
+	"nav.tours": "Tours",
+	"nav.booking": "Book Now",
+	"home.greeting": "Hello, World!",
+	"footer.rights": "All rights reserved."
 }

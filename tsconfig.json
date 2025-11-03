@@ -1,23 +1,36 @@
 {
-  "extends": "astro/tsconfigs/base",
-  "include": [
-    "src/**/*",
-    "src/env.d.ts",
-    ".astro/types.d.ts",
-    "astro.config.mjs",
-    "tailwind.config.cjs"
-  ],
-  "exclude": [
-    "./node_modules",
-    ".vscode",
-    "dist"
-  ],
-  "compilerOptions": {
-    "baseUrl":".",
-    "jsx": "react-jsx",
-    "jsxImportSource": "preact",
-    "paths": {
-      "~/*": ["./src/*"],
-    }
-  }
+	"extends": "astro/tsconfigs/base",
+	"include": [
+		".astro/types.d.ts",
+		"**/*"
+	],
+	"exclude": [
+		"node_modules",
+		"**/node_modules/*",
+		".vscode",
+		"dist"
+	],
+	"compilerOptions": {
+		"strictNullChecks": true,
+		"baseUrl": ".",
+		"ignoreDeprecations": "6.0",
+		"verbatimModuleSyntax": true,
+		"paths": {
+			"@/components/*": [
+				"src/components/*"
+			],
+			"@/layouts/*": [
+				"src/layouts/*"
+			],
+			"@/utils/*": [
+				"src/utils/*"
+			],
+			"@/i18n/*": [
+				"src/i18n/*"
+			],
+			"@/styles/*": [
+				"src/styles/*"
+			]
+		}
+	},
 }

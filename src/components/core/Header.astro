@@ -1,20 +1,19 @@
 ---
-import LanguageSwitcher from '../molecules/controls/LanguageSwitcher.jsx';
-import CurrencySwitcher from '../molecules/controls/CurrencySwitcher.jsx';
+// import CurrencySwitcher from "@/components/molecules/controls/CurrencySwitcher.jsx";
+// import LanguageSwitcher from "@/components/molecules/controls/LanguageSwitcher.jsx";
 
 interface Props {
-    t: (key: string) => string;
-    config?: any; // Assuming config structure
-    lang: string;
+	config?: any; // Assuming config structure
+	lang: string;
 }
 
-const {t, config, lang} = Astro.props;
+const { config, lang } = Astro.props;
 ---
 
 <header class="absolute top-0 left-0 right-0 z-50 text-background"> {/* text-white -> text-background */}
     <nav class="container mx-auto flex justify-between items-center p-4">
         <!-- Left: Logo -->
-        <div class="flex-shrink-0">
+        <div class="shrink-0">
             <a href="/" class="flex items-center space-x-2">
                 <img src="/favicon.png" alt="MiLogo" class="h-14 w-auto"/>
             </a>
@@ -25,7 +24,7 @@ const {t, config, lang} = Astro.props;
             <!-- Rooms Dropdown Container -->
             <div id="rooms-nav-container" class="relative">
                 <a href="/rooms" class="px-3 py-2 hover:text-accent transition-colors flex items-center"> {/* hover:text-gray-300 -> hover:text-accent */}
-                    {t('nav.rooms')}
+                    <!-- {t('nav.rooms')} -->
                     <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                          xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
@@ -48,7 +47,7 @@ const {t, config, lang} = Astro.props;
             <!-- Destinations Dropdown Container -->
             <div id="destinations-nav-container" class="relative">
                 <a href="/destinations" class="px-3 py-2 hover:text-accent transition-colors flex items-center">
-                    {t('nav.destinations')}
+                    <!-- {t('nav.destinations')} -->
                     <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                          xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
@@ -70,7 +69,7 @@ const {t, config, lang} = Astro.props;
             <!-- Gastronomy Dropdown Container -->
             <div id="gastronomy-nav-container" class="relative">
                 <a href="/gastronomy" class="px-3 py-2 hover:text-accent transition-colors flex items-center">
-                    {t('nav.gastronomy')}
+                    <!-- {t('nav.gastronomy')} -->
                     <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                          xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
@@ -92,7 +91,7 @@ const {t, config, lang} = Astro.props;
             <!-- Tours Dropdown Container -->
             <div id="tours-nav-container" class="relative">
                 <a href="/tours" class="px-3 py-2 hover:text-accent transition-colors flex items-center">
-                    {t('nav.tours')}
+                    <!-- {t('nav.tours')} -->
                     <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                          xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
@@ -110,20 +109,20 @@ const {t, config, lang} = Astro.props;
                         </div>
                 )}
             </div>
-
+<!-- 
             <a href="/about" class="px-3 py-2 hover:text-accent transition-colors">{t('nav.about')}</a>
-            <a href="/contact" class="px-3 py-2 hover:text-accent transition-colors">{t('nav.contact')}</a>
+            <a href="/contact" class="px-3 py-2 hover:text-accent transition-colors">{t('nav.contact')}</a> -->
         </div>
 
         <!-- Right: Controls and Hamburger Button -->
         <div class="flex items-center space-x-4">
-            <LanguageSwitcher client:load class="mr-2"/>
-            <CurrencySwitcher client:load/>
+            <!-- <LanguageSwitcher client:load class="mr-2"/>
+            <CurrencySwitcher client:load/> -->
             <a href="/booking"
                class="bg-accent text-primary font-bold py-2 px-4 rounded-lg transition-opacity hover:opacity-90 hidden sm:block"> {/* Updated colors */}
-                {t('nav.booking')}
+                <!-- {t('nav.booking')} -->
             </a>
-            <button id="mobile-menu-button" class="text-background focus:outline-none sm:hidden"> {/* text-white -> text-background */}
+            <button id="mobile-menu-button" class="text-background focus:outline-hidden sm:hidden"> {/* text-white -> text-background */}
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                      xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -137,7 +136,7 @@ const {t, config, lang} = Astro.props;
     <div id="mobile-menu"
          class="hidden sm:hidden bg-primary bg-opacity-95 absolute top-full left-0 right-0 py-4 text-center"> {/* Updated colors */}
         <div class="flex flex-col space-y-2">
-            <a href="/rooms" class="block px-4 py-2 text-background hover:bg-accent hover:text-primary transition-colors">{t('nav.rooms')}</a>
+            <!-- <a href="/rooms" class="block px-4 py-2 text-background hover:bg-accent hover:text-primary transition-colors">{t('nav.rooms')}</a>
             <a href="/destinations"
                class="block px-4 py-2 text-background hover:bg-accent hover:text-primary transition-colors">{t('nav.destinations')}</a>
             <a href="/gastronomy"
@@ -149,7 +148,7 @@ const {t, config, lang} = Astro.props;
             <a href="/booking"
                class="block bg-accent text-primary font-bold py-2 px-4 rounded-lg transition-opacity hover:opacity-90 mx-4 mt-2">
                 {t('nav.booking')}
-            </a>
+            </a> -->
         </div>
     </div>
 </header>

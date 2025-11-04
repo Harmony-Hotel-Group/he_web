@@ -1,0 +1,70 @@
+---
+import { languages, type Language, getCurrentLang } from "@/i18n/translation";
+
+const currentLang = getCurrentLang(Astro.url);
+const currentPath = Astro.url.pathname.replace(/^\/(en)/, "") || "/";
+---
+
+<div class="language-selector">
+    <select id="languageSelect" data-current-lang={currentLang} data-current-path={currentPath}>
+        {Object.entries(languages).map(([code, name]) => (
+                <option value={code} selected={code === currentLang}>
+                    {name}
+                </option>
+        ))}
+    </select>
+</div>
+
+<script>
+    import type { Language } from '@/i18n/translation';
+    import { setLangCookie } from '@/i18n/translation';
+
+    const select = document.getElementById('languageSelect') as HTMLSelectElement;
+
+    select.addEventListener('change', async (e) => {
+        const newLang = (e.target as HTMLSelectElement).value as Language;
+        const currentPath = select.getAttribute('data-current-path') || '/';
+
+        // Guardar preferencia en cookie
+        setLangCookie(newLang);
+
+        // Construir la URL correcta según el idioma
+        let targetPath = currentPath;
+        let displayPath = currentPath;
+
+        if (newLang === 'en') {
+            targetPath = `/en${currentPath}`;
+            displayPath = currentPath; // Ocultar /en/ en la URL mostrada
+        }
+
+        // Limpiar sessionStorage para permitir redirección
+        sessionStorage.removeItem('langRedirected');
+
+        // Actualizar la URL mostrada primero (sin /en/)
+        history.pushState({ lang: newLang }, '', displayPath);
+
+        // Recargar la página para aplicar el nuevo idioma
+        // La cookie hará que el servidor/detector cargue el idioma correcto
+        window.location.reload();
+    });
+</script>
+
+
+<style>
+    .language-selector {
+        display: inline-block;
+    }
+
+    select {
+        padding: 0.5rem 2rem 0.5rem 0.5rem;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        background: white;
+        cursor: pointer;
+        font-size: 0.95rem;
+    }
+
+    select:hover {
+        border-color: #999;
+    }
+</style>

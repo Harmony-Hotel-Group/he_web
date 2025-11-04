@@ -1,71 +1,91 @@
 /**
- * @file Servicio de Logger para Desarrollo
- *
- * Este módulo proporciona un sistema de logging controlado que solo funciona en modo de desarrollo.
- * Se configura a través de variables de entorno en un archivo `.env`.
+ * @file Logger para desarrollo con contexto precargado y colores
  *
  * Variables de Entorno:
- * - `LOG_ENABLED`: Si se establece en `false`, deshabilita todos los logs. Por defecto es `true`.
- * - `LOG_CONTEXTS`: Una cadena de contextos separados por comas (ej: "Api,Translation").
- *                    Si no se define o es `*`, se mostrarán todos los logs.
+ * - `LOG_ENABLED`: Si es 'false', deshabilita los logs (por defecto true)
+ * - `LOG_CONTEXTS`: Lista separada por comas ("Api,UI"), o '*' para todos
  */
 
-// --- Configuración ---
-
-// Lee las variables de entorno. Vite las reemplaza en tiempo de compilación.
 const isDev = import.meta.env.DEV;
-const logEnabled = import.meta.env.LOG_ENABLED !== 'false'; // Habilitado a menos que sea explícitamente 'false'
-const allowedContexts = (import.meta.env.LOG_CONTEXTS || '*').split(',').map(c => c.trim());
-
-// --- Lógica Principal ---
+const logEnabled = import.meta.env.LOG_ENABLED !== "false";
+const allowedContexts = (import.meta.env.LOG_CONTEXTS || "*")
+	.split(",")
+	.map((c) => c.trim());
 
 /**
- * Decide si un log para un contexto específico debe mostrarse.
- * @param context - El contexto del log (ej: 'Api', 'MyComponent').
- * @returns `true` si el log está permitido.
+ * Determina si un contexto tiene permitido loguear.
  */
 function shouldLog(context: string): boolean {
-    // Solo loguear en modo de desarrollo y si el logger está habilitado globalmente
-    if (!isDev || !logEnabled) {
-        return false;
-    }
-
-    // Permitir si la lista de contextos incluye '*' (todos) o el contexto específico.
-    return allowedContexts.includes('*') || allowedContexts.includes(context);
-}
-
-// --- Funciones Exportadas ---
-
-/**
- * Registra un mensaje de log estándar si está permitido.
- * En el servidor, aparece en la terminal. En el cliente, en la consola del navegador.
- * @param context - El origen del mensaje (ej: 'MyComponent').
- * @param args - Los argumentos a mostrar, igual que en `console.log`.
- */
-export function log(context: string, ...args: any[]) {
-    if (shouldLog(context)) {
-        console.log(`[${context}]`, ...args);
-    }
+	if (!isDev || !logEnabled) return false;
+	return allowedContexts.includes("*") || allowedContexts.includes(context);
 }
 
 /**
- * Registra una advertencia si está permitida.
- * @param context - El origen del mensaje.
- * @param args - Los argumentos a mostrar, igual que en `console.warn`.
+ * Colores ANSI (funcionan en terminal y la mayoría de navegadores)
  */
-export function warn(context: string, ...args: any[]) {
-    if (shouldLog(context)) {
-        console.warn(`[${context}]`, ...args);
-    }
+const colors = {
+	reset: "\x1b[0m",
+	gray: "\x1b[90m",
+	blue: "\x1b[34m",
+	yellow: "\x1b[33m",
+	red: "\x1b[31m",
+	bold: "\x1b[1m",
+};
+
+/**
+ * Devuelve la hora actual en formato HH:MM:SS
+ */
+function timeStamp(): string {
+	const now = new Date();
+	return now.toTimeString().split(" ")[0];
 }
 
 /**
- * Registra un error si está permitido.
- * @param context - El origen del mensaje.
- * @param args - Los argumentos a mostrar, igual que en `console.error`.
+ * Formatea una línea de log con color y metadatos.
  */
-export function error(context: string, ...args: any[]) {
-    if (shouldLog(context)) {
-        console.error(`[${context}]`, ...args);
-    }
+function formatLine(
+	level: "INFO" | "WARN" | "ERROR",
+	context: string,
+	args: any[],
+): any[] {
+	let color: string;
+	switch (level) {
+		case "WARN":
+			color = colors.yellow;
+			break;
+		case "ERROR":
+			color = colors.red;
+			break;
+		default:
+			color = colors.blue;
+			break;
+	}
+
+	const prefix = `${colors.gray}[${timeStamp()}]${colors.reset} ${color}[${level}]${colors.reset} ${colors.bold}[${context}]${colors.reset}`;
+	return [prefix, ...args];
+}
+
+/**
+ * Crea un logger con contexto fijo.
+ * @example
+ * const api = log('Api');
+ * api.info('Llamada exitosa');
+ * api.error('Fallo de red');
+ */
+export function logger(context: string) {
+	const active = shouldLog(context);
+
+	const base =
+		(level: "INFO" | "WARN" | "ERROR", type: "log" | "warn" | "error") =>
+		(...args: any[]) => {
+			if (!active) return;
+			console[type](...formatLine(level, context, args));
+		};
+
+	return {
+		info: base("INFO", "log"),
+		warn: base("WARN", "warn"),
+		error: base("ERROR", "error"),
+		log: base("INFO", "log"),
+	};
 }

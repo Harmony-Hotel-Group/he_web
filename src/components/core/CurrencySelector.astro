@@ -1,0 +1,38 @@
+---
+// src/components/core/CurrencySelector.astro
+// Simple currency selector that stores preference in a cookie and reloads the page
+// to allow server-rendered components to format prices accordingly.
+
+const currentCurrency = Astro.cookies.get('currency')?.value || 'USD';
+---
+
+<div class="currency-selector">
+  <select id="currencySelect" value={currentCurrency}>
+    <option value="USD" selected={currentCurrency === 'USD'}>USD $</option>
+    <option value="EUR" selected={currentCurrency === 'EUR'}>EUR €</option>
+  </select>
+</div>
+
+<script>
+  const select = document.getElementById('currencySelect') as HTMLSelectElement;
+  select?.addEventListener('change', (e) => {
+    const newCurrency = (e.target as HTMLSelectElement).value;
+    // Persist for 1 year
+    document.cookie = `currency=${newCurrency}; path=/; max-age=31536000; SameSite=Lax`;
+    // Reload to re-render content with the chosen currency
+    window.location.reload();
+  });
+</script>
+
+<style>
+  .currency-selector { display: inline-block; }
+  select {
+    padding: 0.5rem 2rem 0.5rem 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background: white;
+    cursor: pointer;
+    font-size: 0.95rem;
+  }
+  select:hover { border-color: #999; }
+</style>

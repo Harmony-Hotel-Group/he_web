@@ -1,42 +1,44 @@
 ---
-import Icono from "~/components/atoms/Icono.astro";
-interface Props {
-    t: any;
-    config: any;
-    lang?: string;
-}
+// src/components/core/Footer.astro
+import Icono from "@/components/atoms/Icono.astro";
 
-const {t, config, lang} = Astro.props;
+interface Props {
+	t: any;
+	config: any;
+	lang?: string;
+}
+const { t, config, lang } = Astro.props;
+
 const currentYear = new Date().getFullYear();
 const startYear = 2021;
 
 // Navegación principal
 const mainLinks = [
-    {href: `/`, label: t('nav.home')},
-    {href: `/rooms`, label: t('nav.rooms')},
-    {href: `/destinations`, label: t('nav.destinations') },
-    {href: `/tours`, label: t('nav.tours') },
-    {href: `/gastronomy`, label: t('nav.gastronomy')},
+	{ href: `/`, label: t("nav.home") },
+	{ href: `/rooms`, label: t("nav.rooms") },
+	{ href: `/destinations`, label: t("nav.destinations") },
+	{ href: `/tours`, label: t("nav.tours") },
+	{ href: `/gastronomy`, label: t("nav.gastronomy") },
 ];
 
 // Páginas de interés
 const interestLinks = [
-    {href: `/about`, label: t('footer.about') },
-    {href: `/gallery`, label: t('footer.gallery') },
-    {href: `/contact`, label: t('footer.contact') },
-    {href: `/booking`, label: t('footer.booking') },
+	{ href: `/about`, label: t("footer.about") },
+	{ href: `/gallery`, label: t("footer.gallery") },
+	{ href: `/contact`, label: t("footer.contact") },
+	{ href: `/booking`, label: t("footer.booking") },
 ];
 
 // Información legal
 const legalLinks = [
-    {href: `/privacy`, label: t('footer.privacy')},
-    {href: `/terms`, label: t('footer.terms')},
-    {href: `/cancellation`, label: t('footer.cancellation') },
-    {href: `/faq`, label: t('footer.faq')},
+	{ href: `/privacy`, label: t("footer.privacy") },
+	{ href: `/terms`, label: t("footer.terms") },
+	{ href: `/cancellation`, label: t("footer.cancellation") },
+	{ href: `/faq`, label: t("footer.faq") },
 ];
 
 // Redes sociales (ajusta según tu config.json)
-const socialLinks = config.contactInfo.socialLinks
+const socialLinks = config.contactInfo.socialLinks;
 ---
 
 <!--suppress ALL -->

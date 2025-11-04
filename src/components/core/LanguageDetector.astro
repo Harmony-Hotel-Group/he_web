@@ -1,0 +1,49 @@
+---
+
+---
+
+<script>
+    import type { Language } from '@/i18n/translation';
+    import { getLangFromCookie, setLangCookie } from '@/i18n/translation';
+
+    function detectPreferredLanguage(): Language {
+        // 1. Verificar cookie
+        const cookieLang = getLangFromCookie();
+        if (cookieLang) return cookieLang;
+
+        // 2. Verificar navegador
+        const browserLang = navigator.language.split('-')[0];
+        if (browserLang === 'en') return 'en';
+
+        // 3. Default
+        return 'es';
+    }
+
+    const preferredLang = detectPreferredLanguage();
+    const currentPath = window.location.pathname;
+    const isEnglishPath = currentPath.startsWith('/en');
+    const currentLang = isEnglishPath ? 'en' : 'es';
+
+    // Si hay una cookie y el idioma actual no coincide, redirigir
+    if (preferredLang !== currentLang) {
+        if (preferredLang === 'en' && !isEnglishPath) {
+            // Redirigir a inglés pero mantener la URL limpia
+            const targetPath = `/en${currentPath}`;
+            history.replaceState({}, '', currentPath);
+            window.location.replace(targetPath);
+        } else if (preferredLang === 'es' && isEnglishPath) {
+            // Redirigir a español
+            const spanishPath = currentPath.replace(/^\/en/, '') || '/';
+            window.location.replace(spanishPath);
+        }
+    } else {
+        // Sincronizar cookie con el idioma actual
+        setLangCookie(currentLang);
+
+        // Si estamos en /en/, ocultar el prefijo en la URL mostrada
+        if (isEnglishPath) {
+            const cleanPath = currentPath.replace(/^\/en/, '') || '/';
+            history.replaceState({}, '', cleanPath);
+        }
+    }
+</script>

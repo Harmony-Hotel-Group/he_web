@@ -2,9 +2,12 @@
 // import CurrencySwitcher from "@/components/molecules/controls/CurrencySwitcher.jsx";
 // import LanguageSwitcher from "@/components/molecules/controls/LanguageSwitcher.jsx";
 
+import CurrencySelector from "@/components/core/CurrencySelector.astro";
+import LangSelector from "@/components/core/LangSelector.astro";
+
 interface Props {
-	config?: any; // Assuming config structure
 	lang: string;
+	config?: JSON;
 }
 
 const { config, lang } = Astro.props;
@@ -116,12 +119,13 @@ const { config, lang } = Astro.props;
 
         <!-- Right: Controls and Hamburger Button -->
         <div class="flex items-center space-x-4">
-            <!-- <LanguageSwitcher client:load class="mr-2"/>
-            <CurrencySwitcher client:load/> -->
-            <a href="/booking"
-               class="bg-accent text-primary font-bold py-2 px-4 rounded-lg transition-opacity hover:opacity-90 hidden sm:block"> {/* Updated colors */}
-                <!-- {t('nav.booking')} -->
-            </a>
+            <LangSelector />
+            <CurrencySelector />
+
+            <!--<a href="/booking"-->
+            <!--   class="bg-accent text-primary font-bold py-2 px-4 rounded-lg transition-opacity hover:opacity-90 hidden sm:block"> {/* Updated colors */}-->
+            <!--    {t('nav.booking')}-->
+            <!--</a>-->
             <button id="mobile-menu-button" class="text-background focus:outline-hidden sm:hidden"> {/* text-white -> text-background */}
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                      xmlns="http://www.w3.org/2000/svg">

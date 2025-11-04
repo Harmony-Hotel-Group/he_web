@@ -1,54 +1,44 @@
 [
-  {
-    "id": "room1",
-    "name": {
-      "es": "Habitación Estándar",
-      "en": "Standard Room"
-    },
-    "type": {
-      "es": "Estándar",
-      "en": "Standard"
-    },
-    "description": {
-      "es": "Una cómoda habitación con todas las comodidades básicas para una estancia agradable.",
-      "en": "A comfortable room with all basic amenities for a pleasant stay."
-    },
-    "pricePerNight": 100,
-    "currency": "USD",
-    "images": [
-      {
-        "src": "/images/rooms/standard1.jpg",
-        "frontpage": true,
-        "alt": {
-          "es": "Fotografia frontal de habitacion estandar",
-          "en": "Fotografia frontal de habitacion estandar"
-        }
-      },
-      {
-        "src": "/images/rooms/standard2.jpg",
-        "alt": {
-          "es": "fotografia lateral de habiracion estandar",
-          "en": "fotografia lateral de habiracion estandar"
-        }
-      }
-    ],
-    "amenities": {
-      "es": [
-        "Cama doble",
-        "Baño privado",
-        "TV",
-        "Wi-Fi"
-      ],
-      "en": [
-        "Double bed",
-        "Private bathroom",
-        "TV",
-        "Wi-Fi"
-      ]
-    },
-    "category": {
-      "es": "Estandar",
-      "en": "Standard"
-    }
-  }
+	{
+		"id": "room1",
+		"name": {
+			"es": "Habitación Estándar",
+			"en": "Standard Room"
+		},
+		"type": {
+			"es": "Estándar",
+			"en": "Standard"
+		},
+		"description": {
+			"es": "Una cómoda habitación con todas las comodidades básicas para una estancia agradable.",
+			"en": "A comfortable room with all basic amenities for a pleasant stay."
+		},
+		"pricePerNight": 100,
+		"currency": "USD",
+		"images": [
+			{
+				"src": "/images/rooms/standard1.jpg",
+				"frontpage": true,
+				"alt": {
+					"es": "Fotografia frontal de habitacion estandar",
+					"en": "Fotografia frontal de habitacion estandar"
+				}
+			},
+			{
+				"src": "/images/rooms/standard2.jpg",
+				"alt": {
+					"es": "fotografia lateral de habiracion estandar",
+					"en": "fotografia lateral de habiracion estandar"
+				}
+			}
+		],
+		"amenities": {
+			"es": ["Cama doble", "Baño privado", "TV", "Wi-Fi"],
+			"en": ["Double bed", "Private bathroom", "TV", "Wi-Fi"]
+		},
+		"category": {
+			"es": "Estandar",
+			"en": "Standard"
+		}
+	}
 ]

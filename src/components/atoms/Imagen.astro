@@ -1,42 +1,42 @@
 ---
 // src/components/atoms/Imagen.astro
 /**
- * Componente optimizado para imágenes
- * Soporta: local (/src/resources/img/), public (/public/), y URLs remotas
- * Con validación, cache y fallback automático
- */
+    * Componente optimizado para imágenes
+    * Soporta: local (/src/resources/img/), public (/public/), y URLs remotas
+    * Con validación, cache y fallback automático
+    */
 
 import { Image } from "astro:assets";
 import { promises as fs } from "node:fs";
 import path from "node:path";
-import { log, warn, error } from "@/services/logger.ts";
+import { logger } from "@/services/logger.ts";
 
-const CONTEXT = "Imagen";
+const log = logger("Imagen");
 
 interface Props {
-	id?: string;
-	src: string | null | undefined;
-	alt: string;
-	width: number;
-	height: number;
-	class?: string;
-	loading?: "lazy" | "eager";
-	decoding?: "async" | "sync" | "auto";
-	quality?: number;
-	format?: "webp" | "avif" | "png" | "jpg";
+    id?: string;
+    src: string | null | undefined;
+    alt: string;
+    width: number;
+    height: number;
+    class?: string;
+    loading?: "lazy" | "eager";
+    decoding?: "async" | "sync" | "auto";
+    quality?: number;
+    format?: "webp" | "avif" | "png" | "jpg";
 }
 
 const {
-	id,
-	src,
-	alt,
-	width,
-	height,
-	class: className,
-	loading = "lazy",
-	decoding = "async",
-	quality = 80,
-	format,
+    id,
+    src,
+    alt,
+    width,
+    height,
+    class: className,
+    loading = "lazy",
+    decoding = "async",
+    quality = 80,
+    format,
 } = Astro.props;
 
 // ==================== CACHE ====================
@@ -46,64 +46,64 @@ const validationCache = new Map<string, boolean>();
 // ==================== HELPERS ====================
 
 async function existeEnPublic(rutaPublica: string): Promise<boolean> {
-	const cacheKey = `public:${rutaPublica}`;
-	if (validationCache.has(cacheKey)) {
-		return validationCache.get(cacheKey)!;
-	}
+    const cacheKey = `public:${rutaPublica}`;
+    if (validationCache.has(cacheKey)) {
+        return validationCache.get(cacheKey)!;
+    }
 
-	try {
-		const rutaCompleta = path.join(process.cwd(), "public", rutaPublica);
-		await fs.access(rutaCompleta);
-		validationCache.set(cacheKey, true);
-		return true;
-	} catch {
-		validationCache.set(cacheKey, false);
-		return false;
-	}
+    try {
+        const rutaCompleta = path.join(process.cwd(), "public", rutaPublica);
+        await fs.access(rutaCompleta);
+        validationCache.set(cacheKey, true);
+        return true;
+    } catch {
+        validationCache.set(cacheKey, false);
+        return false;
+    }
 }
 
 async function urlExist(url: string): Promise<boolean> {
-	const cacheKey = `remote:${url}`;
-	if (validationCache.has(cacheKey)) {
-		return validationCache.get(cacheKey)!;
-	}
+    const cacheKey = `remote:${url}`;
+    if (validationCache.has(cacheKey)) {
+        return validationCache.get(cacheKey)!;
+    }
 
-	try {
-		if (import.meta.env.PROD) {
-			validationCache.set(cacheKey, true);
-			return true;
-		}
+    try {
+        if (import.meta.env.PROD) {
+            validationCache.set(cacheKey, true);
+            return true;
+        }
 
-		const controller = new AbortController();
-		const timeoutId = setTimeout(() => controller.abort(), 3000);
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 3000);
 
-		const res = await fetch(url, {
-			method: "HEAD",
-			signal: controller.signal,
-		});
+        const res = await fetch(url, {
+            method: "HEAD",
+            signal: controller.signal,
+        });
 
-		clearTimeout(timeoutId);
+        clearTimeout(timeoutId);
 
-		if (!res.ok) {
-			validationCache.set(cacheKey, false);
-			return false;
-		}
+        if (!res.ok) {
+            validationCache.set(cacheKey, false);
+            return false;
+        }
 
-		const contentType = res.headers.get("content-type") || "";
-		const isImage = contentType.startsWith("image/");
+        const contentType = res.headers.get("content-type") || "";
+        const isImage = contentType.startsWith("image/");
 
-		validationCache.set(cacheKey, isImage);
-		return isImage;
-	} catch (e) {
-		warn(CONTEXT, `No se pudo validar URL: ${url}`, e);
-		validationCache.set(cacheKey, true);
-		return true;
-	}
+        validationCache.set(cacheKey, isImage);
+        return isImage;
+    } catch (e) {
+        log.warn(`No se pudo validar URL: ${url}`, e);
+        validationCache.set(cacheKey, true);
+        return true;
+    }
 }
 
 function getPlaceholder(w: number, h: number, text?: string): string {
-	const displayText = text || `${w}x${h}`;
-	return `https://placehold.co/${w}x${h}/EAEAEA/29333B?text=${encodeURIComponent(displayText)}`;
+    const displayText = text || `${w}x${h}`;
+    return `https://placehold.co/${w}x${h}/EAEAEA/29333B?text=${encodeURIComponent(displayText)}`;
 }
 
 // ==================== VALIDACIÓN DE SRC ====================
@@ -112,48 +112,48 @@ let finalSrc: string | any = getPlaceholder(width, height);
 let useOptimizedImage = false;
 
 if (!src) {
-	warn(CONTEXT, "No se proporcionó 'src', usando placeholder.");
+    log.warn("No se proporcionó 'src', usando placeholder.");
 } else if (src.startsWith("/") || src.startsWith(".")) {
-	const images = import.meta.glob(
-		"/src/resources/img/**/*.{jpeg,jpg,png,gif,webp,svg,avif}",
-	);
-	const imagePath = `/src/resources${src.startsWith("/img") ? src : "/img" + src}`;
+    const images = import.meta.glob(
+        "/src/resources/img/**/*.{jpeg,jpg,png,gif,webp,svg,avif}",
+    );
+    const imagePath = `/src/resources${src.startsWith("/img") ? src : "/img" + src}`;
 
-	if (images[imagePath]) {
-		try {
-			finalSrc = (await images[imagePath]()).default;
-			useOptimizedImage = true;
-			log(CONTEXT, `Usando imagen optimizada: ${imagePath}`);
-		} catch (e) {
-			error(CONTEXT, `Error cargando imagen optimizada: ${imagePath}`, e);
-			finalSrc = getPlaceholder(width, height, "Error");
-		}
-	} else {
-		const existsInPublic = await existeEnPublic(src);
+    if (images[imagePath]) {
+        try {
+            finalSrc = (await images[imagePath]()).default;
+            useOptimizedImage = true;
+            log.info(`Usando imagen optimizada: ${imagePath}`);
+        } catch (e) {
+            log.error(`Error cargando imagen optimizada: ${imagePath}`, e);
+            finalSrc = getPlaceholder(width, height, "Error");
+        }
+    } else {
+        const existsInPublic = await existeEnPublic(src);
 
-		if (existsInPublic) {
-			finalSrc = src;
-			useOptimizedImage = false;
-			log(CONTEXT, `Usando imagen de /public/: ${src}`);
-		} else {
-			warn(CONTEXT, `Imagen local no encontrada en /src/resources ni en /public: ${src}`);
-			finalSrc = getPlaceholder(width, height, "No encontrada");
-		}
-	}
+        if (existsInPublic) {
+            finalSrc = src;
+            useOptimizedImage = false;
+            log.info(`Usando imagen de /public/: ${src}`);
+        } else {
+            log.warn(`Imagen local no encontrada en /src/resources ni en /public: ${src}`);
+            finalSrc = getPlaceholder(width, height, "No encontrada");
+        }
+    }
 } else if (src.startsWith("http://") || src.startsWith("https://")) {
-	const isValid = await urlExist(src);
+    const isValid = await urlExist(src);
 
-	if (isValid) {
-		finalSrc = src;
-		useOptimizedImage = false;
-		log(CONTEXT, `Usando URL remota: ${src}`);
-	} else {
-		warn(CONTEXT, `URL remota inválida o inaccesible: ${src}`);
-		finalSrc = getPlaceholder(width, height, "URL inválida");
-	}
+    if (isValid) {
+        finalSrc = src;
+        useOptimizedImage = false;
+        log.info(`Usando URL remota: ${src}`);
+    } else {
+        log.warn(`URL remota inválida o inaccesible: ${src}`);
+        finalSrc = getPlaceholder(width, height, "URL inválida");
+    }
 } else {
-	warn(CONTEXT, `Formato de src no reconocido: ${src}`);
-	finalSrc = getPlaceholder(width, height, "Formato inválido");
+    log.warn(`Formato de src no reconocido: ${src}`);
+    finalSrc = getPlaceholder(width, height, "Formato inválido");
 }
 ---
 
@@ -186,8 +186,9 @@ if (!src) {
     )}
 
 <script>
-    import { error } from "@/services/logger.ts";
-    const CONTEXT = "Imagen-Cliente";
+    import { logger } from "@/services/logger.ts";
+
+    const log = logger("Imagen-Cliente");
 
     class ImagenErrorHandler {
         constructor() {
@@ -212,7 +213,7 @@ if (!src) {
             const width = img.width || 600;
             const height = img.height || 400;
 
-            error(CONTEXT, 'Error cargando imagen en el cliente:', img.src);
+            log.error('Error cargando imagen en el cliente:', img.src);
 
             img.src = `https://placehold.co/${width}x${height}/EAEAEA/29333B?text=Error+de+Carga`;
             img.alt = 'Error cargando imagen';

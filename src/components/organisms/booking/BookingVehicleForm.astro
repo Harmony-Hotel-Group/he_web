@@ -1,20 +1,19 @@
 ---
 // src/components/organisms/booking/BookingVehicleForm.astro
-import { Translations } from "~/i18n/translation.ts";
+import { Translations } from "@/i18n/translation.ts";
 import BookingVehicleSection from "./BookingVehicleSection.astro";
 
 interface Props {
-    lang: string;
-    config: any;
+	lang: string;
+	config: any;
 }
 
 const { lang, config } = Astro.props;
 const t = Translations(lang);
-
 ---
 
 <form id="booking-vehicle-form" method="post" class="space-y-4">
-    <BookingVehicleSection lang={lang} vehicleTypeOptions={config.vehicleTypeOptions} />
+    <BookingVehicleSection lang={lang} vehicleTypeOptions={config?.vehicleTypeOptions ?? []} />
 
     <!-- Información adicional para vehículos -->
     <div class="space-y-1">

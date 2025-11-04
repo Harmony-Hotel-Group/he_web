@@ -1,21 +1,23 @@
 ---
 // src/components/organisms/booking/BookingGroupForm.astro
-import Grid from "~/layouts/GridLayout.astro";
-import Row from "~/layouts/Row.astro";
-import DatePickerField from "~/components/molecules/forms/DatePickerField.astro";
-import SwitchField from "~/components/molecules/forms/SwitchField.astro";
-import { Translations } from "~/i18n/translation.ts";
-import NumberField from "~/components/molecules/forms/NumberField.astro";
-import TextAreaInput from "~/components/atoms/TextAreaInput.astro";
-import Label from "~/components/atoms/Label.astro";
-import BookingVehicleSection from "~/components/organisms/booking/BookingVehicleSection.astro";
+import Label from "@/components/atoms/Label.astro";
+import TextAreaInput from "@/components/atoms/TextAreaInput.astro";
+
+import DatePickerField from "@/components/molecules/forms/DatePickerField.astro";
+import NumberField from "@/components/molecules/forms/NumberField.astro";
+import SwitchField from "@/components/molecules/forms/SwitchField.astro";
+
+import BookingVehicleSection from "@/components/organisms/booking/BookingVehicleSection.astro";
+import { Translations } from "@/i18n/translation.ts";
+import Grid from "@/layouts/GridLayout.astro";
+import Row from "@/layouts/Row.astro";
 
 interface Props {
-    lang: string;
-    config: any;
+	lang: string;
+	config: any;
 }
 
-const {lang, config} = Astro.props;
+const { lang, config } = Astro.props;
 const t = Translations(lang);
 ---
 

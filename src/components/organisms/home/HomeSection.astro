@@ -1,24 +1,37 @@
 ---
 // src/components/organisms/home/HomeSection.astro
-import InfoCard from '~/components/molecules/cards/InfoCard.astro';
-import { Translations } from '~/i18n/translation';
+import InfoCard from "@/components/molecules/cards/InfoCard.astro";
+import { Translations } from "@/i18n/translation";
+import { log } from "@/services/logger.ts";
+
+const CONTEXT = "HomeSection";
 
 interface Item {
-  id: string;
-  src: string;
-  name: { [key: string]: string };
+	id: string;
+	src: string;
+	name: { [key: string]: string };
 }
 
 interface Props {
-  lang: string;
-  titleKey: string;
-  items: Item[];
-  baseHref: string;
-  bgColorClass?: string;
-  maxItems?: number; // nuevo, controla cuántos items mostrar
+	lang: string;
+	titleKey: string;
+	items: Item[];
+	baseHref: string;
+	bgColorClass?: string;
+	maxItems?: number;
 }
 
-const { lang, titleKey, items, baseHref, bgColorClass = 'bg-white', maxItems = 4 } = Astro.props;
+const {
+	lang,
+	titleKey,
+	items,
+	baseHref,
+	bgColorClass = "bg-white",
+	maxItems = 4,
+} = Astro.props;
+
+log(CONTEXT, "Props recibidas:", { lang, titleKey, numItems: items.length, baseHref, maxItems });
+
 const t = Translations(lang);
 ---
 

@@ -1,17 +1,23 @@
 ---
 // src/components/organisms/booking/BookingVehicleSection.astro
-import { Translations } from "~/i18n/translation.ts";
-import Grid from "~/layouts/GridLayout.astro";
-import Row from "~/layouts/Row.astro";
+import { Translations } from "@/i18n/translation.ts";
+import Grid from "@/layouts/GridLayout.astro";
+import Row from "@/layouts/Row.astro";
 
 interface Props {
-    lang: string;
-    config?: any;
-    vehicleTypeOptions?: Array<{ value: string; [key: string]: any }>;
+	lang: string;
+	config?: any;
+	vehicleTypeOptions?: Array<{ value: string; [key: string]: any }>;
 }
 
-const { lang, config, vehicleTypeOptions: propVehicleTypeOptions = [] } = Astro.props as Props;
-const vehicleTypeOptions = (propVehicleTypeOptions ?? (config?.vehicleTypeOptions ?? [])) as Array<{ value: string; [key: string]: any }>;
+const {
+	lang,
+	config,
+	vehicleTypeOptions: propVehicleTypeOptions = [],
+} = Astro.props as Props;
+const vehicleTypeOptions = (propVehicleTypeOptions ??
+	config?.vehicleTypeOptions ??
+	[]) as Array<{ value: string; [key: string]: any }>;
 const t = Translations(lang);
 ---
 

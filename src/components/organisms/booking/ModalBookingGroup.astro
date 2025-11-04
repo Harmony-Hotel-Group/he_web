@@ -1,17 +1,17 @@
 ---
 // src/components/organisms/booking/ModalBookingGroup.astro
+import Switch from "@/components/atoms/Switch.astro";
+import { Translations } from "@/i18n/translation.ts";
 import BookingGroupForm from "./BookingGroupForm.astro";
 import BookingVehicleForm from "./BookingVehicleForm.astro";
-import Switch from "../../atoms/Switch.astro";
-import { Translations } from "~/i18n/translation.ts";
 
 interface Props {
-    lang: string;
-    config: any;
-    isOpen: boolean;
+	lang: string;
+	config: any;
+	isOpen: boolean;
 }
 
-const {lang, config, isOpen} = Astro.props;
+const { lang, config, isOpen } = Astro.props;
 const t = Translations(lang);
 ---
 
@@ -40,24 +40,24 @@ const t = Translations(lang);
             </div>
 
             <!-- Switch para mostrar/ocultar formulario de vehículos -->
-            <!--<div class="bg-white dark:bg-gray-700 rounded-lg p-4 mb-4 shadow-sm">-->
-            <!--    <div class="flex items-center justify-between">-->
-            <!--        <div class="flex items-center gap-3">-->
-            <!--            <svg class="w-5 h-5 text-gray-700 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">-->
-            <!--                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0"/>-->
-            <!--            </svg>-->
-            <!--            <span class="font-medium text-gray-900 dark:text-gray-100">-->
-            <!--                {t('booking.group.modal.includeVehicles') || '¿Incluir información de vehículos?'}-->
-            <!--            </span>-->
-            <!--        </div>-->
-            <!--        <Switch-->
-            <!--                id="vehicleToggleSwitch"-->
-            <!--                name="includeVehicles"-->
-            <!--                checked={false}-->
-            <!--                classes="pl-0"-->
-            <!--        />-->
-            <!--    </div>-->
-            <!--</div>-->
+            <div class="bg-white dark:bg-gray-700 rounded-lg p-4 mb-4 shadow-sm">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <svg class="w-5 h-5 text-gray-700 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0"/>
+                        </svg>
+                        <span class="font-medium text-gray-900 dark:text-gray-100">
+                            {t('booking.group.modal.includeVehicles') || '¿Incluir información de vehículos?'}
+                        </span>
+                    </div>
+                    <Switch
+                            id="vehicleToggleSwitch"
+                            name="includeVehicles"
+                            checked={false}
+                            classes="pl-0"
+                    />
+                </div>
+            </div>
 
             <!-- Formulario de Vehículos (oculto por defecto) -->
             <div id="vehicleTabContent" class="hidden transition-opacity duration-200 opacity-0">
@@ -88,6 +88,9 @@ const t = Translations(lang);
 </div>
 
 <script>
+    import { log, warn, error } from "@/services/logger.ts";
+    const CONTEXT = 'ModalBookingGroup';
+
     document.addEventListener("DOMContentLoaded", () => {
         class ModalBookingGroup {
             private modal: HTMLElement | null = null;
@@ -115,15 +118,15 @@ const t = Translations(lang);
 
                 // Verificar que los elementos esenciales existen
                 if (!this.modal || !this.cancelBtn || !this.confirmBtn) {
-                    console.error('[ModalBookingGroup] Error: No se pudieron encontrar elementos esenciales del modal');
+                    error(CONTEXT, 'Error: No se pudieron encontrar elementos esenciales del modal');
                     return;
                 }
 
                 // Verificar switch
                 if (this.vehicleToggleSwitch && this.vehicleToggleInput && this.vehicleTabContent) {
-                    console.log('[ModalBookingGroup] Switch de vehículos encontrado y listo');
+                    log(CONTEXT, 'Switch de vehículos encontrado y listo');
                 } else {
-                    console.error('[ModalBookingGroup] Error: Elementos del switch no encontrados', {
+                    error(CONTEXT, 'Error: Elementos del switch no encontrados', {
                         switch: this.vehicleToggleSwitch,
                         input: this.vehicleToggleInput,
                         content: this.vehicleTabContent
@@ -192,7 +195,7 @@ const t = Translations(lang);
                 const isChecked = this.vehicleToggleInput.value === 'true';
                 this.vehiclesEnabled = isChecked;
 
-                console.log('[ModalBookingGroup] Switch cambió a:', isChecked);
+                log(CONTEXT, 'Switch cambió a:', isChecked);
 
                 if (isChecked) {
                     // Mostrar formulario de vehículos con animación
@@ -212,7 +215,7 @@ const t = Translations(lang);
 
             public open() {
                 if (!this.modal) {
-                    console.error('[ModalBookingGroup] Error: Modal element not found');
+                    error(CONTEXT, 'Error: Modal element not found');
                     return;
                 }
 
@@ -294,7 +297,7 @@ const t = Translations(lang);
                     }
 
                     // Usar la función de envío desde utils
-                    const {sendBookingMessage} = await import('~/services/send/index.ts');
+                    const {sendBookingMessage} = await import('@/services/send/index.ts');
 
                     // Determinar el tipo de booking
                     const bookingType = this.vehiclesEnabled ? 'vehicle' : 'group';
@@ -306,8 +309,8 @@ const t = Translations(lang);
                     // Cerrar modal después del envío exitoso
                     this.close();
 
-                } catch (error) {
-                    console.error('Error al confirmar reserva:', error);
+                } catch (e) {
+                    error(CONTEXT, 'Error al confirmar reserva:', e);
                     alert('Error al procesar la reserva. Por favor, inténtelo de nuevo.');
                 }
             }

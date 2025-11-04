@@ -1,19 +1,19 @@
 ---
 // src/components/organisms/carousel/VisualCarousel.astro
 interface Props {
-    class?: string;
-    maskOpacityClass?: string;
-    autoplayInterval?: number;
-    showIndicators?: boolean;
-    showScrollIndicator?: boolean;
+	class?: string;
+	maskOpacityClass?: string;
+	autoplayInterval?: number;
+	showIndicators?: boolean;
+	showScrollIndicator?: boolean;
 }
 
 const {
-    class: className = '',
-    maskOpacityClass = 'bg-black/50',
-    autoplayInterval = 5000,
-    showIndicators = true,
-    showScrollIndicator = true,
+	class: className = "",
+	maskOpacityClass = "bg-black/50",
+	autoplayInterval = 5000,
+	showIndicators = true,
+	showScrollIndicator = true,
 } = Astro.props;
 
 const carouselId = `carousel-${Math.random().toString(36).substr(2, 9)}`;
@@ -65,89 +65,91 @@ const carouselId = `carousel-${Math.random().toString(36).substr(2, 9)}`;
 </div>
 
 <script is:inline define:vars={{autoplayInterval, carouselId}}>
-    class VisualCarouselManager {
-        private container: HTMLElement | null = null;
-        private items: HTMLElement[] = [];
-        private indicatorsContainer: HTMLElement | null = null;
-        private indicators: HTMLElement[] = [];
-        private currentIndex: number = 0;
-        private intervalId: number | null = null;
+    document.addEventListener('DOMContentLoaded', () => {
+        class VisualCarouselManager {
+            private container: HTMLElement | null = null;
+            private items: HTMLElement[] = [];
+            private indicatorsContainer: HTMLElement | null = null;
+            private indicators: HTMLElement[] = [];
+            private currentIndex: number = 0;
+            private intervalId: number | null = null;
 
-        constructor(carouselId: string, interval: number) {
-            this.init(carouselId, interval);
-        }
-
-        private init(carouselId: string, interval: number) {
-            const carousel = document.querySelector(`[data-carousel-id="${carouselId}"]`);
-            if (!carousel) return;
-
-            this.container = carousel.querySelector('[data-carousel-container]');
-            if (!this.container) return;
-
-            this.items = Array.from(this.container.children) as HTMLElement[];
-            this.indicatorsContainer = carousel.querySelector('[data-carousel-indicators]');
-
-            if (this.items.length <= 1) {
-                carousel.querySelector('[data-carousel-prev]')?.remove();
-                carousel.querySelector('[data-carousel-next]')?.remove();
-                this.indicatorsContainer?.remove();
-                return;
+            constructor(carouselId: string, interval: number) {
+                this.init(carouselId, interval);
             }
 
-            this.createIndicators();
-            this.initEventListeners();
-            this.updateSlide(0);
-            this.start(interval);
+            private init(carouselId: string, interval: number) {
+                const carousel = document.querySelector(`[data-carousel-id="${carouselId}"]`);
+                if (!carousel) return;
+
+                this.container = carousel.querySelector('[data-carousel-container]');
+                if (!this.container) return;
+
+                this.items = Array.from(this.container.children) as HTMLElement[];
+                this.indicatorsContainer = carousel.querySelector('[data-carousel-indicators]');
+
+                if (this.items.length <= 1) {
+                    carousel.querySelector('[data-carousel-prev]')?.remove();
+                    carousel.querySelector('[data-carousel-next]')?.remove();
+                    this.indicatorsContainer?.remove();
+                    return;
+                }
+
+                this.createIndicators();
+                this.initEventListeners();
+                this.updateSlide(0);
+                this.start(interval);
+            }
+
+            private createIndicators() {
+                if (!this.indicatorsContainer) return;
+                this.items.forEach((_, index) => {
+                    const button = document.createElement('button');
+                    button.type = 'button';
+                    button.classList.add('w-3', 'h-3', 'rounded-full', 'transition-all', 'duration-300');
+                    button.setAttribute('aria-label', `Ir a slide ${index + 1}`);
+                    button.dataset.slideTo = index.toString();
+                    this.indicatorsContainer.appendChild(button);
+                });
+                this.indicators = Array.from(this.indicatorsContainer.children) as HTMLElement[];
+            }
+
+            private initEventListeners() {
+                const carousel = document.querySelector(`[data-carousel-id="${carouselId}"]`);
+                carousel?.querySelector('[data-carousel-prev]')?.addEventListener('click', () => this.prev());
+                carousel?.querySelector('[data-carousel-next]')?.addEventListener('click', () => this.next());
+                this.indicators.forEach(ind => ind.addEventListener('click', (e) => this.goToSlide(parseInt((e.target as HTMLElement).dataset.slideTo || '0'))));
+            }
+
+            private updateSlide(index: number) {
+                this.items.forEach((item, i) => {
+                    item.classList.toggle('opacity-100', i === index);
+                    item.classList.toggle('opacity-0', i !== index);
+                    item.classList.toggle('z-10', i === index);
+                    item.classList.toggle('z-0', i !== index);
+                });
+                this.indicators.forEach((indicator, i) => {
+                    indicator.classList.toggle('bg-white', i === index);
+                    indicator.classList.toggle('w-8', i === index);
+                    indicator.classList.toggle('bg-white/50', i !== index);
+                    indicator.classList.toggle('w-3', i !== index);
+                });
+                this.currentIndex = index;
+            }
+
+            private next() {
+                this.goToSlide((this.currentIndex + 1) % this.items.length);
+            }
+
+            private prev() {
+                this.goToSlide((this.currentIndex - 1 + this.items.length) % this.items.length);
+            }
+
+            private start(interval: number) {
+                this.intervalId = window.setInterval(() => this.next(), interval);
+            }
         }
 
-        private createIndicators() {
-            if (!this.indicatorsContainer) return;
-            this.items.forEach((_, index) => {
-                const button = document.createElement('button');
-                button.type = 'button';
-                button.classList.add('w-3', 'h-3', 'rounded-full', 'transition-all', 'duration-300');
-                button.setAttribute('aria-label', `Ir a slide ${index + 1}`);
-                button.dataset.slideTo = index.toString();
-                this.indicatorsContainer.appendChild(button);
-            });
-            this.indicators = Array.from(this.indicatorsContainer.children) as HTMLElement[];
-        }
-
-        private initEventListeners() {
-            const carousel = document.querySelector(`[data-carousel-id="${carouselId}"]`);
-            carousel?.querySelector('[data-carousel-prev]')?.addEventListener('click', () => this.prev());
-            carousel?.querySelector('[data-carousel-next]')?.addEventListener('click', () => this.next());
-            this.indicators.forEach(ind => ind.addEventListener('click', (e) => this.goToSlide(parseInt((e.target as HTMLElement).dataset.slideTo || '0'))));
-        }
-
-        private updateSlide(index: number) {
-            this.items.forEach((item, i) => {
-                item.classList.toggle('opacity-100', i === index);
-                item.classList.toggle('opacity-0', i !== index);
-                item.classList.toggle('z-10', i === index);
-                item.classList.toggle('z-0', i !== index);
-            });
-            this.indicators.forEach((indicator, i) => {
-                indicator.classList.toggle('bg-white', i === index);
-                indicator.classList.toggle('w-8', i === index);
-                indicator.classList.toggle('bg-white/50', i !== index);
-                indicator.classList.toggle('w-3', i !== index);
-            });
-            this.currentIndex = index;
-        }
-
-        private next() {
-            this.goToSlide((this.currentIndex + 1) % this.items.length);
-        }
-
-        private prev() {
-            this.goToSlide((this.currentIndex - 1 + this.items.length) % this.items.length);
-        }
-
-        private start(interval: number) {
-            this.intervalId = window.setInterval(() => this.next(), interval);
-        }
-    }
-
-    new VisualCarouselManager(carouselId, autoplayInterval);
+        new VisualCarouselManager(carouselId, autoplayInterval);
+    })
 </script>

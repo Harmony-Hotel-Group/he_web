@@ -1,261 +1,225 @@
+/**
+ * @file Módulo de Internacionalización (i18n)
+ * 
+ * Este archivo gestiona todas las funcionalidades relacionadas con la traducción de textos en la aplicación.
+ * Proporciona una función `Translations` que, al ser inicializada con un idioma, devuelve una función `t` 
+ * para obtener las traducciones correspondientes.
+ *
+ * Características:
+ * - Carga de archivos de traducción JSON.
+ * - Soporte para múltiples idiomas con un idioma por defecto (fallback).
+ * - Búsqueda de traducciones anidadas mediante claves (ej: 'page.title').
+ * - Reemplazo de parámetros dinámicos en las cadenas de texto (ej: 'Hola, {{name}}').
+ * - Normalización de códigos de idioma.
+ * - Advertencias en modo de desarrollo para traducciones faltantes.
+ */
+
 import en from './en.json';
 import es from './es.json';
+import { log, warn, error } from '@/services/logger.ts';
+
+const CONTEXT = 'Translation';
 
 // ==================== TYPES ====================
 
+/**
+ * Representa un objeto de traducción, que es un mapa de claves de cadena a cualquier valor.
+ * Usado para los archivos JSON de idioma.
+ */
 type TranslationObject = Record<string, any>;
+
+/**
+ * Define los idiomas soportados de forma explícita.
+ */
 type SupportedLang = 'en' | 'es';
+
+/**
+ * Define el tipo para los parámetros dinámicos que se pueden insertar en las cadenas de traducción.
+ * Ejemplo: { name: 'Usuario' }
+ */
 type TranslationParams = Record<string, string | number>;
 
 // ==================== CONFIG ====================
+export const languages = {
+    es: 'Español',
+    en: 'English'
+} as const;
 
+export type Language = keyof typeof languages;
+/**
+ * Idioma por defecto de la aplicación.
+ * Se utilizará como fallback si una traducción no está disponible en el idioma seleccionado.
+ * @type {SupportedLang}
+ */
 export const defaultLang: SupportedLang = 'es';
+
+/**
+ * Array con todos los idiomas soportados por la aplicación.
+ * @type {SupportedLang[]}
+ */
 export const supportedLangs: SupportedLang[] = ['en', 'es'];
 
+
+
+/**
+ * Objeto que almacena todos los archivos de traducción cargados.
+ * Cada idioma soportado debe tener su correspondiente objeto de traducción aquí.
+ * @type {Record<SupportedLang, TranslationObject>}
+ */
 export const translations: Record<SupportedLang, TranslationObject> = {
-	en: en,
-	es: es,
-};
+    en: en,
+    es: es,
+}
 
-// ==================== CACHE ====================
+// ===================== UTILS =====================
 
-// Cache para las funciones de traducción por idioma
-const translationFunctionCache = new Map<string, (key: string, params?: TranslationParams) => string>();
+export function getCurrentLang(url: URL): Language {
+    const path = url.pathname;
+    if (path.startsWith('/en/') || path === '/en') {
+        return 'en';
+    }
+    return 'es';
+}
 
-// Cache para traducciones ya resueltas (key + lang)
-const translationCache = new Map<string, string>();
+export function getLangFromCookie(): Language | null {
+    if (typeof document === 'undefined') return null;
+    const match = document.cookie.match(/lang=(\w+)/);
+    return match ? (match[1] as Language) : null;
+}
 
-// Cache para paths de keys (evitar split repetido)
-const keyPathCache = new Map<string, string[]>();
+export function setLangCookie(lang: Language) {
+    document.cookie = `lang=${lang}; path=/; max-age=31536000; SameSite=Lax`;
+}
 
 // ==================== HELPERS ====================
 
 /**
- * Obtiene el path de una key con cache
+ * Busca una traducción en un objeto de idioma utilizando una clave anidada.
+ * @param {TranslationObject} obj - El objeto de traducciones donde buscar.
+ * @param {string} key - La clave de la traducción (ej: 'nav.home' o 'site.title').
+ * @returns {string | null} - El valor de la traducción si se encuentra, o null si no.
  */
-function getKeyPath(key: string): string[] {
-    if (!keyPathCache.has(key)) {
-        keyPathCache.set(key, key.split('.'));
-    }
-    return keyPathCache.get(key)!;
-}
-
-/**
- * Busca una traducción en el objeto de forma optimizada
- */
-function findTranslation(
-    obj: TranslationObject,
-    keyPath: string[]
-): string | null {
+function findTranslation(obj: TranslationObject, key: string): string | null {
+    const keys = key.split('.');
     let result: any = obj;
 
-    for (let i = 0; i < keyPath.length; i++) {
-        if (result && typeof result === 'object' && keyPath[i] in result) {
-            result = result[keyPath[i]];
+    for (const k of keys) {
+        if (result && typeof result === 'object' && k in result) {
+            result = result[k];
         } else {
-            return null;
+            return null; // Si alguna clave intermedia no existe, retorna null.
         }
     }
 
-    return typeof result === 'string' || typeof result === 'number'
-        ? String(result)
-        : null;
+    // Retorna el valor solo si es una cadena o un número.
+    return typeof result === 'string' || typeof result === 'number' ? String(result) : null;
 }
 
 /**
- * Reemplaza parámetros en la traducción de forma eficiente
- * Pre-compila las regex comunes
+ * Reemplaza los parámetros en una cadena de traducción.
+ * Busca placeholders con el formato {{paramName}}.
+ * @param {string} translation - La cadena de traducción con placeholders.
+ * @param {TranslationParams} params - Un objeto con los valores a reemplazar.
+ * @returns {string} - La cadena de traducción con los parámetros reemplazados.
  */
-const paramRegexCache = new Map<string, RegExp>();
-
-function getParamRegex(paramName: string): RegExp {
-    if (!paramRegexCache.has(paramName)) {
-        paramRegexCache.set(
-            paramName,
-            new RegExp(`\\{\\{\\s*${paramName}\\s*\\}\\}`, 'g')
-        );
-    }
-    return paramRegexCache.get(paramName)!;
-}
-
-function replaceParams(
-    translation: string,
-    params: TranslationParams
-): string {
+function replaceParams(translation: string, params: TranslationParams): string {
     let result = translation;
-
     for (const [paramName, paramValue] of Object.entries(params)) {
-        result = result.replace(
-            getParamRegex(paramName),
-            String(paramValue)
-        );
+        // Expresión regular para encontrar {{paramName}} con posibles espacios.
+        result = result.replace(new RegExp(`\\{\\{\\s*${paramName}\\s*\\}\\}`, 'g'), String(paramValue));
     }
-
     return result;
 }
 
 /**
- * Normaliza el idioma con fallback
+ * Normaliza un código de idioma a uno de los idiomas soportados.
+ * Intenta hacer coincidir el idioma completo (ej: 'en-US') o su código base ('en').
+ * @param {string} lang - El código de idioma a normalizar.
+ * @returns {SupportedLang} - El idioma soportado o el idioma por defecto.
  */
 function normalizeLang(lang: string): SupportedLang {
-    // Normalizar lowercase
     const normalizedLang = lang.toLowerCase();
-
-    // Si es un idioma soportado, usarlo
     if (supportedLangs.includes(normalizedLang as SupportedLang)) {
         return normalizedLang as SupportedLang;
     }
-
-    // Intentar con solo los primeros 2 caracteres (en-US -> en)
+    // Si no, intenta con el código de dos letras (ej: 'en' de 'en-US').
     const shortLang = normalizedLang.substring(0, 2);
     if (supportedLangs.includes(shortLang as SupportedLang)) {
         return shortLang as SupportedLang;
     }
-
-    // Fallback al idioma por defecto
+    // Si no se encuentra ninguna coincidencia, retorna el idioma por defecto.
     return defaultLang;
 }
 
 // ==================== MAIN FUNCTION ====================
 
 /**
- * Obtiene la función de traducción para un idioma específico
- * Usa cache para evitar crear múltiples funciones
+ * Fábrica de funciones de traducción (Higher-Order Function).
+ * Crea y devuelve una función `t` configurada para un idioma específico.
+ * @param {string} lang - El idioma para el cual se creará la función de traducción.
+ * @returns {(key: string, params?: TranslationParams) => string} - La función `t` para obtener traducciones.
  */
 export function Translations(lang: string) {
-	const normalizedLang = normalizeLang(lang);
-
-    // Cache hit: retornar función existente
-    if (translationFunctionCache.has(normalizedLang)) {
-        return translationFunctionCache.get(normalizedLang)!;
-    }
-
-    // Obtener el archivo de traducción
-	const translationFile = translations[normalizedLang];
+    const normalizedLang = normalizeLang(lang);
+    const translationFile = translations[normalizedLang];
     const fallbackFile = translations[defaultLang];
 
-    // Crear la función de traducción
-	const t = (key: string, params?: TranslationParams): string => {
-        // Validación de entrada
+    /**
+     * La función de traducción principal (`t`).
+     * @param {string} key - La clave de la traducción a obtener.
+     * @param {TranslationParams} [params] - Parámetros opcionales para reemplazar en la cadena.
+     * @returns {string} - La cadena traducida y formateada. Si no se encuentra, devuelve la clave.
+     */
+    return function t(key: string, params?: TranslationParams): string {
         if (!key || typeof key !== 'string') {
-            console.error('[Translation] Invalid key:', key);
+            error(CONTEXT, 'La clave proporcionada no es válida:', key);
             return String(key);
         }
 
-        // Generar cache key (incluye params para diferenciar)
-        const cacheKey = params
-            ? `${normalizedLang}:${key}:${JSON.stringify(params)}`
-            : `${normalizedLang}:${key}`;
+        // 1. Intentar obtener la traducción del idioma actual.
+        let translation = findTranslation(translationFile, key);
 
-	return function t(key: string, params?: Record<string, string | number>) {
-		if (key === null || key === undefined) {
-			console.error("Key is null or undefined", key);
-			return key;
-		}
-		const keys = key.split(".");
-		let result: TranslationObject | undefined = translationFile;
-
-		// Obtener path de la key
-        const keyPath = getKeyPath(key);
-
-        // Buscar en el idioma seleccionado
-        let translation = findTranslation(translationFile, keyPath);
-
-        // Fallback al idioma por defecto si no se encuentra
+        // 2. Si no se encuentra, intentar con el idioma por defecto (fallback).
         if (translation === null && normalizedLang !== defaultLang) {
-			translation = findTranslation(fallbackFile, keyPath);
-
-            if (translation !== null && import.meta.env.DEV) {
-                console.warn(
-                    `[Translation] Missing '${key}' in '${normalizedLang}', using '${defaultLang}'`
-                );
-			}
-		}
-
-		// Si aún no se encuentra, retornar la key
-        if (translation === null) {
-            if (import.meta.env.DEV) {
-                console.error(`[Translation] Missing translation for key: '${key}'`);
+            translation = findTranslation(fallbackFile, key);
+            // En desarrollo, advertir sobre el uso del fallback.
+            if (translation !== null) {
+                warn(CONTEXT, `Falta la clave '${key}' en '${normalizedLang}'. Usando fallback a '${defaultLang}'.`);
             }
-			return key;
-		}
-
-		let translation = String(result);
-		// Reemplazar parámetros de manera más eficiente
-		if (params) {
-			for (const [paramName, paramValue] of Object.entries(params)) {
-				translation = translation.replace(
-					new RegExp(`\\{\\{\\s*${paramName}\\s*\\}\\}`, "g"),
-					String(paramValue),
-				);
-			}
-		}
-		return translation;
-	};
-}
-
-/**
- * Obtiene todas las traducciones de un namespace
- */
-export function getNamespace(lang: string, namespace: string): TranslationObject | null {
-    const normalizedLang = normalizeLang(lang);
-    const translationFile = translations[normalizedLang];
-    const keyPath = getKeyPath(namespace);
-
-    let result: any = translationFile;
-
-    for (const k of keyPath) {
-        if (result && typeof result === 'object' && k in result) {
-            result = result[k];
-        } else {
-            return null;
         }
-    }
 
-    return typeof result === 'object' ? result : null;
-}
+        // 3. Si la traducción sigue sin encontrarse, devolver la clave como último recurso.
+        if (translation === null) {
+            error(CONTEXT, `No se encontró una traducción para la clave: '${key}'`);
+            return key;
+        }
 
-/**
- * Limpia todos los caches (útil para HMR o testing)
- */
-export function clearTranslationCache() {
-    translationCache.clear();
-    keyPathCache.clear();
-    paramRegexCache.clear();
-    console.log('[Translation] Cache cleared');
-}
+        // 4. Si hay parámetros, reemplazarlos en la cadena.
+        if (params) {
+            translation = replaceParams(translation, params);
+        }
 
-/**
- * Obtiene estadísticas del cache
- */
-export function getCacheStats() {
-    return {
-        translationFunctions: translationFunctionCache.size,
-        translations: translationCache.size,
-        keyPaths: keyPathCache.size,
-        paramRegexes: paramRegexCache.size,
+        return translation;
     };
-}
-
-/**
- * Pre-carga traducciones comunes para mejorar performance inicial
- */
-export function preloadCommonTranslations(lang: string, keys: string[]) {
-    const t = Translations(lang);
-    keys.forEach(key => t(key));
-    console.log(`[Translation] Preloaded ${keys.length} translations for '${lang}'`);
 }
 
 // ==================== DEVELOPMENT HELPERS ====================
 
-if (import.meta.env.DEV) {
-    // Exponer utilidades en desarrollo
-    (globalThis as any).__translationUtils = {
-        getCacheStats,
-        clearCache: clearTranslationCache,
-        hasTranslation,
-        getNamespace,
+/**
+ * En modo de desarrollo, expone utilidades en la ventana global para facilitar la depuración.
+ * Esto permite probar traducciones directamente desde la consola del navegador.
+ */
+if (import.meta.env.DEV && typeof window !== 'undefined') {
+    log(CONTEXT, 'Utilidades de desarrollo disponibles en window.__translationUtils');
+    const t_es = Translations('es');
+    const t_en = Translations('en');
+    (window as any).__translationUtils = {
+        t_es,
+        t_en,
+        find: (key: string) => ({
+            es: t_es(key),
+            en: t_en(key),
+        }),
+        files: translations,
     };
-
-    console.log('[Translation] Dev utilities available at window.__translationUtils');
 }

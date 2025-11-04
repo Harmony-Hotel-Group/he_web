@@ -43,7 +43,7 @@ type TranslationParams = Record<string, string | number>;
 export const languages = [
     {code: "es", name: "Español", flag: "/img/flags/es.svg"},
     {code: "en", name: "English", flag: "/img/flags/en.svg"},
-] as const;
+];
 
 export type Language = (typeof languages)[number]["code"];
 /**

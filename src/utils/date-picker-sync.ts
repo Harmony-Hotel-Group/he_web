@@ -4,12 +4,6 @@
  * Mantiene múltiples date pickers sincronizados entre formularios
  **/
 
-interface DatePickerSyncEvent {
-	sourceId: string;
-	value: string;
-	dates: Date[];
-}
-
 class DatePickerSyncManager {
 	private pickers: Map<string, any> = new Map();
 	private syncGroups: Map<string, Set<string>> = new Map();

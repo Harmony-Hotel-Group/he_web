@@ -1,29 +1,30 @@
 ---
 // src/components/molecules/forms/DatePickerField.astro
-import { Translations, defaultLang } from '~/i18n/translation.ts';
-import Row from '~/layouts/Row.astro';
-import DateRangePicker from '../../atoms/DateRangePicker.astro';
-import Label from '../../atoms/Label.astro';
-import Icono from '../../atoms/Icono.astro';
+import DateRangePicker from "@/components/atoms/DateRangePicker.astro";
+import Icono from "@/components/atoms/Icono.astro";
+import Label from "@/components/atoms/Label.astro";
+
+import { defaultLang, Translations } from "@/i18n/translation.ts";
+import Row from "@/layouts/Row.astro";
 
 interface Props {
-    fieldId?: string;
-    name: string;
-    lblKey: string;
-    icon?: string;
-    lang: string;
-    className?: string;
-    syncGroup?: string; // Grupo de sincronización
+	fieldId?: string;
+	name: string;
+	lblKey: string;
+	icon?: string;
+	lang: string;
+	className?: string;
+	syncGroup?: string; // Grupo de sincronización
 }
 
 const {
-    fieldId = 'date-range-picker',
-    name,
-    lblKey,
-    lang,
-    icon = 'form/calendar',
-    className,
-    syncGroup = 'booking', // Por defecto todos se sincronizan
+	fieldId = "date-range-picker",
+	name,
+	lblKey,
+	lang,
+	icon = "form/calendar",
+	className,
+	syncGroup = "booking", // Por defecto todos se sincronizan
 } = Astro.props;
 
 const t = Translations(lang ?? defaultLang);

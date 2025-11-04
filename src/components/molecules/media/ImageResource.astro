@@ -1,35 +1,35 @@
 ---
 // src/components/ui/ImageResource.astro
 /**
-    * Componente especializado para imágenes
-    * Incluye lazy loading, srcset, y fallback automático
-    * Usa el componente Imagen.astro para optimización
-    */
+ * Componente especializado para imágenes
+ * Incluye lazy loading, srcset, y fallback automático
+ * Usa el componente Imagen.astro para optimización
+ */
 
 import Imagen from "../../atoms/Imagen.astro";
 
 interface Props {
-    src: string;
-    alt?: string;
-    width?: number;
-    height?: number;
-    loading?: 'lazy' | 'eager';
-    classes?: string;
-    srcset?: string;
-    sizes?: string;
-    decoding?: 'async' | 'sync' | 'auto';
+	src: string;
+	alt?: string;
+	width?: number;
+	height?: number;
+	loading?: "lazy" | "eager";
+	classes?: string;
+	srcset?: string;
+	sizes?: string;
+	decoding?: "async" | "sync" | "auto";
 }
 
 const {
-    src,
-    alt = '',
-    width = 600,
-    height = 400,
-    loading = 'lazy',
-    classes = '',
-    srcset,
-    sizes,
-    decoding = 'async',
+	src,
+	alt = "",
+	width = 600,
+	height = 400,
+	loading = "lazy",
+	classes = "",
+	srcset,
+	sizes,
+	decoding = "async",
 } = Astro.props;
 
 // Generar ID único para el skeleton

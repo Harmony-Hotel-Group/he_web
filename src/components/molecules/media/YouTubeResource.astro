@@ -1,43 +1,46 @@
 ---
 // src/components/media/YouTubeResource.astro
 /**
-* Componente especializado para videos de YouTube
-* Usa YouTube Lite para mejor performance
-*/
+ * Componente especializado para videos de YouTube
+ * Usa YouTube Lite para mejor performance
+ */
 
-import { extractYouTubeId, getYouTubeEmbedUrl } from '~/utils/visual-resource-utils';
+import {
+	extractYouTubeId,
+	getYouTubeEmbedUrl,
+} from "@/utils/visual-resource-utils";
 
 interface Props {
-    src: string;
-    classes?: string;
-    autoplay?: boolean;
-    loop?: boolean;
-    muted?: boolean;
-    controls?: boolean;
-    title?: string;
+	src: string;
+	classes?: string;
+	autoplay?: boolean;
+	loop?: boolean;
+	muted?: boolean;
+	controls?: boolean;
+	title?: string;
 }
 
 const {
-    src,
-    classes = '',
-    autoplay = false,
-    loop = false,
-    muted = true,
-    controls = true,
-    title = 'YouTube video player',
+	src,
+	classes = "",
+	autoplay = false,
+	loop = false,
+	muted = true,
+	controls = true,
+	title = "YouTube video player",
 } = Astro.props;
 
 const videoId = extractYouTubeId(src);
 
 if (!videoId) {
-    throw new Error(`[YouTubeResource] Invalid YouTube URL: ${src}`);
+	throw new Error(`[YouTubeResource] Invalid YouTube URL: ${src}`);
 }
 
 const embedUrl = getYouTubeEmbedUrl(videoId, {
-    autoplay,
-    loop,
-    muted,
-    controls,
+	autoplay,
+	loop,
+	muted,
+	controls,
 });
 
 const thumbnailUrl = `https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg`;

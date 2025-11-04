@@ -1,23 +1,25 @@
 ---
 // src/components/molecules/forms/SwitchField.astro
-import Switch from '../../atoms/Switch.astro';
-import Label from '../../atoms/Label.astro';
-import Row from "~/layouts/Row.astro";
-import Icono from "~/components/atoms/Icono.astro";
-import { Translations } from "~/i18n/translation.ts";
+import Icono from "@/components/atoms/Icono.astro";
+import Label from "@/components/atoms/Label.astro";
+import Switch from "@/components/atoms/Switch.astro";
+
+import { Translations } from "@/i18n/translation.ts";
+import Row from "@/layouts/Row.astro";
 
 interface Props {
-    fieldId: string;
-    name: string;
-    lblKey: string; // This is the translation key
-    lang: string;
-    icon?: string;
-    checked?: boolean;
-    className?: string;
-    onChange?: (value: boolean) => void; // Add onChange prop
+	fieldId: string;
+	name: string;
+	lblKey: string; // This is the translation key
+	lang: string;
+	icon?: string;
+	checked?: boolean;
+	className?: string;
+	onChange?: (value: boolean) => void; // Add onChange prop
 }
 
-const {fieldId, name, lblKey, checked, className, onChange, lang, icon} = Astro.props;
+const { fieldId, name, lblKey, checked, className, onChange, lang, icon } =
+	Astro.props;
 const t = Translations(lang);
 ---
 

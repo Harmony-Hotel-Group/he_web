@@ -1,68 +1,78 @@
 ---
 // src/components/media/VisualResource.astro
 /**
-    * Componente principal que delega a subcomponentes específicos
-    * Solo carga el componente necesario para mejor performance
-    */
+ * Componente principal que delega a subcomponentes específicos
+ * Solo carga el componente necesario para mejor performance
+ */
 
 import {
-    detectResourceType,
-    validateResource,
-    type ResourceType
-} from '~/utils/visual-resource-utils.ts';
+	detectResourceType,
+	type ResourceType,
+	validateResource,
+} from "@/utils/visual-resource-utils.ts";
 
-import ImageResource from './ImageResource.astro';
-import VideoResource from './VideoResource.astro';
-import YouTubeResource from './YouTubeResource.astro';
+import ImageResource from "./ImageResource.astro";
+import VideoResource from "./VideoResource.astro";
+import YouTubeResource from "./YouTubeResource.astro";
+import { log, warn } from "@/services/logger.ts";
+
+const CONTEXT = "VisualResource";
 
 interface Props {
-    src: string;
-    type?: 'image' | 'video' | 'youtube' | 'auto';
-    alt?: string;
-    classes?: string;
-    loading?: 'lazy' | 'eager';
-    width?: number;
-    height?: number;
-    autoplay?: boolean;
-    loop?: boolean;
-    muted?: boolean;
-    controls?: boolean;
-    placeholder?: string;
-    poster?: string;
-    srcset?: string;
-    sizes?: string;
+	src: string;
+	type?: "image" | "video" | "youtube" | "auto";
+	alt?: string;
+	classes?: string;
+	loading?: "lazy" | "eager";
+	width?: number;
+	height?: number;
+	autoplay?: boolean;
+	loop?: boolean;
+	muted?: boolean;
+	controls?: boolean;
+	placeholder?: string;
+	poster?: string;
+	srcset?: string;
+	sizes?: string;
 }
 
 const {
-    src,
-    type = 'auto',
-    alt = '',
-    classes = '',
-    loading = 'lazy',
-    width = 600,
-    height = 400,
-    autoplay = false,
-    loop = false,
-    muted = true,
-    controls = true,
-    placeholder,
-    poster,
-    srcset,
-    sizes,
+	src,
+	type = "auto",
+	alt = "",
+	classes = "",
+	loading = "lazy",
+	width = 600,
+	height = 400,
+	autoplay = false,
+	loop = false,
+	muted = true,
+	controls = true,
+	placeholder,
+	poster,
+	srcset,
+	sizes,
 } = Astro.props;
 
-const PlaceHolder = placeholder || `https://placehold.co/${width}x${height}?text=Recurso+No+Encontrado`;
-
+const PlaceHolder =
+	placeholder ||
+	`https://placehold.co/${width}x${height}?text=Recurso+No+Encontrado`;
 
 // Detectar tipo de recurso
-const detectedType: ResourceType = type === 'auto' ? detectResourceType(src) : type as ResourceType;
+const detectedType: ResourceType =
+	type === "auto" ? detectResourceType(src) : (type as ResourceType);
 
-if (import.meta.env.DEV) {
-    console.log(`[VisualResource] Recurso: ${src} | Tipo recibido: ${type} | Tipo detectado: ${detectedType}`);
-}
+log(
+    CONTEXT,
+    `Recurso: ${src} | Tipo recibido: ${type} | Tipo detectado: ${detectedType}`
+);
 
 // Validar recurso (solo en build time, no en runtime)
 const validation = await validateResource(src, detectedType);
+
+if (!validation.isValid) {
+    warn(CONTEXT, `Recurso no válido o no encontrado: '${src}'. Usando placeholder. Razón: ${validation.reason}`);
+}
 ---
 
 {!src || !validation.isValid ? (

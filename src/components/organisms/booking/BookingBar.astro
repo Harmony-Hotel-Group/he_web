@@ -1,9 +1,9 @@
 ---
 import { Translations } from "@/i18n/translation.ts";
 import BookingForm from "./BookingForm.astro";
-import { log } from "@/services/logger.ts";
+import { logger } from "@/services/logger.ts";
 
-const CONTEXT = "BookingBar";
+const log = logger("BookingBar");
 
 interface Props {
 	lang: string;
@@ -12,7 +12,7 @@ interface Props {
 
 const { lang, config } = Astro.props;
 
-log(CONTEXT, "Props recibidas:", { lang, config: !!config });
+log.info("Props recibidas:", { lang, config: !!config });
 
 const t = Translations(lang);
 ---

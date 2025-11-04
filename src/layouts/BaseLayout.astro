@@ -9,10 +9,10 @@ import SizeIndicator from "@/dev/SizeIndicator.astro";
 
 import { Translations, getCurrentLang } from '@/i18n/translation';
 
-import { log } from "@/services/logger.ts";
+import { logger } from "@/services/logger.ts";
 import "@/styles/global.css";
 
-const CONTEXT = "BaseLayout";
+const log = logger("BaseLayout");
 
 interface Props {
     titleKey: string;
@@ -21,7 +21,7 @@ interface Props {
     description?: string;
 }
 let {titleKey, lang, config, description} = Astro.props;
-log(CONTEXT, "Props recibidas:", {titleKey, lang, config: !!config});
+log.info("Props recibidas:", {titleKey, lang, config: !!config});
 
 const currentLang = getCurrentLang(Astro.url);
 const t = Translations(lang);
@@ -39,19 +39,19 @@ const baseUrl = Astro.site?.toString().replace(/\/$/, '') || 'https://hotelensue
     <meta name="description" content={metaDescription}/>
 
     <!-- SEO: Enlaces alternativos -->
-    <link rel="alternate" hreflang="es" href={`${baseUrl}${cleanPath}`} />
-    <link rel="alternate" hreflang="en" href={`${baseUrl}/en${cleanPath}`} />
-    <link rel="alternate" hreflang="x-default" href={`${baseUrl}${cleanPath}`} />
+    <link rel="alternate" hreflang="es" href={`${baseUrl}${cleanPath}`}/>
+    <link rel="alternate" hreflang="en" href={`${baseUrl}/en${cleanPath}`}/>
+    <link rel="alternate" hreflang="x-default" href={`${baseUrl}${cleanPath}`}/>
 
     <!-- Canonical -->
-    <link rel="canonical" href={currentLang === 'es' ? `${baseUrl}${cleanPath}` : `${baseUrl}/en${cleanPath}`} />
+    <link rel="canonical" href={currentLang === 'es' ? `${baseUrl}${cleanPath}` : `${baseUrl}/en${cleanPath}`}/>
 
     <link rel="icon" type="image/svg+xml" href="/favicon.png"/>
     <meta name="generator" content={Astro.generator}/>
     <title>{t(titleKey)}</title>
 </head>
 <body class="flex flex-col min-h-screen overflow-x-hidden">
-<LanguageDetector />
+<LanguageDetector/>
 <Header config={config} lang={lang}/>
 <main class="flex-grow w-full overflow-x-hidden"> {/* Added w-full and overflow-x-hidden */}
     <slot/>

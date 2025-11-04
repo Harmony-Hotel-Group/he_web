@@ -2,64 +2,70 @@
 // src/components/organisms/hero/HomeHero.astro
 import VisualResource from "@/components/molecules/media/VisualResource.astro";
 import VisualCarousel from "@/components/organisms/carousel/VisualCarousel.astro";
-import { detectResourceType, validateResource } from "@/utils/visual-resource-utils.ts";
-import { log } from "@/services/logger.ts";
+import {
+	detectResourceType,
+	validateResource,
+} from "@/utils/visual-resource-utils.ts";
+import { logger } from "@/services/logger.ts";
 
-const CONTEXT = "HomeHero";
+const log = logger("HomeHero");
 
 interface Resource {
-    src: string;
-    type?: "image" | "video" | "youtube" | "auto";
-    alt?: string;
-    poster?: string;
+	src: string;
+	type?: "image" | "video" | "youtube" | "auto";
+	alt?: string;
+	poster?: string;
 }
 
 interface Props {
-    resources: Resource[];
-    prioritizeVideo?: boolean;
+	resources: Resource[];
+	prioritizeVideo?: boolean;
 }
 
-const {resources = [], prioritizeVideo = true} = Astro.props;
+const { resources = [], prioritizeVideo = true } = Astro.props;
 
-log(CONTEXT, "Props recibidas:", { numResources: resources.length, prioritizeVideo });
+log.info("Props recibidas:", {
+	numResources: resources.length,
+	prioritizeVideo,
+});
 
 const defaultPlaceholderResources: Resource[] = [
-    {
-        src: "https://placehold.co/1920x1080/1a1a1a/ffffff?text=Slide+1",
-        type: "image",
-        alt: "Placeholder 1",
-    },
-    {
-        src: "https://placehold.co/1920x1080/2a2a2a/ffffff?text=Slide+2",
-        type: "image",
-        alt: "Placeholder 2",
-    },
-    {
-        src: "https://placehold.co/1920x1080/3a3a3a/ffffff?text=Slide+3",
-        type: "image",
-        alt: "Placeholder 3",
-    },
+	{
+		src: "https://placehold.co/1920x1080/1a1a1a/ffffff?text=Slide+1",
+		type: "image",
+		alt: "Placeholder 1",
+	},
+	{
+		src: "https://placehold.co/1920x1080/2a2a2a/ffffff?text=Slide+2",
+		type: "image",
+		alt: "Placeholder 2",
+	},
+	{
+		src: "https://placehold.co/1920x1080/3a3a3a/ffffff?text=Slide+3",
+		type: "image",
+		alt: "Placeholder 3",
+	},
 ];
 
 const userAgent = Astro.request.headers.get("user-agent") || "";
 const isMobileDevice = /Mobile|Android|iPhone|iPad|iPod|Windows Phone/i.test(
-    userAgent,
+	userAgent,
 );
 
 let validatedResources: Resource[] = [];
 if (resources && resources.length > 0) {
-    for (const res of resources) {
-        const type =
-            !res.type || res.type === "auto" ? detectResourceType(res.src) : res.type;
-        const validation = await validateResource(res.src, type);
-        if (validation.isValid) {
-            validatedResources.push({...res, type});
-        }
-    }
+	for (const res of resources) {
+		const type =
+			!res.type || res.type === "auto" ? detectResourceType(res.src) : res.type;
+		const validation = await validateResource(res.src, type);
+		if (validation.isValid) {
+			validatedResources.push({ ...res, type });
+		}
+	}
 }
 
 if (validatedResources.length === 0) {
-    validatedResources = defaultPlaceholderResources;
+	validatedResources = defaultPlaceholderResources;
 }
 
 const videos = validatedResources.filter((r) => r.type === "video");
@@ -70,20 +76,23 @@ let finalResources: Resource[];
 let displayMode: "video" | "carousel" = "carousel";
 
 if (prioritizeVideo && !isMobileDevice) {
-    if (youtubeVideos.length > 0) {
-        finalResources = [youtubeVideos[0]];
-        displayMode = "video";
-    } else if (videos.length > 0) {
-        finalResources = [videos[0]];
-        displayMode = "video";
-    } else {
-        finalResources = images.length > 0 ? images : defaultPlaceholderResources;
-    }
+	if (youtubeVideos.length > 0) {
+		finalResources = [youtubeVideos[0]];
+		displayMode = "video";
+	} else if (videos.length > 0) {
+		finalResources = [videos[0]];
+		displayMode = "video";
+	} else {
+		finalResources = images.length > 0 ? images : defaultPlaceholderResources;
+	}
 } else {
-    finalResources = images.length > 0 ? images : defaultPlaceholderResources;
+	finalResources = images.length > 0 ? images : defaultPlaceholderResources;
 }
 
-log(CONTEXT, `Modo de visualización: ${displayMode}. Recursos finales:`, finalResources.map(r => r.src));
+log.info(
+	`Modo de visualización: ${displayMode}. Recursos finales:`,
+	finalResources.map((r) => r.src),
+);
 ---
 
 {displayMode === 'video' ? (

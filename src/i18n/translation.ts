@@ -1,8 +1,8 @@
 /**
  * @file Módulo de Internacionalización (i18n)
- * 
+ *
  * Este archivo gestiona todas las funcionalidades relacionadas con la traducción de textos en la aplicación.
- * Proporciona una función `Translations` que, al ser inicializada con un idioma, devuelve una función `t` 
+ * Proporciona una función `Translations` que, al ser inicializada con un idioma, devuelve una función `t`
  * para obtener las traducciones correspondientes.
  *
  * Características:
@@ -14,11 +14,11 @@
  * - Advertencias en modo de desarrollo para traducciones faltantes.
  */
 
-import en from './en.json';
-import es from './es.json';
-import { log, warn, error } from '@/services/logger.ts';
+import en from "./en.json";
+import es from "./es.json";
+import { logger } from "@/services/logger.ts";
 
-const CONTEXT = 'Translation';
+const log = logger("Translation");
 
 // ==================== TYPES ====================
 
@@ -31,7 +31,7 @@ type TranslationObject = Record<string, any>;
 /**
  * Define los idiomas soportados de forma explícita.
  */
-type SupportedLang = 'en' | 'es';
+type SupportedLang = "en" | "es";
 
 /**
  * Define el tipo para los parámetros dinámicos que se pueden insertar en las cadenas de traducción.
@@ -40,26 +40,24 @@ type SupportedLang = 'en' | 'es';
 type TranslationParams = Record<string, string | number>;
 
 // ==================== CONFIG ====================
-export const languages = {
-    es: 'Español',
-    en: 'English'
-} as const;
+export const languages = [
+    {code: "es", name: "Español", flag: "/img/flags/es.svg"},
+    {code: "en", name: "English", flag: "/img/flags/en.svg"},
+] as const;
 
-export type Language = keyof typeof languages;
+export type Language = (typeof languages)[number]["code"];
 /**
  * Idioma por defecto de la aplicación.
  * Se utilizará como fallback si una traducción no está disponible en el idioma seleccionado.
  * @type {SupportedLang}
  */
-export const defaultLang: SupportedLang = 'es';
+export const defaultLang: SupportedLang = "es";
 
 /**
  * Array con todos los idiomas soportados por la aplicación.
  * @type {SupportedLang[]}
  */
-export const supportedLangs: SupportedLang[] = ['en', 'es'];
-
-
+export const supportedLangs: SupportedLang[] = ["en", "es"];
 
 /**
  * Objeto que almacena todos los archivos de traducción cargados.
@@ -69,20 +67,20 @@ export const supportedLangs: SupportedLang[] = ['en', 'es'];
 export const translations: Record<SupportedLang, TranslationObject> = {
     en: en,
     es: es,
-}
+};
 
 // ===================== UTILS =====================
 
 export function getCurrentLang(url: URL): Language {
     const path = url.pathname;
-    if (path.startsWith('/en/') || path === '/en') {
-        return 'en';
+    if (path.startsWith("/en/") || path === "/en") {
+        return "en";
     }
-    return 'es';
+    return "es";
 }
 
 export function getLangFromCookie(): Language | null {
-    if (typeof document === 'undefined') return null;
+    if (typeof document === "undefined") return null;
     const match = document.cookie.match(/lang=(\w+)/);
     return match ? (match[1] as Language) : null;
 }
@@ -100,11 +98,11 @@ export function setLangCookie(lang: Language) {
  * @returns {string | null} - El valor de la traducción si se encuentra, o null si no.
  */
 function findTranslation(obj: TranslationObject, key: string): string | null {
-    const keys = key.split('.');
+    const keys = key.split(".");
     let result: any = obj;
 
     for (const k of keys) {
-        if (result && typeof result === 'object' && k in result) {
+        if (result && typeof result === "object" && k in result) {
             result = result[k];
         } else {
             return null; // Si alguna clave intermedia no existe, retorna null.
@@ -112,7 +110,9 @@ function findTranslation(obj: TranslationObject, key: string): string | null {
     }
 
     // Retorna el valor solo si es una cadena o un número.
-    return typeof result === 'string' || typeof result === 'number' ? String(result) : null;
+    return typeof result === "string" || typeof result === "number"
+        ? String(result)
+        : null;
 }
 
 /**
@@ -126,7 +126,10 @@ function replaceParams(translation: string, params: TranslationParams): string {
     let result = translation;
     for (const [paramName, paramValue] of Object.entries(params)) {
         // Expresión regular para encontrar {{paramName}} con posibles espacios.
-        result = result.replace(new RegExp(`\\{\\{\\s*${paramName}\\s*\\}\\}`, 'g'), String(paramValue));
+        result = result.replace(
+            new RegExp(`\\{\\{\\s*${paramName}\\s*\\}\\}`, "g"),
+            String(paramValue),
+        );
     }
     return result;
 }
@@ -171,8 +174,8 @@ export function Translations(lang: string) {
      * @returns {string} - La cadena traducida y formateada. Si no se encuentra, devuelve la clave.
      */
     return function t(key: string, params?: TranslationParams): string {
-        if (!key || typeof key !== 'string') {
-            error(CONTEXT, 'La clave proporcionada no es válida:', key);
+        if (!key || typeof key !== "string") {
+            log.info("La clave proporcionada no es válida:", key);
             return String(key);
         }
 
@@ -184,13 +187,15 @@ export function Translations(lang: string) {
             translation = findTranslation(fallbackFile, key);
             // En desarrollo, advertir sobre el uso del fallback.
             if (translation !== null) {
-                warn(CONTEXT, `Falta la clave '${key}' en '${normalizedLang}'. Usando fallback a '${defaultLang}'.`);
+                log.warn(
+                    `Falta la clave '${key}' en '${normalizedLang}'. Usando fallback a '${defaultLang}'.`,
+                );
             }
         }
 
         // 3. Si la traducción sigue sin encontrarse, devolver la clave como último recurso.
         if (translation === null) {
-            error(CONTEXT, `No se encontró una traducción para la clave: '${key}'`);
+            log.error(`No se encontró una traducción para la clave: '${key}'`);
             return key;
         }
 
@@ -203,23 +208,3 @@ export function Translations(lang: string) {
     };
 }
 
-// ==================== DEVELOPMENT HELPERS ====================
-
-/**
- * En modo de desarrollo, expone utilidades en la ventana global para facilitar la depuración.
- * Esto permite probar traducciones directamente desde la consola del navegador.
- */
-if (import.meta.env.DEV && typeof window !== 'undefined') {
-    log(CONTEXT, 'Utilidades de desarrollo disponibles en window.__translationUtils');
-    const t_es = Translations('es');
-    const t_en = Translations('en');
-    (window as any).__translationUtils = {
-        t_es,
-        t_en,
-        find: (key: string) => ({
-            es: t_es(key),
-            en: t_en(key),
-        }),
-        files: translations,
-    };
-}

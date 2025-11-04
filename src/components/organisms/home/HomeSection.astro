@@ -2,9 +2,9 @@
 // src/components/organisms/home/HomeSection.astro
 import InfoCard from "@/components/molecules/cards/InfoCard.astro";
 import { Translations } from "@/i18n/translation";
-import { log } from "@/services/logger.ts";
+import { logger } from "@/services/logger.ts";
 
-const CONTEXT = "HomeSection";
+const log = logger("HomeSection");
 
 interface Item {
 	id: string;
@@ -30,7 +30,13 @@ const {
 	maxItems = 4,
 } = Astro.props;
 
-log(CONTEXT, "Props recibidas:", { lang, titleKey, numItems: items.length, baseHref, maxItems });
+log.info("Props recibidas:", {
+	lang,
+	titleKey,
+	numItems: items.length,
+	baseHref,
+	maxItems,
+});
 
 const t = Translations(lang);
 ---

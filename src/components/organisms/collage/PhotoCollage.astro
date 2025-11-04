@@ -1,8 +1,8 @@
 ---
-import VisualResource from "../../molecules/media/VisualResource.astro";
-import { log } from "@/services/logger.ts";
+import VisualResource from "@/components/molecules/media/VisualResource.astro";
+import { logger } from "@/services/logger.ts";
 
-const CONTEXT = "PhotoCollage";
+const log = logger("PhotoCollage");
 
 interface Image {
 	src: string;
@@ -16,7 +16,7 @@ interface Props {
 
 const { images = [], class: className } = Astro.props;
 
-log(CONTEXT, "Props recibidas:", { numImages: images.length });
+log.info("Props recibidas:", { numImages: images.length });
 
 // Configuración mejorada de transformaciones con valores responsivos
 const imageConfigs = [

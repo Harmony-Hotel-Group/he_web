@@ -1,163 +1,94 @@
 ---
-import { languages, type Language, getCurrentLang } from "@/i18n/translation";
+// src/components/core/LangSelector.astro
+import esFlag from "../../resources/img/flags/es.svg";
+import enFlag from "../../resources/img/flags/en.svg";
 
-const currentLang = getCurrentLang(Astro.url);
-const currentPath = Astro.url.pathname.replace(/^\/(en)/, "") || "/";
+// 1. Definir los idiomas disponibles con las banderas importadas
+const languages = [
+    { code: 'es', name: 'Español', flag: esFlag.src },
+    { code: 'en', name: 'English', flag: enFlag.src },
+];
 
-import { log } from "@/services/logger.ts";
-const CONTEXT = "LangSelector";
+// 2. Determinar el idioma actual en el servidor a partir de la cookie
+const currentLangCode = Astro.cookies.get('lang')?.value || 'es';
+const selectedLang = languages.find(lang => lang.code === currentLangCode) || languages[0];
 ---
 
-<div class="relative language-switcher-container mr-2">
+<div class="relative mr-2" id="lang-switcher-container">
+    <!-- Botón que muestra el idioma actual -->
     <button
-            type="button"
-            id="languageButton"
-            class="flex items-center bg-transparent text-white py-1 px-2 rounded-md cursor-pointer focus:outline-hidden text-sm"
-            aria-haspopup="true"
-            aria-expanded="false"
-            data-current-lang={currentLang}
-            data-current-path={currentPath}
+        type="button"
+        id="lang-switcher-button"
+        class="flex items-center bg-transparent text-white py-1 px-2 rounded-md cursor-pointer focus:outline-none text-sm"
+        aria-haspopup="true"
+        aria-expanded="false"
     >
         <img
-                id="currentFlag"
-                src={`/src/resources/img/flags/${currentLang}.svg`}
-                alt={`${languages[currentLang]} flag`}
-                class="h-5 w-5"
+            src={selectedLang.flag}
+            alt={`Bandera de ${selectedLang.name}`}
+            class="h-5 w-5"
+            id="lang-switcher-flag"
         />
-        <span class="hidden" id="currentLangName">{languages[currentLang]}</span>
-        <svg
-                class="w-3 h-3 ml-1 hidden"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-        >
-            <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M19 9l-7 7-7-7"
-            ></path>
-        </svg>
     </button>
 
-    <div id="languageDropdown" class="absolute right-0 mt-2 w-32 bg-gray-700 rounded-md shadow-lg z-20 hidden">
-        {Object.entries(languages).map(([langCode, langName]) => (
-                <button
-                        type="button"
-                        class="lang-option flex items-center space-x-2 w-full text-left px-3 py-2 text-sm text-white hover:bg-gray-600"
-                        data-lang={langCode}
-                >
-                    <img
-                            src={`/src/resources/img/flags/${langCode}.svg`}
-                            alt={`${langName} flag`}
-                            class="h-4 w-4"
-                    />
-                    <span>{langName}</span>
-                </button>
+    <!-- Menú desplegable (oculto por defecto) -->
+    <div
+        id="lang-switcher-dropdown"
+        class="absolute right-0 mt-2 w-36 bg-gray-700 rounded-md shadow-lg z-20 hidden"
+    >
+        {languages.map((lang) => (
+            <button
+                type="button"
+                class="lang-option flex items-center space-x-2 w-full text-left px-3 py-2 text-sm text-white hover:bg-gray-600"
+                data-lang-code={lang.code}
+            >
+                <img src={lang.flag} alt={`Bandera de ${lang.name}`} class="h-4 w-4" />
+                <span>{lang.name}</span>
+            </button>
         ))}
     </div>
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', async () => {
-        const { setLangCookie } = await import('@/i18n/translation');
+    document.addEventListener('DOMContentLoaded', () => {
+        const container = document.getElementById('lang-switcher-container');
+        const button = document.getElementById('lang-switcher-button');
+        const dropdown = document.getElementById('lang-switcher-dropdown');
 
-        const button = document.getElementById('languageButton');
-        const dropdown = document.getElementById('languageDropdown');
-        const langOptions = document.querySelectorAll('.lang-option');
+        if (!container || !button || !dropdown) return;
 
-        // Toggle dropdown
-        button?.addEventListener('click', (e) => {
+        // Lógica para abrir/cerrar el menú
+        button.addEventListener('click', (e) => {
             e.stopPropagation();
-            const isOpen = dropdown?.classList.contains('hidden');
-            dropdown?.classList.toggle('hidden');
-            button.setAttribute('aria-expanded', String(isOpen));
+            const isExpanded = dropdown.classList.toggle('hidden');
+            button.setAttribute('aria-expanded', String(!isExpanded));
         });
 
-        // Close dropdown when clicking outside
-        document.addEventListener('mousedown', (event) => {
-            const target = event.target;
-            if (target && !target.closest('.language-switcher-container')) {
-                dropdown?.classList.add('hidden');
-                button?.setAttribute('aria-expanded', 'false');
+        // Lógica para cerrar el menú al hacer click fuera
+        document.addEventListener('click', () => {
+            if (!dropdown.classList.contains('hidden')) {
+                dropdown.classList.add('hidden');
+                button.setAttribute('aria-expanded', 'false');
             }
         });
 
-        // Handle language change
-        langOptions.forEach(option => {
-            option.addEventListener('click', async (e) => {
-                const newLang = e.currentTarget.getAttribute('data-lang');
-                const currentPath = button?.getAttribute('data-current-path') || '/';
+        // Lógica para la selección de idioma
+        const langButtons = dropdown.querySelectorAll('.lang-option');
+        langButtons.forEach(langButton => {
+            langButton.addEventListener('click', () => {
+                const newLangCode = (langButton as HTMLElement).dataset.langCode;
+                
+                // Obtener el idioma actual de la cookie
+                const currentCookie = document.cookie.split('; ').find(row => row.startsWith('lang='))?.split('=')[1];
 
-                // Guardar preferencia en cookie
-                setLangCookie(newLang);
-
-                // Construir la URL correcta según el idioma
-                let targetPath = currentPath;
-                let displayPath = currentPath;
-
-                if (newLang === 'en') {
-                    targetPath = `/en${currentPath}`;
-                    displayPath = currentPath;
-                }
-
-                // Limpiar sessionStorage para permitir redirección
-                sessionStorage.removeItem('langRedirected');
-
-                // Hacer fetch de la nueva página
-                try {
-                    const response = await fetch(targetPath);
-                    if (!response.ok) throw new Error('Error al cargar la página');
-
-                    const html = await response.text();
-                    const parser = new DOMParser();
-                    const newDoc = parser.parseFromString(html, 'text/html');
-
-                    // Actualizar el título
-                    document.title = newDoc.title;
-
-                    // Actualizar todo el body
-                    const newBody = newDoc.querySelector('body');
-                    const currentBody = document.querySelector('body');
-                    if (newBody && currentBody) {
-                        currentBody.innerHTML = newBody.innerHTML;
-                    }
-
-                    // Actualizar el atributo lang del html
-                    document.documentElement.lang = newLang;
-
-                    // Actualizar la URL mostrada (sin /en/)
-                    history.pushState({ lang: newLang }, '', displayPath);
-
-                    // Re-inicializar después de actualizar el DOM
-                    setTimeout(() => location.reload(), 0);
-
-                } catch (error) {
-                    console.error('Error al cambiar idioma:', error);
-                    // Fallback: navegación tradicional
-                    window.location.href = targetPath;
+                if (newLangCode && newLangCode !== currentCookie) {
+                    // 1. Actualiza la cookie
+                    document.cookie = `lang=${newLangCode}; path=/; max-age=31536000; SameSite=Lax`;
+                    
+                    // 2. Recarga la página para que el servidor aplique el nuevo idioma
+                    window.location.reload();
                 }
             });
         });
     });
 </script>
-
-<style>
-    .language-switcher-container {
-        display: inline-block;
-    }
-
-    button {
-        transition: background-color 0.2s ease;
-    }
-
-    button:hover {
-        background-color: rgba(255, 255, 255, 0.1);
-    }
-
-    /* Asegurar que el dropdown aparezca por encima de otros elementos */
-    .z-20 {
-        z-index: 20;
-    }
-</style>

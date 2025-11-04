@@ -1,16 +1,14 @@
 ---
 import { fetchData } from "@/utils/apiService.js";
-import BookingForm from "../components/organisms/booking/BookingForm.astro";
+import Card from "~/components/atoms/Card.astro";
 // src/pages/test-ui.astro
 import DevOnlyPage from "~/components/dev/DevOnlyPage.astro";
+import { api } from "~/services/api.ts";
+import BookingForm from "../components/organisms/booking/BookingForm.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
-import { api } from "~/services/api.ts";
-import Card from "~/components/atoms/Card.astro";
-
-
 const dataConfig = await api.fetchData("config");
-const lang = 'es'
+const lang = "es";
 ---
 
 <DevOnlyPage>

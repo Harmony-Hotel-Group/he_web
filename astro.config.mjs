@@ -1,7 +1,7 @@
 import node from "@astrojs/node";
 import vercel from "@astrojs/vercel";
-import { defineConfig } from "astro/config";
 import tailwindcss from "@tailwindcss/vite";
+import { defineConfig } from "astro/config";
 
 import icon from "astro-icon";
 
@@ -13,7 +13,7 @@ export default defineConfig({
 		locales: ["en", "es"],
 		defaultLocale: "es",
 		routing: {
-			prefixDefaultLocale: true,
+			prefixDefaultLocale: false,
 		},
 	},
 	integrations: [
@@ -22,10 +22,13 @@ export default defineConfig({
 	],
 	adapter: isDevEnvironment
 		? node({
-				mode: "server",
+				mode: "static",
 			})
 		: vercel({
 				webAnalytics: { enabled: true },
 			}),
-	output: "server",
+	output: "static",
+    build: {
+        format: 'directory' // Genera /about/index.html en lugar de /about.html
+    },
 });

@@ -1,64 +1,64 @@
 ---
 /**
-    * GridLayout Component - Sistema de grid flexible y optimizado
-    *
-    * @example
-    * <GridLayout cols={4}>
-    *   <div data-col-span="2">Ancho doble</div>
-    *   <div>Normal</div>
-    *   <div>Normal</div>
-    * </GridLayout>
-    */
+ * GridLayout Component - Sistema de grid flexible y optimizado
+ *
+ * @example
+ * <GridLayout cols={4}>
+ *   <div data-col-span="2">Ancho doble</div>
+ *   <div>Normal</div>
+ *   <div>Normal</div>
+ * </GridLayout>
+ */
 
 interface Props {
-    _id?: string;
-    lang?: string;
-    classes?: string | string[];
+	_id?: string;
+	lang?: string;
+	classes?: string | string[];
 
-    // Grid Configuration
-    cols?: number;                    // Número de columnas (ej: 3, 4, 6, 12)
-    rows?: number;                    // Número de filas (opcional)
-    gap?: string | number;            // Gap entre items (ej: "1rem", 16, "4")
-    rowGap?: string | number;         // Gap vertical específico
-    colGap?: string | number;         // Gap horizontal específico
+	// Grid Configuration
+	cols?: number; // Número de columnas (ej: 3, 4, 6, 12)
+	rows?: number; // Número de filas (opcional)
+	gap?: string | number; // Gap entre items (ej: "1rem", 16, "4")
+	rowGap?: string | number; // Gap vertical específico
+	colGap?: string | number; // Gap horizontal específico
 
-    // Auto Layout
-    autoAdjust?: boolean;             // Usar auto-fit para responsive
-    minColWidth?: string;             // Ancho mínimo de columna en auto-fit (ej: "250px")
-    maxColWidth?: string;             // Ancho máximo de columna en auto-fit (ej: "1fr")
+	// Auto Layout
+	autoAdjust?: boolean; // Usar auto-fit para responsive
+	minColWidth?: string; // Ancho mínimo de columna en auto-fit (ej: "250px")
+	maxColWidth?: string; // Ancho máximo de columna en auto-fit (ej: "1fr")
 
-    // Responsive
-    responsive?: {
-        sm?: number;   // Cols en mobile (640px+)
-        md?: number;   // Cols en tablet (768px+)
-        lg?: number;   // Cols en desktop (1024px+)
-        xl?: number;   // Cols en large desktop (1280px+)
-    };
+	// Responsive
+	responsive?: {
+		sm?: number; // Cols en mobile (640px+)
+		md?: number; // Cols en tablet (768px+)
+		lg?: number; // Cols en desktop (1024px+)
+		xl?: number; // Cols en large desktop (1280px+)
+	};
 
-    // Alignment
-    alignItems?: 'start' | 'center' | 'end' | 'stretch';
-    justifyItems?: 'start' | 'center' | 'end' | 'stretch';
+	// Alignment
+	alignItems?: "start" | "center" | "end" | "stretch";
+	justifyItems?: "start" | "center" | "end" | "stretch";
 
-    // Dense packing
-    autoFlow?: 'row' | 'column' | 'dense' | 'row dense' | 'column dense';
+	// Dense packing
+	autoFlow?: "row" | "column" | "dense" | "row dense" | "column dense";
 }
 
 const {
-    _id,
-    lang,
-    classes,
-    cols = 12,
-    rows,
-    gap = 4,
-    rowGap,
-    colGap,
-    autoAdjust = false,
-    minColWidth = '250px',
-    maxColWidth = '1fr',
-    responsive,
-    alignItems,
-    justifyItems,
-    autoFlow,
+	_id,
+	lang,
+	classes,
+	cols = 12,
+	rows,
+	gap = 4,
+	rowGap,
+	colGap,
+	autoAdjust = false,
+	minColWidth = "250px",
+	maxColWidth = "1fr",
+	responsive,
+	alignItems,
+	justifyItems,
+	autoFlow,
 } = Astro.props;
 
 // ==================== HELPERS ====================
@@ -67,69 +67,69 @@ const {
  * Convierte gap a formato CSS
  */
 function formatGap(value: string | number): string {
-    if (typeof value === 'number') {
-        // Si es número, asumimos que son unidades de Tailwind (4 = 1rem)
-        return `${value * 0.25}rem`;
-    }
-    return value;
+	if (typeof value === "number") {
+		// Si es número, asumimos que son unidades de Tailwind (4 = 1rem)
+		return `${value * 0.25}rem`;
+	}
+	return value;
 }
 
 /**
  * Genera el grid-template-columns
  */
 function generateGridColumns(): string {
-    if (autoAdjust) {
-        return `repeat(auto-fit, minmax(${minColWidth}, ${maxColWidth}))`;
-    }
-    return `repeat(${cols}, minmax(0, 1fr))`;
+	if (autoAdjust) {
+		return `repeat(auto-fit, minmax(${minColWidth}, ${maxColWidth}))`;
+	}
+	return `repeat(${cols}, minmax(0, 1fr))`;
 }
 
 /**
  * Genera el grid-template-rows si está definido
  */
 function generateGridRows(): string | undefined {
-    if (!rows) return undefined;
-    return `repeat(${rows}, minmax(0, 1fr))`;
+	if (!rows) return undefined;
+	return `repeat(${rows}, minmax(0, 1fr))`;
 }
 
 // ==================== STYLES ====================
 
 const gridStyles: Record<string, string> = {
-    'grid-template-columns': generateGridColumns(),
+	"grid-template-columns": generateGridColumns(),
 };
 
 // Rows
 if (rows) {
-    gridStyles['grid-template-rows'] = generateGridRows()!;
+	gridStyles["grid-template-rows"] = generateGridRows()!;
 }
 
 // Gap
 const finalRowGap = rowGap ?? gap;
 const finalColGap = colGap ?? gap;
-if (finalRowGap) gridStyles['row-gap'] = formatGap(finalRowGap);
-if (finalColGap) gridStyles['column-gap'] = formatGap(finalColGap);
+if (finalRowGap) gridStyles["row-gap"] = formatGap(finalRowGap);
+if (finalColGap) gridStyles["column-gap"] = formatGap(finalColGap);
 
 // Alignment
-if (alignItems) gridStyles['align-items'] = alignItems;
-if (justifyItems) gridStyles['justify-items'] = justifyItems;
+if (alignItems) gridStyles["align-items"] = alignItems;
+if (justifyItems) gridStyles["justify-items"] = justifyItems;
 
 // Auto flow
-if (autoFlow) gridStyles['grid-auto-flow'] = autoFlow;
+if (autoFlow) gridStyles["grid-auto-flow"] = autoFlow;
 
 const styleString = Object.entries(gridStyles)
-    .map(([key, value]) => `${key}: ${value}`)
-    .join('; ');
+	.map(([key, value]) => `${key}: ${value}`)
+	.join("; ");
 
 // ==================== RESPONSIVE CLASSES ====================
 
 const responsiveClasses: string[] = [];
 
 if (responsive) {
-    // Generar classes de Tailwind para responsive
-    if (responsive.sm) responsiveClasses.push(`sm:grid-cols-${responsive.sm}`);
-    if (responsive.md) responsiveClasses.push(`md:grid-cols-${responsive.md}`);
-    if (responsive.lg) responsiveClasses.push(`lg:grid-cols-${responsive.lg}`);
-    if (responsive.xl) responsiveClasses.push(`xl:grid-cols-${responsive.xl}`);
+	// Generar classes de Tailwind para responsive
+	if (responsive.sm) responsiveClasses.push(`sm:grid-cols-${responsive.sm}`);
+	if (responsive.md) responsiveClasses.push(`md:grid-cols-${responsive.md}`);
+	if (responsive.lg) responsiveClasses.push(`lg:grid-cols-${responsive.lg}`);
+	if (responsive.xl) responsiveClasses.push(`xl:grid-cols-${responsive.xl}`);
 }
 ---
 

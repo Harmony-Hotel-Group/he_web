@@ -1,41 +1,62 @@
 ---
-import Header from '../components/core/Header.astro';
-import Footer from '../components/core/Footer.astro';
-import '../styles/global.css';
-import { Translations } from '../i18n/translation.ts';
-import SizeIndicator from "~/components/dev/SizeIndicator.astro";
+// src/layouts/BaseLayout.astro
 
+import Footer from "@/components/core/Footer.astro";
+import Header from "@/components/core/Header.astro";
+import LanguageDetector from "@/components/core/LanguageDetector.astro";
 
-let { titleKey, lang, config } = Astro.props;
-const t = Translations(lang);
-const title = t(titleKey);
-try {
-    const baseUrl = new URL(Astro.request.url);
-    const apiUrl = new URL('/api/config', baseUrl).toString();
-    const res = await fetch(apiUrl, { headers: { 'Accept': 'application/json' } });
-    if (res.ok) {
-        const payload = await res.json().catch(() => null);
-        config = payload?.data ?? payload ?? null;
-    }
-} catch (_) {
-    // Ignorar errores: haremos fallback local
+import SizeIndicator from "@/dev/SizeIndicator.astro";
+
+import { Translations, getCurrentLang } from '@/i18n/translation';
+
+import { log } from "@/services/logger.ts";
+import "@/styles/global.css";
+
+const CONTEXT = "BaseLayout";
+
+interface Props {
+    titleKey: string;
+    lang: string;
+    config?: any;
+    description?: string;
 }
+let {titleKey, lang, config, description} = Astro.props;
+log(CONTEXT, "Props recibidas:", {titleKey, lang, config: !!config});
+
+const currentLang = getCurrentLang(Astro.url);
+const t = Translations(lang);
+const metaDescription = description || t('meta.description');
+
+// Construir URLs canónicas
+const cleanPath = Astro.url.pathname.replace(/^\/en/, '') || '/';
+const baseUrl = Astro.site?.toString().replace(/\/$/, '') || 'https://hotelensueños.com';
 ---
 
-<html lang={lang}>
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.png" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <title>{title}</title>
-  </head>
-  <body class="flex flex-col min-h-screen overflow-x-hidden">
-    <Header t={t} config={config} lang={lang} />
-    <main class="flex-grow w-full overflow-x-hidden"> {/* Added w-full and overflow-x-hidden */}
-      <slot />
-    </main>
-    <Footer t={t} config={config} lang={lang}/>
-    <SizeIndicator />
-  </body>
+<html lang={currentLang}>
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width"/>
+    <meta name="description" content={metaDescription}/>
+
+    <!-- SEO: Enlaces alternativos -->
+    <link rel="alternate" hreflang="es" href={`${baseUrl}${cleanPath}`} />
+    <link rel="alternate" hreflang="en" href={`${baseUrl}/en${cleanPath}`} />
+    <link rel="alternate" hreflang="x-default" href={`${baseUrl}${cleanPath}`} />
+
+    <!-- Canonical -->
+    <link rel="canonical" href={currentLang === 'es' ? `${baseUrl}${cleanPath}` : `${baseUrl}/en${cleanPath}`} />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.png"/>
+    <meta name="generator" content={Astro.generator}/>
+    <title>{t(titleKey)}</title>
+</head>
+<body class="flex flex-col min-h-screen overflow-x-hidden">
+<LanguageDetector />
+<Header config={config} lang={lang}/>
+<main class="flex-grow w-full overflow-x-hidden"> {/* Added w-full and overflow-x-hidden */}
+    <slot/>
+</main>
+<Footer t={t} config={config} lang={lang}/>
+<SizeIndicator/>
+</body>
 </html>

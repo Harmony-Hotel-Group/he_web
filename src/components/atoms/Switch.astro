@@ -1,24 +1,24 @@
 ---
 /**
-    * src/components/atoms/Switch.astro
-    * Componente atómico para un switch accesible y sin dependencias externas.
-    */
+ * src/components/atoms/Switch.astro
+ * Componente atómico para un switch accesible y sin dependencias externas.
+ */
 interface Props {
-    id?: string;
-    name: string;
-    checked?: boolean;
-    disabled?: boolean;
-    classes?: string;
-    onChange?: (checked: boolean) => void;
+	id?: string;
+	name: string;
+	checked?: boolean;
+	disabled?: boolean;
+	classes?: string;
+	onChange?: (checked: boolean) => void;
 }
 
 const {
-    id,
-    name,
-    checked = false,
-    disabled = false,
-    classes = "",
-    onChange,
+	id,
+	name,
+	checked = false,
+	disabled = false,
+	classes = "",
+	onChange,
 } = Astro.props;
 ---
 

@@ -1,15 +1,16 @@
 ---
-import { Translations } from "~/i18n/translation.ts";
+import { Translations } from "@/i18n/translation.ts";
+
 interface Props {
-    id: string;
-    name?: string;
-    keyPlaceholder?: string;
-    rows?: number;
-    classes?: string;
-    lang: string
+	id: string;
+	name?: string;
+	keyPlaceholder?: string;
+	rows?: number;
+	classes?: string;
+	lang: string;
 }
 
-const {id, name, rows, keyPlaceholder, classes, lang} = Astro.props;
+const { id, name, rows, keyPlaceholder, classes, lang } = Astro.props;
 const t = Translations(lang);
 ---
 

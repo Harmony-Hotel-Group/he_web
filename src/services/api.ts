@@ -1,20 +1,21 @@
-// api.service.ts
+// services/api.ts
+import { log, warn, error } from "./logger";
+const CONTEXT = "Api";
 
-// en milisegundos
 /**
  * Opciones de configuración para el constructor de ApiService.
  */
 interface ApiServiceOptions {
-    baseUrl: string;
-    timeout?: number;
+	baseUrl: string;
+	timeout?: number;
 }
 
 /**
  * Opciones para una solicitud de `fetchData`.
  */
 interface FetchOptions {
-    params?: Record<string, any>;
-    headers?: Record<string, string>;
+	params?: Record<string, any>;
+	headers?: Record<string, string>;
 }
 
 /**
@@ -22,188 +23,200 @@ interface FetchOptions {
  * timeouts y fallbacks.
  */
 export class Api {
-    private readonly baseUrl: string;
-    private readonly apiTimeout: number;
-    private readonly isDev: boolean;
+	private readonly baseUrl: string;
+	private readonly apiTimeout: number;
 
-    constructor(options: ApiServiceOptions) {
-        if (!options.baseUrl) {
-            throw new Error("ApiService requiere una 'baseUrl' en las opciones.");
-        }
-        this.baseUrl = options.baseUrl;
-        this.apiTimeout = options.timeout ?? 8000; // Default a 8 segundos
-        this.isDev = import.meta.env.DEV;
-    }
+	constructor(options: ApiServiceOptions) {
+		if (!options.baseUrl) {
+			throw new Error("ApiService requiere una 'baseUrl' en las opciones.");
+		}
+		this.baseUrl = options.baseUrl;
+		this.apiTimeout = options.timeout ?? 8000; // Default a 8 segundos
+		log(CONTEXT, "Servicio de API inicializado con opciones:", options);
+	}
 
-    // ============== Métodos Públicos ==============
+	// ============== Métodos Públicos ==============
 
-    /**
-     * Busca un único conjunto de datos desde la API.
-     * @template T El tipo esperado de los datos de respuesta.
-     * @param key La clave del endpoint (ej. 'config', 'rooms').
-     * @param opts Opciones adicionales como parámetros de consulta y cabeceras.
-     * @returns Una promesa que resuelve con los datos o null.
-     */
-    public async fetch<T>(key: string, opts: FetchOptions = {}): Promise<T | null> {
-        const { params, headers } = opts;
-        const endpoint = this.keyToEndpoint(key);
-        const url = new URL(`/api/${endpoint}`, this.baseUrl);
+	public async fetch<T>(
+		key: string,
+		opts: FetchOptions = {},
+	): Promise<T | null> {
+		const { params, headers } = opts;
+		log(CONTEXT, `Iniciando fetch para clave: '${key}'`, { params, headers });
 
-        if (params && typeof params === 'object') {
-            for (const [k, v] of Object.entries(params)) {
-                if (v !== undefined && v !== null) {
-                    url.searchParams.set(k, String(v));
-                }
-            }
-        }
+		const endpoint = this.keyToEndpoint(key);
+		const url = new URL(this.baseUrl);
+		// Solo añadir /api si no es la raíz, para flexibilidad
+		if (endpoint) {
+			url.pathname += endpoint.startsWith("/") ? endpoint : `/api/${endpoint}`;
+		}
 
-        try {
-            const res = await this.fetchWithTimeout(url.toString(), {
-                headers: { Accept: 'application/json', ...(headers || {}) },
-            });
-            if (!res.ok) {
-                throw new Error(`Error HTTP ${res.status}`);
-            }
-            const payload = await res.json().catch(() => null);
-            // Asumimos que la API envuelve los datos en una propiedad `data`
-            return (payload?.data ?? payload ?? null) as T | null;
-        } catch (e: any) {
-            // Intenta leer un archivo local como fallback si está disponible
-            const local = await this.readLocalFallback<T>(endpoint);
-            if (local != null) return local;
+		if (params && typeof params === "object") {
+			for (const [k, v] of Object.entries(params)) {
+				if (v !== undefined && v !== null) {
+					url.searchParams.set(k, String(v));
+				}
+			}
+		}
 
-            if (this.isDev) {
-                console.warn(`[ApiService] Fallback para '${endpoint}' falló:`, e?.message || e);
-            }
-            return null;
-        }
-    }
+		const finalHeaders = { Accept: "application/json", ...(headers || {}) };
+		log(CONTEXT, `Petición a ${url.toString()} con headers:`, finalHeaders);
 
-    /**
-     * Busca múltiples conjuntos de datos en paralelo.
-     * @template T El tipo esperado de los datos de respuesta.
-     * @param inputs Un array de claves o un mapa de clave -> opciones.
-     * @returns Un objeto con los datos solicitados, usando las claves proporcionadas.
-     */
-    public async multiFetch<T = any>(
-        inputs: string[] | Record<string, FetchOptions>
-    ): Promise<Record<string, T | null | Error>> {
-        let entries: [string, FetchOptions][];
+		try {
+			// Solo intentar fetch si la baseUrl no es solo "/"
+			if (this.baseUrl === "/")
+				throw new Error(
+					"La URL base de la API no está configurada, usando fallback local.",
+				);
 
-        if (Array.isArray(inputs)) {
-            entries = inputs.map((key) => [key, {}]);
-        } else if (inputs && typeof inputs === 'object' && !Array.isArray(inputs)) {
-            entries = Object.entries(inputs);
-        } else {
-            throw new Error("fetchMultipleData espera un array o un objeto.");
-        }
+			const res = await this.fetchWithTimeout(url.toString(), {
+				headers: finalHeaders,
+			});
+			if (!res.ok) {
+				throw new Error(`Respuesta no exitosa de la API: ${res.status}`);
+			}
+			const payload = await res.json().catch(() => null);
+			log(CONTEXT, `Payload crudo recibido para '${key}':`, payload);
 
-        const promises = entries.map(([key, opt]) =>
-            this.fetch<T>(key, opt).then(
-                (data) => ({ key, data }),
-                (error) => ({ key, error })
-            )
-        );
+			const data = (payload?.data ?? payload ?? null) as T | null;
+			log(CONTEXT, `Datos finales procesados para '${key}':`, data);
 
-        const settled = await Promise.all(promises);
+			return data;
+		} catch (e: any) {
+			warn(
+				CONTEXT,
+				`El fetch para '${key}' falló. Intentando fallback local. Error:`,
+				e?.message || e,
+			);
 
-        return settled.reduce<Record<string, T | null | Error>>((acc, result) => {
-            if ('error' in result) {
-                acc[result.key] = result.error;
-            } else {
-                acc[result.key] = result.data;
-            }
-            return acc;
-        }, {});
-    }
+			const local = await this.readLocalFallback<T>(endpoint);
+			if (local != null) {
+				log(CONTEXT, `Fallback local para '${key}' encontrado y cargado.`);
+				return local;
+			}
 
+			error(
+				CONTEXT,
+				`El fallback local para '${key}' también falló. No se pudieron obtener los datos.`,
+			);
+			return null;
+		}
+	}
 
-    // ============== Helpers Privados ==============
+	public async multiFetch<T = any>(
+		inputs: string[] | Record<string, FetchOptions>,
+	): Promise<Record<string, T | null | Error>> {
+		log(CONTEXT, "Iniciando multi-fetch con entradas:", inputs);
+		let entries: [string, FetchOptions][];
 
-    /**
-     * Envuelve fetch con un timeout usando AbortController.
-     */
-    private async fetchWithTimeout(
-        url: RequestInfo,
-        options: RequestInit = {},
-        timeout?: number
-    ): Promise<Response> {
-        const controller = new AbortController();
-        const resolvedTimeout = timeout ?? this.apiTimeout;
-        const id = setTimeout(() => controller.abort(), resolvedTimeout);
+		if (Array.isArray(inputs)) {
+			entries = inputs.map((key) => [key, {}]);
+		} else if (inputs && typeof inputs === "object" && !Array.isArray(inputs)) {
+			entries = Object.entries(inputs);
+		} else {
+			throw new Error(
+				"multiFetch espera un array de strings o un objeto de opciones.",
+			);
+		}
 
-        try {
-            const res = await fetch(url, { ...options, signal: controller.signal });
-            clearTimeout(id);
-            return res;
-        } catch (e) {
-            clearTimeout(id);
-            throw e;
-        }
-    }
+		const promises = entries.map(([key, opt]) =>
+			this.fetch<T>(key, opt).then(
+				(data) => ({ key, data, status: "fulfilled" as const }),
+				(error) => ({ key, error, status: "rejected" as const }),
+			),
+		);
 
-    /**
-     * Limpia una clave para usarla como endpoint.
-     */
-    private keyToEndpoint(key: string): string {
-        return key.replace(/^\/+|\/+$/g, '');
-    }
+		const settled = await Promise.all(promises);
+		log(CONTEXT, "Resultados de multi-fetch:", settled);
 
-    /**
-     * Placeholder para la lógica de fallback a datos locales.
-     * Deberías implementar esto para que lea desde archivos locales si es necesario.
-     */
-    private async readLocalFallback<T>(endpoint: string): Promise<T | null> {
-        if (this.isDev) {
-            console.log(`[ApiService] Buscando fallback local para '${endpoint}'... (no implementado)`);
-        }
-        // Lógica para leer un archivo JSON local, ej:
-        try {
-          const res = await fetch(`/data/${endpoint}.json`);
-          if (!res.ok) return null;
-          return await res.json();
-        } catch {
-          return null;
-        }
-        return null; // Retorna null si no hay fallback
-    }
+		return settled.reduce<Record<string, T | null | Error>>((acc, result) => {
+			if (result.status === "rejected") {
+				acc[result.key] = result.error;
+			} else {
+				acc[result.key] = result.data;
+			}
+			return acc;
+		}, {});
+	}
+
+	// ============== Helpers Privados ==============
+
+	private async fetchWithTimeout(
+		url: RequestInfo,
+		options: RequestInit = {},
+		timeout?: number,
+	): Promise<Response> {
+		const controller = new AbortController();
+		const resolvedTimeout = timeout ?? this.apiTimeout;
+		const id = setTimeout(() => controller.abort(), resolvedTimeout);
+
+		try {
+			const res = await fetch(url, { ...options, signal: controller.signal });
+			clearTimeout(id);
+			return res;
+		} catch (e) {
+			clearTimeout(id);
+			// Si el error es por AbortError, lanzamos un mensaje más claro.
+			if (e instanceof DOMException && e.name === "AbortError") {
+				throw new Error(
+					`La solicitud excedió el tiempo de espera de ${resolvedTimeout / 1000}s.`,
+				);
+			}
+			throw e;
+		}
+	}
+
+	private keyToEndpoint(key: string): string {
+		return key.replace(/^\/|\/$/g, "");
+	}
+
+	private async readLocalFallback<T>(endpoint: string): Promise<T | null> {
+		// Este mitodo solo funciona en el servidor. En el cliente, fallará de forma segura.
+		if (import.meta.env.SSR) {
+			log(
+				CONTEXT,
+				`[SSR] Buscando fallback local para '${endpoint}' en src/data/`,
+			);
+			try {
+				// Vite/Astro manejan este glob para encontrar los archivos JSON en src/data
+				const modules = import.meta.glob("/src/data/*.json");
+				const path = `/src/data/${endpoint}.json`;
+
+				if (modules[path]) {
+					const module = await modules[path]();
+					// @ts-expect-error
+					const data = module.default;
+					log(
+						CONTEXT,
+						`[SSR] Fallback local para '${endpoint}' cargado con éxito desde src/data.`,
+					);
+					return data;
+				} else {
+					warn(
+						CONTEXT,
+						`[SSR] No se encontró el archivo de fallback en la ruta: ${path}`,
+					);
+					return null;
+				}
+			} catch (e: any) {
+				error(
+					CONTEXT,
+					`[SSR] Error al importar dinámicamente el fallback para '${endpoint}':`,
+					e.message,
+				);
+				return null;
+			}
+		} else {
+			warn(
+				CONTEXT,
+				"readLocalFallback solo está soportado en el servidor (SSR). En el cliente, este método no hará nada.",
+			);
+			return null;
+		}
+	}
 }
 
-
-export const api = new Api({baseUrl: import.meta.env.API_BASE_URL})
-// ============== Ejemplo de Uso ==============
-/*
-// En algún lugar de tu aplicación (por ejemplo, un archivo de configuración central)
-export const api = new ApiService({
-  baseUrl: 'https://tu-dominio.com',
-  timeout: 10000, // 10 segundos (opcional)
+// Para que Vite incluya la variable de entorno en el cliente, debe empezar con PUBLIC_
+export const api = new Api({
+	baseUrl: import.meta.env.PUBLIC_API_BASE_URL || "/",
 });
-
-// En un componente o página
-import { api } from './ruta/al/api.service';
-
-interface Room {
-  id: number;
-  name: string;
-}
-
-async function loadRooms() {
-  const rooms = await api.fetchData<Room[]>('rooms', { params: { lang: 'es' } });
-  if (rooms) {
-    console.log('Habitaciones cargadas:', rooms);
-  }
-}
-
-async function loadInitialData() {
-    const data = await api.fetchMultipleData({
-        config: {},
-        rooms: { params: { featured: true } },
-        events: { params: { limit: 5 } }
-    });
-    console.log('Datos iniciales:', data);
-    // data.config, data.rooms, data.events
-}
-
-loadRooms();
-loadInitialData();
-*/

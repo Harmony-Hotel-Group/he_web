@@ -3,7 +3,7 @@
  * @module utils/send
  */
 
-import config from "@/data/siteConfig.json";
+import config from "@/data/config.json";
 
 /**
  * Información de contacto desde configuración
@@ -67,7 +67,6 @@ export async function sendBookingMessage(
 
 		// También enviar por email (opcional)
 		// await sendEmail(processedData, type);
-
 	} catch (error) {
 		console.error(`Error enviando mensaje de ${type}:`, error);
 		throw new Error(`Error al enviar mensaje: ${error.message}`);
@@ -569,6 +568,7 @@ function getVehiclesData(
 		const plate = formData.get(`vehiclePlate${i}`) as string;
 
 		if (type) {
+			// @ts-ignore
 			vehicles.push({ type, plate: plate || "" });
 		}
 	}

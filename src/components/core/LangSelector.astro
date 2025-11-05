@@ -1,91 +1,88 @@
 ---
-// src/components/core/LangSelector.astro
-import esFlag from "../../resources/img/flags/es.svg";
-import enFlag from "../../resources/img/flags/en.svg";
+import { languages } from "@/i18n/translation.ts";
+import { logger } from "@/services/logger.ts";
 
-// 1. Definir los idiomas disponibles con las banderas importadas
-const languages = [
-    { code: 'es', name: 'Español', flag: esFlag.src },
-    { code: 'en', name: 'English', flag: enFlag.src },
-];
+const log = logger("LangSelector");
 
-// 2. Determinar el idioma actual en el servidor a partir de la cookie
-const currentLangCode = Astro.cookies.get('lang')?.value || 'es';
-const selectedLang = languages.find(lang => lang.code === currentLangCode) || languages[0];
+log.info(
+	"Idiomas cargados desde translations.ts:",
+	languages.map((l) => l.code),
+);
+
+// 1️⃣ Determinar el idioma actual
+const currentLangCode = Astro.cookies.get("lang")?.value || "es";
+log.info("Idioma actual en el servidor:", currentLangCode);
+
+const selectedLang =
+	languages.find((lang) => lang.code === currentLangCode) || languages[0];
+log.info("Idioma seleccionado:", selectedLang);
 ---
 
 <div class="relative mr-2" id="lang-switcher-container">
-    <!-- Botón que muestra el idioma actual -->
     <button
-        type="button"
-        id="lang-switcher-button"
-        class="flex items-center bg-transparent text-white py-1 px-2 rounded-md cursor-pointer focus:outline-none text-sm"
-        aria-haspopup="true"
-        aria-expanded="false"
+            type="button"
+            id="lang-switcher-button"
+            class="flex items-center bg-transparent text-white py-1 px-2 rounded-md cursor-pointer focus:outline-none text-sm"
+            aria-haspopup="true"
+            aria-expanded="false"
     >
         <img
-            src={selectedLang.flag}
-            alt={`Bandera de ${selectedLang.name}`}
-            class="h-5 w-5"
-            id="lang-switcher-flag"
+                src={selectedLang.flag}
+                alt={`Bandera de ${selectedLang.name}`}
+                class="h-5 w-5"
+                id="lang-switcher-flag"
         />
     </button>
 
-    <!-- Menú desplegable (oculto por defecto) -->
     <div
-        id="lang-switcher-dropdown"
-        class="absolute right-0 mt-2 w-36 bg-gray-700 rounded-md shadow-lg z-20 hidden"
+            id="lang-switcher-dropdown"
+            class="absolute right-0 mt-2 w-36 bg-gray-700 rounded-md shadow-lg z-20 hidden"
     >
         {languages.map((lang) => (
-            <button
-                type="button"
-                class="lang-option flex items-center space-x-2 w-full text-left px-3 py-2 text-sm text-white hover:bg-gray-600"
-                data-lang-code={lang.code}
-            >
-                <img src={lang.flag} alt={`Bandera de ${lang.name}`} class="h-4 w-4" />
-                <span>{lang.name}</span>
-            </button>
+                <button
+                        type="button"
+                        class="lang-option flex items-center space-x-2 w-full text-left px-3 py-2 text-sm text-white hover:bg-gray-600"
+                        data-lang-code={lang.code}
+                >
+                    <img src={lang.flag} alt={`Bandera de ${lang.name}`} class="h-4 w-4" />
+                    <span>{lang.name}</span>
+                </button>
         ))}
     </div>
 </div>
 
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const container = document.getElementById('lang-switcher-container');
-        const button = document.getElementById('lang-switcher-button');
-        const dropdown = document.getElementById('lang-switcher-dropdown');
+<script is:inline>
+    document.addEventListener("DOMContentLoaded", () => {
+        const container = document.getElementById("lang-switcher-container");
+        const button = document.getElementById("lang-switcher-button");
+        const dropdown = document.getElementById("lang-switcher-dropdown");
 
         if (!container || !button || !dropdown) return;
 
-        // Lógica para abrir/cerrar el menú
-        button.addEventListener('click', (e) => {
+        button.addEventListener("click", (e) => {
             e.stopPropagation();
-            const isExpanded = dropdown.classList.toggle('hidden');
-            button.setAttribute('aria-expanded', String(!isExpanded));
+            const isExpanded = dropdown.classList.toggle("hidden");
+            button.setAttribute("aria-expanded", String(!isExpanded));
         });
 
-        // Lógica para cerrar el menú al hacer click fuera
-        document.addEventListener('click', () => {
-            if (!dropdown.classList.contains('hidden')) {
-                dropdown.classList.add('hidden');
-                button.setAttribute('aria-expanded', 'false');
+        document.addEventListener("click", () => {
+            if (!dropdown.classList.contains("hidden")) {
+                dropdown.classList.add("hidden");
+                button.setAttribute("aria-expanded", "false");
             }
         });
 
-        // Lógica para la selección de idioma
-        const langButtons = dropdown.querySelectorAll('.lang-option');
-        langButtons.forEach(langButton => {
-            langButton.addEventListener('click', () => {
-                const newLangCode = (langButton as HTMLElement).dataset.langCode;
-                
-                // Obtener el idioma actual de la cookie
-                const currentCookie = document.cookie.split('; ').find(row => row.startsWith('lang='))?.split('=')[1];
+        const langButtons = dropdown.querySelectorAll(".lang-option");
+        langButtons.forEach((langButton) => {
+            langButton.addEventListener("click", () => {
+                const newLangCode = langButton.dataset.langCode;
+                const currentCookie = document.cookie
+                    .split("; ")
+                    .find((row) => row.startsWith("lang="))
+                    ?.split("=")[1];
 
                 if (newLangCode && newLangCode !== currentCookie) {
-                    // 1. Actualiza la cookie
                     document.cookie = `lang=${newLangCode}; path=/; max-age=31536000; SameSite=Lax`;
-                    
-                    // 2. Recarga la página para que el servidor aplique el nuevo idioma
                     window.location.reload();
                 }
             });

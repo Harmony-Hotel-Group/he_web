@@ -12,9 +12,9 @@ import { logger } from "@/services/logger.ts";
 
 const log = logger("IndexPage");
 
-const lang = 'en';
+const lang = "en";
 
-const config: any = await api.fetch("config", {params: {lang: "en"}});
+const config: any = await api.fetch("config");
 
 log.info("Datos de configuración (config) cargados:", config);
 

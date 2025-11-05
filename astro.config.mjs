@@ -1,8 +1,8 @@
+// astro.config.mjs
 import node from "@astrojs/node";
 import vercel from "@astrojs/vercel";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "astro/config";
-
 import icon from "astro-icon";
 
 const isDevEnvironment = process.env.NODE_ENV === "development";
@@ -12,9 +12,9 @@ export default defineConfig({
 	// Configurar i18n
 	i18n: {
 		defaultLocale: "es",
-		locales: ["es", "en"],
+		locales: ["es", "en", "fr"],
 		routing: {
-			prefixDefaultLocale: false, // /es/ no aparecerá
+			prefixDefaultLocale: false,
 		},
 	},
 	integrations: [
@@ -29,7 +29,4 @@ export default defineConfig({
 				webAnalytics: { enabled: true },
 			}),
 	output: "static",
-	build: {
-		format: "directory", // Genera /about/index.html en lugar de /about.html
-	},
 });

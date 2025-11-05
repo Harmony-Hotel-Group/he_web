@@ -7,6 +7,8 @@
  */
 
 const isDev = import.meta.env.DEV;
+const isServer = import.meta.env.SSR;
+const isBrowser = !isServer;
 const logEnabled = import.meta.env.LOG_ENABLED !== "false";
 const allowedContexts = (import.meta.env.LOG_CONTEXTS || "*")
 	.split(",")
@@ -21,15 +23,27 @@ function shouldLog(context: string): boolean {
 }
 
 /**
- * Colores ANSI (funcionan en terminal y la mayoría de navegadores)
+ * Colores ANSI para terminal (servidor)
  */
-const colors = {
+const ansiColors = {
 	reset: "\x1b[0m",
 	gray: "\x1b[90m",
 	blue: "\x1b[34m",
 	yellow: "\x1b[33m",
 	red: "\x1b[31m",
 	bold: "\x1b[1m",
+};
+
+/**
+ * Colores CSS para navegador (cliente)
+ */
+const cssColors = {
+	info: "color: #3b82f6; font-weight: bold",
+	warn: "color: #f59e0b; font-weight: bold",
+	error: "color: #ef4444; font-weight: bold",
+	context: "color: #10b981; font-weight: bold",
+	time: "color: #6b7280",
+	reset: "color: inherit; font-weight: normal",
 };
 
 /**
@@ -41,9 +55,9 @@ function timeStamp(): string {
 }
 
 /**
- * Formatea una línea de log con color y metadatos.
+ * Formatea una línea de log para el servidor (ANSI colors)
  */
-function formatLine(
+function formatLineServer(
 	level: "INFO" | "WARN" | "ERROR",
 	context: string,
 	args: any[],
@@ -51,26 +65,66 @@ function formatLine(
 	let color: string;
 	switch (level) {
 		case "WARN":
-			color = colors.yellow;
+			color = ansiColors.yellow;
 			break;
 		case "ERROR":
-			color = colors.red;
+			color = ansiColors.red;
 			break;
 		default:
-			color = colors.blue;
+			color = ansiColors.blue;
 			break;
 	}
 
-	const prefix = `${colors.gray}[${timeStamp()}]${colors.reset} ${color}[${level}]${colors.reset} ${colors.bold}[${context}]${colors.reset}`;
+	const prefix = `${color}[${timeStamp()}] [${level}] ${ansiColors.bold}[${context}]${ansiColors.reset}`;
 	return [prefix, ...args];
 }
 
 /**
+ * Formatea una línea de log para el navegador (CSS colors)
+ */
+function formatLineBrowser(
+	level: "INFO" | "WARN" | "ERROR",
+	context: string,
+	args: any[],
+): any[] {
+	let levelColor: string;
+	switch (level) {
+		case "WARN":
+			levelColor = cssColors.warn;
+			break;
+		case "ERROR":
+			levelColor = cssColors.error;
+			break;
+		default:
+			levelColor = cssColors.info;
+			break;
+	}
+
+	const message = `%c[${timeStamp()}]%c [${level}]%c [${context}]%c`;
+	const styles = [
+		cssColors.time,
+		levelColor,
+		cssColors.context,
+		cssColors.reset,
+	];
+
+	return [message, ...styles, ...args];
+}
+
+/**
  * Crea un logger con contexto fijo.
+ * Detecta automáticamente si está en servidor o navegador y aplica el formato adecuado.
+ *
  * @example
- * const api = log('Api');
+ * // En el servidor (terminal con colores ANSI)
+ * const api = logger('Api');
  * api.info('Llamada exitosa');
- * api.error('Fallo de red');
+ *
+ * @example
+ * // En el navegador (consola con colores CSS)
+ * const ui = logger('UI');
+ * ui.warn('Estado incompleto');
+ * ui.error('Fallo de red');
  */
 export function logger(context: string) {
 	const active = shouldLog(context);
@@ -79,7 +133,13 @@ export function logger(context: string) {
 		(level: "INFO" | "WARN" | "ERROR", type: "log" | "warn" | "error") =>
 		(...args: any[]) => {
 			if (!active) return;
-			console[type](...formatLine(level, context, args));
+
+			// Usar formato apropiado según el entorno
+			const formattedArgs = isServer
+				? formatLineServer(level, context, args)
+				: formatLineBrowser(level, context, args);
+
+			console[type](...formattedArgs);
 		};
 
 	return {
@@ -87,5 +147,21 @@ export function logger(context: string) {
 		warn: base("WARN", "warn"),
 		error: base("ERROR", "error"),
 		log: base("INFO", "log"),
+
+		// Metadata útil para debugging
+		get isServer() {
+			return isServer;
+		},
+		get isBrowser() {
+			return isBrowser;
+		},
+		get context() {
+			return context;
+		},
 	};
 }
+
+/**
+ * Logger global para uso rápido sin contexto específico
+ */
+export const log = logger("App");

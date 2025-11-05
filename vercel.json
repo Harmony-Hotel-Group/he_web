@@ -1,13 +1,30 @@
 {
-	"version": 2,
-	"buildCommand": "pnpm build",
-	"outputDirectory": "dist",
-	"framework": "astro",
-	"git": {
-		"deploymentEnabled": true
-	},
-	"github": {
-		"enabled": true,
-		"silent": false
-	}
+	"rewrites": [
+		{
+			"source": "/:path((?!en|_astro|favicon).*)*",
+			"has": [
+				{
+					"type": "cookie",
+					"key": "lang",
+					"value": "en"
+				}
+			],
+			"destination": "/en/:path*"
+		}
+	],
+	"headers": [
+		{
+			"source": "/(.*)",
+			"headers": [
+				{
+					"key": "Vary",
+					"value": "Cookie"
+				},
+				{
+					"key": "Cache-Control",
+					"value": "public, max-age=0, must-revalidate"
+				}
+			]
+		}
+	]
 }

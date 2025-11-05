@@ -14,19 +14,12 @@ interface Props {
 }
 const { currentLang } = Astro.props as Props;
 
-// 🧠 SERVER SIDE (Astro SSR)
-log.info("🟢 [SSR] Ejecutando LangSelector en el servidor");
-
 const currentLangCode =
 	(currentLang as string) || getCurrentLang(Astro.url, Astro.request);
-log.info("🟢 [SSR] Lang para selector (prop/url):", currentLangCode);
+log.info("🟢 [SSR] Lang para selector:", currentLangCode);
 
 const uiLanguages = languages.filter((l) =>
 	supportedLangs.includes(l.code as any),
-);
-log.info(
-	"🟢 [SSR] Idiomas visibles en selector:",
-	uiLanguages.map((l) => l.code),
 );
 
 const selectedLang =
@@ -73,7 +66,7 @@ log.info("🟢 [SSR] Idioma seleccionado:", selectedLang);
     const log = logger("LangSelector");
 
     document.addEventListener('DOMContentLoaded', () => {
-        log.info("🟢 [CLIENT] LangSelector montado (DOM listo)");
+        log.info("🟢 [CLIENT] LangSelector montado");
 
         const container = document.getElementById('lang-switcher-container');
         const button = document.getElementById('lang-switcher-button');
@@ -84,8 +77,6 @@ log.info("🟢 [SSR] Idioma seleccionado:", selectedLang);
             return;
         }
 
-        log.info("🟢 [CLIENT] Elementos encontrados correctamente");
-
         // Sincronizar bandera al cargar según la cookie
         const mainFlagEl = document.getElementById('lang-switcher-flag') as HTMLImageElement | null;
         try {
@@ -95,47 +86,41 @@ log.info("🟢 [SSR] Idioma seleccionado:", selectedLang);
             if (mainFlagEl && optionImg) {
                 mainFlagEl.src = optionImg.src;
                 mainFlagEl.alt = optionImg.alt;
-                log.info('🟢 [CLIENT] Bandera sincronizada al cargar:', cookieLang);
+                log.info('🟢 [CLIENT] Bandera sincronizada:', cookieLang);
             }
         } catch (e) {
-            log.warn('⚠️ [CLIENT] No se pudo sincronizar bandera al cargar', e);
+            log.warn('⚠️ [CLIENT] No se pudo sincronizar bandera', e);
         }
 
-        // --- Toggle del dropdown ---
+        // Toggle del dropdown
         button.addEventListener('click', (e) => {
             e.stopPropagation();
             const isHidden = dropdown.classList.toggle('hidden');
             button.setAttribute('aria-expanded', String(!isHidden));
-            log.info("🟠 Toggle dropdown:", !isHidden ? "abierto" : "cerrado");
         });
 
-        // --- Cerrar si se hace click fuera ---
+        // Cerrar si se hace click fuera
         document.addEventListener('click', () => {
             if (!dropdown.classList.contains('hidden')) {
                 dropdown.classList.add('hidden');
                 button.setAttribute('aria-expanded', 'false');
-                log.info("🟠 Dropdown cerrado por click externo");
             }
         });
 
-        // --- Manejo de cambio de idioma ---
+        // CAMBIO IMPORTANTE: Manejo del cambio de idioma
         const langButtons: NodeListOf<HTMLButtonElement> = dropdown.querySelectorAll('.lang-option');
         langButtons.forEach(langButton => {
             langButton.addEventListener('click', () => {
                 const newLangCode = langButton.dataset.langCode;
-                const currentPath = window.location.pathname;
-                const query = window.location.search || '';
-                const hash = window.location.hash || '';
-
-                log.info("🟠 Idioma seleccionado:", newLangCode);
-                log.info("🟠 Path actual:", currentPath);
 
                 if (!newLangCode) {
-                    log.warn('⚠️ Código de idioma inválido:', newLangCode);
+                    log.warn('⚠️ Código de idioma inválido');
                     return;
                 }
 
-                // Actualizar inmediatamente la bandera del botón (feedback instantáneo)
+                log.info("🟠 Cambiando a idioma:", newLangCode);
+
+                // Actualizar bandera inmediatamente (feedback visual)
                 const optionImg = langButton.querySelector('img') as HTMLImageElement | null;
                 if (mainFlagEl && optionImg) {
                     mainFlagEl.src = optionImg.src;
@@ -145,22 +130,21 @@ log.info("🟢 [SSR] Idioma seleccionado:", selectedLang);
                 // Actualizar cookie
                 document.cookie = `lang=${newLangCode}; path=/; max-age=31536000; SameSite=Lax`;
 
-                // Determinar la ruta real (con /en/ si es necesario)
-                let targetPath = currentPath;
+                // Obtener la ruta limpia (sin /en/)
+                const currentPath = window.location.pathname.replace(/^\/en/, '') || '/';
+                const query = window.location.search || '';
+                const hash = window.location.hash || '';
 
-                if (newLangCode === 'en') {
-                    // Si cambiamos a inglés, agregar /en/ al path
-                    if (!currentPath.startsWith('/en')) {
-                        targetPath = '/en' + currentPath;
-                    }
-                } else {
-                    // Si cambiamos a español, quitar /en/ del path
-                    targetPath = currentPath.replace(/^\/en/, '') || '/';
-                }
+                // CLAVE: Siempre redirigir a la ruta LIMPIA
+                // Vercel se encargará de servir /en/* si la cookie lang=en existe
+                const targetUrl = currentPath + query + hash;
 
-                const fullUrl = targetPath + query + hash;
-                log.info('🟢 Redirigiendo a:', fullUrl);
-                window.location.href = fullUrl;
+                log.info('🟢 Redirigiendo a:', targetUrl);
+                log.info('🟢 Cookie establecida:', newLangCode);
+
+                // Recargar la página en la ruta limpia
+                // Vercel leerá la cookie y servirá el contenido correcto
+                window.location.href = targetUrl;
             });
         });
     });

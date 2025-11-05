@@ -113,36 +113,46 @@ export function getCurrentLang(
 	url?: URL | string,
 	request?: Request,
 ): Language {
-	// SSR: Try to read from cookie first (if request is provided)
+	// PRIORIDAD 1: Leer cookie del request (SSR)
 	if (request) {
 		const cookieHeader = request.headers.get("cookie");
 		if (cookieHeader) {
 			const match = cookieHeader.match(/lang=(\w+)/);
 			if (match) {
-				return match[1] as Language;
+				const lang = match[1] as Language;
+				log.info("🟢 [SSR] Idioma desde cookie:", lang);
+				return lang;
 			}
 		}
 	}
 
-	// SSR: fallback to pathname prefix detection
+	// PRIORIDAD 2: Detectar desde la URL (pathname)
 	if (url) {
 		const pathname = typeof url === "string" ? url : url.pathname;
 		if (pathname === "/en" || pathname.startsWith("/en/")) {
+			log.info("🟢 [SSR] Idioma desde pathname: en");
 			return "en" as Language;
 		}
+		log.info("🟢 [SSR] Idioma desde pathname: es");
 		return "es" as Language;
 	}
 
-	// CLIENT: prefer cookie (because we may hide /en from the visible URL)
-	const lang = getLangFromCookie();
-	if (lang) return lang;
-
-	// Fallback to the current path in the browser
+	// PRIORIDAD 3: Cliente (navegador)
 	if (typeof window !== "undefined") {
+		const cookieLang = getLangFromCookie();
+		if (cookieLang) {
+			log.info("🟢 [CLIENT] Idioma desde cookie:", cookieLang);
+			return cookieLang;
+		}
+
 		const p = window.location.pathname;
-		if (p === "/en" || p.startsWith("/en/")) return "en" as Language;
+		if (p === "/en" || p.startsWith("/en/")) {
+			log.info("🟢 [CLIENT] Idioma desde pathname: en");
+			return "en" as Language;
+		}
 	}
 
+	log.info("🟢 Usando idioma por defecto:", defaultLang);
 	return defaultLang;
 }
 

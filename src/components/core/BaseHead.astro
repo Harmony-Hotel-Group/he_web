@@ -1,10 +1,6 @@
 ---
-// import { siteConfig } from "@/data/constants/site.config";
 import "@/styles/global.css";
 import { ClientRouter } from "astro:transitions";
-// import { createSchemaBusiness } from "src/utils/headData/createSchemaBussines";
-// import { createSchemeProduct } from "src/utils/headData/createSchemeProduct";
-// import { join } from "node:path";
 
 export interface Props {
 	title: string;
@@ -34,11 +30,14 @@ const {
 	//   productData,
 } = Astro.props;
 
-const canonicalURL = new URL(Astro.url.pathname, Astro.site);
-const socialImageURL = new URL(
-	ogImage ? ogImage : "/open-graph.webp",
-	Astro.url,
-).href;
+// Construir URLs de forma segura para SSG
+const siteUrl =
+	Astro.site?.toString() || import.meta.env.VERCEL_URL
+		? `https://${import.meta.env.VERCEL_URL}`
+		: "https://hotelensueños.com";
+const canonicalURL = new URL(Astro.url.pathname, siteUrl);
+const socialImageURL = new URL(ogImage ? ogImage : "/open-graph.webp", siteUrl)
+	.href;
 
 const titleSeparator = "•";
 

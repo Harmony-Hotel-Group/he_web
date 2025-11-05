@@ -28,15 +28,24 @@ const t = Translations(lang);
 const metaDescription = description || t("meta.description");
 
 // Construir URLs canónicas de forma segura
-const cleanPath = Astro.url.pathname.replace(/^\/en/, "") || "/";
+let cleanPath = "/";
+// let baseUrl = "https://hotelensueños.com";
+let baseUrl = import.meta.env.VERCEL_URL
+	? `https://${import.meta.env.VERCEL_URL}`
+	: "https://hotelensueños.com";
 
-// Usar una URL base válida
-let baseUrl: string;
 try {
-	baseUrl =
-		Astro.site?.toString().replace(/\/$/, "") || "https://hotelensueños.com";
-} catch {
-	baseUrl = "https://hotelensueños.com";
+	// Obtener el path de forma segura
+	if (Astro.url && Astro.url.pathname) {
+		cleanPath = Astro.url.pathname.replace(/^\/en/, "") || "/";
+	}
+
+	// Obtener la URL base de forma segura
+	if (Astro.site) {
+		baseUrl = Astro.site.toString().replace(/\/$/, "");
+	}
+} catch (error) {
+	log.warn("Error al construir URLs:", error);
 }
 
 // Construir URLs completas de forma segura
@@ -44,7 +53,7 @@ const esUrl = `${baseUrl}${cleanPath}`;
 const enUrl = `${baseUrl}/en${cleanPath}`;
 const canonicalUrl = currentLang === "es" ? esUrl : enUrl;
 
-log.info("URLs generadas:", { esUrl, enUrl, canonicalUrl });
+log.info("URLs generadas:", { esUrl, enUrl, canonicalUrl, cleanPath, baseUrl });
 ---
 
 <html lang={currentLang}>

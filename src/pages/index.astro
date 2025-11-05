@@ -12,9 +12,17 @@ import { logger } from "@/services/logger.ts";
 
 const log = logger("IndexPage");
 
-const lang = "es";
+// En el servidor, el idioma se determina por la cookie. 'es' es el valor por defecto.
+const lang = Astro.cookies.get("lang")?.value || "es";
+log.info("Idioma detectado en el servidor:", lang);
 
-const config: any = await api.fetch("config");
+if (lang === "en") {
+	// Si la cookie es 'en', Vercel ya debería haber reescrito a /en.
+	// Esta redirección es una salvaguarda por si se accede directamente a la raíz.
+	return Astro.redirect("/en", 302);
+}
+
+const config: any = await api.fetch("config", { params: { lang } });
 
 log.info("Datos de configuración (config) cargados:", config);
 

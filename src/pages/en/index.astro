@@ -12,9 +12,15 @@ import { logger } from "@/services/logger.ts";
 
 const log = logger("IndexPage");
 
-const lang = "en";
+// En el servidor, el idioma se determina por la cookie. El 'en' de la ruta es un fallback.
+const lang = Astro.cookies.get("lang")?.value || "en";
 
-const config: any = await api.fetch("config");
+if (lang === "es") {
+	// Si la cookie es 'es' pero estamos en la ruta /en, corregimos redirigiendo a la raíz.
+	return Astro.redirect("/", 302);
+}
+
+const config: any = await api.fetch("config", { params: { lang } });
 
 log.info("Datos de configuración (config) cargados:", config);
 

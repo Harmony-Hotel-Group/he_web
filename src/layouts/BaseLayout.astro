@@ -22,6 +22,8 @@ log.info("Props recibidas:", { titleKey, lang, config: !!config });
 
 // Solo detectar idioma por URL pathname
 const currentLang = getCurrentLang(Astro.url);
+log.info("Idioma detectado:", currentLang);
+
 const t = Translations(lang);
 const metaDescription = description || t("meta.description");
 

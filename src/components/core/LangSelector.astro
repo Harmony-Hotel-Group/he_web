@@ -14,8 +14,10 @@ interface Props {
 }
 const { currentLang } = Astro.props as Props;
 
-const currentLangCode =
-	(currentLang as string) || getCurrentLang(Astro.url, Astro.request);
+// IMPORTANTE: No usar Astro.request en SSG
+// Solo detectar por URL pathname
+const currentLangCode = (currentLang as string) || getCurrentLang(Astro.url);
+
 log.info("🟢 [SSR] Lang para selector:", currentLangCode);
 
 const uiLanguages = languages.filter((l) =>
@@ -107,7 +109,7 @@ log.info("🟢 [SSR] Idioma seleccionado:", selectedLang);
             }
         });
 
-        // CAMBIO IMPORTANTE: Manejo del cambio de idioma
+        // Manejo del cambio de idioma
         const langButtons: NodeListOf<HTMLButtonElement> = dropdown.querySelectorAll('.lang-option');
         langButtons.forEach(langButton => {
             langButton.addEventListener('click', () => {
@@ -120,7 +122,7 @@ log.info("🟢 [SSR] Idioma seleccionado:", selectedLang);
 
                 log.info("🟠 Cambiando a idioma:", newLangCode);
 
-                // Actualizar bandera inmediatamente (feedback visual)
+                // Actualizar bandera inmediatamente
                 const optionImg = langButton.querySelector('img') as HTMLImageElement | null;
                 if (mainFlagEl && optionImg) {
                     mainFlagEl.src = optionImg.src;
@@ -130,23 +132,18 @@ log.info("🟢 [SSR] Idioma seleccionado:", selectedLang);
                 // Actualizar cookie
                 document.cookie = `lang=${newLangCode}; path=/; max-age=31536000; SameSite=Lax`;
 
-                // Obtener la ruta limpia (sin /en/)
+                // Obtener ruta limpia
                 const currentPath = window.location.pathname.replace(/^\/en/, '') || '/';
                 const query = window.location.search || '';
                 const hash = window.location.hash || '';
 
-                // CLAVE: Siempre redirigir a la ruta LIMPIA
-                // Vercel se encargará de servir /en/* si la cookie lang=en existe
+                // Redirigir a ruta limpia
+                // Vercel leerá la cookie y servirá el contenido correcto
                 const targetUrl = currentPath + query + hash;
 
                 log.info('🟢 Redirigiendo a:', targetUrl);
-                log.info('🟢 Cookie establecida:', newLangCode);
-
-                // Recargar la página en la ruta limpia
-                // Vercel leerá la cookie y servirá el contenido correcto
                 window.location.href = targetUrl;
             });
         });
     });
 </script>
-

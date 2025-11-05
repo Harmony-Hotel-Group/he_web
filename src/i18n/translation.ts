@@ -111,33 +111,22 @@ log.warn("Archivos de traducción cargados:", Object.keys(translations));
 
 export function getCurrentLang(
 	url?: URL | string,
-	request?: Request,
+	request?: Request, // Este parámetro se mantiene por compatibilidad pero NO se usa en SSG
 ): Language {
-	// PRIORIDAD 1: Leer cookie del request (SSR)
-	if (request) {
-		const cookieHeader = request.headers.get("cookie");
-		if (cookieHeader) {
-			const match = cookieHeader.match(/lang=(\w+)/);
-			if (match) {
-				const lang = match[1] as Language;
-				log.info("🟢 [SSR] Idioma desde cookie:", lang);
-				return lang;
-			}
-		}
-	}
+	// EN MODO ESTÁTICO (SSG): Solo detectar por URL pathname
+	// La cookie se manejará en el cliente después del hydration
 
-	// PRIORIDAD 2: Detectar desde la URL (pathname)
 	if (url) {
 		const pathname = typeof url === "string" ? url : url.pathname;
 		if (pathname === "/en" || pathname.startsWith("/en/")) {
-			log.info("🟢 [SSR] Idioma desde pathname: en");
+			log.info("🟢 [SSR/SSG] Idioma desde pathname: en");
 			return "en" as Language;
 		}
-		log.info("🟢 [SSR] Idioma desde pathname: es");
+		log.info("🟢 [SSR/SSG] Idioma desde pathname: es");
 		return "es" as Language;
 	}
 
-	// PRIORIDAD 3: Cliente (navegador)
+	// SOLO EN EL CLIENTE: Leer cookie
 	if (typeof window !== "undefined") {
 		const cookieLang = getLangFromCookie();
 		if (cookieLang) {

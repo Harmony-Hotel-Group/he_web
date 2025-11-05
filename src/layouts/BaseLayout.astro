@@ -4,11 +4,8 @@
 import Footer from "@/components/core/Footer.astro";
 import Header from "@/components/core/Header.astro";
 import LanguageDetector from "@/components/core/LanguageDetector.astro";
-
 import SizeIndicator from "@/dev/SizeIndicator.astro";
-
 import { Translations, getCurrentLang } from "@/i18n/translation";
-
 import { logger } from "@/services/logger.ts";
 import "@/styles/global.css";
 
@@ -20,17 +17,34 @@ interface Props {
 	config?: any;
 	description?: string;
 }
+
 let { titleKey, lang, config, description } = Astro.props;
 log.info("Props recibidas:", { titleKey, lang, config: !!config });
 
-const currentLang = getCurrentLang(Astro.url, Astro.request);
+// IMPORTANTE: En SSG NO usar Astro.request
+// Solo detectar idioma por URL pathname
+const currentLang = getCurrentLang(Astro.url);
 const t = Translations(lang);
 const metaDescription = description || t("meta.description");
 
-// Construir URLs canónicas
+// Construir URLs canónicas de forma segura
 const cleanPath = Astro.url.pathname.replace(/^\/en/, "") || "/";
-const baseUrl =
-	Astro.site?.toString().replace(/\/$/, "") || "https://hotelensueños.com";
+
+// Usar una URL base válida
+let baseUrl: string;
+try {
+	baseUrl =
+		Astro.site?.toString().replace(/\/$/, "") || "https://hotelensueños.com";
+} catch {
+	baseUrl = "https://hotelensueños.com";
+}
+
+// Construir URLs completas de forma segura
+const esUrl = `${baseUrl}${cleanPath}`;
+const enUrl = `${baseUrl}/en${cleanPath}`;
+const canonicalUrl = currentLang === "es" ? esUrl : enUrl;
+
+log.info("URLs generadas:", { esUrl, enUrl, canonicalUrl });
 ---
 
 <html lang={currentLang}>
@@ -40,21 +54,23 @@ const baseUrl =
     <meta name="description" content={metaDescription}/>
 
     <!-- SEO: Enlaces alternativos -->
-    <link rel="alternate" hreflang="es" href={`${baseUrl}${cleanPath}`}/>
-    <link rel="alternate" hreflang="en" href={`${baseUrl}/en${cleanPath}`}/>
-    <link rel="alternate" hreflang="x-default" href={`${baseUrl}${cleanPath}`}/>
+    <link rel="alternate" hreflang="es" href={esUrl}/>
+    <link rel="alternate" hreflang="en" href={enUrl}/>
+    <link rel="alternate" hreflang="x-default" href={esUrl}/>
 
     <!-- Canonical -->
-    <link rel="canonical" href={currentLang === 'es' ? `${baseUrl}${cleanPath}` : `${baseUrl}/en${cleanPath}`}/>
+    <link rel="canonical" href={canonicalUrl}/>
 
     <link rel="icon" type="image/svg+xml" href="/favicon.png"/>
     <meta name="generator" content={Astro.generator}/>
     <title>{t(titleKey)}</title>
+
+    <!-- LanguageDetector se ejecuta DESPUÉS del hydration -->
     <LanguageDetector/>
 </head>
 <body class="flex flex-col min-h-screen overflow-x-hidden">
 <Header config={config} lang={lang}/>
-<main class="flex-grow w-full overflow-x-hidden"> {/* Added w-full and overflow-x-hidden */}
+<main class="flex-grow w-full overflow-x-hidden">
     <slot/>
 </main>
 <Footer t={t} config={config} lang={lang}/>

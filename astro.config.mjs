@@ -9,11 +9,12 @@ const isDevEnvironment = process.env.NODE_ENV === "development";
 
 export default defineConfig({
 	site: "https://www.hotelensueños.com",
+	// Configurar i18n
 	i18n: {
-		locales: ["en", "es"],
 		defaultLocale: "es",
+		locales: ["es", "en"],
 		routing: {
-			prefixDefaultLocale: false,
+			prefixDefaultLocale: false, // /es/ no aparecerá
 		},
 	},
 	integrations: [
@@ -28,7 +29,7 @@ export default defineConfig({
 				webAnalytics: { enabled: true },
 			}),
 	output: "static",
-    build: {
-        format: 'directory' // Genera /about/index.html en lugar de /about.html
-    },
+	build: {
+		format: "directory", // Genera /about/index.html en lugar de /about.html
+	},
 });

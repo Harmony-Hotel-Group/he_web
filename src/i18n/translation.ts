@@ -14,12 +14,18 @@
  * - Advertencias en modo de desarrollo para traducciones faltantes.
  */
 
-import en from "./en.json";
-import es from "./es.json";
-import { logger } from "@/services/logger.ts";
-
+// ==================== IMPORTS ====================
 const log = logger("Translation");
 
+const flags = import.meta.glob<{ default: ImageMetadata }>(
+	"/src/resources/img/flags/*.svg",
+);
+log.info("Buscando banderas...", Object.keys(flags));
+
+const jsons = import.meta.glob("/src/i18n/*.json");
+log.info("Buscando archivos de traducción...", Object.keys(jsons));
+
+import { logger } from "@/services/logger.ts";
 // ==================== TYPES ====================
 
 /**
@@ -40,10 +46,27 @@ type SupportedLang = "en" | "es";
 type TranslationParams = Record<string, string | number>;
 
 // ==================== CONFIG ====================
-export const languages = [
-    {code: "es", name: "Español", flag: "/img/flags/es.svg"},
-    {code: "en", name: "English", flag: "/img/flags/en.svg"},
-];
+const langNames = {
+	es: "Español",
+	en: "English",
+};
+
+export const languages: { code: string; name: string; flag: string }[] = [];
+
+await (async () => {
+	for (const path in flags) {
+		// @ts-expect-error
+		const code = path.split("/").pop().replace(".svg", "");
+		const mod = await flags[path]();
+		languages.push({
+			code,
+			name: langNames[code] || code,
+			flag: mod.default.src,
+		});
+	}
+})();
+
+log.warn("Languages cargados:", languages);
 
 export type Language = (typeof languages)[number]["code"];
 /**
@@ -64,29 +87,42 @@ export const supportedLangs: SupportedLang[] = ["en", "es"];
  * Cada idioma soportado debe tener su correspondiente objeto de traducción aquí.
  * @type {Record<SupportedLang, TranslationObject>}
  */
-export const translations: Record<SupportedLang, TranslationObject> = {
-    en: en,
-    es: es,
-};
+// export const translations: Record<SupportedLang, TranslationObject> = {
+// 	en: en,
+// 	es: es,
+// };
+const translations: Record<string, any> = {};
+
+await (async () => {
+	for (const path in jsons) {
+		// @ts-expect-error
+		const key = path.split("/").pop().replace(".json", "") as SupportedLang;
+		// @ts-expect-error
+		translations[key] = (await jsons[path]()).default;
+	}
+})();
+
+log.warn("Archivos de traducción cargados:", Object.keys(translations));
+// log.info("Archivos de traducción cargados:", translations);
 
 // ===================== UTILS =====================
 
 export function getCurrentLang(url: URL): Language {
-    const path = url.pathname;
-    if (path.startsWith("/en/") || path === "/en") {
-        return "en";
-    }
-    return "es";
+	const path = url.pathname;
+	if (path.startsWith("/en/") || path === "/en") {
+		return "en";
+	}
+	return "es";
 }
 
 export function getLangFromCookie(): Language | null {
-    if (typeof document === "undefined") return null;
-    const match = document.cookie.match(/lang=(\w+)/);
-    return match ? (match[1] as Language) : null;
+	if (typeof document === "undefined") return null;
+	const match = document.cookie.match(/lang=(\w+)/);
+	return match ? (match[1] as Language) : null;
 }
 
 export function setLangCookie(lang: Language) {
-    document.cookie = `lang=${lang}; path=/; max-age=31536000; SameSite=Lax`;
+	document.cookie = `lang=${lang}; path=/; max-age=31536000; SameSite=Lax`;
 }
 
 // ==================== HELPERS ====================
@@ -98,21 +134,21 @@ export function setLangCookie(lang: Language) {
  * @returns {string | null} - El valor de la traducción si se encuentra, o null si no.
  */
 function findTranslation(obj: TranslationObject, key: string): string | null {
-    const keys = key.split(".");
-    let result: any = obj;
+	const keys = key.split(".");
+	let result: any = obj;
 
-    for (const k of keys) {
-        if (result && typeof result === "object" && k in result) {
-            result = result[k];
-        } else {
-            return null; // Si alguna clave intermedia no existe, retorna null.
-        }
-    }
+	for (const k of keys) {
+		if (result && typeof result === "object" && k in result) {
+			result = result[k];
+		} else {
+			return null; // Si alguna clave intermedia no existe, retorna null.
+		}
+	}
 
-    // Retorna el valor solo si es una cadena o un número.
-    return typeof result === "string" || typeof result === "number"
-        ? String(result)
-        : null;
+	// Retorna el valor solo si es una cadena o un número.
+	return typeof result === "string" || typeof result === "number"
+		? String(result)
+		: null;
 }
 
 /**
@@ -123,15 +159,15 @@ function findTranslation(obj: TranslationObject, key: string): string | null {
  * @returns {string} - La cadena de traducción con los parámetros reemplazados.
  */
 function replaceParams(translation: string, params: TranslationParams): string {
-    let result = translation;
-    for (const [paramName, paramValue] of Object.entries(params)) {
-        // Expresión regular para encontrar {{paramName}} con posibles espacios.
-        result = result.replace(
-            new RegExp(`\\{\\{\\s*${paramName}\\s*\\}\\}`, "g"),
-            String(paramValue),
-        );
-    }
-    return result;
+	let result = translation;
+	for (const [paramName, paramValue] of Object.entries(params)) {
+		// Expresión regular para encontrar {{paramName}} con posibles espacios.
+		result = result.replace(
+			new RegExp(`\\{\\{\\s*${paramName}\\s*\\}\\}`, "g"),
+			String(paramValue),
+		);
+	}
+	return result;
 }
 
 /**
@@ -141,17 +177,17 @@ function replaceParams(translation: string, params: TranslationParams): string {
  * @returns {SupportedLang} - El idioma soportado o el idioma por defecto.
  */
 function normalizeLang(lang: string): SupportedLang {
-    const normalizedLang = lang.toLowerCase();
-    if (supportedLangs.includes(normalizedLang as SupportedLang)) {
-        return normalizedLang as SupportedLang;
-    }
-    // Si no, intenta con el código de dos letras (ej: 'en' de 'en-US').
-    const shortLang = normalizedLang.substring(0, 2);
-    if (supportedLangs.includes(shortLang as SupportedLang)) {
-        return shortLang as SupportedLang;
-    }
-    // Si no se encuentra ninguna coincidencia, retorna el idioma por defecto.
-    return defaultLang;
+	const normalizedLang = lang.toLowerCase();
+	if (supportedLangs.includes(normalizedLang as SupportedLang)) {
+		return normalizedLang as SupportedLang;
+	}
+	// Si no, intenta con el código de dos letras (ej: 'en' de 'en-US').
+	const shortLang = normalizedLang.substring(0, 2);
+	if (supportedLangs.includes(shortLang as SupportedLang)) {
+		return shortLang as SupportedLang;
+	}
+	// Si no se encuentra ninguna coincidencia, retorna el idioma por defecto.
+	return defaultLang;
 }
 
 // ==================== MAIN FUNCTION ====================
@@ -163,48 +199,47 @@ function normalizeLang(lang: string): SupportedLang {
  * @returns {(key: string, params?: TranslationParams) => string} - La función `t` para obtener traducciones.
  */
 export function Translations(lang: string) {
-    const normalizedLang = normalizeLang(lang);
-    const translationFile = translations[normalizedLang];
-    const fallbackFile = translations[defaultLang];
+	const normalizedLang = normalizeLang(lang);
+	const translationFile = translations[normalizedLang];
+	const fallbackFile = translations[defaultLang];
 
-    /**
-     * La función de traducción principal (`t`).
-     * @param {string} key - La clave de la traducción a obtener.
-     * @param {TranslationParams} [params] - Parámetros opcionales para reemplazar en la cadena.
-     * @returns {string} - La cadena traducida y formateada. Si no se encuentra, devuelve la clave.
-     */
-    return function t(key: string, params?: TranslationParams): string {
-        if (!key || typeof key !== "string") {
-            log.info("La clave proporcionada no es válida:", key);
-            return String(key);
-        }
+	/**
+	 * La función de traducción principal (`t`).
+	 * @param {string} key - La clave de la traducción a obtener.
+	 * @param {TranslationParams} [params] - Parámetros opcionales para reemplazar en la cadena.
+	 * @returns {string} - La cadena traducida y formateada. Si no se encuentra, devuelve la clave.
+	 */
+	return function t(key: string, params?: TranslationParams): string {
+		if (!key || typeof key !== "string") {
+			log.info("La clave proporcionada no es válida:", key);
+			return String(key);
+		}
 
-        // 1. Intentar obtener la traducción del idioma actual.
-        let translation = findTranslation(translationFile, key);
+		// 1. Intentar obtener la traducción del idioma actual.
+		let translation = findTranslation(translationFile, key);
 
-        // 2. Si no se encuentra, intentar con el idioma por defecto (fallback).
-        if (translation === null && normalizedLang !== defaultLang) {
-            translation = findTranslation(fallbackFile, key);
-            // En desarrollo, advertir sobre el uso del fallback.
-            if (translation !== null) {
-                log.warn(
-                    `Falta la clave '${key}' en '${normalizedLang}'. Usando fallback a '${defaultLang}'.`,
-                );
-            }
-        }
+		// 2. Si no se encuentra, intentar con el idioma por defecto (fallback).
+		if (translation === null && normalizedLang !== defaultLang) {
+			translation = findTranslation(fallbackFile, key);
+			// En desarrollo, advertir sobre el uso del fallback.
+			if (translation !== null) {
+				log.warn(
+					`Falta la clave '${key}' en '${normalizedLang}'. Usando fallback a '${defaultLang}'.`,
+				);
+			}
+		}
 
-        // 3. Si la traducción sigue sin encontrarse, devolver la clave como último recurso.
-        if (translation === null) {
-            log.error(`No se encontró una traducción para la clave: '${key}'`);
-            return key;
-        }
+		// 3. Si la traducción sigue sin encontrarse, devolver la clave como último recurso.
+		if (translation === null) {
+			log.error(`No se encontró una traducción para la clave: '${key}'`);
+			return key;
+		}
 
-        // 4. Si hay parámetros, reemplazarlos en la cadena.
-        if (params) {
-            translation = replaceParams(translation, params);
-        }
+		// 4. Si hay parámetros, reemplazarlos en la cadena.
+		if (params) {
+			translation = replaceParams(translation, params);
+		}
 
-        return translation;
-    };
+		return translation;
+	};
 }
-

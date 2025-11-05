@@ -8,15 +8,15 @@ import HomeSection from "@/components/organisms/home/HomeSection.astro";
 
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { api } from "@/services/api.ts";
-import { log } from "@/services/logger.ts";
+import { logger } from "@/services/logger.ts";
 
-const CONTEXT = "IndexPage";
+const log = logger("IndexPage");
 
 const lang = 'en';
 
 const config: any = await api.fetch("config", {params: {lang: "en"}});
 
-log(CONTEXT, "Datos de configuración (config) cargados:", config);
+log.info("Datos de configuración (config) cargados:", config);
 
 const carouselResources = config?.carouselResources || [];
 ---

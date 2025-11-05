@@ -6,12 +6,12 @@ import BookingGroupForm from "./BookingGroupForm.astro";
 import BookingVehicleForm from "./BookingVehicleForm.astro";
 
 interface Props {
-	lang: string;
-	config: any;
-	isOpen: boolean;
+    lang: string;
+    config: any;
+    isOpen: boolean;
 }
 
-const { lang, config, isOpen } = Astro.props;
+const {lang, config, isOpen} = Astro.props;
 const t = Translations(lang);
 ---
 
@@ -43,8 +43,10 @@ const t = Translations(lang);
             <div class="bg-white dark:bg-gray-700 rounded-lg p-4 mb-4 shadow-sm">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center gap-3">
-                        <svg class="w-5 h-5 text-gray-700 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0"/>
+                        <svg class="w-5 h-5 text-gray-700 dark:text-gray-300" fill="none" stroke="currentColor"
+                             viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0"/>
                         </svg>
                         <span class="font-medium text-gray-900 dark:text-gray-100">
                             {t('booking.group.modal.includeVehicles') || '¿Incluir información de vehículos?'}
@@ -88,8 +90,9 @@ const t = Translations(lang);
 </div>
 
 <script>
-    import { log, warn, error } from "@/services/logger.ts";
-    const CONTEXT = 'ModalBookingGroup';
+    import { logger } from "@/services/logger.ts";
+
+    const log = logger('ModalBookingGroup');
 
     document.addEventListener("DOMContentLoaded", () => {
         class ModalBookingGroup {
@@ -118,15 +121,15 @@ const t = Translations(lang);
 
                 // Verificar que los elementos esenciales existen
                 if (!this.modal || !this.cancelBtn || !this.confirmBtn) {
-                    error(CONTEXT, 'Error: No se pudieron encontrar elementos esenciales del modal');
+                    log.error('Error: No se pudieron encontrar elementos esenciales del modal');
                     return;
                 }
 
                 // Verificar switch
                 if (this.vehicleToggleSwitch && this.vehicleToggleInput && this.vehicleTabContent) {
-                    log(CONTEXT, 'Switch de vehículos encontrado y listo');
+                    log.info('Switch de vehículos encontrado y listo');
                 } else {
-                    error(CONTEXT, 'Error: Elementos del switch no encontrados', {
+                    log.error('Error: Elementos del switch no encontrados', {
                         switch: this.vehicleToggleSwitch,
                         input: this.vehicleToggleInput,
                         content: this.vehicleTabContent
@@ -195,7 +198,7 @@ const t = Translations(lang);
                 const isChecked = this.vehicleToggleInput.value === 'true';
                 this.vehiclesEnabled = isChecked;
 
-                log(CONTEXT, 'Switch cambió a:', isChecked);
+                log.info('Switch cambió a:', isChecked);
 
                 if (isChecked) {
                     // Mostrar formulario de vehículos con animación
@@ -215,7 +218,7 @@ const t = Translations(lang);
 
             public open() {
                 if (!this.modal) {
-                    error(CONTEXT, 'Error: Modal element not found');
+                    log.error('Error: Modal element not found');
                     return;
                 }
 
@@ -310,7 +313,7 @@ const t = Translations(lang);
                     this.close();
 
                 } catch (e) {
-                    error(CONTEXT, 'Error al confirmar reserva:', e);
+                    log.error('Error al confirmar reserva:', e);
                     alert('Error al procesar la reserva. Por favor, inténtelo de nuevo.');
                 }
             }

@@ -6,7 +6,10 @@
  * Usa el componente Imagen.astro para optimización
  */
 
-import Imagen from "../../atoms/Imagen.astro";
+import Imagen from "@/components/atoms/Imagen.astro";
+import { logger } from "@/services/logger.ts";
+
+const log = logger("ImageResource");
 
 interface Props {
 	src: string;
@@ -143,6 +146,11 @@ const imageId = `img-${Math.random().toString(36).substr(2, 9)}`;
      * Manejo de carga de imágenes
      * Detecta cuando la imagen carga y quita el skeleton
      */
+
+    import { logger } from '@/services/logger';
+
+    const log = logger('ImageResource');
+    
     class ImageResourceManager {
         private images: Map<string, HTMLImageElement> = new Map();
         private skeletons: Map<string, HTMLElement> = new Map();
@@ -183,9 +191,9 @@ const imageId = `img-${Math.random().toString(36).substr(2, 9)}`;
                 }
             });
 
-            if (import.meta.env.DEV) {
-                console.log(`[ImageResource] Initialized ${this.images.size} image(s)`);
-            }
+
+            log.info(`Initialized ${this.images.size} image(s)`);
+            
         }
 
         private handleImageLoad(
@@ -201,9 +209,7 @@ const imageId = `img-${Math.random().toString(36).substr(2, 9)}`;
             // Mostrar imagen con fade in
             img.classList.add('loaded');
 
-            if (import.meta.env.DEV) {
-                console.log(`[ImageResource] Image loaded: ${imageId}`);
-            }
+                log.info(`Image loaded: ${imageId}`);
         }
 
         private handleImageError(
@@ -247,10 +253,5 @@ const imageId = `img-${Math.random().toString(36).substr(2, 9)}`;
         });
     } else {
         imageManager = new ImageResourceManager();
-    }
-
-    // Exponer en desarrollo
-    if (import.meta.env.DEV) {
-        (window as any).__imageResourceManager = imageManager;
     }
 </script>

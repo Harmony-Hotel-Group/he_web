@@ -4,18 +4,21 @@ import { logger } from "@/services/logger.ts";
 
 const log = logger("LangSelector");
 
+// 🧠 SERVER SIDE (Astro SSR)
+log.info("🟢 [SSR] Ejecutando LangSelector en el servidor");
+
+const currentLangCode = Astro.cookies.get("lang")?.value || "es";
+log.info("🟢 [SSR] Cookie detectada en el servidor:", currentLangCode);
+
 log.info(
-	"Idiomas cargados desde translations.ts:",
+	"🟢 [SSR] Lista de idiomas disponibles:",
 	languages.map((l) => l.code),
 );
 
-// 1️⃣ Determinar el idioma actual
-const currentLangCode = Astro.cookies.get("lang")?.value || "es";
-log.info("Idioma actual en el servidor:", currentLangCode);
-
 const selectedLang =
 	languages.find((lang) => lang.code === currentLangCode) || languages[0];
-log.info("Idioma seleccionado:", selectedLang);
+
+log.info("🟢 [SSR] Idioma seleccionado:", selectedLang);
 ---
 
 <div class="relative mr-2" id="lang-switcher-container">
@@ -51,41 +54,64 @@ log.info("Idioma seleccionado:", selectedLang);
     </div>
 </div>
 
-<script is:inline>
-    document.addEventListener("DOMContentLoaded", () => {
-        const container = document.getElementById("lang-switcher-container");
-        const button = document.getElementById("lang-switcher-button");
-        const dropdown = document.getElementById("lang-switcher-dropdown");
+<script>
+    import { logger } from "@/services/logger.ts";
+    const log = logger("LangSelector");
 
-        if (!container || !button || !dropdown) return;
+    document.addEventListener('DOMContentLoaded', () => {
+        log.info("🟢 [CLIENT] LangSelector montado (DOM listo)");
 
-        button.addEventListener("click", (e) => {
+        const container = document.getElementById('lang-switcher-container');
+        const button = document.getElementById('lang-switcher-button');
+        const dropdown = document.getElementById('lang-switcher-dropdown');
+
+        if (!container || !button || !dropdown) {
+            log.error("🔴 [CLIENT] Elementos del LangSelector no encontrados");
+            return;
+        }
+
+        log.info("🟢 [CLIENT] Elementos encontrados correctamente");
+
+        // --- Toggle del dropdown ---
+        button.addEventListener('click', (e) => {
             e.stopPropagation();
-            const isExpanded = dropdown.classList.toggle("hidden");
-            button.setAttribute("aria-expanded", String(!isExpanded));
+            const isHidden = dropdown.classList.toggle('hidden');
+            button.setAttribute('aria-expanded', String(!isHidden));
+            log.info("🟠 Toggle dropdown:", !isHidden ? "abierto" : "cerrado");
         });
 
-        document.addEventListener("click", () => {
-            if (!dropdown.classList.contains("hidden")) {
-                dropdown.classList.add("hidden");
-                button.setAttribute("aria-expanded", "false");
+        // --- Cerrar si se hace click fuera ---
+        document.addEventListener('click', () => {
+            if (!dropdown.classList.contains('hidden')) {
+                dropdown.classList.add('hidden');
+                button.setAttribute('aria-expanded', 'false');
+                log.info("🟠 Dropdown cerrado por click externo");
             }
         });
 
-        const langButtons = dropdown.querySelectorAll(".lang-option");
-        langButtons.forEach((langButton) => {
-            langButton.addEventListener("click", () => {
+        // --- Manejo de cambio de idioma ---
+        const langButtons = dropdown.querySelectorAll('.lang-option');
+        langButtons.forEach(langButton => {
+            langButton.addEventListener('click', () => {
                 const newLangCode = langButton.dataset.langCode;
                 const currentCookie = document.cookie
-                    .split("; ")
-                    .find((row) => row.startsWith("lang="))
-                    ?.split("=")[1];
+                    .split('; ')
+                    .find(row => row.startsWith('lang='))
+                    ?.split('=')[1];
+
+                log.info("🟠 Idioma seleccionado:", newLangCode);
+                log.info("🟠 Cookie actual:", currentCookie);
 
                 if (newLangCode && newLangCode !== currentCookie) {
+                    log.info("🟢 Actualizando cookie y recargando...");
                     document.cookie = `lang=${newLangCode}; path=/; max-age=31536000; SameSite=Lax`;
+                    log.info("🟢 Nueva cookie:", document.cookie);
                     window.location.reload();
+                } else {
+                    log.warn("⚠️ Idioma ya seleccionado o inválido:", newLangCode);
                 }
             });
         });
     });
 </script>
+

@@ -1,4 +1,6 @@
 /**
+ * src/i18n/translation.ts
+ *
  * @file Módulo de Internacionalización (i18n)
  *
  * Este archivo gestiona todas las funcionalidades relacionadas con la traducción de textos en la aplicación.
@@ -107,12 +109,41 @@ log.warn("Archivos de traducción cargados:", Object.keys(translations));
 
 // ===================== UTILS =====================
 
-export function getCurrentLang(url: URL): Language {
-	const path = url.pathname;
-	if (path.startsWith("/en/") || path === "/en") {
-		return "en";
+export function getCurrentLang(
+	url?: URL | string,
+	request?: Request,
+): Language {
+	// SSR: Try to read from cookie first (if request is provided)
+	if (request) {
+		const cookieHeader = request.headers.get("cookie");
+		if (cookieHeader) {
+			const match = cookieHeader.match(/lang=(\w+)/);
+			if (match) {
+				return match[1] as Language;
+			}
+		}
 	}
-	return "es";
+
+	// SSR: fallback to pathname prefix detection
+	if (url) {
+		const pathname = typeof url === "string" ? url : url.pathname;
+		if (pathname === "/en" || pathname.startsWith("/en/")) {
+			return "en" as Language;
+		}
+		return "es" as Language;
+	}
+
+	// CLIENT: prefer cookie (because we may hide /en from the visible URL)
+	const lang = getLangFromCookie();
+	if (lang) return lang;
+
+	// Fallback to the current path in the browser
+	if (typeof window !== "undefined") {
+		const p = window.location.pathname;
+		if (p === "/en" || p.startsWith("/en/")) return "en" as Language;
+	}
+
+	return defaultLang;
 }
 
 export function getLangFromCookie(): Language | null {

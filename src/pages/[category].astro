@@ -14,7 +14,8 @@ export async function getStaticPaths() {
 }
 
 const { category } = Astro.params;
-const lang = Astro.cookies.get("lang")?.value || "es";
+import { getCurrentLang } from "@/i18n/translation";
+const lang = getCurrentLang(Astro.url, Astro.request);
 const t = Translations(lang);
 
 // 2. Map URL category to API endpoint and page title

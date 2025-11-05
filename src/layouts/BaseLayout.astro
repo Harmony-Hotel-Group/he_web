@@ -7,7 +7,7 @@ import LanguageDetector from "@/components/core/LanguageDetector.astro";
 
 import SizeIndicator from "@/dev/SizeIndicator.astro";
 
-import { Translations, getCurrentLang } from '@/i18n/translation';
+import { Translations, getCurrentLang } from "@/i18n/translation";
 
 import { logger } from "@/services/logger.ts";
 import "@/styles/global.css";
@@ -15,21 +15,22 @@ import "@/styles/global.css";
 const log = logger("BaseLayout");
 
 interface Props {
-    titleKey: string;
-    lang: string;
-    config?: any;
-    description?: string;
+	titleKey: string;
+	lang: string;
+	config?: any;
+	description?: string;
 }
-let {titleKey, lang, config, description} = Astro.props;
-log.info("Props recibidas:", {titleKey, lang, config: !!config});
+let { titleKey, lang, config, description } = Astro.props;
+log.info("Props recibidas:", { titleKey, lang, config: !!config });
 
-const currentLang = getCurrentLang(Astro.url);
+const currentLang = getCurrentLang(Astro.url, Astro.request);
 const t = Translations(lang);
-const metaDescription = description || t('meta.description');
+const metaDescription = description || t("meta.description");
 
 // Construir URLs canónicas
-const cleanPath = Astro.url.pathname.replace(/^\/en/, '') || '/';
-const baseUrl = Astro.site?.toString().replace(/\/$/, '') || 'https://hotelensueños.com';
+const cleanPath = Astro.url.pathname.replace(/^\/en/, "") || "/";
+const baseUrl =
+	Astro.site?.toString().replace(/\/$/, "") || "https://hotelensueños.com";
 ---
 
 <html lang={currentLang}>
@@ -49,9 +50,9 @@ const baseUrl = Astro.site?.toString().replace(/\/$/, '') || 'https://hotelensue
     <link rel="icon" type="image/svg+xml" href="/favicon.png"/>
     <meta name="generator" content={Astro.generator}/>
     <title>{t(titleKey)}</title>
+    <LanguageDetector/>
 </head>
 <body class="flex flex-col min-h-screen overflow-x-hidden">
-<LanguageDetector/>
 <Header config={config} lang={lang}/>
 <main class="flex-grow w-full overflow-x-hidden"> {/* Added w-full and overflow-x-hidden */}
     <slot/>

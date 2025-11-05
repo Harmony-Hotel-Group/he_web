@@ -1,22 +1,36 @@
 ---
-import { languages } from "@/i18n/translation.ts";
+// src/components/core/LangSelector.astro
+import {
+	getCurrentLang,
+	languages,
+	supportedLangs,
+} from "@/i18n/translation.ts";
 import { logger } from "@/services/logger.ts";
 
 const log = logger("LangSelector");
 
+interface Props {
+	currentLang?: string;
+}
+const { currentLang } = Astro.props as Props;
+
 // 🧠 SERVER SIDE (Astro SSR)
 log.info("🟢 [SSR] Ejecutando LangSelector en el servidor");
 
-const currentLangCode = Astro.cookies.get("lang")?.value || "es";
-log.info("🟢 [SSR] Cookie detectada en el servidor:", currentLangCode);
+const currentLangCode =
+	(currentLang as string) || getCurrentLang(Astro.url, Astro.request);
+log.info("🟢 [SSR] Lang para selector (prop/url):", currentLangCode);
 
+const uiLanguages = languages.filter((l) =>
+	supportedLangs.includes(l.code as any),
+);
 log.info(
-	"🟢 [SSR] Lista de idiomas disponibles:",
-	languages.map((l) => l.code),
+	"🟢 [SSR] Idiomas visibles en selector:",
+	uiLanguages.map((l) => l.code),
 );
 
 const selectedLang =
-	languages.find((lang) => lang.code === currentLangCode) || languages[0];
+	uiLanguages.find((lang) => lang.code === currentLangCode) || uiLanguages[0];
 
 log.info("🟢 [SSR] Idioma seleccionado:", selectedLang);
 ---
@@ -41,7 +55,7 @@ log.info("🟢 [SSR] Idioma seleccionado:", selectedLang);
             id="lang-switcher-dropdown"
             class="absolute right-0 mt-2 w-36 bg-gray-700 rounded-md shadow-lg z-20 hidden"
     >
-        {languages.map((lang) => (
+        {uiLanguages.map((lang) => (
                 <button
                         type="button"
                         class="lang-option flex items-center space-x-2 w-full text-left px-3 py-2 text-sm text-white hover:bg-gray-600"
@@ -72,6 +86,21 @@ log.info("🟢 [SSR] Idioma seleccionado:", selectedLang);
 
         log.info("🟢 [CLIENT] Elementos encontrados correctamente");
 
+        // Sincronizar bandera al cargar según la cookie
+        const mainFlagEl = document.getElementById('lang-switcher-flag') as HTMLImageElement | null;
+        try {
+            const cookieLang = document.cookie.split('; ').find(r => r.startsWith('lang='))?.split('=')[1] || 'es';
+            const desiredBtn = document.querySelector(`#lang-switcher-dropdown .lang-option[data-lang-code="${cookieLang}"]`) as HTMLButtonElement | null;
+            const optionImg = desiredBtn?.querySelector('img') as HTMLImageElement | null;
+            if (mainFlagEl && optionImg) {
+                mainFlagEl.src = optionImg.src;
+                mainFlagEl.alt = optionImg.alt;
+                log.info('🟢 [CLIENT] Bandera sincronizada al cargar:', cookieLang);
+            }
+        } catch (e) {
+            log.warn('⚠️ [CLIENT] No se pudo sincronizar bandera al cargar', e);
+        }
+
         // --- Toggle del dropdown ---
         button.addEventListener('click', (e) => {
             e.stopPropagation();
@@ -90,26 +119,48 @@ log.info("🟢 [SSR] Idioma seleccionado:", selectedLang);
         });
 
         // --- Manejo de cambio de idioma ---
-        const langButtons = dropdown.querySelectorAll('.lang-option');
+        const langButtons: NodeListOf<HTMLButtonElement> = dropdown.querySelectorAll('.lang-option');
         langButtons.forEach(langButton => {
             langButton.addEventListener('click', () => {
                 const newLangCode = langButton.dataset.langCode;
-                const currentCookie = document.cookie
-                    .split('; ')
-                    .find(row => row.startsWith('lang='))
-                    ?.split('=')[1];
+                const currentPath = window.location.pathname;
+                const query = window.location.search || '';
+                const hash = window.location.hash || '';
 
                 log.info("🟠 Idioma seleccionado:", newLangCode);
-                log.info("🟠 Cookie actual:", currentCookie);
+                log.info("🟠 Path actual:", currentPath);
 
-                if (newLangCode && newLangCode !== currentCookie) {
-                    log.info("🟢 Actualizando cookie y recargando...");
-                    document.cookie = `lang=${newLangCode}; path=/; max-age=31536000; SameSite=Lax`;
-                    log.info("🟢 Nueva cookie:", document.cookie);
-                    window.location.reload();
-                } else {
-                    log.warn("⚠️ Idioma ya seleccionado o inválido:", newLangCode);
+                if (!newLangCode) {
+                    log.warn('⚠️ Código de idioma inválido:', newLangCode);
+                    return;
                 }
+
+                // Actualizar inmediatamente la bandera del botón (feedback instantáneo)
+                const optionImg = langButton.querySelector('img') as HTMLImageElement | null;
+                if (mainFlagEl && optionImg) {
+                    mainFlagEl.src = optionImg.src;
+                    mainFlagEl.alt = optionImg.alt;
+                }
+
+                // Actualizar cookie
+                document.cookie = `lang=${newLangCode}; path=/; max-age=31536000; SameSite=Lax`;
+
+                // Determinar la ruta real (con /en/ si es necesario)
+                let targetPath = currentPath;
+
+                if (newLangCode === 'en') {
+                    // Si cambiamos a inglés, agregar /en/ al path
+                    if (!currentPath.startsWith('/en')) {
+                        targetPath = '/en' + currentPath;
+                    }
+                } else {
+                    // Si cambiamos a español, quitar /en/ del path
+                    targetPath = currentPath.replace(/^\/en/, '') || '/';
+                }
+
+                const fullUrl = targetPath + query + hash;
+                log.info('🟢 Redirigiendo a:', fullUrl);
+                window.location.href = fullUrl;
             });
         });
     });

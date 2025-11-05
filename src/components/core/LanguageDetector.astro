@@ -1,49 +1,44 @@
 ---
-
+// src/components/core/LanguageDetector.astro
 ---
 
 <script>
     import type { Language } from '@/i18n/translation';
-    import { getLangFromCookie, setLangCookie } from '@/i18n/translation';
+    import { getLangFromCookie, setLangCookie, defaultLang } from '@/i18n/translation';
+    import { logger } from '@/services/logger.ts';
+    const log = logger('LanguageDetector')
 
     function detectPreferredLanguage(): Language {
+        log.warn('Iniciando Deteccion de Lenguaje')
         // 1. Verificar cookie
         const cookieLang = getLangFromCookie();
+        log.info("Cargndo Cookie Lang",cookieLang)
+
         if (cookieLang) return cookieLang;
 
         // 2. Verificar navegador
         const browserLang = navigator.language.split('-')[0];
+        log.info("Buscando en configuraciones de Navegador",browserLang)
+
         if (browserLang === 'en') return 'en';
 
         // 3. Default
-        return 'es';
+        log.info('Devolviendo valor por defecto',defaultLang)
+        return defaultLang;
     }
 
     const preferredLang = detectPreferredLanguage();
     const currentPath = window.location.pathname;
     const isEnglishPath = currentPath.startsWith('/en');
-    const currentLang = isEnglishPath ? 'en' : 'es';
 
-    // Si hay una cookie y el idioma actual no coincide, redirigir
-    if (preferredLang !== currentLang) {
-        if (preferredLang === 'en' && !isEnglishPath) {
-            // Redirigir a inglés pero mantener la URL limpia
-            const targetPath = `/en${currentPath}`;
-            history.replaceState({}, '', currentPath);
-            window.location.replace(targetPath);
-        } else if (preferredLang === 'es' && isEnglishPath) {
-            // Redirigir a español
-            const spanishPath = currentPath.replace(/^\/en/, '') || '/';
-            window.location.replace(spanishPath);
-        }
-    } else {
-        // Sincronizar cookie con el idioma actual
-        setLangCookie(currentLang);
+    // Sincronizar cookie con el idioma preferido
+    setLangCookie(preferredLang);
 
-        // Si estamos en /en/, ocultar el prefijo en la URL mostrada
-        if (isEnglishPath) {
-            const cleanPath = currentPath.replace(/^\/en/, '') || '/';
-            history.replaceState({}, '', cleanPath);
-        }
+    // Ocultar /en/ de la URL visible si estamos en una ruta en inglés
+    if (isEnglishPath) {
+        const cleanPath = currentPath.replace(/^\/en/, '') || '/';
+        const query = window.location.search || '';
+        const hash = window.location.hash || '';
+        history.replaceState({}, '', cleanPath + query + hash);
     }
 </script>

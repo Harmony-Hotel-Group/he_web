@@ -67,25 +67,24 @@ const carouselId = `carousel-${Math.random().toString(36).substr(2, 9)}`;
 <script is:inline define:vars={{autoplayInterval, carouselId}}>
     document.addEventListener('DOMContentLoaded', () => {
         class VisualCarouselManager {
-            private container: HTMLElement | null = null;
-            private items: HTMLElement[] = [];
-            private indicatorsContainer: HTMLElement | null = null;
-            private indicators: HTMLElement[] = [];
-            private currentIndex: number = 0;
-            private intervalId: number | null = null;
-
-            constructor(carouselId: string, interval: number) {
+            constructor(carouselId, interval) {
+                this.container = null;
+                this.items = [];
+                this.indicatorsContainer = null;
+                this.indicators = [];
+                this.currentIndex = 0;
+                this.intervalId = null;
                 this.init(carouselId, interval);
             }
 
-            private init(carouselId: string, interval: number) {
+            init(carouselId, interval) {
                 const carousel = document.querySelector(`[data-carousel-id="${carouselId}"]`);
                 if (!carousel) return;
 
                 this.container = carousel.querySelector('[data-carousel-container]');
                 if (!this.container) return;
 
-                this.items = Array.from(this.container.children) as HTMLElement[];
+                this.items = Array.from(this.container.children);
                 this.indicatorsContainer = carousel.querySelector('[data-carousel-indicators]');
 
                 if (this.items.length <= 1) {
@@ -96,12 +95,12 @@ const carouselId = `carousel-${Math.random().toString(36).substr(2, 9)}`;
                 }
 
                 this.createIndicators();
-                this.initEventListeners();
+                this.initEventListeners(carousel);
                 this.updateSlide(0);
                 this.start(interval);
             }
 
-            private createIndicators() {
+            createIndicators() {
                 if (!this.indicatorsContainer) return;
                 this.items.forEach((_, index) => {
                     const button = document.createElement('button');
@@ -111,17 +110,16 @@ const carouselId = `carousel-${Math.random().toString(36).substr(2, 9)}`;
                     button.dataset.slideTo = index.toString();
                     this.indicatorsContainer.appendChild(button);
                 });
-                this.indicators = Array.from(this.indicatorsContainer.children) as HTMLElement[];
+                this.indicators = Array.from(this.indicatorsContainer.children);
             }
 
-            private initEventListeners() {
-                const carousel = document.querySelector(`[data-carousel-id="${carouselId}"]`);
-                carousel?.querySelector('[data-carousel-prev]')?.addEventListener('click', () => this.prev());
-                carousel?.querySelector('[data-carousel-next]')?.addEventListener('click', () => this.next());
-                this.indicators.forEach(ind => ind.addEventListener('click', (e) => this.goToSlide(parseInt((e.target as HTMLElement).dataset.slideTo || '0'))));
+            initEventListeners(carousel) {
+                carousel.querySelector('[data-carousel-prev]')?.addEventListener('click', () => this.prev());
+                carousel.querySelector('[data-carousel-next]')?.addEventListener('click', () => this.next());
+                this.indicators.forEach(ind => ind.addEventListener('click', (e) => this.goToSlide(parseInt(e.target.dataset.slideTo || '0'))));
             }
 
-            private updateSlide(index: number) {
+            updateSlide(index) {
                 this.items.forEach((item, i) => {
                     item.classList.toggle('opacity-100', i === index);
                     item.classList.toggle('opacity-0', i !== index);
@@ -137,19 +135,23 @@ const carouselId = `carousel-${Math.random().toString(36).substr(2, 9)}`;
                 this.currentIndex = index;
             }
 
-            private next() {
+            next() {
                 this.goToSlide((this.currentIndex + 1) % this.items.length);
             }
 
-            private prev() {
+            prev() {
                 this.goToSlide((this.currentIndex - 1 + this.items.length) % this.items.length);
             }
 
-            private start(interval: number) {
+            goToSlide(index) {
+                this.updateSlide(index);
+            }
+
+            start(interval) {
                 this.intervalId = window.setInterval(() => this.next(), interval);
             }
         }
 
         new VisualCarouselManager(carouselId, autoplayInterval);
-    })
+    });
 </script>

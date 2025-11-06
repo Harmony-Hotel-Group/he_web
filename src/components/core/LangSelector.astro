@@ -1,149 +1,99 @@
 ---
-// src/components/core/LangSelector.astro
 import {
 	getCurrentLang,
 	languages,
+	type SupportedLang,
 	supportedLangs,
 } from "@/i18n/translation.ts";
 import { logger } from "@/services/logger.ts";
 
 const log = logger("LangSelector");
 
-interface Props {
-	currentLang?: string;
-}
-const { currentLang } = Astro.props as Props;
-
-// IMPORTANTE: No usar Astro.request en SSG
-// Solo detectar por URL pathname
-const currentLangCode = (currentLang as string) || getCurrentLang(Astro.url);
-
+const currentLangCode = getCurrentLang(Astro.url);
 log.info("🟢 [SSR] Lang para selector:", currentLangCode);
 
 const uiLanguages = languages.filter((l) =>
-	supportedLangs.includes(l.code as any),
+	supportedLangs.includes(l.code as SupportedLang),
 );
 
 const selectedLang =
 	uiLanguages.find((lang) => lang.code === currentLangCode) || uiLanguages[0];
 
-log.info("🟢 [SSR] Idioma seleccionado:", selectedLang);
+function getUrlForLang(langCode: string) {
+	const currentPath = Astro.url.pathname;
+	const currentPathWithoutLang = currentPath.replace(/^\/(en|fr)/, "");
+
+	if (langCode === "es") {
+		return currentPathWithoutLang;
+	}
+	return `/${langCode}${currentPathWithoutLang}`;
+}
 ---
 
 <div class="relative mr-2" id="lang-switcher-container">
-    <button
-            type="button"
-            id="lang-switcher-button"
-            class="flex items-center bg-transparent text-white py-1 px-2 rounded-md cursor-pointer focus:outline-none text-sm"
-            aria-haspopup="true"
-            aria-expanded="false"
-    >
-        <img
-                src={selectedLang.flag}
-                alt={`Bandera de ${selectedLang.name}`}
-                class="h-5 w-5"
-                id="lang-switcher-flag"
-        />
-    </button>
+	<button
+		type="button"
+		id="lang-switcher-button"
+		class="flex items-center bg-transparent text-white py-1 px-2 rounded-md cursor-pointer focus:outline-none text-sm"
+		aria-haspopup="true"
+		aria-expanded="false"
+	>
+		<img
+			src={selectedLang.flag}
+			alt={`Bandera de ${selectedLang.name}`}
+			class="h-5 w-5"
+			id="lang-switcher-flag"
+		/>
+	</button>
 
-    <div
-            id="lang-switcher-dropdown"
-            class="absolute right-0 mt-2 w-36 bg-gray-700 rounded-md shadow-lg z-20 hidden"
-    >
-        {uiLanguages.map((lang) => (
-                <button
-                        type="button"
-                        class="lang-option flex items-center space-x-2 w-full text-left px-3 py-2 text-sm text-white hover:bg-gray-600"
-                        data-lang-code={lang.code}
-                >
-                    <img src={lang.flag} alt={`Bandera de ${lang.name}`} class="h-4 w-4" />
-                    <span>{lang.name}</span>
-                </button>
-        ))}
-    </div>
+	<div
+		id="lang-switcher-dropdown"
+		class="absolute right-0 mt-2 w-36 bg-gray-700 rounded-md shadow-lg z-20 hidden"
+	>
+		{uiLanguages.map((lang) => (
+			<a
+				href={getUrlForLang(lang.code)}
+				class="flex items-center space-x-2 w-full text-left px-3 py-2 text-sm text-white hover:bg-gray-600"
+			>
+				<img
+					src={lang.flag}
+					alt={`Bandera de ${lang.name}`}
+					class="h-4 w-4"
+				/>
+				<span>{lang.name}</span>
+			</a>
+		))}
+	</div>
 </div>
 
 <script>
-    import { logger } from "@/services/logger.ts";
-    const log = logger("LangSelector");
+	document.addEventListener("DOMContentLoaded", async () => {
+        // Importación dinámica para el cliente
+        const { logger } = await import('@/services/logger.ts');
+        const log = logger("LangSelector:Client");
 
-    document.addEventListener('DOMContentLoaded', () => {
         log.info("🟢 [CLIENT] LangSelector montado");
 
-        const container = document.getElementById('lang-switcher-container');
-        const button = document.getElementById('lang-switcher-button');
-        const dropdown = document.getElementById('lang-switcher-dropdown');
+		const container = document.getElementById("lang-switcher-container");
+		const button = document.getElementById("lang-switcher-button");
+		const dropdown = document.getElementById("lang-switcher-dropdown");
 
-        if (!container || !button || !dropdown) {
+		if (!container || !button || !dropdown) {
             log.error("🔴 [CLIENT] Elementos del LangSelector no encontrados");
             return;
         }
 
-        // Sincronizar bandera al cargar según la cookie
-        const mainFlagEl = document.getElementById('lang-switcher-flag') as HTMLImageElement | null;
-        try {
-            const cookieLang = document.cookie.split('; ').find(r => r.startsWith('lang='))?.split('=')[1] || 'es';
-            const desiredBtn = document.querySelector(`#lang-switcher-dropdown .lang-option[data-lang-code="${cookieLang}"]`) as HTMLButtonElement | null;
-            const optionImg = desiredBtn?.querySelector('img') as HTMLImageElement | null;
-            if (mainFlagEl && optionImg) {
-                mainFlagEl.src = optionImg.src;
-                mainFlagEl.alt = optionImg.alt;
-                log.info('🟢 [CLIENT] Bandera sincronizada:', cookieLang);
-            }
-        } catch (e) {
-            log.warn('⚠️ [CLIENT] No se pudo sincronizar bandera', e);
-        }
+		button.addEventListener("click", (e) => {
+			e.stopPropagation();
+			dropdown.classList.toggle("hidden");
+			button.setAttribute("aria-expanded", String(!dropdown.classList.contains("hidden")));
+		});
 
-        // Toggle del dropdown
-        button.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const isHidden = dropdown.classList.toggle('hidden');
-            button.setAttribute('aria-expanded', String(!isHidden));
-        });
-
-        // Cerrar si se hace click fuera
-        document.addEventListener('click', () => {
-            if (!dropdown.classList.contains('hidden')) {
-                dropdown.classList.add('hidden');
-                button.setAttribute('aria-expanded', 'false');
-            }
-        });
-
-        // Manejo del cambio de idioma
-        const langButtons: NodeListOf<HTMLButtonElement> = dropdown.querySelectorAll('.lang-option');
-        langButtons.forEach(langButton => {
-            langButton.addEventListener('click', () => {
-                const newLangCode = langButton.dataset.langCode;
-
-                if (!newLangCode) {
-                    log.warn('⚠️ Código de idioma inválido');
-                    return;
-                }
-
-                log.info("🟠 Cambiando a idioma:", newLangCode);
-
-                // Actualizar bandera inmediatamente
-                const optionImg = langButton.querySelector('img') as HTMLImageElement | null;
-                if (mainFlagEl && optionImg) {
-                    mainFlagEl.src = optionImg.src;
-                    mainFlagEl.alt = optionImg.alt;
-                }
-
-                // Actualizar cookie
-                document.cookie = `lang=${newLangCode}; path=/; max-age=31536000; SameSite=Lax`;
-
-                // Obtener ruta limpia
-                const currentPath = window.location.pathname.replace(/^\/en/, '') || '/';
-                const query = window.location.search || '';
-                const hash = window.location.hash || '';
-
-                // Redirigir a ruta limpia
-                // Vercel leerá la cookie y servirá el contenido correcto
-                const targetUrl = currentPath + query + hash;
-
-                log.info('🟢 Redirigiendo a:', targetUrl);
-                window.location.href = targetUrl;
-            });
-        });
-    });
+		document.addEventListener("click", () => {
+			if (!dropdown.classList.contains("hidden")) {
+				dropdown.classList.add("hidden");
+				button.setAttribute("aria-expanded", "false");
+			}
+		});
+	});
 </script>

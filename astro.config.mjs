@@ -9,6 +9,13 @@ const isDevEnvironment = process.env.NODE_ENV === "development";
 
 export default defineConfig({
 	site: "https://www.hotelensueños.com",
+	vite: {
+		resolve: {
+			alias: {
+				picocolors: "/src/polyfills/picocolors.js",
+			},
+		},
+	},
 	// Configurar i18n
 	i18n: {
 		defaultLocale: "es",
@@ -21,12 +28,19 @@ export default defineConfig({
 		tailwindcss(),
 		icon({ iconSets: [{ name: "astro", svg: { dir: "src/icons" } }] }),
 	],
-	adapter: isDevEnvironment
-		? node({
-				mode: "static",
-			})
-		: vercel({
-				webAnalytics: { enabled: true },
+	...(isDevEnvironment
+		? {}
+		: {
+				adapter: vercel({
+					webAnalytics: { enabled: true },
+				}),
 			}),
+	// adapter: isDevEnvironment
+	// 	? node({
+	// 			mode: "static",
+	// 		})
+	// 	: vercel({
+	// 			webAnalytics: { enabled: true },
+	// 		}),
 	output: "static",
 });

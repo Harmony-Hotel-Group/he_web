@@ -1,0 +1,97 @@
+
+{
+	"site": {
+		"title": "Hôtel Ensueños par HHG"
+	},
+	"nav": {
+		"home": "Accueil",
+		"about": "À propos de nous",
+		"contact": "Contact",
+		"rooms": "Chambres",
+		"destinations": "Destinations",
+		"gastronomy": "Gastronomie",
+		"tours": "Tours",
+		"booking": "Réserver maintenant"
+	},
+	"components": {
+		"dateRangePicker": "{{n}} nuit{{s}}",
+		"errors": {
+			"dateRangePicker": "Veuillez sélectionner une plage de dates"
+		}
+	},
+	"footer": {
+		"description": "Situé au cœur du centre historique de Cuenca, en Équateur, notre hôtel de charme vous invite à vivre une expérience unique. À quelques pas de la majestueuse Cathédrale de l'Immaculée Conception et entouré de la vie culturelle animée de la ville, l'Hôtel Ensueños est le point de départ idéal pour explorer les charmes de ce site du patrimoine mondial.\n\nÀ l'Hôtel Ensueños, nous nous engageons à votre satisfaction et à votre confort. Dès que vous entrerez dans notre hall accueillant, vous sentirez la chaleur et l'attention personnalisée qui nous distinguent. Nos 15 chambres et notre bar/restaurant sont conçus pour vous offrir un séjour confortable et relaxant. Notre personnel amical est toujours à votre disposition pour répondre à tous vos besoins, des recommandations de restaurants locaux à l'organisation de visites passionnantes de la ville.",
+		"navigation": "Navigation",
+		"interest": "Information",
+		"legal": "Légal",
+		"social": "Suivez-nous",
+		"rights": "Tous droits réservés",
+		"developed": "Développé par",
+		"about": "À propos de nous",
+		"gallery": "Galerie",
+		"contact": "Contact",
+		"booking": "Réserver",
+		"privacy": "Politique de confidentialité",
+		"terms": "Termes et conditions",
+		"cancellation": "Politique d'annulation",
+		"faq": "Questions fréquentes"
+	},
+	"booking": {
+		"title": "Réservez votre aventure",
+		"subtitle": "Trouvez et réservez votre place pour la prochaine grande expérience.",
+		"dropdown": {
+			"lblAdults": "Adultes",
+			"optAdults": "{{i}} Adulte{{s}}",
+			"optGroup": "Groupe",
+			"lblChildren": "Enfants",
+			"optChildren": "{{i}} Enfant{{s}}",
+			"lblRooms": "Chambres",
+			"optRooms": "{{i}} Chambre{{s}}",
+			"error": "Veuillez sélectionner une option"
+		},
+		"switch": {
+			"breakfast": "Inclure le petit-déjeuner",
+			"vehicle": "Je viens en véhicule",
+			"special_request": "Demande spéciale"
+		},
+		"btn": {
+			"search": "Réserver avec un conseiller"
+		},
+		"dateRange": {
+			"title": "Sélectionnez vos dates",
+			"placeholder": "Sélectionnez une plage de dates",
+			"error": "Aucune date sélectionnée"
+		},
+		"number": {
+			"error": "Veuillez choisir un numéro valide"
+		},
+		"vehicles": {
+			"title": "Réserver un véhicule",
+			"vehicle": "Véhicule",
+			"type": "Type",
+			"add": "Ajouter un véhicule",
+			"remove": "Supprimer le véhicule",
+			"plate": {
+				"title": "Plaque",
+				"placeholder": "ABC-1234 (Optionnel)"
+			},
+			"notes": "Note additionnelle",
+			"notesPlaceHolder": "Décrivez des notes supplémentaires"
+		},
+		"group": {
+			"title": "Informations sur le groupe",
+			"adults": "Nb. Adultes +18",
+			"teens": "Nb. Adolescents +12",
+			"kids": "Nb. Enfants +5",
+			"infants": "Nb. Bébés -5",
+			"notes": "Demande spéciale",
+			"notesPlaceholder": "Décrivez si vous souhaitez des informations supplémentaires",
+			"vehicle": "Nous venons en véhicules",
+			"modal": {
+				"title": "Réservation de groupe",
+				"cancel": "Annuler",
+				"confirm": "Confirmer"
+			}
+		}
+	}
+}

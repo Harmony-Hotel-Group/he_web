@@ -17,6 +17,8 @@
  */
 
 // ==================== IMPORTS ====================
+import { logger } from "@/services/logger.ts";
+
 const log = logger("Translation");
 
 const flags = import.meta.glob<{ default: ImageMetadata }>(
@@ -27,7 +29,6 @@ log.info("Buscando banderas...", Object.keys(flags));
 const jsons = import.meta.glob("/src/i18n/*.json");
 log.info("Buscando archivos de traducción...", Object.keys(jsons));
 
-import { logger } from "@/services/logger.ts";
 // ==================== TYPES ====================
 
 /**
@@ -39,7 +40,7 @@ type TranslationObject = Record<string, any>;
 /**
  * Define los idiomas soportados de forma explícita.
  */
-type SupportedLang = "en" | "es";
+export type SupportedLang = "en" | "es" | "fr";
 
 /**
  * Define el tipo para los parámetros dinámicos que se pueden insertar en las cadenas de traducción.
@@ -48,9 +49,11 @@ type SupportedLang = "en" | "es";
 type TranslationParams = Record<string, string | number>;
 
 // ==================== CONFIG ====================
-const langNames = {
+
+const langNames: Record<SupportedLang, string> = {
 	es: "Español",
 	en: "English",
+	fr: "Français",
 };
 
 export const languages: { code: string; name: string; flag: string }[] = [];
@@ -60,11 +63,13 @@ await (async () => {
 		// @ts-expect-error
 		const code = path.split("/").pop().replace(".svg", "");
 		const mod = await flags[path]();
-		languages.push({
-			code,
-			name: langNames[code] || code,
-			flag: mod.default.src,
-		});
+		if (Object.keys(langNames).includes(code)) {
+			languages.push({
+				code,
+				name: langNames[code as SupportedLang] || code,
+				flag: mod.default.src,
+			});
+		}
 	}
 })();
 
@@ -82,17 +87,12 @@ export const defaultLang: SupportedLang = "es";
  * Array con todos los idiomas soportados por la aplicación.
  * @type {SupportedLang[]}
  */
-export const supportedLangs: SupportedLang[] = ["en", "es"];
+export const supportedLangs: SupportedLang[] = ["en", "es", "fr"];
 
 /**
  * Objeto que almacena todos los archivos de traducción cargados.
  * Cada idioma soportado debe tener su correspondiente objeto de traducción aquí.
- * @type {Record<SupportedLang, TranslationObject>}
  */
-// export const translations: Record<SupportedLang, TranslationObject> = {
-// 	en: en,
-// 	es: es,
-// };
 const translations: Record<string, any> = {};
 
 await (async () => {
@@ -105,54 +105,20 @@ await (async () => {
 })();
 
 log.warn("Archivos de traducción cargados:", Object.keys(translations));
-// log.info("Archivos de traducción cargados:", translations);
 
 // ===================== UTILS =====================
 
-export function getCurrentLang(
-	url?: URL | string,
-	request?: Request, // Este parámetro se mantiene por compatibilidad pero NO se usa en SSG
-): Language {
-	// EN MODO ESTÁTICO (SSG): Solo detectar por URL pathname
-	// La cookie se manejará en el cliente después del hydration
+export function getCurrentLang(url: URL): Language {
+	const pathname = url.pathname;
+	const langCode = pathname.split("/")[1];
 
-	if (url) {
-		const pathname = typeof url === "string" ? url : url.pathname;
-		if (pathname === "/en" || pathname.startsWith("/en/")) {
-			log.info("🟢 [SSR/SSG] Idioma desde pathname: en");
-			return "en" as Language;
-		}
-		log.info("🟢 [SSR/SSG] Idioma desde pathname: es");
-		return "es" as Language;
+	if (supportedLangs.includes(langCode as SupportedLang)) {
+		log.info(`🟢 [SSG] Idioma desde pathname: ${langCode}`);
+		return langCode as Language;
 	}
 
-	// SOLO EN EL CLIENTE: Leer cookie
-	if (typeof window !== "undefined") {
-		const cookieLang = getLangFromCookie();
-		if (cookieLang) {
-			log.info("🟢 [CLIENT] Idioma desde cookie:", cookieLang);
-			return cookieLang;
-		}
-
-		const p = window.location.pathname;
-		if (p === "/en" || p.startsWith("/en/")) {
-			log.info("🟢 [CLIENT] Idioma desde pathname: en");
-			return "en" as Language;
-		}
-	}
-
-	log.info("🟢 Usando idioma por defecto:", defaultLang);
+	log.info(`🟢 [SSG] Idioma por defecto: ${defaultLang}`);
 	return defaultLang;
-}
-
-export function getLangFromCookie(): Language | null {
-	if (typeof document === "undefined") return null;
-	const match = document.cookie.match(/lang=(\w+)/);
-	return match ? (match[1] as Language) : null;
-}
-
-export function setLangCookie(lang: Language) {
-	document.cookie = `lang=${lang}; path=/; max-age=31536000; SameSite=Lax`;
 }
 
 // ==================== HELPERS ====================

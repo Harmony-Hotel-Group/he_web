@@ -8,6 +8,7 @@ const log = logger("Api");
  */
 interface ApiServiceOptions {
 	baseUrl: string;
+	cacheDuration?: number;
 	timeout?: number;
 }
 
@@ -26,17 +27,27 @@ interface FetchOptions {
 export class Api {
 	private readonly baseUrl: string;
 	private readonly apiTimeout: number;
+	private readonly cacheDuration: number;
+	private cache = new Map<string, { data: any; timestamp: number }>();
 
 	constructor(options: ApiServiceOptions) {
 		if (!options.baseUrl) {
 			throw new Error("ApiService requiere una 'baseUrl' en las opciones.");
 		}
 		this.baseUrl = options.baseUrl;
-		this.apiTimeout = options.timeout ?? 8000; // Default a 8 segundos
+		this.apiTimeout = options.timeout ?? 8000; // 8 segundos por defecto
+		this.cacheDuration = options.cacheDuration ?? 5 * 60 * 1000; // 5 minutos por defecto
 		log.info("Servicio de API inicializado con opciones:", options);
 	}
 
 	// ============== Métodos Públicos ==============
+
+	public warmUpCache(key: string, data: any) {
+		if (data) {
+			this.cache.set(key, { data, timestamp: Date.now() });
+			log.info(`Caché pre-cargado para la clave: '${key}'`);
+		}
+	}
 
 	public async fetch<T>(
 		key: string,
@@ -49,6 +60,13 @@ export class Api {
 			params,
 			headers,
 		});
+
+		// 1. Revisar el caché primero
+		const cachedItem = this.cache.get(key);
+		if (cachedItem && Date.now() - cachedItem.timestamp < this.cacheDuration) {
+			log.info(`Retornando datos desde el caché para la clave: '${key}'`);
+			return cachedItem.data as T;
+		}
 
 		try {
 			// Si la baseUrl no es una URL http(s) válida, no intentar el fetch y usar fallback.
@@ -84,6 +102,11 @@ export class Api {
 
 			const data = (payload?.data ?? payload ?? null) as T | null;
 			log.info(`Datos finales procesados para '${key}':`, data);
+
+			// 2. Guardar en caché si la respuesta fue exitosa
+			if (data !== null) {
+				this.cache.set(key, { data, timestamp: Date.now() });
+			}
 
 			return data;
 		} catch (e: any) {
@@ -211,7 +234,46 @@ export class Api {
 	}
 }
 
-// Para que Vite incluya la variable de entorno en el cliente, debe empezar con PUBLIC_
+// --- Instancia Singleton de la API ---
+
+// 1. Leer el intervalo de caché desde las variables de entorno.
+//    El valor por defecto será 5 minutos si no se especifica.
+const cacheMinutes = parseInt(
+	import.meta.env.STATUS_CHECK_INTERVAL_MINUTES || "5",
+	10,
+);
+const cacheDurationMs = cacheMinutes * 60 * 1000;
+
+log.info(
+	`Intervalo de caché configurado a ${cacheMinutes} minutos (${cacheDurationMs}ms).`,
+);
+
 export const api = new Api({
-	baseUrl: import.meta.env.PUBLIC_API_BASE_URL || "/",
+	baseUrl: import.meta.env.PUBLIC_API_BASE_URL || "",
+	cacheDuration: cacheDurationMs,
 });
+
+/**
+ * Función de inicialización del lado del servidor.
+ * Realiza una llamada inicial para obtener datos críticos (ej. 'config')
+ * y los pre-carga en el caché de la instancia de la API.
+ * Esto solo se ejecuta una vez cuando el servidor de Astro arranca.
+ */
+async function initializeApiOnServer() {
+	if (import.meta.env.SSR) {
+		log.info("[SSR] Inicializando API y pre-cargando datos críticos...");
+		try {
+			// Obtenemos la configuración una sola vez.
+			const config = await api.fetch("config");
+			if (config) {
+				// La guardamos en el caché para que esté disponible instantáneamente para todas las páginas.
+				api.warmUpCache("config", config);
+			}
+		} catch (error) {
+			log.error("[SSR] Falló la pre-carga de datos para la API.", error);
+		}
+	}
+}
+
+// Ejecutamos la inicialización.
+initializeApiOnServer();

@@ -2,8 +2,8 @@
 import {
 	getCurrentLang,
 	languages,
+	SUPPORTED_LANGS,
 	type SupportedLang,
-	supportedLangs,
 } from "@/i18n/translation.ts";
 import { logger } from "@/services/logger.ts";
 
@@ -13,7 +13,7 @@ const currentLangCode = getCurrentLang(Astro.url);
 log.info("🟢 [SSR] Lang para selector:", currentLangCode);
 
 const uiLanguages = languages.filter((l) =>
-	supportedLangs.includes(l.code as SupportedLang),
+	SUPPORTED_LANGS.includes(l.code as SupportedLang),
 );
 
 const selectedLang =

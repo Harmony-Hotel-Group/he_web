@@ -147,16 +147,18 @@ const imageId = `img-${Math.random().toString(36).substr(2, 9)}`;
      * Detecta cuando la imagen carga y quita el skeleton
      */
 
-    import { logger } from '@/services/logger';
-
-    const log = logger('ImageResource');
-    
     class ImageResourceManager {
         private images: Map<string, HTMLImageElement> = new Map();
         private skeletons: Map<string, HTMLElement> = new Map();
+        private log: ReturnType<typeof import('@/services/logger').logger>;
 
-        constructor() {
-            this.initImages();
+        constructor(loggerInstance: any) {
+            this.log = loggerInstance;
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', () => this.initImages());
+            } else {
+                this.initImages();
+            }
         }
 
         private initImages() {
@@ -191,8 +193,7 @@ const imageId = `img-${Math.random().toString(36).substr(2, 9)}`;
                 }
             });
 
-
-            log.info(`Initialized ${this.images.size} image(s)`);
+            this.log.info(`Initialized ${this.images.size} image(s)`);
             
         }
 
@@ -209,7 +210,7 @@ const imageId = `img-${Math.random().toString(36).substr(2, 9)}`;
             // Mostrar imagen con fade in
             img.classList.add('loaded');
 
-                log.info(`Image loaded: ${imageId}`);
+            this.log.info(`Image loaded: ${imageId}`);
         }
 
         private handleImageError(
@@ -217,7 +218,7 @@ const imageId = `img-${Math.random().toString(36).substr(2, 9)}`;
             wrapper: HTMLElement,
             skeleton: HTMLElement | null
         ) {
-            console.error(`[ImageResource] Failed to load image: ${imageId}`);
+            this.log.error(`Failed to load image: ${imageId}`);
 
             // Marcar wrapper como error
             wrapper.classList.add('error');
@@ -243,15 +244,12 @@ const imageId = `img-${Math.random().toString(36).substr(2, 9)}`;
         }
     }
 
-    // Instancia global
-    let imageManager: ImageResourceManager;
-
-    // Inicializar cuando el DOM esté listo
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', () => {
-            imageManager = new ImageResourceManager();
-        });
-    } else {
-        imageManager = new ImageResourceManager();
-    }
+    // Inicialización asíncrona para cargar el logger dinámicamente
+    (async () => {
+        const { logger } = await import('@/services/logger.ts');
+        const log = logger('ImageResource:Client');
+        // Instanciar el manager una vez que el logger está listo
+        // y pasarle la instancia del logger.
+        new ImageResourceManager(log);
+    })();
 </script>

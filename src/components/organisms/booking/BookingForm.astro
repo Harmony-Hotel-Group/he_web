@@ -153,16 +153,22 @@ const email = config?.contactInfo?.email ?? "";
 <script>
     import { actions } from 'astro:actions';
 
-    document.addEventListener("DOMContentLoaded", () => {
+    document.addEventListener("DOMContentLoaded", async () => {
+        const { logger } = await import('@/services/logger.ts');
+        const log = logger('BookingForm:Client');
+
         const form: HTMLFormElement = document.getElementById('booking-form') as HTMLFormElement;
         if (!form) return;
 
         const bookingBar = form.closest('#booking-bar');
         const vehicleSection = document.getElementById('vehicle-section');
-        const vehicleSwitchButton = form.querySelector('button[id="vehicle"]');
+        const vehicleSwitchButton = form.querySelector('button#vehicle');
 
         if (vehicleSwitchButton && vehicleSection) {
-            const observer = new MutationObserver(() => {
+            const observer = new MutationObserver((mutations) => {
+                const mutation = mutations[0];
+                if (mutation.attributeName !== 'aria-checked') return;
+
                 const isChecked = vehicleSwitchButton.getAttribute('aria-checked') === 'true';
                 vehicleSection.classList.toggle('hidden', !isChecked);
                 bookingBar?.classList.toggle('max-h-[80vh]', isChecked);
@@ -175,12 +181,24 @@ const email = config?.contactInfo?.email ?? "";
             });
         }
 
-        const adultsSelect = document.getElementById('adults');
-        const modalBookingGroup = new (window as any).ModalBookingGroup();
-        adultsSelect?.addEventListener('change', (e) => {
-            if ((e.target as HTMLSelectElement).value === 'group') {
-                modalBookingGroup.open();
-            }
+        // --- Lógica para el Modal de Grupo ---
+        // Espera a que el componente ModalBookingGroup anuncie que está listo.
+        document.addEventListener('modalBookingGroupReady', () => {
+            log.info('Evento modalBookingGroupReady recibido. Inicializando lógica del modal.');
+
+            // Ahora es seguro crear la instancia del modal.
+            const modalInstance = new (window as any).ModalBookingGroupClass();
+            const adultsDropdown = document.getElementById('adults');
+
+            adultsDropdown?.addEventListener('change', (e) => {
+                const target = e.target as HTMLSelectElement;
+                if (target.value === 'group') {
+                    log.info("Opción 'group' seleccionada. Abriendo modal.");
+                    modalInstance.open();
+                    // Opcional: resetear el dropdown a un valor por defecto para que no se quede en "Grupo"
+                    target.value = "2";
+                }
+            });
         });
 
         function clearValidationErrors() {

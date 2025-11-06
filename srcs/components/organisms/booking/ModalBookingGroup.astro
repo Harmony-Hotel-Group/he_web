@@ -137,6 +137,10 @@ const t = Translations(lang);
                 }
 
                 this.initEventListeners();
+
+                // Anunciar que el modal está listo para ser usado
+                const readyEvent = new CustomEvent('modalBookingGroupReady');
+                document.dispatchEvent(readyEvent);
             }
 
             private initEventListeners() {
@@ -331,7 +335,7 @@ const t = Translations(lang);
         }
 
         // Hacer la clase disponible globalmente
-        (window as any).ModalBookingGroup = ModalBookingGroup;
+        (window as any).ModalBookingGroupClass = ModalBookingGroup;
     });
 </script>
 

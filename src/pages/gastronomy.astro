@@ -1,0 +1,12 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+interface Props {
+	lang: string;
+}
+
+const { lang = "es" } = Astro.props;
+---
+
+<BaseLayout titleKey="site.title" lang={lang}>
+    <h1>Gastronimia</h1>
+</BaseLayout>

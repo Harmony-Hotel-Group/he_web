@@ -136,7 +136,7 @@ function formatBookingMessage(
 	data: ProcessedBookingData,
 	type: BookingType,
 ): string {
-	const baseMessage = `*Estimado Hotel Ensueños, necesito ayuda con una reserva:*\n\n`;
+	const _baseMessage = `*Estimado Hotel Ensueños, necesito ayuda con una reserva:*\n\n`;
 
 	switch (type) {
 		case "normal":
@@ -276,9 +276,9 @@ export async function sendEmail(
 	type: BookingType,
 ): Promise<void> {
 	try {
-		const subject = getEmailSubject(type);
-		const htmlContent = generateEmailTemplate(data, type);
-		const textContent = generateTextTemplate(data, type);
+		const _subject = getEmailSubject(type);
+		const _htmlContent = generateEmailTemplate(data, type);
+		const _textContent = generateTextTemplate(data, type);
 
 		// Aquí implementarías el envío real del email
 		// Por ahora solo mostramos en consola
@@ -468,10 +468,10 @@ function generateTextTemplate(
 
 	let content = `Nueva ${type === "normal" ? "reserva" : type === "group" ? "reserva grupal" : "información de vehículos"} - Hotel Ensueños\n\n`;
 	content += `Fecha: ${currentDate}\n`;
-	content += "=".repeat(50) + "\n\n";
+	content += `${"=".repeat(50)}\n\n`;
 
 	content += getTextContent(data, type);
-	content += "\n\n" + "=".repeat(50);
+	content += `\n\n${"=".repeat(50)}`;
 	content += "\nEste mensaje fue generado automáticamente.";
 	content +=
 		"\nPor favor, responder directamente al cliente para cualquier consulta.";
@@ -568,7 +568,7 @@ function getVehiclesData(
 		const plate = formData.get(`vehiclePlate${i}`) as string;
 
 		if (type) {
-			// @ts-ignore
+			// @ts-expect-error
 			vehicles.push({ type, plate: plate || "" });
 		}
 	}
@@ -606,7 +606,7 @@ export function validateBookingData(
 				errors.push("Fecha de reserva es requerida");
 			}
 			const groupAdults = formData.get("groupAdults");
-			if (!groupAdults || parseInt(groupAdults as string) < 1) {
+			if (!groupAdults || Number.parseInt(groupAdults as string, 10) < 1) {
 				errors.push("Debe especificar al menos 1 adulto");
 			}
 			break;

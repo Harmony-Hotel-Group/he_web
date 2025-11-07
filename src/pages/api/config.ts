@@ -1,5 +1,6 @@
 import path from "node:path";
 import type { APIContext } from "astro";
+import type { SiteConfig } from "@/types/config";
 import { json200, loadData } from "@/utils/apiHelpers";
 
 const UPSTREAM_URL =
@@ -15,7 +16,7 @@ const PROCESS_NAME = "api/config";
 export const prerender = false; // SSR runtime
 
 export async function GET(_ctx: APIContext) {
-	const data = await loadData<any>(
+	const data = await loadData<SiteConfig>(
 		CACHE_KEY,
 		LOCAL_FILE,
 		UPSTREAM_URL,

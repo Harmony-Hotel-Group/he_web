@@ -58,8 +58,9 @@ export async function sendEmail(input: SendEmailInput) {
 		const result = await doMailgunSend(params);
 		if (ENV.DEV) console.log("[messages/email] send result:", result);
 		return result;
-	} catch (e: any) {
-		console.error("[messages/email] send error:", e?.message || e);
+	} catch (e) {
+		const errorMessage = e instanceof Error ? e.message : String(e);
+		console.error("[messages/email] send error:", errorMessage);
 		return { ok: false, error: e } as const;
 	}
 }

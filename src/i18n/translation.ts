@@ -19,7 +19,10 @@ const log = logger("Translation");
 
 // ==================== TYPES ====================
 
-type TranslationObject = Record<string, any>;
+interface TranslationObject {
+	[key: string]: string | TranslationObject;
+}
+
 export type SupportedLang = "en" | "es" | "fr";
 type TranslationParams = Record<string, string | number>;
 
@@ -85,7 +88,9 @@ async function loadResources() {
 	const flagsGlob = import.meta.glob<{ default: ImageMetadata }>(
 		"/src/resources/img/flags/*.svg",
 	);
-	const jsonsGlob = import.meta.glob("/src/i18n/*.json");
+	const jsonsGlob = import.meta.glob<{ default: TranslationObject }>(
+		"/src/i18n/*.json",
+	);
 
 	const [languages, translations] = await Promise.all([
 		loadLanguages(flagsGlob),
@@ -125,7 +130,7 @@ async function loadLanguages(
 }
 
 async function loadTranslations(
-	jsonsGlob: Record<string, () => Promise<any>>,
+	jsonsGlob: Record<string, () => Promise<{ default: TranslationObject }>>,
 ): Promise<Record<SupportedLang, TranslationObject>> {
 	const entries = Object.entries(jsonsGlob);
 	const translations: Partial<Record<SupportedLang, TranslationObject>> = {};
@@ -181,7 +186,7 @@ function findTranslation(
 	if (!obj || !key) return null;
 
 	const keys = key.split(".");
-	let result: any = obj;
+	let result: string | TranslationObject = obj;
 
 	for (const k of keys) {
 		if (result == null || typeof result !== "object" || !(k in result)) {

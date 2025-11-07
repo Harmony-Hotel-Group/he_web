@@ -8,7 +8,7 @@ interface WebhookOptions {
 
 export async function postWebhook(
 	url: string,
-	payload: any,
+	payload: Record<string, unknown>,
 	options: WebhookOptions = {},
 ) {
 	const { headers, timeoutMs = 8000 } = options;
@@ -27,8 +27,9 @@ export async function postWebhook(
 		clearTimeout(id);
 		const text = await res.text().catch(() => "");
 		return { ok: res.ok, status: res.status, body: text } as const;
-	} catch (e: any) {
+	} catch (e) {
 		clearTimeout(id);
-		return { ok: false, error: e?.message || String(e) } as const;
+		const error = e instanceof Error ? e.message : String(e);
+		return { ok: false, error } as const;
 	}
 }

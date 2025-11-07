@@ -9,6 +9,7 @@ import HomeSection from "@/components/organisms/home/HomeSection.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { api } from "@/services/api.ts";
 import { logger } from "@/services/logger.ts";
+import type { SiteConfig } from "@/types/config";
 
 const log = logger("IndexPage");
 
@@ -20,7 +21,7 @@ if (lang === "es") {
 	return Astro.redirect("/", 302);
 }
 
-const config: any = await api.fetch("config", { params: { lang } });
+const config = (await api.fetch("config", { params: { lang } })) as SiteConfig;
 
 log.info("Datos de configuración (config) cargados:", config);
 

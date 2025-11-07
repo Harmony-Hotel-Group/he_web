@@ -16,7 +16,7 @@ interface ApiServiceOptions {
  * Opciones para una solicitud de `fetchData`.
  */
 interface FetchOptions {
-	params?: Record<string, any>;
+	params?: Record<string, unknown>;
 	headers?: Record<string, string>;
 }
 
@@ -28,7 +28,7 @@ export class Api {
 	private readonly baseUrl: string;
 	private readonly apiTimeout: number;
 	private readonly cacheDuration: number;
-	private cache = new Map<string, { data: any; timestamp: number }>();
+	private cache = new Map<string, { data: unknown; timestamp: number }>();
 
 	constructor(options: ApiServiceOptions) {
 		if (!options.baseUrl) {
@@ -42,7 +42,7 @@ export class Api {
 
 	// ============== Métodos Públicos ==============
 
-	public warmUpCache(key: string, data: any) {
+	public warmUpCache(key: string, data: unknown) {
 		if (data) {
 			this.cache.set(key, { data, timestamp: Date.now() });
 			log.info(`Caché pre-cargado para la clave: '${key}'`);
@@ -109,10 +109,11 @@ export class Api {
 			}
 
 			return data;
-		} catch (e: any) {
+		} catch (e) {
+			const error = e instanceof Error ? e.message : String(e);
 			log.warn(
 				`El fetch para '${key}' falló. Intentando fallback local. Error:`,
-				e?.message || e,
+				error,
 			);
 
 			const local = await this.readLocalFallback<T>(endpoint);
@@ -128,7 +129,7 @@ export class Api {
 		}
 	}
 
-	public async multiFetch<T = any>(
+	public async multiFetch<T = unknown>(
 		inputs: string[] | Record<string, FetchOptions>,
 	): Promise<Record<string, T | null | Error>> {
 		log.info("Iniciando multi-fetch con entradas:", inputs);
@@ -218,10 +219,11 @@ export class Api {
 					);
 					return null;
 				}
-			} catch (e: any) {
+			} catch (e) {
+				const error = e instanceof Error ? e.message : String(e);
 				log.error(
 					`[SSR] Error al importar dinámicamente el fallback para '${endpoint}':`,
-					e.message,
+					error,
 				);
 				return null;
 			}

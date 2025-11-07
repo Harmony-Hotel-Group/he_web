@@ -60,8 +60,8 @@ function timeStamp(): string {
 function formatLineServer(
 	level: "INFO" | "WARN" | "ERROR",
 	context: string,
-	args: any[],
-): any[] {
+	args: unknown[],
+): unknown[] {
 	let color: string;
 	switch (level) {
 		case "WARN":
@@ -85,8 +85,8 @@ function formatLineServer(
 function formatLineBrowser(
 	level: "INFO" | "WARN" | "ERROR",
 	context: string,
-	args: any[],
-): any[] {
+	args: unknown[],
+): unknown[] {
 	let levelColor: string;
 	switch (level) {
 		case "WARN":
@@ -131,7 +131,7 @@ export function logger(context: string) {
 
 	const base =
 		(level: "INFO" | "WARN" | "ERROR", type: "log" | "warn" | "error") =>
-		(...args: any[]) => {
+		(...args: unknown[]) => {
 			if (!active) return;
 
 			// Usar formato apropiado según el entorno

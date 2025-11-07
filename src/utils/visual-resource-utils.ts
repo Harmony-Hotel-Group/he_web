@@ -95,7 +95,7 @@ export function extractYouTubeId(url: string): string | null {
 
 	for (const pattern of patterns) {
 		const match = url.match(pattern);
-		if (match && match[1]) {
+		if (match?.[1]) {
 			return match[1];
 		}
 	}
@@ -342,7 +342,7 @@ export function getCacheStats() {
 // Exponer en desarrollo para debugging
 if (import.meta.env.DEV) {
 	if (typeof window !== "undefined") {
-		(window as any).__visualResourceUtils = {
+		window.__visualResourceUtils = {
 			clearCache: clearValidationCache,
 			getCacheStats,
 			detectResourceType,

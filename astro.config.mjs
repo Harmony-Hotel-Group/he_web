@@ -1,5 +1,4 @@
 // astro.config.mjs
-import node from "@astrojs/node";
 import vercel from "@astrojs/vercel";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "astro/config";

@@ -26,7 +26,8 @@ export async function sendTelegramMessage(text: string, chatId?: string) {
 			body: JSON.stringify({ chat_id: chat, text }),
 		});
 		return { ok: res.ok, status: res.status } as const;
-	} catch (e: any) {
-		return { ok: false, error: e?.message || String(e) } as const;
+	} catch (e) {
+		const error = e instanceof Error ? e.message : String(e);
+		return { ok: false, error } as const;
 	}
 }

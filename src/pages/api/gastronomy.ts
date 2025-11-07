@@ -2,6 +2,11 @@ import path from "node:path";
 import type { APIContext } from "astro";
 import { json200, loadData } from "@/utils/apiHelpers";
 
+interface GastronomyItem {
+	id: string;
+	[key: string]: unknown;
+}
+
 const UPSTREAM_URL =
 	import.meta.env.GASTRONOMY_UPSTREAM_URL ??
 	(import.meta.env.API_BASE_URL
@@ -20,7 +25,7 @@ const PROCESS_NAME = "api/gastronomy";
 export const prerender = false; // SSR runtime
 
 export async function GET(_ctx: APIContext) {
-	const data = await loadData<any>(
+	const data = await loadData<GastronomyItem[]>(
 		CACHE_KEY,
 		LOCAL_FILE,
 		UPSTREAM_URL,

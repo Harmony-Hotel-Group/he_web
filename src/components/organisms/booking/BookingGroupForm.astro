@@ -11,10 +11,11 @@ import BookingVehicleSection from "@/components/organisms/booking/BookingVehicle
 import { Translations } from "@/i18n/translation.ts";
 import Grid from "@/layouts/GridLayout.astro";
 import Row from "@/layouts/Row.astro";
+import type { SiteConfig } from "@/types/config";
 
 interface Props {
 	lang: string;
-	config: any;
+	config: SiteConfig;
 }
 
 const { lang, config } = Astro.props;

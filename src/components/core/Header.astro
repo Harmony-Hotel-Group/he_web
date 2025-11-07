@@ -4,10 +4,11 @@
 import CurrencySelector from "@/components/core/CurrencySelector.astro";
 import LangSelector from "@/components/core/LangSelector.astro";
 import { Translations } from "@/i18n/translation.ts";
+import type { SiteConfig } from "@/types/config";
 
 interface Props {
 	lang: string;
-	config?: any;
+	config?: SiteConfig;
 }
 
 const { config, lang } = Astro.props;
@@ -42,7 +43,7 @@ const t = Translations(lang);
                             {config.roomTypes.map(roomType => (
                                     <a href={`/rooms/${roomType.id}`}
                                        class="block px-4 py-2 text-sm text-background hover:bg-accent hover:text-primary"> {/* text-white -> text-background, hover colors updated */}
-                                        {roomType.name[lang]}
+                                        {roomType.name?.[lang] ?? roomType.name.es}
                                     </a>
                             ))}
                         </div>
@@ -64,7 +65,7 @@ const t = Translations(lang);
                             {config.destinationCategories.map(category => (
                                     <a href={`/destinations/${category.id}`}
                                        class="block px-4 py-2 text-sm text-background hover:bg-accent hover:text-primary">
-                                        {category.name[lang]}
+                                        {category.name?.[lang] ?? category.name.es}
                                     </a>
                             ))}
                         </div>
@@ -86,7 +87,7 @@ const t = Translations(lang);
                             {config.gastronomyCategories.map(category => (
                                     <a href={`/gastronomy/${category.id}`}
                                        class="block px-4 py-2 text-sm text-background hover:bg-accent hover:text-primary">
-                                        {category.name[lang]}
+                                        {category.name?.[lang] ?? category.name.es}
                                     </a>
                             ))}
                         </div>
@@ -108,7 +109,7 @@ const t = Translations(lang);
                             {config.tourCategories.map(category => (
                                     <a href={`/tours/${category.id}`}
                                        class="block px-4 py-2 text-sm text-background hover:bg-accent hover:text-primary">
-                                        {category.name[lang]}
+                                        {category.name?.[lang] ?? category.name.es}
                                     </a>
                             ))}
                         </div>

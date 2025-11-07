@@ -46,6 +46,18 @@
 					}
 				}
 			}
+		},
+		{
+			"includes": [".astro/**"],
+			"linter": {
+				"enabled": false
+			}
+		},
+		{
+			"includes": ["**/*.css"],
+			"linter": {
+				"enabled": false
+			}
 		}
 	]
 }

@@ -28,19 +28,22 @@ const {
 
 const truncatedDescription =
 	description.length > 200
-		? description.substring(0, 200) + "..."
+		? `${description.substring(0, 200)}...`
 		: description;
 
 // Currency formatting (minimal, cookie-based)
-const selectedCurrency = Astro.cookies.get('currency')?.value || 'USD';
-const baseCurrency = 'USD';
+const selectedCurrency = Astro.cookies.get("currency")?.value || "USD";
+const baseCurrency = "USD";
 const rates: Record<string, number> = { USD: 1, EUR: 0.92 };
 const formatCurrency = (amount: number, currency: string) => {
 	try {
-		return new Intl.NumberFormat(undefined, { style: 'currency', currency }).format(amount);
+		return new Intl.NumberFormat(undefined, {
+			style: "currency",
+			currency,
+		}).format(amount);
 	} catch {
 		// Fallback: symbol + localized number
-		const symbol = currency === 'EUR' ? '€' : '$';
+		const symbol = currency === "EUR" ? "€" : "$";
 		return `${symbol}${amount.toLocaleString()}`;
 	}
 };
@@ -49,9 +52,13 @@ const convert = (amount: number, from: string, to: string) => {
 	const rTo = rates[to] ?? 1;
 	return amount * (rTo / rFrom);
 };
-const displayValue = typeof value === 'number'
-	? formatCurrency(convert(value, baseCurrency, selectedCurrency), selectedCurrency)
-	: null;
+const displayValue =
+	typeof value === "number"
+		? formatCurrency(
+				convert(value, baseCurrency, selectedCurrency),
+				selectedCurrency,
+			)
+		: null;
 ---
 
 <a href={href} class="group bg-white rounded-lg shadow-lg overflow-hidden transform transition-transform duration-300 hover:-translate-y-2 h-full flex flex-col">

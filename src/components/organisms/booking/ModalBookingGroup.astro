@@ -2,16 +2,17 @@
 // src/components/organisms/booking/ModalBookingGroup.astro
 import Switch from "@/components/atoms/Switch.astro";
 import { Translations } from "@/i18n/translation.ts";
+import type { SiteConfig } from "@/types/config";
 import BookingGroupForm from "./BookingGroupForm.astro";
 import BookingVehicleForm from "./BookingVehicleForm.astro";
 
 interface Props {
-    lang: string;
-    config: any;
-    isOpen: boolean;
+	lang: string;
+	config: SiteConfig;
+	isOpen: boolean;
 }
 
-const {lang, config, isOpen} = Astro.props;
+const { lang, config, isOpen } = Astro.props;
 const t = Translations(lang);
 ---
 

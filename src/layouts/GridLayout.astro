@@ -100,7 +100,10 @@ const gridStyles: Record<string, string> = {
 
 // Rows
 if (rows) {
-	gridStyles["grid-template-rows"] = generateGridRows()!;
+	const rowsTemplate = generateGridRows();
+	if (rowsTemplate) {
+		gridStyles["grid-template-rows"] = rowsTemplate;
+	}
 }
 
 // Gap

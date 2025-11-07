@@ -1,12 +1,12 @@
 ---
+import VisualResource from "@/components/molecules/media/VisualResource.astro";
 // src/components/organisms/hero/HomeHero.astro
 import VisualCarousel from "@/components/organisms/carousel/VisualCarousel.astro";
-import VisualResource from "@/components/molecules/media/VisualResource.astro";
+import { logger } from "@/services/logger.ts";
 import {
 	detectResourceType,
 	validateResource,
 } from "@/utils/visual-resource-utils.ts";
-import { logger } from "@/services/logger.ts";
 
 const log = logger("HomeHero");
 

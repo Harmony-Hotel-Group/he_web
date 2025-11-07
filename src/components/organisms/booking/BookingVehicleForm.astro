@@ -1,11 +1,12 @@
 ---
 // src/components/organisms/booking/BookingVehicleForm.astro
 import { Translations } from "@/i18n/translation.ts";
+import type { SiteConfig } from "@/types/config";
 import BookingVehicleSection from "./BookingVehicleSection.astro";
 
 interface Props {
 	lang: string;
-	config: any;
+	config: SiteConfig;
 }
 
 const { lang, config } = Astro.props;

@@ -4,8 +4,9 @@
 import Footer from "@/components/core/Footer.astro";
 import Header from "@/components/core/Header.astro";
 import SizeIndicator from "@/dev/SizeIndicator.astro";
-import { Translations, getCurrentLang } from "@/i18n/translation";
+import { getCurrentLang, Translations } from "@/i18n/translation";
 import { logger } from "@/services/logger.ts";
+import type { SiteConfig } from "@/types/config";
 import "@/styles/global.css";
 
 const log = logger("BaseLayout");
@@ -13,7 +14,7 @@ const log = logger("BaseLayout");
 interface Props {
 	titleKey: string;
 	lang: string;
-	config?: any;
+	config?: SiteConfig;
 	description?: string;
 }
 
@@ -36,7 +37,7 @@ let baseUrl = import.meta.env.VERCEL_URL
 
 try {
 	// Obtener el path de forma segura
-	if (Astro.url && Astro.url.pathname) {
+	if (Astro.url?.pathname) {
 		cleanPath = Astro.url.pathname.replace(/^\/en/, "") || "/";
 	}
 
@@ -76,7 +77,7 @@ log.info("URLs generadas:", { esUrl, enUrl, canonicalUrl, cleanPath, baseUrl });
 </head>
 <body class="flex flex-col min-h-screen overflow-x-hidden">
 <Header config={config} lang={lang}/>
-<main class="flex-grow w-full overflow-x-hidden">
+<main class="grow w-full overflow-x-hidden">
     <slot/>
 </main>
 <Footer t={t} config={config} lang={lang}/>

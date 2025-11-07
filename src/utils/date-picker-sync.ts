@@ -4,8 +4,13 @@
  * Mantiene múltiples date pickers sincronizados entre formularios
  **/
 
+interface FlatpickrInstance {
+	setDate(dates: Date | Date[], triggerChange?: boolean): void;
+	clear(): void;
+}
+
 class DatePickerSyncManager {
-	private pickers: Map<string, any> = new Map();
+	private pickers: Map<string, FlatpickrInstance> = new Map();
 	private syncGroups: Map<string, Set<string>> = new Map();
 
 	/**
@@ -13,7 +18,7 @@ class DatePickerSyncManager {
 	 */
 	public register(
 		pickerId: string,
-		pickerInstance: any,
+		pickerInstance: FlatpickrInstance,
 		syncGroup: string = "default",
 	) {
 		this.pickers.set(pickerId, pickerInstance);
@@ -22,7 +27,7 @@ class DatePickerSyncManager {
 			this.syncGroups.set(syncGroup, new Set());
 		}
 
-		this.syncGroups.get(syncGroup)!.add(pickerId);
+		this.syncGroups.get(syncGroup)?.add(pickerId);
 
 		if (import.meta.env.DEV) {
 			console.log(
@@ -114,5 +119,5 @@ export const datePickerSync = new DatePickerSyncManager();
 
 // Exponer en window para debugging
 if (typeof window !== "undefined") {
-	(window as any).__datePickerSync = datePickerSync;
+	window.__datePickerSync = datePickerSync;
 }

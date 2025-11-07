@@ -47,7 +47,8 @@ export async function sendWhatsappMessage(
 		});
 		const text = await res.text().catch(() => "");
 		return { ok: res.ok, status: res.status, body: text } as const;
-	} catch (e: any) {
-		return { ok: false, error: e?.message || String(e) } as const;
+	} catch (e) {
+		const error = e instanceof Error ? e.message : String(e);
+		return { ok: false, error } as const;
 	}
 }

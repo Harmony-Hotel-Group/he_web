@@ -43,9 +43,9 @@ export const bookingGroup = defineAction({
 			/(\d{4}\/\d{2}\/\d{2})\s*➜\s*(\d{4}\/\d{2}\/\d{2})\s*\(([^)]+)\)/;
 		const match = dateRangeGroup?.match(regex);
 
-		let checkin = null;
-		let checkout = null;
-		let nights = null;
+		let checkin: string | null = null;
+		let checkout: string | null = null;
+		let nights: string | null = null;
 
 		if (match) {
 			[, checkin, checkout, nights] = match;
@@ -57,11 +57,11 @@ export const bookingGroup = defineAction({
 		}
 
 		// Procesar vehículos si están incluidos
-		const vehicles = [];
+		const vehicles: { type: string; plate: string }[] = [];
 		if (vehicle === "true") {
 			for (let i = 1; i <= 5; i++) {
-				const type = vehicleFields[`vehicleType${i}`];
-				const plate = vehicleFields[`vehiclePlate${i}`];
+				const type: string | undefined = vehicleFields[`vehicleType${i}`];
+				const plate: string | undefined = vehicleFields[`vehiclePlate${i}`];
 
 				if (type) {
 					vehicles.push({

@@ -23,12 +23,12 @@ export const bookingVehicle = defineAction({
 		const { vehicleNotes, ...vehicleFields } = input;
 
 		// Procesar vehículos
-		const vehicles = [];
+		const vehicles: { type: string; plate: string }[] = [];
 		let vehicleCount = 0;
 
 		for (let i = 1; i <= 5; i++) {
-			const type = vehicleFields[`vehicleType${i}`];
-			const plate = vehicleFields[`vehiclePlate${i}`];
+			const type: string | undefined = vehicleFields[`vehicleType${i}`];
+			const plate: string | undefined = vehicleFields[`vehiclePlate${i}`];
 
 			if (type) {
 				vehicles.push({

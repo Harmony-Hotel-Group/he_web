@@ -50,22 +50,24 @@ export const booking = defineAction({
 		// Ejecutamos el match
 		const match = dateRange?.match(regex);
 
-		let checkin = null;
-		let checkout = null;
-		let nights = null;
+		let checkin: string | null = null;
+		let checkout: string | null = null;
+		let nights: string | null = null;
 
 		if (match) {
-			[, checkin, checkout, nights] = match;
+			[checkin, checkout, nights] = match;
 		} else {
 			console.warn("No se encontraron coincidencias en dateRange:", dateRange);
 		}
 
 		// Procesar vehículos si están incluidos
-		const vehicles = [];
+		const vehicles: { type: string; plate: string }[] = [];
 		if (vehicle === "true") {
 			for (let i = 1; i <= 5; i++) {
-				const type = input[`vehicleType${i}` as keyof typeof input];
-				const plate = input[`vehiclePlate${i}` as keyof typeof input];
+				const type: string | undefined =
+					input[`vehicleType${i}` as keyof typeof input];
+				const plate: string | undefined =
+					input[`vehiclePlate${i}` as keyof typeof input];
 
 				if (type) {
 					vehicles.push({

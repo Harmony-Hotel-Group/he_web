@@ -1,5 +1,7 @@
 // src/types/config.d.ts
 
+import type { Resource } from "@/types/resource";
+
 interface LocalizedText {
 	es: string;
 	en: string;
@@ -15,16 +17,20 @@ interface Category {
 	tags: LocalizedText;
 }
 
-interface ImageResource {
-	src: string;
-	alt: string;
-}
+// interface ImageResource extends Resource {
+// 	src: string;
+// 	alt: string;
+// }
 
-interface CarouselResource {
-	src: string;
-	type: string;
-	alt: string;
-}
+type ImageResource = Omit<Resource, "type" | "poster">;
+
+// interface CarouselResource {
+// 	src: string;
+// 	type: string;
+// 	alt: string;
+// }
+
+type CarouselResource = Omit<Resource, "poster">;
 
 export interface SiteConfig {
 	siteName?: string;

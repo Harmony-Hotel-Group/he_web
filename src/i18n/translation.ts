@@ -48,7 +48,7 @@ export const SUPPORTED_LANGS: readonly SupportedLang[] = [
 ] as const;
 
 // Regex precompilado para mejor rendimiento
-const PARAM_REGEX = /\{\{\s*(\w+)\s*\}\}/g;
+const PARAM_REGEX = /\{\{\s*(\w+)\s*}}/g;
 
 // ==================== CACHE ====================
 
@@ -197,8 +197,6 @@ function findTranslation(
 
 	// Validar tipo de resultado
 	if (typeof result === "string") return result;
-	if (typeof result === "number") return String(result);
-	if (typeof result === "boolean") return String(result);
 
 	return null;
 }
@@ -217,7 +215,7 @@ function replaceParams(translation: string, params: TranslationParams): string {
  * Normaliza código de idioma con mejor manejo
  */
 function normalizeLang(lang: string): SupportedLang {
-	if (!lang || typeof lang !== "string") return DEFAULT_LANG;
+	if (!lang) return DEFAULT_LANG;
 
 	const normalized = lang.toLowerCase().trim();
 
@@ -287,7 +285,7 @@ export function Translations(lang: string) {
 	 */
 	return function t(key: string, params?: TranslationParams): string {
 		// Validación de entrada
-		if (!key || typeof key !== "string") {
+		if (!key) {
 			log.warn("Clave de traducción inválida:", key);
 			return String(key || "");
 		}

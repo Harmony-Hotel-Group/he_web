@@ -1,11 +1,17 @@
 ---
 // src/components/organisms/carousel/VisualCarousel.astro
+import Imagen from "@/components/atoms/Imagen.astro";
+import { logger } from "@/services/logger.ts";
+import type { Resource } from "@/types/resource";
+
 interface Props {
 	class?: string;
 	maskOpacityClass?: string;
 	autoplayInterval?: number;
 	showIndicators?: boolean;
 	showScrollIndicator?: boolean;
+	resources?: Resource[];
+	arrows?: boolean;
 }
 
 const {
@@ -14,9 +20,22 @@ const {
 	autoplayInterval = 5000,
 	showIndicators = true,
 	showScrollIndicator = true,
+	resources = [],
+	arrows = false,
 } = Astro.props;
 
-const carouselId = `carousel-${Math.random().toString(36).substr(2, 9)}`;
+const log = logger("VisualCarousel");
+
+const carouselId = `carousel-${String(Math.random().toString(36)).substring(2, 9)}`;
+log.info(
+	"Crecion de VisualCarousel con ID:",
+	carouselId,
+	",Cantidad de recursos:",
+	resources.length,
+	"y intervalo:",
+	autoplayInterval,
+	"ms",
+);
 ---
 
 <div
@@ -24,7 +43,21 @@ const carouselId = `carousel-${Math.random().toString(36).substr(2, 9)}`;
     data-carousel-id={carouselId}
 >
     <div class="absolute inset-0 w-full h-full" data-carousel-container>
-        <slot />
+        {resources && resources.length > 0 ? (
+            resources.map((item, index) => (
+                <div class="absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out opacity-0">
+                    <Imagen
+                        src={item.src as string}
+                        alt={item.alt}
+                        class="w-full h-full object-cover"
+                        loading={index === 0 ? "eager" : "lazy"}
+                        fetchpriority={index === 0 ? "high" : "auto"}
+                     height={250} width={250}/>
+                </div>
+            ))
+        ) : (
+            <slot />
+        )}
     </div>
 
     <!-- Indicators (dots) -->
@@ -33,31 +66,33 @@ const carouselId = `carousel-${Math.random().toString(36).substr(2, 9)}`;
     )}
 
     <!-- Navigation arrows -->
-    <button
-        type="button"
-        class="absolute top-1/2 left-4 z-30 -translate-y-1/2 flex items-center justify-center w-12 h-12 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-sm transition-all group"
-        data-carousel-prev
-        aria-label="Slide anterior"
-    >
-        <svg class="w-6 h-6 text-white group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-        </svg>
-    </button>
-    <button
-        type="button"
-        class="absolute top-1/2 right-4 z-30 -translate-y-1/2 flex items-center justify-center w-12 h-12 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-sm transition-all group"
-        data-carousel-next
-        aria-label="Slide siguiente"
-    >
-        <svg class="w-6 h-6 text-white group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-        </svg>
-    </button>
+    {arrows && (
+            <button
+                    type="button"
+                    class="absolute top-1/2 left-4 z-30 -translate-y-1/2 flex items-center justify-center w-12 h-12 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-sm transition-all group"
+                    data-carousel-prev
+                    aria-label="Slide anterior"
+            >
+                <svg class="w-6 h-6 text-white group-hover:scale-110 transition-transform" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                </svg>
+            </button>
+            <button
+                    type="button"
+                    class="absolute top-1/2 right-4 z-30 -translate-y-1/2 flex items-center justify-center w-12 h-12 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-sm transition-all group"
+                    data-carousel-next
+                    aria-label="Slide siguiente"
+            >
+                <svg class="w-6 h-6 text-white group-hover:scale-110 transition-transform"  stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+            </button>
+    )}
 
     <!-- Scroll Down Indicator -->
     {showScrollIndicator && (
         <div class="absolute bottom-4 left-1/2 -translate-x-1/2 z-30 animate-bounce cursor-pointer" data-scroll-indicator>
-            <svg class="w-8 h-8 text-white drop-shadow-lg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg class="w-8 h-8 text-white drop-shadow-lg" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
             </svg>
         </div>

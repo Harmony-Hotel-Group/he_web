@@ -1,21 +1,22 @@
 ---
-import VisualResource from "@/components/molecules/media/VisualResource.astro";
 // src/components/organisms/hero/HomeHero.astro
+import VisualResource from "@/components/molecules/media/VisualResource.astro";
 import VisualCarousel from "@/components/organisms/carousel/VisualCarousel.astro";
 import { logger } from "@/services/logger.ts";
 import {
 	detectResourceType,
 	validateResource,
 } from "@/utils/visual-resource-utils.ts";
+import type { Resource } from "@/types/resource";
 
 const log = logger("HomeHero");
 
-interface Resource {
-	src: string;
-	type?: "image" | "video" | "youtube" | "auto";
-	alt?: string;
-	poster?: string;
-}
+// interface Resource {
+// 	src: string | ImageMetadata;
+// 	type?: "image" | "video" | "youtube" | "auto";
+// 	alt?: string;
+// 	poster?: string;
+// }
 
 interface Props {
 	resources: Resource[];

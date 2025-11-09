@@ -25,6 +25,7 @@ interface Props {
 	decoding?: "async" | "sync" | "auto";
 	quality?: number;
 	format?: "webp" | "avif" | "png" | "jpg";
+	fetchpriority?: "auto" | "high" | "low";
 }
 
 const {
@@ -38,6 +39,7 @@ const {
 	decoding = "async",
 	quality = 80,
 	format,
+	fetchpriority = "auto",
 } = Astro.props;
 
 // ==================== CACHE ====================
@@ -172,6 +174,7 @@ if (!src) {
       decoding={decoding}
       quality={quality}
       format={format}
+      fetchpriority={fetchpriority}
     />
   ) : (
     <img

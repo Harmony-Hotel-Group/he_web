@@ -70,7 +70,7 @@ const validation = await validateResource(src, detectedType);
 
 if (!validation.isValid) {
 	log.warn(
-		`Recurso no válido o no encontrado: '${src}'. Usando placeholder. Razón: ${validation.reason}`,
+		`Recurso no válido o no encontrado: '${src}'. Usando placeholder. Razón: ${validation.error}`,
 	);
 }
 ---

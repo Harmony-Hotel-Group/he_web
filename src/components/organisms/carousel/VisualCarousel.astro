@@ -38,14 +38,18 @@ log.info(
 );
 ---
 
+
+
 <div
     class:list={[className, 'relative w-full min-h-[100dvh] overflow-hidden']}
     data-carousel-id={carouselId}
 >
+
+
     <div class="absolute inset-0 w-full h-full" data-carousel-container>
         {resources && resources.length > 0 ? (
             resources.map((item, index) => (
-                <div class="absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out opacity-0">
+                <div class="absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out opacity-25">
                     <Imagen
                         src={item.src as string}
                         alt={item.alt}
@@ -59,6 +63,9 @@ log.info(
             <slot />
         )}
     </div>
+
+    <!--&lt;!&ndash; Mask overlay &ndash;&gt;-->
+    <!--<div class:list={['absolute inset-0 w-full h-full z-20', maskOpacityClass]}></div>-->
 
     <!-- Indicators (dots) -->
     {showIndicators && (

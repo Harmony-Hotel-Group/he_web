@@ -36,7 +36,7 @@ const carouselResources = config?.carouselResources || [];
     <div class="relative w-full min-h-[100dvh] overflow-hidden">
         <HomeHero resources={carouselResources}/>
         <!-- Overlay de degradado para legibilidad del contenido superpuesto -->
-        <div class="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/20"></div>
+        <!--<div class="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/20"></div>-->
         <div class="absolute inset-0 z-10 flex items-center justify-center p-4">
             <div class="w-full max-w-6xl px-4 sm:px-6">
                 <BookingBar lang={lang} config={config}/>

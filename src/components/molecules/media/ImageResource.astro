@@ -36,7 +36,7 @@ const {
 } = Astro.props;
 
 // Generar ID único para el skeleton
-const imageId = `img-${Math.random().toString(36).substr(2, 9)}`;
+const imageId = `img-${String(Math.random().toString(36)).substring(2, 9)}`;
 ---
 
 <div class="image-resource-wrapper" data-image-id={imageId}>

@@ -62,7 +62,7 @@ function getVideoSources(srcUrl: string): Array<{ src: string; type: string }> {
 	];
 }
 
-const videoId = `video-${Math.random().toString(36).substr(2, 9)}`;
+const videoId = `video-${String(Math.random().toString(36)).substring(2, 9)}`;
 const videoSources = getVideoSources(src);
 const placeholderUrl =
 	placeholder || `https://placehold.co/${width}x${height}?text=Video`;
@@ -309,7 +309,7 @@ const placeholderUrl =
                 });
 
                 // Event: error - cuando falla la carga
-                video.addEventListener('error', (e) => {
+                video.addEventListener('error', (_) => {
                     this.handleVideoError(video, wrapper as HTMLElement, loadingOverlay, errorOverlay);
                 });
 

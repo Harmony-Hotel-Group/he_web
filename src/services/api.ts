@@ -68,16 +68,41 @@ export class Api {
 			return cachedItem.data as T;
 		}
 
-		try {
-			// Si la baseUrl no es una URL http(s) válida, no intentar el fetch y usar fallback.
-			// Esto previene el error "Invalid URL" durante el build si la variable de entorno no está seteada.
-			if (!this.baseUrl.startsWith("http")) {
-				throw new Error(
-					"La URL base de la API no está configurada, usando fallback local.",
-				);
+		// Helper para manejar el fallback y evitar duplicar código.
+		const handleFallback = async (
+			errorSource: string | Error,
+		): Promise<T | null> => {
+			const errorMessage =
+				errorSource instanceof Error
+					? errorSource.message
+					: String(errorSource);
+			log.warn(
+				`El fetch para '${key}' falló. Intentando fallback local. Error:`,
+				errorMessage,
+			);
+
+			const local = await this.readLocalFallback<T>(endpoint);
+			if (local != null) {
+				log.info(`Fallback local para '${key}' encontrado y cargado.`);
+				return local;
 			}
 
-			// Construcción de URL segura. new URL(path, base)
+			log.error(
+				`El fallback local para '${key}' también falló. No se pudieron obtener los datos.`,
+			);
+			return null;
+		};
+
+		if (!this.baseUrl.startsWith("http")) {
+			return await handleFallback(
+				new Error(
+					"La URL base de la API no está configurada, usando fallback local.",
+				),
+			);
+		}
+
+		try {
+			// Construcción de URL segura
 			const url = new URL(`/api/${endpoint}`, this.baseUrl);
 
 			if (params && typeof params === "object") {
@@ -95,7 +120,7 @@ export class Api {
 				headers: finalHeaders,
 			});
 			if (!res.ok) {
-				throw new Error(`Respuesta no exitosa de la API: ${res.status}`);
+				new Error(`Respuesta no exitosa de la API: ${res.status}`);
 			}
 			const payload = await res.json().catch(() => null);
 			log.info(`Payload crudo recibido para '${key}':`, payload);
@@ -103,29 +128,14 @@ export class Api {
 			const data = (payload?.data ?? payload ?? null) as T | null;
 			log.info(`Datos finales procesados para '${key}':`, data);
 
-			// 2. Guardar en caché si la respuesta fue exitosa
+			// Guardar en caché si la respuesta fue exitosa
 			if (data !== null) {
 				this.cache.set(key, { data, timestamp: Date.now() });
 			}
 
 			return data;
 		} catch (e) {
-			const error = e instanceof Error ? e.message : String(e);
-			log.warn(
-				`El fetch para '${key}' falló. Intentando fallback local. Error:`,
-				error,
-			);
-
-			const local = await this.readLocalFallback<T>(endpoint);
-			if (local != null) {
-				log.info(`Fallback local para '${key}' encontrado y cargado.`);
-				return local;
-			}
-
-			log.error(
-				`El fallback local para '${key}' también falló. No se pudieron obtener los datos.`,
-			);
-			return null;
+			return await handleFallback(e);
 		}
 	}
 
@@ -278,4 +288,4 @@ async function initializeApiOnServer() {
 }
 
 // Ejecutamos la inicialización.
-initializeApiOnServer();
+await initializeApiOnServer();

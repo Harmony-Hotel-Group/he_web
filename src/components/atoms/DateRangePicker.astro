@@ -63,11 +63,11 @@ const {
 <script>
     import flatpickr from "flatpickr";
     import "flatpickr/dist/l10n/es.js";
-    import { defaultLang, Translations } from "@/i18n/translation.ts";
+    import { DEFAULT_LANG, Translations } from "@/i18n/translation.ts";
     import { datePickerSync } from "@/utils/date-picker-sync.ts";
 
     function runDatePicker(input: HTMLInputElement) {
-        const lang = input.dataset.lang || defaultLang;
+        const lang = input.dataset.lang || DEFAULT_LANG;
         const syncGroup = input.dataset.syncGroup || 'booking';
         const pickerId = input.id;
         const t = Translations(lang);

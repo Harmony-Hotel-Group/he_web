@@ -25,7 +25,7 @@ const t = Translations(lang);
         <!-- Modal Header -->
         <div class="bg-blue-600 text-white px-6 py-4 flex justify-between items-center flex-shrink-0">
             <h2 class="text-xl font-semibold flex items-center gap-2">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="w-6 h-6" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                           d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
                 </svg>
@@ -44,7 +44,7 @@ const t = Translations(lang);
             <div class="bg-white dark:bg-gray-700 rounded-lg p-4 mb-4 shadow-sm">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center gap-3">
-                        <svg class="w-5 h-5 text-gray-700 dark:text-gray-300" fill="none" stroke="currentColor"
+                        <svg class="w-5 h-5 text-gray-700 dark:text-gray-300" stroke="currentColor"
                              viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                   d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0"/>
@@ -80,7 +80,7 @@ const t = Translations(lang);
                     id="confirmModalBtn"
                     class="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md transition-colors duration-200 font-medium flex items-center gap-2"
             >
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="w-4 h-4" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                           d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
                 </svg>
@@ -288,7 +288,7 @@ const t = Translations(lang);
                     const groupForm = document.getElementById('booking-group-form') as HTMLFormElement;
 
                     if (!groupForm) {
-                        throw new Error('No se encontró formulario de grupo');
+                        new Error('No se encontró formulario de grupo');
                     }
 
                     const formData = new FormData(groupForm);
@@ -305,11 +305,11 @@ const t = Translations(lang);
                     }
 
                     // Usar la función de envío desde utils
-                    const {sendBookingMessage} = await import('@/services/send/index.ts');
+                    const {sendWhatsappMessage} = await import('@/services/messages/whatsapp.ts');
 
                     // Determinar el tipo de booking
                     const bookingType = this.vehiclesEnabled ? 'vehicle' : 'group';
-                    await sendBookingMessage(formData, bookingType);
+                    await sendWhatsappMessage(formData, bookingType);
 
                     // Limpiar datos temporales después del envío exitoso
                     this.clearTempData();

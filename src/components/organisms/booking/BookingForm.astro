@@ -60,16 +60,6 @@ const roomsOptions = range(1, 5).map((i) => {
 	};
 });
 
-const vehicleTypeOptions = [
-	{ value: "auto", label: "Auto" },
-	{ value: "suv", label: "SUV" },
-	{ value: "camioneta", label: "Camioneta" },
-	{ value: "furgoneta", label: "Furgoneta" },
-	{ value: "buseta", label: "Buseta" },
-	{ value: "bus", label: "Bus" },
-	{ value: "otro", label: "Otro" },
-];
-
 const whatsappNumber = config?.contactInfo?.whatsapp ?? "";
 const email = config?.contactInfo?.email ?? "";
 ---
@@ -142,7 +132,7 @@ const email = config?.contactInfo?.email ?? "";
 
   <!-- Sección de Vehículos (oculta inicialmente) -->
   <div id="vehicle-section" class="hidden">
-    <BookingVehicleSection lang={lang} config={config} client:load />
+    <BookingVehicleSection lang={lang} config={config} />
   </div>
 
   <div id="special_request-section" class="hidden">
@@ -175,7 +165,7 @@ const email = config?.contactInfo?.email ?? "";
 </form>
 
 <!-- Modal para reservas grupales -->
-<ModalBookingGroup lang={lang} config={config} isOpen={false} client:load />
+<ModalBookingGroup lang={lang} config={config} isOpen={false}/>
 
 <script>
   import { actions } from "astro:actions";
@@ -263,7 +253,7 @@ const email = config?.contactInfo?.email ?? "";
       clearValidationErrors();
       const originalButtonHTML = btn.innerHTML;
       btn.disabled = true;
-      btn.innerHTML = `<svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Enviando...`;
+      btn.innerHTML = `<svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Enviando...`;
 
       try {
         const formData = new FormData(form);

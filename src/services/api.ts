@@ -38,6 +38,7 @@ export class Api {
 		this.apiTimeout = options.timeout ?? 8000; // 8 segundos por defecto
 		this.cacheDuration = options.cacheDuration ?? 5 * 60 * 1000; // 5 minutos por defecto
 		log.info("Servicio de API inicializado con opciones:", options);
+		log.info("Info cache:", this.cache);
 	}
 
 	// ============== Métodos Públicos ==============
@@ -261,7 +262,11 @@ log.info(
 );
 
 export const api = new Api({
-	baseUrl: import.meta.env.PUBLIC_API_BASE_URL || "",
+	baseUrl:
+		import.meta.env.PUBLIC_API_BASE_URL || import.meta.env.VERCEL_URL
+			? `https://${import.meta.env.VERCEL_URL}`
+			: // @ts-expect-error
+				"" || import.meta.env.BASE_URL,
 	cacheDuration: cacheDurationMs,
 });
 
@@ -277,6 +282,7 @@ async function initializeApiOnServer() {
 		try {
 			// Obtenemos la configuración una sola vez.
 			const config = await api.fetch("config");
+			log.info("Pre-carga config request:", config);
 			if (config) {
 				// La guardamos en el caché para que esté disponible instantáneamente para todas las páginas.
 				api.warmUpCache("config", config);

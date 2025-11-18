@@ -11,13 +11,6 @@ import type { Resource } from "@/types/resource";
 
 const log = logger("HomeHero");
 
-// interface Resource {
-// 	src: string | ImageMetadata;
-// 	type?: "image" | "video" | "youtube" | "auto";
-// 	alt?: string;
-// 	poster?: string;
-// }
-
 interface Props {
 	resources: Resource[];
 	prioritizeVideo?: boolean;

@@ -17,23 +17,14 @@ interface Category {
 	tags: LocalizedText;
 }
 
-// interface ImageResource extends Resource {
-// 	src: string;
-// 	alt: string;
-// }
-
 type ImageResource = Omit<Resource, "type" | "poster">;
 
-// interface CarouselResource {
-// 	src: string;
-// 	type: string;
-// 	alt: string;
-// }
 
 type CarouselResource = Omit<Resource, "poster">;
 
 export interface SiteConfig {
 	siteName?: string;
+	tagline?: LocalizedText;
 	contactInfo?: {
 		address?: string;
 		linkMap?: string;
@@ -55,13 +46,19 @@ export interface SiteConfig {
 	carouselResources?: CarouselResource[];
 	vehicleTypeOptions?: Array<{
 		value: string;
-		label: string;
-		[key: string]: string;
-	}>;
+	} & LocalizedText>;
 	roomTypes?: Category[];
 	destinationCategories?: Category[];
 	gastronomyCategories?: Category[];
 	tourCategories?: Category[];
+	supportedLanguages?: Array<{
+		code: string;
+		name: string;
+	}>;
+	supportedCurrencies?: Array<{
+		code: string;
+		symbol: string;
+	}>;
 	[key: string]: unknown;
 }
 

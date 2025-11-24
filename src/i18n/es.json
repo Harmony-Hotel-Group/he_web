@@ -12,6 +12,15 @@
 		"tours": "Tours",
 		"booking": "Reservar Ahora"
 	},
+	"home": {
+		"explore_category": "Explorar categoría"
+	},
+	"buttons": {
+		"see_more": "Ver más"
+	},
+	"meta": {
+		"description": "Hotel Ensueños by HHG - Tu hogar lejos de casa en el corazón de Cuenca, Ecuador."
+	},
 	"components": {
 		"dateRangePicker": "{{n}} noche{{s}}",
 		"errors": {

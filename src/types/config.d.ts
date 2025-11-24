@@ -2,11 +2,7 @@
 
 import type { Resource } from "@/types/resource";
 
-interface LocalizedText {
-	es: string;
-	en: string;
-	[lang: string]: string;
-}
+
 
 interface Category {
 	id: string;
@@ -18,8 +14,6 @@ interface Category {
 }
 
 type ImageResource = Omit<Resource, "type" | "poster">;
-
-
 type CarouselResource = Omit<Resource, "poster">;
 
 export interface SiteConfig {
@@ -58,6 +52,7 @@ export interface SiteConfig {
 	supportedCurrencies?: Array<{
 		code: string;
 		symbol: string;
+		exchangeRate?: number;
 	}>;
 	[key: string]: unknown;
 }

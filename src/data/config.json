@@ -51,205 +51,325 @@
 		},
 		"images": [
 			{
-				"src": "/img/about/collage1.jpg",
-				"alt": "Vista de la fachada del hotel"
+				"src": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/06/18/84/1d/hotel-ensuenos.jpg?w=700&h=-1&s=1",
+				"alt": "Fachada del Hotel Ensueños"
 			},
 			{
-				"src": "/img/about/collage2.jpg",
-				"alt": "Interior del lobby del hotel"
+				"src": "https://cf.bstatic.com/xdata/images/hotel/max1024x768/511529329.jpg?k=732041281512a8138118029519199346124718535a9018447849c40781702f28&o=&hp=1",
+				"alt": "Habitación confortable"
 			},
 			{
-				"src": "/img/about/collage3.jpg",
-				"alt": "Detalle decorativo de una habitación"
+				"src": "https://a.travel-assets.com/media/meso_cm/PAPI/Images/hotels/33000000/3292746432/38d31298_b.jpg",
+				"alt": "Interior del hotel"
 			},
 			{
-				"src": "/img/about/collage4.jpg",
-				"alt": "Jardines del hotel"
+				"src": "https://media-cdn.tripadvisor.com/media/photo-s/06/18/84/1c/hotel-ensuenos.jpg",
+				"alt": "Área común"
 			}
 		]
 	},
 	"carouselResources": [
 		{
-			"src": "https://fastly.picsum.photos/id/237/1920/1080.jpg?hmac=1hPzsubx1j8fMddzUgP5NbuX2rNLOEaQML1rD_g1C5Y",
+			"src": "https://images.unsplash.com/photo-1616331101920-9e1d6241e7a0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1ODEzNDR8MHwxfHNlYXJjaHwxfHxjdWVuY2ElMjBlY3VhZG9yfGVufDB8fHx8MTc2Mzg2OTU4Mnww&ixlib=rb-4.0.3&q=80&w=400",
 			"type": "image",
-			"alt": "Perro mirando a la cámara"
+			"alt": "Catedral de la Inmaculada Concepción"
 		},
 		{
-			"src": "https://fastly.picsum.photos/id/238/1920/1080.jpg?hmac=poVbLcPNjgsBwc5evNoDIpU4Psvr4qMFql-qHSWaEBU",
+			"src": "https://images.unsplash.com/photo-1599042241212-09a5929a0f9b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1ODEzNDR8MHwxfHNlYXJjaHw1fHxjdWVuY2ElMjBlY3VhZG9yfGVufDB8fHx8MTc2Mzg2OTYxNnww&ixlib=rb-4.0.3&q=80&w=400",
 			"type": "image",
-			"alt": "Paisaje montañoso"
+			"alt": "Cúpulas de la Catedral"
 		},
 		{
-			"src": "https://fastly.picsum.photos/id/239/1920/1080.jpg?hmac=Ii-YrkHwNkDBvmZxB_AkjTrTemEAjFoFxSpChpE4YDY",
+			"src": "https://images.unsplash.com/photo-1600208222818-4a41a63c41e8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1ODEzNDR8MHwxfHNlYXJjaHw2fHxjdWVuY2ElMjBlY3VhZG9yfGVufDB8fHx8MTc2Mzg2OTYxNnww&ixlib=rb-4.0.3&q=80&w=400",
 			"type": "image",
-			"alt": "Ciudad de noche"
+			"alt": "Calles de Cuenca"
 		}
 	],
 	"roomTypes": [
 		{
 			"id": "standard",
-			"src": "portada/standard.jpg",
+			"src": "https://cf.bstatic.com/xdata/images/hotel/max1024x768/511529329.jpg?k=732041281512a8138118029519199346124718535a9018447849c40781702f28&o=&hp=1",
 			"name": {
 				"es": "Estándar",
 				"en": "Standard"
 			},
 			"title": {
-				"es": "titulo",
-				"en": "title"
+				"es": "Habitación Estándar",
+				"en": "Standard Room"
 			},
 			"description": {
-				"es": "descripcion",
-				"en": "description"
+				"es": "Comodidad y calidez para tu descanso.",
+				"en": "Comfort and warmth for your rest."
 			},
 			"tags": {
-				"es": "tags",
-				"en": "tags"
+				"es": "TV, Wifi, Baño Privado",
+				"en": "TV, Wifi, Private Bath"
 			}
 		},
 		{
-			"id": "deluxe",
-			"src": "https://fastly.picsum.photos/id/237/1920/1080.jpg?hmac=1hPzsubx1j8fMddzUgP5NbuX2rNLOEaQML1rD_g1C5Y",
+			"id": "suite",
+			"src": "https://cf.bstatic.com/xdata/images/hotel/max1024x768/511529324.jpg?k=3f208191242337a34114407e38343719000572e0d376d8b0222167d60f51950c&o=&hp=1",
 			"name": {
-				"es": "Deluxe",
-				"en": "Deluxe"
+				"es": "Suite",
+				"en": "Suite"
 			},
 			"title": {
-				"es": "titulo",
-				"en": "title"
+				"es": "Suite Familiar",
+				"en": "Family Suite"
 			},
 			"description": {
-				"es": "descripcion",
-				"en": "description"
+				"es": "Espacio amplio ideal para familias.",
+				"en": "Spacious area ideal for families."
 			},
 			"tags": {
-				"es": "tags",
-				"en": "tags"
+				"es": "TV, Wifi, Sala de estar",
+				"en": "TV, Wifi, Living Room"
 			}
 		}
 	],
 	"destinationCategories": [
 		{
-			"id": "beach",
-			"src": "",
+			"id": "adventure",
+			"src": "https://images.unsplash.com/photo-1599042241212-09a5929a0f9b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1ODEzNDR8MHwxfHNlYXJjaHw1fHxjdWVuY2ElMjBlY3VhZG9yfGVufDB8fHx8MTc2Mzg2OTYxNnww&ixlib=rb-4.0.3&q=80&w=400",
 			"name": {
-				"es": "Playas",
-				"en": "Beaches"
+				"es": "Aventura",
+				"en": "Adventure"
 			},
 			"title": {
-				"es": "titulo",
-				"en": "title"
+				"es": "Destinos de Aventura",
+				"en": "Adventure Destinations"
 			},
 			"description": {
-				"es": "descripcion",
-				"en": "description"
+				"es": "Explora los alrededores llenos de adrenalina.",
+				"en": "Explore the adrenaline-filled surroundings."
 			},
 			"tags": {
-				"es": "tags",
-				"en": "tags"
+				"es": "Cajas, Senderismo",
+				"en": "Cajas, Hiking"
 			}
 		},
 		{
-			"id": "mountain",
-			"src": "https://fastly.picsum.photos/id/237/1920/1080.jpg?hmac=1hPzsubx1j8fMddzUgP5NbuX2rNLOEaQML1rD_g1C5Y",
+			"id": "culture",
+			"src": "https://images.unsplash.com/photo-1616331101920-9e1d6241e7a0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1ODEzNDR8MHwxfHNlYXJjaHwxfHxjdWVuY2ElMjBlY3VhZG9yfGVufDB8fHx8MTc2Mzg2OTU4Mnww&ixlib=rb-4.0.3&q=80&w=400",
 			"name": {
-				"es": "Montañas",
-				"en": "Mountains"
+				"es": "Cultura",
+				"en": "Culture"
 			},
 			"title": {
-				"es": "titulo",
-				"en": "title"
+				"es": "Riqueza Cultural",
+				"en": "Cultural Wealth"
 			},
 			"description": {
-				"es": "descripcion",
-				"en": "description"
+				"es": "Sumérgete en la historia y arte local.",
+				"en": "Immerse yourself in local history and art."
 			},
 			"tags": {
-				"es": "tags",
-				"en": "tags"
-			}
-		}
-	],
-	"tourCategories": [
-		{
-			"id": "city",
-			"src": "https://fastly.picsum.photos/id/237/1920/1080.jpg?hmac=1hPzsubx1j8fMddzUg",
-			"name": {
-				"es": "Ciudad",
-				"en": "City"
-			},
-			"title": {
-				"es": "titulo",
-				"en": "title"
-			},
-			"description": {
-				"es": "descripcion",
-				"en": "description"
-			},
-			"tags": {
-				"es": "tags",
-				"en": "tags"
+				"es": "Museos, Iglesias",
+				"en": "Museums, Churches"
 			}
 		},
 		{
 			"id": "nature",
-			"src": "https://fastly.picsum.photos/id/237/1920/1080.jpg?hmac=1hPzsubx1j8fMddzUgP5NbuX2rNLOEaQML1rD_g1C5Y",
+			"src": "https://images.unsplash.com/photo-1600208222818-4a41a63c41e8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1ODEzNDR8MHwxfHNlYXJjaHw2fHxjdWVuY2ElMjBlY3VhZG9yfGVufDB8fHx8MTc2Mzg2OTYxNnww&ixlib=rb-4.0.3&q=80&w=400",
 			"name": {
 				"es": "Naturaleza",
 				"en": "Nature"
 			},
 			"title": {
-				"es": "titulo",
-				"en": "title"
+				"es": "Conexión Natural",
+				"en": "Natural Connection"
 			},
 			"description": {
-				"es": "descripcion",
-				"en": "description"
+				"es": "Disfruta de paisajes únicos.",
+				"en": "Enjoy unique landscapes."
 			},
 			"tags": {
-				"es": "tags",
-				"en": "tags"
+				"es": "Parques, Ríos",
+				"en": "Parks, Rivers"
+			}
+		}
+	],
+	"tourCategories": [
+		{
+			"id": "adventure",
+			"src": "https://images.unsplash.com/photo-1599042241212-09a5929a0f9b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1ODEzNDR8MHwxfHNlYXJjaHw1fHxjdWVuY2ElMjBlY3VhZG9yfGVufDB8fHx8MTc2Mzg2OTYxNnww&ixlib=rb-4.0.3&q=80&w=400",
+			"name": {
+				"es": "Aventura",
+				"en": "Adventure"
+			},
+			"title": {
+				"es": "Tours de Aventura",
+				"en": "Adventure Tours"
+			},
+			"description": {
+				"es": "Emociones fuertes en los Andes.",
+				"en": "Strong emotions in the Andes."
+			},
+			"tags": {
+				"es": "Ciclismo, Escalada",
+				"en": "Cycling, Climbing"
+			}
+		},
+		{
+			"id": "mountain",
+			"src": "https://images.unsplash.com/photo-1616331101920-9e1d6241e7a0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1ODEzNDR8MHwxfHNlYXJjaHwxfHxjdWVuY2ElMjBlY3VhZG9yfGVufDB8fHx8MTc2Mzg2OTU4Mnww&ixlib=rb-4.0.3&q=80&w=400",
+			"name": {
+				"es": "Montaña",
+				"en": "Mountain"
+			},
+			"title": {
+				"es": "Exploración de Montaña",
+				"en": "Mountain Exploration"
+			},
+			"description": {
+				"es": "Rutas escénicas y aire puro.",
+				"en": "Scenic routes and fresh air."
+			},
+			"tags": {
+				"es": "Miradores, Caminatas",
+				"en": "Viewpoints, Hikes"
+			}
+		},
+		{
+			"id": "cultural",
+			"src": "https://images.unsplash.com/photo-1600208222818-4a41a63c41e8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1ODEzNDR8MHwxfHNlYXJjaHw2fHxjdWVuY2ElMjBlY3VhZG9yfGVufDB8fHx8MTc2Mzg2OTYxNnww&ixlib=rb-4.0.3&q=80&w=400",
+			"name": {
+				"es": "Cultural",
+				"en": "Cultural"
+			},
+			"title": {
+				"es": "Tours Culturales",
+				"en": "Cultural Tours"
+			},
+			"description": {
+				"es": "Descubre el patrimonio de Cuenca.",
+				"en": "Discover Cuenca's heritage."
+			},
+			"tags": {
+				"es": "Historia, Arte",
+				"en": "History, Art"
+			}
+		},
+		{
+			"id": "gastronomic",
+			"src": "https://images.unsplash.com/photo-1600208222818-4a41a63c41e8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1ODEzNDR8MHwxfHNlYXJjaHw2fHxjdWVuY2ElMjBlY3VhZG9yfGVufDB8fHx8MTc2Mzg2OTYxNnww&ixlib=rb-4.0.3&q=80&w=400",
+			"name": {
+				"es": "Gastronómico",
+				"en": "Gastronomic"
+			},
+			"title": {
+				"es": "Ruta de Sabores",
+				"en": "Flavor Route"
+			},
+			"description": {
+				"es": "Delicias locales e internacionales.",
+				"en": "Local and international delights."
+			},
+			"tags": {
+				"es": "Comida Típica, Mercados",
+				"en": "Typical Food, Markets"
 			}
 		}
 	],
 	"gastronomyCategories": [
 		{
-			"id": "main-course",
-			"src": "",
+			"id": "local",
+			"src": "https://images.unsplash.com/photo-1600208222818-4a41a63c41e8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1ODEzNDR8MHwxfHNlYXJjaHw2fHxjdWVuY2ElMjBlY3VhZG9yfGVufDB8fHx8MTc2Mzg2OTYxNnww&ixlib=rb-4.0.3&q=80&w=400",
 			"name": {
-				"es": "Platos Principales",
-				"en": "Main Courses"
+				"es": "Local",
+				"en": "Local"
 			},
 			"title": {
-				"es": "titulo",
-				"en": "title"
+				"es": "Sabor Cuencano",
+				"en": "Cuencan Flavor"
 			},
 			"description": {
-				"es": "descripcion",
-				"en": "description"
+				"es": "Platos tradicionales de la región.",
+				"en": "Traditional dishes of the region."
 			},
 			"tags": {
-				"es": "tags",
-				"en": "tags"
+				"es": "Mote Pillo, Cuy",
+				"en": "Mote Pillo, Guinea Pig"
 			}
 		},
 		{
-			"id": "dessert",
-			"src": "https://fastly.picsum.photos/id/237/1920/1080.jpg?hmac=1hPzsubx1j8fMddzUgP5NbuX2rNLOEaQML1rD_g1C5Y",
+			"id": "italian",
+			"src": "https://images.unsplash.com/photo-1600208222818-4a41a63c41e8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1ODEzNDR8MHwxfHNlYXJjaHw2fHxjdWVuY2ElMjBlY3VhZG9yfGVufDB8fHx8MTc2Mzg2OTYxNnww&ixlib=rb-4.0.3&q=80&w=400",
 			"name": {
-				"es": "Postres",
-				"en": "Desserts"
+				"es": "Italiana",
+				"en": "Italian"
 			},
 			"title": {
-				"es": "titulo",
-				"en": "title"
+				"es": "Cocina Italiana",
+				"en": "Italian Cuisine"
 			},
 			"description": {
-				"es": "descripcion",
-				"en": "description"
+				"es": "Pastas y pizzas artesanales.",
+				"en": "Artisanal pastas and pizzas."
 			},
 			"tags": {
-				"es": "tags",
-				"en": "tags"
+				"es": "Pasta, Pizza",
+				"en": "Pasta, Pizza"
+			}
+		},
+		{
+			"id": "sweets",
+			"src": "https://images.unsplash.com/photo-1600208222818-4a41a63c41e8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1ODEzNDR8MHwxfHNlYXJjaHw2fHxjdWVuY2ElMjBlY3VhZG9yfGVufDB8fHx8MTc2Mzg2OTYxNnww&ixlib=rb-4.0.3&q=80&w=400",
+			"name": {
+				"es": "Corpus y Dulces",
+				"en": "Corpus & Sweets"
+			},
+			"title": {
+				"es": "Dulces Tradicionales",
+				"en": "Traditional Sweets"
+			},
+			"description": {
+				"es": "Dulces de la fiesta del Corpus Christi.",
+				"en": "Sweets from the Corpus Christi festival."
+			},
+			"tags": {
+				"es": "Quesadillas, Suspiros",
+				"en": "Quesadillas, Meringues"
+			}
+		},
+		{
+			"id": "exotic",
+			"src": "https://images.unsplash.com/photo-1600208222818-4a41a63c41e8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1ODEzNDR8MHwxfHNlYXJjaHw2fHxjdWVuY2ElMjBlY3VhZG9yfGVufDB8fHx8MTc2Mzg2OTYxNnww&ixlib=rb-4.0.3&q=80&w=400",
+			"name": {
+				"es": "Exótica",
+				"en": "Exotic"
+			},
+			"title": {
+				"es": "Sabores Exóticos",
+				"en": "Exotic Flavors"
+			},
+			"description": {
+				"es": "Experiencias culinarias únicas.",
+				"en": "Unique culinary experiences."
+			},
+			"tags": {
+				"es": "Fusión, Internacional",
+				"en": "Fusion, International"
+			}
+		},
+		{
+			"id": "chocolate",
+			"src": "https://images.unsplash.com/photo-1600208222818-4a41a63c41e8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1ODEzNDR8MHwxfHNlYXJjaHw2fHxjdWVuY2ElMjBlY3VhZG9yfGVufDB8fHx8MTc2Mzg2OTYxNnww&ixlib=rb-4.0.3&q=80&w=400",
+			"name": {
+				"es": "Chocolate",
+				"en": "Chocolate"
+			},
+			"title": {
+				"es": "Cacao Fino de Aroma",
+				"en": "Fine Aroma Cacao"
+			},
+			"description": {
+				"es": "El mejor chocolate del mundo.",
+				"en": "The best chocolate in the world."
+			},
+			"tags": {
+				"es": "Cacao, Trufas",
+				"en": "Cacao, Truffles"
 			}
 		}
 	],
@@ -290,24 +410,16 @@
 			"en": "Other"
 		}
 	],
-	"supportedLanguages": [
-		{
-			"code": "es",
-			"name": "Español"
-		},
-		{
-			"code": "en",
-			"name": "English"
-		}
-	],
 	"supportedCurrencies": [
 		{
 			"code": "USD",
-			"symbol": "$"
+			"symbol": "$",
+			"exchangeRate": 1
 		},
 		{
 			"code": "EUR",
-			"symbol": "€"
+			"symbol": "€",
+			"exchangeRate": 0.95
 		}
 	]
 }

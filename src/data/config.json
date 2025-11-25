@@ -51,38 +51,37 @@
 		},
 		"images": [
 			{
-				"src": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/06/18/84/1d/hotel-ensuenos.jpg?w=700&h=-1&s=1",
+				"src": "https://wallpapers.com/images/featured/fondos-de-hermosos-paisajes-wnxju2647uqrcccv.jpg",
 				"alt": "Fachada del Hotel Ensueños"
 			},
 			{
-				"src": "https://cf.bstatic.com/xdata/images/hotel/max1024x768/511529329.jpg?k=732041281512a8138118029519199346124718535a9018447849c40781702f28&o=&hp=1",
-				"alt": "Habitación confortable"
+				"src": "https://wallpapers.com/images/featured/fondos-de-hermosos-paisajes-wnxju2647uqrcccv.jpg",
+				"alt": "Fachada del Hotel Ensueños"
 			},
 			{
-				"src": "https://a.travel-assets.com/media/meso_cm/PAPI/Images/hotels/33000000/3292746432/38d31298_b.jpg",
-				"alt": "Interior del hotel"
+				"src": "https://wallpapers.com/images/featured/fondos-de-hermosos-paisajes-wnxju2647uqrcccv.jpg",
+				"alt": "Fachada del Hotel Ensueños"
 			},
 			{
-				"src": "https://media-cdn.tripadvisor.com/media/photo-s/06/18/84/1c/hotel-ensuenos.jpg",
-				"alt": "Área común"
+				"src": "https://wallpapers.com/images/featured/fondos-de-hermosos-paisajes-wnxju2647uqrcccv.jpg",
+				"alt": "Fachada del Hotel Ensueños"
+			},
+			{
+				"src": "https://wallpapers.com/images/featured/fondos-de-hermosos-paisajes-wnxju2647uqrcccv.jpg",
+				"alt": "Fachada del Hotel Ensueños"
 			}
 		]
 	},
 	"carouselResources": [
 		{
-			"src": "https://images.unsplash.com/photo-1616331101920-9e1d6241e7a0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1ODEzNDR8MHwxfHNlYXJjaHwxfHxjdWVuY2ElMjBlY3VhZG9yfGVufDB8fHx8MTc2Mzg2OTU4Mnww&ixlib=rb-4.0.3&q=80&w=400",
+			"src": "https://wallpapers.com/images/featured/fondos-de-hermosos-paisajes-wnxju2647uqrcccv.jpg",
 			"type": "image",
-			"alt": "Catedral de la Inmaculada Concepción"
+			"alt": "Catedral de Cuenca - Imagen Local"
 		},
 		{
-			"src": "https://images.unsplash.com/photo-1599042241212-09a5929a0f9b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1ODEzNDR8MHwxfHNlYXJjaHw1fHxjdWVuY2ElMjBlY3VhZG9yfGVufDB8fHx8MTc2Mzg2OTYxNnww&ixlib=rb-4.0.3&q=80&w=400",
+			"src": "/src/resources/img/cities/cuenca/calderon-catedral.jpg",
 			"type": "image",
-			"alt": "Cúpulas de la Catedral"
-		},
-		{
-			"src": "https://images.unsplash.com/photo-1600208222818-4a41a63c41e8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1ODEzNDR8MHwxfHNlYXJjaHw2fHxjdWVuY2ElMjBlY3VhZG9yfGVufDB8fHx8MTc2Mzg2OTYxNnww&ixlib=rb-4.0.3&q=80&w=400",
-			"type": "image",
-			"alt": "Calles de Cuenca"
+			"alt": "Catedral de Cuenca - Imagen Local"
 		}
 	],
 	"roomTypes": [

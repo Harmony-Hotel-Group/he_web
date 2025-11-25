@@ -18,9 +18,13 @@ async function loadData<T>(
 	localFile: string,
 	upstreamUrl: string | undefined,
 	processName: string,
+	options?: { bypassCache?: boolean },
 ): Promise<T | null> {
 	globalThis.__API_CACHE__ = globalThis.__API_CACHE__ || new Map();
+	globalThis.__CACHE_CONTROL__ = globalThis.__CACHE_CONTROL__ || new Map();
+
 	const GLOBAL_CACHE = globalThis.__API_CACHE__;
+	const CACHE_CONTROL = globalThis.__CACHE_CONTROL__;
 	const log = logger(processName);
 
 	try {
@@ -28,7 +32,27 @@ async function loadData<T>(
 		const cached = GLOBAL_CACHE.get(cacheKey);
 		const fresh = !!cached && now - cached.timestamp < ONE_DAY_MS;
 
-		if (fresh && cached?.data) {
+		// Check Cache Control Rules
+		const globalRule = CACHE_CONTROL.get("ALL");
+		const specificRule = CACHE_CONTROL.get(cacheKey);
+		let controlBypass = false;
+
+		const checkRule = (rule: CacheControlRule | undefined) => {
+			if (!rule) return false;
+			if (rule.disabledUntil && now < rule.disabledUntil) return true;
+			if (rule.disabledCount && rule.disabledCount > 0) {
+				rule.disabledCount--;
+				return true;
+			}
+			return false;
+		};
+
+		if (checkRule(globalRule) || checkRule(specificRule)) {
+			controlBypass = true;
+			log.info("Cache bypass (Global/Specific Control)");
+		}
+
+		if (!controlBypass && !options?.bypassCache && fresh && cached?.data) {
 			log.info("Data source: Cache (fresh)");
 			return cached.data as T;
 		}
@@ -135,6 +159,70 @@ async function ensureLocalDir(localFile: string) {
 
 function deepEqual(a: unknown, b: unknown): boolean {
 	return JSON.stringify(a) === JSON.stringify(b);
+}
+
+interface CacheControlRule {
+	disabledUntil?: number;
+	disabledCount?: number;
+}
+
+declare global {
+	var __CACHE_CONTROL__: Map<string, CacheControlRule> | undefined;
+}
+
+export function configureCacheControl(options: {
+	action: "flush" | "disable";
+	targets?: string[];
+	duration?: number;
+	count?: number;
+}): { success: boolean; missingKeys?: string[] } {
+	globalThis.__API_CACHE__ = globalThis.__API_CACHE__ || new Map();
+	globalThis.__CACHE_CONTROL__ = globalThis.__CACHE_CONTROL__ || new Map();
+
+	const GLOBAL_CACHE = globalThis.__API_CACHE__;
+	const CACHE_CONTROL = globalThis.__CACHE_CONTROL__;
+
+	const targets = options.targets && options.targets.length > 0 ? options.targets : ["ALL"];
+	const missingKeys: string[] = [];
+
+	// Validation: Check if targets exist (except ALL)
+	for (const target of targets) {
+		if (target !== "ALL" && !GLOBAL_CACHE.has(target)) {
+			missingKeys.push(target);
+		}
+	}
+
+	if (missingKeys.length > 0) {
+		return { success: false, missingKeys };
+	}
+
+	if (options.action === "flush") {
+		if (targets.includes("ALL")) {
+			GLOBAL_CACHE.clear();
+		} else {
+			for (const target of targets) {
+				GLOBAL_CACHE.delete(target);
+			}
+		}
+		return { success: true };
+	}
+
+	if (options.action === "disable") {
+		const rule: CacheControlRule = {};
+		if (options.duration) {
+			rule.disabledUntil = Date.now() + options.duration * 1000;
+		}
+		if (options.count) {
+			rule.disabledCount = options.count;
+		}
+
+		for (const target of targets) {
+			CACHE_CONTROL.set(target, rule);
+		}
+		return { success: true };
+	}
+
+	return { success: false };
 }
 
 export { loadData, json200 };

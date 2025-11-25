@@ -8,6 +8,7 @@ import {
 	validateResource,
 } from "@/utils/visual-resource-utils.ts";
 import type { Resource } from "@/types/resource";
+import ImageResource from "@/components/molecules/media/ImageResource.astro";
 
 const log = logger("HomeHero");
 
@@ -50,13 +51,18 @@ let validatedResources: Resource[] = [];
 if (resources && resources.length > 0) {
 	for (const res of resources) {
 		const type =
-			!res.type || res.type === "auto" ? detectResourceType(res.src) : res.type;
+			!res.type || res.type === "auto"
+				? detectResourceType(res.src)
+				: res.type;
 		const validation = await validateResource(res.src, type);
+		log.warn("Validando recurso:", type, validation);
 		if (validation.isValid) {
 			validatedResources.push({ ...res, type });
 		}
 	}
 }
+
+log.info("Recursos validados:", validatedResources);
 
 if (validatedResources.length === 0) {
 	validatedResources = defaultPlaceholderResources;
@@ -77,7 +83,8 @@ if (prioritizeVideo && !isMobileDevice) {
 		finalResources = [videos[0]];
 		displayMode = "video";
 	} else {
-		finalResources = images.length > 0 ? images : defaultPlaceholderResources;
+		finalResources =
+			images.length > 0 ? images : defaultPlaceholderResources;
 	}
 } else {
 	finalResources = images.length > 0 ? images : defaultPlaceholderResources;
@@ -89,21 +96,22 @@ log.info(
 );
 ---
 
-{displayMode === 'video' ? (
-<div class="relative w-full min-h-[100dvh] overflow-hidden">
-    <VisualResource
-            src={finalResources[0].src}
-            type={finalResources[0].type}
-            alt={finalResources[0].alt}
-            autoplay={true}
-            loop={true}
-            muted={true}
-            controls={false}
-            classes="absolute inset-0 w-full h-full object-cover"
-    />
-    <div class="absolute inset-0 z-10 pointer-events-none bg-black/50"></div>
-</div>
-    ) : (
-<VisualCarousel resources={finalResources}/>
-<div class="absolute inset-0 z-10 pointer-events-none bg-black/50"></div>
-    )}
+{
+	displayMode === "video" ? (
+		<div class="relative w-full min-h-[100dvh] overflow-hidden">
+			<VisualResource
+				src={finalResources[0].src}
+				type={finalResources[0].type}
+				alt={finalResources[0].alt}
+				autoplay={true}
+				loop={true}
+				muted={true}
+				controls={false}
+				classes="absolute inset-0 w-full h-full object-cover"
+			/>
+			<div class="absolute inset-0 z-10 pointer-events-none bg-black/50" />
+		</div>
+	) : (
+		<VisualCarousel resources={finalResources} />
+	)
+}

@@ -16,7 +16,7 @@ const log = logger("Imagen");
 
 interface Props {
 	id?: string;
-	src: string | null | undefined;
+	src: string | ImageMetadata | null | undefined;
 	alt: string;
 	width: number;
 	height: number;
@@ -112,6 +112,10 @@ let useOptimizedImage = false;
 
 if (!src) {
 	log.warn("No se proporcionó 'src', usando placeholder.");
+} else if (typeof src === "object" && src !== null) {
+	optimizedSrc = src;
+	useOptimizedImage = true;
+	log.info(`Usando imagen optimizada pasada por prop`);
 } else if (src.startsWith("/") || src.startsWith(".")) {
 	const images = import.meta.glob(
 		"/src/resources/img/**/*.{jpeg,jpg,png,gif,webp,svg,avif}",
@@ -162,87 +166,87 @@ if (!src) {
 ---
 
 {
-  useOptimizedImage && optimizedSrc ? (
-    <Image
-      id={id}
-      src={optimizedSrc}
-      alt={alt}
-      width={width}
-      height={height}
-      class:list={[className]}
-      loading={loading}
-      decoding={decoding}
-      quality={quality}
-      format={format}
-      fetchpriority={fetchpriority}
-    />
-  ) : (
-    <img
-      id={id}
-      src={finalSrc}
-      alt={alt}
-      width={width}
-      height={height}
-      class:list={[className]}
-      loading={loading}
-      decoding={decoding}
-    />
-  )
+	useOptimizedImage && optimizedSrc ? (
+		<Image
+			id={id}
+			src={optimizedSrc}
+			alt={alt}
+			width={width}
+			height={height}
+			class:list={[className]}
+			loading={loading}
+			decoding={decoding}
+			quality={quality}
+			format={format}
+			fetchpriority={fetchpriority}
+		/>
+	) : (
+		<img
+			id={id}
+			src={finalSrc}
+			alt={alt}
+			width={width}
+			height={height}
+			class:list={[className]}
+			loading={loading}
+			decoding={decoding}
+		/>
+	)
 }
 
 <script>
-  import { logger } from "@/services/logger.ts";
+	import { logger } from "@/services/logger.ts";
 
-  const log = logger("Imagen-Cliente");
+	const log = logger("Imagen-Cliente");
 
-  class ImagenErrorHandler {
-    constructor() {
-      this.initErrorHandling();
-    }
+	class ImagenErrorHandler {
+		constructor() {
+			this.initErrorHandling();
+		}
 
-    private initErrorHandling() {
-      document.addEventListener(
-        "error",
-        (e) => {
-          const target = e.target as HTMLElement;
+		private initErrorHandling() {
+			document.addEventListener(
+				"error",
+				(e) => {
+					const target = e.target as HTMLElement;
 
-          if (target.tagName === "IMG") {
-            this.handleImageError(target as HTMLImageElement);
-          }
-        },
-        true
-      );
-    }
+					if (target.tagName === "IMG") {
+						this.handleImageError(target as HTMLImageElement);
+					}
+				},
+				true,
+			);
+		}
 
-    private handleImageError(img: HTMLImageElement) {
-      if (img.src.includes("placehold.co")) {
-        return;
-      }
+		private handleImageError(img: HTMLImageElement) {
+			if (img.src.includes("placehold.co")) {
+				return;
+			}
 
-      const width = img.width || 600;
-      const height = img.height || 400;
+			const width = img.width || 600;
+			const height = img.height || 400;
 
-      log.error("Error cargando imagen en el cliente:", img.src);
+			log.error("Error cargando imagen en el cliente:", img.src);
 
-      img.src = `https://placehold.co/${width}x${height}/EAEAEA/29333B?text=Error+de+Carga`;
-      img.alt = "Error cargando imagen";
-      img.classList.add("image-error");
-      img.onerror = null;
-    }
-  }
+			img.src = `https://placehold.co/${width}x${height}/EAEAEA/29333B?text=Error+de+Carga`;
+			img.alt = "Error cargando imagen";
+			img.classList.add("image-error");
+			img.onerror = null;
+		}
+	}
 
-  if (
-    typeof window !== "undefined" &&
-    !window.hasOwnProperty("imagenErrorHandler")
-  ) {
-    (window as any).imagenErrorHandler = new ImagenErrorHandler();
-  }
+	if (
+		typeof window !== "undefined" &&
+		!window.hasOwnProperty("imagenErrorHandler")
+	) {
+		(window as any).imagenErrorHandler = new ImagenErrorHandler();
+	}
 </script>
 
 <style is:global>
-  img.image-error {
-    border: 2px dashed #fcc;
-    background: #fee;
-    padding: 0.5rem;
-  }
+	img.image-error {
+		border: 2px dashed #fcc;
+		background: #fee;
+		padding: 0.5rem;
+	}
 </style>

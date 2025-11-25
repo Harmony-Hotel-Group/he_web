@@ -26,6 +26,9 @@ const {
 
 const log = logger("VisualCarousel");
 
+log.info("Props recibidas:", Astro.props);
+
+
 const carouselId = `carousel-${String(Math.random().toString(36)).substring(2, 9)}`;
 log.info(
 	"Crecion de VisualCarousel con ID:",
@@ -49,14 +52,14 @@ log.info(
     <div class="absolute inset-0 w-full h-full" data-carousel-container>
         {resources && resources.length > 0 ? (
             resources.map((item, index) => (
-                <div class="absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out opacity-25">
+                <div class="absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out opacity-0">
                     <Imagen
                         src={item.src as string}
                         alt={item.alt}
                         class="w-full h-full object-cover"
                         loading={index === 0 ? "eager" : "lazy"}
                         fetchpriority={index === 0 ? "high" : "auto"}
-                     height={250} width={250}/>
+                     height={1080} width={1920}/>
                 </div>
             ))
         ) : (

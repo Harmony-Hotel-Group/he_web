@@ -75,43 +75,42 @@ if (!validation.isValid) {
 }
 ---
 
-{!src || !validation.isValid ? (
-<ImageResource
-        src={PlaceHolder}
-        alt={alt || 'Recurso no encontrado'}
-/>) :
-    (detectedType === 'youtube') ? (
-    <YouTubeResource
-            src={src}
-            classes={classes}
-            autoplay={autoplay}
-            loop={loop}
-            muted={muted}
-            controls={controls}
-            title={alt}
-    />
-        ) : detectedType === 'video' ? (
-    <VideoResource
-            src={src}
-            classes={classes}
-            width={width}
-            height={height}
-            autoplay={autoplay}
-            loop={loop}
-            muted={muted}
-            controls={controls}
-            poster={poster}
-            placeholder={placeholder}
-    />
-        ) : (
-    <ImageResource
-            src={src}
-            alt={alt}
-            width={width}
-            height={height}
-            loading={loading}
-            classes={classes}
-            srcset={srcset}
-            sizes={sizes}
-    />
-        )}
+{
+	!src || !validation.isValid ? (
+		<ImageResource src={PlaceHolder} alt={alt || "Recurso no encontrado"} />
+	) : detectedType === "youtube" ? (
+		<YouTubeResource
+			src={src}
+			classes={classes}
+			autoplay={autoplay}
+			loop={loop}
+			muted={muted}
+			controls={controls}
+			title={alt}
+		/>
+	) : detectedType === "video" ? (
+		<VideoResource
+			src={(validation.finalSrc as string) || src}
+			classes={classes}
+			width={width}
+			height={height}
+			autoplay={autoplay}
+			loop={loop}
+			muted={muted}
+			controls={controls}
+			poster={poster}
+			placeholder={placeholder}
+		/>
+	) : (
+		<ImageResource
+			src={validation.finalSrc || src}
+			alt={alt}
+			width={width}
+			height={height}
+			loading={loading}
+			classes={classes}
+			srcset={srcset}
+			sizes={sizes}
+		/>
+	)
+}

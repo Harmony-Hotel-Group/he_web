@@ -8,31 +8,32 @@
 
 import Imagen from "@/components/atoms/Imagen.astro";
 import { logger } from "@/services/logger.ts";
+import type { ImageMetadata } from "astro";
 
 const log = logger("ImageResource");
 
 interface Props {
-	src: string;
-	alt?: string;
-	width?: number;
-	height?: number;
-	loading?: "lazy" | "eager";
-	classes?: string;
-	srcset?: string;
-	sizes?: string;
-	decoding?: "async" | "sync" | "auto";
+    src: string | ImageMetadata;
+    alt?: string;
+    width?: number;
+    height?: number;
+    loading?: "lazy" | "eager";
+    classes?: string;
+    srcset?: string;
+    sizes?: string;
+    decoding?: "async" | "sync" | "auto";
 }
 
 const {
-	src,
-	alt = "",
-	width = 600,
-	height = 400,
-	loading = "lazy",
-	classes = "",
-	srcset,
-	sizes,
-	decoding = "async",
+    src,
+    alt = "",
+    width = 600,
+    height = 400,
+    loading = "lazy",
+    classes = "",
+    srcset,
+    sizes,
+    decoding = "async",
 } = Astro.props;
 
 // Generar ID único para el skeleton
@@ -41,14 +42,14 @@ const imageId = `img-${String(Math.random().toString(36)).substring(2, 9)}`;
 
 <div class="image-resource-wrapper" data-image-id={imageId}>
     <Imagen
-            id={imageId}
-            src={src}
-            alt={alt}
-            width={width}
-            height={height}
-            loading={loading}
-            decoding={decoding}
-            class={`image-resource ${classes}`}
+        id={imageId}
+        src={src}
+        alt={alt}
+        width={width}
+        height={height}
+        loading={loading}
+        decoding={decoding}
+        class={`image-resource ${classes}`}
     />
 
     <!-- Skeleton overlay (se oculta cuando carga) -->
@@ -101,11 +102,11 @@ const imageId = `img-${String(Math.random().toString(36)).substring(2, 9)}`;
         width: 100%;
         height: 100%;
         background: linear-gradient(
-                90deg,
-                #f0f0f0 0%,
-                #e0e0e0 20%,
-                #f0f0f0 40%,
-                #f0f0f0 100%
+            90deg,
+            #f0f0f0 0%,
+            #e0e0e0 20%,
+            #f0f0f0 40%,
+            #f0f0f0 100%
         );
         background-size: 200% 100%;
         animation: shimmer 1.5s infinite linear;
@@ -137,7 +138,7 @@ const imageId = `img-${String(Math.random().toString(36)).substring(2, 9)}`;
     }
 
     .image-resource-wrapper.error .skeleton-shimmer::before {
-        content: '⚠️ Imagen no disponible';
+        content: "⚠️ Imagen no disponible";
     }
 </style>
 
@@ -150,26 +151,32 @@ const imageId = `img-${String(Math.random().toString(36)).substring(2, 9)}`;
     class ImageResourceManager {
         private images: Map<string, HTMLImageElement> = new Map();
         private skeletons: Map<string, HTMLElement> = new Map();
-        private log: ReturnType<typeof import('@/services/logger').logger>;
+        private log: ReturnType<typeof import("@/services/logger").logger>;
 
         constructor(loggerInstance: any) {
             this.log = loggerInstance;
-            if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', () => this.initImages());
+            if (document.readyState === "loading") {
+                document.addEventListener("DOMContentLoaded", () =>
+                    this.initImages(),
+                );
             } else {
                 this.initImages();
             }
         }
 
         private initImages() {
-            const wrappers = document.querySelectorAll('[data-image-id]');
+            const wrappers = document.querySelectorAll("[data-image-id]");
 
-            wrappers.forEach(wrapper => {
-                const imageId = wrapper.getAttribute('data-image-id');
+            wrappers.forEach((wrapper) => {
+                const imageId = wrapper.getAttribute("data-image-id");
                 if (!imageId) return;
 
-                const img = wrapper.querySelector(`#${imageId}`) as HTMLImageElement;
-                const skeleton = wrapper.querySelector(`[data-skeleton-for="${imageId}"]`) as HTMLElement;
+                const img = wrapper.querySelector(
+                    `#${imageId}`,
+                ) as HTMLImageElement;
+                const skeleton = wrapper.querySelector(
+                    `[data-skeleton-for="${imageId}"]`,
+                ) as HTMLElement;
 
                 if (!img) return;
 
@@ -183,32 +190,35 @@ const imageId = `img-${String(Math.random().toString(36)).substring(2, 9)}`;
                     this.handleImageLoad(imageId, img, skeleton);
                 } else {
                     // Event listeners para carga
-                    img.addEventListener('load', () => {
+                    img.addEventListener("load", () => {
                         this.handleImageLoad(imageId, img, skeleton);
                     });
 
-                    img.addEventListener('error', () => {
-                        this.handleImageError(imageId, wrapper as HTMLElement, skeleton);
+                    img.addEventListener("error", () => {
+                        this.handleImageError(
+                            imageId,
+                            wrapper as HTMLElement,
+                            skeleton,
+                        );
                     });
                 }
             });
 
             this.log.info(`Initialized ${this.images.size} image(s)`);
-            
         }
 
         private handleImageLoad(
             imageId: string,
             img: HTMLImageElement,
-            skeleton: HTMLElement | null
+            skeleton: HTMLElement | null,
         ) {
             // Ocultar skeleton
             if (skeleton) {
-                skeleton.classList.add('hidden');
+                skeleton.classList.add("hidden");
             }
 
             // Mostrar imagen con fade in
-            img.classList.add('loaded');
+            img.classList.add("loaded");
 
             this.log.info(`Image loaded: ${imageId}`);
         }
@@ -216,16 +226,16 @@ const imageId = `img-${String(Math.random().toString(36)).substring(2, 9)}`;
         private handleImageError(
             imageId: string,
             wrapper: HTMLElement,
-            skeleton: HTMLElement | null
+            skeleton: HTMLElement | null,
         ) {
             this.log.error(`Failed to load image: ${imageId}`);
 
             // Marcar wrapper como error
-            wrapper.classList.add('error');
+            wrapper.classList.add("error");
 
             // Mantener skeleton visible pero cambiar estilo
             if (skeleton) {
-                skeleton.classList.remove('hidden');
+                skeleton.classList.remove("hidden");
             }
         }
 
@@ -235,8 +245,8 @@ const imageId = `img-${String(Math.random().toString(36)).substring(2, 9)}`;
 
         public getLoadedCount(): number {
             let count = 0;
-            this.images.forEach(img => {
-                if (img.classList.contains('loaded')) {
+            this.images.forEach((img) => {
+                if (img.classList.contains("loaded")) {
                     count++;
                 }
             });
@@ -246,8 +256,8 @@ const imageId = `img-${String(Math.random().toString(36)).substring(2, 9)}`;
 
     // Inicialización asíncrona para cargar el logger dinámicamente
     (async () => {
-        const { logger } = await import('@/services/logger.ts');
-        const log = logger('ImageResource:Client');
+        const { logger } = await import("@/services/logger.ts");
+        const log = logger("ImageResource:Client");
         // Instanciar el manager una vez que el logger está listo
         // y pasarle la instancia del logger.
         new ImageResourceManager(log);

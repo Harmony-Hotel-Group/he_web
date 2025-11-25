@@ -21,7 +21,7 @@ const LOCAL_FILE = path.resolve(
 	"data",
 	"destinations.json",
 );
-const CACHE_KEY = "api.destinations.cache.entry";
+const CACHE_KEY = "api.destinations";
 const PROCESS_NAME = "api/destinations";
 
 export const prerender = false; // SSR runtime

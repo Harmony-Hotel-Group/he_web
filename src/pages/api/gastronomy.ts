@@ -19,7 +19,7 @@ const LOCAL_FILE = path.resolve(
 	"data",
 	"gastronomy.json",
 );
-const CACHE_KEY = "api.gastronomy.cache.entry";
+const CACHE_KEY = "api.gastronomy";
 const PROCESS_NAME = "api/gastronomy";
 
 export const prerender = false; // SSR runtime

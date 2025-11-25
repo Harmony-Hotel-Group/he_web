@@ -14,7 +14,7 @@ const UPSTREAM_URL =
 		: undefined);
 
 const LOCAL_FILE = path.resolve(process.cwd(), "src", "data", "tours.json");
-const CACHE_KEY = "api.tours.cache.entry";
+const CACHE_KEY = "api.tours";
 const PROCESS_NAME = "api/tours";
 
 export const prerender = false; // SSR runtime

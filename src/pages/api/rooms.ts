@@ -14,7 +14,7 @@ const UPSTREAM_URL =
 		: undefined);
 
 const LOCAL_FILE = path.resolve(process.cwd(), "src", "data", "rooms.json");
-const CACHE_KEY = "api.rooms.cache.entry";
+const CACHE_KEY = "api.rooms";
 const PROCESS_NAME = "api/rooms";
 
 export const prerender = false; // SSR runtime

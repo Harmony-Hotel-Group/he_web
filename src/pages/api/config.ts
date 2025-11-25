@@ -13,7 +13,7 @@ const UPSTREAM_URL =
 		: undefined);
 
 const LOCAL_FILE = path.resolve(process.cwd(), "src", "data", "config.json");
-const CACHE_KEY = "api.config.cache.entry";
+const CACHE_KEY = "api.config";
 const PROCESS_NAME = "api/config";
 
 export const prerender = false; // SSR runtime
@@ -27,11 +27,19 @@ export async function GET(_ctx: APIContext) {
 		upstreamUrl: UPSTREAM_URL,
 	});
 
+	const bypassCache =
+		import.meta.env.DEV || _ctx.url.searchParams.has("nocache");
+
+	if (bypassCache) {
+		log.info("Cache bypass enabled.");
+	}
+
 	const data = await loadData<SiteConfig>(
 		CACHE_KEY,
 		LOCAL_FILE,
 		UPSTREAM_URL,
 		PROCESS_NAME,
+		{ bypassCache },
 	);
 
 	if (!data) {

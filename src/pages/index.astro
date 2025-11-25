@@ -24,10 +24,10 @@ if (lang === "en") {
 }
 
 const config = (await api.fetch("config", { params: { lang } })) as SiteConfig;
-
-log.info("Datos de configuración (config) cargados:", config);
+//log.info("Datos de configuración (config) cargados:", config);
 
 const carouselResources = config?.carouselResources || [];
+log.info("Recursos para el carousel:", carouselResources);
 ---
 
 <BaseLayout titleKey="site.title" lang={lang} config={config}>

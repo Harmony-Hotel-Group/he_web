@@ -1,7 +1,7 @@
 ---
 import Icono from "@/components/atoms/Icono.astro";
 // src/components/molecules/forms/DropdownField.astro
-import { defaultLang, Translations } from "@/i18n/translation.ts";
+import { DEFAULT_LANG, Translations } from "@/i18n/translation.ts";
 import Row from "@/layouts/Row.astro";
 import Label from "../../atoms/Label.astro";
 import Select from "../../atoms/Select.astro";
@@ -37,27 +37,27 @@ const {
 	initialValue,
 } = Astro.props;
 
-const t = Translations(lang ?? defaultLang);
+const t = Translations(lang ?? DEFAULT_LANG);
 ---
 
 <div id={id} class:list={["flex flex-col", className]}>
-    <Row class="items-end">
-        <Icono name={icon}/>
-        <Label
-            forId={fieldId}
-            lblKey={lblKey}
-            lang={lang}
-            classes="font-bold text-black"
-        />
-    </Row>
-    <Select
-            id={fieldId}
-            name={name}
-            options={options}
-            required={required}
-            value={initialValue}
-    >
-    </Select>
-    <span id={`error_${fieldId}`} class="hidden text-red-700 px-4">{t('booking.dropdown.error')}</span>
-
+	<Row class="items-end">
+		<Icono name={icon} />
+		<Label
+			forId={(fieldId ?? id ?? name) as string}
+			lblKey={lblKey}
+			lang={lang}
+			classes="font-bold text-black"
+		/>
+	</Row>
+	<Select
+		id={fieldId ?? id ?? name}
+		name={name}
+		options={options}
+		required={required}
+		value={initialValue}
+	/>
+	<span id={`error_${fieldId ?? id ?? name}`} class="hidden text-red-700 px-4"
+		>{t("booking.dropdown.error")}</span
+	>
 </div>

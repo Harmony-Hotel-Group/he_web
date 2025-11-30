@@ -2,325 +2,134 @@
 // src/components/media/YouTubeResource.astro
 /**
  * Componente especializado para videos de YouTube
- * Usa YouTube Lite para mejor performance
+ * Usa lite-youtube-embed para mejor performance
  */
 
-import {
-	extractYouTubeId,
-	getYouTubeEmbedUrl,
-} from "@/utils/visual-resource-utils";
-
 interface Props {
-	src: string;
-	classes?: string;
-	autoplay?: boolean;
-	loop?: boolean;
-	muted?: boolean;
-	controls?: boolean;
-	title?: string;
+    videoid: string;
+    title?: string;
+    classes?: string;
 }
 
-const {
-	src,
-	classes = "",
-	autoplay = false,
-	loop = false,
-	muted = true,
-	controls = true,
-	title = "YouTube video player",
-} = Astro.props;
-
-const videoId = extractYouTubeId(src);
-
-if (!videoId) {
-	throw new Error(`[YouTubeResource] Invalid YouTube URL: ${src}`);
-}
-
-const embedUrl = getYouTubeEmbedUrl(videoId, {
-	autoplay,
-	loop,
-	muted,
-	controls,
-});
-
-const thumbnailUrl = `https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg`;
-const thumbnailUrlFallback = `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`;
+const { videoid, title, classes = "" } = Astro.props;
 ---
 
-<div
-        class:list={['youtube-resource-wrapper', classes]}
-        data-youtube-id={videoId}
-        data-youtube-embed={embedUrl}
+<lite-youtube
+    videoid={videoid}
+    class:list={["youtube-resource", classes]}
+    title={title}
 >
-    <!-- Thumbnail con play button -->
-    <div class="youtube-thumbnail-container">
-        <img
-                src={thumbnailUrl}
-                alt={title}
-                class="youtube-thumbnail"
-                loading="lazy"
-                onError={`this.onerror=null;this.src='${thumbnailUrlFallback}';`}
-        />
+    <button type="button" class="lty-playbtn" slot="playButton">
+        <span class="lyt-visually-hidden">Play</span>
+    </button>
+</lite-youtube>
 
-        <!-- Play button -->
-        <button
-                class="youtube-play-button"
-                aria-label="Play video"
-                type="button"
-        >
-            <svg width="68" height="48" viewBox="0 0 68 48">
-                <path
-                        class="youtube-play-button-bg"
-                        d="M66.52,7.74c-0.78-2.93-2.49-5.41-5.42-6.19C55.79,.13,34,0,34,0S12.21,.13,6.9,1.55 C3.97,2.33,2.27,4.81,1.48,7.74C0.06,13.05,0,24,0,24s0.06,10.95,1.48,16.26c0.78,2.93,2.49,5.41,5.42,6.19 C12.21,47.87,34,48,34,48s21.79-0.13,27.1-1.55c2.93-0.78,4.64-3.26,5.42-6.19C67.94,34.95,68,24,68,24S67.94,13.05,66.52,7.74z"
-                        fill="#f00"
-                />
-                <path d="M 45,24 27,14 27,34" fill="#fff"/>
-            </svg>
-        </button>
-    </div>
+<style is:global>
+    /* Import lite-youtube-embed CSS */
+    @import "lite-youtube-embed/src/lite-yt-embed.css";
 
-    <!-- Loading state -->
-    <div class="youtube-loading hidden">
-        <div class="youtube-spinner"></div>
-    </div>
-</div>
+    /* Custom styling for our use case */
+    .youtube-resource {
+        max-width: 100%;
+        margin: 0 auto;
+    }
 
-<style>
-    .youtube-resource-wrapper {
+    lite-youtube {
+        background-color: #000;
         position: relative;
-        width: 100%;
-        padding-bottom: 56.25%; /* 16:9 aspect ratio */
-        background: #000;
-        overflow: hidden;
+        display: block;
+        contain: content;
+        background-position: center center;
+        background-size: cover;
         cursor: pointer;
     }
 
-    .youtube-thumbnail-container {
+    /* 16:9 aspect ratio */
+    lite-youtube::before {
+        content: "";
+        display: block;
         position: absolute;
         top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAADGCAYAAAAT+OqFAAAAdklEQVQoz42QQQ7AIAgEF/T/D+kbq/RWAlnQyyazA4aoAB4FsBSA/bFjuF1EOL7VbrIrBuusmrt4ZZORfb6ehbWdnRHEIiITaEUKa5EJqUakRSaEYBJSCY2dEstQY7AuxahwXFrvZmWl2rh4JZ07z9dLtesfNj5q0FU3A5ObbwAAAABJRU5ErkJggg==);
+        background-position: top;
+        background-repeat: repeat-x;
+        background-size: contain;
+        padding-bottom: calc(100% / (16 / 9));
+        pointer-events: none;
     }
 
-    .youtube-thumbnail {
+    /* Thumbnail */
+    lite-youtube > .lty-playbtn {
+        width: 68px;
+        height: 48px;
         position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        transition: opacity 0.3s;
-    }
-
-    .youtube-resource-wrapper:hover .youtube-thumbnail {
-        opacity: 0.8;
-    }
-
-    /* Play button */
-    .youtube-play-button {
-        position: relative;
+        cursor: pointer;
+        transform: translate3d(-50%, -50%, 0);
+        top: 50%;
+        left: 50%;
         z-index: 1;
-        background: none;
-        border: none;
-        cursor: pointer;
-        transition: transform 0.2s;
-        padding: 0;
-    }
-
-    .youtube-play-button:hover {
-        transform: scale(1.1);
-    }
-
-    .youtube-play-button:focus {
-        outline: 2px solid #fff;
-        outline-offset: 4px;
-    }
-
-    .youtube-play-button-bg {
-        transition: fill 0.2s;
-    }
-
-    .youtube-play-button:hover .youtube-play-button-bg {
-        fill: #c00;
-    }
-
-    /* iframe (loaded dynamically) */
-    :global(.youtube-resource-wrapper iframe) {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
+        background-color: transparent;
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 68 48"><path d="M66.52 7.74c-.78-2.93-2.49-5.41-5.42-6.19C55.79.13 34 0 34 0S12.21.13 6.9 1.55c-2.93.78-4.63 3.26-5.42 6.19C.06 13.05 0 24 0 24s.06 10.95 1.48 16.26c.78 2.93 2.49 5.41 5.42 6.19C12.21 47.87 34 48 34 48s21.79-.13 27.1-1.55c2.93-.78 4.64-3.26 5.42-6.19C67.94 34.95 68 24 68 24s-.06-10.95-1.48-16.26z" fill="red"/><path d="M45 24 27 14v20" fill="white"/></svg>');
+        filter: grayscale(100%);
+        transition: filter 0.1s cubic-bezier(0, 0, 0.2, 1);
         border: none;
     }
 
-    /* Loading state */
-    .youtube-loading {
+    lite-youtube:hover > .lty-playbtn,
+    lite-youtube .lty-playbtn:focus {
+        filter: none;
+    }
+
+    /* Iframe (inserted by lite-youtube) */
+    lite-youtube > iframe {
+        width: 100%;
+        height: 100%;
         position: absolute;
         top: 0;
         left: 0;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: rgba(0, 0, 0, 0.8);
-        z-index: 2;
+        border: 0;
     }
 
-    .youtube-loading.hidden {
-        display: none;
+    /* Activated state */
+    lite-youtube.lyt-activated {
+        cursor: unset;
     }
 
-    .youtube-spinner {
-        width: 50px;
-        height: 50px;
-        border: 4px solid rgba(255, 255, 255, 0.3);
-        border-top-color: #ff0000;
-        border-radius: 50%;
-        animation: spin 1s linear infinite;
-    }
-
-    .fade-in {
+    lite-youtube.lyt-activated::before,
+    lite-youtube.lyt-activated > .lty-playbtn {
         opacity: 0;
-        transition: opacity 0.5s;
-    }
-    .fade-in.loaded {
-        opacity: 1;
+        pointer-events: none;
     }
 
-
-    @keyframes spin {
-        to {
-            transform: rotate(360deg);
-        }
-    }
-
-    /* Loaded state */
-    .youtube-resource-wrapper.loaded .youtube-thumbnail-container,
-    .youtube-resource-wrapper.loaded .youtube-play-button {
-        display: none;
+    /* Visually hidden for accessibility */
+    .lyt-visually-hidden {
+        clip: rect(0 0 0 0);
+        clip-path: inset(50%);
+        height: 1px;
+        overflow: hidden;
+        position: absolute;
+        white-space: nowrap;
+        width: 1px;
     }
 </style>
 
 <script>
     /**
-     * YouTube Lite - Carga el iframe solo cuando se hace click
-     * Mejora significativa de performance
+     * lite-youtube-embed
+     * Lightweight YouTube embed with better performance
      */
-    class YouTubeResourceManager {
-        private players: Map<string, HTMLElement> = new Map();
+    import "lite-youtube-embed";
 
-        constructor() {
-            this.initPlayers();
-        }
+    // The custom element is automatically registered by the import
+    // No additional JavaScript needed - the library handles everything!
 
-        private initPlayers() {
-            const wrappers = document.querySelectorAll('[data-youtube-id]');
-
-            wrappers.forEach(wrapper => {
-                const videoId = wrapper.getAttribute('data-youtube-id');
-                if (!videoId) return;
-
-                this.players.set(videoId, wrapper as HTMLElement);
-
-                // ⚡ Nuevo: autoplay automático
-                const embedUrl = wrapper.getAttribute('data-youtube-embed');
-                const isAutoplay = embedUrl?.includes('autoplay=1');
-                if (isAutoplay) {
-                    this.loadVideo(videoId, wrapper as HTMLElement);
-                    return; // Ya lo cargamos, no hace falta listeners
-                }
-
-                // Click para cargar el iframe
-                wrapper.addEventListener('click', () => {
-                    this.loadVideo(videoId, wrapper as HTMLElement);
-                });
-
-                // Enter key para accesibilidad
-                wrapper.addEventListener('keydown', (e: Event) => {
-                    const event = e as KeyboardEvent;
-                    if (event.key === 'Enter' || event.key === ' ') {
-                        event.preventDefault();
-                        this.loadVideo(videoId, wrapper as HTMLElement);
-                    }
-                });
-            });
-
-
-            if (import.meta.env.DEV) {
-                console.log(`[YouTubeResource] Initialized ${this.players.size} player(s)`);
-            }
-        }
-
-        private loadVideo(videoId: string, wrapper: HTMLElement) {
-            // Prevenir múltiples cargas
-            if (wrapper.classList.contains('loaded')) {
-                return;
-            }
-
-            const embedUrl = wrapper.getAttribute('data-youtube-embed');
-            if (!embedUrl) return;
-
-            // Mostrar loading
-            const loading = wrapper.querySelector('.youtube-loading');
-            loading?.classList.remove('hidden');
-
-            // Crear iframe
-            const iframe = document.createElement('iframe');
-            iframe.src = embedUrl;
-            iframe.setAttribute('frameborder', '0');
-            iframe.setAttribute('allowfullscreen', '');
-            iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
-            iframe.setAttribute('title', 'YouTube video player');
-            iframe.classList.add('fade-in');
-
-            // Evento de carga
-            iframe.addEventListener('load', () => {
-                iframe.classList.add('loaded');
-                loading?.classList.add('hidden');
-                wrapper.classList.add('loaded');
-            });
-
-            // Agregar iframe al wrapper
-            wrapper.appendChild(iframe);
-
-            if (import.meta.env.DEV) {
-                console.log(`[YouTubeResource] Loaded video: ${videoId}`);
-            }
-        }
-
-        // API pública
-        public playVideo(videoId: string) {
-            const wrapper = this.players.get(videoId);
-            if (wrapper) {
-                this.loadVideo(videoId, wrapper);
-            }
-        }
-
-        public getPlayerCount(): number {
-            return this.players.size;
-        }
-    }
-
-    // Instancia global
-    let youtubeManager: YouTubeResourceManager;
-
-    // Inicializar cuando el DOM esté listo
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', () => {
-            youtubeManager = new YouTubeResourceManager();
-        });
-    } else {
-        youtubeManager = new YouTubeResourceManager();
-    }
-
-    // Exponer en desarrollo
+    // Debugging in development
     if (import.meta.env.DEV) {
-        (window as any).__youtubeResourceManager = youtubeManager;
+        document.addEventListener("DOMContentLoaded", () => {
+            const players = document.querySelectorAll("lite-youtube");
+            console.log(
+                `[YouTubeResource] Initialized ${players.length} lite-youtube player(s)`,
+            );
+        });
     }
 </script>

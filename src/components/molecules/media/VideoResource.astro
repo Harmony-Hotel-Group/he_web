@@ -6,89 +6,88 @@
  */
 
 interface Props {
-	src: string;
-	classes?: string;
-	width?: number;
-	height?: number;
-	autoplay?: boolean;
-	loop?: boolean;
-	muted?: boolean;
-	controls?: boolean;
-	poster?: string;
-	placeholder?: string;
+    src: string;
+    classes?: string;
+    width?: number;
+    height?: number;
+    autoplay?: boolean;
+    loop?: boolean;
+    muted?: boolean;
+    controls?: boolean;
+    poster?: string;
+    placeholder?: string;
 }
 
 const {
-	src,
-	classes = "",
-	width = 600,
-	height = 400,
-	autoplay = false,
-	loop = false,
-	muted = true,
-	controls = true,
-	poster,
-	placeholder,
+    src,
+    classes = "",
+    width = 600,
+    height = 400,
+    autoplay = false,
+    loop = false,
+    muted = true,
+    controls = true,
+    poster,
+    placeholder,
 } = Astro.props;
 
 /**
  * Obtiene el MIME type según la extensión
  */
 function getVideoMimeType(url: string): string {
-	const ext = url.split(".").pop()?.toLowerCase() || "";
-	const mimeTypes: Record<string, string> = {
-		mp4: "video/mp4",
-		webm: "video/webm",
-		ogg: "video/ogg",
-		ogv: "video/ogg",
-		mov: "video/quicktime",
-		avi: "video/x-msvideo",
-		m4v: "video/mp4",
-	};
+    const ext = url.split(".").pop()?.toLowerCase() || "";
+    const mimeTypes: Record<string, string> = {
+        mp4: "video/mp4",
+        webm: "video/webm",
+        ogg: "video/ogg",
+        ogv: "video/ogg",
+        mov: "video/quicktime",
+        avi: "video/x-msvideo",
+        m4v: "video/mp4",
+    };
 
-	return mimeTypes[ext] || "video/mp4";
+    return mimeTypes[ext] || "video/mp4";
 }
 
 /**
  * Genera sources del video (solo el principal, sin variantes automáticas)
  */
 function getVideoSources(srcUrl: string): Array<{ src: string; type: string }> {
-	// Solo retornar el source principal
-	return [
-		{
-			src: srcUrl,
-			type: getVideoMimeType(srcUrl),
-		},
-	];
+    // Solo retornar el source principal
+    return [
+        {
+            src: srcUrl,
+            type: getVideoMimeType(srcUrl),
+        },
+    ];
 }
 
 const videoId = `video-${String(Math.random().toString(36)).substring(2, 9)}`;
 const videoSources = getVideoSources(src);
 const placeholderUrl =
-	placeholder || `https://placehold.co/${width}x${height}?text=Video`;
+    placeholder || `https://placehold.co/${width}x${height}?text=Video`;
 ---
 
-<div
-        class:list={['video-resource-wrapper', classes]}
-        data-video-id={videoId}
->
+<div class:list={["video-resource-wrapper", classes]} data-video-id={videoId}>
     <video
-            id={videoId}
-            class="video-resource"
-            width={width}
-            height={height}
-            autoplay={autoplay}
-            loop={loop}
-            muted={muted}
-            controls={controls}
-            playsinline
-            poster={poster}
-            preload="metadata"
-            data-loaded="false"
+        id={videoId}
+        class="video-resource"
+        width={width}
+        height={height}
+        autoplay={autoplay}
+        loop={loop}
+        muted={muted}
+        controls={controls}
+        playsinline
+        poster={poster}
+        preload="metadata"
+        data-loaded="false"
     >
-        {videoSources.map(source => (
+        {
+            videoSources.map((source) => (
                 <source src={source.src} type={source.type} />
-        ))}
+            ))
+        }
 
         <!-- Fallback para navegadores sin soporte -->
         <p class="video-fallback-text">
@@ -108,18 +107,38 @@ const placeholderUrl =
     <!-- Error overlay (oculto por defecto) -->
     <div class="video-error-overlay hidden">
         <div class="video-error-content">
-            <svg class="video-error-icon" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
-                <line x1="12" y1="9" x2="12" y2="13"/>
-                <line x1="12" y1="17" x2="12.01" y2="17"/>
+            <svg
+                class="video-error-icon"
+                width="64"
+                height="64"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+            >
+                <path
+                    d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"
+                ></path>
+                <line x1="12" y1="9" x2="12" y2="13"></line>
+                <line x1="12" y1="17" x2="12.01" y2="17"></line>
             </svg>
             <h3 class="video-error-title">No se pudo cargar el video</h3>
-            <p class="video-error-message">El archivo de video no está disponible o el formato no es compatible.</p>
+            <p class="video-error-message">
+                El archivo de video no está disponible o el formato no es
+                compatible.
+            </p>
             <a href={src} download class="video-error-download">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
-                    <polyline points="7 10 12 15 17 10"/>
-                    <line x1="12" y1="15" x2="12" y2="3"/>
+                <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                >
+                    <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"></path>
+                    <polyline points="7 10 12 15 17 10"></polyline>
+                    <line x1="12" y1="15" x2="12" y2="3"></line>
                 </svg>
                 Descargar video
             </a>
@@ -283,34 +302,45 @@ const placeholderUrl =
         }
 
         private initVideos() {
-            const wrappers = document.querySelectorAll('[data-video-id]');
+            const wrappers = document.querySelectorAll("[data-video-id]");
 
-            wrappers.forEach(wrapper => {
-                const videoId = wrapper.getAttribute('data-video-id');
+            wrappers.forEach((wrapper) => {
+                const videoId = wrapper.getAttribute("data-video-id");
                 if (!videoId) return;
 
-                const video = wrapper.querySelector(`#${videoId}`) as HTMLVideoElement;
-                const loadingOverlay = wrapper.querySelector('.video-loading-overlay') as HTMLElement;
-                const errorOverlay = wrapper.querySelector('.video-error-overlay') as HTMLElement;
+                const video = wrapper.querySelector(
+                    `#${videoId}`,
+                ) as HTMLVideoElement;
+                const loadingOverlay = wrapper.querySelector(
+                    ".video-loading-overlay",
+                ) as HTMLElement;
+                const errorOverlay = wrapper.querySelector(
+                    ".video-error-overlay",
+                ) as HTMLElement;
 
                 if (!video) return;
 
                 this.videos.set(videoId, video);
 
                 // Event: loadeddata - cuando el video está listo
-                video.addEventListener('loadeddata', () => {
+                video.addEventListener("loadeddata", () => {
                     this.handleVideoLoad(video, loadingOverlay);
                 });
 
                 // Event: canplay - cuando puede empezar a reproducir
-                video.addEventListener('canplay', () => {
-                    loadingOverlay?.classList.add('hidden');
-                    video.setAttribute('data-loaded', 'true');
+                video.addEventListener("canplay", () => {
+                    loadingOverlay?.classList.add("hidden");
+                    video.setAttribute("data-loaded", "true");
                 });
 
                 // Event: error - cuando falla la carga
-                video.addEventListener('error', (_) => {
-                    this.handleVideoError(video, wrapper as HTMLElement, loadingOverlay, errorOverlay);
+                video.addEventListener("error", (_) => {
+                    this.handleVideoError(
+                        video,
+                        wrapper as HTMLElement,
+                        loadingOverlay,
+                        errorOverlay,
+                    );
                 });
 
                 // Intersection Observer para autoplay inteligente
@@ -320,16 +350,18 @@ const placeholderUrl =
             });
 
             if (import.meta.env.DEV) {
-                console.log(`[VideoResource] Initialized ${this.videos.size} video(s)`);
+                console.log(
+                    `[VideoResource] Initialized ${this.videos.size} video(s)`,
+                );
             }
         }
 
         private handleVideoLoad(
             video: HTMLVideoElement,
-            loadingOverlay: HTMLElement | null
+            loadingOverlay: HTMLElement | null,
         ) {
-            loadingOverlay?.classList.add('hidden');
-            video.setAttribute('data-loaded', 'true');
+            loadingOverlay?.classList.add("hidden");
+            video.setAttribute("data-loaded", "true");
 
             if (import.meta.env.DEV) {
                 console.log(`[VideoResource] Video loaded: ${video.id}`);
@@ -340,16 +372,16 @@ const placeholderUrl =
             video: HTMLVideoElement,
             wrapper: HTMLElement,
             loadingOverlay: HTMLElement | null,
-            errorOverlay: HTMLElement | null
+            errorOverlay: HTMLElement | null,
         ) {
-            console.error('[VideoResource] Error loading video:', video.src);
+            console.error("[VideoResource] Error loading video:", video.src);
 
             // Ocultar loading, mostrar error
-            loadingOverlay?.classList.add('hidden');
-            errorOverlay?.classList.remove('hidden');
+            loadingOverlay?.classList.add("hidden");
+            errorOverlay?.classList.remove("hidden");
 
             // Intentar con el siguiente source si hay
-            const sources = video.querySelectorAll('source');
+            const sources = video.querySelectorAll("source");
             let currentSourceIndex = -1;
 
             sources.forEach((source, index) => {
@@ -360,9 +392,13 @@ const placeholderUrl =
 
             // Si hay más sources, intentar con el siguiente
             if (currentSourceIndex < sources.length - 1) {
-                const nextSource = sources[currentSourceIndex + 1] as HTMLSourceElement;
+                const nextSource = sources[
+                    currentSourceIndex + 1
+                ] as HTMLSourceElement;
                 if (nextSource && import.meta.env.DEV) {
-                    console.log(`[VideoResource] Trying next source: ${nextSource.src}`);
+                    console.log(
+                        `[VideoResource] Trying next source: ${nextSource.src}`,
+                    );
                 }
                 video.load();
             }
@@ -370,16 +406,19 @@ const placeholderUrl =
 
         private setupIntersectionObserver(
             videoId: string,
-            video: HTMLVideoElement
+            video: HTMLVideoElement,
         ) {
             const observer = new IntersectionObserver(
                 (entries) => {
-                    entries.forEach(entry => {
+                    entries.forEach((entry) => {
                         if (entry.isIntersecting && video.paused) {
                             // Video visible y pausado - intentar reproducir
-                            video.play().catch(err => {
+                            video.play().catch((err) => {
                                 if (import.meta.env.DEV) {
-                                    console.warn('[VideoResource] Autoplay prevented:', err);
+                                    console.warn(
+                                        "[VideoResource] Autoplay prevented:",
+                                        err,
+                                    );
                                 }
                             });
                         } else if (!entry.isIntersecting && !video.paused) {
@@ -389,8 +428,8 @@ const placeholderUrl =
                     });
                 },
                 {
-                    threshold: 0.5 // 50% visible
-                }
+                    threshold: 0.5, // 50% visible
+                },
             );
 
             observer.observe(video);
@@ -401,8 +440,8 @@ const placeholderUrl =
         public playVideo(videoId: string) {
             const video = this.videos.get(videoId);
             if (video) {
-                video.play().catch(err => {
-                    console.error('[VideoResource] Error playing video:', err);
+                video.play().catch((err) => {
+                    console.error("[VideoResource] Error playing video:", err);
                 });
             }
         }
@@ -420,31 +459,32 @@ const placeholderUrl =
 
         public cleanup() {
             // Limpiar observers
-            this.observers.forEach(observer => observer.disconnect());
+            this.observers.forEach((observer) => observer.disconnect());
             this.observers.clear();
             this.videos.clear();
         }
     }
 
     // Instancia global
-    let videoManager: VideoResourceManager;
+    let videoManager: VideoResourceManager | null = null;
 
     // Inicializar cuando el DOM esté listo
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', () => {
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", () => {
             videoManager = new VideoResourceManager();
+            if (import.meta.env.DEV) {
+                (window as any).__videoResourceManager = videoManager;
+            }
         });
     } else {
         videoManager = new VideoResourceManager();
+        if (import.meta.env.DEV) {
+            (window as any).__videoResourceManager = videoManager;
+        }
     }
 
     // Cleanup al salir de la página
-    window.addEventListener('beforeunload', () => {
+    window.addEventListener("beforeunload", () => {
         videoManager?.cleanup();
     });
-
-    // Exponer en desarrollo
-    if (import.meta.env.DEV) {
-        (window as any).__videoResourceManager = videoManager;
-    }
 </script>

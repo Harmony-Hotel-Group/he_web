@@ -86,7 +86,7 @@ const translationCache = new TranslationCache();
  */
 async function loadResources() {
 	const flagsGlob = import.meta.glob<{ default: ImageMetadata }>(
-		"/src/resources/img/flags/*.svg",
+		"/src/assets/img/flags/*.svg",
 	);
 	const jsonsGlob = import.meta.glob<{ default: TranslationObject }>(
 		"/src/i18n/*.json",

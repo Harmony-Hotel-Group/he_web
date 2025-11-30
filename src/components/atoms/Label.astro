@@ -1,6 +1,6 @@
 ---
 // src/components/atoms/Label.astro
-import { defaultLang, Translations } from "@/i18n/translation.ts";
+import { DEFAULT_LANG, Translations } from "@/i18n/translation.ts";
 
 interface Props {
 	id?: string;
@@ -18,7 +18,7 @@ const {
 	id,
 	forId,
 	lblKey,
-	lang = defaultLang,
+	lang = DEFAULT_LANG,
 	required = false,
 	classes = "",
 	direction = "horizontal",

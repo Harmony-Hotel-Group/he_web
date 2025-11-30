@@ -5,20 +5,17 @@
  * Solo carga el componente necesario para mejor performance
  */
 
-import { logger } from "@/services/logger.ts";
-import {
-	detectResourceType,
-	type ResourceType,
-	validateResource,
-} from "@/utils/visual-resource-utils.ts";
+import type { ImageMetadata } from "astro";
 import ImageResource from "./ImageResource.astro";
 import VideoResource from "./VideoResource.astro";
+import { logger } from "@/services/logger.ts";
+import {detectResourceType,	type ResourceType,	validateResource,	extractYouTubeId,} from "@/utils/visual-resource-utils.ts";
 import YouTubeResource from "./YouTubeResource.astro";
 
 const log = logger("VisualResource");
 
 interface Props {
-	src: string;
+	src: string | ImageMetadata;
 	type?: "image" | "video" | "youtube" | "auto";
 	alt?: string;
 	classes?: string;
@@ -62,7 +59,7 @@ const detectedType: ResourceType =
 	type === "auto" ? detectResourceType(src) : (type as ResourceType);
 
 log.info(
-	`Recurso: ${src} | Tipo recibido: ${type} | Tipo detectado: ${detectedType}`,
+	`Recurso: ${typeof src === "string" ? src : "ImageMetadata"} | Tipo recibido: ${type} | Tipo detectado: ${detectedType}`,
 );
 
 // Validar recurso (solo en build time, no en runtime)
@@ -70,7 +67,7 @@ const validation = await validateResource(src, detectedType);
 
 if (!validation.isValid) {
 	log.warn(
-		`Recurso no válido o no encontrado: '${src}'. Usando placeholder. Razón: ${validation.error}`,
+		`Recurso no válido o no encontrado: '${typeof src === "string" ? src : "ImageMetadata"}'. Usando placeholder. Razón: ${validation.error}`,
 	);
 }
 ---
@@ -80,17 +77,13 @@ if (!validation.isValid) {
 		<ImageResource src={PlaceHolder} alt={alt || "Recurso no encontrado"} />
 	) : detectedType === "youtube" ? (
 		<YouTubeResource
-			src={src}
+			videoid={extractYouTubeId(src as string) || ""}
 			classes={classes}
-			autoplay={autoplay}
-			loop={loop}
-			muted={muted}
-			controls={controls}
 			title={alt}
 		/>
 	) : detectedType === "video" ? (
 		<VideoResource
-			src={(validation.finalSrc as string) || src}
+			src={(validation.finalSrc as string) || (src as string)}
 			classes={classes}
 			width={width}
 			height={height}
@@ -103,7 +96,7 @@ if (!validation.isValid) {
 		/>
 	) : (
 		<ImageResource
-			src={validation.finalSrc || src}
+			src={validation.finalSrc ?? src}
 			alt={alt}
 			width={width}
 			height={height}

@@ -4,7 +4,7 @@ import DateRangePicker from "@/components/atoms/DateRangePicker.astro";
 import Icono from "@/components/atoms/Icono.astro";
 import Label from "@/components/atoms/Label.astro";
 
-import { defaultLang, Translations } from "@/i18n/translation.ts";
+import { DEFAULT_LANG, Translations } from "@/i18n/translation.ts";
 import Row from "@/layouts/Row.astro";
 
 interface Props {
@@ -27,7 +27,7 @@ const {
 	syncGroup = "booking", // Por defecto todos se sincronizan
 } = Astro.props;
 
-const t = Translations(lang ?? defaultLang);
+const t = Translations(lang ?? DEFAULT_LANG);
 ---
 
 <div class:list={["flex flex-col", className]}>

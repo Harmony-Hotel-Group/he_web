@@ -3,6 +3,7 @@
 import Imagen from "@/components/atoms/Imagen.astro";
 import { logger } from "@/services/logger.ts";
 import type { Resource } from "@/types/resource";
+import { validateResource } from "@/utils/visual-resource-utils.ts";
 
 interface Props {
 	class?: string;
@@ -39,6 +40,17 @@ log.info(
 	autoplayInterval,
 	"ms",
 );
+
+// Validar recursos
+const validatedResources = await Promise.all(
+	resources.map(async (item) => {
+		const validation = await validateResource(item.src, "image");
+		return {
+			...item,
+			src: validation.isValid && validation.finalSrc ? validation.finalSrc : item.src,
+		};
+	}),
+);
 ---
 
 
@@ -50,11 +62,11 @@ log.info(
 
 
     <div class="absolute inset-0 w-full h-full" data-carousel-container>
-        {resources && resources.length > 0 ? (
-            resources.map((item, index) => (
+        {validatedResources && validatedResources.length > 0 ? (
+            validatedResources.map((item, index) => (
                 <div class="absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out opacity-0">
                     <Imagen
-                        src={item.src as string}
+                        src={item.src}
                         alt={item.alt}
                         class="w-full h-full object-cover"
                         loading={index === 0 ? "eager" : "lazy"}

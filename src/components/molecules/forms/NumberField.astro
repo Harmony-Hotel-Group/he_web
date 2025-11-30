@@ -4,33 +4,33 @@ import Icono from "@/components/atoms/Icono.astro";
 import Label from "@/components/atoms/Label.astro";
 import NumberInput from "@/components/atoms/NumberInput.astro";
 
-import { defaultLang, Translations } from "@/i18n/translation.ts";
+import { DEFAULT_LANG, Translations } from "@/i18n/translation.ts";
 import Row from "@/layouts/Row.astro";
 
 interface Props {
-	fieldId?: string;
-	name: string;
-	lblKey: string;
-	icon?: string;
-	min?: number;
-	max?: number;
-	step?: number;
-	value?: number;
-	lang: string;
-	className?: string;
+    fieldId?: string;
+    name: string;
+    lblKey: string;
+    icon?: string;
+    min?: number;
+    max?: number;
+    step?: number;
+    value?: number;
+    lang: string;
+    className?: string;
 }
 
 const {
-	fieldId = "groupAdults",
-	name,
-	lblKey,
-	lang,
-	icon,
-	min = 0,
-	max,
-	step = 1,
-	value = 0,
-	className,
+    fieldId = "groupAdults",
+    name,
+    lblKey,
+    lang,
+    icon,
+    min = 0,
+    max,
+    step = 1,
+    value = 0,
+    className,
 } = Astro.props;
 
 const t = Translations(lang);
@@ -38,23 +38,25 @@ const t = Translations(lang);
 
 <div class:list={["flex flex-col", className]}>
     <Row class="items-end">
-        <Icono name={icon}/>
+        {icon && <Icono name={icon as string} />}
         <Label
-                forId={fieldId}
-                lblKey={lblKey}
-                lang={lang}
-                classes="font-bold"
+            forId={fieldId}
+            lblKey={lblKey}
+            lang={lang}
+            classes="font-bold"
         />
     </Row>
     <NumberInput
-            id={fieldId}
-            name={name}
-            lang={lang}
-            min={min}
-            max={max}
-            step={step}
-            value={value}
-            placeholder={t('booking.dateRange.placeholder')}
+        id={fieldId}
+        name={name}
+        lang={lang}
+        min={min}
+        max={max}
+        step={step}
+        value={value}
+        placeholder={t("booking.dateRange.placeholder")}
     />
-    <span id={`error_${fieldId}`} class="hidden text-red-700 px-4">{t('booking.number.error')}</span>
+    <span id={`error_${fieldId}`} class="hidden text-red-700 px-4"
+        >{t("booking.number.error")}</span
+    >
 </div>

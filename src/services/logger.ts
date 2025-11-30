@@ -57,10 +57,10 @@ function timeStamp(): string {
  * Formatea una línea de log para el servidor (ANSI colors)
  */
 
-const colorMap: Record<string, string> = {
-	INFO: cssColors.info,
-	WARN: cssColors.warn,
-	ERROR: cssColors.error,
+const serverColorMap: Record<string, string> = {
+	INFO: ansiColors.blue,
+	WARN: ansiColors.yellow,
+	ERROR: ansiColors.red,
 };
 
 function formatLineServer(
@@ -68,21 +68,24 @@ function formatLineServer(
 	context: string,
 	args: unknown[],
 ): unknown[] {
-	const color = colorMap[level] ?? ansiColors.blue;
+	const color = serverColorMap[level] ?? ansiColors.blue;
 
 	const prefix = `${color}[${timeStamp()}] [${level}] ${ansiColors.bold}[${context}]${ansiColors.reset}`;
 	return [prefix, ...args];
 }
 
-/**
- * Formatea una línea de log para el navegador (CSS colors)
- */
+const browserColorMap: Record<string, string> = {
+	INFO: cssColors.info,
+	WARN: cssColors.warn,
+	ERROR: cssColors.error,
+};
+
 function formatLineBrowser(
 	level: "INFO" | "WARN" | "ERROR",
 	context: string,
 	args: unknown[],
 ): unknown[] {
-	const levelColor = colorMap[level] ?? cssColors.info;
+	const levelColor = browserColorMap[level] ?? cssColors.info;
 	const message = `%c[${timeStamp()}]%c [${level}]%c [${context}]%c`;
 	const styles = [
 		cssColors.time,
@@ -114,16 +117,16 @@ export function logger(context: string) {
 
 	const base =
 		(level: "INFO" | "WARN" | "ERROR", type: "log" | "warn" | "error") =>
-		(...args: unknown[]) => {
-			if (!active) return;
+			(...args: unknown[]) => {
+				if (!active) return;
 
-			// Usar formato apropiado según el entorno
-			const formattedArgs = isServer
-				? formatLineServer(level, context, args)
-				: formatLineBrowser(level, context, args);
+				// Usar formato apropiado según el entorno
+				const formattedArgs = isServer
+					? formatLineServer(level, context, args)
+					: formatLineBrowser(level, context, args);
 
-			console[type](...formattedArgs);
-		};
+				console[type](...formattedArgs);
+			};
 
 	return {
 		info: base("INFO", "log"),
@@ -136,8 +139,3 @@ export function logger(context: string) {
 		},
 	};
 }
-
-/**
- * Logger global para uso rápido sin contexto específico
- */
-export const log = logger("App");

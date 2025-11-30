@@ -24,7 +24,8 @@
 	"components": {
 		"dateRangePicker": "{{n}} noche{{s}}",
 		"errors": {
-			"dateRangePicker": "Falta seleccionar un rango de fechas"
+			"dateRangePicker": "Falta seleccionar un rango de fechas",
+			"missingVehicleOptions": "No hay tipos de vehículo configurados aún. Continúa con tu reserva o contacta al administrador."
 		}
 	},
 	"footer": {
@@ -76,6 +77,9 @@
 		"vehicles": {
 			"title": "Reservar Vehiculo",
 			"vehicle": "Vehiculo",
+			"vehicles": {
+				"notesPlaceholder": "Información adicional sobre estacionamiento, horarios de llegada, etc."
+			},
 			"type": "Tipo",
 			"add": "Agregar Vehiculo",
 			"remove": "Eliminar Vehiculo",
@@ -98,7 +102,8 @@
 			"modal": {
 				"title": "Reserva Grupal",
 				"cancel": "Cancelar",
-				"confirm": "Confirmar"
+				"confirm": "Confirmar",
+				"includeVehicles": "¿Incluir información de vehículos?"
 			}
 		}
 	}

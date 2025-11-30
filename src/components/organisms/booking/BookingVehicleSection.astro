@@ -37,7 +37,7 @@ const t = Translations(lang);
 
         {vehicleTypeOptions.length === 0 && (
             <div class="mb-3 text-sm text-amber-800 dark:text-amber-200 bg-amber-100/60 dark:bg-amber-900/30 border border-amber-200 dark:border-amber-800 rounded-md p-3">
-                {t('components.errors?.missingVehicleOptions') ?? 'No hay tipos de vehículo configurados aún. Continúa con tu reserva o contacta al administrador.'}
+                {t('components.errors?.missingVehicleOptions')}
             </div>
         )}
         <Grid cols={3} _id="vehicles-container">

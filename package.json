@@ -10,20 +10,21 @@
 		"astro": "astro"
 	},
 	"dependencies": {
-		"@astrojs/node": "^9.4.4",
-		"@astrojs/vercel": "^8.2.8",
+		"@astrojs/node": "^9.5.1",
+		"@astrojs/vercel": "^9.0.2",
 		"@tailwindcss/vite": "^4.1.16",
 		"astro-icon": "^1.1.5",
 		"flatpickr": "^4.6.13",
+		"lite-youtube-embed": "^0.3.4",
 		"lucide-astro": "^0.544.0",
 		"mailgun.js": "^12.1.0"
 	},
 	"devDependencies": {
-		"@astrojs/check": "^0.9.4",
+		"@astrojs/check": "^0.9.6",
 		"@biomejs/biome": "2.2.7",
 		"@tailwindcss/postcss": "^4.1.16",
 		"@types/node": "^24.6.2",
-		"astro": "^5.14.1",
+		"astro": "^5.16.3",
 		"tailwindcss": "^4.1.16",
 		"typescript": "^5.9.3"
 	}

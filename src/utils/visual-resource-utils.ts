@@ -2,25 +2,20 @@
 /**
  * Utilidades para el sistema de recursos visuales
  * Funciones reutilizables y optimizadas
- * Con validación de archivos locales usando fs y glob
+ * Con validación de archivos locales usando glob
  */
 
 import { logger } from "@/services/logger";
 import type { ImageMetadata } from "astro";
 
-// Solo importar fs en servidor (build-time)
-let fs: typeof import('node:fs').promises | null = null;
-let path: typeof import('node:path') | null = null;
-
-// Importar dinámicamente solo si estamos en Node.js
-if (typeof process !== 'undefined' && process.versions?.node) {
-	try {
-		fs = await import('node:fs').then(m => m.promises);
-		path = await import('node:path');
-	} catch (error) {
-		// Ignorar si no está disponible (navegador)
-	}
-}
+// Definir globs para diferentes tipos de recursos
+const assets = import.meta.glob<{ default: ImageMetadata }>("/src/assets/**/*");
+const localImages = import.meta.glob<{ default: ImageMetadata }>(
+	"/src/resources/img/**/*.{jpeg,jpg,png,gif,webp,svg,avif}",
+);
+const localVideos = import.meta.glob<{ default: string }>(
+	"/src/resources/vid/**/*.{mp4,webm,ogg,mov,avi}",
+);
 
 const log = logger("VisualResourceUtils");
 
@@ -49,14 +44,12 @@ const CACHE_TTL = 60 * 60 * 1000; // 60 minutos
 /**
  * Detecta el tipo de recurso basado en la URL
  */
-export function detectResourceType(src: string): ResourceType {
+export function detectResourceType(src: string | ImageMetadata): ResourceType {
 	if (!src) return "image";
-
-	log.info(`[detectResourceType] Analyzing: ${src}`);
+	if (typeof src !== "string") return "image";
 
 	// YouTube URLs
 	if (isYouTubeUrl(src)) {
-		log.info(`[detectResourceType] Detected YouTube URL: ${src}`);
 		return "youtube";
 	}
 
@@ -64,31 +57,19 @@ export function detectResourceType(src: string): ResourceType {
 	const videoExtensions = [".mp4", ".webm", ".ogg", ".mov", ".avi"];
 	const lowerSrc = src.toLowerCase();
 	if (videoExtensions.some((ext) => lowerSrc.includes(ext))) {
-		log.info(`[detectResourceType] Detected video extension: ${src}`);
 		return "video";
 	}
 
 	// Image extensions (default)
-	log.info(`[detectResourceType] Defaulting to image: ${src}`);
 	return "image";
 }
-
-/**
- * Verifica si una URL es de YouTube
- */
 export function isYouTubeUrl(url: string): boolean {
-	log.info(`[isYouTubeUrl] Checking URL: ${url}`);
-
 	const youtubePatterns = [
 		/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&\s]+)/,
 		/youtube\.com\/shorts\/([^&\s]+)/,
 	];
 
-	const isYouTube = youtubePatterns.some((pattern) => pattern.test(url));
-
-	log.info(`[isYouTubeUrl] URL: ${url} | Is YouTube: ${isYouTube}`);
-
-	return isYouTube;
+	return youtubePatterns.some((pattern) => pattern.test(url));
 }
 
 /**
@@ -149,37 +130,57 @@ export function getYouTubeEmbedUrl(
 	return `https://www.youtube-nocookie.com/embed/${videoId}?${params.toString()}`;
 }
 
-// ==================== GLOBS ====================
-
-const localImages = import.meta.glob(
-	"/src/resources/img/**/*.{jpeg,jpg,png,gif,webp,svg,avif}",
-);
-
-const localVideos = import.meta.glob(
-	"/src/resources/vid/**/*.{mp4,webm,ogg,mov,avi}",
-);
-
 // ==================== VALIDACIÓN DE ARCHIVOS LOCALES ====================
 
 /**
  * Valida si un archivo existe en el sistema de archivos local
  * Usa import.meta.glob para recursos en /src/
- * Usa fs para recursos en /public/ (si está disponible)
  */
 async function validateLocalFile(src: string): Promise<ValidationResult> {
-	// 1. Verificar en /src/resources/img/ (Imágenes)
-	const possiblePaths = [
-		src,
-		// `/src/resources/img${src.startsWith("/") ? src : `/${src}`}`,
-		// `/src/resources${src.startsWith("/") ? src : `/${src}`}`,
-		// `/src${src.startsWith("/") ? src : `/${src}`}`,
+	// Normalizar ruta para coincidir con las claves del glob
+	// Asegurar que empiece con /src/ si no lo tiene
+	let normalizedPath = src;
+	if (!src.startsWith("/")) {
+		normalizedPath = "/" + src;
+	}
+	if (!normalizedPath.startsWith("/src/")) {
+		// Si es una ruta relativa o de alias, intentar resolverla o asumir que es relativa a src
+		// Por ahora, intentamos buscarla tal cual si empieza con /src, o añadimos /src si parece estar en assets
+		if (normalizedPath.startsWith("/assets/")) {
+			normalizedPath = "/src" + normalizedPath;
+		}
+	}
+
+	// 1. Verificar en assets glob (general)
+	if (assets[normalizedPath]) {
+		try {
+			const mod = await assets[normalizedPath]();
+			log.info(
+				`[validateLocalFile] ✓ Encontrado en assets: ${JSON.stringify(mod.default)}`,
+			);
+			return {
+				isValid: true,
+				finalSrc: mod.default,
+			};
+		} catch (e) {
+			log.error(`[validateLocalFile] Error cargando módulo: ${normalizedPath}`, e);
+		}
+	}
+
+	// 2. Verificar en /src/resources/img/ (Imágenes legacy/específicas)
+	// Intentar variaciones de ruta
+	const possibleImgPaths = [
+		normalizedPath,
+		`/src/resources/img${normalizedPath.startsWith("/src/resources/img") ? normalizedPath.replace("/src/resources/img", "") : normalizedPath}`,
 	];
-	log.warn(`[validateLocalFile] Posibles rutas en src: ${possiblePaths}`);
-	for (const p of possiblePaths) {
+
+	for (const p of possibleImgPaths) {
 		if (localImages[p]) {
 			try {
-				const mod = (await localImages[p]()) as { default: ImageMetadata };
-				log.info(`[validateLocalFile] ✓ Encontrado en src (img): ${JSON.stringify(mod.default)}`);
+				const mod = await localImages[p]();
+				log.info(
+					`[validateLocalFile] ✓ Encontrado en src (img): ${JSON.stringify(mod.default)}`,
+				);
 				return {
 					isValid: true,
 					finalSrc: mod.default,
@@ -190,47 +191,45 @@ async function validateLocalFile(src: string): Promise<ValidationResult> {
 		}
 	}
 
-	// 2. Verificar en /src/resources/vid/ (Videos)
-	for (const p of possiblePaths) {
-		// Ajustar ruta para video si es necesario
-		const videoPath = p.replace("/img/", "/vid/");
+	// 3. Verificar en /src/resources/vid/ (Videos)
+	const possibleVidPaths = [
+		normalizedPath,
+		`/src/resources/vid${normalizedPath.startsWith("/src/resources/vid") ? normalizedPath.replace("/src/resources/vid", "") : normalizedPath}`,
+	];
 
-		if (localVideos[videoPath]) {
-			log.info(`[validateLocalFile] ✓ Encontrado en src (vid): ${videoPath}`);
-			return {
-				isValid: true,
-				finalSrc: videoPath,
-			};
-		}
+	for (const p of possibleVidPaths) {
 		if (localVideos[p]) {
-			log.info(`[validateLocalFile] ✓ Encontrado en src (vid): ${p}`);
-			return {
-				isValid: true,
-				finalSrc: p,
-			};
+			try {
+				const mod = await localVideos[p]();
+				// Para videos, el default suele ser la URL (string)
+				log.info(`[validateLocalFile] ✓ Encontrado en src (vid): ${mod.default}`);
+				return {
+					isValid: true,
+					finalSrc: mod.default,
+				};
+			} catch (e) {
+				log.error(`[validateLocalFile] Error cargando módulo: ${p}`, e);
+			}
 		}
 	}
 
-	// 3. Verificar en /public/ usando fs (solo servidor)
-	if (fs && path && process.cwd) {
-		try {
-			const publicPath = path.join(process.cwd(), "public", src.startsWith("/") ? src.slice(1) : src);
-			await fs.access(publicPath, fs.constants.F_OK);
-			log.info(`[validateLocalFile] ✓ Encontrado en public: ${publicPath}`);
-			return {
-				isValid: true,
-				finalSrc: src,
-			};
-		} catch {
-			// No está en public
-		}
+	// No encontrado en globs
+	// Nota: Ya no verificamos 'public' con fs. Si está en public, se asume válido si no falla el fetch en dev,
+	// o simplemente se devuelve como string para que el navegador intente cargarlo.
+
+	// Si parece ser un archivo estático en public (no empieza con /src), lo devolvemos como válido
+	// para que el navegador lo resuelva.
+	if (!src.startsWith("/src/")) {
+		return {
+			isValid: true,
+			finalSrc: src,
+		};
 	}
 
-	// No encontrado
-	log.info(`[validateLocalFile] ✗ Archivo no encontrado: ${src}`);
+	log.info(`[validateLocalFile] ✗ Archivo no encontrado en globs: ${src}`);
 	return {
 		isValid: false,
-		error: `Archivo local no encontrado: ${src}`,
+		error: `Archivo local no encontrado en globs: ${src}`,
 	};
 }
 
@@ -238,12 +237,20 @@ async function validateLocalFile(src: string): Promise<ValidationResult> {
 
 /**
  * Valida si un recurso existe y es accesible
- * Soporta: archivos locales (con fs), URLs remotas, YouTube
+ * Soporta: archivos locales (vía glob), URLs remotas, YouTube
  */
 export async function validateResource(
-	src: string,
+	src: string | ImageMetadata,
 	type: ResourceType,
 ): Promise<ValidationResult> {
+	// Si ya es ImageMetadata, es válido
+	if (typeof src !== "string") {
+		return {
+			isValid: true,
+			finalSrc: src,
+		};
+	}
+
 	// Cache check
 	const cached = getCachedValidation(src);
 	if (cached) {
@@ -263,72 +270,20 @@ export async function validateResource(
 
 	// ==================== RECURSOS LOCALES ====================
 	if (!src.startsWith("http://") && !src.startsWith("https://")) {
-		// Intentar validar con fs (servidor/build-time)
-		if (fs && path && typeof process !== 'undefined' && typeof process.cwd === 'function') {
-			try {
-				const result = await validateLocalFile(src);
-				cacheValidation(src, result);
-				return result;
-			} catch (error) {
-				const errorMessage = error instanceof Error
-					? error.message
-					: "Error accediendo archivo local";
-
-				log.info(`[validateResource] Error en fs: ${errorMessage}`);
-
-				const result = {
-					isValid: false,
-					error: errorMessage,
-				};
-
-				cacheValidation(src, result);
-				return result;
-			}
+		try {
+			const result = await validateLocalFile(src);
+			cacheValidation(src, result);
+			return result;
+		} catch (error) {
+			const errorMessage =
+				error instanceof Error ? error.message : "Error validando archivo local";
+			const result = {
+				isValid: false,
+				error: errorMessage,
+			};
+			cacheValidation(src, result);
+			return result;
 		}
-
-		// Fallback: intentar con fetch (funciona en dev server)
-		if (import.meta.env.DEV) {
-			try {
-				const controller = new AbortController();
-				const timeoutId = setTimeout(() => controller.abort(), 2000);
-
-				const response = await fetch(src, {
-					method: "HEAD",
-					signal: controller.signal,
-				});
-
-				clearTimeout(timeoutId);
-
-				const isValid = response.ok;
-				const result = {
-					isValid,
-					finalSrc: isValid ? src : undefined,
-					error: isValid
-						? undefined
-						: `Archivo local no encontrado: ${response.status}`,
-				};
-
-				cacheValidation(src, result);
-				return result;
-			} catch (error) {
-				const errorMessage =
-					error instanceof Error ? error.message : "Archivo local no accesible";
-
-				const result = {
-					isValid: false,
-					finalSrc: undefined,
-					error: errorMessage,
-				};
-
-				cacheValidation(src, result);
-				return result;
-			}
-		}
-
-		// En producción o navegador, asumir válido
-		const result = { isValid: true, finalSrc: src };
-		cacheValidation(src, result);
-		return result;
 	}
 
 	// ==================== RECURSOS REMOTOS ====================
@@ -361,8 +316,7 @@ export async function validateResource(
 		cacheValidation(src, result);
 		return result;
 	} catch (error) {
-		const errorMessage =
-			error instanceof Error ? error.message : String(error);
+		const errorMessage = error instanceof Error ? error.message : String(error);
 
 		log.info(`[validateResource] Error validando ${src}:`, errorMessage);
 
@@ -477,42 +431,15 @@ export async function findResource(
 	filename: string,
 	type: ResourceType,
 ): Promise<string | null> {
-	if (!fs || !path || typeof process === 'undefined' || typeof process.cwd !== 'function') {
-		return null;
-	}
+	// Buscar en los globs
+	const searchGlobs = type === "image" ? [assets, localImages] : [localVideos];
 
-	try {
-		const cwd = process.cwd();
-		const searchPaths = type === 'image'
-			? [
-				path.join(cwd, 'public', 'images', filename),
-				path.join(cwd, 'public', 'img', filename),
-				path.join(cwd, 'src', 'resources', 'img', filename),
-			]
-			: type === 'video'
-				? [
-					path.join(cwd, 'public', 'videos', filename),
-					path.join(cwd, 'public', 'vid', filename),
-					path.join(cwd, 'src', 'resources', 'vid', filename),
-				]
-				: [];
-
-		for (const filePath of searchPaths) {
-			try {
-				await fs.access(filePath, fs.constants.F_OK);
-
-				// Convertir a ruta relativa desde public
-				if (filePath.includes('/public/')) {
-					return '/' + filePath.split('/public/')[1];
-				}
-
-				return filePath;
-			} catch {
-				continue;
+	for (const glob of searchGlobs) {
+		for (const key of Object.keys(glob)) {
+			if (key.endsWith(filename)) {
+				return key;
 			}
 		}
-	} catch (error) {
-		log.info('[findResource] Error:', error);
 	}
 
 	return null;
@@ -537,4 +464,26 @@ if (import.meta.env.DEV) {
 			"[VisualResource] Dev utils available at window.__visualResourceUtils",
 		);
 	}
+}
+
+export function imagePath({ url, back = 0 }: { url: string; back?: number }) {
+	let finalPath = "";
+	// Si ya tiene el prefijo correcto, devolverla tal cual
+	if (url.startsWith("/src/assets")) {
+		return url;
+	}
+
+	// Si comienza con ~ o / eliminarlo
+	const cleanPath =
+		url.startsWith("~") || url.startsWith("/") ? url.substring(1) : url;
+
+	if (back > 0) {
+		for (let i = 0; i < back; i++) {
+			finalPath = `../${finalPath}`;
+		}
+	} else {
+		finalPath = `/src/assets/${cleanPath}`;
+	}
+	// Devolver la ruta correcta
+	return finalPath;
 }

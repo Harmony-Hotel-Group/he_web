@@ -12,6 +12,7 @@ declare global {
 
 	interface Window {
 		showToast(message: string, type: "success" | "error" | "info"): void;
+		initializeAllDatePickers: () => void;
 		__visualResourceUtils?: {
 			clearCache: () => void;
 			getCacheStats: () => { size: number; entries: string[] };

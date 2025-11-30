@@ -8,11 +8,10 @@
 
 const isDev = import.meta.env.DEV;
 const isServer = import.meta.env.SSR;
-const isBrowser = !isServer;
 const logEnabled = import.meta.env.LOG_ENABLED !== "false";
 const allowedContexts = (import.meta.env.LOG_CONTEXTS || "*")
 	.split(",")
-	.map((c) => c.trim());
+	.map((c: string) => c.trim());
 
 /**
  * Determina si un contexto tiene permitido loguear.
@@ -57,23 +56,19 @@ function timeStamp(): string {
 /**
  * Formatea una línea de log para el servidor (ANSI colors)
  */
+
+const colorMap: Record<string, string> = {
+	INFO: cssColors.info,
+	WARN: cssColors.warn,
+	ERROR: cssColors.error,
+};
+
 function formatLineServer(
 	level: "INFO" | "WARN" | "ERROR",
 	context: string,
 	args: unknown[],
 ): unknown[] {
-	let color: string;
-	switch (level) {
-		case "WARN":
-			color = ansiColors.yellow;
-			break;
-		case "ERROR":
-			color = ansiColors.red;
-			break;
-		default:
-			color = ansiColors.blue;
-			break;
-	}
+	const color = colorMap[level] ?? ansiColors.blue;
 
 	const prefix = `${color}[${timeStamp()}] [${level}] ${ansiColors.bold}[${context}]${ansiColors.reset}`;
 	return [prefix, ...args];
@@ -87,19 +82,7 @@ function formatLineBrowser(
 	context: string,
 	args: unknown[],
 ): unknown[] {
-	let levelColor: string;
-	switch (level) {
-		case "WARN":
-			levelColor = cssColors.warn;
-			break;
-		case "ERROR":
-			levelColor = cssColors.error;
-			break;
-		default:
-			levelColor = cssColors.info;
-			break;
-	}
-
+	const levelColor = colorMap[level] ?? cssColors.info;
 	const message = `%c[${timeStamp()}]%c [${level}]%c [${context}]%c`;
 	const styles = [
 		cssColors.time,
@@ -148,13 +131,6 @@ export function logger(context: string) {
 		error: base("ERROR", "error"),
 		log: base("INFO", "log"),
 
-		// Metadata útil para debugging
-		get isServer() {
-			return isServer;
-		},
-		get isBrowser() {
-			return isBrowser;
-		},
 		get context() {
 			return context;
 		},

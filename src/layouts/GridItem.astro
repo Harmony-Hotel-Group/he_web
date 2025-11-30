@@ -1,4 +1,6 @@
 ---
+import type { HTMLAttributes } from "astro/types";
+
 /**
  * GridItem Component - Helper para items dentro de GridLayout
  * Simplifica el uso de data-attributes con props TypeScript
@@ -82,12 +84,12 @@ if (order) dataAttrs["data-order"] = String(order);
 ---
 
 <div
-        id={id}
-        class:list={className}
-        style={style}
-        role={role}
-        aria-label={ariaLabel}
-        {...dataAttrs}
+	id={id}
+	class:list={className}
+	style={style}
+	role={role as any}
+	aria-label={ariaLabel}
+	{...dataAttrs}
 >
-    <slot />
+	<slot />
 </div>

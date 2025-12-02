@@ -34,30 +34,35 @@ const imageConfigs = [
         position:
             "top-[5%] left-[10%] sm:top-[8%] sm:left-[5%] md:top-[10%] md:left-[8%]",
         zIndex: "z-1",
+        delay: "0s",
     },
     {
         rotation: "rotate-3 hover:rotate-[5deg]",
         position:
             "top-[15%] right-[8%] sm:top-[12%] sm:right-[10%] md:top-[8%] md:right-[12%]",
         zIndex: "z-2",
+        delay: "0.1s",
     },
     {
         rotation: "rotate-12 hover:rotate-15",
         position:
             "bottom-[8%] left-[15%] sm:bottom-[10%] sm:left-[12%] md:bottom-[12%] md:left-[10%]",
         zIndex: "z-3",
+        delay: "0.2s",
     },
     {
         rotation: "-rotate-2 hover:rotate-[-4deg]",
         position:
             "top-[25%] left-[25%] sm:top-[22%] sm:left-[28%] md:top-[20%] md:left-[30%]",
         zIndex: "z-4",
+        delay: "0.3s",
     },
     {
         rotation: "rotate-8 hover:rotate-11",
         position:
             "bottom-[18%] right-[12%] sm:bottom-[15%] sm:right-[15%] md:bottom-[18%] md:right-[18%]",
         zIndex: "z-5",
+        delay: "0.4s",
     },
 ];
 ---
@@ -111,7 +116,11 @@ const imageConfigs = [
                             
                             // Eliminar overflow para evitar bordes
                             "overflow-hidden",
+                            
+                            // Clase para la animación
+                            "photo-throw-in",
                         ]}
+                        style={`animation-delay: ${config.delay};`}
                         data-collage-image
                     >
                         <VisualResource
@@ -136,6 +145,56 @@ const imageConfigs = [
 </div>
 
 <style>
+    /* Animación de lanzamiento de tarjetas */
+    @keyframes throwIn {
+        0% {
+            opacity: 0;
+            transform: translate(-100vw, -100vh) rotate(-180deg) scale(0.5);
+        }
+        60% {
+            opacity: 1;
+            transform: translate(0, 0) rotate(var(--rotation-overshoot, 0deg)) scale(1.1);
+        }
+        80% {
+            transform: translate(0, 0) rotate(var(--rotation-back, 0deg)) scale(0.95);
+        }
+        100% {
+            opacity: 1;
+            transform: translate(0, 0) rotate(0deg) scale(1);
+        }
+    }
+    
+    .photo-throw-in {
+        animation: throwIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        opacity: 0;
+    }
+    
+    /* Variaciones de overshoot para cada rotación */
+    .photo-throw-in:nth-child(1) {
+        --rotation-overshoot: -8deg;
+        --rotation-back: -4deg;
+    }
+    
+    .photo-throw-in:nth-child(2) {
+        --rotation-overshoot: 5deg;
+        --rotation-back: 2deg;
+    }
+    
+    .photo-throw-in:nth-child(3) {
+        --rotation-overshoot: 15deg;
+        --rotation-back: 10deg;
+    }
+    
+    .photo-throw-in:nth-child(4) {
+        --rotation-overshoot: -4deg;
+        --rotation-back: -1deg;
+    }
+    
+    .photo-throw-in:nth-child(5) {
+        --rotation-overshoot: 11deg;
+        --rotation-back: 6deg;
+    }
+
     /* Asegurar que las imágenes no se salgan en pantallas muy pequeñas */
     @media (max-width: 380px) {
         div[class*="aspect-"] > div {
@@ -180,5 +239,21 @@ const imageConfigs = [
     [data-collage-image] :global(*) {
         box-sizing: border-box;
         line-height: 0;
+    }
+    
+    /* Reducir animación en dispositivos con prefer-reduced-motion */
+    @media (prefers-reduced-motion: reduce) {
+        .photo-throw-in {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
     }
 </style>

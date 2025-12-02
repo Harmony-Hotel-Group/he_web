@@ -17,47 +17,47 @@ import BookingVehicleSection from "./BookingVehicleSection.astro";
 import ModalBookingGroup from "./ModalBookingGroup.astro";
 
 interface Props {
-	lang: string;
-	config: SiteConfig;
+  lang: string;
+  config: SiteConfig;
 }
 const { lang, config } = Astro.props;
 
 const t = Translations(lang);
 
 const adultsOptions = range(1, 9).map((i, index, array) => {
-	if (index === array.length - 1) {
-		return {
-			value: "group",
-			label: t("booking.dropdown.optGroup"),
-		};
-	}
-	return {
-		value: `${i}`,
-		label: `${t("booking.dropdown.optAdults", {
-			i: i,
-			s: i > 1 ? "s" : "",
-		})}`,
-	};
+  if (index === array.length - 1) {
+    return {
+      value: "group",
+      label: t("booking.dropdown.optGroup"),
+    };
+  }
+  return {
+    value: `${i}`,
+    label: `${t("booking.dropdown.optAdults", {
+      i: i,
+      s: i > 1 ? "s" : "",
+    })}`,
+  };
 });
 
 const childrenOptions = range(0, 8).map((i) => {
-	return {
-		value: `${i}`,
-		label: `${t("booking.dropdown.optChildren", {
-			i: i === 0 ? "Sin" : i,
-			s: i === 0 ? "s" : i > 1 ? "s" : "",
-		})}`,
-	};
+  return {
+    value: `${i}`,
+    label: `${t("booking.dropdown.optChildren", {
+      i: i === 0 ? "Sin" : i,
+      s: i === 0 ? "s" : i > 1 ? "s" : "",
+    })}`,
+  };
 });
 
 const roomsOptions = range(1, 5).map((i) => {
-	return {
-		value: `${i}`,
-		label: `${t("booking.dropdown.optRooms", {
-			i: i,
-			s: i > 1 ? "es" : "",
-		})}`,
-	};
+  return {
+    value: `${i}`,
+    label: `${t("booking.dropdown.optRooms", {
+      i: i,
+      s: i > 1 ? "es" : "",
+    })}`,
+  };
 });
 
 const whatsappNumber = config?.contactInfo?.whatsapp ?? "";
@@ -165,7 +165,7 @@ const email = config?.contactInfo?.email ?? "";
 </form>
 
 <!-- Modal para reservas grupales -->
-<ModalBookingGroup lang={lang} config={config} isOpen={false}/>
+<ModalBookingGroup lang={lang} config={config} isOpen={false} />
 
 <script>
   import { actions } from "astro:actions";
@@ -175,7 +175,7 @@ const email = config?.contactInfo?.email ?? "";
     const log = logger("BookingForm:Client");
 
     const form: HTMLFormElement = document.getElementById(
-      "booking-form"
+      "booking-form",
     ) as HTMLFormElement;
     if (!form) return;
 
@@ -202,14 +202,23 @@ const email = config?.contactInfo?.email ?? "";
     }
 
     // --- Lógica para el Modal de Grupo ---
-    // Espera a que el componente ModalBookingGroup anuncie que está listo.
-    document.addEventListener("modalBookingGroupReady", () => {
-      log.info(
-        "Evento modalBookingGroupReady recibido. Inicializando lógica del modal."
-      );
+    const initModal = () => {
+      if ((window as any).modalInstanceCreated) return; // Evitar doble inicialización
+
+      log.info("Inicializando lógica del modal de grupo.");
 
       // Ahora es seguro crear la instancia del modal.
-      const modalInstance = new (window as any).ModalBookingGroupClass();
+      const ModalClass = (window as any).ModalBookingGroupClass;
+      if (!ModalClass) {
+        log.error(
+          "ModalBookingGroupClass no encontrada a pesar de intentar inicializar.",
+        );
+        return;
+      }
+
+      const modalInstance = new ModalClass();
+      (window as any).modalInstanceCreated = true;
+
       const adultsDropdown = document.getElementById("adults");
 
       adultsDropdown?.addEventListener("change", (e) => {
@@ -221,7 +230,22 @@ const email = config?.contactInfo?.email ?? "";
           target.value = "2";
         }
       });
-    });
+    };
+
+    // Verificar si la clase ya está disponible globalmente
+    if ((window as any).ModalBookingGroupClass) {
+      log.info(
+        "ModalBookingGroupClass ya disponible. Inicializando inmediatamente.",
+      );
+      initModal();
+    } else {
+      log.info("ModalBookingGroupClass no disponible aún. Esperando evento.");
+      // Espera a que el componente ModalBookingGroup anuncie que está listo.
+      document.addEventListener("modalBookingGroupReady", () => {
+        log.info("Evento modalBookingGroupReady recibido.");
+        initModal();
+      });
+    }
 
     function clearValidationErrors() {
       form
@@ -232,7 +256,9 @@ const email = config?.contactInfo?.email ?? "";
         .forEach((el) => el.classList.remove("border-red-500"));
     }
 
-    function handleValidationErrors(errors: Array<{ path: string[]; message: string }>) {
+    function handleValidationErrors(
+      errors: Array<{ path: string[]; message: string }>,
+    ) {
       for (const fieldError of errors) {
         const fieldName = fieldError.path[0];
         const inputElement = document.getElementById(fieldName);
@@ -262,7 +288,7 @@ const email = config?.contactInfo?.email ?? "";
 
         if (error) {
           console.error("Validation error:", error);
-          if ('fields' in error && Array.isArray(error.fields)) {
+          if ("fields" in error && Array.isArray(error.fields)) {
             handleValidationErrors(error.fields);
           }
           return;
@@ -288,12 +314,12 @@ const email = config?.contactInfo?.email ?? "";
           vehicleItems.forEach((item, index) => {
             const type = (
               item.querySelector(
-                `select[name^="vehicleType"]`
+                `select[name^="vehicleType"]`,
               ) as HTMLSelectElement
             )?.value;
             const plate = (
               item.querySelector(
-                `input[name^="vehiclePlate"]`
+                `input[name^="vehiclePlate"]`,
               ) as HTMLInputElement
             )?.value;
             if (type) {
@@ -308,23 +334,23 @@ const email = config?.contactInfo?.email ?? "";
         if (whatsappNumber) {
           window.open(
             `https://wa.me/${whatsappNumber}?text=${encodedMessage}`,
-            "_blank"
+            "_blank",
           );
           window.showToast(
             "Tu solicitud de reserva ha sido enviada.",
-            "success"
+            "success",
           );
         } else {
           window.showToast(
             "No se pudo enviar el mensaje, el número de WhatsApp no está configurado.",
-            "error"
+            "error",
           );
         }
       } catch (err) {
         console.error("Error inesperado al enviar la reserva:", err);
         window.showToast(
           "Ocurrió un error inesperado. Por favor, inténtalo de nuevo.",
-          "error"
+          "error",
         );
       } finally {
         btn.disabled = false;

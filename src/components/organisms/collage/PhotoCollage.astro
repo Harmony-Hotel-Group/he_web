@@ -20,7 +20,7 @@ const { images = [], class: className } = Astro.props;
 log.info("Props recibidas:", { numImages: images.length });
 
 // Validar y filtrar imágenes válidas
-const validImages = images.filter((img) => img && img.src && img.alt);
+const validImages = images.filter((img) => img.src && img.alt);
 const imagesToDisplay = validImages.slice(0, 5);
 
 if (validImages.length === 0) {

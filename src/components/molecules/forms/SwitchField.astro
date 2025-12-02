@@ -8,37 +8,39 @@ import { Translations } from "@/i18n/translation.ts";
 import Row from "@/layouts/Row.astro";
 
 interface Props {
-	fieldId: string;
-	name: string;
-	lblKey: string; // This is the translation key
-	lang: string;
-	icon?: string;
-	checked?: boolean;
-	className?: string;
-	onChange?: (value: boolean) => void; // Add onChange prop
+    fieldId: string;
+    name: string;
+    lblKey: string; // This is the translation key
+    lang: string;
+    icon?: string;
+    checked?: boolean;
+    className?: string;
+    onChange?: (value: boolean) => void; // Add onChange prop
 }
 
 const { fieldId, name, lblKey, checked, className, onChange, lang, icon } =
-	Astro.props;
+    Astro.props;
 const t = Translations(lang);
 ---
 
 <div class:list={["flex flex-col", className]}>
-    <Row class="items-end">
-        {icon && <Icono name={icon} size="lg"/>}
+    <Row>
+        {icon && <Icono name={icon} size="lg" />}
         <Label
-                forId={fieldId}
-                lblKey={lblKey}
-                lang={lang}
-                classes="font-bold"
+            forId={fieldId}
+            lblKey={lblKey}
+            lang={lang}
+            classes="font-bold"
         />
-    <Switch
+        <Switch
             id={fieldId}
             name={name}
             checked={checked}
             onChange={onChange}
             classes="pl-4"
-    />
+        />
     </Row>
-    <span id={`error_${fieldId}`} class="hidden text-red-700 px-4">{t('booking.number.error')}</span>
+    <span id={`error_${fieldId}`} class="hidden text-red-700 px-4"
+        >{t("booking.number.error")}</span
+    >
 </div>

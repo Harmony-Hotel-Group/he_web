@@ -6,54 +6,54 @@
  **/
 
 import {
-    getYouTubeEmbedUrl,
-    extractYouTubeId,
+	getYouTubeEmbedUrl,
+	extractYouTubeId,
 } from "@/utils/visual-resource-utils.ts";
 import { logger } from "@/services/logger.ts";
 
 const log = logger("YouTubeResource");
 
 interface Props {
-    videoid: string;
-    title?: string;
-    classes?: string;
-    autoplay?: boolean;
-    loop?: boolean;
-    muted?: boolean;
-    controls?: boolean;
+	videoid: string;
+	title?: string;
+	classes?: string;
+	autoplay?: boolean;
+	loop?: boolean;
+	muted?: boolean;
+	controls?: boolean;
 }
 
 const {
-    videoid,
-    title,
-    classes = "",
-    autoplay = false,
-    loop = false,
-    muted = true,
-    controls = false,
+	videoid,
+	title,
+	classes = "",
+	autoplay = false,
+	loop = false,
+	muted = true,
+	controls = false,
 } = Astro.props;
 
 // Extraer el video ID si se pasa una URL completa
 const videoId = extractYouTubeId(videoid) || videoid;
 
 log.info(
-    `[YouTubeResource] Video ID: ${videoId}, Title: ${title}, Classes: ${classes}, Autoplay: ${autoplay}, Loop: ${loop}, Muted: ${muted}, Controls: ${controls}`,
+	`Video ID: ${videoId}, Title: ${title}, Classes: ${classes}, Autoplay: ${autoplay}, Loop: ${loop}, Muted: ${muted}, Controls: ${controls}`,
 );
 
 // Validar que tengamos un video ID válido
 if (!videoId) {
-    log.error("[YouTubeResource] No se pudo extraer el video ID de:", videoid);
+	log.error("No se pudo extraer el video ID de:", videoid);
 }
 
 // Generar URL de embed con parámetros
 const embedUrl = videoId
-    ? getYouTubeEmbedUrl(videoId, {
-          autoplay,
-          loop,
-          muted,
-          controls,
-      })
-    : "";
+	? getYouTubeEmbedUrl(videoId, {
+			autoplay,
+			loop,
+			muted,
+			controls,
+		})
+	: "";
 ---
 
 {
@@ -268,9 +268,7 @@ const embedUrl = videoId
                     try {
                         const data = JSON.parse(event.data);
                         if (data.event === "onStateChange") {
-                            // Estado 2 = pausado, Estado 1 = reproduciendo, Estado 0 = terminado
                             if (data.info === 2) {
-                                // Reanudar reproducción enviando comando de play
                                 iframe.contentWindow?.postMessage(
                                     JSON.stringify({
                                         event: "command",
@@ -282,29 +280,12 @@ const embedUrl = videoId
                             }
                         }
                     } catch (e) {
-                        // Ignorar errores de parsing
+                        log.error(e);
                     }
                 }
             };
 
             window.addEventListener("message", messageHandler);
-
-            // Verificar periódicamente que el video esté reproduciéndose
-            const checkInterval = setInterval(() => {
-                try {
-                    // Enviar comando para asegurar que el video siga reproduciéndose
-                    iframe.contentWindow?.postMessage(
-                        JSON.stringify({
-                            event: "command",
-                            func: "playVideo",
-                            args: "",
-                        }),
-                        "*",
-                    );
-                } catch (e) {
-                    // Ignorar errores de cross-origin
-                }
-            }, 2000); // Verificar cada 2 segundos
 
             // Limpiar cuando se desmonte el componente
             console.log(

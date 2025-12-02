@@ -151,35 +151,46 @@ async function validateLocalFile(src: string): Promise<ValidationResult> {
 		}
 	}
 
-	// 1. Verificar en assets glob (general)
-	if (assets[normalizedPath]) {
-		try {
-			const mod = await assets[normalizedPath]();
-			log.info(
-				`[validateLocalFile] ✓ Encontrado en assets: ${JSON.stringify(mod.default)}`,
-			);
-			return {
-				isValid: true,
-				finalSrc: mod.default,
-			};
-		} catch (e) {
-			log.error(`[validateLocalFile] Error cargando módulo: ${normalizedPath}`, e);
+	// Generar variaciones de ruta para buscar en diferentes ubicaciones
+	const possibleImgPaths: string[] = [normalizedPath];
+	
+	// Si busca en /src/resources/img/, también buscar en /src/assets/img/
+	if (normalizedPath.startsWith("/src/resources/img/")) {
+		const assetsPath = normalizedPath.replace("/src/resources/img/", "/src/assets/img/");
+		possibleImgPaths.push(assetsPath);
+	}
+	
+	// Si busca en /src/assets/img/, también buscar en /src/resources/img/ (legacy)
+	if (normalizedPath.startsWith("/src/assets/img/")) {
+		const resourcesPath = normalizedPath.replace("/src/assets/img/", "/src/resources/img/");
+		possibleImgPaths.push(resourcesPath);
+	}
+	
+	// 1. Verificar en assets glob (general) - busca en /src/assets/**/*
+	for (const p of possibleImgPaths) {
+		if (assets[p]) {
+			try {
+				const mod = await assets[p]();
+				log.info(
+					`[validateLocalFile] ✓ Encontrado en assets: ${p}`,
+				);
+				return {
+					isValid: true,
+					finalSrc: mod.default,
+				};
+			} catch (e) {
+				log.error(`[validateLocalFile] Error cargando módulo: ${p}`, e);
+			}
 		}
 	}
-
+	
 	// 2. Verificar en /src/resources/img/ (Imágenes legacy/específicas)
-	// Intentar variaciones de ruta
-	const possibleImgPaths = [
-		normalizedPath,
-		`/src/resources/img${normalizedPath.startsWith("/src/resources/img") ? normalizedPath.replace("/src/resources/img", "") : normalizedPath}`,
-	];
-
 	for (const p of possibleImgPaths) {
 		if (localImages[p]) {
 			try {
 				const mod = await localImages[p]();
 				log.info(
-					`[validateLocalFile] ✓ Encontrado en src (img): ${JSON.stringify(mod.default)}`,
+					`[validateLocalFile] ✓ Encontrado en src (img): ${p}`,
 				);
 				return {
 					isValid: true,

@@ -56,8 +56,12 @@ if (resources && resources.length > 0) {
 				: res.type;
 		const validation = await validateResource(res.src, type);
 		log.warn("Validando recurso:", type, validation);
-		if (validation.isValid) {
-			validatedResources.push({ ...res, type });
+		if (validation.isValid && validation.finalSrc) {
+			validatedResources.push({ 
+				...res, 
+				type,
+				src: validation.finalSrc 
+			});
 		}
 	}
 }

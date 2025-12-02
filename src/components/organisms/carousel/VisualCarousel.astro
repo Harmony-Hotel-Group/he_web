@@ -41,16 +41,22 @@ log.info(
 	"ms",
 );
 
-// Validar recursos
-const validatedResources = await Promise.all(
-	resources.map(async (item) => {
-		const validation = await validateResource(item.src, "image");
-		return {
-			...item,
-			src: validation.isValid && validation.finalSrc ? validation.finalSrc : item.src,
-		};
-	}),
-);
+// Validar recursos y filtrar los inválidos
+const validatedResources = (
+	await Promise.all(
+		resources.map(async (item) => {
+			const validation = await validateResource(item.src, "image");
+			if (validation.isValid && validation.finalSrc) {
+				return {
+					...item,
+					src: validation.finalSrc,
+				};
+			}
+			log.warn(`Recurso inválido filtrado: ${typeof item.src === 'string' ? item.src : 'ImageMetadata'}`, validation.error);
+			return null;
+		}),
+	)
+).filter((item): item is Resource => item !== null);
 ---
 
 

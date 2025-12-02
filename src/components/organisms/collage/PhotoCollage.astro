@@ -19,6 +19,14 @@ const { images = [], class: className } = Astro.props;
 
 log.info("Props recibidas:", { numImages: images.length });
 
+// Validar y filtrar imágenes válidas
+const validImages = images.filter((img) => img && img.src && img.alt);
+const imagesToDisplay = validImages.slice(0, 5);
+
+if (validImages.length === 0) {
+	log.warn("No hay imágenes válidas para mostrar en el collage");
+}
+
 // Configuración mejorada de transformaciones con valores responsivos
 const imageConfigs = [
     {
@@ -66,8 +74,8 @@ const imageConfigs = [
 >
     <!-- Contenedor del collage con aspect ratio -->
     <div class="relative w-full max-w-[900px] aspect-4/3 md:aspect-16/10">
-        {
-            images.slice(0, 5).map((image, index) => {
+        {imagesToDisplay.length > 0 ? (
+            imagesToDisplay.map((image, index) => {
                 const config = imageConfigs[index % imageConfigs.length];
                 return (
                     <div
@@ -100,7 +108,11 @@ const imageConfigs = [
 
                             // Cursor
                             "cursor-pointer",
+                            
+                            // Eliminar overflow para evitar bordes
+                            "overflow-hidden",
                         ]}
+                        data-collage-image
                     >
                         <VisualResource
                             src={image.src}
@@ -115,7 +127,11 @@ const imageConfigs = [
                     </div>
                 );
             })
-        }
+        ) : (
+            <div class="absolute inset-0 flex items-center justify-center text-gray-400">
+                <p class="text-center">No hay imágenes disponibles</p>
+            </div>
+        )}
     </div>
 </div>
 
@@ -125,5 +141,44 @@ const imageConfigs = [
         div[class*="aspect-"] > div {
             width: 48% !important;
         }
+    }
+    
+    /* Eliminar bordes negros y fondos del wrapper de ImageResource en el collage */
+    [data-collage-image] :global(.image-resource-wrapper) {
+        background: transparent !important;
+        width: 100% !important;
+        height: 100% !important;
+        overflow: hidden !important;
+        border: none !important;
+    }
+    
+    [data-collage-image] :global(.image-resource),
+    [data-collage-image] :global(img) {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+        object-position: center !important;
+        display: block !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        border: none !important;
+        outline: none !important;
+        vertical-align: top !important;
+    }
+    
+    /* Asegurar que las imágenes llenen completamente el contenedor sin espacios */
+    [data-collage-image] {
+        line-height: 0 !important;
+    }
+    
+    /* Asegurar que el skeleton no muestre fondo */
+    [data-collage-image] :global(.image-skeleton) {
+        background: transparent !important;
+    }
+    
+    /* Eliminar cualquier espacio o padding que pueda crear bordes */
+    [data-collage-image] :global(*) {
+        box-sizing: border-box;
+        line-height: 0;
     }
 </style>

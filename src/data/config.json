@@ -76,12 +76,17 @@
 		{
 			"src": "https://wallpapers.com/images/featured/fondos-de-hermosos-paisajes-wnxju2647uqrcccv.jpg",
 			"type": "image",
-			"alt": "Catedral de Cuenca - Imagen Local"
+			"alt": "Catedral de Cuenca - Imagen Web"
 		},
 		{
 			"src": "/src/assets/img/cities/cuenca/calderon-catedral.jpg",
 			"type": "image",
 			"alt": "Catedral de Cuenca - Imagen Local"
+		},
+		{
+			"src": "https://www.youtube.com/watch?v=6lABBjfUL6M&t=14s",
+			"type": "youtube",
+			"alt": "Cuenca para el mundo - Video YouTube"
 		}
 	],
 	"roomTypes": [

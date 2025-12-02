@@ -65,6 +65,17 @@ log.info(
 // Validar recurso (solo en build time, no en runtime)
 const validation = await validateResource(src, detectedType);
 
+log.info(
+	`[VisualResource] Validación del recurso:`,
+	{
+		isValid: validation.isValid,
+		error: validation.error,
+		finalSrc: typeof validation.finalSrc === "string" ? validation.finalSrc : "ImageMetadata",
+		detectedType,
+		type,
+	},
+);
+
 if (!validation.isValid) {
 	log.warn(
 		`Recurso no válido o no encontrado: '${typeof src === "string" ? src : "ImageMetadata"}'. Usando placeholder. Razón: ${validation.error}`,
@@ -76,11 +87,21 @@ if (!validation.isValid) {
 	!src || !validation.isValid ? (
 		<ImageResource src={PlaceHolder} alt={alt || "Recurso no encontrado"} />
 	) : detectedType === "youtube" ? (
-		<YouTubeResource
-			videoid={extractYouTubeId(src as string) || ""}
-			classes={classes}
-			title={alt}
-		/>
+		(() => {
+			const videoId = extractYouTubeId(src as string) || "";
+			log.info(`[VisualResource] Renderizando YouTubeResource con videoId: ${videoId}, autoplay: ${autoplay}, loop: ${loop}, muted: ${muted}, controls: ${controls}`);
+			return (
+				<YouTubeResource
+					videoid={videoId}
+					classes={classes}
+					title={alt}
+					autoplay={autoplay}
+					loop={loop}
+					muted={muted}
+					controls={controls}
+				/>
+			);
+		})()
 	) : detectedType === "video" ? (
 		<VideoResource
 			src={(validation.finalSrc as string) || (src as string)}

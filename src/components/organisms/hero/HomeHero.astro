@@ -30,16 +30,6 @@ const defaultPlaceholderResources: Resource[] = [
 		type: "image",
 		alt: "Placeholder 1",
 	},
-	{
-		src: "https://placehold.co/1920x1080/2a2a2a/ffffff?text=Slide+2",
-		type: "image",
-		alt: "Placeholder 2",
-	},
-	{
-		src: "https://placehold.co/1920x1080/3a3a3a/ffffff?text=Slide+3",
-		type: "image",
-		alt: "Placeholder 3",
-	},
 ];
 
 const userAgent = Astro.request.headers.get("user-agent") || "";
@@ -50,18 +40,39 @@ const isMobileDevice = /Mobile|Android|iPhone|iPad|iPod|Windows Phone/i.test(
 let validatedResources: Resource[] = [];
 if (resources && resources.length > 0) {
 	for (const res of resources) {
+		// Siempre detectar el tipo primero para asegurar que YouTube se detecte correctamente
+		// incluso si el tipo está mal configurado como "video"
+		const detectedType = detectResourceType(res.src);
 		const type =
 			!res.type || res.type === "auto"
-				? detectResourceType(res.src)
-				: res.type;
+				? detectedType
+				: detectedType === "youtube" && res.type === "video"
+					? "youtube" // Corregir tipo mal configurado: si detectamos YouTube pero está marcado como "video", usar "youtube"
+					: res.type;
+
+		log.info(
+			`Recurso: ${typeof res.src === "string" ? res.src : "ImageMetadata"} | Tipo original: ${res.type} | Tipo detectado: ${detectedType} | Tipo final: ${type}`,
+		);
+
 		const validation = await validateResource(res.src, type);
 		log.warn("Validando recurso:", type, validation);
-		if (validation.isValid && validation.finalSrc) {
-			validatedResources.push({ 
-				...res, 
+
+		// Para YouTube, la validación puede ser válida incluso sin finalSrc
+		// porque YouTube siempre devuelve la URL original como finalSrc
+		if (validation.isValid) {
+			const finalSrc = validation.finalSrc || res.src;
+			log.info(
+				`[HomeHero] Recurso válido agregado: tipo=${type}, src=${typeof finalSrc === "string" ? finalSrc : "ImageMetadata"}`,
+			);
+			validatedResources.push({
+				...res,
 				type,
-				src: validation.finalSrc 
+				src: finalSrc,
 			});
+		} else {
+			log.warn(
+				`[HomeHero] Recurso inválido filtrado: tipo=${type}, error=${validation.error}`,
+			);
 		}
 	}
 }
@@ -102,19 +113,21 @@ log.info(
 
 {
 	displayMode === "video" ? (
-		<div class="relative w-full min-h-[100dvh] overflow-hidden">
-			<VisualResource
-				src={finalResources[0].src}
-				type={finalResources[0].type}
-				alt={finalResources[0].alt}
-				autoplay={true}
-				loop={true}
-				muted={true}
-				controls={false}
-				classes="absolute inset-0 w-full h-full object-cover"
-			/>
-			<div class="absolute inset-0 z-10 pointer-events-none bg-black/50" />
-		</div>
+		<>
+			<div class="relative w-full h-screen overflow-hidden z-0">
+				<VisualResource
+					src={finalResources[0].src}
+					type={finalResources[0].type}
+					alt={finalResources[0].alt}
+					autoplay={true}
+					loop={true}
+					muted={true}
+					controls={false}
+					classes="absolute inset-0 w-full h-full"
+				/>
+				<div class="absolute inset-0 z-10 pointer-events-none bg-black/50" />
+			</div>
+		</>
 	) : (
 		<VisualCarousel resources={finalResources} />
 	)

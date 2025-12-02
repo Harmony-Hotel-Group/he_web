@@ -267,7 +267,7 @@ const imageId = `img-${String(Math.random().toString(36)).substring(2, 9)}`;
     // Inicialización asíncrona para cargar el logger dinámicamente
     (async () => {
         const { logger } = await import("@/services/logger.ts");
-        const log = logger("ImageResource:Client");
+        const log = logger("ImageResource");
         // Instanciar el manager una vez que el logger está listo
         // y pasarle la instancia del logger.
         new ImageResourceManager(log);

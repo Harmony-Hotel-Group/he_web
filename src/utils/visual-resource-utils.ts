@@ -119,13 +119,20 @@ export function getYouTubeEmbedUrl(
 		enablejsapi: "1", // Permite control por JS
 	});
 
-	if (autoplay) params.set("autoplay", "1");
+	if (autoplay) {
+		params.set("autoplay", "1");
+		params.set("mute", "1"); // Mute es necesario para autoplay en la mayoría de navegadores
+	}
 	if (loop) {
 		params.set("loop", "1");
 		params.set("playlist", videoId);
 	}
 	if (muted) params.set("mute", "1");
-	if (!controls) params.set("controls", "0");
+	if (!controls) {
+		params.set("controls", "0");
+		params.set("disablekb", "1"); // Deshabilitar controles de teclado
+		params.set("fs", "0"); // Deshabilitar pantalla completa
+	}
 
 	return `https://www.youtube-nocookie.com/embed/${videoId}?${params.toString()}`;
 }

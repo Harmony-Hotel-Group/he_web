@@ -3,7 +3,7 @@ interface Props {
 	_id?: string;
 	class?: string;
 	alignX?: "start" | "center" | "end";
-	alignY?: "start" | "center" | "end" | "stretch"; // Nueva prop
+	alignY?: "start" | "center" | "end" | "stretch";
 	gap?: string;
 	wrap?: boolean;
 }
@@ -12,7 +12,7 @@ const {
 	_id,
 	class: className = "",
 	alignX = "start",
-	alignY = "center", // Valor por defecto centrado
+	alignY = "center",
 	gap = "gap-2",
 	wrap = false,
 } = Astro.props;
@@ -39,13 +39,13 @@ const wrapClass = wrap ? "flex-wrap" : "flex-nowrap";
 <div
         id={_id}
         class:list={[
-            "flex flex-row ",
-            justifyClass,
-            itemsClass,
-            wrapClass,
-            gap,
-            className,
-        ]}
+        "flex flex-row",
+        wrapClass,
+        gap,
+        className,
+        justifyClass,
+        itemsClass,
+    ]}
 >
     <slot/>
 </div>

@@ -75,7 +75,7 @@ log.info("URLs generadas:", { esUrl, enUrl, canonicalUrl, cleanPath, baseUrl });
     <meta name="generator" content={Astro.generator}/>
     <title>{t(titleKey)}</title>
 </head>
-<body class="flex flex-col min-h-screen overflow-x-hidden">
+<body class="min-w-[850px] flex flex-col min-h-screen overflow-x-hidden">
 <Header config={config} lang={lang}/>
 <main class="grow w-full overflow-x-hidden">
     <slot/>

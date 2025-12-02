@@ -62,7 +62,7 @@ if (resources && resources.length > 0) {
 		if (validation.isValid) {
 			const finalSrc = validation.finalSrc || res.src;
 			log.info(
-				`[HomeHero] Recurso válido agregado: tipo=${type}, src=${typeof finalSrc === "string" ? finalSrc : "ImageMetadata"}`,
+				`Recurso válido agregado: tipo=${type}, src=${typeof finalSrc === "string" ? finalSrc : "ImageMetadata"}`,
 			);
 			validatedResources.push({
 				...res,
@@ -71,7 +71,7 @@ if (resources && resources.length > 0) {
 			});
 		} else {
 			log.warn(
-				`[HomeHero] Recurso inválido filtrado: tipo=${type}, error=${validation.error}`,
+				`Recurso inválido filtrado: tipo=${type}, error=${validation.error}`,
 			);
 		}
 	}
@@ -98,8 +98,7 @@ if (prioritizeVideo && !isMobileDevice) {
 		finalResources = [videos[0]];
 		displayMode = "video";
 	} else {
-		finalResources =
-			images.length > 0 ? images : defaultPlaceholderResources;
+		finalResources = images.length > 0 ? images : defaultPlaceholderResources;
 	}
 } else {
 	finalResources = images.length > 0 ? images : defaultPlaceholderResources;

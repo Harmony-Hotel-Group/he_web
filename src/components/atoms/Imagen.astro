@@ -41,7 +41,19 @@ const {
 	format,
 	fetchpriority = "auto",
 } = Astro.props;
-
+log.info({
+	id,
+	src,
+	alt,
+	width,
+	height,
+	class: className,
+	loading,
+	decoding,
+	quality,
+	format,
+	fetchpriority,
+});
 // ==================== CACHE ====================
 
 const validationCache = new Map<string, boolean>();
@@ -118,9 +130,9 @@ if (!src) {
 	log.info(`Usando imagen optimizada pasada por prop`);
 } else if (src.startsWith("/") || src.startsWith(".")) {
 	const images = import.meta.glob(
-		"/src/resources/img/**/*.{jpeg,jpg,png,gif,webp,svg,avif}",
+		"/src/assets/img/**/*.{jpeg,jpg,png,gif,webp,svg,avif}",
 	);
-	const imagePath = `/src/resources${src.startsWith("/img") ? src : `/img${src}`}`;
+	const imagePath = `/src/assets${src.startsWith("/img") ? src : `/img${src}`}`;
 
 	if (images[imagePath]) {
 		try {
@@ -197,7 +209,7 @@ if (!src) {
 <script>
 	import { logger } from "@/services/logger.ts";
 
-	const log = logger("Imagen-Cliente");
+	const log = logger("Imagen:Cliente");
 
 	class ImagenErrorHandler {
 		constructor() {

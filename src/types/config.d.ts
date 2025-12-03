@@ -2,15 +2,16 @@
 
 import type { Resource } from "@/types/resource";
 
-
-
 interface Category {
 	id: string;
 	src: string;
 	name: LocalizedText;
-	title: LocalizedText;
-	description: LocalizedText;
-	tags: LocalizedText;
+	title?: LocalizedText;
+	description?: LocalizedText;
+	tags?: LocalizedText;
+	category?: LocalizedText;
+	value?: number;
+	valueLabel?: string;
 }
 
 type ImageResource = Omit<Resource, "type" | "poster">;
@@ -38,9 +39,11 @@ export interface SiteConfig {
 		images: ImageResource[];
 	};
 	carouselResources?: CarouselResource[];
-	vehicleTypeOptions?: Array<{
-		value: string;
-	} & LocalizedText>;
+	vehicleTypeOptions?: Array<
+		{
+			value: string;
+		} & LocalizedText
+	>;
 	roomTypes?: Category[];
 	destinationCategories?: Category[];
 	gastronomyCategories?: Category[];
@@ -49,13 +52,15 @@ export interface SiteConfig {
 		code: string;
 		name: string;
 	}>;
-	supportedCurrencies?: Array<{
-		code: string;
-		symbol: string;
-		exchangeRate?: number;
-	}>;
+	supportedCurrencies?: Array<Currency>;
 	[key: string]: unknown;
 }
+
+export type Currency = {
+	code: string;
+	symbol: string;
+	exchangeRate?: number;
+};
 
 export type TranslationFunction = (
 	key: string,

@@ -42,8 +42,8 @@
 			"en": "Welcome to Ensueños Hotel"
 		},
 		"welcomeParagraph": {
-			"es": "Ubicado en el corazón del centro histórico de Cuenca, Ecuador, nuestro hotel boutique te invita a vivir una experiencia única. A pocos pasos de la majestuosa Catedral de la Inmaculada Concepción y rodeado de la vibrante vida cultural de la ciudad, Hotel Ensueños es el punto de partida perfecto para explorar los encantos de este Patrimonio de la Humanidad.",
-			"en": "Located in the heart of the historic center of Cuenca, Ecuador, our boutique hotel invites you to live a unique experience. Just a few steps from the majestic Cathedral of the Immaculate Conception and surrounded by the vibrant cultural life of the city, Ensueños Hotel is the perfect starting point to explore the charms of this World Heritage Site."
+			"es": "Ubicado en el corazón del centro histórico de Cuenca, Ecuador, nuestro hotel te invita a vivir una experiencia única. A pocos pasos de la majestuosa Catedral de la Inmaculada Concepción y rodeado de la vibrante vida cultural de la ciudad, Hotel Ensueños es el punto de partida perfecto para explorar los encantos de este Patrimonio de la Humanidad.",
+			"en": "Located in the heart of the historic center of Cuenca, Ecuador, our hotel invites you to live a unique experience. Just a few steps from the majestic Cathedral of the Immaculate Conception and surrounded by the vibrant cultural life of the city, Ensueños Hotel is the perfect starting point to explore the charms of this World Heritage Site."
 		},
 		"commitmentParagraph": {
 			"es": "En Hotel Ensueños, estamos comprometidos con su satisfacción y comodidad. Desde el momento en que ingrese a nuestro acogedor vestíbulo, sentirá la calidez y la atención personalizada que nos distingue. Nuestras 15 habitaciones y bar/restaurante están diseñados para brindarle una estancia cómoda y relajante. Nuestro amable personal está siempre a su disposición para atender todas sus necesidades, desde recomendaciones de restaurantes locales hasta la organización de emocionantes tours por la ciudad.",
@@ -51,24 +51,80 @@
 		},
 		"images": [
 			{
-				"src": "https://wallpapers.com/images/featured/fondos-de-hermosos-paisajes-wnxju2647uqrcccv.jpg",
+				"src": "src/assets/img/hotel/lounge/4.jpg",
+				"alt": "Lounge del Hotel Ensueños"
+			},
+			{
+				"src": "src/assets/img/hotel/lobby/7.jpg",
+				"alt": "Lobby del Hotel Ensueños"
+			},
+			{
+				"src": "src/assets/img/hotel/lounge/1.jpg",
+				"alt": "Lounge del Hotel Ensueños"
+			},
+			{
+				"src": "/src/assets/img/hotel/facade/sun.png",
 				"alt": "Fachada del Hotel Ensueños"
 			},
 			{
-				"src": "https://wallpapers.com/images/featured/fondos-de-hermosos-paisajes-wnxju2647uqrcccv.jpg",
-				"alt": "Fachada del Hotel Ensueños"
+				"src": "src/assets/img/hotel/lounge/8.jpg",
+				"alt": "Lounge del Hotel Ensueños"
 			},
 			{
-				"src": "https://wallpapers.com/images/featured/fondos-de-hermosos-paisajes-wnxju2647uqrcccv.jpg",
-				"alt": "Fachada del Hotel Ensueños"
+				"src": "src/assets/img/hotel/lobby/3.jpg",
+				"alt": "Lobby del Hotel Ensueños"
 			},
 			{
-				"src": "https://wallpapers.com/images/featured/fondos-de-hermosos-paisajes-wnxju2647uqrcccv.jpg",
-				"alt": "Fachada del Hotel Ensueños"
+				"src": "src/assets/img/hotel/lounge/7.jpg",
+				"alt": "Lounge del Hotel Ensueños"
 			},
 			{
-				"src": "https://wallpapers.com/images/featured/fondos-de-hermosos-paisajes-wnxju2647uqrcccv.jpg",
-				"alt": "Fachada del Hotel Ensueños"
+				"src": "src/assets/img/hotel/lobby/9.jpg",
+				"alt": "Lobby del Hotel Ensueños"
+			},
+			{
+				"src": "src/assets/img/hotel/lounge/2.jpg",
+				"alt": "Lounge del Hotel Ensueños"
+			},
+			{
+				"src": "src/assets/img/hotel/lobby/1.jpg",
+				"alt": "Lobby del Hotel Ensueños"
+			},
+			{
+				"src": "src/assets/img/hotel/lounge/6.jpg",
+				"alt": "Lounge del Hotel Ensueños"
+			},
+			{
+				"src": "src/assets/img/hotel/lobby/6.jpg",
+				"alt": "Lobby del Hotel Ensueños"
+			},
+			{
+				"src": "src/assets/img/hotel/lobby/4.jpg",
+				"alt": "Lobby del Hotel Ensueños"
+			},
+			{
+				"src": "src/assets/img/hotel/lounge/5.jpg",
+				"alt": "Lounge del Hotel Ensueños"
+			},
+			{
+				"src": "src/assets/img/hotel/lobby/2.jpg",
+				"alt": "Lobby del Hotel Ensueños"
+			},
+			{
+				"src": "src/assets/img/hotel/lounge/3.jpg",
+				"alt": "Lounge del Hotel Ensueños"
+			},
+			{
+				"src": "src/assets/img/hotel/lounge/9.jpg",
+				"alt": "Lounge del Hotel Ensueños"
+			},
+			{
+				"src": "src/assets/img/hotel/lobby/8.jpg",
+				"alt": "Lobby del Hotel Ensueños"
+			},
+			{
+				"src": "src/assets/img/hotel/lobby/5.jpg",
+				"alt": "Lobby del Hotel Ensueños"
 			}
 		]
 	},
@@ -91,289 +147,292 @@
 	],
 	"roomTypes": [
 		{
-			"id": "standard",
-			"src": "https://cf.bstatic.com/xdata/images/hotel/max1024x768/511529329.jpg?k=732041281512a8138118029519199346124718535a9018447849c40781702f28&o=&hp=1",
+			"id": "double",
+			"src": "src/assets/img/hotel/rooms/matrimonial/4.jpg",
 			"name": {
-				"es": "Estándar",
-				"en": "Standard"
-			},
-			"title": {
-				"es": "Habitación Estándar",
-				"en": "Standard Room"
+				"es": "Matrimonial",
+				"en": "Double"
 			},
 			"description": {
-				"es": "Comodidad y calidez para tu descanso.",
-				"en": "Comfort and warmth for your rest."
-			},
-			"tags": {
-				"es": "TV, Wifi, Baño Privado",
-				"en": "TV, Wifi, Private Bath"
+				"es": "Descripcion en Español"
+			}
+		},
+		{
+			"id": "twin",
+			"src": "src/assets/img/hotel/rooms/doble_individual/5.jpg",
+			"name": {
+				"es": "Doble individual",
+				"en": "Twin"
+			}
+		},
+		{
+			"id": "triple",
+			"src": "src/assets/img/hotel/rooms/triple/4.jpg",
+			"name": {
+				"es": "Triple",
+				"en": "Triple"
+			}
+		},
+		{
+			"id": "quadruple",
+			"src": "src/assets/img/hotel/rooms/cuadruple_2_camas/2.jpg",
+			"name": {
+				"es": "Quadruple",
+				"en": "Quadruple"
+			}
+		},
+		{
+			"id": "quintuple",
+			"src": "src/assets/img/hotel/rooms/quintuple/2.jpg",
+			"name": {
+				"es": "Quintuple",
+				"en": "Quintuple"
+			}
+		},
+		{
+			"id": "sextuple",
+			"src": "src/assets/img/hotel/rooms/sextuple/1.jpg",
+			"name": {
+				"es": "Sextuple",
+				"en": "Sextuple"
 			}
 		},
 		{
 			"id": "suite",
-			"src": "https://cf.bstatic.com/xdata/images/hotel/max1024x768/511529324.jpg?k=3f208191242337a34114407e38343719000572e0d376d8b0222167d60f51950c&o=&hp=1",
+			"src": "src/assets/img/hotel/rooms/suite1/2.jpg",
 			"name": {
 				"es": "Suite",
 				"en": "Suite"
-			},
-			"title": {
-				"es": "Suite Familiar",
-				"en": "Family Suite"
-			},
-			"description": {
-				"es": "Espacio amplio ideal para familias.",
-				"en": "Spacious area ideal for families."
-			},
-			"tags": {
-				"es": "TV, Wifi, Sala de estar",
-				"en": "TV, Wifi, Living Room"
 			}
 		}
 	],
 	"destinationCategories": [
 		{
-			"id": "adventure",
-			"src": "https://images.unsplash.com/photo-1599042241212-09a5929a0f9b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1ODEzNDR8MHwxfHNlYXJjaHw1fHxjdWVuY2ElMjBlY3VhZG9yfGVufDB8fHx8MTc2Mzg2OTYxNnww&ixlib=rb-4.0.3&q=80&w=400",
+			"id": "patrimonial",
 			"name": {
-				"es": "Aventura",
-				"en": "Adventure"
-			},
-			"title": {
-				"es": "Destinos de Aventura",
-				"en": "Adventure Destinations"
-			},
-			"description": {
-				"es": "Explora los alrededores llenos de adrenalina.",
-				"en": "Explore the adrenaline-filled surroundings."
-			},
-			"tags": {
-				"es": "Cajas, Senderismo",
-				"en": "Cajas, Hiking"
+				"es": "Ciudades Patrimoniales",
+				"en": "Heritage Cities"
 			}
 		},
 		{
-			"id": "culture",
-			"src": "https://images.unsplash.com/photo-1616331101920-9e1d6241e7a0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1ODEzNDR8MHwxfHNlYXJjaHwxfHxjdWVuY2ElMjBlY3VhZG9yfGVufDB8fHx8MTc2Mzg2OTU4Mnww&ixlib=rb-4.0.3&q=80&w=400",
+			"id": "adventure",
 			"name": {
-				"es": "Cultura",
-				"en": "Culture"
-			},
-			"title": {
-				"es": "Riqueza Cultural",
-				"en": "Cultural Wealth"
-			},
-			"description": {
-				"es": "Sumérgete en la historia y arte local.",
-				"en": "Immerse yourself in local history and art."
-			},
-			"tags": {
-				"es": "Museos, Iglesias",
-				"en": "Museums, Churches"
+				"es": "Ciudades de Aventura",
+				"en": "Adventure Cities"
+			}
+		},
+		{
+			"id": "beach",
+			"name": {
+				"es": "Ciudades de Playa",
+				"en": "Beach Cities"
+			}
+		},
+		{
+			"id": "cultural",
+			"name": {
+				"es": "Ciudades Culturales y Artesanales",
+				"en": "Cultural & Handcraft Cities"
+			}
+		},
+		{
+			"id": "gastronomic",
+			"name": {
+				"es": "Ciudades Gastronómicas",
+				"en": "Gastronomic Cities"
 			}
 		},
 		{
 			"id": "nature",
-			"src": "https://images.unsplash.com/photo-1600208222818-4a41a63c41e8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1ODEzNDR8MHwxfHNlYXJjaHw2fHxjdWVuY2ElMjBlY3VhZG9yfGVufDB8fHx8MTc2Mzg2OTYxNnww&ixlib=rb-4.0.3&q=80&w=400",
 			"name": {
-				"es": "Naturaleza",
-				"en": "Nature"
-			},
-			"title": {
-				"es": "Conexión Natural",
-				"en": "Natural Connection"
-			},
-			"description": {
-				"es": "Disfruta de paisajes únicos.",
-				"en": "Enjoy unique landscapes."
-			},
-			"tags": {
-				"es": "Parques, Ríos",
-				"en": "Parks, Rivers"
+				"es": "Ciudades de Naturaleza",
+				"en": "Nature & Ecotourism Cities"
+			}
+		},
+		{
+			"id": "urban",
+			"name": {
+				"es": "Ciudades para Turismo Urbano",
+				"en": "Urban Tourism Cities"
+			}
+		},
+		{
+			"id": "gateway",
+			"name": {
+				"es": "Ciudades Puerta de Entrada",
+				"en": "Gateway Cities"
 			}
 		}
 	],
 	"tourCategories": [
 		{
-			"id": "adventure",
-			"src": "https://images.unsplash.com/photo-1599042241212-09a5929a0f9b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1ODEzNDR8MHwxfHNlYXJjaHw1fHxjdWVuY2ElMjBlY3VhZG9yfGVufDB8fHx8MTc2Mzg2OTYxNnww&ixlib=rb-4.0.3&q=80&w=400",
+			"id": "city_tour",
 			"name": {
-				"es": "Aventura",
-				"en": "Adventure"
-			},
-			"title": {
-				"es": "Tours de Aventura",
-				"en": "Adventure Tours"
-			},
-			"description": {
-				"es": "Emociones fuertes en los Andes.",
-				"en": "Strong emotions in the Andes."
-			},
-			"tags": {
-				"es": "Ciclismo, Escalada",
-				"en": "Cycling, Climbing"
-			}
-		},
-		{
-			"id": "mountain",
-			"src": "https://images.unsplash.com/photo-1616331101920-9e1d6241e7a0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1ODEzNDR8MHwxfHNlYXJjaHwxfHxjdWVuY2ElMjBlY3VhZG9yfGVufDB8fHx8MTc2Mzg2OTU4Mnww&ixlib=rb-4.0.3&q=80&w=400",
-			"name": {
-				"es": "Montaña",
-				"en": "Mountain"
-			},
-			"title": {
-				"es": "Exploración de Montaña",
-				"en": "Mountain Exploration"
-			},
-			"description": {
-				"es": "Rutas escénicas y aire puro.",
-				"en": "Scenic routes and fresh air."
-			},
-			"tags": {
-				"es": "Miradores, Caminatas",
-				"en": "Viewpoints, Hikes"
+				"es": "City Tour",
+				"en": "City Tour"
 			}
 		},
 		{
 			"id": "cultural",
-			"src": "https://images.unsplash.com/photo-1600208222818-4a41a63c41e8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1ODEzNDR8MHwxfHNlYXJjaHw2fHxjdWVuY2ElMjBlY3VhZG9yfGVufDB8fHx8MTc2Mzg2OTYxNnww&ixlib=rb-4.0.3&q=80&w=400",
 			"name": {
 				"es": "Cultural",
 				"en": "Cultural"
-			},
-			"title": {
-				"es": "Tours Culturales",
-				"en": "Cultural Tours"
-			},
-			"description": {
-				"es": "Descubre el patrimonio de Cuenca.",
-				"en": "Discover Cuenca's heritage."
-			},
-			"tags": {
-				"es": "Historia, Arte",
-				"en": "History, Art"
 			}
 		},
 		{
 			"id": "gastronomic",
-			"src": "https://images.unsplash.com/photo-1600208222818-4a41a63c41e8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1ODEzNDR8MHwxfHNlYXJjaHw2fHxjdWVuY2ElMjBlY3VhZG9yfGVufDB8fHx8MTc2Mzg2OTYxNnww&ixlib=rb-4.0.3&q=80&w=400",
 			"name": {
 				"es": "Gastronómico",
 				"en": "Gastronomic"
-			},
-			"title": {
-				"es": "Ruta de Sabores",
-				"en": "Flavor Route"
-			},
-			"description": {
-				"es": "Delicias locales e internacionales.",
-				"en": "Local and international delights."
-			},
-			"tags": {
-				"es": "Comida Típica, Mercados",
-				"en": "Typical Food, Markets"
+			}
+		},
+		{
+			"id": "adventure",
+			"name": {
+				"es": "Aventura",
+				"en": "Adventure"
+			}
+		},
+		{
+			"id": "nature",
+			"name": {
+				"es": "Naturaleza",
+				"en": "Nature"
+			}
+		},
+		{
+			"id": "wildlife",
+			"name": {
+				"es": "Vida Silvestre",
+				"en": "Wildlife"
+			}
+		},
+		{
+			"id": "community",
+			"name": {
+				"es": "Comunitario",
+				"en": "Community"
+			}
+		},
+		{
+			"id": "historical",
+			"name": {
+				"es": "Histórico",
+				"en": "Historical"
+			}
+		},
+		{
+			"id": "relax",
+			"name": {
+				"es": "Relajación y Bienestar",
+				"en": "Relax & Wellness"
+			}
+		},
+		{
+			"id": "nightlife",
+			"name": {
+				"es": "Vida Nocturna",
+				"en": "Nightlife"
+			}
+		},
+		{
+			"id": "marine",
+			"name": {
+				"es": "Marino",
+				"en": "Marine"
+			}
+		},
+		{
+			"id": "shopping",
+			"name": {
+				"es": "Compras",
+				"en": "Shopping"
+			}
+		},
+		{
+			"id": "photography",
+			"name": {
+				"es": "Fotografía",
+				"en": "Photography"
 			}
 		}
 	],
 	"gastronomyCategories": [
 		{
-			"id": "local",
-			"src": "https://images.unsplash.com/photo-1600208222818-4a41a63c41e8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1ODEzNDR8MHwxfHNlYXJjaHw2fHxjdWVuY2ElMjBlY3VhZG9yfGVufDB8fHx8MTc2Mzg2OTYxNnww&ixlib=rb-4.0.3&q=80&w=400",
+			"id": "traditional_food",
 			"name": {
-				"es": "Local",
-				"en": "Local"
-			},
-			"title": {
-				"es": "Sabor Cuencano",
-				"en": "Cuencan Flavor"
-			},
-			"description": {
-				"es": "Platos tradicionales de la región.",
-				"en": "Traditional dishes of the region."
-			},
-			"tags": {
-				"es": "Mote Pillo, Cuy",
-				"en": "Mote Pillo, Guinea Pig"
+				"es": "Comida Tradicional",
+				"en": "Traditional Food"
 			}
 		},
 		{
-			"id": "italian",
-			"src": "https://images.unsplash.com/photo-1600208222818-4a41a63c41e8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1ODEzNDR8MHwxfHNlYXJjaHw2fHxjdWVuY2ElMjBlY3VhZG9yfGVufDB8fHx8MTc2Mzg2OTYxNnww&ixlib=rb-4.0.3&q=80&w=400",
+			"id": "street_food",
 			"name": {
-				"es": "Italiana",
-				"en": "Italian"
-			},
-			"title": {
-				"es": "Cocina Italiana",
-				"en": "Italian Cuisine"
-			},
-			"description": {
-				"es": "Pastas y pizzas artesanales.",
-				"en": "Artisanal pastas and pizzas."
-			},
-			"tags": {
-				"es": "Pasta, Pizza",
-				"en": "Pasta, Pizza"
+				"es": "Comida Callejera",
+				"en": "Street Food"
+			}
+		},
+		{
+			"id": "seafood",
+			"name": {
+				"es": "Mariscos",
+				"en": "Seafood"
+			}
+		},
+		{
+			"id": "andina",
+			"name": {
+				"es": "Gastronomía Andina",
+				"en": "Andean Cuisine"
+			}
+		},
+		{
+			"id": "amazonian",
+			"name": {
+				"es": "Gastronomía Amazónica",
+				"en": "Amazonian Cuisine"
+			}
+		},
+		{
+			"id": "fusion",
+			"name": {
+				"es": "Cocina Fusión",
+				"en": "Fusion Cuisine"
+			}
+		},
+		{
+			"id": "gourmet",
+			"name": {
+				"es": "Gourmet",
+				"en": "Gourmet"
+			}
+		},
+		{
+			"id": "drinks",
+			"name": {
+				"es": "Bebidas y Coctelería",
+				"en": "Drinks & Mixology"
 			}
 		},
 		{
 			"id": "sweets",
-			"src": "https://images.unsplash.com/photo-1600208222818-4a41a63c41e8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1ODEzNDR8MHwxfHNlYXJjaHw2fHxjdWVuY2ElMjBlY3VhZG9yfGVufDB8fHx8MTc2Mzg2OTYxNnww&ixlib=rb-4.0.3&q=80&w=400",
 			"name": {
-				"es": "Corpus y Dulces",
-				"en": "Corpus & Sweets"
-			},
-			"title": {
-				"es": "Dulces Tradicionales",
-				"en": "Traditional Sweets"
-			},
-			"description": {
-				"es": "Dulces de la fiesta del Corpus Christi.",
-				"en": "Sweets from the Corpus Christi festival."
-			},
-			"tags": {
-				"es": "Quesadillas, Suspiros",
-				"en": "Quesadillas, Meringues"
+				"es": "Postres y Dulces",
+				"en": "Desserts & Sweets"
 			}
 		},
 		{
-			"id": "exotic",
-			"src": "https://images.unsplash.com/photo-1600208222818-4a41a63c41e8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1ODEzNDR8MHwxfHNlYXJjaHw2fHxjdWVuY2ElMjBlY3VhZG9yfGVufDB8fHx8MTc2Mzg2OTYxNnww&ixlib=rb-4.0.3&q=80&w=400",
+			"id": "coffee",
 			"name": {
-				"es": "Exótica",
-				"en": "Exotic"
-			},
-			"title": {
-				"es": "Sabores Exóticos",
-				"en": "Exotic Flavors"
-			},
-			"description": {
-				"es": "Experiencias culinarias únicas.",
-				"en": "Unique culinary experiences."
-			},
-			"tags": {
-				"es": "Fusión, Internacional",
-				"en": "Fusion, International"
+				"es": "Café y Barismo",
+				"en": "Coffee & Barista"
 			}
 		},
 		{
 			"id": "chocolate",
-			"src": "https://images.unsplash.com/photo-1600208222818-4a41a63c41e8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1ODEzNDR8MHwxfHNlYXJjaHw2fHxjdWVuY2ElMjBlY3VhZG9yfGVufDB8fHx8MTc2Mzg2OTYxNnww&ixlib=rb-4.0.3&q=80&w=400",
 			"name": {
-				"es": "Chocolate",
-				"en": "Chocolate"
-			},
-			"title": {
-				"es": "Cacao Fino de Aroma",
-				"en": "Fine Aroma Cacao"
-			},
-			"description": {
-				"es": "El mejor chocolate del mundo.",
-				"en": "The best chocolate in the world."
-			},
-			"tags": {
-				"es": "Cacao, Trufas",
-				"en": "Cacao, Truffles"
+				"es": "Cacao y Chocolate",
+				"en": "Cacao & Chocolate"
 			}
 		}
 	],

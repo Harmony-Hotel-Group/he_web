@@ -3,19 +3,15 @@
 import InfoCard from "@/components/molecules/cards/InfoCard.astro";
 import { Translations } from "@/i18n/translation";
 import { logger } from "@/services/logger.ts";
+import type { Category, Currency } from "@/types/config";
 
 const log = logger("HomeSection");
-
-interface Item {
-	id: string;
-	src: string;
-	name: { [key: string]: string };
-}
 
 interface Props {
 	lang: string;
 	titleKey: string;
-	items: Item[];
+	items: Category[];
+	supportedCurrencies: Currency[];
 	baseHref: string;
 	bgColorClass?: string;
 	maxItems?: number;
@@ -25,6 +21,7 @@ const {
 	lang,
 	titleKey,
 	items,
+	supportedCurrencies,
 	baseHref,
 	bgColorClass = "bg-white",
 	maxItems = 4,
@@ -33,6 +30,8 @@ const {
 log.info("Props recibidas:", {
 	lang,
 	titleKey,
+	items,
+	supportedCurrencies,
 	numItems: items.length,
 	baseHref,
 	maxItems,
@@ -43,21 +42,49 @@ const t = Translations(lang);
 
 <section class={`${bgColorClass} py-16`}>
   <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-    <h2 class="text-2xl md:text-3xl font-bold text-center text-primary mb-10 md:mb-12">{t(titleKey)}</h2>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
-      {items.slice(0, maxItems).map(item => (
-        <InfoCard
-          href={`${baseHref}/${item.id}`}
-          imageSrc={item.src}
-          imageAlt={item.name[lang]}
-          title={item.name[lang]}
-          description={t('home.explore_category')}
-        />
-      ))}
+    <h2
+      class="text-2xl md:text-3xl font-bold text-center text-primary mb-10 md:mb-12"
+    >
+      {t(titleKey)}
+    </h2>
+    <div
+      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8"
+    >
+      {
+          items
+          .slice(0, maxItems)
+          .map((item) => (
+            <InfoCard
+              href={`${baseHref}/${item.id}`}
+              imageSrc={item.src}
+              imageAlt={item.name[lang]}
+              title={item.name[lang]}
+              description={
+                item.description?.[lang] ?? "No description available."
+              }
+              category={
+                item.category
+                  ? item.category[lang]
+                  : "No category available."
+              }
+              tags={
+                item.tags && item.tags[lang]
+                  ? item.tags[lang].split(",").map((t) => t.trim())
+                  : []
+              }
+              value={item.value || 0}
+              valueLabel={item.valueLabel}
+              supportedCurrencies={supportedCurrencies}
+            />
+          ))
+      }
     </div>
     <div class="text-center mt-10 md:mt-12">
-      <a href={baseHref} class="inline-flex items-center bg-primary text-white font-semibold py-3 px-6 md:px-8 rounded-lg hover:bg-accent transition-colors duration-300">
-        {t('buttons.see_more')}
+      <a
+        href={baseHref}
+        class="inline-flex items-center bg-primary text-white font-semibold py-3 px-6 md:px-8 rounded-lg hover:bg-accent transition-colors duration-300"
+      >
+        {t("buttons.see_more")}
       </a>
     </div>
   </div>

@@ -1,9 +1,12 @@
 ---
 // src/components/organisms/booking/BookingVehicleSection.astro
 import { Translations } from "@/i18n/translation.ts";
+import { logger } from "@/services/logger.ts";
 import Grid from "@/layouts/GridLayout.astro";
 import Row from "@/layouts/Row.astro";
 import type { SiteConfig } from "@/types/config";
+
+const log = logger("BookingVehicleSection");
 
 interface Props {
 	lang: string;
@@ -20,6 +23,10 @@ const vehicleTypeOptions = (propVehicleTypeOptions ??
 	config?.vehicleTypeOptions ??
 	[]) as Array<{ value: string; [key: string]: string }>;
 const t = Translations(lang);
+
+if (vehicleTypeOptions.length === 0) {
+	log.warn("No se proporcionaron 'vehicleTypeOptions'. Los selectores de tipo de vehículo estarán deshabilitados.");
+}
 ---
 
 <div id="vehicle-section-component"
@@ -91,15 +98,12 @@ const t = Translations(lang);
 
 <script is:inline define:vars={{ lang, vehicleTypeOptions }}>
     document.addEventListener('DOMContentLoaded', () => {
+        const log = { info: (m, ...a) => console.log(`[UI:BookingVehicleSection] INFO: ${m}`, ...a), warn: (m, ...a) => console.warn(`[UI:BookingVehicleSection] WARN: ${m}`, ...a), error: (m, ...a) => console.error(`[UI:BookingVehicleSection] ERROR: ${m}`, ...a) };
+
         const component = document.getElementById('vehicle-section-component');
         if (!component || component.dataset.initialized) return; // 👈 Evita doble inicialización
         component.dataset.initialized = 'true'; // Marca como inicializado
         if (!component) return;
-
-        // Simulamos la función de traducción solo para los tipos de vehículo
-        // (No puedes importar Translations aquí si es código del lado del servidor)
-        // Pero como ya tienes las traducciones en vehicleTypeOptions, no la necesitas para eso.
-        // Solo la necesitarías si usas t('...') → pero en ese caso, deberías inyectar esas cadenas.
 
         const addVehicleBtn = component.querySelector('#addVehicleBtn');
         const removeVehicleBtn = component.querySelector('#removeVehicleBtn');
@@ -119,7 +123,7 @@ const t = Translations(lang);
 
         addVehicleBtn?.addEventListener('click', () => {
             const currentCount = getVehicleCount();
-            console.log('currentCount', currentCount);
+            log.info(`Añadiendo vehículo. Actual: ${currentCount}`);
             if (currentCount >= 6) return;
 
             const nextIndex = currentCount + 1;
@@ -150,6 +154,7 @@ const t = Translations(lang);
 
         removeVehicleBtn?.addEventListener('click', () => {
             const items = vehiclesContainer.querySelectorAll('.vehicle-item');
+            log.info(`Eliminando vehículo. Actual: ${items.length}`);
             if (items.length > 1) {
                 items[items.length - 1].remove();
                 updateRemoveButton();

@@ -67,7 +67,6 @@ const embedUrl = videoId
                 class="youtube-iframe"
                 src={embedUrl}
                 title={title || "YouTube video player"}
-                frameborder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowfullscreen
                 loading="lazy"
@@ -292,7 +291,6 @@ const embedUrl = videoId
                 `[YouTubeResource-Client] Autoplay activado para video: ${videoId}`,
             );
         } else {
-            // Si no es autoplay, permitir interacción normal
             wrapper.classList.add("allow-interaction");
         }
     });

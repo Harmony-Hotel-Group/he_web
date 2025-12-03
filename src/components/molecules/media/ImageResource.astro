@@ -6,9 +6,9 @@
  * Usa el componente Imagen.astro para optimización
  */
 
+import type { ImageMetadata } from "astro";
 import Imagen from "@/components/atoms/Imagen.astro";
 import { logger } from "@/services/logger.ts";
-import type { ImageMetadata } from "astro";
 import { validateResource } from "@/utils/visual-resource-utils.ts";
 
 const log = logger("ImageResource");
@@ -23,6 +23,7 @@ interface Props {
     srcset?: string;
     sizes?: string;
     decoding?: "async" | "sync" | "auto";
+    wrapperClasses?: string;
 }
 
 const {
@@ -35,6 +36,7 @@ const {
     srcset,
     sizes,
     decoding = "async",
+    wrapperClasses = "",
 } = Astro.props;
 
 // Validar si src es string
@@ -50,7 +52,7 @@ if (typeof src === "string") {
 const imageId = `img-${String(Math.random().toString(36)).substring(2, 9)}`;
 ---
 
-<div class="image-resource-wrapper" data-image-id={imageId}>
+<div class={`image-resource-wrapper ${wrapperClasses}`} data-image-id={imageId}>
     <Imagen
         id={imageId}
         src={finalSrc}

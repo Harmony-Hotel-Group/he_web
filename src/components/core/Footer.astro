@@ -8,7 +8,7 @@ interface Props {
 	config?: SiteConfig;
 	lang?: string;
 }
-const { t, config, lang } = Astro.props;
+const { t, config } = Astro.props;
 
 const currentYear = new Date().getFullYear();
 const startYear = 2021;
@@ -42,7 +42,6 @@ const legalLinks = [
 const socialLinks = config?.contactInfo?.socialLinks ?? [];
 ---
 
-<!--suppress ALL -->
 <footer class="bg-gradient-to-b from-gray-900 to-gray-950 text-gray-300">
     <!-- Contenido principal del footer -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
@@ -54,7 +53,7 @@ const socialLinks = config?.contactInfo?.socialLinks ?? [];
                     {config?.siteName ?? "Hotel Ensueños"}
                 </h3>
                 <p class="text-sm text-gray-400 leading-relaxed">
-                    {t('footer.description').length > 300 ? `${t('footer.description').substring(0, 300)}...` : t('footer.description')}
+                    {t('footer.description')}
                 </p>
                 <div class="space-y-2 text-sm">
                     <p class="flex items-start gap-2">

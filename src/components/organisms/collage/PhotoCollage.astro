@@ -6,13 +6,20 @@ import { logger } from "@/services/logger.ts";
 const log = logger("PhotoCollage");
 
 interface Image {
-    src: string | ImageMetadata;
-    alt: string;
+	src: string | ImageMetadata;
+	alt: string;
 }
 
 interface Props {
-    images: Image[];
-    class?: string;
+	images: Image[];
+	class?: string;
+}
+
+interface ImageConfig {
+	rotation: string;
+	position: string;
+	zIndex: string;
+	delay: string;
 }
 
 const { images = [], class: className } = Astro.props;
@@ -21,131 +28,419 @@ log.info("Props recibidas:", { numImages: images.length });
 
 // Validar y filtrar imágenes válidas
 const validImages = images.filter((img) => img.src && img.alt);
-const imagesToDisplay = validImages.slice(0, 5);
+
+// Función para seleccionar imágenes aleatorias
+const getRandomImages = (imgs: Image[], count: number) => {
+	const shuffled = [...imgs].sort(() => Math.random() - 0.5);
+	return shuffled.slice(0, count);
+};
+
+const LIMIT_IMAGES_VIEW = 5;
+
+// Limitar a máximo 5 imágenes, tomando al azar si hay más
+const imagesToDisplay =
+	validImages.length > LIMIT_IMAGES_VIEW
+		? getRandomImages(validImages, LIMIT_IMAGES_VIEW)
+		: validImages;
 
 if (validImages.length === 0) {
 	log.warn("No hay imágenes válidas para mostrar en el collage");
+} else if (validImages.length > LIMIT_IMAGES_VIEW) {
+	log.info(
+		`Se muestran ${LIMIT_IMAGES_VIEW} imágenes aleatorias de ${validImages.length} disponibles`,
+	);
 }
 
-// Configuración mejorada de transformaciones con valores responsivos
-const imageConfigs = [
-    {
-        rotation: "-rotate-6 hover:rotate-[-8deg]",
-        position:
-            "top-[5%] left-[10%] sm:top-[8%] sm:left-[5%] md:top-[10%] md:left-[8%]",
-        zIndex: "z-1",
-        delay: "0s",
-    },
-    {
-        rotation: "rotate-3 hover:rotate-[5deg]",
-        position:
-            "top-[15%] right-[8%] sm:top-[12%] sm:right-[10%] md:top-[8%] md:right-[12%]",
-        zIndex: "z-2",
-        delay: "0.1s",
-    },
-    {
-        rotation: "rotate-12 hover:rotate-15",
-        position:
-            "bottom-[8%] left-[15%] sm:bottom-[10%] sm:left-[12%] md:bottom-[12%] md:left-[10%]",
-        zIndex: "z-3",
-        delay: "0.2s",
-    },
-    {
-        rotation: "-rotate-2 hover:rotate-[-4deg]",
-        position:
-            "top-[25%] left-[25%] sm:top-[22%] sm:left-[28%] md:top-[20%] md:left-[30%]",
-        zIndex: "z-4",
-        delay: "0.3s",
-    },
-    {
-        rotation: "rotate-8 hover:rotate-11",
-        position:
-            "bottom-[18%] right-[12%] sm:bottom-[15%] sm:right-[15%] md:bottom-[18%] md:right-[18%]",
-        zIndex: "z-5",
-        delay: "0.4s",
-    },
-];
+// Calcular altura mínima dinámica basada en cantidad de imágenes
+const getMinHeight = (count: number) => {
+	if (count === 1) return "min-h-[300px] sm:min-h-[350px] md:min-h-[400px]";
+	if (count === 2) return "min-h-[350px] sm:min-h-[400px] md:min-h-[450px]";
+	if (count === 3) return "min-h-[380px] sm:min-h-[430px] md:min-h-[480px]";
+	if (count === 4) return "min-h-[400px] sm:min-h-[450px] md:min-h-[500px]";
+	// 5 o más imágenes
+	return "min-h-[400px] sm:min-h-[450px] md:min-h-[500px] lg:min-h-[550px]";
+};
+
+const minHeightClass = getMinHeight(imagesToDisplay.length);
+
+// Calcular tamaño de imágenes basado en cantidad
+const getImageSize = (count: number) => {
+	if (count === 1) return "w-[70%] sm:w-[65%] md:w-[60%] lg:w-[55%]";
+	if (count === 2) return "w-[60%] sm:w-[55%] md:w-[50%] lg:w-[48%]";
+	if (count === 3) return "w-[55%] sm:w-[52%] md:w-[48%] lg:w-[45%]";
+	if (count === 4) return "w-[50%] sm:w-[48%] md:w-[45%] lg:w-[42%]";
+	// 5 o más imágenes - tamaño estándar
+	return "w-[45%] sm:w-[42%] md:w-[38%] lg:w-[35%]";
+};
+
+const imageSizeClass = getImageSize(imagesToDisplay.length);
+
+// Configuración de posiciones que se ajusta dinámicamente
+const getImageConfigs = (totalImages: number): ImageConfig[] => {
+	// Para 1-2 imágenes: centradas
+	if (totalImages === 1) {
+		return [
+			{
+				rotation: "-rotate-3 hover:rotate-[-5deg]",
+				position: "top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2",
+				zIndex: "z-1",
+				delay: "0s",
+			},
+		];
+	}
+
+	if (totalImages === 2) {
+		return [
+			{
+				rotation: "-rotate-6 hover:rotate-[-8deg]",
+				position: "top-1/2 left-[30%] -translate-x-1/2 -translate-y-1/2",
+				zIndex: "z-1",
+				delay: "0s",
+			},
+			{
+				rotation: "rotate-6 hover:rotate-[8deg]",
+				position: "top-1/2 right-[30%] translate-x-1/2 -translate-y-1/2",
+				zIndex: "z-2",
+				delay: "0.2s",
+			},
+		];
+	}
+
+	if (totalImages === 3) {
+		return [
+			{
+				rotation: "-rotate-8 hover:rotate-[-10deg]",
+				position: "top-[20%] left-[15%]",
+				zIndex: "z-1",
+				delay: "0s",
+			},
+			{
+				rotation: "rotate-4 hover:rotate-[6deg]",
+				position: "top-[20%] right-[15%]",
+				zIndex: "z-2",
+				delay: "0.2s",
+			},
+			{
+				rotation: "rotate-2 hover:rotate-[4deg]",
+				position: "bottom-[15%] left-1/2 -translate-x-1/2",
+				zIndex: "z-3",
+				delay: "0.4s",
+			},
+		];
+	}
+
+	if (totalImages === 4) {
+		return [
+			{
+				rotation: "-rotate-6 hover:rotate-[-8deg]",
+				position: "top-[15%] left-[12%]",
+				zIndex: "z-1",
+				delay: "0s",
+			},
+			{
+				rotation: "rotate-5 hover:rotate-[7deg]",
+				position: "top-[15%] right-[12%]",
+				zIndex: "z-2",
+				delay: "0.15s",
+			},
+			{
+				rotation: "rotate-8 hover:rotate-10",
+				position: "bottom-[12%] left-[18%]",
+				zIndex: "z-3",
+				delay: "0.4s",
+			},
+			{
+				rotation: "-rotate-4 hover:rotate-[-6deg]",
+				position: "bottom-[12%] right-[18%]",
+				zIndex: "z-4",
+				delay: "0.8s",
+			},
+		];
+	}
+
+	// 5 o más imágenes: diseño original
+	const baseConfigs = [
+		{
+			rotation: "-rotate-6 hover:rotate-[-8deg]",
+			position:
+				"top-[5%] left-[10%] sm:top-[8%] sm:left-[5%] md:top-[10%] md:left-[8%]",
+			zIndex: "z-1",
+			delay: "0s",
+		},
+		{
+			rotation: "rotate-3 hover:rotate-[5deg]",
+			position:
+				"top-[15%] right-[8%] sm:top-[12%] sm:right-[10%] md:top-[8%] md:right-[12%]",
+			zIndex: "z-2",
+			delay: "0.15s",
+		},
+		{
+			rotation: "rotate-12 hover:rotate-15",
+			position:
+				"bottom-[8%] left-[15%] sm:bottom-[10%] sm:left-[12%] md:bottom-[12%] md:left-[10%]",
+			zIndex: "z-3",
+			delay: "0.3s",
+		},
+		{
+			rotation: "-rotate-2 hover:rotate-[-4deg]",
+			position:
+				"top-[25%] left-[25%] sm:top-[22%] sm:left-[28%] md:top-[20%] md:left-[30%]",
+			zIndex: "z-4",
+			delay: "0.6s",
+		},
+		{
+			rotation: "rotate-8 hover:rotate-11",
+			position:
+				"bottom-[18%] right-[12%] sm:bottom-[15%] sm:right-[15%] md:bottom-[18%] md:right-[18%]",
+			zIndex: "z-5",
+			delay: "0.6s",
+		},
+	];
+
+	// Para 6+ imágenes, generar más posiciones basadas en el patrón
+	if (totalImages > 5) {
+		const additionalConfigs: ImageConfig[] = [];
+		for (let i = 5; i < totalImages; i++) {
+			additionalConfigs.push({
+				rotation: `rotate-${i % 2 === 0 ? "" : "-"}${3 + (i % 5)}`,
+				position: `top-[${10 + (i % 4) * 15}%] ${i % 2 === 0 ? "left" : "right"}-[${8 + (i % 3) * 10}%]`,
+				zIndex: `z-${i + 1}`,
+				delay: `${0.2 * i}s`,
+			});
+		}
+		return [...baseConfigs, ...additionalConfigs];
+	}
+
+	return baseConfigs;
+};
+
+const imageConfigs = getImageConfigs(imagesToDisplay.length);
 ---
 
 <!-- CONTENEDOR PRINCIPAL -->
 <div
     class:list={[
         "relative w-full overflow-hidden",
-        "min-h-[400px] sm:min-h-[450px] md:min-h-[500px] lg:min-h-[550px]",
+        minHeightClass,
         "flex justify-center items-center",
         "px-4 sm:px-6 md:px-8",
         className,
     ]}
+    id="photo-collage-container"
 >
     <!-- Contenedor del collage con aspect ratio -->
-    <div class="relative w-full max-w-[900px] aspect-4/3 md:aspect-16/10">
-        {imagesToDisplay.length > 0 ? (
-            imagesToDisplay.map((image, index) => {
-                const config = imageConfigs[index % imageConfigs.length];
-                return (
-                    <div
-                        class:list={[
-                            // Posicionamiento absoluto
-                            "absolute",
-                            config.position,
-                            config.zIndex,
-
-                            // Tamaños responsivos más controlados
-                            "w-[45%] aspect-4/3",
-                            "sm:w-[42%]",
-                            "md:w-[38%]",
-                            "lg:w-[35%]",
-
-                            // Estilo de polaroid (borde mínimo)
-                            "p-0",
-                            "bg-white dark:bg-gray-800",
-                            "shadow-[0_4px_20px_rgba(0,0,0,0.15)] dark:shadow-[0_4px_20px_rgba(0,0,0,0.4)]",
-                            "rounded-xs",
-
-                            // Rotación y transformaciones
-                            config.rotation,
-                            "origin-center",
-
-                            // Transiciones y efectos hover
-                            "transition-all duration-300 ease-out",
-                            "hover:scale-110 hover:shadow-[0_8px_30px_rgba(0,0,0,0.25)]",
-                            "hover:z-100",
-
-                            // Cursor
-                            "cursor-pointer",
-                            
-                            // Eliminar overflow para evitar bordes
-                            "overflow-hidden",
-                            
-                            // Clase para la animación
-                            "photo-throw-in",
-                        ]}
-                        style={`animation-delay: ${config.delay};`}
-                        data-collage-image
-                    >
-                        <VisualResource
-                            src={image.src}
-                            alt={image.alt}
-                            type="image"
+    <div
+        class="relative w-full max-w-[900px] aspect-4/3 md:aspect-16/10"
+        id="collage-wrapper"
+    >
+        {
+            imagesToDisplay.length > 0 ? (
+                imagesToDisplay.map((image, index) => {
+                    const config = imageConfigs[index % imageConfigs.length];
+                    return (
+                        <div
                             class:list={[
-                                "w-full h-full object-cover rounded-xs",
-                                "transition-opacity duration-300",
-                                "opacity-90 hover:opacity-100",
+                                // Posicionamiento absoluto
+                                "absolute",
+                                config.position,
+                                config.zIndex,
+
+                                // Tamaños responsivos dinámicos según cantidad de imágenes
+                                imageSizeClass,
+                                "aspect-4/3",
+
+                                // Estilo de polaroid (borde mínimo)
+                                "p-0",
+                                "bg-white dark:bg-gray-800",
+                                "shadow-[0_4px_20px_rgba(0,0,0,0.15)] dark:shadow-[0_4px_20px_rgba(0,0,0,0.4)]",
+                                "rounded-xs",
+
+                                // Rotación y transformaciones
+                                config.rotation,
+                                "origin-center",
+
+                                // Transiciones y efectos hover
+                                "transition-all duration-300 ease-out",
+                                "hover:scale-110 hover:shadow-[0_8px_30px_rgba(0,0,0,0.25)]",
+
+                                // Cursor
+                                "cursor-pointer",
+
+                                // Eliminar overflow para evitar bordes
+                                "overflow-hidden",
+
+                                // Clase para la animación
+                                "photo-throw-in",
                             ]}
-                        />
-                    </div>
-                );
-            })
-        ) : (
-            <div class="absolute inset-0 flex items-center justify-center text-gray-400">
-                <p class="text-center">No hay imágenes disponibles</p>
-            </div>
-        )}
+                            style={`animation-delay: ${config.delay};`}
+                            data-collage-image
+                            data-card-index={index}
+                        >
+                            <VisualResource
+                                src={image.src}
+                                alt={image.alt}
+                                type="image"
+                                class:list={[
+                                    "w-full h-full object-cover rounded-xs",
+                                    "transition-opacity duration-300",
+                                    "opacity-90 hover:opacity-100",
+                                ]}
+                            />
+                        </div>
+                    );
+                })
+            ) : (
+                <div class="absolute inset-0 flex items-center justify-center text-gray-400">
+                    <p class="text-center">No hay imágenes disponibles</p>
+                </div>
+            )
+        }
     </div>
 </div>
 
+<script is:inline>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Esperar a que todas las animaciones terminen antes de activar el drag
+        const totalImages = document.querySelectorAll(".photo-throw-in").length;
+
+        if (totalImages === 0) {
+            console.warn("No se encontraron imágenes para el collage");
+            return;
+        }
+
+        const lastAnimationDelay = (totalImages - 1) * 0.2; // 0.2s por imagen
+        const animationDuration = 1.5; // 1.5s de duración
+        const totalAnimationTime =
+            (lastAnimationDelay + animationDuration) * 1000;
+
+        console.log(
+            `Esperando ${totalAnimationTime}ms para activar drag en ${totalImages} imágenes`,
+        );
+
+        setTimeout(() => {
+            initDraggableCards();
+        }, totalAnimationTime);
+
+        function initDraggableCards() {
+            const cards = document.querySelectorAll(".draggable-card");
+            const container = document.getElementById("collage-wrapper");
+
+            console.log(`Inicializando drag para ${cards.length} tarjetas`);
+
+            if (!container) {
+                console.warn("Contenedor collage-wrapper no encontrado");
+                return;
+            }
+
+            cards.forEach((card, index) => {
+                let isDragging = false;
+                let currentX = 0;
+                let currentY = 0;
+                let initialX = 0;
+                let initialY = 0;
+                let xOffset = 0;
+                let yOffset = 0;
+
+                // Almacenar la rotación original después de que termine la animación
+                setTimeout(() => {
+                    const computedStyle = window.getComputedStyle(card);
+                    const transform = computedStyle.transform;
+                    let originalRotation = "";
+
+                    if (transform && transform !== "none") {
+                        const values = transform
+                            .split("(")[1]
+                            .split(")")[0]
+                            .split(",");
+                        const a = parseFloat(values[0]);
+                        const b = parseFloat(values[1]);
+                        const angle = Math.round(
+                            Math.atan2(b, a) * (180 / Math.PI),
+                        );
+                        originalRotation = `rotate(${angle}deg)`;
+                    }
+
+                    card.dataset.originalRotation = originalRotation;
+                    console.log(
+                        `Tarjeta ${index} lista para drag con rotación: ${originalRotation}`,
+                    );
+                }, 100);
+
+                card.addEventListener("mousedown", dragStart);
+                document.addEventListener("mousemove", drag);
+                document.addEventListener("mouseup", dragEnd);
+
+                // Soporte táctil para móviles
+                card.addEventListener("touchstart", dragStart, {
+                    passive: false,
+                });
+                document.addEventListener("touchmove", drag, {
+                    passive: false,
+                });
+                document.addEventListener("touchend", dragEnd);
+
+                function dragStart(e) {
+                    e.preventDefault();
+                    const event = e.type === "touchstart" ? e.touches[0] : e;
+
+                    initialX = event.clientX - xOffset;
+                    initialY = event.clientY - yOffset;
+
+                    isDragging = true;
+                    card.style.cursor = "grabbing";
+                    card.style.transition = "none";
+
+                    // Elevar la tarjeta al frente
+                    cards.forEach((c) => {
+                        if (c !== card) {
+                            c.style.zIndex = "";
+                        }
+                    });
+                    card.style.zIndex = "1000";
+
+                    console.log(`Drag iniciado en tarjeta ${index}`);
+                }
+
+                function drag(e) {
+                    if (isDragging) {
+                        e.preventDefault();
+                        const event = e.type === "touchmove" ? e.touches[0] : e;
+
+                        currentX = event.clientX - initialX;
+                        currentY = event.clientY - initialY;
+
+                        xOffset = currentX;
+                        yOffset = currentY;
+
+                        setTranslate(currentX, currentY, card);
+                    }
+                }
+
+                function dragEnd(e) {
+                    if (isDragging) {
+                        initialX = currentX;
+                        initialY = currentY;
+                        isDragging = false;
+                        card.style.cursor = "grab";
+
+                        console.log(
+                            `Drag terminado en tarjeta ${index} - Posición: (${currentX}, ${currentY})`,
+                        );
+                    }
+                }
+
+                function setTranslate(xPos, yPos, el) {
+                    // Mantener la rotación original mientras se arrastra
+                    const rotation = el.dataset.originalRotation || "";
+                    el.style.transform = `translate(${xPos}px, ${yPos}px) ${rotation}`;
+                }
+            });
+        }
+    });
+</script>
+
 <style>
-    /* Animación de lanzamiento de tarjetas */
+    /* Animación de lanzamiento de tarjetas - MÁS LENTA */
     @keyframes throwIn {
         0% {
             opacity: 0;
@@ -153,43 +448,45 @@ const imageConfigs = [
         }
         60% {
             opacity: 1;
-            transform: translate(0, 0) rotate(var(--rotation-overshoot, 0deg)) scale(1.1);
+            transform: translate(0, 0) rotate(var(--rotation-overshoot, 0deg))
+                scale(1.1);
         }
         80% {
-            transform: translate(0, 0) rotate(var(--rotation-back, 0deg)) scale(0.95);
+            transform: translate(0, 0) rotate(var(--rotation-back, 0deg))
+                scale(0.95);
         }
         100% {
             opacity: 1;
             transform: translate(0, 0) rotate(0deg) scale(1);
         }
     }
-    
+
     .photo-throw-in {
-        animation: throwIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        animation: throwIn 1.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
         opacity: 0;
     }
-    
+
     /* Variaciones de overshoot para cada rotación */
     .photo-throw-in:nth-child(1) {
         --rotation-overshoot: -8deg;
         --rotation-back: -4deg;
     }
-    
+
     .photo-throw-in:nth-child(2) {
         --rotation-overshoot: 5deg;
         --rotation-back: 2deg;
     }
-    
+
     .photo-throw-in:nth-child(3) {
         --rotation-overshoot: 15deg;
         --rotation-back: 10deg;
     }
-    
+
     .photo-throw-in:nth-child(4) {
         --rotation-overshoot: -4deg;
         --rotation-back: -1deg;
     }
-    
+
     .photo-throw-in:nth-child(5) {
         --rotation-overshoot: 11deg;
         --rotation-back: 6deg;
@@ -201,7 +498,12 @@ const imageConfigs = [
             width: 48% !important;
         }
     }
-    
+
+    /* Efecto hover para elevar la imagen al frente */
+    [data-collage-image]:hover {
+        z-index: 100 !important;
+    }
+
     /* Eliminar bordes negros y fondos del wrapper de ImageResource en el collage */
     [data-collage-image] :global(.image-resource-wrapper) {
         background: transparent !important;
@@ -210,7 +512,7 @@ const imageConfigs = [
         overflow: hidden !important;
         border: none !important;
     }
-    
+
     [data-collage-image] :global(.image-resource),
     [data-collage-image] :global(img) {
         width: 100% !important;
@@ -224,29 +526,29 @@ const imageConfigs = [
         outline: none !important;
         vertical-align: top !important;
     }
-    
+
     /* Asegurar que las imágenes llenen completamente el contenedor sin espacios */
     [data-collage-image] {
         line-height: 0 !important;
     }
-    
+
     /* Asegurar que el skeleton no muestre fondo */
     [data-collage-image] :global(.image-skeleton) {
         background: transparent !important;
     }
-    
+
     /* Eliminar cualquier espacio o padding que pueda crear bordes */
     [data-collage-image] :global(*) {
         box-sizing: border-box;
         line-height: 0;
     }
-    
+
     /* Reducir animación en dispositivos con prefer-reduced-motion */
     @media (prefers-reduced-motion: reduce) {
         .photo-throw-in {
             animation: fadeIn 0.5s ease-out forwards;
         }
-        
+
         @keyframes fadeIn {
             from {
                 opacity: 0;

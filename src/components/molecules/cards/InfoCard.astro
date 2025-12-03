@@ -1,6 +1,10 @@
 ---
 // src/components/molecules/cards/InfoCard.astro
-import Imagen from "../../atoms/Imagen.astro";
+import type { Currency } from "@/types/config";
+import ImageResource from "@/components/molecules/media/ImageResource.astro";
+import { logger } from "@/services/logger";
+
+const log = logger("InfoCard");
 
 interface Props {
 	href: string;
@@ -11,30 +15,57 @@ interface Props {
 	category?: string;
 	tags?: string[];
 	value?: number;
-	valueLabel?: "Valor" | "Desde";
+	valueLabel?: string;
+	supportedCurrencies: Currency[];
 }
 
 const {
 	href,
 	imageSrc,
 	imageAlt,
-	title,
+	title, //
 	description,
 	category,
 	tags = [],
 	value,
 	valueLabel = "Valor",
+	supportedCurrencies = [],
 } = Astro.props;
 
-const truncatedDescription =
-	description.length > 200
-		? `${description.substring(0, 200)}...`
-		: description;
+log.info("Props recibidas:", {
+	href,
+	imageSrc,
+	imageAlt,
+	title,
+	description,
+	category,
+	tags,
+	value,
+	valueLabel,
+	supportedCurrencies,
+});
 
-// Currency formatting (minimal, cookie-based)
-const selectedCurrency = Astro.cookies.get("currency")?.value || "USD";
+const safeDescription = description || "";
+const truncatedDescription =
+	safeDescription.length > 200
+		? `${safeDescription.substring(0, 200)}...`
+		: safeDescription;
+
+const selectedCurrency = Astro.cookies.get("currency")?.value;
+log.info("Currency selected:", Astro.cookies);
+
 const baseCurrency = "USD";
-const rates: Record<string, number> = { USD: 1, EUR: 0.92 };
+log.info("Base currency:", baseCurrency);
+
+const rates: Record<string, number> = (supportedCurrencies ?? []).reduce(
+	(acc, currency) => {
+		acc[currency.code] = currency.exchangeRate ?? 1;
+		return acc;
+	},
+	{} as Record<string, number>,
+);
+log.info("Exchange rates:", rates);
+
 const formatCurrency = (amount: number, currency: string) => {
 	try {
 		return new Intl.NumberFormat(undefined, {
@@ -47,11 +78,13 @@ const formatCurrency = (amount: number, currency: string) => {
 		return `${symbol}${amount.toLocaleString()}`;
 	}
 };
+
 const convert = (amount: number, from: string, to: string) => {
 	const rFrom = rates[from] ?? 1;
 	const rTo = rates[to] ?? 1;
 	return amount * (rTo / rFrom);
 };
+
 const displayValue =
 	typeof value === "number"
 		? formatCurrency(
@@ -59,35 +92,76 @@ const displayValue =
 				selectedCurrency,
 			)
 		: null;
+log.info("Display value:", displayValue);
 ---
 
-<a href={href} class="group bg-white rounded-lg shadow-lg overflow-hidden transform transition-transform duration-300 hover:-translate-y-2 h-full flex flex-col">
-  <div class="relative pb-[66.66%]"> {/* 3:2 aspect ratio container */}
-    <Imagen
-      src={imageSrc} 
-      alt={imageAlt} 
-      width={600} 
-      height={400} 
-      class="absolute h-full w-full object-cover" 
-    />
-  </div>
-  <div class="p-6 grow flex flex-col">
-    {category && <p class="text-sm text-gray-500 mb-2">{category}</p>}
-    <h3 class="text-xl font-bold text-primary mb-2 group-hover:text-accent transition-colors">{title}</h3>
-    <p class="text-gray-600 text-sm mb-4 grow">{truncatedDescription}</p>
-    
-    {displayValue && (
-      <div class="mb-4">
-        <span class="text-lg font-bold text-accent">{valueLabel}: {displayValue}</span>
-      </div>
-    )}
+<a
+        href={href}
+        class="group bg-white rounded-lg shadow-lg overflow-hidden transform transition-transform duration-300 hover:-translate-y-2 h-full flex flex-col"
+>
+    <!-- Contenedor de imagen con aspect ratio 3:2 -->
+    <div class="relative w-full aspect-[3/2] overflow-hidden">
+        <ImageResource
+                src={imageSrc}
+                alt={imageAlt}
+                width={600}
+                height={400}
+                classes="w-full h-full object-cover"
+                wrapperClasses="w-full h-full"
+        />
+    </div>
 
-    {tags && tags.length > 0 && (
-      <div class="flex flex-wrap gap-2 mt-auto">
-        {tags.map(tag => (
-          <span class="bg-gray-200 text-gray-800 text-xs font-semibold px-2.5 py-0.5 rounded-full">{tag}</span>
-        ))}
-      </div>
-    )}
-  </div>
+    <div class="p-6 grow flex flex-col">
+        {category && <p class="text-sm text-gray-500 mb-2">{category}</p>}
+        <h3
+                class="text-xl font-bold text-primary mb-2 group-hover:text-accent transition-colors"
+        >
+            {title}
+        </h3>
+        <p class="text-gray-600 text-sm mb-4 grow">{truncatedDescription}</p>
+
+        {
+            displayValue && (
+                        <div class="mb-4">
+                <span class="text-lg font-bold text-accent">
+                   {valueLabel}: {displayValue}
+                </span>
+                        </div>
+            )
+        }
+
+        {
+            tags && tags.length > 0 && (
+                        <div class="flex flex-wrap gap-2 mt-auto">
+                            {tags.map((tag) => (
+                                    <span class="bg-gray-200 text-gray-800 text-xs font-semibold px-2.5 py-0.5 rounded-full">
+                      {tag}
+                   </span>
+                            ))}
+                        </div>
+            )
+        }
+    </div>
 </a>
+
+<style>
+    /* Asegurar que el contenedor de imagen no colapse */
+    .aspect-\[3\/2\] {
+        aspect-ratio: 3 / 2;
+    }
+
+    /* Fallback para navegadores antiguos sin soporte de aspect-ratio */
+    @supports not (aspect-ratio: 3 / 2) {
+        .aspect-\[3\/2\] {
+            padding-bottom: 66.66%;
+        }
+
+        .aspect-\[3\/2\] > :global(.image-resource-wrapper) {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+    }
+</style>

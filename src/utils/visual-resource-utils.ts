@@ -11,10 +11,10 @@ import type { ImageMetadata } from "astro";
 // Definir globs para diferentes tipos de recursos
 const assets = import.meta.glob<{ default: ImageMetadata }>("/src/assets/**/*");
 const localImages = import.meta.glob<{ default: ImageMetadata }>(
-	"/src/resources/img/**/*.{jpeg,jpg,png,gif,webp,svg,avif}",
+	"/src/assets/img/**/*.{jpeg,jpg,png,gif,webp,svg,avif}",
 );
 const localVideos = import.meta.glob<{ default: string }>(
-	"/src/resources/vid/**/*.{mp4,webm,ogg,mov,avi}",
+	"/src/assets/vid/**/*.{mp4,webm,ogg,mov,avi}",
 );
 
 const log = logger("VisualResourceUtils");
@@ -160,27 +160,31 @@ async function validateLocalFile(src: string): Promise<ValidationResult> {
 
 	// Generar variaciones de ruta para buscar en diferentes ubicaciones
 	const possibleImgPaths: string[] = [normalizedPath];
-	
+
 	// Si busca en /src/resources/img/, también buscar en /src/assets/img/
 	if (normalizedPath.startsWith("/src/resources/img/")) {
-		const assetsPath = normalizedPath.replace("/src/resources/img/", "/src/assets/img/");
+		const assetsPath = normalizedPath.replace(
+			"/src/resources/img/",
+			"/src/assets/img/",
+		);
 		possibleImgPaths.push(assetsPath);
 	}
-	
+
 	// Si busca en /src/assets/img/, también buscar en /src/resources/img/ (legacy)
 	if (normalizedPath.startsWith("/src/assets/img/")) {
-		const resourcesPath = normalizedPath.replace("/src/assets/img/", "/src/resources/img/");
+		const resourcesPath = normalizedPath.replace(
+			"/src/assets/img/",
+			"/src/resources/img/",
+		);
 		possibleImgPaths.push(resourcesPath);
 	}
-	
+
 	// 1. Verificar en assets glob (general) - busca en /src/assets/**/*
 	for (const p of possibleImgPaths) {
 		if (assets[p]) {
 			try {
 				const mod = await assets[p]();
-				log.info(
-					`[validateLocalFile] ✓ Encontrado en assets: ${p}`,
-				);
+				log.info(`[validateLocalFile] ✓ Encontrado en assets: ${p}`);
 				return {
 					isValid: true,
 					finalSrc: mod.default,
@@ -190,15 +194,13 @@ async function validateLocalFile(src: string): Promise<ValidationResult> {
 			}
 		}
 	}
-	
+
 	// 2. Verificar en /src/resources/img/ (Imágenes legacy/específicas)
 	for (const p of possibleImgPaths) {
 		if (localImages[p]) {
 			try {
 				const mod = await localImages[p]();
-				log.info(
-					`[validateLocalFile] ✓ Encontrado en src (img): ${p}`,
-				);
+				log.info(`[validateLocalFile] ✓ Encontrado en src (img): ${p}`);
 				return {
 					isValid: true,
 					finalSrc: mod.default,
@@ -220,7 +222,9 @@ async function validateLocalFile(src: string): Promise<ValidationResult> {
 			try {
 				const mod = await localVideos[p]();
 				// Para videos, el default suele ser la URL (string)
-				log.info(`[validateLocalFile] ✓ Encontrado en src (vid): ${mod.default}`);
+				log.info(
+					`[validateLocalFile] ✓ Encontrado en src (vid): ${mod.default}`,
+				);
 				return {
 					isValid: true,
 					finalSrc: mod.default,
@@ -294,7 +298,9 @@ export async function validateResource(
 			return result;
 		} catch (error) {
 			const errorMessage =
-				error instanceof Error ? error.message : "Error validando archivo local";
+				error instanceof Error
+					? error.message
+					: "Error validando archivo local";
 			const result = {
 				isValid: false,
 				error: errorMessage,

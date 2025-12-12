@@ -1,7 +1,20 @@
 ---
-interface Props {
-	lang: string;
-}
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import UnderConstruction from "@/components/pages/UnderConstruction.astro";
+import type { SiteConfig } from "@/types/config";
+import { api } from "@/services/api.ts";
 
-const { lang = "en" } = Astro.props;
+export const prerender = false;
+
+const lang = "en";
+const config = (await api.fetch("config", { params: { lang } })) as SiteConfig;
 ---
+
+<BaseLayout titleKey="nav.faq" lang={lang} config={config}>
+    <UnderConstruction 
+        title="Frequently Asked Questions" 
+        message="We are compiling the most common questions to help you better. Coming soon."
+        backPath="/en"
+        backLabel="Back to Home"
+    />
+</BaseLayout>

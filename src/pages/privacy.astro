@@ -1,7 +1,20 @@
 ---
-interface Props {
-	lang: string;
-}
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import UnderConstruction from "@/components/pages/UnderConstruction.astro";
+import type { SiteConfig } from "@/types/config";
+import { api } from "@/services/api.ts";
 
-const { lang } = Astro.props;
+export const prerender = false;
+
+const lang = "es";
+const config = (await api.fetch("config", { params: { lang } })) as SiteConfig;
 ---
+
+<BaseLayout titleKey="footer.privacy" lang={lang} config={config}>
+    <UnderConstruction 
+        title="Política de Privacidad" 
+        message="Tu privacidad es importante para nosotros. Estamos redactando los detalles de protección de datos."
+        backPath="/"
+        backLabel="Volver al Inicio"
+    />
+</BaseLayout>

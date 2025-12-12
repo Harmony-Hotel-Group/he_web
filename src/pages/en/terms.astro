@@ -1,0 +1,20 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import UnderConstruction from "@/components/pages/UnderConstruction.astro";
+import type { SiteConfig } from "@/types/config";
+import { api } from "@/services/api.ts";
+
+export const prerender = false;
+
+const lang = "en";
+const config = (await api.fetch("config", { params: { lang } })) as SiteConfig;
+---
+
+<BaseLayout titleKey="footer.terms" lang={lang} config={config}>
+    <UnderConstruction 
+        title="Terms & Conditions" 
+        message="We are reviewing our legal terms to ensure clarity and transparency."
+        backPath="/en"
+        backLabel="Back to Home"
+    />
+</BaseLayout>

@@ -34,12 +34,5 @@ export default defineConfig({
 					webAnalytics: { enabled: true },
 				}),
 			}),
-	// adapter: isDevEnvironment
-	// 	? node({
-	// 			mode: "static",
-	// 		})
-	// 	: vercel({
-	// 			webAnalytics: { enabled: true },
-	// 		}),
-	output: "static",
+	output: "server",
 });

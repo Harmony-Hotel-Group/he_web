@@ -13,96 +13,126 @@ import type { SiteConfig } from "@/types/config";
 
 const log = logger("Index");
 
-// En el servidor, el idioma se determina por la cookie. 'es' es el valor por defecto.
-const lang = Astro.cookies.get("lang")?.value || "es";
-log.info("Idioma detectado en el servidor:", lang);
+export const prerender = false;
 
-if (lang !== "en") {
-	return Astro.redirect(`/${lang}`, 302);
-}
-
+const lang = "es"; // La página raíz siempre se renderiza en español
 const config = (await api.fetch("config", { params: { lang } })) as SiteConfig;
-//log.info("Datos de configuración (config) cargados:", config);
+log.info("Datos de configuración (config) cargados:", config);
 
 const carouselResources = config?.carouselResources || [];
 log.info("Recursos para el carousel:", carouselResources);
 ---
 
+<script>
+    import { getCookie, setCookie } from "@/utils/cookies.ts";
+
+    // Redirección de idioma en el lado del cliente
+    const lang = getCookie("lang") || "es";
+    if (lang !== "es" && window.location.pathname === "/") {
+        setCookie("lang", lang, { days: 365 });
+        window.location.href = `/${lang}`;
+    }
+</script>
+
 <BaseLayout titleKey="site.title" lang={lang} config={config}>
     <!-- H1 accesible para SEO/a11y -->
-    <h1 class="sr-only">{config?.aboutUs?.mainTitle?.[lang] ?? config?.siteName ?? 'Home'}</h1>
+    <h1 class="sr-only">
+        {config?.aboutUs?.mainTitle?.[lang] ?? config?.siteName ?? "Home"}
+    </h1>
     <div class="relative w-full min-h-[100dvh] overflow-hidden">
-        <HomeHero resources={carouselResources}/>
+        <HomeHero resources={carouselResources} />
         <!-- Overlay de degradado para legibilidad del contenido superpuesto -->
         <!--<div class="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/20"></div>-->
         <div class="absolute inset-0 z-10 flex items-center justify-center p-4">
             <div class="w-full max-w-6xl px-4 sm:px-6">
-                <BookingBar lang={lang} config={config}/>
+                <BookingBar lang={lang} config={config} />
             </div>
         </div>
     </div>
 
     <div>
         <!-- About Us Section -->
-        {config?.aboutUs && (
+        {
+            config?.aboutUs && (
                 <section class="py-20 md:py-24">
                     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-14 items-center">
                             <div class="text-center md:text-left">
-                                <h3 class="text-base md:text-lg font-semibold text-accent mb-2 tracking-wide">{config.aboutUs.subtitle[lang]}</h3>
-                                <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-primary mb-4">{config.aboutUs.mainTitle[lang]}</h2>
-                                <p class="text-gray-600 leading-relaxed mb-4 text-base md:text-lg">{config.aboutUs.welcomeParagraph[lang]}</p>
-                                <p class="text-gray-600 leading-relaxed text-base md:text-lg">{config.aboutUs.commitmentParagraph[lang]}</p>
+                                <h3 class="text-base md:text-lg font-semibold text-accent mb-2 tracking-wide">
+                                    {config.aboutUs.subtitle[lang]}
+                                </h3>
+                                <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-primary mb-4">
+                                    {config.aboutUs.mainTitle[lang]}
+                                </h2>
+                                <p class="text-gray-600 leading-relaxed mb-4 text-base md:text-lg">
+                                    {config.aboutUs.welcomeParagraph[lang]}
+                                </p>
+                                <p class="text-gray-600 leading-relaxed text-base md:text-lg">
+                                    {config.aboutUs.commitmentParagraph[lang]}
+                                </p>
                             </div>
                             <div>
-                                <PhotoCollage images={config.aboutUs.images}/>
+                                <PhotoCollage images={config.aboutUs.images} />
                             </div>
                         </div>
                     </div>
                 </section>
-        )}
+            )
+        }
 
         <!-- Sections -->
-        {config?.roomTypes && (
+        {
+            config?.roomTypes && (
                 <HomeSection
-                        lang={lang}
-                        titleKey="nav.rooms"
-                        items={config.roomTypes}
-                        baseHref="/rooms"
-                        bgColorClass="bg-gray-100"
-                        maxItems={4}
+                    lang={lang}
+                    titleKey="nav.rooms"
+                    items={config.roomTypes}
+                    supportedCurrencies={config.supportedCurrencies || []}
+                    baseHref="/rooms"
+                    bgColorClass="bg-gray-100"
+                    maxItems={4}
                 />
-        )}
+            )
+        }
 
-        {config?.destinationCategories && (
+        {
+            config?.destinationCategories && (
                 <HomeSection
-                        lang={lang}
-                        titleKey="nav.destinations"
-                        items={config.destinationCategories}
-                        baseHref="/destinations"
-                        maxItems={4}
+                    lang={lang}
+                    titleKey="nav.destinations"
+                    items={config.destinationCategories}
+                    supportedCurrencies={config.supportedCurrencies || []}
+                    baseHref="/destinations"
+                    maxItems={4}
                 />
-        )}
+            )
+        }
 
-        {config?.gastronomyCategories && (
+        {
+            config?.gastronomyCategories && (
                 <HomeSection
-                        lang={lang}
-                        titleKey="nav.gastronomy"
-                        items={config.gastronomyCategories}
-                        baseHref="/gastronomy"
-                        bgColorClass="bg-gray-100"
-                        maxItems={4}
+                    lang={lang}
+                    titleKey="nav.gastronomy"
+                    items={config.gastronomyCategories}
+                    supportedCurrencies={config.supportedCurrencies || []}
+                    baseHref="/gastronomy"
+                    bgColorClass="bg-gray-100"
+                    maxItems={4}
                 />
-        )}
+            )
+        }
 
-        {config?.tourCategories && (
+        {
+            config?.tourCategories && (
                 <HomeSection
-                        lang={lang}
-                        titleKey="nav.tours"
-                        items={config.tourCategories}
-                        baseHref="/tours"
-                        maxItems={4}
+                    lang={lang}
+                    titleKey="nav.tours"
+                    items={config.tourCategories}
+                    supportedCurrencies={config.supportedCurrencies || []}
+                    baseHref="/tours"
+                    maxItems={4}
                 />
-        )}
+            )
+        }
     </div>
 </BaseLayout>

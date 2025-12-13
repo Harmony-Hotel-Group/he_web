@@ -15,7 +15,7 @@ const log = logger("Index");
 
 export const prerender = false;
 
-const lang = "es";
+const lang = "en"; // La página raíz siempre se renderiza en español
 const config = (await api.fetch("config", { params: { lang } })) as SiteConfig;
 log.info("Datos de configuración (config) cargados:", config);
 
@@ -24,12 +24,11 @@ log.info("Recursos para el carousel:", carouselResources);
 ---
 
 <script>
-    import { DEFAULT_LANG } from "@/i18n/translation";
     import { getCookie, setCookie } from "@/utils/cookies.ts";
 
     // Redirección de idioma en el lado del cliente
-    const lang = getCookie("lang") || DEFAULT_LANG;
-    if (lang !== DEFAULT_LANG && window.location.pathname === "/") {
+    const lang = getCookie("lang") || "es";
+    if (lang !== "es" && window.location.pathname === "/") {
         setCookie("lang", lang, { days: 365 });
         window.location.href = `/${lang}`;
     }
@@ -91,7 +90,7 @@ log.info("Recursos para el carousel:", carouselResources);
                     supportedCurrencies={config.supportedCurrencies || []}
                     baseHref="/rooms"
                     bgColorClass="bg-gray-100"
-                    maxItems={0}
+                    maxItems={4}
                 />
             )
         }
@@ -104,7 +103,7 @@ log.info("Recursos para el carousel:", carouselResources);
                     items={config.destinationCategories}
                     supportedCurrencies={config.supportedCurrencies || []}
                     baseHref="/destinations"
-                    maxItems={0}
+                    maxItems={4}
                 />
             )
         }
@@ -118,7 +117,7 @@ log.info("Recursos para el carousel:", carouselResources);
                     supportedCurrencies={config.supportedCurrencies || []}
                     baseHref="/gastronomy"
                     bgColorClass="bg-gray-100"
-                    maxItems={0}
+                    maxItems={4}
                 />
             )
         }
@@ -131,7 +130,7 @@ log.info("Recursos para el carousel:", carouselResources);
                     items={config.tourCategories}
                     supportedCurrencies={config.supportedCurrencies || []}
                     baseHref="/tours"
-                    maxItems={0}
+                    maxItems={4}
                 />
             )
         }

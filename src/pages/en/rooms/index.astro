@@ -1,5 +1,121 @@
 ---
-import RoomIndex from "@/pages/rooms/index.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { api } from "@/services/api";
+import type { SiteConfig } from "@/types/config";
+import type { Room } from "@/types/rooms";
+
+// Determinar idioma basado en URL
+const lang = "en";
+
+// Multi-fetch de configuración y habitaciones
+// Se hace cast del resultado para tener tipado fuerte en el destructuring
+const { config, rooms } = (await api.multiFetch({
+  config: { params: { lang } },
+  rooms: { params: { lang } },
+})) as { config: SiteConfig; rooms: Room[] | Error | null };
+
+// Validación de seguridad para habitaciones
+const safeRooms = Array.isArray(rooms) ? rooms : [];
+
+// Formateador de precio
+const formatPrice = (price: number, currency: string) => {
+  return new Intl.NumberFormat(lang === "en" ? "en-US" : "es-ES", {
+    style: "currency",
+    currency: currency,
+    minimumFractionDigits: 0,
+  }).format(price);
+};
 ---
 
-<RoomIndex />
+<BaseLayout titleKey="nav.rooms" lang={lang} config={config}>
+  <!-- Hero Section -->
+  <section class="relative h-[50vh] min-h-[400px] flex items-center justify-center overflow-hidden">
+    <div class="absolute inset-0 bg-gray-900/40 z-10"></div>
+    <img 
+      src="/images/headers/rooms-header.jpg" 
+      alt="Luxury Rooms" 
+      class="absolute inset-0 w-full h-full object-cover"
+      onError="this.src='https://images.unsplash.com/photo-1578683010236-d716f9a3f461?q=80&w=2070&auto=format&fit=crop'"
+    />
+    <div class="relative z-20 text-center px-4 max-w-4xl mx-auto">
+      <h1 class="text-4xl md:text-5xl lg:text-6xl font-serif text-white font-bold mb-4 drop-shadow-lg tracking-wide">
+        {lang === 'es' ? 'Nuestras Habitaciones' : 'Our Rooms'}
+      </h1>
+      <p class="text-lg md:text-xl text-gray-100 font-light max-w-2xl mx-auto drop-shadow-md">
+        {lang === 'es' 
+          ? 'Descubre el confort y la elegancia en cada rincón. Espacios diseñados para tu descanso absoluto.' 
+          : 'Discover comfort and elegance in every corner. Spaces designed for your absolute rest.'}
+      </p>
+    </div>
+  </section>
+
+  <!-- Rooms List -->
+  <section class="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
+    <div class="max-w-7xl mx-auto">
+      {safeRooms.length > 0 ? (
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12">
+          {safeRooms.map((room) => (
+            <article class="group relative bg-white rounded-sm shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col h-full border border-gray-100">
+              <!-- Image -->
+              <div class="relative overflow-hidden aspect-[4/3]">
+                <img 
+                  src={room.images.find(img => img.frontpage)?.src || room.images[0]?.src} 
+                  alt={room.images[0]?.alt[lang] || room.name[lang]}
+                  class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  loading="lazy"
+                />
+                <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-4 py-1.5 text-primary font-serif font-bold text-lg shadow-sm">
+                  {formatPrice(room.pricePerNight, room.currency)} <span class="text-xs font-sans font-normal text-gray-500">/ {lang === 'es' ? 'noche' : 'night'}</span>
+                </div>
+              </div>
+
+              <!-- Content -->
+              <div class="p-6 flex flex-col flex-grow">
+                <div class="mb-4">
+                  <span class="text-xs font-bold tracking-widest text-accent uppercase">{room.type[lang]}</span>
+                  <h3 class="text-2xl font-serif text-primary mt-2 mb-3 group-hover:text-accent transition-colors">
+                    <a href={`/rooms/${room.id}`}>
+                      {room.name[lang]}
+                    </a>
+                  </h3>
+                  <p class="text-gray-600 line-clamp-3 text-sm leading-relaxed">
+                    {room.description[lang]}
+                  </p>
+                </div>
+
+                <!-- Amenities Preview -->
+                <div class="mt-auto pt-6 border-t border-gray-100">
+                  <div class="flex flex-wrap gap-2 mb-6">
+                    {(room.amenities?.[lang] || []).slice(0, 3).map((amenity) => (
+                      <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                        {amenity}
+                      </span>
+                    ))}
+                    {(room.amenities?.[lang] || []).length > 3 && (
+                      <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-500">
+                        +{(room.amenities?.[lang] || []).length - 3}
+                      </span>
+                    )}
+                  </div>
+
+                  <a 
+                    href={`/rooms/${room.id}`}
+                    class="block w-full text-center bg-primary text-white py-3 px-4 uppercase tracking-widest text-xs font-bold hover:bg-accent transition-colors duration-300"
+                  >
+                    {lang === 'es' ? 'Ver Detalles' : 'View Details'}
+                  </a>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+      ) : (
+        <div class="text-center py-20">
+          <h2 class="text-2xl font-serif text-gray-600">
+            {lang === 'es' ? 'No hay habitaciones disponibles en este momento.' : 'No rooms available at the moment.'}
+          </h2>
+        </div>
+      )}
+    </div>
+  </section>
+</BaseLayout>

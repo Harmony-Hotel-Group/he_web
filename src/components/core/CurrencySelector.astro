@@ -2,14 +2,12 @@
 // src/components/core/CurrencySelector.astro
 import { logger } from "@/services/logger.ts";
 import type { Currency } from "@/types/config";
-import Imagen from "../atoms/Imagen.astro";
 
 const log = logger("CurrencySelector");
 
-//import eurFlag from "@/assets/img/currents/eur.svg";
-//import gbpFlag from "@/assets/img/currents/gbp.svg";
-// Importar las imágenes de forma estática
-//import usdFlag from "@/assets/img/currents/usd.svg";
+import eurFlag from "@/assets/img/currents/eur.svg";
+import gbpFlag from "@/assets/img/currents/gbp.svg";
+import usdFlag from "@/assets/img/currents/usd.svg";
 
 interface Props {
     supportedCurrencies?: Currency[];
@@ -17,24 +15,24 @@ interface Props {
 
 const { supportedCurrencies } = Astro.props;
 
-//const flagMap: Record<string, string> = {
-//    USD: "",
-//    EUR: "",
-//    GBP: "",
-//};
+const flagMap: Record<string, string> = {
+    USD: usdFlag.src,
+    EUR: eurFlag.src,
+    GBP: gbpFlag.src,
+};
 
 // Definir monedas disponibles
 let currencies = [
-	{ code: "USD", symbol: "$", image: "src/assets/img/currencies/USD.svg" },
-    { code: "EUR", symbol: "€", image: "src/assets/img/currencies/EUR.svg" },
-    { code: "GBP", symbol: "£", image: "src/assets/img/currencies/GBP.svg" },
+    { code: "USD", symbol: "$", image: usdFlag.src },
+    { code: "EUR", symbol: "€", image: eurFlag.src },
+    { code: "GBP", symbol: "£", image: gbpFlag.src },
 ];
 
 if (supportedCurrencies && supportedCurrencies.length > 0) {
     currencies = supportedCurrencies.map((c) => ({
         code: c.code,
         symbol: c.symbol,
-        image: c.image,
+        image: flagMap[c.code] || usdFlag.src,
         exchangeRate: c.exchangeRate,
     }));
 }
@@ -56,12 +54,11 @@ log.info(
         aria-haspopup="true"
         aria-expanded="false"
     >
-        <Imagen
+        <img
+            id="currency-switcher-flag"
             src={defaultCurrency.image}
             alt={`${defaultCurrency.code} symbol`}
-            id="currency-switcher-flag"
-            width={5}
-            height={5}
+            class="w-5 h-5"
         />
         <span class="hidden ml-1" id="currency-switcher-code">
             {defaultCurrency.code}
@@ -95,11 +92,10 @@ log.info(
                     data-currency-symbol={currency.symbol}
                     data-currency-image={currency.image}
                 >
-                    <Imagen
+                    <img
                         src={currency.image}
                         alt={`${currency.code} symbol`}
-                        width={20}
-                        height={20}
+                        class="h-4 w-4"
                     />
                     <span>{currency.code}</span>
                 </button>

@@ -610,19 +610,19 @@
 		{
 			"code": "USD",
 			"symbol": "$",
-			"image": "/src/assets/img/currencies/USD.svg",
+			"image": "/currents/usd.svg",
 			"exchangeRate": 1
 		},
 		{
 			"code": "EUR",
 			"symbol": "€",
-			"image": "/src/assets/img/currencies/EUR.svg",
+			"image": "/currents/eur.svg",
 			"exchangeRate": 0.95
 		},
 		{
 			"code": "GBP",
 			"symbol": "£",
-			"image": "/src/assets/img/currencies/GBP.svg",
+			"image": "/currents/gbp.svg",
 			"exchangeRate": 0.75
 		}
 	]

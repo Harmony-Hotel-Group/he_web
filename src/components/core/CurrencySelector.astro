@@ -1,89 +1,114 @@
 ---
-// src/components/core/CurrencySwitcher.astro
+// src/components/core/CurrencySelector.astro
 import { logger } from "@/services/logger.ts";
+import type { Currency } from "@/types/config";
+import Imagen from "../atoms/Imagen.astro";
 
-const log = logger("CurrencySwitcher");
+const log = logger("CurrencySelector");
 
-import eurFlag from "@/assets/img/currents/eur.svg";
-import gbpFlag from "@/assets/img/currents/gbp.svg";
+//import eurFlag from "@/assets/img/currents/eur.svg";
+//import gbpFlag from "@/assets/img/currents/gbp.svg";
 // Importar las imágenes de forma estática
-import usdFlag from "@/assets/img/currents/usd.svg";
+//import usdFlag from "@/assets/img/currents/usd.svg";
+
+interface Props {
+    supportedCurrencies?: Currency[];
+}
+
+const { supportedCurrencies } = Astro.props;
+
+//const flagMap: Record<string, string> = {
+//    USD: "",
+//    EUR: "",
+//    GBP: "",
+//};
 
 // Definir monedas disponibles
-const currencies = [
-	{ code: "USD", symbol: "$", image: usdFlag.src },
-	{ code: "EUR", symbol: "€", image: eurFlag.src },
-	{ code: "GBP", symbol: "£", image: gbpFlag.src },
+let currencies = [
+	{ code: "USD", symbol: "$", image: "src/assets/img/currencies/USD.svg" },
+    { code: "EUR", symbol: "€", image: "src/assets/img/currencies/EUR.svg" },
+    { code: "GBP", symbol: "£", image: "src/assets/img/currencies/GBP.svg" },
 ];
+
+if (supportedCurrencies && supportedCurrencies.length > 0) {
+    currencies = supportedCurrencies.map((c) => ({
+        code: c.code,
+        symbol: c.symbol,
+        image: c.image,
+        exchangeRate: c.exchangeRate,
+    }));
+}
 
 const defaultCurrency = currencies[0]; // USD por defecto
 
 log.info(
-	"🟢 [SSR] CurrencySwitcher cargado con monedas:",
-	currencies.map((c) => c.code),
+    "🟢 [SSR] CurrencySelector cargado con monedas:",
+    currencies.map((c) => c.code),
 );
 ---
 
 <div class="relative" id="currency-switcher-container">
     <!-- Botón principal -->
     <button
-            type="button"
-            id="currency-switcher-button"
-            class="flex items-center bg-transparent text-white py-1 px-2 rounded-md cursor-pointer focus:outline-none text-sm"
-            aria-haspopup="true"
-            aria-expanded="false"
+        type="button"
+        id="currency-switcher-button"
+        class="flex items-center bg-transparent text-white py-1 px-2 rounded-md cursor-pointer focus:outline-none text-sm"
+        aria-haspopup="true"
+        aria-expanded="false"
     >
-        <img
-                src={defaultCurrency.image}
-                alt={`${defaultCurrency.code} symbol`}
-                class="h-5 w-5"
-                id="currency-switcher-flag"
+        <Imagen
+            src={defaultCurrency.image}
+            alt={`${defaultCurrency.code} symbol`}
+            id="currency-switcher-flag"
+            width={5}
+            height={5}
         />
         <span class="hidden ml-1" id="currency-switcher-code">
             {defaultCurrency.code}
         </span>
         <svg
-                class="w-3 h-3 ml-1 hidden"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
+            class="w-3 h-3 ml-1 hidden"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
         >
             <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M19 9l-7 7-7-7"
-            ></path>
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M19 9l-7 7-7-7"></path>
         </svg>
     </button>
 
     <!-- Dropdown -->
     <div
-            id="currency-switcher-dropdown"
-            class="absolute right-0 mt-2 w-24 bg-gray-700 rounded-md shadow-lg z-20 hidden"
+        id="currency-switcher-dropdown"
+        class="absolute right-0 mt-2 w-24 bg-gray-700 rounded-md shadow-lg z-20 hidden"
     >
-        {currencies.map((currency) => (
+        {
+            currencies.map((currency) => (
                 <button
-                        type="button"
-                        class="currency-option flex items-center space-x-1 w-full text-left px-3 py-2 text-sm text-white hover:bg-gray-600"
-                        data-currency-code={currency.code}
-                        data-currency-symbol={currency.symbol}
-                        data-currency-image={currency.image}
+                    type="button"
+                    class="currency-option flex items-center space-x-1 w-full text-left px-3 py-2 text-sm text-white hover:bg-gray-600"
+                    data-currency-code={currency.code}
+                    data-currency-symbol={currency.symbol}
+                    data-currency-image={currency.image}
                 >
-                    <img
-                            src={currency.image}
-                            alt={`${currency.code} symbol`}
-                            class="h-4 w-4"
+                    <Imagen
+                        src={currency.image}
+                        alt={`${currency.code} symbol`}
+                        width={20}
+                        height={20}
                     />
                     <span>{currency.code}</span>
                 </button>
-        ))}
+            ))
+        }
     </div>
 </div>
 
 <script>
-
     // Definición de tipos
     type Currency = {
         code: string;
@@ -92,76 +117,90 @@ log.info(
     };
 
     // Esta función se ejecutará cuando el DOM esté listo
-    document.addEventListener('DOMContentLoaded', async () => {
+    document.addEventListener("DOMContentLoaded", async () => {
         // Importación dinámica: La clave para que funcione con un solo archivo.
-        const { logger } = await import('@/services/logger.ts');
+        const { logger } = await import("@/services/logger.ts");
         const log = logger("CurrencySwitcher:Client");
 
         log.info("🟢 [CLIENT] CurrencySwitcher montado");
 
-    // Función para obtener moneda desde localStorage
-    function getStoredCurrency(): string {
-        if (typeof localStorage === 'undefined') return 'USD';
-        return localStorage.getItem('currency') || 'USD';
-    }
-
-    function storeCurrency(currencyCode: string): void {
-        if (typeof localStorage === 'undefined') return;
-        localStorage.setItem('currency', currencyCode);
-        log.info('🟢 [CLIENT] Moneda guardada en localStorage:', currencyCode);
-    }
-
-    // Función para obtener datos de moneda desde el DOM
-    function getCurrencyData(code: string): Currency | null {
-        const button = document.querySelector(
-            `.currency-option[data-currency-code="${code}"]`
-        ) as HTMLButtonElement | null;
-
-        if (!button) return null;
-
-        return {
-            code: button.dataset.currencyCode || 'USD',
-            symbol: button.dataset.currencySymbol || '$',
-            image: button.dataset.currencyImage || '',
-        };
-    }
-
-    // Función para actualizar la UI con la moneda seleccionada
-    function updateCurrencyUI(currency: Currency): void {
-        const flagEl = document.getElementById('currency-switcher-flag') as HTMLImageElement | null;
-        const codeEl = document.getElementById('currency-switcher-code') as HTMLSpanElement | null;
-
-        if (flagEl && currency.image) {
-            flagEl.src = currency.image;
-            flagEl.alt = `${currency.code} symbol`;
+        // Función para obtener moneda desde localStorage
+        function getStoredCurrency(): string {
+            if (typeof localStorage === "undefined") return "USD";
+            return localStorage.getItem("currency") || "USD";
         }
 
-        if (codeEl) {
-            codeEl.textContent = currency.code;
+        function storeCurrency(currencyCode: string): void {
+            if (typeof localStorage === "undefined") return;
+            localStorage.setItem("currency", currencyCode);
+            log.info(
+                "🟢 [CLIENT] Moneda guardada en localStorage:",
+                currencyCode,
+            );
         }
 
-        log.info('🟢 [CLIENT] UI actualizada con moneda:', currency.code);
-    }
+        // Función para obtener datos de moneda desde el DOM
+        function getCurrencyData(code: string): Currency | null {
+            const button = document.querySelector(
+                `.currency-option[data-currency-code="${code}"]`,
+            ) as HTMLButtonElement | null;
 
-    // Función para actualizar todos los precios en la página
-    function updatePrices(newCurrencyCode: string): void {
-        // Dispatch custom event para que otros componentes escuchen
-        const event = new CustomEvent('currencyChanged', {
-            detail: { currency: newCurrencyCode },
-            bubbles: true,
-            composed: true
-        });
-        document.dispatchEvent(event);
+            if (!button) return null;
 
-        log.info('🟢 [CLIENT] Evento currencyChanged disparado:', newCurrencyCode);
-    }
+            return {
+                code: button.dataset.currencyCode || "USD",
+                symbol: button.dataset.currencySymbol || "$",
+                image: button.dataset.currencyImage || "",
+            };
+        }
 
-        const container = document.getElementById('currency-switcher-container');
-        const button = document.getElementById('currency-switcher-button');
-        const dropdown = document.getElementById('currency-switcher-dropdown');
+        // Función para actualizar la UI con la moneda seleccionada
+        function updateCurrencyUI(currency: Currency): void {
+            const flagEl = document.getElementById(
+                "currency-switcher-flag",
+            ) as HTMLImageElement | null;
+            const codeEl = document.getElementById(
+                "currency-switcher-code",
+            ) as HTMLSpanElement | null;
+
+            if (flagEl && currency.image) {
+                flagEl.src = currency.image;
+                flagEl.alt = `${currency.code} symbol`;
+            }
+
+            if (codeEl) {
+                codeEl.textContent = currency.code;
+            }
+
+            log.info("🟢 [CLIENT] UI actualizada con moneda:", currency.code);
+        }
+
+        // Función para actualizar todos los precios en la página
+        function updatePrices(newCurrencyCode: string): void {
+            // Dispatch custom event para que otros componentes escuchen
+            const event = new CustomEvent("currencyChanged", {
+                detail: { currency: newCurrencyCode },
+                bubbles: true,
+                composed: true,
+            });
+            document.dispatchEvent(event);
+
+            log.info(
+                "🟢 [CLIENT] Evento currencyChanged disparado:",
+                newCurrencyCode,
+            );
+        }
+
+        const container = document.getElementById(
+            "currency-switcher-container",
+        );
+        const button = document.getElementById("currency-switcher-button");
+        const dropdown = document.getElementById("currency-switcher-dropdown");
 
         if (!container || !button || !dropdown) {
-            log.error("🔴 [CLIENT] Elementos del CurrencySwitcher no encontrados");
+            log.error(
+                "🔴 [CLIENT] Elementos del CurrencySwitcher no encontrados",
+            );
             return;
         }
 
@@ -176,34 +215,36 @@ log.info(
         }
 
         // Toggle del dropdown
-        button.addEventListener('click', (e) => {
+        button.addEventListener("click", (e) => {
             e.stopPropagation();
-            const isHidden = dropdown.classList.toggle('hidden');
-            button.setAttribute('aria-expanded', String(!isHidden));
+            const isHidden = dropdown.classList.toggle("hidden");
+            button.setAttribute("aria-expanded", String(!isHidden));
             log.info("🟠 Toggle dropdown:", !isHidden ? "abierto" : "cerrado");
         });
 
         // Cerrar dropdown al hacer click fuera
-        document.addEventListener('click', (e) => {
+        document.addEventListener("click", (e) => {
             const target = e.target as HTMLElement;
             if (!container.contains(target)) {
-                if (!dropdown.classList.contains('hidden')) {
-                    dropdown.classList.add('hidden');
-                    button.setAttribute('aria-expanded', 'false');
+                if (!dropdown.classList.contains("hidden")) {
+                    dropdown.classList.add("hidden");
+                    button.setAttribute("aria-expanded", "false");
                     log.info("🟠 Dropdown cerrado por click externo");
                 }
             }
         });
 
         // Manejar cambio de moneda
-        const currencyButtons = dropdown.querySelectorAll('.currency-option') as NodeListOf<HTMLButtonElement>;
+        const currencyButtons = dropdown.querySelectorAll(
+            ".currency-option",
+        ) as NodeListOf<HTMLButtonElement>;
 
-        currencyButtons.forEach(currencyButton => {
-            currencyButton.addEventListener('click', () => {
+        currencyButtons.forEach((currencyButton) => {
+            currencyButton.addEventListener("click", () => {
                 const newCurrencyCode = currencyButton.dataset.currencyCode;
 
                 if (!newCurrencyCode) {
-                    log.warn('⚠️ Código de moneda inválido');
+                    log.warn("⚠️ Código de moneda inválido");
                     return;
                 }
 
@@ -212,7 +253,7 @@ log.info(
                 const newCurrency = getCurrencyData(newCurrencyCode);
 
                 if (!newCurrency) {
-                    log.error('🔴 No se pudieron obtener datos de la moneda');
+                    log.error("🔴 No se pudieron obtener datos de la moneda");
                     return;
                 }
 
@@ -223,8 +264,8 @@ log.info(
                 storeCurrency(newCurrencyCode);
 
                 // Cerrar dropdown
-                dropdown.classList.add('hidden');
-                button.setAttribute('aria-expanded', 'false');
+                dropdown.classList.add("hidden");
+                button.setAttribute("aria-expanded", "false");
 
                 // Actualizar precios
                 updatePrices(newCurrencyCode);

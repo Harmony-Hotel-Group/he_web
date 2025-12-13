@@ -7,8 +7,8 @@ import { Translations } from "@/i18n/translation.ts";
 import type { SiteConfig } from "@/types/config";
 
 interface Props {
-	lang: string;
-	config?: SiteConfig;
+    lang: string;
+    config?: SiteConfig;
 }
 
 const { config, lang } = Astro.props;
@@ -21,7 +21,11 @@ const t = Translations(lang);
         <!-- Left: Logo -->
         <div class="shrink-0 z-50">
             <a href="/" class="flex items-center space-x-2">
-                <img src="/favicon.png" alt="MiLogo" class="h-16 w-auto transition-transform hover:scale-105 duration-500"/>
+                <img
+                    src="/favicon.png"
+                    alt="MiLogo"
+                    class="h-16 w-auto transition-transform hover:scale-105 duration-500"
+                />
             </a>
         </div>
 
@@ -29,115 +33,211 @@ const t = Translations(lang);
         <div class="hidden lg:flex justify-center items-center space-x-8">
             <!-- Rooms Dropdown Container -->
             <div id="rooms-nav-container" class="relative group">
-                <a href="/rooms" class="px-2 py-2 text-sm font-serif uppercase tracking-widest hover:text-accent transition-colors flex items-center gap-1 group-hover:text-accent">
-                     {t('nav.rooms')}
-                    <svg class="w-3 h-3 transition-transform group-hover:rotate-180 duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                         xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                <a
+                    href="/rooms"
+                    class="px-2 py-2 text-sm font-serif uppercase tracking-widest hover:text-accent transition-colors flex items-center gap-1 group-hover:text-accent"
+                >
+                    {t("nav.rooms")}
+                    <svg
+                        class="w-3 h-3 transition-transform group-hover:rotate-180 duration-300"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M19 9l-7 7-7-7"></path>
                     </svg>
                 </a>
                 <!-- Dropdown Menu -->
-                {config?.roomTypes && (
-                        <div id="rooms-dropdown"
-                             class="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-56 bg-primary/95 backdrop-blur-md rounded-sm border-t-2 border-accent shadow-xl z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top"> 
-                            {config.roomTypes.map(roomType => (
-                                    <a href={`/rooms/${roomType.id}`}
-                                       class="block px-6 py-3 text-sm font-serif tracking-wide text-white/90 hover:bg-accent hover:text-white transition-colors border-b border-white/5 last:border-0">
-                                        {roomType.name?.[lang] ?? roomType.name.es}
-                                    </a>
+                {
+                    config?.roomTypes && (
+                        <div
+                            id="rooms-dropdown"
+                            class="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-56 bg-primary/95 backdrop-blur-md rounded-sm border-t-2 border-accent shadow-xl z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top"
+                        >
+                            {config.roomTypes.map((roomType) => (
+                                <a
+                                    href={`/rooms/${roomType.id}`}
+                                    class="block px-6 py-3 text-sm font-serif tracking-wide text-white/90 hover:bg-accent hover:text-white transition-colors border-b border-white/5 last:border-0"
+                                >
+                                    {roomType.name?.[lang] ?? roomType.name.es}
+                                </a>
                             ))}
                         </div>
-                )}
+                    )
+                }
             </div>
 
             <!-- Destinations Dropdown Container -->
             <div id="destinations-nav-container" class="relative group">
-                <a href="/destinations" class="px-2 py-2 text-sm font-serif uppercase tracking-widest hover:text-accent transition-colors flex items-center gap-1 group-hover:text-accent">
-                     {t('nav.destinations')}
-                     <svg class="w-3 h-3 transition-transform group-hover:rotate-180 duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                         xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                <a
+                    href="/destinations"
+                    class="px-2 py-2 text-sm font-serif uppercase tracking-widest hover:text-accent transition-colors flex items-center gap-1 group-hover:text-accent"
+                >
+                    {t("nav.destinations")}
+                    <svg
+                        class="w-3 h-3 transition-transform group-hover:rotate-180 duration-300"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M19 9l-7 7-7-7"></path>
                     </svg>
                 </a>
-                {config?.destinationCategories && (
-                        <div id="destinations-dropdown"
-                             class="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-56 bg-primary/95 backdrop-blur-md rounded-sm border-t-2 border-accent shadow-xl z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top">
-                            {config.destinationCategories.map(category => (
-                                    <a href={`/destinations/${category.id}`}
-                                       class="block px-6 py-3 text-sm font-serif tracking-wide text-white/90 hover:bg-accent hover:text-white transition-colors border-b border-white/5 last:border-0">
-                                        {category.name?.[lang] ?? category.name.es}
-                                    </a>
+                {
+                    config?.destinationCategories && (
+                        <div
+                            id="destinations-dropdown"
+                            class="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-56 bg-primary/95 backdrop-blur-md rounded-sm border-t-2 border-accent shadow-xl z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top"
+                        >
+                            {config.destinationCategories.map((category) => (
+                                <a
+                                    href={`/destinations/${category.id}`}
+                                    class="block px-6 py-3 text-sm font-serif tracking-wide text-white/90 hover:bg-accent hover:text-white transition-colors border-b border-white/5 last:border-0"
+                                >
+                                    {category.name?.[lang] ?? category.name.es}
+                                </a>
                             ))}
                         </div>
-                )}
+                    )
+                }
             </div>
 
             <!-- Gastronomy Dropdown Container -->
             <div id="gastronomy-nav-container" class="relative group">
-                <a href="/gastronomy" class="px-2 py-2 text-sm font-serif uppercase tracking-widest hover:text-accent transition-colors flex items-center gap-1 group-hover:text-accent">
-                     {t('nav.gastronomy')}
-                     <svg class="w-3 h-3 transition-transform group-hover:rotate-180 duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                         xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                <a
+                    href="/gastronomy"
+                    class="px-2 py-2 text-sm font-serif uppercase tracking-widest hover:text-accent transition-colors flex items-center gap-1 group-hover:text-accent"
+                >
+                    {t("nav.gastronomy")}
+                    <svg
+                        class="w-3 h-3 transition-transform group-hover:rotate-180 duration-300"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M19 9l-7 7-7-7"></path>
                     </svg>
                 </a>
-                {config?.gastronomyCategories && (
-                        <div id="gastronomy-dropdown"
-                             class="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-56 bg-primary/95 backdrop-blur-md rounded-sm border-t-2 border-accent shadow-xl z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top">
-                            {config.gastronomyCategories.map(category => (
-                                    <a href={`/gastronomy/${category.id}`}
-                                       class="block px-6 py-3 text-sm font-serif tracking-wide text-white/90 hover:bg-accent hover:text-white transition-colors border-b border-white/5 last:border-0">
-                                        {category.name?.[lang] ?? category.name.es}
-                                    </a>
+                {
+                    config?.gastronomyCategories && (
+                        <div
+                            id="gastronomy-dropdown"
+                            class="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-56 bg-primary/95 backdrop-blur-md rounded-sm border-t-2 border-accent shadow-xl z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top"
+                        >
+                            {config.gastronomyCategories.map((category) => (
+                                <a
+                                    href={`/gastronomy/${category.id}`}
+                                    class="block px-6 py-3 text-sm font-serif tracking-wide text-white/90 hover:bg-accent hover:text-white transition-colors border-b border-white/5 last:border-0"
+                                >
+                                    {category.name?.[lang] ?? category.name.es}
+                                </a>
                             ))}
                         </div>
-                )}
+                    )
+                }
             </div>
 
             <!-- Tours Dropdown Container -->
             <div id="tours-nav-container" class="relative group">
-                <a href="/tours" class="px-2 py-2 text-sm font-serif uppercase tracking-widest hover:text-accent transition-colors flex items-center gap-1 group-hover:text-accent">
-                     {t('nav.tours')}
-                     <svg class="w-3 h-3 transition-transform group-hover:rotate-180 duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                         xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                <a
+                    href="/tours"
+                    class="px-2 py-2 text-sm font-serif uppercase tracking-widest hover:text-accent transition-colors flex items-center gap-1 group-hover:text-accent"
+                >
+                    {t("nav.tours")}
+                    <svg
+                        class="w-3 h-3 transition-transform group-hover:rotate-180 duration-300"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M19 9l-7 7-7-7"></path>
                     </svg>
                 </a>
-                {config?.tourCategories && (
-                        <div id="tours-dropdown"
-                             class="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-56 bg-primary/95 backdrop-blur-md rounded-sm border-t-2 border-accent shadow-xl z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top">
-                            {config.tourCategories.map(category => (
-                                    <a href={`/tours/${category.id}`}
-                                       class="block px-6 py-3 text-sm font-serif tracking-wide text-white/90 hover:bg-accent hover:text-white transition-colors border-b border-white/5 last:border-0">
-                                        {category.name?.[lang] ?? category.name.es}
-                                    </a>
+                {
+                    config?.tourCategories && (
+                        <div
+                            id="tours-dropdown"
+                            class="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-56 bg-primary/95 backdrop-blur-md rounded-sm border-t-2 border-accent shadow-xl z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top"
+                        >
+                            {config.tourCategories.map((category) => (
+                                <a
+                                    href={`/tours/${category.id}`}
+                                    class="block px-6 py-3 text-sm font-serif tracking-wide text-white/90 hover:bg-accent hover:text-white transition-colors border-b border-white/5 last:border-0"
+                                >
+                                    {category.name?.[lang] ?? category.name.es}
+                                </a>
                             ))}
                         </div>
-                )}
+                    )
+                }
             </div>
 
-            <a href="/about" class="px-2 py-2 text-sm font-serif uppercase tracking-widest hover:text-accent transition-colors">{t('nav.about')}</a>
-            <a href="/contact" class="px-2 py-2 text-sm font-serif uppercase tracking-widest hover:text-accent transition-colors">{t('nav.contact')}</a>
+            <a
+                href="/about"
+                class="px-2 py-2 text-sm font-serif uppercase tracking-widest hover:text-accent transition-colors"
+                >{t("nav.about")}</a
+            >
+            <a
+                href="/contact"
+                class="px-2 py-2 text-sm font-serif uppercase tracking-widest hover:text-accent transition-colors"
+                >{t("nav.contact")}</a
+            >
         </div>
 
         <!-- Right: Controls and Hamburger Button -->
         <div class="flex items-center space-x-4">
             <LangSelector currentLang={lang} />
-            <CurrencySelector />
+            <CurrencySelector
+                supportedCurrencies={config?.supportedCurrencies}
+            />
 
-            <button id="mobile-menu-button" class="text-white focus:outline-none lg:hidden">
-                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                     xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                          d="M4 6h16M4 12h16M4 18h16"></path>
+            <button
+                id="mobile-menu-button"
+                class="text-white focus:outline-none lg:hidden"
+            >
+                <svg
+                    class="w-8 h-8"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="1.5"
+                        d="M4 6h16M4 12h16M4 18h16"></path>
                 </svg>
             </button>
         </div>
     </nav>
 
     <!-- Mobile menu container -->
-    <div id="mobile-menu"
-         class="hidden sm:hidden bg-primary bg-opacity-95 absolute top-full left-0 right-0 py-4 text-center"> {/* Updated colors */}
+    <div
+        id="mobile-menu"
+        class="hidden sm:hidden bg-primary bg-opacity-95 absolute top-full left-0 right-0 py-4 text-center"
+    >
+        {/* Updated colors */}
         <div class="flex flex-col space-y-2">
             <!-- <a href="/rooms" class="block px-4 py-2 text-background hover:bg-accent hover:text-primary transition-colors">{t('nav.rooms')}</a>
             <a href="/destinations"
@@ -157,13 +257,13 @@ const t = Translations(lang);
 </header>
 
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener("DOMContentLoaded", () => {
         // Hamburger menu logic
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileMenuButton = document.getElementById("mobile-menu-button");
+        const mobileMenu = document.getElementById("mobile-menu");
         if (mobileMenuButton && mobileMenu) {
-            mobileMenuButton.addEventListener('click', () => {
-                mobileMenu.classList.toggle('hidden');
+            mobileMenuButton.addEventListener("click", () => {
+                mobileMenu.classList.toggle("hidden");
             });
         }
     });

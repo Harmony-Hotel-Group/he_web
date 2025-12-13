@@ -176,6 +176,31 @@ log.info("Display value:", displayValue);
     import { logger } from "@/services/logger.ts";
     const log = logger("InfoCard:Client");
 
+    // Map of currency codes to symbols for manual fallback if needed
+    const CURRENCY_SYMBOLS: Record<string, string> = {
+        USD: "$",
+        EUR: "€",
+        GBP: "£",
+        JPY: "¥",
+        // Add others as needed
+    };
+
+    function getCurrencySymbol(currency: string): string {
+        try {
+            return (0)
+                .toLocaleString(undefined, {
+                    style: "currency",
+                    currency,
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 0,
+                })
+                .replace(/\d/g, "")
+                .trim();
+        } catch {
+            return CURRENCY_SYMBOLS[currency] || currency;
+        }
+    }
+
     function formatCurrency(amount: number, currency: string) {
         try {
             return new Intl.NumberFormat(undefined, {
@@ -183,7 +208,7 @@ log.info("Display value:", displayValue);
                 currency,
             }).format(amount);
         } catch {
-            const symbol = currency === "EUR" ? "€" : "$";
+            const symbol = CURRENCY_SYMBOLS[currency] || "$";
             return `${symbol}${amount.toLocaleString()}`;
         }
     }
@@ -208,6 +233,7 @@ log.info("Display value:", displayValue);
 
             const formatted = formatCurrency(convertedValue, targetCurrency);
 
+            // Update text content with label and formatted value (which includes symbol)
             element.textContent = `${label}: ${formatted}`;
         } catch (error) {
             log.error("Error updating price", error);
@@ -216,30 +242,31 @@ log.info("Display value:", displayValue);
 
     function updateAllPrices(currency: string) {
         const prices = document.querySelectorAll(".dynamic-price");
+        if (prices.length === 0) return;
+
+        log.info(`Updating ${prices.length} items to ${currency}`);
         prices.forEach((el) => updatePrice(el as HTMLElement, currency));
     }
 
-    // Listen for currency changes
+    function syncCurrencyFromStorage() {
+        const stored = localStorage.getItem("currency");
+        if (stored) {
+            updateAllPrices(stored);
+        }
+    }
+
+    // Listen for currency changes (custom event)
     document.addEventListener("currencyChanged", (e: any) => {
         const newCurrency = e.detail?.currency;
         if (newCurrency) {
-            log.info("Updating prices to", newCurrency);
+            localStorage.setItem("currency", newCurrency); // Ensure it's saved
             updateAllPrices(newCurrency);
         }
     });
 
     // Initial check on load
-    document.addEventListener("DOMContentLoaded", () => {
-        const stored = localStorage.getItem("currency");
-        if (stored) {
-            const serverCurrency = document.cookie
-                .split("; ")
-                .find((row) => row.startsWith("currency="))
-                ?.split("=")[1];
-            // If server rendered different currency (or we just want to be sure), update
-            // We can just update always to be safe, or check.
-            // Updating always ensures localStorage is the source of truth on client.
-            updateAllPrices(stored);
-        }
-    });
+    document.addEventListener("DOMContentLoaded", syncCurrencyFromStorage);
+
+    // Support for View Transitions if/when enabled
+    document.addEventListener("astro:page-load", syncCurrencyFromStorage);
 </script>

@@ -59,6 +59,7 @@ export interface SiteConfig {
 export type Currency = {
 	code: string;
 	symbol: string;
+	image: string;
 	exchangeRate?: number;
 };
 

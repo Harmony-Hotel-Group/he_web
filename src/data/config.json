@@ -154,8 +154,21 @@
 				"en": "Double"
 			},
 			"description": {
-				"es": "Descripcion en Español"
-			}
+				"es": "Descripcion en Español",
+				"en": "Description in English"
+			},
+			"category": {
+				"es": "Categoria en Español",
+				"en": "Category in English"
+			},
+			"tags": [
+				{
+					"es": "Conformidad,Vista al Frente, Baño Privado, Cama Matrimonial",
+					"en": "Conformity,Front View,Private Bathroom,Double Bed"
+				}
+			],
+			"value": 25,
+			"currency": "USD"
 		},
 		{
 			"id": "twin",
@@ -163,7 +176,23 @@
 			"name": {
 				"es": "Doble individual",
 				"en": "Twin"
-			}
+			},
+			"description": {
+				"es": "Descripcion en Español",
+				"en": "Description in English"
+			},
+			"category": {
+				"es": "Categoria en Español",
+				"en": "Category in English"
+			},
+			"tags": [
+				{
+					"es": "Conformidad,Vista al Frente, Baño Privado, Cama Matrimonial",
+					"en": "Conformity,Front View,Private Bathroom,Double Bed"
+				}
+			],
+			"value": 45,
+			"currency": "USD"
 		},
 		{
 			"id": "triple",
@@ -171,7 +200,23 @@
 			"name": {
 				"es": "Triple",
 				"en": "Triple"
-			}
+			},
+			"description": {
+				"es": "Descripcion en Español",
+				"en": "Description in English"
+			},
+			"category": {
+				"es": "Categoria en Español",
+				"en": "Category in English"
+			},
+			"tags": [
+				{
+					"es": "Conformidad,Vista al Frente, Baño Privado, Cama Matrimonial",
+					"en": "Conformity,Front View,Private Bathroom,Double Bed"
+				}
+			],
+			"value": 60,
+			"currency": "USD"
 		},
 		{
 			"id": "quadruple",
@@ -179,7 +224,23 @@
 			"name": {
 				"es": "Quadruple",
 				"en": "Quadruple"
-			}
+			},
+			"description": {
+				"es": "Descripcion en Español",
+				"en": "Description in English"
+			},
+			"category": {
+				"es": "Categoria en Español",
+				"en": "Category in English"
+			},
+			"tags": [
+				{
+					"es": "Conformidad,Vista al Frente, Baño Privado, Cama Matrimonial",
+					"en": "Conformity,Front View,Private Bathroom,Double Bed"
+				}
+			],
+			"value": 80,
+			"currency": "USD"
 		},
 		{
 			"id": "quintuple",
@@ -187,7 +248,23 @@
 			"name": {
 				"es": "Quintuple",
 				"en": "Quintuple"
-			}
+			},
+			"description": {
+				"es": "Descripcion en Español",
+				"en": "Description in English"
+			},
+			"category": {
+				"es": "Categoria en Español",
+				"en": "Category in English"
+			},
+			"tags": [
+				{
+					"es": "Conformidad,Vista al Frente, Baño Privado, Cama Matrimonial",
+					"en": "Conformity,Front View,Private Bathroom,Double Bed"
+				}
+			],
+			"value": 87.50,
+			"currency": "USD"
 		},
 		{
 			"id": "sextuple",
@@ -195,15 +272,71 @@
 			"name": {
 				"es": "Sextuple",
 				"en": "Sextuple"
-			}
+			},
+			"description": {
+				"es": "Descripcion en Español",
+				"en": "Description in English"
+			},
+			"category": {
+				"es": "Categoria en Español",
+				"en": "Category in English"
+			},
+			"tags": [
+				{
+					"es": "Conformidad,Vista al Frente, Baño Privado, Cama Matrimonial",
+					"en": "Conformity,Front View,Private Bathroom,Double Bed"
+				}
+			],
+			"value": 105,
+			"currency": "USD"
 		},
 		{
-			"id": "suite",
+			"id": "suitematrimonial",
 			"src": "src/assets/img/hotel/rooms/suite1/2.jpg",
 			"name": {
 				"es": "Suite",
 				"en": "Suite"
-			}
+			},
+			"description": {
+				"es": "Descripcion en Español",
+				"en": "Description in English"
+			},
+			"category": {
+				"es": "Categoria en Español",
+				"en": "Category in English"
+			},
+			"tags": [
+				{
+					"es": "Conformidad,Vista al Frente, Baño Privado, Cama Matrimonial",
+					"en": "Conformity,Front View,Private Bathroom,Double Bed"
+				}
+			],
+			"value": 100,
+			"currency": "USD"
+		},
+		{
+			"id": "suitefamiliar",
+			"src": "src/assets/img/hotel/rooms/suite1/2.jpg",
+			"name": {
+				"es": "Suite",
+				"en": "Suite"
+			},
+			"description": {
+				"es": "Descripcion en Español",
+				"en": "Description in English"
+			},
+			"category": {
+				"es": "Categoria en Español",
+				"en": "Category in English"
+			},
+			"tags": [
+				{
+					"es": "Conformidad,Vista al Frente, Baño Privado, Cama Matrimonial",
+					"en": "Conformity,Front View,Private Bathroom,Double Bed"
+				}
+			],
+			"value": 160,
+			"currency": "USD"
 		}
 	],
 	"destinationCategories": [
@@ -477,12 +610,20 @@
 		{
 			"code": "USD",
 			"symbol": "$",
+			"image": "/src/assets/img/currencies/USD.svg",
 			"exchangeRate": 1
 		},
 		{
 			"code": "EUR",
 			"symbol": "€",
+			"image": "/src/assets/img/currencies/EUR.svg",
 			"exchangeRate": 0.95
+		},
+		{
+			"code": "GBP",
+			"symbol": "£",
+			"image": "/src/assets/img/currencies/GBP.svg",
+			"exchangeRate": 0.75
 		}
 	]
 }

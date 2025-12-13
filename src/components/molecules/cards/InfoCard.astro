@@ -123,7 +123,13 @@ log.info("Display value:", displayValue);
         {
             displayValue && (
                 <div class="mb-4">
-                    <span class="text-lg font-bold text-accent">
+                    <span
+                        class="text-lg font-bold text-accent dynamic-price"
+                        data-base-value={value}
+                        data-base-currency={baseCurrency}
+                        data-rates={JSON.stringify(rates)}
+                        data-label={valueLabel}
+                    >
                         {valueLabel}: {displayValue}
                     </span>
                 </div>
@@ -165,3 +171,75 @@ log.info("Display value:", displayValue);
         }
     }
 </style>
+
+<script>
+    import { logger } from "@/services/logger.ts";
+    const log = logger("InfoCard:Client");
+
+    function formatCurrency(amount: number, currency: string) {
+        try {
+            return new Intl.NumberFormat(undefined, {
+                style: "currency",
+                currency,
+            }).format(amount);
+        } catch {
+            const symbol = currency === "EUR" ? "€" : "$";
+            return `${symbol}${amount.toLocaleString()}`;
+        }
+    }
+
+    function updatePrice(element: HTMLElement, targetCurrency: string) {
+        try {
+            const baseValue = parseFloat(element.dataset.baseValue || "0");
+            const baseCurrency = element.dataset.baseCurrency || "USD";
+            const rates = JSON.parse(element.dataset.rates || "{}");
+            const label = element.dataset.label || "Value";
+
+            if (!rates[targetCurrency] || !rates[baseCurrency]) {
+                log.warn(
+                    `Missing rates for ${targetCurrency} or ${baseCurrency}`,
+                );
+                return;
+            }
+
+            const rFrom = rates[baseCurrency];
+            const rTo = rates[targetCurrency];
+            const convertedValue = baseValue * (rTo / rFrom);
+
+            const formatted = formatCurrency(convertedValue, targetCurrency);
+
+            element.textContent = `${label}: ${formatted}`;
+        } catch (error) {
+            log.error("Error updating price", error);
+        }
+    }
+
+    function updateAllPrices(currency: string) {
+        const prices = document.querySelectorAll(".dynamic-price");
+        prices.forEach((el) => updatePrice(el as HTMLElement, currency));
+    }
+
+    // Listen for currency changes
+    document.addEventListener("currencyChanged", (e: any) => {
+        const newCurrency = e.detail?.currency;
+        if (newCurrency) {
+            log.info("Updating prices to", newCurrency);
+            updateAllPrices(newCurrency);
+        }
+    });
+
+    // Initial check on load
+    document.addEventListener("DOMContentLoaded", () => {
+        const stored = localStorage.getItem("currency");
+        if (stored) {
+            const serverCurrency = document.cookie
+                .split("; ")
+                .find((row) => row.startsWith("currency="))
+                ?.split("=")[1];
+            // If server rendered different currency (or we just want to be sure), update
+            // We can just update always to be safe, or check.
+            // Updating always ensures localStorage is the source of truth on client.
+            updateAllPrices(stored);
+        }
+    });
+</script>

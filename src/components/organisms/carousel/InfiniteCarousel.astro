@@ -1,0 +1,75 @@
+---
+interface Props {
+    items: any[];
+    component: any;
+    itemClass?: string;
+    duration?: string;
+    gap?: string;
+}
+
+const {
+    items,
+    component: CardComponent,
+    itemClass = "w-80 md:w-96 flex-shrink-0",
+    duration = "40s",
+    gap = "gap-6 md:gap-8",
+} = Astro.props;
+
+const duplicatedItems = [...items, ...items];
+---
+
+<div class="carousel-container relative w-full mask-gradient overflow-hidden">
+    <div class={`carousel-track flex w-max hover:pause ${gap}`}>
+        {
+            duplicatedItems.map((item) => (
+                <div class={itemClass}>
+                    <CardComponent {...item} />
+                </div>
+            ))
+        }
+    </div>
+</div>
+
+<style define:vars={{ duration, gap }}>
+    .carousel-track {
+        animation: scroll var(--duration) linear infinite;
+        /* Apply gap here if not using Tailwind's gap utility with dynamic values properly, 
+       but style attribute handles specific values well. 
+       Note: We used style for gap to ensure it works with arbitrary strings if needed, 
+       though Tailwind classes are preferred if passed in gap prop. 
+       The style attribute above covers the gap.
+    */
+    }
+
+    /* Utility to pause on hover */
+    .hover\:pause:hover {
+        animation-play-state: paused;
+    }
+
+    /* Fade effect on the sides using mask-image */
+    .mask-gradient {
+        mask-image: linear-gradient(
+            to right,
+            transparent,
+            black 5%,
+            black 95%,
+            transparent
+        );
+        -webkit-mask-image: linear-gradient(
+            to right,
+            transparent,
+            black 5%,
+            black 95%,
+            transparent
+        );
+    }
+
+    @keyframes scroll {
+        0% {
+            transform: translateX(0);
+        }
+        100% {
+            transform: translateX(-50%);
+        }
+    }
+</style>

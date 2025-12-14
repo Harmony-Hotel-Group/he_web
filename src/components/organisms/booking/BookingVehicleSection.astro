@@ -11,16 +11,13 @@ const log = logger("BookingVehicleSection");
 interface Props {
 	lang: string;
 	config?: SiteConfig;
-	vehicleTypeOptions?: Array<{ value: string; [key: string]: string }>;
 }
 
 const {
 	lang,
 	config,
-	vehicleTypeOptions: propVehicleTypeOptions = [],
 } = Astro.props as Props;
-const vehicleTypeOptions = (propVehicleTypeOptions ??
-	config?.vehicleTypeOptions ??
+const vehicleTypeOptions = (config?.vehicleTypeOptions ??
 	[]) as Array<{ value: string; [key: string]: string }>;
 const t = Translations(lang);
 

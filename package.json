@@ -12,6 +12,7 @@
 	"dependencies": {
 		"@astrojs/node": "^9.5.1",
 		"@astrojs/vercel": "^9.0.2",
+		"@lottiefiles/dotlottie-web": "^0.58.1",
 		"@tailwindcss/vite": "^4.1.16",
 		"astro-icon": "^1.1.5",
 		"flatpickr": "^4.6.13",

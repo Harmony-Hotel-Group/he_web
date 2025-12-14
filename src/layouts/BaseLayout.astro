@@ -3,6 +3,7 @@
 
 import Footer from "@/components/core/Footer.astro";
 import Header from "@/components/core/Header.astro";
+import WhatsAppButton from "@/components/atoms/WhatsAppButton.astro";
 import SizeIndicator from "@/dev/SizeIndicator.astro";
 import { getCurrentLang, Translations } from "@/i18n/translation";
 import { logger } from "@/services/logger.ts";
@@ -12,10 +13,10 @@ import "@/styles/global.css";
 const log = logger("BaseLayout");
 
 interface Props {
-	titleKey: string;
-	lang: string;
-	config?: SiteConfig;
-	description?: string;
+    titleKey: string;
+    lang: string;
+    config?: SiteConfig;
+    description?: string;
 }
 
 let { titleKey, lang, config, description } = Astro.props;
@@ -32,21 +33,21 @@ const metaDescription = description || t("meta.description");
 let cleanPath = "/";
 // let baseUrl = "https://hotelensueños.com";
 let baseUrl = import.meta.env.VERCEL_URL
-	? `https://${import.meta.env.VERCEL_URL}`
-	: "https://hotelensueños.com";
+    ? `https://${import.meta.env.VERCEL_URL}`
+    : "https://hotelensueños.com";
 
 try {
-	// Obtener el path de forma segura
-	if (Astro.url?.pathname) {
-		cleanPath = Astro.url.pathname.replace(/^\/en/, "") || "/";
-	}
+    // Obtener el path de forma segura
+    if (Astro.url?.pathname) {
+        cleanPath = Astro.url.pathname.replace(/^\/en/, "") || "/";
+    }
 
-	// Obtener la URL base de forma segura
-	if (Astro.site) {
-		baseUrl = Astro.site.toString().replace(/\/$/, "");
-	}
+    // Obtener la URL base de forma segura
+    if (Astro.site) {
+        baseUrl = Astro.site.toString().replace(/\/$/, "");
+    }
 } catch (error) {
-	log.warn("Error al construir URLs:", error);
+    log.warn("Error al construir URLs:", error);
 }
 
 // Construir URLs completas de forma segura
@@ -58,35 +59,39 @@ log.info("URLs generadas:", { esUrl, enUrl, canonicalUrl, cleanPath, baseUrl });
 ---
 
 <html lang={currentLang}>
-<head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width"/>
-    <meta name="description" content={metaDescription}/>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width" />
+        <meta name="description" content={metaDescription} />
 
-    <!-- SEO: Enlaces alternativos -->
-    <link rel="alternate" hreflang="es" href={esUrl}/>
-    <link rel="alternate" hreflang="en" href={enUrl}/>
-    <link rel="alternate" hreflang="x-default" href={esUrl}/>
+        <!-- SEO: Enlaces alternativos -->
+        <link rel="alternate" hreflang="es" href={esUrl} />
+        <link rel="alternate" hreflang="en" href={enUrl} />
+        <link rel="alternate" hreflang="x-default" href={esUrl} />
 
-    <!-- Canonical -->
-    <link rel="canonical" href={canonicalUrl}/>
+        <!-- Canonical -->
+        <link rel="canonical" href={canonicalUrl} />
 
-    <link rel="icon" type="image/svg+xml" href="/favicon.png"/>
-    <meta name="generator" content={Astro.generator}/>
+        <link rel="icon" type="image/svg+xml" href="/favicon.png" />
+        <meta name="generator" content={Astro.generator} />
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+        <!-- Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
+            rel="stylesheet"
+        />
 
-    <title>{t(titleKey)}</title>
-</head>
-<body class="min-w-[850px] flex flex-col min-h-screen overflow-x-hidden">
-<Header config={config} lang={lang}/>
-<main class="grow w-full overflow-x-hidden">
-    <slot/>
-</main>
-<Footer t={t} config={config} lang={lang}/>
-<SizeIndicator/>
-</body>
+        <title>{t(titleKey)}</title>
+    </head>
+    <body class="min-w-[850px] flex flex-col min-h-screen overflow-x-hidden">
+        <Header config={config} lang={lang} />
+        <main class="grow w-full overflow-x-hidden">
+            <slot />
+        </main>
+        <WhatsAppButton />
+        <Footer t={t} config={config} lang={lang} />
+        <SizeIndicator />
+    </body>
 </html>

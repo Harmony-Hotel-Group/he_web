@@ -7,49 +7,49 @@ import { logger } from "@/services/logger";
 const log = logger("InfoCard");
 
 interface Props {
-    href: string;
-    imageSrc: string;
-    imageAlt: string;
-    title: string;
-    description: string;
-    category?: string;
-    tags?: string[];
-    value?: number;
-    valueLabel?: string;
-    supportedCurrencies: Currency[];
+	href: string;
+	imageSrc: string;
+	imageAlt: string;
+	title: string;
+	description: string;
+	category?: string;
+	tags?: string[];
+	value?: number;
+	valueLabel?: string;
+	supportedCurrencies: Currency[];
 }
 
 const {
-    href,
-    imageSrc,
-    imageAlt,
-    title, //
-    description,
-    category,
-    tags = [],
-    value,
-    valueLabel = "Valor",
-    supportedCurrencies = [],
+	href,
+	imageSrc,
+	imageAlt,
+	title, //
+	description,
+	category,
+	tags = [],
+	value,
+	valueLabel = "Valor",
+	supportedCurrencies = [],
 } = Astro.props;
 
 log.info("Props recibidas:", {
-    href,
-    imageSrc,
-    imageAlt,
-    title,
-    description,
-    category,
-    tags,
-    value,
-    valueLabel,
-    supportedCurrencies,
+	href,
+	imageSrc,
+	imageAlt,
+	title,
+	description,
+	category,
+	tags,
+	value,
+	valueLabel,
+	supportedCurrencies,
 });
 
 const safeDescription = description || "";
 const truncatedDescription =
-    safeDescription.length > 200
-        ? `${safeDescription.substring(0, 200)}...`
-        : safeDescription;
+	safeDescription.length > 200
+		? `${safeDescription.substring(0, 200)}...`
+		: safeDescription;
 
 const selectedCurrency = Astro.cookies.get("currency")?.value || "USD";
 log.info("Currency selected:", Astro.cookies);
@@ -58,41 +58,40 @@ const baseCurrency = "USD";
 log.info("Base currency:", baseCurrency);
 
 const rates: Record<string, number> = (supportedCurrencies ?? []).reduce(
-    (acc, currency) => {
-        acc[currency.code] = currency.exchangeRate ?? 1;
-        return acc;
-    },
-    {} as Record<string, number>,
+	(acc, currency) => {
+		acc[currency.code] = currency.exchangeRate ?? 1;
+		return acc;
+	},
+	{} as Record<string, number>,
 );
 log.info("Exchange rates:", rates);
 
 const formatCurrency = (amount: number, currency: string) => {
-    try {
-        return new Intl.NumberFormat(undefined, {
-            style: "currency",
-            currency,
-        }).format(amount);
-    } catch {
-        // Fallback: symbol + localized number
-        const symbol = currency === "EUR" ? "€" : "$";
-        return `${symbol}${amount.toLocaleString()}`;
-    }
+	try {
+		return new Intl.NumberFormat(undefined, {
+			style: "currency",
+			currency,
+		}).format(amount);
+	} catch {
+		// Fallback: symbol + localized number
+		const symbol = currency === "EUR" ? "€" : "$";
+		return `${symbol}${amount.toLocaleString()}`;
+	}
 };
 
 const convert = (amount: number, from: string, to: string) => {
-    const rFrom = rates[from] ?? 1;
-    const rTo = rates[to] ?? 1;
-    return amount * (rTo / rFrom);
+	const rFrom = rates[from] ?? 1;
+	const rTo = rates[to] ?? 1;
+	return amount * (rTo / rFrom);
 };
 
 const displayValue =
-    typeof value === "number"
-        ? formatCurrency(
-              convert(value, baseCurrency, selectedCurrency),
-              selectedCurrency,
-          )
-        : null;
-log.info("Display value:", displayValue);
+	typeof value === "number"
+		? formatCurrency(
+				convert(value, baseCurrency, selectedCurrency),
+				selectedCurrency,
+			)
+		: null;
 ---
 
 <a

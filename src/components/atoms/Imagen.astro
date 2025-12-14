@@ -118,6 +118,49 @@ function getPlaceholder(w: number, h: number, text?: string): string {
 
 // ==================== VALIDACIÓN DE SRC ====================
 
+import { ASSETS } from "@/constants/img.ts";
+
+function resolveImageFromAssets(path: string): ImageMetadata | undefined {
+	// 1. Intentar acceso directo por clave (si el usuario pasó "USD" o "FACADE_SUN")
+	if (ASSETS[path]) return ASSETS[path];
+
+	// 2. Normalizar ruta para intentar derivar la clave
+	// /src/assets/img/hotel/facade/sun.png -> hotel/facade/sun.png
+	// /currents/usd.svg -> currents/usd.svg
+	let cleanPath = path;
+	if (cleanPath.startsWith("/src/assets/img/")) {
+		cleanPath = cleanPath.replace("/src/assets/img/", "");
+	} else if (cleanPath.startsWith("/img/")) {
+		cleanPath = cleanPath.replace("/img/", "");
+	} else if (cleanPath.startsWith("/")) {
+		cleanPath = cleanPath.substring(1);
+	}
+
+	// 3. Estrategia por nombre de archivo simple (para flags/currents)
+	// currents/usd.svg -> USD
+	const fileName = cleanPath.split("/").pop()?.split(".")[0]?.toUpperCase();
+	if (fileName && ASSETS[fileName]) return ASSETS[fileName];
+
+	// 4. Estrategia anidada (para hotel/cities)
+	// hotel/facade/sun.png -> hotel/facade/sun -> FACADE_SUN (removiendo el prefijo de carpeta raiz si es posible)
+
+	// Detectar categoría para limpiar prefijo
+	let relativePath = cleanPath;
+	if (relativePath.startsWith("hotel/"))
+		relativePath = relativePath.replace("hotel/", "");
+	else if (relativePath.startsWith("cities/"))
+		relativePath = relativePath.replace("cities/", "");
+
+	// Convertir a formato de clave: facade/sun -> FACADE_SUN
+	const nestedKey = relativePath
+		.split(".")[0]
+		.replace(/\//g, "_")
+		.toUpperCase();
+	if (ASSETS[nestedKey]) return ASSETS[nestedKey];
+
+	return undefined;
+}
+
 let finalSrc: string = getPlaceholder(width, height);
 let optimizedSrc: ImageMetadata | null = null;
 let useOptimizedImage = false;
@@ -128,25 +171,17 @@ if (!src) {
 	optimizedSrc = src;
 	useOptimizedImage = true;
 	log.info(`Usando imagen optimizada pasada por prop`);
-} else if (src.startsWith("/") || src.startsWith(".")) {
-	const images = import.meta.glob(
-		"/src/assets/img/**/*.{jpeg,jpg,png,gif,webp,svg,avif}",
-	);
-	const imagePath = `/src/assets${src.startsWith("/img") ? src : `/img${src}`}`;
+} else {
+	// Intentar resolver usando constantes globales
+	const assetImage = resolveImageFromAssets(src);
 
-	if (images[imagePath]) {
-		try {
-			const imageModule = (await images[imagePath]()) as {
-				default: ImageMetadata;
-			};
-			optimizedSrc = imageModule.default;
-			useOptimizedImage = true;
-			log.info(`Usando imagen optimizada: ${imagePath}`);
-		} catch (e) {
-			log.error(`Error cargando imagen optimizada: ${imagePath}`, e);
-			finalSrc = getPlaceholder(width, height, "Error");
-		}
-	} else {
+	if (assetImage) {
+		optimizedSrc = assetImage;
+		useOptimizedImage = true;
+		log.info(`Usando imagen constante: ${src}`);
+	} else if (src.startsWith("/") || src.startsWith(".")) {
+		// Fallback lógica antigua para /public o si falló la resolución de assets
+		// Nota: ya no usamos glob dinámico aquí, solo verificamos public
 		const existsInPublic = await existeEnPublic(src);
 
 		if (existsInPublic) {
@@ -155,25 +190,25 @@ if (!src) {
 			log.info(`Usando imagen de /public/: ${src}`);
 		} else {
 			log.warn(
-				`Imagen local no encontrada en /src/resources ni en /public: ${src}`,
+				`Imagen local no encontrada en ASSETS ni en /public: ${src}`,
 			);
 			finalSrc = getPlaceholder(width, height, "No encontrada");
 		}
-	}
-} else if (src.startsWith("http://") || src.startsWith("https://")) {
-	const isValid = await urlExist(src);
+	} else if (src.startsWith("http://") || src.startsWith("https://")) {
+		const isValid = await urlExist(src);
 
-	if (isValid) {
-		finalSrc = src;
-		useOptimizedImage = false;
-		log.info(`Usando URL remota: ${src}`);
+		if (isValid) {
+			finalSrc = src;
+			useOptimizedImage = false;
+			log.info(`Usando URL remota: ${src}`);
+		} else {
+			log.warn(`URL remota inválida o inaccesible: ${src}`);
+			finalSrc = getPlaceholder(width, height, "URL inválida");
+		}
 	} else {
-		log.warn(`URL remota inválida o inaccesible: ${src}`);
-		finalSrc = getPlaceholder(width, height, "URL inválida");
+		log.warn(`Formato de src no reconocido: ${src}`);
+		finalSrc = getPlaceholder(width, height, "Formato inválido");
 	}
-} else {
-	log.warn(`Formato de src no reconocido: ${src}`);
-	finalSrc = getPlaceholder(width, height, "Formato inválido");
 }
 ---
 

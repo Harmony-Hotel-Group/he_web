@@ -44,10 +44,10 @@ export interface SiteConfig {
 			value: string;
 		} & LocalizedText
 	>;
-	roomTypes?: Category[];
-	destinationCategories?: Category[];
-	gastronomyCategories?: Category[];
-	tourCategories?: Category[];
+	rooms?: Category[];
+	destinations?: Category[];
+	gastronomies?: Category[];
+	tours?: Category[];
 	supportedLanguages?: Array<{
 		code: string;
 		name: string;

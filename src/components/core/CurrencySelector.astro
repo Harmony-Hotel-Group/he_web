@@ -2,12 +2,9 @@
 // src/components/core/CurrencySelector.astro
 import { logger } from "@/services/logger.ts";
 import type { Currency } from "@/types/config";
+import { CURRENTS } from "@/constants/img.ts";
 
 const log = logger("CurrencySelector");
-
-import eurFlag from "@/assets/img/currents/eur.svg";
-import gbpFlag from "@/assets/img/currents/gbp.svg";
-import usdFlag from "@/assets/img/currents/usd.svg";
 
 interface Props {
     supportedCurrencies?: Currency[];
@@ -16,28 +13,28 @@ interface Props {
 const { supportedCurrencies } = Astro.props;
 
 const flagMap: Record<string, string> = {
-    USD: usdFlag.src,
-    EUR: eurFlag.src,
-    GBP: gbpFlag.src,
+    USD: CURRENTS.USD.src,
+    EUR: CURRENTS.EUR.src,
+    GBP: CURRENTS.GBP.src,
 };
 
 // Definir monedas disponibles
 let currencies = [
-    { code: "USD", symbol: "$", image: usdFlag.src },
-    { code: "EUR", symbol: "€", image: eurFlag.src },
-    { code: "GBP", symbol: "£", image: gbpFlag.src },
+    { code: "USD", symbol: "$", image: CURRENTS.USD.src },
+    { code: "EUR", symbol: "€", image: CURRENTS.EUR.src },
+    { code: "GBP", symbol: "£", image: CURRENTS.GBP.src },
 ];
 
 if (supportedCurrencies && supportedCurrencies.length > 0) {
     currencies = supportedCurrencies.map((c) => ({
         code: c.code,
         symbol: c.symbol,
-        image: flagMap[c.code] || usdFlag.src,
+        image: flagMap[c.code] || CURRENTS.USD.src,
         exchangeRate: c.exchangeRate,
     }));
 }
 
-const defaultCurrency = currencies[0]; // USD por defecto
+const defaultCurrency = currencies[0];
 
 log.info(
     "🟢 [SSR] CurrencySelector cargado con monedas:",
@@ -116,9 +113,9 @@ log.info(
     document.addEventListener("DOMContentLoaded", async () => {
         // Importación dinámica: La clave para que funcione con un solo archivo.
         const { logger } = await import("@/services/logger.ts");
-        const log = logger("CurrencySwitcher:Client");
+        const log = logger("CurrencySelector:Client");
 
-        log.info("🟢 [CLIENT] CurrencySwitcher montado");
+        log.info("🟢 [CLIENT] CurrencySelector montado");
 
         // Función para obtener moneda desde localStorage
         function getStoredCurrency(): string {

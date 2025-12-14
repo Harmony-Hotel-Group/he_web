@@ -8,12 +8,40 @@ import type { SiteConfig } from "@/types/config";
 
 interface Props {
     lang: string;
-    config?: SiteConfig;
+    config: SiteConfig;
 }
 
 const { config, lang } = Astro.props;
 
 const t = Translations(lang);
+
+const uniqueRooms =
+    config?.rooms?.filter((room, index, self) => {
+        const getCat = (r: any) => r.category?.[lang] ?? r.category?.es;
+        return index === self.findIndex((r) => getCat(r) === getCat(room));
+    }) || [];
+
+const uniqueDestinations =
+    config?.destinations?.filter((destination, index, self) => {
+        const getCat = (d: any) => d.category?.[lang] ?? d.category?.es;
+        return (
+            index === self.findIndex((d) => getCat(d) === getCat(destination))
+        );
+    }) || [];
+
+const uniqueGastronomies =
+    config?.gastronomies?.filter((gastronomy, index, self) => {
+        const getCat = (g: any) => g.category?.[lang] ?? g.category?.es;
+        return (
+            index === self.findIndex((g) => getCat(g) === getCat(gastronomy))
+        );
+    }) || [];
+
+const uniqueTours =
+    config?.tours?.filter((tour, index, self) => {
+        const getCat = (t: any) => t.category?.[lang] ?? t.category?.es;
+        return index === self.findIndex((t) => getCat(t) === getCat(tour));
+    }) || [];
 ---
 
 <header class="absolute top-0 left-0 right-0 z-50 text-background">
@@ -54,17 +82,17 @@ const t = Translations(lang);
                 </a>
                 <!-- Dropdown Menu -->
                 {
-                    config?.roomTypes && (
+                    uniqueRooms && (
                         <div
                             id="rooms-dropdown"
                             class="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-56 bg-primary/95 backdrop-blur-md rounded-sm border-t-2 border-accent shadow-xl z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top"
                         >
-                            {config.roomTypes.map((roomType) => (
+                            {uniqueRooms[0].category && uniqueRooms.map((room) => (
                                 <a
-                                    href={`/rooms/${roomType.id}`}
+                                    href={`/rooms/${room.id}`}
                                     class="block px-6 py-3 text-sm font-serif tracking-wide text-white/90 hover:bg-accent hover:text-white transition-colors border-b border-white/5 last:border-0"
                                 >
-                                    {roomType.name?.[lang] ?? roomType.name.es}
+                                    {room.category?.[lang] ?? room.category?.es}
                                 </a>
                             ))}
                         </div>
@@ -94,17 +122,18 @@ const t = Translations(lang);
                     </svg>
                 </a>
                 {
-                    config?.destinationCategories && (
+                    uniqueDestinations && (
                         <div
                             id="destinations-dropdown"
                             class="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-56 bg-primary/95 backdrop-blur-md rounded-sm border-t-2 border-accent shadow-xl z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top"
                         >
-                            {config.destinationCategories.map((category) => (
+                            {uniqueDestinations[0].category && uniqueDestinations.map((destination) => (
                                 <a
-                                    href={`/destinations/${category.id}`}
+                                    href={`/destinations/${destination.id}`}
                                     class="block px-6 py-3 text-sm font-serif tracking-wide text-white/90 hover:bg-accent hover:text-white transition-colors border-b border-white/5 last:border-0"
                                 >
-                                    {category.name?.[lang] ?? category.name.es}
+                                    {destination.category?.[lang] ??
+                                        destination.category?.es}
                                 </a>
                             ))}
                         </div>
@@ -134,17 +163,18 @@ const t = Translations(lang);
                     </svg>
                 </a>
                 {
-                    config?.gastronomyCategories && (
+                    uniqueGastronomies && (
                         <div
                             id="gastronomy-dropdown"
                             class="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-56 bg-primary/95 backdrop-blur-md rounded-sm border-t-2 border-accent shadow-xl z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top"
                         >
-                            {config.gastronomyCategories.map((category) => (
+                            {uniqueGastronomies[0].category && uniqueGastronomies.map((gastronomy) => (
                                 <a
-                                    href={`/gastronomy/${category.id}`}
+                                    href={`/gastronomy/${gastronomy.id}`}
                                     class="block px-6 py-3 text-sm font-serif tracking-wide text-white/90 hover:bg-accent hover:text-white transition-colors border-b border-white/5 last:border-0"
                                 >
-                                    {category.name?.[lang] ?? category.name.es}
+                                    {gastronomy.category?.[lang] ??
+                                        gastronomy.category?.es}
                                 </a>
                             ))}
                         </div>
@@ -174,17 +204,17 @@ const t = Translations(lang);
                     </svg>
                 </a>
                 {
-                    config?.tourCategories && (
+                    uniqueTours && (
                         <div
                             id="tours-dropdown"
                             class="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-56 bg-primary/95 backdrop-blur-md rounded-sm border-t-2 border-accent shadow-xl z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top"
                         >
-                            {config.tourCategories.map((category) => (
+                            {uniqueTours[0].category && uniqueTours.map((tour) => (
                                 <a
-                                    href={`/tours/${category.id}`}
+                                    href={`/tours/${tour.id}`}
                                     class="block px-6 py-3 text-sm font-serif tracking-wide text-white/90 hover:bg-accent hover:text-white transition-colors border-b border-white/5 last:border-0"
                                 >
-                                    {category.name?.[lang] ?? category.name.es}
+                                    {tour.category?.[lang] ?? tour.category?.es}
                                 </a>
                             ))}
                         </div>

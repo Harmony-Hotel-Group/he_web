@@ -145,26 +145,26 @@
 			"alt": "Cuenca para el mundo - Video YouTube"
 		}
 	],
-	"roomTypes": [
+	"rooms": [
 		{
 			"id": "double",
 			"src": "src/assets/img/hotel/rooms/matrimonial/4.jpg",
 			"name": {
-				"es": "Matrimonial",
-				"en": "Double"
+				"es": "Estándar",
+				"en": "Standard"
 			},
 			"description": {
-				"es": "Descripcion en Español",
-				"en": "Description in English"
+				"es": "Habitación acogedora ideal para parejas, con todas las comodidades para una estancia romántica y relajante en el centro de la ciudad.",
+				"en": "Cozy room ideal for couples, with all the amenities for a romantic and relaxing stay in the city center."
 			},
 			"category": {
-				"es": "Categoria en Español",
-				"en": "Category in English"
+				"es": "Estándar",
+				"en": "Standard"
 			},
 			"tags": [
 				{
-					"es": "Conformidad,Vista al Frente, Baño Privado, Cama Matrimonial",
-					"en": "Conformity,Front View,Private Bathroom,Double Bed"
+					"es": "Cama Matrimonial, TV Cable, WiFi, Baño Privado",
+					"en": "Double Bed, Cable TV, WiFi, Private Bathroom"
 				}
 			],
 			"value": 25,
@@ -178,17 +178,17 @@
 				"en": "Twin"
 			},
 			"description": {
-				"es": "Descripcion en Español",
-				"en": "Description in English"
+				"es": "Perfecta para amigos o compañeros de viaje, ofrece dos camas individuales cómodas y espacio optimizado para el descanso.",
+				"en": "Perfect for friends or travel companions, offering two comfortable single beds and optimized space for rest."
 			},
 			"category": {
-				"es": "Categoria en Español",
-				"en": "Category in English"
+				"es": "Estándar",
+				"en": "Standard"
 			},
 			"tags": [
 				{
-					"es": "Conformidad,Vista al Frente, Baño Privado, Cama Matrimonial",
-					"en": "Conformity,Front View,Private Bathroom,Double Bed"
+					"es": "2 Camas Individuales, Escritorio, WiFi, Agua Caliente",
+					"en": "2 Single Beds, Desk, WiFi, Hot Water"
 				}
 			],
 			"value": 45,
@@ -202,17 +202,17 @@
 				"en": "Triple"
 			},
 			"description": {
-				"es": "Descripcion en Español",
-				"en": "Description in English"
+				"es": "Espaciosa habitación diseñada para pequeñas familias o grupos de amigos, combinando confort y funcionalidad.",
+				"en": "Spacious room designed for small families or groups of friends, combining comfort and functionality."
 			},
 			"category": {
-				"es": "Categoria en Español",
-				"en": "Category in English"
+				"es": "Estándar",
+				"en": "Standard"
 			},
 			"tags": [
 				{
-					"es": "Conformidad,Vista al Frente, Baño Privado, Cama Matrimonial",
-					"en": "Conformity,Front View,Private Bathroom,Double Bed"
+					"es": "3 Camas, Espacio Amplio, TV, Baño Privado",
+					"en": "3 Beds, Spacious, TV, Private Bathroom"
 				}
 			],
 			"value": 60,
@@ -223,20 +223,20 @@
 			"src": "src/assets/img/hotel/rooms/cuadruple_2_camas/2.jpg",
 			"name": {
 				"es": "Quadruple",
-				"en": "Quadruple"
+				"en": "Family"
 			},
 			"description": {
-				"es": "Descripcion en Español",
-				"en": "Description in English"
+				"es": "La mejor opción para grupos y familias, asegurando que todos compartan el mismo espacio con total comodidad.",
+				"en": "The best option for groups and families, ensuring everyone shares the same space with total comfort."
 			},
 			"category": {
-				"es": "Categoria en Español",
-				"en": "Category in English"
+				"es": "Familiar",
+				"en": "Family"
 			},
 			"tags": [
 				{
-					"es": "Conformidad,Vista al Frente, Baño Privado, Cama Matrimonial",
-					"en": "Conformity,Front View,Private Bathroom,Double Bed"
+					"es": "4 Camas, Ideal Grupos, Amenities, WiFi",
+					"en": "4 Beds, Ideal for Groups, Amenities, WiFi"
 				}
 			],
 			"value": 80,
@@ -250,41 +250,41 @@
 				"en": "Quintuple"
 			},
 			"description": {
-				"es": "Descripcion en Español",
-				"en": "Description in English"
+				"es": "Amplitud garantizada para grupos grandes, con espacio suficiente para moverse y descansar plácidamente.",
+				"en": "Guaranteed spaciousness for large groups, with enough room to move around and rest peacefully."
 			},
 			"category": {
-				"es": "Categoria en Español",
-				"en": "Category in English"
+				"es": "Familiar",
+				"en": "Family"
 			},
 			"tags": [
 				{
-					"es": "Conformidad,Vista al Frente, Baño Privado, Cama Matrimonial",
-					"en": "Conformity,Front View,Private Bathroom,Double Bed"
+					"es": "5 Camas, Gran Espacio, Baño Privado, WiFi",
+					"en": "5 Beds, Great Space, Private Bathroom, WiFi"
 				}
 			],
-			"value": 87.50,
+			"value": 87.5,
 			"currency": "USD"
 		},
 		{
 			"id": "sextuple",
 			"src": "src/assets/img/hotel/rooms/sextuple/1.jpg",
 			"name": {
-				"es": "Sextuple",
+				"es": "Séxtuple",
 				"en": "Sextuple"
 			},
 			"description": {
-				"es": "Descripcion en Español",
-				"en": "Description in English"
+				"es": "Nuestra habitación de mayor capacidad, perfecta para excursiones o familias numerosas que viajan juntas.",
+				"en": "Our highest capacity room, perfect for excursions or large families traveling together."
 			},
 			"category": {
-				"es": "Categoria en Español",
-				"en": "Category in English"
+				"es": "Familiar",
+				"en": "Family"
 			},
 			"tags": [
 				{
-					"es": "Conformidad,Vista al Frente, Baño Privado, Cama Matrimonial",
-					"en": "Conformity,Front View,Private Bathroom,Double Bed"
+					"es": "6 Camas, Capacidad Máxima, Confort, WiFi",
+					"en": "6 Beds, Max Capacity, Comfort, WiFi"
 				}
 			],
 			"value": 105,
@@ -294,21 +294,21 @@
 			"id": "suitematrimonial",
 			"src": "src/assets/img/hotel/rooms/suite1/2.jpg",
 			"name": {
+				"es": "Suite Matrimonial",
+				"en": "Honeymoon Suite"
+			},
+			"description": {
+				"es": "Nuestra suite más exclusiva para parejas, con acabados de lujo, mayor espacio y vistas privilegiadas.",
+				"en": "Our most exclusive suite for couples, with luxury finishes, extra space, and privileged views."
+			},
+			"category": {
 				"es": "Suite",
 				"en": "Suite"
 			},
-			"description": {
-				"es": "Descripcion en Español",
-				"en": "Description in English"
-			},
-			"category": {
-				"es": "Categoria en Español",
-				"en": "Category in English"
-			},
 			"tags": [
 				{
-					"es": "Conformidad,Vista al Frente, Baño Privado, Cama Matrimonial",
-					"en": "Conformity,Front View,Private Bathroom,Double Bed"
+					"es": "Cama King, Vista Panorámica, Minibar, Sala de Estar",
+					"en": "King Bed, Panoramic View, Minibar, Living Room"
 				}
 			],
 			"value": 100,
@@ -318,28 +318,28 @@
 			"id": "suitefamiliar",
 			"src": "src/assets/img/hotel/rooms/suite1/2.jpg",
 			"name": {
+				"es": "Suite Familiar",
+				"en": "Family Suite"
+			},
+			"description": {
+				"es": "Lujo y amplitud para toda la familia. Disfrute de áreas separadas y comodidades superiores para sentirse como en casa.",
+				"en": "Luxury and space for the whole family. Enjoy separate areas and superior amenities to feel right at home."
+			},
+			"category": {
 				"es": "Suite",
 				"en": "Suite"
 			},
-			"description": {
-				"es": "Descripcion en Español",
-				"en": "Description in English"
-			},
-			"category": {
-				"es": "Categoria en Español",
-				"en": "Category in English"
-			},
 			"tags": [
 				{
-					"es": "Conformidad,Vista al Frente, Baño Privado, Cama Matrimonial",
-					"en": "Conformity,Front View,Private Bathroom,Double Bed"
+					"es": "Camas Premium, Sala de Estar, Refrigerador, Vistas",
+					"en": "Premium Beds, Living Room, Fridge, Views"
 				}
 			],
 			"value": 160,
 			"currency": "USD"
 		}
 	],
-	"destinationCategories": [
+	"destinations": [
 		{
 			"id": "patrimonial",
 			"name": {
@@ -397,7 +397,7 @@
 			}
 		}
 	],
-	"tourCategories": [
+	"tours": [
 		{
 			"id": "city_tour",
 			"name": {
@@ -490,7 +490,7 @@
 			}
 		}
 	],
-	"gastronomyCategories": [
+	"gastronomies": [
 		{
 			"id": "traditional_food",
 			"name": {

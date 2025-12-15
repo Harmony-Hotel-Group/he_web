@@ -4,6 +4,7 @@
 import Footer from "@/components/core/Footer.astro";
 import Header from "@/components/core/Header.astro";
 import WhatsAppButton from "@/components/atoms/WhatsAppButton.astro";
+import ToastContainer from "@/components/organisms/notifications/ToastContainer.astro";
 import SizeIndicator from "@/dev/SizeIndicator.astro";
 import { getCurrentLang, Translations } from "@/i18n/translation";
 import { logger } from "@/services/logger.ts";
@@ -92,6 +93,7 @@ log.info("URLs generadas:", { esUrl, enUrl, canonicalUrl, cleanPath, baseUrl });
         </main>
         <WhatsAppButton />
         <Footer t={t} config={config} lang={lang} />
+        <ToastContainer />
         <SizeIndicator />
     </body>
 </html>

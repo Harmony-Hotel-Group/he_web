@@ -274,8 +274,41 @@ const email = config?.contactInfo?.email ?? "";
       }
     }
 
+    function validateForm(): boolean {
+      let isValid = true;
+      clearValidationErrors();
+
+      // Validar campo de fecha (requerido)
+      const dateRangeInput = document.getElementById(
+        "dateRange",
+      ) as HTMLInputElement;
+      if (!dateRangeInput?.value || dateRangeInput.value.trim() === "") {
+        const errorElement = document.getElementById("error_dateRange");
+        if (errorElement) {
+          errorElement.classList.remove("hidden");
+        }
+        if (dateRangeInput) {
+          dateRangeInput.classList.add("border-red-500");
+        }
+        isValid = false;
+      }
+
+      // Scroll al primer error si existe
+      if (!isValid) {
+        const firstError = form.querySelector('[id^="error_"]:not(.hidden)');
+        firstError?.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+
+      return isValid;
+    }
+
     const btn = document.getElementById("btnSubmit") as HTMLButtonElement;
     btn?.addEventListener("click", async () => {
+      // Validar formulario antes de procesar
+      if (!validateForm()) {
+        return;
+      }
+
       clearValidationErrors();
       const originalButtonHTML = btn.innerHTML;
       btn.disabled = true;

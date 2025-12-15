@@ -7,9 +7,9 @@ import BookingGroupForm from "./BookingGroupForm.astro";
 import BookingVehicleForm from "./BookingVehicleForm.astro";
 
 interface Props {
-	lang: string;
-	config: SiteConfig;
-	isOpen: boolean;
+    lang: string;
+    config: SiteConfig;
+    isOpen: boolean;
 }
 
 const { lang, config, isOpen } = Astro.props;
@@ -312,6 +312,15 @@ const t = Translations(lang);
 
             private async confirm() {
                 try {
+                    // Validar formulario antes de procesar
+                    const validateFn = (window as any).validateBookingGroupForm;
+                    if (validateFn && typeof validateFn === "function") {
+                        if (!validateFn()) {
+                            log.warn("Validación del formulario falló");
+                            return;
+                        }
+                    }
+
                     // Obtener datos del formulario de grupo (siempre presente)
                     const groupForm = document.getElementById(
                         "booking-group-form",
@@ -337,9 +346,8 @@ const t = Translations(lang);
                     }
 
                     // Usar la función de envío desde utils
-                    const { sendWhatsappMessage } = await import(
-                        "@/services/messages/whatsapp.ts"
-                    );
+                    const { sendWhatsappMessage } =
+                        await import("@/services/messages/whatsapp.ts");
 
                     // Determinar el tipo de booking
                     const bookingType = this.vehiclesEnabled

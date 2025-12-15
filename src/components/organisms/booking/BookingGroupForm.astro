@@ -14,8 +14,8 @@ import Row from "@/layouts/Row.astro";
 import type { SiteConfig } from "@/types/config";
 
 interface Props {
-	lang: string;
-	config: SiteConfig;
+    lang: string;
+    config: SiteConfig;
 }
 
 const { lang, config } = Astro.props;
@@ -23,135 +23,215 @@ const t = Translations(lang);
 ---
 
 <form id="booking-group-form" method="post" class="space-y-4">
-    <div class="bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg p-4">
-        <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-3 flex items-center gap-2">
+    <div
+        class="bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg p-4"
+    >
+        <h3
+            class="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-3 flex items-center gap-2"
+        >
             <svg class="w-5 h-5" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+                ></path>
             </svg>
-            {t('booking.group.title')}
+            {t("booking.group.title")}
         </h3>
 
         <Grid cols={3} autoAdjust={true} gap={4}>
             <!-- DatePicker sincronizado con el formulario principal -->
             <div data-col-span="full" data-col-span-md="full">
                 <DatePickerField
-                        fieldId="dateRangeGroup"
-                        name="dateRangeGroup"
-                        lblKey="booking.dateRange.title"
-                        lang={lang}
-                        syncGroup="booking"
+                    fieldId="dateRangeGroup"
+                    name="dateRangeGroup"
+                    lblKey="booking.dateRange.title"
+                    lang={lang}
+                    syncGroup="booking"
                 />
             </div>
 
             <NumberField
-                    fieldId="groupAdults"
-                    name="groupAdults"
-                    lblKey="booking.group.adults"
-                    lang={lang}
-                    icon="form/adult"
-                    min={1}
-                    value={8}
+                fieldId="groupAdults"
+                name="groupAdults"
+                lblKey="booking.group.adults"
+                lang={lang}
+                icon="form/adult"
+                min={1}
+                value={8}
             />
 
             <NumberField
-                    fieldId="groupTeens"
-                    name="groupTeens"
-                    lblKey="booking.group.teens"
-                    lang={lang}
-                    icon="form/teen"
-                    min={0}
+                fieldId="groupTeens"
+                name="groupTeens"
+                lblKey="booking.group.teens"
+                lang={lang}
+                icon="form/teen"
+                min={0}
             />
 
             <NumberField
-                    fieldId="groupKids"
-                    name="groupKids"
-                    lblKey="booking.group.kids"
-                    lang={lang}
-                    icon="form/child"
-                    min={0}
+                fieldId="groupKids"
+                name="groupKids"
+                lblKey="booking.group.kids"
+                lang={lang}
+                icon="form/child"
+                min={0}
             />
 
             <NumberField
-                    fieldId="groupInfants"
-                    name="groupInfants"
-                    lblKey="booking.group.infants"
-                    lang={lang}
-                    icon="form/baby"
-                    min={0}
+                fieldId="groupInfants"
+                name="groupInfants"
+                lblKey="booking.group.infants"
+                lang={lang}
+                icon="form/baby"
+                min={0}
             />
         </Grid>
     </div>
 
     <Row>
         <SwitchField
-                fieldId="breakfast"
-                name="breakfast"
-                lblKey="booking.switch.breakfast"
-                lang={lang}
-                checked
-                icon="form/breakfast"
+            fieldId="breakfast"
+            name="breakfast"
+            lblKey="booking.switch.breakfast"
+            lang={lang}
+            checked
+            icon="form/breakfast"
         />
         <SwitchField
-                fieldId="vehicle-group"
-                name="vehicle-group"
-                lblKey="booking.group.vehicle"
-                lang={lang}
-                icon="form/vehicle"
+            fieldId="vehicle-group"
+            name="vehicle-group"
+            lblKey="booking.group.vehicle"
+            lang={lang}
+            icon="form/vehicle"
         />
     </Row>
 
     <div id="special_request-group-section" class="hidden">
-        <Label forId="groupNotes" lang={lang} lblKey="booking.group.notes" classes="pr-5"/>
+        <Label
+            forId="groupNotes"
+            lang={lang}
+            lblKey="booking.group.notes"
+            classes="pr-5"
+        />
         <TextAreaInput
-                id="groupNotes"
-                name="groupNotes"
-                keyPlaceholder='booking.group.notesPlaceholder'
-                lang={lang}
+            id="groupNotes"
+            name="groupNotes"
+            keyPlaceholder="booking.group.notesPlaceholder"
+            lang={lang}
         />
     </div>
 
     <div id="vehicle-group-section" class="hidden">
-        <BookingVehicleSection lang={lang} config={config}/>
+        <BookingVehicleSection lang={lang} config={config} />
     </div>
-
 </form>
 
 <script>
-    import { actions } from 'astro:actions';
+    import { actions } from "astro:actions";
 
-    document.addEventListener('DOMContentLoaded', () => {
-        const form: HTMLFormElement = document.getElementById('booking-group-form') as HTMLFormElement;
+    document.addEventListener("DOMContentLoaded", () => {
+        const form: HTMLFormElement = document.getElementById(
+            "booking-group-form",
+        ) as HTMLFormElement;
         if (!form) return;
 
-        const vehicleSection = document.getElementById('vehicle-group-section');
-        const vehicleSwitchButton = form.querySelector('button[id="vehicle-group"]');
-
+        const vehicleSection = document.getElementById("vehicle-group-section");
+        const vehicleSwitchButton = form.querySelector(
+            'button[id="vehicle-group"]',
+        );
 
         if (vehicleSwitchButton && vehicleSection) {
             const observer = new MutationObserver(() => {
-                const isChecked = vehicleSwitchButton.getAttribute('aria-checked') === 'true';
-                vehicleSection.classList.toggle('hidden', !isChecked);
+                const isChecked =
+                    vehicleSwitchButton.getAttribute("aria-checked") === "true";
+                vehicleSection.classList.toggle("hidden", !isChecked);
             });
             observer.observe(vehicleSwitchButton, {
                 attributes: true,
-                attributeFilter: ['aria-checked']
+                attributeFilter: ["aria-checked"],
             });
         }
 
         // Escuchar cambios en el date picker para validación
-        const dateInput = document.getElementById('dateRangeGroup');
+        const dateInput = document.getElementById("dateRangeGroup");
 
-        dateInput?.addEventListener('datepicker:change', (event: any) => {
-            const {nights, dates} = event.detail;
+        dateInput?.addEventListener("datepicker:change", (event: any) => {
+            const { nights, dates } = event.detail;
 
             if (import.meta.env.DEV) {
-                console.log('[BookingGroupForm] Fechas cambiadas:', {
+                console.log("[BookingGroupForm] Fechas cambiadas:", {
                     nights,
-                    dates: dates.map((d: Date) => d.toLocaleDateString())
+                    dates: dates.map((d: Date) => d.toLocaleDateString()),
                 });
             }
         });
+
+        // Funciones de validación
+        function clearValidationErrors() {
+            form.querySelectorAll('[id^="error_"]').forEach((el) =>
+                el.classList.add("hidden"),
+            );
+            form.querySelectorAll(".border-red-500").forEach((el) =>
+                el.classList.remove("border-red-500"),
+            );
+        }
+
+        function validateForm(): boolean {
+            let isValid = true;
+            clearValidationErrors();
+
+            // Validar campo de fecha (requerido)
+            const dateRangeInput = document.getElementById(
+                "dateRangeGroup",
+            ) as HTMLInputElement;
+            if (!dateRangeInput?.value || dateRangeInput.value.trim() === "") {
+                const errorElement = document.getElementById(
+                    "error_dateRangeGroup",
+                );
+                if (errorElement) {
+                    errorElement.classList.remove("hidden");
+                }
+                if (dateRangeInput) {
+                    dateRangeInput.classList.add("border-red-500");
+                }
+                isValid = false;
+            }
+
+            // Validar que al menos haya 1 adulto
+            const adultsInput = document.getElementById(
+                "groupAdults",
+            ) as HTMLInputElement;
+            if (!adultsInput?.value || parseInt(adultsInput.value) < 1) {
+                const errorElement =
+                    document.getElementById("error_groupAdults");
+                if (errorElement) {
+                    errorElement.classList.remove("hidden");
+                }
+                if (adultsInput) {
+                    adultsInput.classList.add("border-red-500");
+                }
+                isValid = false;
+            }
+
+            // Scroll al primer error si existe
+            if (!isValid) {
+                const firstError = form.querySelector(
+                    '[id^="error_"]:not(.hidden)',
+                );
+                firstError?.scrollIntoView({
+                    behavior: "smooth",
+                    block: "center",
+                });
+            }
+
+            return isValid;
+        }
+
+        // Exponer validateForm globalmente para que el modal lo use
+        (window as any).validateBookingGroupForm = validateForm;
     });
 </script>
 

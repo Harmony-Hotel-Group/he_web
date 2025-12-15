@@ -3,154 +3,261 @@
 import { Translations } from "@/i18n/translation.ts";
 import { logger } from "@/services/logger.ts";
 import Grid from "@/layouts/GridLayout.astro";
-import Row from "@/layouts/Row.astro";
 import type { SiteConfig } from "@/types/config";
 
 const log = logger("BookingVehicleSection");
 
 interface Props {
-	lang: string;
-	config?: SiteConfig;
+    lang: string;
+    config?: SiteConfig;
 }
 
-const {
-	lang,
-	config,
-} = Astro.props as Props;
-const vehicleTypeOptions = (config?.vehicleTypeOptions ??
-	[]) as Array<{ value: string; [key: string]: string }>;
+const { lang, config } = Astro.props as Props;
+const vehicleTypeOptions = (config?.vehicleTypeOptions ?? []) as Array<{
+    value: string;
+    [key: string]: string;
+}>;
 const t = Translations(lang);
 
 if (vehicleTypeOptions.length === 0) {
-	log.warn("No se proporcionaron 'vehicleTypeOptions'. Los selectores de tipo de vehículo estarán deshabilitados.");
+    log.warn(
+        "No se proporcionaron 'vehicleTypeOptions'. Los selectores de tipo de vehículo estarán deshabilitados.",
+    );
 }
+
+// Clases CSS reutilizables
+const inputClasses =
+    "w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-amber-500 focus:border-transparent";
+const labelClasses =
+    "block text-xs font-medium text-gray-600 dark:text-gray-400";
 ---
 
-<div id="vehicle-section-component"
-     class="space-y-3"
+<div
+    id="vehicle-section-component"
+    class="space-y-3"
+    data-t-vehicle={t("booking.vehicles.vehicle")}
+    data-t-type={t("booking.vehicles.type")}
+    data-t-plate-title={t("booking.vehicles.plate.title")}
+    data-t-plate-placeholder={t("booking.vehicles.plate.placeholder")}
 >
-
-    <div class="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg p-4">
-        <h3 class="text-lg font-semibold text-amber-900 dark:text-amber-100 mb-3 flex items-center gap-2">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0"/>
+    <div
+        class="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg p-4"
+    >
+        <h3
+            class="text-lg font-semibold text-amber-900 dark:text-amber-100 mb-3 flex items-center gap-2"
+        >
+            <svg
+                class="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+            >
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0"
+                ></path>
             </svg>
-            {t('booking.vehicles.title')}
+            {t("booking.vehicles.title")}
         </h3>
 
-        {vehicleTypeOptions.length === 0 && (
-            <div class="mb-3 text-sm text-amber-800 dark:text-amber-200 bg-amber-100/60 dark:bg-amber-900/30 border border-amber-200 dark:border-amber-800 rounded-md p-3">
-                {t('components.errors.missingVehicleOptions')}
-            </div>
-        )}
-        <Grid cols={3} _id="vehicles-container">
-            <!-- Vehículo 1 (por defecto) -->
-            <div class="vehicle-item bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-3">
-                <div class="flex justify-between items-center mb-2">
-                    <span class="text-sm font-medium text-gray-700 dark:text-gray-300">
-                        {t('booking.vehicles.vehicle')} 1</span>
+        {
+            vehicleTypeOptions.length === 0 && (
+                <div class="mb-3 text-sm text-amber-800 dark:text-amber-200 bg-amber-100/60 dark:bg-amber-900/30 border border-amber-200 dark:border-amber-800 rounded-md p-3">
+                    {t("components.errors.missingVehicleOptions")}
                 </div>
-                <Row class="grid grid-cols-2 ">
-                    <label for="vehicleType1" class="block text-xs font-medium text-gray-600 dark:text-gray-400">
-                        {t('booking.vehicles.type')}
-                        <select name="vehicleType1"
-                                class="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-amber-500 focus:border-transparent"
-                                disabled={vehicleTypeOptions.length === 0}>
-                            {vehicleTypeOptions.length > 0 ? (
-                                vehicleTypeOptions.map(option => (
-                                    <option value={option.value}>{option[lang] ?? option.label ?? option.value}</option>
-                                ))
-                            ) : (
-                                <option value="" disabled selected>— {t('booking.vehicles.type')} —</option>
-                            )}
+            )
+        }
+
+        <Grid cols={3} _id="vehicles-container">
+            <!-- Template del primer vehículo -->
+            <div
+                class="vehicle-item bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-3"
+            >
+                <div class="flex justify-between items-center mb-2">
+                    <span
+                        class="text-sm font-medium text-gray-700 dark:text-gray-300"
+                    >
+                        {t("booking.vehicles.vehicle")} 1
+                    </span>
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <label for="vehicleType1" class={labelClasses}>
+                        {t("booking.vehicles.type")}
+                        <select
+                            name="vehicleType1"
+                            class={inputClasses}
+                            disabled={vehicleTypeOptions.length === 0}
+                        >
+                            {
+                                vehicleTypeOptions.length > 0 ? (
+                                    vehicleTypeOptions.map((option) => (
+                                        <option value={option.value}>
+                                            {option[lang] ??
+                                                option.label ??
+                                                option.value}
+                                        </option>
+                                    ))
+                                ) : (
+                                    <option value="" disabled selected>
+                                        — {t("booking.vehicles.type")} —
+                                    </option>
+                                )
+                            }
                         </select>
                     </label>
-                    <label class="block text-xs font-medium text-gray-600 dark:text-gray-400">{t('booking.vehicles.plate.title')}
-                        <input type="text" name="vehiclePlate1" placeholder={t('booking.vehicles.plate.placeholder')}
-                               class="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-amber-500 focus:border-transparent uppercase"/>
+                    <label class={labelClasses}>
+                        {t("booking.vehicles.plate.title")}
+                        <input
+                            type="text"
+                            name="vehiclePlate1"
+                            placeholder={t(
+                                "booking.vehicles.plate.placeholder",
+                            )}
+                            class={`${inputClasses} uppercase`}
+                        />
                     </label>
-                </Row>
+                </div>
             </div>
         </Grid>
 
         <div class="flex gap-2 mt-3">
-            <button type="button" id="addVehicleBtn"
-                    class="px-4 py-2 text-sm bg-amber-600 hover:bg-amber-700 text-white rounded-md transition-colors duration-200 flex items-center gap-2">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+            <button
+                type="button"
+                id="addVehicleBtn"
+                class="px-4 py-2 text-sm bg-amber-600 hover:bg-amber-700 text-white rounded-md transition-colors duration-200 flex items-center gap-2"
+            >
+                <svg
+                    class="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M12 4v16m8-8H4"></path>
                 </svg>
-                {t('booking.vehicles.add')}
+                {t("booking.vehicles.add")}
             </button>
-            <button type="button" id="removeVehicleBtn"
-                    class="px-4 py-2 text-sm bg-red-600 hover:bg-red-700 text-white rounded-md transition-colors duration-200 items-center gap-2 hidden">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"/>
+            <button
+                type="button"
+                id="removeVehicleBtn"
+                class="px-4 py-2 text-sm bg-red-600 hover:bg-red-700 text-white rounded-md transition-colors duration-200 flex items-center gap-2 hidden"
+            >
+                <svg
+                    class="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M20 12H4"></path>
                 </svg>
-                {t('booking.vehicles.remove')}
+                {t("booking.vehicles.remove")}
             </button>
         </div>
     </div>
 </div>
 
 <script is:inline define:vars={{ lang, vehicleTypeOptions }}>
-    document.addEventListener('DOMContentLoaded', () => {
-        const log = { info: (m, ...a) => console.log(`[UI:BookingVehicleSection] INFO: ${m}`, ...a), warn: (m, ...a) => console.warn(`[UI:BookingVehicleSection] WARN: ${m}`, ...a), error: (m, ...a) => console.error(`[UI:BookingVehicleSection] ERROR: ${m}`, ...a) };
-
-        const component = document.getElementById('vehicle-section-component');
-        if (!component || component.dataset.initialized) return; // 👈 Evita doble inicialización
-        component.dataset.initialized = 'true'; // Marca como inicializado
-        if (!component) return;
-
-        const addVehicleBtn = component.querySelector('#addVehicleBtn');
-        const removeVehicleBtn = component.querySelector('#removeVehicleBtn');
-        const vehiclesContainer = component.querySelector('#vehicles-container');
-
-        const getVehicleCount = () => vehiclesContainer.querySelectorAll('.vehicle-item').length;
-
-        const updateRemoveButton = () => {
-            removeVehicleBtn.classList.toggle('hidden', getVehicleCount() <= 1);
+    document.addEventListener("DOMContentLoaded", () => {
+        const log = {
+            info: (m, ...a) =>
+                console.log(`[UI:BookingVehicleSection] INFO: ${m}`, ...a),
+            warn: (m, ...a) =>
+                console.warn(`[UI:BookingVehicleSection] WARN: ${m}`, ...a),
+            error: (m, ...a) =>
+                console.error(`[UI:BookingVehicleSection] ERROR: ${m}`, ...a),
         };
 
-        // Inyectamos las traducciones necesarias desde Astro (mejor que importar en el cliente)
-        const t_vehicle = component.dataset.tVehicle || 'Vehículo';
-        const t_type = component.dataset.tType || 'Tipo';
-        const t_plateTitle = component.dataset.tPlateTitle || 'Placa';
-        const t_platePlaceholder = component.dataset.tPlatePlaceholder || 'ABC-1234';
+        const component = document.getElementById("vehicle-section-component");
+        if (!component || component.dataset.initialized) return;
+        component.dataset.initialized = "true";
 
-        addVehicleBtn?.addEventListener('click', () => {
+        const addVehicleBtn = component.querySelector("#addVehicleBtn");
+        const removeVehicleBtn = component.querySelector("#removeVehicleBtn");
+        const vehiclesContainer = component.querySelector(
+            "#vehicles-container",
+        );
+
+        const getVehicleCount = () =>
+            vehiclesContainer.querySelectorAll(".vehicle-item").length;
+
+        const updateRemoveButton = () => {
+            removeVehicleBtn.classList.toggle("hidden", getVehicleCount() <= 1);
+            removeVehicleBtn.classList.toggle("flex", getVehicleCount() > 1);
+        };
+
+        // Traducciones inyectadas desde data-attributes
+        const t_vehicle = component.dataset.tVehicle || "Vehículo";
+        const t_type = component.dataset.tType || "Tipo";
+        const t_plateTitle = component.dataset.tPlateTitle || "Placa";
+        const t_platePlaceholder =
+            component.dataset.tPlatePlaceholder || "ABC-1234";
+
+        // Clases CSS compartidas
+        const inputClasses =
+            "w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-amber-500 focus:border-transparent";
+        const labelClasses =
+            "block text-xs font-medium text-gray-600 dark:text-gray-400";
+
+        // Función helper para generar el HTML del vehículo
+        const createVehicleHTML = (index) => {
+            const optionsHTML =
+                vehicleTypeOptions && vehicleTypeOptions.length > 0
+                    ? vehicleTypeOptions
+                          .map(
+                              (opt) =>
+                                  `<option value="${opt.value}">${opt[lang] ?? opt.label ?? opt.value}</option>`,
+                          )
+                          .join("")
+                    : "";
+
+            return `
+				<div class="vehicle-item bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-3">
+					<div class="flex justify-between items-center mb-2">
+						<span class="text-sm font-medium text-gray-700 dark:text-gray-300">${t_vehicle} ${index}</span>
+					</div>
+					<div class="grid grid-cols-2 gap-3">
+						<label class="${labelClasses}">
+							${t_type}
+							<select name="vehicleType${index}" class="${inputClasses}">
+								${optionsHTML}
+							</select>
+						</label>
+						<label class="${labelClasses}">
+							${t_plateTitle}
+							<input 
+								type="text" 
+								name="vehiclePlate${index}" 
+								placeholder="${t_platePlaceholder}" 
+								class="${inputClasses} uppercase" 
+							/>
+						</label>
+					</div>
+				</div>`;
+        };
+
+        addVehicleBtn?.addEventListener("click", () => {
             const currentCount = getVehicleCount();
             log.info(`Añadiendo vehículo. Actual: ${currentCount}`);
             if (currentCount >= 6) return;
 
-            const nextIndex = currentCount + 1;
-
-            const optionsHTML = (vehicleTypeOptions && vehicleTypeOptions.length > 0)
-                ? vehicleTypeOptions.map((opt) => `<option value="${opt.value}">${opt[lang] ?? opt.label ?? opt.value}</option>`).join('')
-                : '';
-
-            const vehicleHTML = `
-        <div class="vehicle-item bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-3">
-          <div class="flex justify-between items-center mb-2">
-            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">${t_vehicle} ${nextIndex}</span>
-          </div>
-          <div class="grid grid-cols-2 gap-3 flex justify-between items-center mb-2">
-              <label class="block text-xs font-medium text-gray-600 dark:text-gray-400">${t_type}
-              <select name="vehicleType${nextIndex}" class="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-amber-500 focus:border-transparent">
-                ${optionsHTML}
-              </select></label>
-              <label class="block text-xs font-medium text-gray-600 dark:text-gray-400">${t_plateTitle}
-              <input type="text" name="vehiclePlate${nextIndex}" placeholder="${t_platePlaceholder}" class="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-amber-500 focus:border-transparent uppercase" />
-              </label>
-          </div>
-        </div>`;
-
-            vehiclesContainer.insertAdjacentHTML('beforeend', vehicleHTML);
+            vehiclesContainer.insertAdjacentHTML(
+                "beforeend",
+                createVehicleHTML(currentCount + 1),
+            );
             updateRemoveButton();
         });
 
-        removeVehicleBtn?.addEventListener('click', () => {
-            const items = vehiclesContainer.querySelectorAll('.vehicle-item');
+        removeVehicleBtn?.addEventListener("click", () => {
+            const items = vehiclesContainer.querySelectorAll(".vehicle-item");
             log.info(`Eliminando vehículo. Actual: ${items.length}`);
             if (items.length > 1) {
                 items[items.length - 1].remove();
@@ -158,6 +265,6 @@ if (vehicleTypeOptions.length === 0) {
             }
         });
 
-        // updateRemoveButton(); // Inicializa estado del botón
+        updateRemoveButton();
     });
 </script>

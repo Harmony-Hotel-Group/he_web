@@ -1,75 +1,171 @@
 ---
 interface Props {
-    items: any[];
-    component: any;
-    itemClass?: string;
-    duration?: string;
-    gap?: string;
+	items: any[];
+	component: any;
+	itemClass?: string;
+	speed?: number; // Reemplazamos duration por velocidad (px por frame)
+	gap?: string;
 }
 
 const {
-    items,
-    component: CardComponent,
-    itemClass = "w-80 md:w-96 flex-shrink-0",
-    duration = "40s",
-    gap = "gap-6 md:gap-8",
+	items,
+	component: CardComponent,
+	itemClass = "w-80 md:w-96 flex-shrink-0",
+	speed = 1, // Velocidad por defecto
+	gap = "gap-6 md:gap-8",
 } = Astro.props;
 
+// Duplicamos los items para el efecto infinito
 const duplicatedItems = [...items, ...items];
 ---
 
-<div class="carousel-container relative w-full mask-gradient overflow-hidden">
-    <div class={`carousel-track flex w-max hover:pause ${gap}`}>
+<div class="carousel-wrapper relative w-full mask-gradient overflow-hidden cursor-grab active:cursor-grabbing">
+    <div class={`carousel-track flex w-max ${gap}`}>
         {
             duplicatedItems.map((item) => (
-                <div class={itemClass}>
-                    <CardComponent {...item} />
-                </div>
+                    <div class={`carousel-item ${itemClass}`}>
+                        <CardComponent {...item} />
+                    </div>
             ))
         }
     </div>
 </div>
 
-<style define:vars={{ duration, gap }}>
-    .carousel-track {
-        animation: scroll var(--duration) linear infinite;
-        /* Apply gap here if not using Tailwind's gap utility with dynamic values properly, 
-       but style attribute handles specific values well. 
-       Note: We used style for gap to ensure it works with arbitrary strings if needed, 
-       though Tailwind classes are preferred if passed in gap prop. 
-       The style attribute above covers the gap.
-    */
-    }
+<style define:vars={{ gap }}>
+    /* Eliminamos la animación CSS keyframes porque ahora JS controla el movimiento */
 
-    /* Utility to pause on hover */
-    .hover\:pause:hover {
-        animation-play-state: paused;
-    }
-
-    /* Fade effect on the sides using mask-image */
+    /* Fade effect en los lados */
     .mask-gradient {
         mask-image: linear-gradient(
-            to right,
-            transparent,
-            black 5%,
-            black 95%,
-            transparent
+                to right,
+                transparent,
+                black 5%,
+                black 95%,
+                transparent
         );
         -webkit-mask-image: linear-gradient(
-            to right,
-            transparent,
-            black 5%,
-            black 95%,
-            transparent
+                to right,
+                transparent,
+                black 5%,
+                black 95%,
+                transparent
         );
     }
 
-    @keyframes scroll {
-        0% {
-            transform: translateX(0);
-        }
-        100% {
-            transform: translateX(-50%);
-        }
+    /* Prevenimos que el usuario seleccione el texto o imagenes al arrastrar */
+    .carousel-track {
+        user-select: none;
+        touch-action: pan-y; /* Permite scroll vertical pero controlamos el horizontal */
+        will-change: transform; /* Optimización para la GPU */
     }
 </style>
+
+<script define:vars={{ speed }}>
+    class InfiniteCarousel {
+        constructor(container, speed) {
+            this.container = container;
+            this.track = container.querySelector('.carousel-track');
+            this.speed = speed; // Pixeles por frame
+            this.baseSpeed = speed;
+
+            this.offset = 0;
+            this.isDragging = false;
+            this.startX = 0;
+            this.lastX = 0;
+
+            this.animationId = null;
+
+            this.init();
+        }
+
+        get trackWidth() {
+            // El ancho real es la mitad porque duplicamos los items
+            return this.track.scrollWidth / 2;
+        }
+
+        init() {
+            // Eventos de Mouse
+            this.container.addEventListener('mousedown', (e) => this.startDrag(e));
+            window.addEventListener('mouseup', () => this.endDrag());
+            window.addEventListener('mousemove', (e) => this.onDrag(e));
+
+            // Eventos Táctiles (Móvil)
+            this.container.addEventListener('touchstart', (e) => this.startDrag(e.touches[0]));
+            window.addEventListener('touchend', () => this.endDrag());
+            window.addEventListener('touchmove', (e) => this.onDrag(e.touches[0]));
+
+            // Pausa al hacer hover (opcional, si quieres que pare solo al posar el mouse sin click)
+            this.container.addEventListener('mouseenter', () => this.speed = 0);
+            this.container.addEventListener('mouseleave', () => {
+                if (!this.isDragging) this.speed = this.baseSpeed;
+            });
+
+            // Iniciar Loop
+            this.animate();
+        }
+
+        startDrag(e) {
+            this.isDragging = true;
+            this.startX = e.clientX;
+            this.lastX = e.clientX;
+            this.speed = 0; // Detenemos el auto-scroll al agarrar
+            this.container.style.cursor = 'grabbing';
+        }
+
+        endDrag() {
+            if (!this.isDragging) return;
+            this.isDragging = false;
+            this.speed = this.baseSpeed; // Restauramos velocidad
+            this.container.style.cursor = 'grab';
+        }
+
+        onDrag(e) {
+            if (!this.isDragging) return;
+
+            const currentX = e.clientX;
+            const delta = currentX - this.lastX;
+
+            // Movemos el track basado en el arrastre
+            this.offset += delta;
+            this.lastX = currentX;
+        }
+
+        animate() {
+            // Movimiento automático (si no se arrastra y speed > 0)
+            if (!this.isDragging) {
+                this.offset -= this.speed;
+            }
+
+            // Lógica de Bucle Infinito
+            // Si nos pasamos de la mitad (final del set original), reseteamos a 0
+            if (Math.abs(this.offset) >= this.trackWidth) {
+                this.offset = 0;
+            }
+            // Si arrastramos hacia la derecha y pasamos el inicio, saltamos al final
+            else if (this.offset > 0) {
+                this.offset = -this.trackWidth;
+            }
+
+            // Aplicar transformación
+            this.track.style.transform = `translate3d(${this.offset}px, 0, 0)`;
+
+            this.animationId = requestAnimationFrame(() => this.animate());
+        }
+    }
+
+    // Inicializar todos los carruseles en la página
+    document.addEventListener('astro:page-load', () => {
+        // Esto asegura compatibilidad con ViewTransitions de Astro
+        initCarousels();
+    });
+
+    // Fallback para carga normal
+    document.addEventListener('DOMContentLoaded', initCarousels);
+
+    function initCarousels() {
+        const containers = document.querySelectorAll('.carousel-wrapper');
+        containers.forEach(container => {
+            new InfiniteCarousel(container, speed);
+        });
+    }
+</script>

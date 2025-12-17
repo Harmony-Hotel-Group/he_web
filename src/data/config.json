@@ -51,15 +51,15 @@
 		},
 		"images": [
 			{
-				"src": "src/assets/img/hotel/lounge/4.jpg",
+				"src": "src/assets/img/hotel/lounge/4.webp",
 				"alt": "Lounge del Hotel Ensueños"
 			},
 			{
-				"src": "src/assets/img/hotel/lobby/7.jpg",
+				"src": "src/assets/img/hotel/lobby/7.webp",
 				"alt": "Lobby del Hotel Ensueños"
 			},
 			{
-				"src": "src/assets/img/hotel/lounge/1.jpg",
+				"src": "src/assets/img/hotel/lounge/1.webp",
 				"alt": "Lounge del Hotel Ensueños"
 			},
 			{
@@ -67,75 +67,75 @@
 				"alt": "Fachada del Hotel Ensueños"
 			},
 			{
-				"src": "src/assets/img/hotel/lounge/8.jpg",
+				"src": "src/assets/img/hotel/lounge/8.webp",
 				"alt": "Lounge del Hotel Ensueños"
 			},
 			{
-				"src": "src/assets/img/hotel/lobby/3.jpg",
+				"src": "src/assets/img/hotel/lobby/3.webp",
 				"alt": "Lobby del Hotel Ensueños"
 			},
 			{
-				"src": "src/assets/img/hotel/lounge/7.jpg",
+				"src": "src/assets/img/hotel/lounge/7.webp",
 				"alt": "Lounge del Hotel Ensueños"
 			},
 			{
-				"src": "src/assets/img/hotel/lobby/9.jpg",
+				"src": "src/assets/img/hotel/lobby/9.webp",
 				"alt": "Lobby del Hotel Ensueños"
 			},
 			{
-				"src": "src/assets/img/hotel/lounge/2.jpg",
+				"src": "src/assets/img/hotel/lounge/2.webp",
 				"alt": "Lounge del Hotel Ensueños"
 			},
 			{
-				"src": "src/assets/img/hotel/lobby/1.jpg",
+				"src": "src/assets/img/hotel/lobby/1.webp",
 				"alt": "Lobby del Hotel Ensueños"
 			},
 			{
-				"src": "src/assets/img/hotel/lounge/6.jpg",
+				"src": "src/assets/img/hotel/lounge/6.webp",
 				"alt": "Lounge del Hotel Ensueños"
 			},
 			{
-				"src": "src/assets/img/hotel/lobby/6.jpg",
+				"src": "src/assets/img/hotel/lobby/6.webp",
 				"alt": "Lobby del Hotel Ensueños"
 			},
 			{
-				"src": "src/assets/img/hotel/lobby/4.jpg",
+				"src": "src/assets/img/hotel/lobby/4.webp",
 				"alt": "Lobby del Hotel Ensueños"
 			},
 			{
-				"src": "src/assets/img/hotel/lounge/5.jpg",
+				"src": "src/assets/img/hotel/lounge/5.webp",
 				"alt": "Lounge del Hotel Ensueños"
 			},
 			{
-				"src": "src/assets/img/hotel/lobby/2.jpg",
+				"src": "src/assets/img/hotel/lobby/2.webp",
 				"alt": "Lobby del Hotel Ensueños"
 			},
 			{
-				"src": "src/assets/img/hotel/lounge/3.jpg",
+				"src": "src/assets/img/hotel/lounge/3.webp",
 				"alt": "Lounge del Hotel Ensueños"
 			},
 			{
-				"src": "src/assets/img/hotel/lounge/9.jpg",
+				"src": "src/assets/img/hotel/lounge/9.webp",
 				"alt": "Lounge del Hotel Ensueños"
 			},
 			{
-				"src": "src/assets/img/hotel/lobby/8.jpg",
+				"src": "src/assets/img/hotel/lobby/8.webp",
 				"alt": "Lobby del Hotel Ensueños"
 			},
 			{
-				"src": "src/assets/img/hotel/lobby/5.jpg",
+				"src": "src/assets/img/hotel/lobby/5.webp",
 				"alt": "Lobby del Hotel Ensueños"
 			}
 		]
 	},
 	"carouselResources": [
 		{
-			"src": "https://wallpapers.com/images/featured/fondos-de-hermosos-paisajes-wnxju2647uqrcccv.jpg",
+			"src": "https://wallpapers.com/images/featured/fondos-de-hermosos-paisajes-wnxju2647uqrcccv.webp",
 			"type": "image",
 			"alt": "Catedral de Cuenca - Imagen Web"
 		},
 		{
-			"src": "/src/assets/img/cities/cuenca/calderon-catedral.jpg",
+			"src": "/src/assets/img/cities/cuenca/calderon-catedral.webp",
 			"type": "image",
 			"alt": "Catedral de Cuenca - Imagen Local"
 		},
@@ -148,7 +148,7 @@
 	"rooms": [
 		{
 			"id": "double",
-			"src": "src/assets/img/hotel/rooms/matrimonial/4.jpg",
+			"src": "src/assets/img/hotel/rooms/matrimonial/4.webp",
 			"name": {
 				"es": "Estándar",
 				"en": "Standard"
@@ -172,7 +172,7 @@
 		},
 		{
 			"id": "twin",
-			"src": "src/assets/img/hotel/rooms/doble_individual/5.jpg",
+			"src": "src/assets/img/hotel/rooms/doble_individual/5.webp",
 			"name": {
 				"es": "Doble individual",
 				"en": "Twin"
@@ -196,7 +196,7 @@
 		},
 		{
 			"id": "triple",
-			"src": "src/assets/img/hotel/rooms/triple/4.jpg",
+			"src": "src/assets/img/hotel/rooms/triple/4.webp",
 			"name": {
 				"es": "Triple",
 				"en": "Triple"
@@ -220,7 +220,7 @@
 		},
 		{
 			"id": "quadruple",
-			"src": "src/assets/img/hotel/rooms/cuadruple_2_camas/2.jpg",
+			"src": "src/assets/img/hotel/rooms/cuadruple_2_camas/2.webp",
 			"name": {
 				"es": "Quadruple",
 				"en": "Family"
@@ -244,7 +244,7 @@
 		},
 		{
 			"id": "quintuple",
-			"src": "src/assets/img/hotel/rooms/quintuple/2.jpg",
+			"src": "src/assets/img/hotel/rooms/quintuple/2.webp",
 			"name": {
 				"es": "Quintuple",
 				"en": "Quintuple"
@@ -263,12 +263,12 @@
 					"en": "5 Beds, Great Space, Private Bathroom, WiFi"
 				}
 			],
-			"value": 87.5,
+			"value": 90,
 			"currency": "USD"
 		},
 		{
 			"id": "sextuple",
-			"src": "src/assets/img/hotel/rooms/sextuple/1.jpg",
+			"src": "src/assets/img/hotel/rooms/sextuple/1.webp",
 			"name": {
 				"es": "Séxtuple",
 				"en": "Sextuple"
@@ -292,7 +292,7 @@
 		},
 		{
 			"id": "suitematrimonial",
-			"src": "src/assets/img/hotel/rooms/suite1/2.jpg",
+			"src": "src/assets/img/hotel/rooms/suite1/2.webp",
 			"name": {
 				"es": "Suite Matrimonial",
 				"en": "Honeymoon Suite"
@@ -316,7 +316,7 @@
 		},
 		{
 			"id": "suitefamiliar",
-			"src": "src/assets/img/hotel/rooms/suite1/2.jpg",
+			"src": "src/assets/img/hotel/rooms/suite1/2.webp",
 			"name": {
 				"es": "Suite Familiar",
 				"en": "Family Suite"
@@ -341,60 +341,152 @@
 	],
 	"destinations": [
 		{
-			"id": "patrimonial",
+			"id": "nature_reserves",
+			"src": "src/assets/img/nature_reserves/el_cajas_park.webp",
 			"name": {
-				"es": "Ciudades Patrimoniales",
-				"en": "Heritage Cities"
-			}
+				"es": "Parque Nacional El Cajas",
+				"en": "El Cajas National Park"
+			},
+			"description": {
+				"es": "El parque nacional Cajas (PNC) es un área protegida, situada en los Andes sur del Ecuador, 33 km al noroccidente de la ciudad de Cuenca, dentro de la provincia de Azuay",
+				"en": "Cajas National Park (PNC) is a protected area located in the southern Andes of Ecuador, 33 km northwest of the city of Cuenca, within the province of Azuay."
+			},
+			"category": {
+				"es": "Reservas Naturales",
+				"en": "Nature Reserves"
+			},
+			"tags": [
+				{
+					"es": "Senderismo, lagunas glaciales, vida silvestre",
+					"en": "Hiking, glacial lakes, wildlife"
+				}
+			]
 		},
 		{
 			"id": "adventure",
 			"name": {
-				"es": "Ciudades de Aventura",
-				"en": "Adventure Cities"
-			}
-		},
-		{
-			"id": "beach",
-			"name": {
-				"es": "Ciudades de Playa",
-				"en": "Beach Cities"
-			}
+				"es": "Rutas de Aventura Cuenca",
+				"en": "Cuenca Adventure Routes"
+			},
+			"description": {
+				"es": "Cuenca ofrece diversas actividades de aventura como escalada, barranquismo, canopy, ciclismo de montaña en rutas de Tarqui y Nulti, y vuelo en parapente en los alrededores de la ciudad.",
+				"en": "Cuenca offers various adventure activities such as climbing, canyoning, zip-lining, mountain biking on Tarqui and Nulti routes, and paragliding in the surroundings of the city."
+			},
+			"category": {
+				"es": "Aventura",
+				"en": "Adventure"
+			},
+			"tags": [
+				{
+					"es": "Deportes extremos, senderismo, ciclismo",
+					"en": "Extreme sports, trekking, cycling"
+				}
+			]
 		},
 		{
 			"id": "cultural",
 			"name": {
-				"es": "Ciudades Culturales y Artesanales",
-				"en": "Cultural & Handcraft Cities"
-			}
+				"es": "Centro Histórico de Cuenca",
+				"en": "Historic Center of Cuenca"
+			},
+			"description": {
+				"es": "El Centro Histórico de Santa Ana de los Ríos de Cuenca fue declarado Patrimonio Cultural de la Humanidad por la UNESCO en 1999, destacando por su arquitectura colonial, más de quince iglesias y ruinas arqueológicas como el Museo Pumapungo.",
+				"en": "The Historic Center of Santa Ana de los Ríos de Cuenca was declared UNESCO World Heritage Site in 1999, renowned for its colonial architecture, over fifteen churches, and archaeological ruins like the Pumapungo Museum."
+			},
+			"category": {
+				"es": "Cultural",
+				"en": "Cultural"
+			},
+			"tags": [
+				{
+					"es": "Patrimonio UNESCO, arquitectura colonial, museos",
+					"en": "UNESCO Heritage, colonial architecture, museums"
+				}
+			]
 		},
 		{
 			"id": "gastronomic",
 			"name": {
-				"es": "Ciudades Gastronómicas",
-				"en": "Gastronomic Cities"
-			}
+				"es": "Ruta Gastronómica Cuencana",
+				"en": "Cuencan Gastronomic Route"
+			},
+			"description": {
+				"es": "Cuenca es reconocida como capital culinaria del Ecuador, ofreciendo platos tradicionales como mote pillo, cuy, y locro de papa en restaurantes emblemáticos como Raymipampa, Mi Escondite y el Mercado 10 de Agosto.",
+				"en": "Cuenca is recognized as the culinary capital of Ecuador, offering traditional dishes like mote pillo, cuy (guinea pig), and locro de papa (potato soup) in emblematic restaurants like Raymipampa, Mi Escondite, and the 10 de Agosto Market."
+			},
+			"category": {
+				"es": "Gastronómico",
+				"en": "Gastronomic"
+			},
+			"tags": [
+				{
+					"es": "Comida típica, restaurantes tradicionales, mercados",
+					"en": "Traditional food, traditional restaurants, markets"
+				}
+			]
 		},
 		{
 			"id": "nature",
 			"name": {
-				"es": "Ciudades de Naturaleza",
-				"en": "Nature & Ecotourism Cities"
-			}
+				"es": "Bioparque Amaru y Río Tomebamba",
+				"en": "Amaru Biopark and Tomebamba River"
+			},
+			"description": {
+				"es": "El Bioparque Amaru es un centro de rescate de vida silvestre ubicado cerca de Cuenca, mientras que el Río Tomebamba ofrece hermosos paisajes naturales y senderos ecológicos en el corazón de la ciudad, complementando la experiencia natural de la región.",
+				"en": "The Amaru Biopark is a wildlife rescue center located near Cuenca, while the Tomebamba River offers beautiful natural landscapes and ecological trails in the heart of the city, complementing the natural experience of the region."
+			},
+			"category": {
+				"es": "Naturaleza",
+				"en": "Nature"
+			},
+			"tags": [
+				{
+					"es": "Vida silvestre, senderos ecológicos, conservación",
+					"en": "Wildlife, ecological trails, conservation"
+				}
+			]
 		},
 		{
 			"id": "urban",
 			"name": {
-				"es": "Ciudades para Turismo Urbano",
-				"en": "Urban Tourism Cities"
-			}
+				"es": "Ciudades Cercanas: Gualaceo y Azogues",
+				"en": "Nearby Cities: Gualaceo and Azogues"
+			},
+			"description": {
+				"es": "Gualaceo y Azogues son ciudades cercanas a Cuenca que ofrecen experiencias urbanas distintas. Gualaceo es conocido por sus artesanías y textiles, mientras que Azogues, capital de la provincia del Cañar, destaca por su arquitectura y vida cultural vibrante.",
+				"en": "Gualaceo and Azogues are cities near Cuenca that offer different urban experiences. Gualaceo is known for its crafts and textiles, while Azogues, the capital of Cañar province, stands out for its architecture and vibrant cultural life."
+			},
+			"category": {
+				"es": "Urbano",
+				"en": "Urban"
+			},
+			"tags": [
+				{
+					"es": "Ciudades vecinas, cultura local, artesanías",
+					"en": "Neighboring cities, local culture, handicrafts"
+				}
+			]
 		},
 		{
 			"id": "gateway",
 			"name": {
-				"es": "Ciudades Puerta de Entrada",
-				"en": "Gateway Cities"
-			}
+				"es": "Aeropuerto Mariscal Lamar",
+				"en": "Mariscal Lamar Airport"
+			},
+			"description": {
+				"es": "El Aeropuerto Internacional Mariscal La Mar (CUE) es la principal puerta de entrada aérea a Cuenca, ubicado a solo 3 km del centro de la ciudad, sirviendo como punto de acceso principal para visitantes nacionales e internacionales.",
+				"en": "The Mariscal La Mar International Airport (CUE) is the main air gateway to Cuenca, located just 3 km from the city center, serving as the primary access point for national and international visitors."
+			},
+			"category": {
+				"es": "Puerta de Entrada",
+				"en": "Gateway"
+			},
+			"tags": [
+				{
+					"es": "Transporte aéreo, acceso principal, conectividad",
+					"en": "Air transport, main access, connectivity"
+				}
+			]
 		}
 	],
 	"tours": [

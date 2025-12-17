@@ -1,7 +1,8 @@
 ---
 // src/components/organisms/home/HomeSection.astro
-import InfiniteCarousel from "@/components/organisms/carousel/InfiniteCarousel.astro";
+
 import InfoCard from "@/components/molecules/cards/InfoCard.astro";
+import InfiniteCarousel from "@/components/organisms/carousel/InfiniteCarousel.astro";
 import { Translations } from "@/i18n/translation";
 import { logger } from "@/services/logger.ts";
 import type { Category, Currency } from "@/types/config";
@@ -9,52 +10,52 @@ import type { Category, Currency } from "@/types/config";
 const log = logger("HomeSection");
 
 interface Props {
-  lang: string;
-  titleKey: string;
-  items: Category[];
-  supportedCurrencies: Currency[];
-  baseHref: string;
-  bgColorClass?: string;
-  maxItems?: number;
+	lang: string;
+	titleKey: string;
+	items: Category[];
+	supportedCurrencies: Currency[];
+	baseHref: string;
+	bgColorClass?: string;
+	maxItems?: number;
 }
 
 const {
-  lang,
-  titleKey,
-  items,
-  supportedCurrencies,
-  baseHref,
-  bgColorClass = "bg-white",
-  maxItems = 4,
+	lang,
+	titleKey,
+	items,
+	supportedCurrencies,
+	baseHref,
+	bgColorClass = "bg-white",
+	maxItems = 4,
 } = Astro.props;
 
-log.info("Props recibidas:", {
-  lang,
-  titleKey,
-  items,
-  supportedCurrencies,
-  numItems: items.length,
-  baseHref,
-  maxItems,
-});
+log.info(
+	"Props recibidas:",
+	JSON.stringify({
+		lang,
+		titleKey,
+		items,
+		supportedCurrencies,
+		numItems: items.length,
+		baseHref,
+		maxItems,
+	}),
+);
 
 const t = Translations(lang);
 
 // Pre-map items for the SimpleCarousel if needed, to match InfoCard props logic
-const carouselItems = items.map((item) => ({
-  href: `${baseHref}/${item.id}`,
-  imageSrc: item.src,
-  imageAlt: item.name[lang],
-  title: item.name[lang],
-  description: item.description?.[lang] ?? "No description available.",
-  category: item.category ? item.category[lang] : "No category available.",
-  tags:
-    item.tags && item.tags[lang]
-      ? item.tags[lang].split(",").map((t) => t.trim())
-      : [],
-  value: item.value || 0,
-  valueLabel: item.valueLabel,
-  supportedCurrencies: supportedCurrencies,
+const Items = items.map((item) => ({
+	href: `${baseHref}/${item.id}`,
+	imageSrc: item.src,
+	imageAlt: item.name[lang],
+	title: item.name[lang],
+	description: item.description?.[lang] ?? "No description available.",
+	category: item.category ? item.category[lang] : "No category available.",
+	tags: item.tags ? item.tags[0][lang].split(",").map((tag) => tag.trim()) : [],
+	value: item.value || 0,
+	valueLabel: item.valueLabel,
+	supportedCurrencies: supportedCurrencies,
 }));
 ---
 
@@ -69,23 +70,19 @@ const carouselItems = items.map((item) => ({
     {
       maxItems > 0 ? (
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
-          {items.slice(0, maxItems).map((item) => (
+          {Items.slice(0, maxItems).map((item) => (
             <InfoCard
-              href={`${baseHref}/${item.id}`}
-              imageSrc={item.src}
-              imageAlt={item.name[lang]}
-              title={item.name[lang]}
+              href={`${baseHref}/${item.href}`}
+              imageSrc={item.imageSrc}
+              imageAlt={item.imageAlt}
+              title={item.title}
               description={
                 item.description?.[lang] ?? "No description available."
               }
               category={
                 item.category ? item.category[lang] : "No category available."
               }
-              tags={
-                item.tags && item.tags[lang]
-                  ? item.tags[lang].split(",").map((t) => t.trim())
-                  : []
-              }
+              tags={item.tags}
               value={item.value || 0}
               valueLabel={item.valueLabel}
               supportedCurrencies={supportedCurrencies}
@@ -94,7 +91,7 @@ const carouselItems = items.map((item) => ({
         </div>
       ) : (
         <InfiniteCarousel
-          items={carouselItems}
+          items={Items}
           component={InfoCard}
           gap="gap-6 md:gap-8"
         />

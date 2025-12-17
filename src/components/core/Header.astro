@@ -9,9 +9,10 @@ import type { SiteConfig } from "@/types/config";
 interface Props {
     lang: string;
     config: SiteConfig;
+    headerBgClass?: string;
 }
 
-const { config, lang } = Astro.props;
+const { config, lang, headerBgClass = "" } = Astro.props;
 
 const t = Translations(lang);
 
@@ -44,7 +45,9 @@ const uniqueTours =
     }) || [];
 ---
 
-<header class="absolute top-0 left-0 right-0 z-50 text-background">
+<header
+    class={`absolute top-0 left-0 right-0 z-50 text-background ${headerBgClass}`}
+>
     <nav class="container mx-auto flex justify-between items-center p-4 lg:p-6">
         <!-- Left: Logo -->
         <div class="shrink-0 z-50">
@@ -87,14 +90,16 @@ const uniqueTours =
                             id="rooms-dropdown"
                             class="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-56 bg-primary/95 backdrop-blur-md rounded-sm border-t-2 border-accent shadow-xl z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top"
                         >
-                            {uniqueRooms[0].category && uniqueRooms.map((room) => (
-                                <a
-                                    href={`/rooms/${room.id}`}
-                                    class="block px-6 py-3 text-sm font-serif tracking-wide text-white/90 hover:bg-accent hover:text-white transition-colors border-b border-white/5 last:border-0"
-                                >
-                                    {room.category?.[lang] ?? room.category?.es}
-                                </a>
-                            ))}
+                            {uniqueRooms[0].category &&
+                                uniqueRooms.map((room) => (
+                                    <a
+                                        href={`/rooms/${room.id}`}
+                                        class="block px-6 py-3 text-sm font-serif tracking-wide text-white/90 hover:bg-accent hover:text-white transition-colors border-b border-white/5 last:border-0"
+                                    >
+                                        {room.category?.[lang] ??
+                                            room.category?.es}
+                                    </a>
+                                ))}
                         </div>
                     )
                 }
@@ -127,15 +132,16 @@ const uniqueTours =
                             id="destinations-dropdown"
                             class="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-56 bg-primary/95 backdrop-blur-md rounded-sm border-t-2 border-accent shadow-xl z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top"
                         >
-                            {uniqueDestinations[0].category && uniqueDestinations.map((destination) => (
-                                <a
-                                    href={`/destinations/${destination.id}`}
-                                    class="block px-6 py-3 text-sm font-serif tracking-wide text-white/90 hover:bg-accent hover:text-white transition-colors border-b border-white/5 last:border-0"
-                                >
-                                    {destination.category?.[lang] ??
-                                        destination.category?.es}
-                                </a>
-                            ))}
+                            {uniqueDestinations[0].category &&
+                                uniqueDestinations.map((destination) => (
+                                    <a
+                                        href={`/destinations/${destination.id}`}
+                                        class="block px-6 py-3 text-sm font-serif tracking-wide text-white/90 hover:bg-accent hover:text-white transition-colors border-b border-white/5 last:border-0"
+                                    >
+                                        {destination.category?.[lang] ??
+                                            destination.category?.es}
+                                    </a>
+                                ))}
                         </div>
                     )
                 }
@@ -168,15 +174,16 @@ const uniqueTours =
                             id="gastronomy-dropdown"
                             class="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-56 bg-primary/95 backdrop-blur-md rounded-sm border-t-2 border-accent shadow-xl z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top"
                         >
-                            {uniqueGastronomies[0].category && uniqueGastronomies.map((gastronomy) => (
-                                <a
-                                    href={`/gastronomy/${gastronomy.id}`}
-                                    class="block px-6 py-3 text-sm font-serif tracking-wide text-white/90 hover:bg-accent hover:text-white transition-colors border-b border-white/5 last:border-0"
-                                >
-                                    {gastronomy.category?.[lang] ??
-                                        gastronomy.category?.es}
-                                </a>
-                            ))}
+                            {uniqueGastronomies[0].category &&
+                                uniqueGastronomies.map((gastronomy) => (
+                                    <a
+                                        href={`/gastronomy/${gastronomy.id}`}
+                                        class="block px-6 py-3 text-sm font-serif tracking-wide text-white/90 hover:bg-accent hover:text-white transition-colors border-b border-white/5 last:border-0"
+                                    >
+                                        {gastronomy.category?.[lang] ??
+                                            gastronomy.category?.es}
+                                    </a>
+                                ))}
                         </div>
                     )
                 }
@@ -209,14 +216,16 @@ const uniqueTours =
                             id="tours-dropdown"
                             class="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-56 bg-primary/95 backdrop-blur-md rounded-sm border-t-2 border-accent shadow-xl z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top"
                         >
-                            {uniqueTours[0].category && uniqueTours.map((tour) => (
-                                <a
-                                    href={`/tours/${tour.id}`}
-                                    class="block px-6 py-3 text-sm font-serif tracking-wide text-white/90 hover:bg-accent hover:text-white transition-colors border-b border-white/5 last:border-0"
-                                >
-                                    {tour.category?.[lang] ?? tour.category?.es}
-                                </a>
-                            ))}
+                            {uniqueTours[0].category &&
+                                uniqueTours.map((tour) => (
+                                    <a
+                                        href={`/tours/${tour.id}`}
+                                        class="block px-6 py-3 text-sm font-serif tracking-wide text-white/90 hover:bg-accent hover:text-white transition-colors border-b border-white/5 last:border-0"
+                                    >
+                                        {tour.category?.[lang] ??
+                                            tour.category?.es}
+                                    </a>
+                                ))}
                         </div>
                     )
                 }

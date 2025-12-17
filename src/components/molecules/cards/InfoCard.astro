@@ -1,6 +1,7 @@
 ---
 // src/components/molecules/cards/InfoCard.astro
 import type { Currency } from "@/types/config";
+// import type { LocalizedText } from "@/types/global";
 import ImageResource from "@/components/molecules/media/ImageResource.astro";
 import { logger } from "@/services/logger";
 
@@ -14,7 +15,7 @@ interface Props {
 	description: string;
 	category?: string;
 	tags?: string[];
-	value?: number;
+	value: number;
 	valueLabel?: string;
 	supportedCurrencies: Currency[];
 }
@@ -75,7 +76,7 @@ const formatCurrency = (amount: number, currency: string) => {
 	} catch {
 		// Fallback: symbol + localized number
 		const symbol = currency === "EUR" ? "€" : "$";
-		return `${symbol}${amount.toLocaleString()}`;
+		return `${symbol} ${amount.toLocaleString()}`;
 	}
 };
 
@@ -86,7 +87,7 @@ const convert = (amount: number, from: string, to: string) => {
 };
 
 const displayValue =
-	typeof value === "number"
+	value > 0
 		? formatCurrency(
 				convert(value, baseCurrency, selectedCurrency),
 				selectedCurrency,
@@ -99,7 +100,7 @@ const displayValue =
     class="group bg-white rounded-lg shadow-lg overflow-hidden transform transition-transform duration-300 hover:-translate-y-2 h-full flex flex-col"
 >
     <!-- Contenedor de imagen con aspect ratio 3:2 -->
-    <div class="relative w-full aspect-[3/2] overflow-hidden">
+    <div class="relative w-full aspect-3/2 overflow-hidden">
         <ImageResource
             src={imageSrc}
             alt={imageAlt}

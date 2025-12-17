@@ -3,6 +3,7 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import { api } from "@/services/api";
 import type { SiteConfig } from "@/types/config";
 import type { Room } from "@/types/rooms";
+import { formatPrice } from "@/utils/currency";
 
 // Determinar idioma basado en URL
 const lang = Astro.url.pathname.startsWith("/en") ? "en" : "es";
@@ -16,15 +17,6 @@ const { config, rooms } = (await api.multiFetch({
 
 // Validación de seguridad para habitaciones
 const safeRooms = Array.isArray(rooms) ? rooms : [];
-
-// Formateador de precio
-const formatPrice = (price: number, currency: string) => {
-  return new Intl.NumberFormat(lang === "en" ? "en-US" : "es-ES", {
-    style: "currency",
-    currency: currency,
-    minimumFractionDigits: 0,
-  }).format(price);
-};
 ---
 
 <BaseLayout titleKey="nav.rooms" lang={lang} config={config}>
@@ -35,7 +27,7 @@ const formatPrice = (price: number, currency: string) => {
       src="/images/headers/rooms-header.jpg" 
       alt="Luxury Rooms" 
       class="absolute inset-0 w-full h-full object-cover"
-      onError="this.src='https://images.unsplash.com/photo-1578683010236-d716f9a3f461?q=80&w=2070&auto=format&fit=crop'"
+      onerror="this.src='https://images.unsplash.com/photo-1578683010236-d716f9a3f461?q=80&w=2070&auto=format&fit=crop'"
     />
     <div class="relative z-20 text-center px-4 max-w-4xl mx-auto">
       <h1 class="text-4xl md:text-5xl lg:text-6xl font-serif text-white font-bold mb-4 drop-shadow-lg tracking-wide">
@@ -64,8 +56,8 @@ const formatPrice = (price: number, currency: string) => {
                   class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   loading="lazy"
                 />
-                <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-4 py-1.5 text-primary font-serif font-bold text-lg shadow-sm">
-                  {formatPrice(room.pricePerNight, room.currency)} <span class="text-xs font-sans font-normal text-gray-500">/ {lang === 'es' ? 'noche' : 'night'}</span>
+                 <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-4 py-1.5 text-primary font-serif font-bold text-lg shadow-sm">
+                  {formatPrice(room.pricePerNight, room.currency, lang)} <span class="text-xs font-sans font-normal text-gray-500">/ {lang === 'es' ? 'noche' : 'night'}</span>
                 </div>
               </div>
 

@@ -1,20 +1,11 @@
 ---
-import UnderConstruction from "@/components/pages/UnderConstruction.astro";
-import BaseLayout from "@/layouts/BaseLayout.astro";
-import type { SiteConfig } from "@/types/config";
-import { api } from "@/services/api.ts";
+import UnderConstructionPage from "@/components/layouts/UnderConstructionPage.astro";
 
 export const prerender = false;
-
-const lang = "es";
-const config = (await api.fetch("config", { params: { lang } })) as SiteConfig;
 ---
 
-<BaseLayout titleKey="nav.destinations" lang={lang} config={config}>
-    <UnderConstruction 
-        title="Destinos" 
-        message="Estamos recopilando los destinos más habituales para ayudarte. Pronto estará disponible."
-        backPath="/"
-        backLabel="Volver al Inicio"
-    />
-</BaseLayout>
+<UnderConstructionPage
+    titleKey="nav.destinations"
+    title="Destinos"
+    message="Estamos recopilando los destinos más habituales para ayudarte. Pronto estará disponible."
+/>

@@ -4,4 +4,85 @@ interface Props {
 }
 
 const { lang } = Astro.props;
+
+const title = lang === "es" ? "Error del Servidor" : "Server Error";
+const message =
+	lang === "es"
+		? "Lo sentimos, algo salió mal en nuestro servidor. Por favor, intenta nuevamente más tarde."
+		: "Sorry, something went wrong on our server. Please try again later.";
+const backLabel = lang === "es" ? "Volver al Inicio" : "Back to Home";
 ---
+
+<!doctype html>
+<html lang={lang}>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>500 - {title}</title>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
+			body {
+				font-family:
+					system-ui,
+					-apple-system,
+					sans-serif;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				min-height: 100vh;
+				background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+				color: white;
+				text-align: center;
+				padding: 2rem;
+			}
+			.error-container {
+				max-width: 600px;
+			}
+			h1 {
+				font-size: 8rem;
+				font-weight: bold;
+				margin-bottom: 1rem;
+				text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+			}
+			h2 {
+				font-size: 2rem;
+				margin-bottom: 1rem;
+				font-weight: 600;
+			}
+			p {
+				font-size: 1.125rem;
+				margin-bottom: 2rem;
+				opacity: 0.9;
+				line-height: 1.6;
+			}
+			a {
+				display: inline-block;
+				padding: 1rem 2rem;
+				background: white;
+				color: #667eea;
+				text-decoration: none;
+				border-radius: 0.5rem;
+				font-weight: 600;
+				transition:
+					transform 0.2s,
+					box-shadow 0.2s;
+			}
+			a:hover {
+				transform: translateY(-2px);
+				box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+			}
+		</style>
+	</head>
+	<body>
+		<div class="error-container">
+			<h1>500</h1>
+			<h2>{title}</h2>
+			<p>{message}</p>
+			<a href="/">{backLabel}</a>
+		</div>
+	</body>
+</html>

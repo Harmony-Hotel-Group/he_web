@@ -1,0 +1,116 @@
+---
+/**
+ * Componente reutilizable de Hero Section para páginas
+ * Reduce duplicación de código entre diferentes páginas con hero sections
+ */
+import { formatPrice } from "@/utils/currency";
+
+interface Props {
+  backgroundImage: string;
+  fallbackImage?: string;
+  title: string;
+  subtitle?: string;
+  badge?: string;
+  priceInfo?: {
+    amount: number;
+    currency: string;
+    period: string;
+  };
+  height?: "sm" | "md" | "lg";
+  overlayOpacity?: number;
+  lang?: "es" | "en";
+  animated?: boolean;
+}
+
+const {
+  backgroundImage,
+  fallbackImage,
+  title,
+  subtitle,
+  badge,
+  priceInfo,
+  height = "md",
+  overlayOpacity = 40,
+  lang = "es",
+  animated = false,
+} = Astro.props;
+
+const heightClasses = {
+  sm: "h-[40vh] min-h-[300px]",
+  md: "h-[50vh] min-h-[400px]",
+  lg: "h-[60vh] min-h-[500px]",
+};
+---
+
+<section class={`relative ${heightClasses[height]} flex items-center justify-center overflow-hidden`}>
+  <div class={`absolute inset-0 bg-gray-900/${overlayOpacity} z-10`}></div>
+  <img 
+    src={backgroundImage} 
+    alt={title}
+    class={`absolute inset-0 w-full h-full object-cover ${animated ? 'transition-transform duration-1000 animate-slow-zoom' : ''}`}
+    onerror={fallbackImage ? `this.src='${fallbackImage}'` : undefined}
+  />
+  
+  <div class={`absolute ${badge ? 'bottom-0 left-0 right-0' : 'inset-0 flex items-center justify-center'} z-20 p-${badge ? '8 md:p-12 lg:p-20' : '4'}`}>
+    <div class={`${badge ? 'max-w-7xl mx-auto' : 'text-center max-w-4xl mx-auto'}`}>
+      {badge && (
+        <span class={`inline-block bg-accent px-3 py-1 text-white text-xs font-bold tracking-[0.2em] uppercase mb-4 ${animated ? 'animate-fade-in-up' : ''}`}>
+          {badge}
+        </span>
+      )}
+      
+      <h1 class={`text-4xl md:text-${badge ? '6xl lg:text-7xl' : '5xl lg:text-6xl'} font-serif text-white font-bold mb-4 drop-shadow-lg tracking-wide ${animated && badge ? 'animate-fade-in-up delay-100' : ''}`}>
+        {title}
+      </h1>
+      
+      {subtitle && (
+        <p class={`text-lg md:text-xl text-gray-${badge ? '200' : '100'} font-light ${badge ? '' : 'max-w-2xl mx-auto'} drop-shadow-md ${animated && badge ? 'animate-fade-in-up delay-200' : ''}`}>
+          {subtitle}
+        </p>
+      )}
+      
+      {priceInfo && (
+        <p class={`text-xl md:text-2xl text-gray-200 font-light drop-shadow-md ${badge ? '' : 'mt-4'}`}>
+          {formatPrice(priceInfo.amount, priceInfo.currency, lang)}
+          <span class="text-base text-gray-300">/ {priceInfo.period}</span>
+        </p>
+      )}
+    </div>
+  </div>
+</section>
+
+{animated && (
+  <style>
+    @keyframes slow-zoom {
+      from {
+        transform: scale(1);
+      }
+      to {
+        transform: scale(1.1);
+      }
+    }
+    .animate-slow-zoom {
+      animation: slow-zoom 20s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite alternate;
+    }
+
+    .animate-fade-in-up {
+      animation: fade-in-up 0.8s ease-out forwards;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .delay-100 {
+      animation-delay: 0.1s;
+    }
+    .delay-200 {
+      animation-delay: 0.2s;
+    }
+
+    @keyframes fade-in-up {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+)}

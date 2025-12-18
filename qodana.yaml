@@ -43,7 +43,7 @@ profile:
 #    total: 50
 
 #Specify Qodana linter for analysis (Applied in CI/CD pipeline)
-linter: "jetbrains/qodana-js:2025.2\r"
+linter: "js"
 exclude:
   - name: All
     paths:

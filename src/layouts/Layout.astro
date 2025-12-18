@@ -1,0 +1,30 @@
+---
+import '../styles/global.css';
+---
+
+<html lang="es">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Hotel Majestic II - Próximamente</title>
+
+	<!-- Font imports -->
+	<link rel="stylesheet" href="@fontsource/playfair-display/400.css">
+	<link rel="stylesheet" href="@fontsource/playfair-display/700.css">
+	<link rel="stylesheet" href="@fontsource/lato/400.css">
+	<link rel="stylesheet" href="@fontsource/lato/700.css">
+
+	<!-- SEO Meta Tags -->
+	<meta name="description" content="Hotel Majestic II - Elegancia colonial en el corazón de Cuenca, Ecuador" />
+	<meta name="keywords" content="hotel, cuenca, ecuador, colonial, hospedaje, turismo" />
+	<meta name="author" content="Hotel Majestic II" />
+	<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+</head>
+<body class="bg-background text-text font-sans">
+<div class="min-h-screen flex flex-col">
+	<main class="flex-grow">
+		<slot />
+	</main>
+</div>
+</body>
+</html>

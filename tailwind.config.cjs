@@ -4,10 +4,10 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'primary': '#29333B', // Azul Marino Oscuro
-        'accent': '#BF953D',  // Dorado Antiguo
-        'background': '#ffffff', // Gris Claro/Beige
-      },
+        primary: '#1E3A8A', // Azul oscuro
+        accent: '#D97706',  // Naranja/dorado
+        text: '#1F2937',    // Gris oscuro para texto
+      }
     },
   },
   plugins: [],

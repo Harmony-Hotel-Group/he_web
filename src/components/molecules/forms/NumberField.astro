@@ -4,33 +4,33 @@ import Icono from "@/components/atoms/Icono.astro";
 import Label from "@/components/atoms/Label.astro";
 import NumberInput from "@/components/atoms/NumberInput.astro";
 
-import { DEFAULT_LANG, Translations } from "@/i18n/translation.ts";
+import { Translations } from "@/i18n/translation.ts";
 import Row from "@/layouts/Row.astro";
 
 interface Props {
-    fieldId?: string;
-    name: string;
-    lblKey: string;
-    icon?: string;
-    min?: number;
-    max?: number;
-    step?: number;
-    value?: number;
-    lang: string;
-    className?: string;
+	fieldId?: string;
+	name: string;
+	lblKey: string;
+	icon?: string;
+	min?: number;
+	max?: number;
+	step?: number;
+	value?: number;
+	lang: string;
+	className?: string;
 }
 
 const {
-    fieldId = "groupAdults",
-    name,
-    lblKey,
-    lang,
-    icon,
-    min = 0,
-    max,
-    step = 1,
-    value = 0,
-    className,
+	fieldId = "groupAdults",
+	name,
+	lblKey,
+	lang,
+	icon,
+	min = 0,
+	max,
+	step = 1,
+	value = 0,
+	className,
 } = Astro.props;
 
 const t = Translations(lang);

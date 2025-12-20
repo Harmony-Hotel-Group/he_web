@@ -185,22 +185,6 @@ const displayValue =
         // Add others as needed
     };
 
-    function getCurrencySymbol(currency: string): string {
-        try {
-            return (0)
-                .toLocaleString(undefined, {
-                    style: "currency",
-                    currency,
-                    minimumFractionDigits: 0,
-                    maximumFractionDigits: 0,
-                })
-                .replace(/\d/g, "")
-                .trim();
-        } catch {
-            return CURRENCY_SYMBOLS[currency] || currency;
-        }
-    }
-
     function formatCurrency(amount: number, currency: string) {
         try {
             return new Intl.NumberFormat(undefined, {
@@ -256,13 +240,13 @@ const displayValue =
     }
 
     // Listen for currency changes (custom event)
-    document.addEventListener("currencyChanged", (e: any) => {
+    document.addEventListener("currencyChanged", ((e: CustomEvent) => {
         const newCurrency = e.detail?.currency;
         if (newCurrency) {
             localStorage.setItem("currency", newCurrency); // Ensure it's saved
             updateAllPrices(newCurrency);
         }
-    });
+    }) as EventListener);
 
     // Initial check on load
     document.addEventListener("DOMContentLoaded", syncCurrencyFromStorage);

@@ -13,52 +13,59 @@ import Row from "@/layouts/Row.astro";
 import type { SiteConfig } from "@/types/config";
 
 import { range } from "@/utils/math.ts";
+import NumberField from "@/components/molecules/forms/NumberField.astro";
 import BookingVehicleSection from "./BookingVehicleSection.astro";
-import ModalBookingGroup from "./ModalBookingGroup.astro";
+import Icono from "@/components/atoms/Icono.astro";
 
 interface Props {
-  lang: string;
-  config: SiteConfig;
+	lang: string;
+	config: SiteConfig;
 }
 const { lang, config } = Astro.props;
 
 const t = Translations(lang);
 
 const adultsOptions = range(1, 9).map((i, index, array) => {
-  if (index === array.length - 1) {
-    return {
-      value: "group",
-      label: t("booking.dropdown.optGroup"),
-    };
-  }
-  return {
-    value: `${i}`,
-    label: `${t("booking.dropdown.optAdults", {
-      i: i,
-      s: i > 1 ? "s" : "",
-    })}`,
-  };
+	if (index === array.length - 1) {
+		return {
+			value: "group",
+			label: t("booking.dropdown.optGroup"),
+		};
+	}
+	return {
+		value: `${i}`,
+		label: `${t("booking.dropdown.optAdults", {
+			i: i,
+			s: i > 1 ? "s" : "",
+		})}`,
+	};
 });
 
 const childrenOptions = range(0, 8).map((i) => {
-  return {
-    value: `${i}`,
-    label: `${t("booking.dropdown.optChildren", {
-      i: i === 0 ? "Sin" : i,
-      s: i === 0 ? "s" : i > 1 ? "s" : "",
-    })}`,
-  };
+	return {
+		value: `${i}`,
+		label: `${t("booking.dropdown.optChildren", {
+			i: i === 0 ? "Sin" : i,
+			s: i === 0 ? "s" : i > 1 ? "s" : "",
+		})}`,
+	};
 });
 
 const roomsOptions = range(1, 5).map((i) => {
-  return {
-    value: `${i}`,
-    label: `${t("booking.dropdown.optRooms", {
-      i: i,
-      s: i > 1 ? "es" : "",
-    })}`,
-  };
+	return {
+		value: `${i}`,
+		label: `${t("booking.dropdown.optRooms", {
+			i: i,
+			s: i > 1 ? "es" : "",
+		})}`,
+	};
 });
+
+const distributionOptions = [
+	{ value: "shared_beds", label: "Camas Compartidas" },
+	{ value: "shared_rooms", label: "Habitaciones Compartidas" },
+	{ value: "individual_rooms", label: "Habitaciones Individuales" },
+];
 
 const whatsappNumber = config?.contactInfo?.whatsapp ?? "";
 const email = config?.contactInfo?.email ?? "";
@@ -71,44 +78,122 @@ const email = config?.contactInfo?.email ?? "";
   data-whatsapp={whatsappNumber}
   data-email={email}
 >
-  <Grid cols={5}>
-    <div data-col-span="2">
-      <DatePickerField
-        fieldId="dateRange"
-        name="dateRange"
-        lblKey="booking.dateRange.title"
-        icon="form/calendar"
+  <!-- Standard Fields Container -->
+  <div id="standard-fields">
+    <Grid cols={5}>
+      <div data-col-span="2">
+        <DatePickerField
+          fieldId="dateRange"
+          name="dateRange"
+          lblKey="booking.dateRange.title"
+          icon="form/calendar"
+          lang={lang}
+        />
+      </div>
+      <DropDownField
+        fieldId="adults"
+        name="adults"
+        initialValue={2}
+        icon="form/adult"
+        lblKey="booking.dropdown.lblAdults"
         lang={lang}
+        options={adultsOptions}
       />
+
+      <DropDownField
+        fieldId="children"
+        name="children"
+        icon="form/teen"
+        lblKey="booking.dropdown.lblChildren"
+        lang={lang}
+        options={childrenOptions}
+      />
+
+      <DropDownField
+        fieldId="rooms"
+        name="rooms"
+        icon="form/bed"
+        lblKey="booking.dropdown.lblRooms"
+        lang={lang}
+        options={roomsOptions}
+      />
+    </Grid>
+  </div>
+
+  <!-- Group Fields Container (Hidden by default) -->
+  <div id="group-fields" class="hidden space-y-4">
+    <div class="flex justify-between items-center mb-2">
+      <h3
+        class="text-lg font-semibold text-gray-800 dark:text-gray-100 flex items-center gap-2"
+      >
+        <Icono name='form/group' size="lg" />
+        {t("booking.group.title") || "Reserva Grupal"}
+      </h3>
+      <button
+        type="button"
+        id="btn-cancel-group"
+        class="text-sm text-red-500 hover:text-red-700 font-medium"
+      >
+        ✕ Cancelar Grupo
+      </button>
     </div>
-    <DropDownField
-      fieldId="adults"
-      name="adults"
-      initialValue={2}
-      icon="form/adult"
-      lblKey="booking.dropdown.lblAdults"
-      lang={lang}
-      options={adultsOptions}
-    />
 
-    <DropDownField
-      fieldId="children"
-      name="children"
-      icon="form/teen"
-      lblKey="booking.dropdown.lblChildren"
-      lang={lang}
-      options={childrenOptions}
-    />
+    <Grid cols={3} autoAdjust={false} gap={4}>
+      <DatePickerField
+        fieldId="dateRangeGroup"
+        name="dateRangeGroup"
+        lblKey="booking.dateRange.title"
+        lang={lang}
+        syncGroup="booking"
+      />
 
-    <DropDownField
-      fieldId="rooms"
-      name="rooms"
-      icon="form/bed"
-      lblKey="booking.dropdown.lblRooms"
-      lang={lang}
-      options={roomsOptions}
-    />
-  </Grid>
+      <NumberField
+        fieldId="groupAdults"
+        name="groupAdults"
+        lblKey="booking.group.adults"
+        lang={lang}
+        icon="form/adult"
+        min={8}
+        value={8}
+      />
+
+      <NumberField
+        fieldId="groupTeens"
+        name="groupTeens"
+        lblKey="booking.group.teens"
+        lang={lang}
+        icon="form/teen"
+        min={0}
+      />
+
+      <NumberField
+        fieldId="groupKids"
+        name="groupKids"
+        lblKey="booking.group.kids"
+        lang={lang}
+        icon="form/child"
+        min={0}
+      />
+
+      <NumberField
+        fieldId="groupInfants"
+        name="groupInfants"
+        lblKey="booking.group.infants"
+        lang={lang}
+        icon="form/baby"
+        min={0}
+      />
+
+      <DropDownField
+        fieldId="distributionType"
+        name="distributionType"
+        icon="form/bed"
+        lblKey="Tipo de Distribución"
+        lang={lang}
+        options={distributionOptions}
+      />
+    </Grid>
+  </div>
 
   <!-- Switches -->
   <Row>
@@ -127,7 +212,13 @@ const email = config?.contactInfo?.email ?? "";
       lang={lang}
       icon="form/vehicle"
     />
-    <!--<SwitchField fieldId="special_request" name="request" lblKey="booking.switch.special_request" lang={lang}/>-->
+    <SwitchField
+      fieldId="special_request"
+      name="special_request"
+      lblKey="booking.switch.special_request"
+      lang={lang}
+      icon="form/request"
+    />
   </Row>
 
   <!-- Sección de Vehículos (oculta inicialmente) -->
@@ -162,173 +253,302 @@ const email = config?.contactInfo?.email ?? "";
       color="#FFFFFF"
     />
   </div>
-</form>
 
-<!-- Modal para reservas grupales -->
-<ModalBookingGroup lang={lang} config={config} isOpen={false} />
+  <script>
+    import { actions } from "astro:actions";
 
-<script>
-  import { actions } from "astro:actions";
+    document.addEventListener("DOMContentLoaded", async () => {
+      const { logger } = await import("@/services/logger.ts");
+      const log = logger("BookingForm:Client");
 
-  document.addEventListener("DOMContentLoaded", async () => {
-    const { logger } = await import("@/services/logger.ts");
-    const log = logger("BookingForm:Client");
+      const form: HTMLFormElement = document.getElementById(
+        "booking-form",
+      ) as HTMLFormElement;
+      if (!form) return;
 
-    const form: HTMLFormElement = document.getElementById(
-      "booking-form",
-    ) as HTMLFormElement;
-    if (!form) return;
+      const bookingBar = form.closest("#booking-bar");
+      const vehicleSection = document.getElementById("vehicle-section");
+      const vehicleSwitchButton = form.querySelector("button#vehicle");
 
-    const bookingBar = form.closest("#booking-bar");
-    const vehicleSection = document.getElementById("vehicle-section");
-    const vehicleSwitchButton = form.querySelector("button#vehicle");
-
-    if (vehicleSwitchButton && vehicleSection) {
-      const observer = new MutationObserver((mutations) => {
-        const mutation = mutations[0];
-        if (mutation.attributeName !== "aria-checked") return;
-
-        const isChecked =
-          vehicleSwitchButton.getAttribute("aria-checked") === "true";
-        vehicleSection.classList.toggle("hidden", !isChecked);
-        bookingBar?.classList.toggle("max-h-[80vh]", isChecked);
-        bookingBar?.classList.toggle("overflow-y-auto", isChecked);
-      });
-
-      observer.observe(vehicleSwitchButton, {
-        attributes: true,
-        attributeFilter: ["aria-checked"],
-      });
-    }
-
-    // --- Lógica para el Modal de Grupo ---
-    const initModal = () => {
-      if ((window as any).modalInstanceCreated) return; // Evitar doble inicialización
-
-      log.info("Inicializando lógica del modal de grupo.");
-
-      // Ahora es seguro crear la instancia del modal.
-      const ModalClass = (window as any).ModalBookingGroupClass;
-      if (!ModalClass) {
-        log.error(
-          "ModalBookingGroupClass no encontrada a pesar de intentar inicializar.",
-        );
-        return;
-      }
-
-      const modalInstance = new ModalClass();
-      (window as any).modalInstanceCreated = true;
-
-      const adultsDropdown = document.getElementById("adults");
-
-      adultsDropdown?.addEventListener("change", (e) => {
-        const target = e.target as HTMLSelectElement;
-        if (target.value === "group") {
-          log.info("Opción 'group' seleccionada. Abriendo modal.");
-          modalInstance.open();
-          // Opcional: resetear el dropdown a un valor por defecto para que no se quede en "Grupo"
-          target.value = "2";
-        }
-      });
-    };
-
-    // Verificar si la clase ya está disponible globalmente
-    if ((window as any).ModalBookingGroupClass) {
-      log.info(
-        "ModalBookingGroupClass ya disponible. Inicializando inmediatamente.",
+      // Elements for Group Mode
+      const standardFields = document.getElementById("standard-fields");
+      const groupFields = document.getElementById("group-fields");
+      const adultsDropdown = document.getElementById(
+        "adults",
+      ) as HTMLSelectElement;
+      const btnCancelGroup = document.getElementById("btn-cancel-group");
+      const specialRequestCheck = document.getElementById(
+        "specialRequestCheck",
+      ) as HTMLInputElement;
+      const specialRequestSection = document.getElementById(
+        "special_request-section",
       );
-      initModal();
-    } else {
-      log.info("ModalBookingGroupClass no disponible aún. Esperando evento.");
-      // Espera a que el componente ModalBookingGroup anuncie que está listo.
-      document.addEventListener("modalBookingGroupReady", () => {
-        log.info("Evento modalBookingGroupReady recibido.");
-        initModal();
-      });
-    }
-
-    function clearValidationErrors() {
-      form
-        .querySelectorAll('[id^="error_"]')
-        .forEach((el) => el.classList.add("hidden"));
-      form
-        .querySelectorAll(".border-red-500")
-        .forEach((el) => el.classList.remove("border-red-500"));
-    }
-
-    function handleValidationErrors(
-      errors: Array<{ path: string[]; message: string }>,
-    ) {
-      for (const fieldError of errors) {
-        const fieldName = fieldError.path[0];
-        const inputElement = document.getElementById(fieldName);
-        const errorElement = document.getElementById(`error_${fieldName}`);
-
-        if (inputElement) {
-          inputElement.classList.add("border-red-500");
-        }
-        if (errorElement) {
-          errorElement.textContent = fieldError.message;
-          errorElement.classList.remove("hidden");
-        }
-      }
-    }
-
-    function validateForm(): boolean {
-      let isValid = true;
-      clearValidationErrors();
-
-      // Validar campo de fecha (requerido)
-      const dateRangeInput = document.getElementById(
+      const dateRangeStandard = document.getElementById(
         "dateRange",
       ) as HTMLInputElement;
-      if (!dateRangeInput?.value || dateRangeInput.value.trim() === "") {
-        const errorElement = document.getElementById("error_dateRange");
-        if (errorElement) {
-          errorElement.classList.remove("hidden");
-        }
-        if (dateRangeInput) {
-          dateRangeInput.classList.add("border-red-500");
-        }
-        isValid = false;
+      const dateRangeGroup = document.getElementById(
+        "dateRangeGroup",
+      ) as HTMLInputElement;
+
+      // Toggle Vehicle Section
+      if (vehicleSwitchButton && vehicleSection) {
+        const observer = new MutationObserver((mutations) => {
+          const mutation = mutations[0];
+          if (mutation.attributeName !== "aria-checked") return;
+
+          const isChecked =
+            vehicleSwitchButton.getAttribute("aria-checked") === "true";
+          vehicleSection.classList.toggle("hidden", !isChecked);
+          bookingBar?.classList.toggle("max-h-[80vh]", isChecked);
+          bookingBar?.classList.toggle("overflow-y-auto", isChecked);
+        });
+
+        observer.observe(vehicleSwitchButton, {
+          attributes: true,
+          attributeFilter: ["aria-checked"],
+        });
       }
 
-      // Scroll al primer error si existe
-      if (!isValid) {
-        const firstError = form.querySelector('[id^="error_"]:not(.hidden)');
-        firstError?.scrollIntoView({ behavior: "smooth", block: "center" });
+      // Toggle Special Request Section (Switch)
+      // The SwitchField component usually uses a button with role="switch" inside.
+      // We need to find the button associated with 'special_request'.
+      const specialRequestSwitchBtn = form.querySelector(
+        "button#special_request",
+      );
+
+      if (specialRequestSwitchBtn && specialRequestSection) {
+        const observer = new MutationObserver((mutations) => {
+          const mutation = mutations[0];
+          if (mutation.attributeName !== "aria-checked") return;
+
+          const isChecked =
+            specialRequestSwitchBtn.getAttribute("aria-checked") === "true";
+          specialRequestSection.classList.toggle("hidden", !isChecked);
+          // Optional: auto-scroll or expand layout if needed
+        });
+
+        observer.observe(specialRequestSwitchBtn, {
+          attributes: true,
+          attributeFilter: ["aria-checked"],
+        });
       }
 
-      return isValid;
-    }
-
-    const btn = document.getElementById("btnSubmit") as HTMLButtonElement;
-    btn?.addEventListener("click", async () => {
-      // Validar formulario antes de procesar
-      if (!validateForm()) {
-        return;
-      }
-
-      clearValidationErrors();
-      const originalButtonHTML = btn.innerHTML;
-      btn.disabled = true;
-      btn.innerHTML = `<svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Enviando...`;
-
-      try {
-        const formData = new FormData(form);
-        const whatsappNumber = form.dataset.whatsapp;
-        const { data, error } = await actions.booking(formData);
-
-        if (error) {
-          console.error("Validation error:", error);
-          if ("fields" in error && Array.isArray(error.fields)) {
-            handleValidationErrors(error.fields);
+      // Group Mode Logic
+      function toggleGroupMode(isGroup: boolean) {
+        if (isGroup) {
+          standardFields?.classList.add("hidden");
+          groupFields?.classList.remove("hidden");
+          // Sync date from standard to group
+          if (dateRangeStandard && dateRangeGroup && dateRangeStandard.value) {
+            // Try to sync values if feasible.
+            // Note: DatePicker internal state might need more work to sync perfectly if it has JS attached,
+            // but basic value copy helps.
+            dateRangeGroup.value = dateRangeStandard.value;
           }
+        } else {
+          groupFields?.classList.add("hidden");
+          standardFields?.classList.remove("hidden");
+          if (dateRangeStandard && dateRangeGroup && dateRangeGroup.value) {
+            dateRangeStandard.value = dateRangeGroup.value;
+          }
+          // Reset Adults dropdown
+          if (adultsDropdown) adultsDropdown.value = "2";
+        }
+      }
+
+      if (adultsDropdown) {
+        adultsDropdown.addEventListener("change", (e) => {
+          const target = e.target as HTMLSelectElement;
+          if (target.value === "group") {
+            toggleGroupMode(true);
+          }
+        });
+      }
+
+      if (btnCancelGroup) {
+        btnCancelGroup.addEventListener("click", () => {
+          toggleGroupMode(false);
+        });
+      }
+
+      function clearValidationErrors() {
+        form
+          .querySelectorAll('[id^="error_"]')
+          .forEach((el) => el.classList.add("hidden"));
+        form
+          .querySelectorAll(".border-red-500")
+          .forEach((el) => el.classList.remove("border-red-500"));
+      }
+
+      function handleValidationErrors(
+        errors: Array<{ path: string[]; message: string }>,
+      ) {
+        for (const fieldError of errors) {
+          const fieldName = fieldError.path[0];
+          const inputElement = document.getElementById(fieldName);
+          const errorElement = document.getElementById(`error_${fieldName}`);
+
+          if (inputElement) {
+            inputElement.classList.add("border-red-500");
+          }
+          if (errorElement) {
+            errorElement.textContent = fieldError.message;
+            errorElement.classList.remove("hidden");
+          }
+        }
+      }
+
+      function validateForm(): boolean {
+        let isValid = true;
+        clearValidationErrors();
+
+        const isGroupMode = !groupFields?.classList.contains("hidden");
+
+        if (isGroupMode) {
+          // Validate Group Date
+          const dateInput = document.getElementById(
+            "dateRangeGroup",
+          ) as HTMLInputElement;
+          if (!dateInput?.value || dateInput.value.trim() === "") {
+            const errorElement = document.getElementById(
+              "error_dateRangeGroup",
+            );
+            if (errorElement) {
+              errorElement.classList.remove("hidden");
+              errorElement.innerText = "Requerido";
+            }
+            if (dateInput) dateInput.classList.add("border-red-500");
+            isValid = false;
+          }
+
+          // Validate Adults Min 8
+          const groupAdults = document.getElementById(
+            "groupAdults",
+          ) as HTMLInputElement;
+          if (!groupAdults?.value || parseInt(groupAdults.value) < 8) {
+            const errorElement = document.getElementById("error_groupAdults");
+            if (errorElement) {
+              errorElement.classList.remove("hidden");
+              errorElement.innerText = "Mínimo 8";
+            }
+            if (groupAdults) groupAdults.classList.add("border-red-500");
+            isValid = false;
+          }
+        } else {
+          // Validate Standard Date
+          const dateRangeInput = document.getElementById(
+            "dateRange",
+          ) as HTMLInputElement;
+          if (!dateRangeInput?.value || dateRangeInput.value.trim() === "") {
+            const errorElement = document.getElementById("error_dateRange");
+            if (errorElement) {
+              errorElement.classList.remove("hidden");
+            }
+            if (dateRangeInput) {
+              dateRangeInput.classList.add("border-red-500");
+            }
+            isValid = false;
+          }
+        }
+
+        if (!isValid) {
+          const firstError = form.querySelector('[id^="error_"]:not(.hidden)');
+          firstError?.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+
+        return isValid;
+      }
+
+      const btn = document.getElementById("btnSubmit") as HTMLButtonElement;
+      btn?.addEventListener("click", async () => {
+        if (!validateForm()) {
           return;
         }
 
-        const { processing } = data;
-        let message = `
+        clearValidationErrors();
+        const originalButtonHTML = btn.innerHTML;
+        btn.disabled = true;
+        btn.innerHTML = `<svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Enviando...`;
+
+        try {
+          const formData = new FormData(form);
+          const whatsappNumber = form.dataset.whatsapp;
+          const isGroupMode = !groupFields?.classList.contains("hidden");
+
+          const { data, error } = await actions.booking(formData);
+
+          if (error) {
+            console.error("Validation error:", error);
+            if ("fields" in error && Array.isArray(error.fields)) {
+              handleValidationErrors(error.fields);
+            }
+            return;
+          }
+
+          const { processing } = data;
+          let message = "";
+
+          if (isGroupMode) {
+            const dateRangeRaw =
+              formData.get("dateRangeGroup")?.toString() || "";
+            let checkIn = "N/A";
+            let checkOut = "N/A";
+            let nightsCount = "N/A";
+
+            // Format example: "2025-12-20 ➜ 2025-12-28 (8 noches)"
+            if (dateRangeRaw.includes("➜")) {
+              const parts = dateRangeRaw.split("➜").map((p) => p.trim());
+              checkIn = parts[0];
+              const rightPart = parts[1];
+
+              if (rightPart && rightPart.includes("(")) {
+                const subParts = rightPart.split("(").map((p) => p.trim());
+                checkOut = subParts[0];
+                nightsCount = subParts[1]
+                  .replace(")", "")
+                  .replace("noches", "")
+                  .replace("noche", "")
+                  .trim();
+              } else {
+                checkOut = rightPart;
+              }
+            } else if (dateRangeRaw.includes(" to ")) {
+              const parts = dateRangeRaw.split(" to ");
+              checkIn = parts[0];
+              checkOut = parts[1] || "N/A";
+            } else {
+              checkIn = dateRangeRaw;
+            }
+
+            message = `
+*Estimado Hotel Ensueños por favor necesito que me ayude con una reserva de GRUPO:*
+
+➢ Check In: ${checkIn}
+➢ Check Out: ${checkOut}
+➢ Cantidad de Noches: ${nightsCount}
+➢ Adultos: ${formData.get("groupAdults")}
+➢ Adolescentes: ${formData.get("groupTeens")}
+➢ Niños: ${formData.get("groupKids")}
+➢ Infantes: ${formData.get("groupInfants")}
+➢ Distribución: ${
+              (document.getElementById("distributionType") as HTMLSelectElement)
+                ?.options[
+                (
+                  document.getElementById(
+                    "distributionType",
+                  ) as HTMLSelectElement
+                )?.selectedIndex
+              ]?.text || formData.get("distributionType")
+            }
+➢ Desayuno incluido: ${formData.get("breakfast") === "on" ? "Sí" : "No"}
+`;
+
+            const notes = formData.get("groupNotes");
+            if (notes) {
+              message += `\n➢ Petición Especial: ${notes}`;
+            }
+          } else {
+            message = `
 *Estimado Hotel Ensueños por favor necesito que me ayude con una reserva:*
 
 ➢ Check In: ${processing.checkin}
@@ -338,64 +558,67 @@ const email = config?.contactInfo?.email ?? "";
 ➢ Niños: ${processing.children}
 ➢ Habitaciones: ${processing.rooms}
 ➢ Desayuno incluido: ${processing.breakfast === "true" ? "Sí" : "No"}`;
+          }
 
-        const isVehicleChecked =
-          vehicleSwitchButton?.getAttribute("aria-checked") === "true";
-        if (isVehicleChecked && vehicleSection) {
-          message += `\n➢ *Vehículos:*`;
-          const vehicleItems = vehicleSection.querySelectorAll(".vehicle-item");
-          vehicleItems.forEach((item, index) => {
-            const type = (
-              item.querySelector(
-                `select[name^="vehicleType"]`,
-              ) as HTMLSelectElement
-            )?.value;
-            const plate = (
-              item.querySelector(
-                `input[name^="vehiclePlate"]`,
-              ) as HTMLInputElement
-            )?.value;
-            if (type) {
-              message += `\n   ${index + 1}. Tipo: ${type}, Placa: ${plate || "N/A"}`;
-            }
-          });
-        }
+          const isVehicleChecked =
+            vehicleSwitchButton?.getAttribute("aria-checked") === "true";
+          if (isVehicleChecked && vehicleSection) {
+            message += `\n➢ *Vehículos:*`;
+            const vehicleItems =
+              vehicleSection.querySelectorAll(".vehicle-item");
+            vehicleItems.forEach((item, index) => {
+              const type = (
+                item.querySelector(
+                  `select[name^="vehicleType"]`,
+                ) as HTMLSelectElement
+              )?.value;
+              const plate = (
+                item.querySelector(
+                  `input[name^="vehiclePlate"]`,
+                ) as HTMLInputElement
+              )?.value;
+              if (type) {
+                message += `\n   ${index + 1}. Tipo: ${type}, Placa: ${plate || "N/A"}`;
+              }
+            });
+          }
 
-        message += `\n\nSi hace falta información adicional, por favor responder a este mensaje.`;
-        const encodedMessage = encodeURIComponent(message.trim());
+          message += `\n\nSi hace falta información adicional, por favor responder a este mensaje.`;
+          const encodedMessage = encodeURIComponent(message.trim());
 
-        if (whatsappNumber) {
-          window.open(
-            `https://wa.me/${whatsappNumber}?text=${encodedMessage}`,
-            "_blank",
-          );
+          if (whatsappNumber) {
+            window.open(
+              `https://wa.me/${whatsappNumber}?text=${encodedMessage}`,
+              "_blank",
+            );
+            window.showToast(
+              "Tu solicitud de reserva ha sido enviada.",
+              "success",
+            );
+          } else {
+            window.showToast(
+              "No se pudo enviar el mensaje, el número de WhatsApp no está configurado.",
+              "error",
+            );
+          }
+        } catch (err) {
+          console.error("Error inesperado al enviar la reserva:", err);
           window.showToast(
-            "Tu solicitud de reserva ha sido enviada.",
-            "success",
-          );
-        } else {
-          window.showToast(
-            "No se pudo enviar el mensaje, el número de WhatsApp no está configurado.",
+            "Ocurrió un error inesperado. Por favor, inténtalo de nuevo.",
             "error",
           );
+        } finally {
+          btn.disabled = false;
+          btn.innerHTML = originalButtonHTML;
         }
-      } catch (err) {
-        console.error("Error inesperado al enviar la reserva:", err);
-        window.showToast(
-          "Ocurrió un error inesperado. Por favor, inténtalo de nuevo.",
-          "error",
-        );
-      } finally {
-        btn.disabled = false;
-        btn.innerHTML = originalButtonHTML;
-      }
+      });
     });
-  });
-</script>
+  </script>
 
-<style>
-  input[type="number"]::-webkit-inner-spin-button,
-  input[type="number"]::-webkit-outer-spin-button {
-    opacity: 1;
-  }
-</style>
+  <style>
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+      opacity: 1;
+    }
+  </style>
+</form>

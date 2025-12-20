@@ -9,7 +9,7 @@ export const prerender = false;
 // Obtener parámetros de la URL
 const { slot } = Astro.params;
 // Determinar idioma basado en URL
-const lang = "en";
+const lang: "es" | "en" = "en";
 
 // Multi-fetch de configuration y rooms
 const { config, rooms } = (await api.multiFetch({

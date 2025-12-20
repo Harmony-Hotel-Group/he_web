@@ -1,20 +1,12 @@
 ---
-import BaseLayout from "@/layouts/BaseLayout.astro";
-import UnderConstruction from "@/components/pages/UnderConstruction.astro";
-import type { SiteConfig } from "@/types/config";
-import { api } from "@/services/api.ts";
+import UnderConstructionPage from "@/components/pages/UnderConstructionPage.astro";
 
 export const prerender = false;
-
-const lang = "en";
-const config = (await api.fetch("config", { params: { lang } })) as SiteConfig;
 ---
 
-<BaseLayout titleKey="nav.gallery" lang={lang} config={config}>
-    <UnderConstruction 
-        title="Galería de Fotos" 
-        message="Estamos seleccionando las mejores imágenes para mostrarte nuestras instalaciones. Vuelve pronto para verlas."
-        backPath="/"
-        backLabel="Volver al Inicio"
-    />
-</BaseLayout>
+<UnderConstructionPage
+    titleKey="nav.gallery"
+    title="Galería de Fotos"
+    message="Estamos seleccionando las mejores imágenes para mostrarte nuestras instalaciones. Vuelve pronto para verlas."
+    lang="en"
+/>

@@ -9,6 +9,7 @@ const isDevEnvironment = process.env.NODE_ENV === "development";
 export default defineConfig({
 	site: "https://www.hotelensueños.com",
 	vite: {
+		assetsInclude: ["**/*.lottie"],
 		resolve: {
 			alias: {
 				picocolors: "/src/polyfills/picocolors.js",

@@ -1,16 +1,16 @@
 ---
 interface Props {
-    title?: string;
-    message?: string;
-    backPath?: string;
-    backLabel?: string;
+	title?: string;
+	message?: string;
+	backPath?: string;
+	backLabel?: string;
 }
 
 const {
-    title = "Under Construction",
-    message = "We are working hard to bring you this experience. Please check back soon.",
-    backPath = "/",
-    backLabel = "Back to Home",
+	title = "Under Construction",
+	message = "We are working hard to bring you this experience. Please check back soon.",
+	backPath = "/",
+	backLabel = "Back to Home",
 } = Astro.props;
 ---
 
@@ -53,7 +53,7 @@ const {
     import { DotLottie } from "@lottiefiles/dotlottie-web";
 
     document.addEventListener("DOMContentLoaded", () => {
-        const dotLottie = new DotLottie({
+        new DotLottie({
             autoplay: true,
             loop: true,
             canvas: document.querySelector(

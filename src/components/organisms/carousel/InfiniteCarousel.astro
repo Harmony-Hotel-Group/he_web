@@ -60,7 +60,7 @@ const duplicatedItems = [...items, ...items];
     }
 </style>
 
-<script define:vars={{ speed }}>
+<script is:inline define:vars={{ speed }}>
     class InfiniteCarousel {
         constructor(container, speed) {
             this.container = container;

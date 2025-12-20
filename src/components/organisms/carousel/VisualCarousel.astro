@@ -1,13 +1,11 @@
 ---
 // src/components/organisms/carousel/VisualCarousel.astro
 import Imagen from "@/components/atoms/Imagen.astro";
-import { logger } from "@/services/logger.ts";
 import type { Resource } from "@/types/resource";
 import { validateResource } from "@/utils/visual-resource-utils.ts";
 
 interface Props {
 	class?: string;
-	maskOpacityClass?: string;
 	autoplayInterval?: number;
 	showIndicators?: boolean;
 	showScrollIndicator?: boolean;
@@ -17,7 +15,6 @@ interface Props {
 
 const {
 	class: className = "",
-	maskOpacityClass = "bg-black/50",
 	autoplayInterval = 5000,
 	showIndicators = true,
 	showScrollIndicator = true,
@@ -25,21 +22,7 @@ const {
 	arrows = false,
 } = Astro.props;
 
-const log = logger("VisualCarousel");
-
-log.info("Props recibidas:", Astro.props);
-
-
 const carouselId = `carousel-${String(Math.random().toString(36)).substring(2, 9)}`;
-log.info(
-	"Crecion de VisualCarousel con ID:",
-	carouselId,
-	",Cantidad de recursos:",
-	resources.length,
-	"y intervalo:",
-	autoplayInterval,
-	"ms",
-);
 
 // Validar recursos y filtrar los inválidos
 const validatedResources = (
@@ -52,7 +35,6 @@ const validatedResources = (
 					src: validation.finalSrc,
 				};
 			}
-			log.warn(`Recurso inválido filtrado: ${typeof item.src === 'string' ? item.src : 'ImageMetadata'}`, validation.error);
 			return null;
 		}),
 	)

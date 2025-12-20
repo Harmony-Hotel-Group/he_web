@@ -258,9 +258,6 @@ const email = config?.contactInfo?.email ?? "";
     import { actions } from "astro:actions";
 
     document.addEventListener("DOMContentLoaded", async () => {
-      const { logger } = await import("@/services/logger.ts");
-      const log = logger("BookingForm:Client");
-
       const form: HTMLFormElement = document.getElementById(
         "booking-form",
       ) as HTMLFormElement;
@@ -277,9 +274,6 @@ const email = config?.contactInfo?.email ?? "";
         "adults",
       ) as HTMLSelectElement;
       const btnCancelGroup = document.getElementById("btn-cancel-group");
-      const specialRequestCheck = document.getElementById(
-        "specialRequestCheck",
-      ) as HTMLInputElement;
       const specialRequestSection = document.getElementById(
         "special_request-section",
       );

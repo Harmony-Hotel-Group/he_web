@@ -52,7 +52,7 @@ const Items = items.map((item) => ({
 	title: item.name[lang],
 	description: item.description?.[lang] ?? "No description available.",
 	category: item.category ? item.category[lang] : "No category available.",
-	tags: item.tags ? item.tags[0][lang].split(",").map((tag) => tag.trim()) : [],
+ tags: item.tags ? (item.tags[0][lang] as string).split(",").map((tag: string) => tag.trim()) : [],
 	value: item.value || 0,
 	valueLabel: item.valueLabel,
 	supportedCurrencies: supportedCurrencies,

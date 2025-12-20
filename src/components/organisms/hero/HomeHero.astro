@@ -2,15 +2,11 @@
 // src/components/organisms/hero/HomeHero.astro
 import VisualResource from "@/components/molecules/media/VisualResource.astro";
 import VisualCarousel from "@/components/organisms/carousel/VisualCarousel.astro";
-import { logger } from "@/services/logger.ts";
 import {
 	detectResourceType,
 	validateResource,
 } from "@/utils/visual-resource-utils.ts";
 import type { Resource } from "@/types/resource";
-import ImageResource from "@/components/molecules/media/ImageResource.astro";
-
-const log = logger("HomeHero");
 
 interface Props {
 	resources: Resource[];
@@ -18,11 +14,6 @@ interface Props {
 }
 
 const { resources = [], prioritizeVideo = true } = Astro.props;
-
-log.info("Props recibidas:", {
-	numResources: resources.length,
-	prioritizeVideo,
-});
 
 const defaultPlaceholderResources: Resource[] = [
 	{
@@ -50,34 +41,20 @@ if (resources && resources.length > 0) {
 					? "youtube" // Corregir tipo mal configurado: si detectamos YouTube pero está marcado como "video", usar "youtube"
 					: res.type;
 
-		log.info(
-			`Recurso: ${typeof res.src === "string" ? res.src : "ImageMetadata"} | Tipo original: ${res.type} | Tipo detectado: ${detectedType} | Tipo final: ${type}`,
-		);
-
 		const validation = await validateResource(res.src, type);
-		log.warn("Validando recurso:", type, validation);
 
 		// Para YouTube, la validación puede ser válida incluso sin finalSrc
 		// porque YouTube siempre devuelve la URL original como finalSrc
 		if (validation.isValid) {
 			const finalSrc = validation.finalSrc || res.src;
-			log.info(
-				`Recurso válido agregado: tipo=${type}, src=${typeof finalSrc === "string" ? finalSrc : "ImageMetadata"}`,
-			);
 			validatedResources.push({
 				...res,
 				type,
 				src: finalSrc,
 			});
-		} else {
-			log.warn(
-				`Recurso inválido filtrado: tipo=${type}, error=${validation.error}`,
-			);
 		}
 	}
 }
-
-log.info("Recursos validados:", validatedResources);
 
 if (validatedResources.length === 0) {
 	validatedResources = defaultPlaceholderResources;
@@ -103,11 +80,6 @@ if (prioritizeVideo && !isMobileDevice) {
 } else {
 	finalResources = images.length > 0 ? images : defaultPlaceholderResources;
 }
-
-log.info(
-	`Modo de visualización: ${displayMode}. Recursos finales:`,
-	finalResources.map((r) => r.src),
-);
 ---
 
 {

@@ -6,66 +6,62 @@
  */
 
 interface Props {
-    src: string;
-    classes?: string;
-    width?: number;
-    height?: number;
-    autoplay?: boolean;
-    loop?: boolean;
-    muted?: boolean;
-    controls?: boolean;
-    poster?: string;
-    placeholder?: string;
+	src: string;
+	classes?: string;
+	width?: number;
+	height?: number;
+	autoplay?: boolean;
+	loop?: boolean;
+	muted?: boolean;
+	controls?: boolean;
+	poster?: string;
 }
 
 const {
-    src,
-    classes = "",
-    width = 600,
-    height = 400,
-    autoplay = false,
-    loop = false,
-    muted = true,
-    controls = true,
-    poster,
-    placeholder,
+	src,
+	width = 600,
+	height = 400,
+	autoplay = false,
+	loop = false,
+	muted = true,
+	controls = true,
+	classes,
+	poster,
 } = Astro.props;
 
 /**
  * Obtiene el MIME type según la extensión
  */
 function getVideoMimeType(url: string): string {
-    const ext = url.split(".").pop()?.toLowerCase() || "";
-    const mimeTypes: Record<string, string> = {
-        mp4: "video/mp4",
-        webm: "video/webm",
-        ogg: "video/ogg",
-        ogv: "video/ogg",
-        mov: "video/quicktime",
-        avi: "video/x-msvideo",
-        m4v: "video/mp4",
-    };
+	const ext = url.split(".").pop()?.toLowerCase() || "";
+	const mimeTypes: Record<string, string> = {
+		mp4: "video/mp4",
+		webm: "video/webm",
+		ogg: "video/ogg",
+		ogv: "video/ogg",
+		mov: "video/quicktime",
+		avi: "video/x-msvideo",
+		m4v: "video/mp4",
+	};
 
-    return mimeTypes[ext] || "video/mp4";
+	return mimeTypes[ext] || "video/mp4";
 }
 
 /**
  * Genera sources del video (solo el principal, sin variantes automáticas)
  */
 function getVideoSources(srcUrl: string): Array<{ src: string; type: string }> {
-    // Solo retornar el source principal
-    return [
-        {
-            src: srcUrl,
-            type: getVideoMimeType(srcUrl),
-        },
-    ];
+	// Solo retornar el source principal
+	return [
+		{
+			src: srcUrl,
+			type: getVideoMimeType(srcUrl),
+		},
+	];
 }
 
 const videoId = `video-${String(Math.random().toString(36)).substring(2, 9)}`;
 const videoSources = getVideoSources(src);
-const placeholderUrl =
-    placeholder || `https://placehold.co/${width}x${height}?text=Video`;
 ---
 
 <div class:list={["video-resource-wrapper", classes]} data-video-id={videoId}>
@@ -370,7 +366,7 @@ const placeholderUrl =
 
         private handleVideoError(
             video: HTMLVideoElement,
-            wrapper: HTMLElement,
+            _wrapper: HTMLElement,
             loadingOverlay: HTMLElement | null,
             errorOverlay: HTMLElement | null,
         ) {

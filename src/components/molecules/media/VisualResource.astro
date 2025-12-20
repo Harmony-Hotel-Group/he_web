@@ -9,7 +9,12 @@ import type { ImageMetadata } from "astro";
 import ImageResource from "./ImageResource.astro";
 import VideoResource from "./VideoResource.astro";
 import { logger } from "@/services/logger.ts";
-import {detectResourceType,	type ResourceType,	validateResource,	extractYouTubeId,} from "@/utils/visual-resource-utils.ts";
+import {
+	detectResourceType,
+	type ResourceType,
+	validateResource,
+	extractYouTubeId,
+} from "@/utils/visual-resource-utils.ts";
 import YouTubeResource from "./YouTubeResource.astro";
 
 const log = logger("VisualResource");
@@ -26,7 +31,6 @@ interface Props {
 	loop?: boolean;
 	muted?: boolean;
 	controls?: boolean;
-	placeholder?: string;
 	poster?: string;
 	srcset?: string;
 	sizes?: string;
@@ -44,15 +48,12 @@ const {
 	loop = false,
 	muted = true,
 	controls = true,
-	placeholder,
 	poster,
 	srcset,
 	sizes,
 } = Astro.props;
 
-const PlaceHolder =
-	placeholder ||
-	`https://placehold.co/${width}x${height}?text=Recurso+No+Encontrado`;
+const PlaceHolder = `https://placehold.co/${width}x${height}?text=Recurso+No+Encontrado`;
 
 // Detectar tipo de recurso
 const detectedType: ResourceType =
@@ -65,16 +66,16 @@ log.info(
 // Validar recurso (solo en build time, no en runtime)
 const validation = await validateResource(src, detectedType);
 
-log.info(
-	`[VisualResource] Validación del recurso:`,
-	{
-		isValid: validation.isValid,
-		error: validation.error,
-		finalSrc: typeof validation.finalSrc === "string" ? validation.finalSrc : "ImageMetadata",
-		detectedType,
-		type,
-	},
-);
+log.info(`[VisualResource] Validación del recurso:`, {
+	isValid: validation.isValid,
+	error: validation.error,
+	finalSrc:
+		typeof validation.finalSrc === "string"
+			? validation.finalSrc
+			: "ImageMetadata",
+	detectedType,
+	type,
+});
 
 if (!validation.isValid) {
 	log.warn(
@@ -113,7 +114,6 @@ if (!validation.isValid) {
 			muted={muted}
 			controls={controls}
 			poster={poster}
-			placeholder={placeholder}
 		/>
 	) : (
 		<ImageResource

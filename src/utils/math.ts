@@ -2,7 +2,12 @@
  * range(start, stop, step)
  * Genera un array de números similar al range() de Python.
  */
-export const range = (start, stop, step = 1, autoAjust = true) => {
+export const range = (
+	start: number,
+	stop: number,
+	step = 1,
+	autoAjust = true,
+) => {
 	// Si solo se pasa un argumento, se interpreta como stop
 	if (stop === undefined) {
 		stop = start;

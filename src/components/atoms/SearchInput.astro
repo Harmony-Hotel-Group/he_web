@@ -20,7 +20,6 @@ interface Props {
 const {
 	label,
 	name,
-	id = name,
 	placeholder = "",
 	options = [],
 	className,
@@ -63,7 +62,7 @@ const dropdownId = `${uniqueId}-dropdown`;
   </div>
 </div>
 
-<script define:vars={{ uniqueId, inputId, dropdownId, options }}>
+<script is:inline define:vars={{ uniqueId, inputId, dropdownId, options }}>
   function setupSearchInput() {
     const inputElement = document.getElementById(inputId);
     const dropdownElement = document.getElementById(dropdownId);

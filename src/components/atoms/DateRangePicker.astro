@@ -6,19 +6,19 @@
  */
 
 interface Props {
-    id: string;
-    lang?: string;
-    name?: string;
-    placeholder?: string;
-    syncGroup?: string; // Grupo de sincronización (default: 'booking')
+	id: string;
+	lang?: string;
+	name?: string;
+	placeholder?: string;
+	syncGroup?: string; // Grupo de sincronización (default: 'booking')
 }
 
 const {
-    id,
-    name,
-    lang,
-    placeholder,
-    syncGroup = "booking", // Por defecto todos los date pickers de booking se sincronizan
+	id,
+	name,
+	lang,
+	placeholder,
+	syncGroup = "booking", // Por defecto todos los date pickers de booking se sincronizan
 } = Astro.props;
 ---
 
@@ -93,7 +93,7 @@ const {
             showMonths: 1,
             enableTime: false,
 
-            onChange: (selectedDates, dateStr, instance) => {
+            onChange: (selectedDates, _dateStr, instance) => {
                 if (selectedDates.length < 2) {
                     // No hacer nada hasta que se seleccione un rango completo
                     return;
@@ -140,7 +140,7 @@ const {
                 inputElement.dispatchEvent(changeEvent);
             },
 
-            onReady: (selectedDates, dateStr, instance) => {
+            onReady: (_selectedDates, _dateStr, instance) => {
                 datePickerSync.register(pickerId, instance, syncGroup);
                 inputElement.dataset.flatpickrInitialized = "true"; // Marcar como inicializado
                 log.info(`Initialized: ${pickerId}`);

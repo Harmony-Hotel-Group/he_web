@@ -5,7 +5,7 @@ import type { SiteConfig } from "@/types/config";
 import type { Room } from "@/types/rooms";
 
 // Determinar idioma basado en URL
-const lang: "es" | "en" = "en";
+const lang = "en" as string;
 
 // Multi-fetch de configuración y habitaciones
 // Se hace cast del resultado para tener tipado fuerte en el destructuring
@@ -35,7 +35,7 @@ const formatPrice = (price: number, currency: string) => {
       src="/images/headers/rooms-header.jpg" 
       alt="Luxury Rooms" 
       class="absolute inset-0 w-full h-full object-cover"
-      onerror="this.src='https://images.unsplash.com/photo-1578683010236-d716f9a3f461?q=80&w=2070&auto=format&fit=crop'"
+      onerror="const fallback='https://images.unsplash.com/photo-1578683010236-d716f9a3f461?q=80&w=2070&auto=format&fit=crop'; if(this.getAttribute('src')!==fallback)this.setAttribute('src',fallback);"
     />
     <div class="relative z-20 text-center px-4 max-w-4xl mx-auto">
       <h1 class="text-4xl md:text-5xl lg:text-6xl font-serif text-white font-bold mb-4 drop-shadow-lg tracking-wide">

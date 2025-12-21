@@ -1,45 +1,35 @@
 ---
-/**
- * Componente de página genérico para páginas "Under Construction"
- * Elimina la duplicación de código en múltiples páginas que usan el mismo patrón
- */
-import BaseLayout from "@/layouts/BaseLayout.astro";
+// src/pages/UnderConstructionPage.astro
+
 import UnderConstruction from "@/components/dev/UnderConstruction.astro";
-import { getConfigForLang } from "@/utils/page-helpers.ts";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { api } from "@/services/api";
 
 interface Props {
-    titleKey: string;
-    title: string;
-    message: string;
-    backPath?: string;
-    backLabel?: string;
-    lang?: "es" | "en";
+	titleHead: string;
+	title: string;
+	message: string;
+	btnBackLabel: string;
+	lang: string;
 }
 
-export const prerender = false;
+// export const prerender = false;
 
-const {
-    titleKey,
-    title,
-    message,
-    backPath = "/",
-    backLabel = "Volver al Inicio",
-    lang = "es",
-} = Astro.props;
+const { titleHead, title, message, btnBackLabel, lang } = Astro.props;
 
-const config = await getConfigForLang(lang);
+const config = await api.fetch("config");
 ---
 
 <BaseLayout
-    titleKey={titleKey}
+    titleKey={titleHead}
     lang={lang}
     config={config}
     headerBgClass="bg-gradient-to-b from-gray-800 to-white shadow-md"
+    py="py-10"
 >
     <UnderConstruction
         title={title}
         message={message}
-        backPath={backPath}
-        backLabel={backLabel}
+        btnBackLabel={btnBackLabel}
     />
 </BaseLayout>

@@ -10,7 +10,14 @@ import { getCurrentLang, Translations } from "@/i18n/translation";
 import type { SiteConfig } from "@/types/config";
 import "@/styles/global.css";
 
-const { titleKey, lang, config, description, headerBgClass } = Astro.props;
+const {
+	titleKey,
+	lang,
+	config,
+	description,
+	headerBgClass,
+	py = "",
+} = Astro.props;
 
 // Solo detectar idioma por URL pathname
 const currentLang = getCurrentLang(Astro.url);
@@ -97,7 +104,7 @@ const canonicalUrl = currentLang === "es" ? esUrl : enUrl;
             lang={lang}
             headerBgClass={headerBgClass}
         />
-        <main class="grow w-full overflow-x-hidden">
+        <main class=`grow w-full overflow-x-hidden ${py}`>
             <slot />
         </main>
         <WhatsAppButton />

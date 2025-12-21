@@ -10,8 +10,11 @@
 		"destinations": "Destinos",
 		"gastronomy": "Gastronomía",
 		"tours": "Tours",
-		"booking": "Reservar Ahora"
+		"booking": "Reservar Ahora",
+		"faq": "Preguntas Frecuentes",
+		"404": "Pagina no Encontrada"
 	},
+	"header": {},
 	"home": {
 		"explore_category": "Explorar categoría"
 	},
@@ -105,6 +108,13 @@
 				"confirm": "Confirmar",
 				"includeVehicles": "¿Incluir información de vehículos?"
 			}
+		}
+	},
+	"underConstruction": {
+		"404": {
+			"title": "Página no encontrada",
+			"message": "Estamos recopilando las preguntas más habituales para ayudarte. Pronto estará disponible.",
+			"back": "Volver al inicio"
 		}
 	}
 }

@@ -1,8 +1,4 @@
 ---
-interface Props {
-	lang: string;
-}
-
-const { lang } = Astro.props;
+import Page404 from "../404.astro";
 ---
-<h1>{lang === "en" ? "Página no encontrada" : "Page not found"}</h1>
+<Page404 lang="en"/>

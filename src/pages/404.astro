@@ -1,8 +1,25 @@
 ---
+//pages/404.astro
+
+import { logger } from "@/services/logger.ts";
+import { Translations } from "@/i18n/translation.ts";
+
 interface Props {
 	lang: string;
 }
 
-const { lang } = Astro.props;
+const { lang = "es" } = Astro.props;
+
+const log = logger("404");
+
+import UnderConstructionPage from "@/components/pages/UnderConstructionPage.astro";
+const t = Translations(lang);
 ---
-<h1>{lang === "es" ? "Página no encontrada" : "Page not found"}</h1>
+
+<UnderConstructionPage
+        titleHead={t("nav.404")}
+        title={t("underConstruction.404.title")}
+        message={t("underConstruction.404.message")}
+        btnBackLabel={t("underConstruction.404.back")}
+        lang={lang}
+/>

@@ -1,13 +1,29 @@
 ---
+//pages/booking.astro
+
+// export const prerender = false;
+
+import { Translations } from "@/i18n/translation.ts";
+import { logger } from "@/services/logger.ts";
+
+interface Props {
+	lang: string;
+}
+
+const { lang = "es" } = Astro.props;
+
+const log = logger("booking");
+
 import UnderConstructionPage from "@/components/pages/UnderConstructionPage.astro";
 
-export const prerender = false;
+const t = Translations(lang);
+log.info(`Rendering about page with language: ${lang}`);
 ---
 
-<div class="py-10">
-    <UnderConstructionPage
-        titleHead="nav.booking"
-        title="Reservas"
-        message="Estamos construyendo nuestra pagina para facilitar tus reservas. Pronto estará disponible."
-    />
-</div>
+<UnderConstructionPage
+        titleHead={t("nav.booking")}
+        title={t("underConstruction.booking.title")}
+        message={t("underConstruction.booking.message")}
+        btnBackLabel={t("underConstruction.back")}
+        lang={lang}
+/>

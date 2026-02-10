@@ -3,6 +3,7 @@
 
 // export const prerender = false;
 
+import { features } from "@/config/features";
 import { Translations } from "@/i18n/translation.ts";
 import { logger } from "@/services/logger.ts";
 
@@ -18,6 +19,10 @@ import UnderConstructionPage from "@/components/pages/UnderConstructionPage.astr
 
 const t = Translations(lang);
 log.info(`Rendering tours page with language: ${lang}`);
+
+if (!features.toursAdvanced) {
+	throw new Response(null, { status: 404 });
+}
 ---
 
 <UnderConstructionPage

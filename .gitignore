@@ -1,7 +1,40 @@
+# Dependencies
 /node_modules
-.idea
-.astro
-.env
+/.pnp
+.pnp.js
+
+# Production
 /dist/
-/.vercel/
-.unlighthouse   
+
+# Generated files
+.astro/
+.vercel/
+
+# Environment variables
+.env
+.env.production
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# IDEs and Editors
+.idea
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Testing
+coverage/
+
+# Tools
+.unlighthouse
+
+# Custom
+/contexts

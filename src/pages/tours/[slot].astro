@@ -1,29 +1,43 @@
 ---
+// src/pages/tours/[slot].astro
+
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { api } from "@/services/api";
 import type { SiteConfig } from "@/types/config";
-import type { Room } from "@/types/rooms";
+import type { Tour } from "@/types/tours";
+import { logger } from "@/services/logger.ts";
 import { formatPrice } from "@/utils/currency";
+
+const log = logger("tours:[slot]");
 
 export const prerender = false;
 
+export async function getStaticPaths() {
+	return [{ params: { slot: "adventure" } }];
+}
+
 // Obtener parámetros de la URL
 const { slot } = Astro.params;
+
+log.warn(`Fetching tour with slot: ${slot}`);
+
 // Determinar idioma basado en URL
 const lang = "es";
 
-// Multi-fetch de configuration y rooms
-const { config, rooms } = (await api.multiFetch({
-	config: { params: { lang } },
-	rooms: { params: { lang } },
-})) as { config: SiteConfig; rooms: Room[] | Error | null };
+// Multi-fetch de configuration y tours
+const { config, tours } = (await api.multiFetch(["config", "tours"])) as {
+	config: SiteConfig;
+	tours: Tour[] | Error | null;
+};
 
-// Safe lookup de la habitación
-const safeRooms = Array.isArray(rooms) ? rooms : [];
-const room = safeRooms.find((r) => r.id === slot);
+log.warn(`Fetched tours for slot: ${JSON.stringify(tours)}`);
 
-// Redirect to 404 if room not found (in a real app, use Astro.redirect('/404'))
-if (!room) {
+// Safe lookup del tour
+const safeTours = Array.isArray(tours) ? tours : [];
+const tour = safeTours.find((t) => t.id === slot);
+
+// Redirect to 404 if tour not found
+if (!tour) {
 	return new Response(null, {
 		status: 404,
 		statusText: "Not Found",
@@ -31,17 +45,16 @@ if (!room) {
 }
 ---
 
-<BaseLayout titleKey={room.name[lang]} lang={lang} config={config}>
-	<!-- Hero Section (Room specific) -->
+<BaseLayout titleKey={tour.name[lang]} lang={lang} config={config}>
+	<!-- Hero Section (Tour specific) -->
 	<div class="relative h-[60vh] min-h-[500px] w-full overflow-hidden">
 		<div
 			class="absolute inset-0 bg-gradient-to-t from-gray-900/80 via-transparent to-gray-900/30 z-10"
 		>
 		</div>
 		<img
-			src={room.images.find((img) => img.frontpage)?.src ||
-				room.images[0].src}
-			alt={room.name[lang]}
+			src={tour.images[0]}
+			alt={tour.name[lang]}
 			class="w-full h-full object-cover transition-transform duration-1000 animate-slow-zoom"
 		/>
 
@@ -50,20 +63,17 @@ if (!room) {
 				<span
 					class="inline-block bg-accent px-3 py-1 text-white text-xs font-bold tracking-[0.2em] uppercase mb-4 animate-fade-in-up"
 				>
-					{room.type[lang]}
+					{lang === "es" ? "Tour" : "Tour"}
 				</span>
 				<h1
 					class="text-4xl md:text-6xl lg:text-7xl font-serif text-white font-bold mb-4 drop-shadow-xl animate-fade-in-up delay-100"
 				>
-					{room.name[lang]}
+					{tour.name[lang]}
 				</h1>
 				<p
 					class="text-xl md:text-2xl text-gray-200 font-light drop-shadow-md animate-fade-in-up delay-200"
 				>
-					{formatPrice(room.pricePerNight, room.currency, lang)}
-					<span class="text-base text-gray-300"
-						>/ {lang === "es" ? "noche" : "night"}</span
-					>
+					{formatPrice(tour.price, tour.currency, lang)}
 				</p>
 			</div>
 		</div>
@@ -82,55 +92,40 @@ if (!room) {
 						<span class="h-px bg-gray-200 flex-grow"></span>
 					</h2>
 					<p class="text-gray-600 leading-loose text-lg font-light">
-						{room.description[lang]}
+						{tour.description[lang]}
 					</p>
 				</div>
 
-				<!-- Amenities -->
+				<!-- Details / Duration -->
 				<div>
 					<h2
 						class="text-2xl font-serif text-primary mb-6 flex items-center gap-4"
 					>
-						{lang === "es" ? "Comodidades" : "Amenities"}
+						{lang === "es" ? "Detalles" : "Details"}
 						<span class="h-px bg-gray-200 flex-grow"></span>
 					</h2>
-					<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-						{
-							(room.amenities?.[lang] || []).map((amenity) => (
-								<div class="flex items-center gap-3 text-gray-600 p-3 bg-gray-50 rounded-sm hover:bg-white hover:shadow-sm transition-all border border-transparent hover:border-gray-100">
-									<svg
-										class="w-5 h-5 text-accent"
-										fill="none"
-										stroke="currentColor"
-										viewBox="0 0 24 24"
-									>
-										<path
-											stroke-linecap="round"
-											stroke-linejoin="round"
-											stroke-width="2"
-											d="M5 13l4 4L19 7"
-										/>
-									</svg>
-									<span>{amenity}</span>
-								</div>
-							))
-						}
+					<div class="flex items-center gap-3 text-gray-600 p-3 bg-gray-50 rounded-sm border border-gray-100">
+						<svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+						</svg>
+						<span class="font-bold">{lang === "es" ? "Duración:" : "Duration:"}</span>
+						<span>{tour.duration}</span>
 					</div>
 				</div>
 
 				<!-- Extra Images Grid -->
 				{
-					room.images.length > 1 && (
+					tour.images.length > 1 && (
 						<div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-8">
-							{room.images
-								.filter((img) => !img.frontpage)
+							{tour.images
+								.slice(1)
 								.map((img, index) => (
 									<div
-										class={`relative overflow-hidden rounded-sm aspect-video ${index === 0 ? "md:col-span-2 md:aspect-[2/1]" : ""}`}
+										class={`relative overflow-hidden rounded-sm aspect-video ${index === 0 && (tour.images.length - 1) % 2 !== 0 ? "md:col-span-2 md:aspect-[2/1]" : ""}`}
 									>
 										<img
-											src={img.src}
-											alt={img.alt[lang]}
+											src={img}
+											alt={`${tour.name[lang]} - ${index + 2}`}
 											class="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
 										/>
 									</div>
@@ -150,8 +145,8 @@ if (!room) {
 					>
 						{
 							lang === "es"
-								? "Reserva tu Estancia"
-								: "Book Your Stay"
+								? "Reservar Tour"
+								: "Book Tour"
 						}
 					</h3>
 
@@ -162,19 +157,7 @@ if (!room) {
 								<label
 									class="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-2"
 									>{
-										lang === "es" ? "Llegada" : "Check-in"
-									}</label
-								>
-								<input
-									type="date"
-									class="w-full border-gray-200 rounded-sm focus:border-accent focus:ring-accent"
-								/>
-							</div>
-							<div>
-								<label
-									class="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-2"
-									>{
-										lang === "es" ? "Salida" : "Check-out"
+										lang === "es" ? "Fecha" : "Date"
 									}</label
 								>
 								<input
@@ -189,15 +172,15 @@ if (!room) {
 								<span class="text-gray-500"
 									>{
 										lang === "es"
-											? "Precio por noche"
-											: "Price per night"
+											? "Precio"
+											: "Price"
 									}</span
 								>
 								<span class="text-xl font-bold text-primary"
 									>{
 										formatPrice(
-											room.pricePerNight,
-											room.currency,
+											tour.price,
+											tour.currency,
 											lang,
 										)
 									}</span

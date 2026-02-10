@@ -1,11 +1,29 @@
 ---
+//pages/tours/index.astro
+
+// export const prerender = false;
+
+import { Translations } from "@/i18n/translation.ts";
+import { logger } from "@/services/logger.ts";
+
+interface Props {
+	lang: string;
+}
+
+const { lang = "es" } = Astro.props;
+
+const log = logger("tours");
+
 import UnderConstructionPage from "@/components/pages/UnderConstructionPage.astro";
 
-export const prerender = false;
+const t = Translations(lang);
+log.info(`Rendering tours page with language: ${lang}`);
 ---
 
 <UnderConstructionPage
-    titleHead="nav.tours"
-    title="Tours"
-    message="Estamos recopilando los tours más habituales para ayudarte. Pronto estará disponible."
+        titleHead={t("nav.tours")}
+        title={t("underConstruction.tours.title")}
+        message={t("underConstruction.tours.message")}
+        btnBackLabel={t("underConstruction.back")}
+        lang={lang}
 />

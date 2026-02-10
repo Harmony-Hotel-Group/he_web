@@ -1,11 +1,29 @@
 ---
+//pages/gallery.astro
+
+// export const prerender = false;
+
+import { Translations } from "@/i18n/translation.ts";
+import { logger } from "@/services/logger.ts";
+
+interface Props {
+	lang: string;
+}
+
+const { lang = "es" } = Astro.props;
+
+const log = logger("gallery");
+
 import UnderConstructionPage from "@/components/pages/UnderConstructionPage.astro";
 
-export const prerender = false;
+const t = Translations(lang);
+log.info(`Rendering gallery page with language: ${lang}`);
 ---
 
 <UnderConstructionPage
-    titleHead="nav.gallery"
-    title="Galería de Fotos"
-    message="Estamos seleccionando las mejores imágenes para mostrarte nuestras instalaciones. Vuelve pronto para verlas."
+        titleHead={t("nav.gallery")}
+        title={t("underConstruction.gallery.title")}
+        message={t("underConstruction.gallery.message")}
+        btnBackLabel={t("underConstruction.back")}
+        lang={lang}
 />

@@ -1,11 +1,29 @@
 ---
+//pages/terms.astro
+
+// export const prerender = false;
+
+import { Translations } from "@/i18n/translation.ts";
+import { logger } from "@/services/logger.ts";
+
+interface Props {
+	lang: string;
+}
+
+const { lang = "es" } = Astro.props;
+
+const log = logger("terms");
+
 import UnderConstructionPage from "@/components/pages/UnderConstructionPage.astro";
 
-export const prerender = false;
+const t = Translations(lang);
+log.info(`Rendering terms page with language: ${lang}`);
 ---
 
 <UnderConstructionPage
-    titleHead="footer.terms"
-    title="Términos y Condiciones"
-    message="Estamos revisando nuestros términos legales para garantizar claridad y transparencia."
+        titleHead={t("nav.terms")}
+        title={t("underConstruction.terms.title")}
+        message={t("underConstruction.terms.message")}
+        btnBackLabel={t("underConstruction.back")}
+        lang={lang}
 />

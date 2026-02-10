@@ -7,40 +7,40 @@
  */
 
 import type { ImageMetadata } from "astro";
-import Imagen from "@/components/atoms/Imagen.astro";
+import Imagen from "@/components/atoms/image/Imagen.astro";
 import { validateResource } from "@/utils/visual-resource-utils.ts";
 
 interface Props {
-    src: string | ImageMetadata;
-    alt?: string;
-    width?: number;
-    height?: number;
-    loading?: "lazy" | "eager";
-    classes?: string;
-    srcset?: string;
-    sizes?: string;
-    decoding?: "async" | "sync" | "auto";
-    wrapperClasses?: string;
+	src: string | ImageMetadata;
+	alt?: string;
+	width?: number;
+	height?: number;
+	loading?: "lazy" | "eager";
+	classes?: string;
+	srcset?: string;
+	sizes?: string;
+	decoding?: "async" | "sync" | "auto";
+	wrapperClasses?: string;
 }
 
 const {
-    src,
-    alt = "",
-    width = 600,
-    height = 400,
-    loading = "lazy",
-    classes = "",
-    decoding = "async",
-    wrapperClasses = "",
+	src,
+	alt = "",
+	width = 600,
+	height = 400,
+	loading = "lazy",
+	classes = "",
+	decoding = "async",
+	wrapperClasses = "",
 } = Astro.props;
 
 // Validar si src es string
 let finalSrc = src;
 if (typeof src === "string") {
-    const validation = await validateResource(src, "image");
-    if (validation.isValid && validation.finalSrc) {
-        finalSrc = validation.finalSrc;
-    }
+	const validation = await validateResource(src, "image");
+	if (validation.isValid && validation.finalSrc) {
+		finalSrc = validation.finalSrc;
+	}
 }
 
 // Generar ID único para el skeleton

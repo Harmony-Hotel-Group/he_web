@@ -1,0 +1,15 @@
+---
+import ImagenLocal from "./ImagenLocal.astro";
+import ImagenValidada from "./ImagenValidada.astro";
+
+const { src } = Astro.props;
+
+const isRemote = typeof src === "string" && src.startsWith("http");
+---
+
+{isRemote ? (
+<ImagenValidada {...Astro.props} />
+	) : (
+<ImagenLocal {...Astro.props} />
+	)}
+

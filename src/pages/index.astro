@@ -1,6 +1,8 @@
 ---
 // index.astro
 
+// export const prerender = false;
+
 import BookingBar from "@/components/organisms/booking/BookingBar.astro";
 import PhotoCollage from "@/components/organisms/collage/PhotoCollage.astro";
 import HomeHero from "@/components/organisms/hero/HomeHero.astro";
@@ -11,11 +13,14 @@ import { api } from "@/services/api.ts";
 import { logger } from "@/services/logger.ts";
 import type { SiteConfig } from "@/types/config";
 
+interface Props {
+	lang: string;
+}
+
+const { lang = "es" } = Astro.props;
+
 const log = logger("Index");
 
-export const prerender = false;
-
-const lang = "es";
 const config = (await api.fetch("config", { params: { lang } })) as SiteConfig;
 log.info("Datos de configuración (config) cargados:", config);
 

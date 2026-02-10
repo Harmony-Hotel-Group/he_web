@@ -11,8 +11,13 @@
 		"gastronomy": "Gastronomía",
 		"tours": "Tours",
 		"booking": "Reservar Ahora",
+		"cancellation": "Politica de Cancelaciones",
+		"gallery": "Galería de Fotos",
+		"privacy": "Política de Privacidad",
+		"terms": "Términos y Condiciones",
 		"faq": "Preguntas Frecuentes",
-		"404": "Pagina no Encontrada"
+		"404": "Pagina no Encontrada",
+		"500": "Error de Servidor"
 	},
 	"header": {},
 	"home": {
@@ -111,10 +116,50 @@
 		}
 	},
 	"underConstruction": {
+		"back": "Volver al inicio",
 		"404": {
 			"title": "Página no encontrada",
-			"message": "Estamos recopilando las preguntas más habituales para ayudarte. Pronto estará disponible.",
-			"back": "Volver al inicio"
+			"message": "Estamos recopilando las preguntas más habituales para ayudarte. Pronto estará disponible."
+		},
+		"500": {
+			"title": "Página no encontrada",
+			"message": "Lo sentimos, algo salió mal en nuestro servidor. Por favor, intenta nuevamente más tarde."
+		},
+		"about": {
+			"title": "Sobre nosotros",
+			"message": "Estamos actualizando nuestras políticas para ofrecerte mayor flexibilidad. Pronto estarán disponibles."
+		},
+		"booking": {
+			"title": "Reservas",
+			"message": "Estamos construyendo nuestra pagina para facilitar tus reservas. Pronto estará disponible."
+		},
+		"cancellation": {
+			"title": "Politica de Cancelaciones",
+			"message": "Estamos construyendo nuestras pagina de politicas de cancelacion. Pronto estará disponible."
+		},
+		"contact": {
+			"title": "Contacto",
+			"message": "Estamos construyendo nuestra pagina de contacto. Pronto estará disponible."
+		},
+		"faq": {
+			"title": "Preguntas Frecuentes",
+			"message": "Estamos recopilando las preguntas más habituales para ayudarte. Pronto estará disponible."
+		},
+		"gallery": {
+			"title": "Galería",
+			"message": "Estamos construyendo nuestra pagina de galeria. Pronto estará disponible."
+		},
+		"privacy": {
+			"title": "Política de Privacidad",
+			"message": "Estamos construyendo nuestra pagina de privacidad. Pronto estará disponible."
+		},
+		"terms": {
+			"title": "Términos y Condiciones",
+			"message": "Estamos construyendo nuestra pagina de términos y condiciones. Pronto estará disponible."
+		},
+		"tours": {
+			"title": "Lista de Tours",
+			"message": "Estamos construyendo nuestra pagina de tours. Pronto estará disponible"
 		}
 	}
 }

@@ -1,11 +1,29 @@
 ---
+//pages/faq.astro
+
+// export const prerender = false;
+
+import { Translations } from "@/i18n/translation.ts";
+import { logger } from "@/services/logger.ts";
+
+interface Props {
+	lang: string;
+}
+
+const { lang = "es" } = Astro.props;
+
+const log = logger("faq");
+
 import UnderConstructionPage from "@/components/pages/UnderConstructionPage.astro";
 
-export const prerender = false;
+const t = Translations(lang);
+log.info(`Rendering faq page with language: ${lang}`);
 ---
 
 <UnderConstructionPage
-    titleHead="nav.faq"
-    title="Preguntas Frecuentes"
-    message="Estamos recopilando las preguntas más habituales para ayudarte. Pronto estará disponible."
+        titleHead={t("nav.faq")}
+        title={t("underConstruction.faq.title")}
+        message={t("underConstruction.faq.message")}
+        btnBackLabel={t("underConstruction.back")}
+        lang={lang}
 />

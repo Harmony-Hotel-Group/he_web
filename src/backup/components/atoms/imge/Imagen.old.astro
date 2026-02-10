@@ -1,4 +1,4 @@
----
+ ---
 // src/components/atoms/Imagen.astro
 /**
  * Componente optimizado para imágenes
@@ -25,7 +25,7 @@ interface Props {
 	decoding?: "async" | "sync" | "auto";
 	quality?: number;
 	format?: "webp" | "avif" | "png" | "jpg";
-	fetchpriority?: "auto" | "high" | "low";
+	fetchPriority?: "auto" | "high" | "low";
 }
 
 const {
@@ -210,7 +210,7 @@ if (!src) {
 		finalSrc = getPlaceholder(width, height, "Formato inválido");
 	}
 }
----
+ ---
 
 {
 	useOptimizedImage && optimizedSrc ? (

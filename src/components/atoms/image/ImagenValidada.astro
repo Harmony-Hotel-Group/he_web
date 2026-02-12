@@ -1,9 +1,9 @@
 ---
 import ImagenBase from "./ImagenBase.astro";
-import { validateImageSource } from "@/utils/image";
+import { validateImageSource } from "@/adapters/image/image.adapter";
 
 const { src, alt } = Astro.props;
-const safeSrc = await validateImageSource(src);
+const safeSrc = validateImageSource(src);
 ---
 
 <ImagenBase src={safeSrc} alt={alt} />

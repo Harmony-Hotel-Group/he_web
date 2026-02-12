@@ -1,5 +1,5 @@
-import type { ImageSource } from "@/types/image";
 import type { ImageMetadata } from "astro";
+import type { ImageSource } from "@/types/image";
 
 export function adaptImageSource(input: unknown): ImageSource {
 	if (!input) return null;
@@ -13,4 +13,14 @@ export function adaptImageSource(input: unknown): ImageSource {
 	}
 
 	return null;
+}
+
+export function validateImageSource(
+	src: string | ImageMetadata,
+): string | ImageMetadata {
+	if (!src) {
+		throw new Error("Image source is required");
+	}
+
+	return src;
 }

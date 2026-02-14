@@ -256,6 +256,7 @@ const email = config?.contactInfo?.email ?? "";
 
   <script>
     import { actions } from "astro:actions";
+    import { buildBookingMessage } from "@/domain/booking/buildBookingMessage";
 
     document.addEventListener("DOMContentLoaded", async () => {
       const form: HTMLFormElement = document.getElementById(
@@ -480,104 +481,58 @@ const email = config?.contactInfo?.email ?? "";
           }
 
           const { processing } = data;
-          let message = "";
-
-          if (isGroupMode) {
-            const dateRangeRaw =
-              formData.get("dateRangeGroup")?.toString() || "";
-            let checkIn = "N/A";
-            let checkOut = "N/A";
-            let nightsCount = "N/A";
-
-            // Format example: "2025-12-20 ➜ 2025-12-28 (8 noches)"
-            if (dateRangeRaw.includes("➜")) {
-              const parts = dateRangeRaw.split("➜").map((p) => p.trim());
-              checkIn = parts[0];
-              const rightPart = parts[1];
-
-              if (rightPart && rightPart.includes("(")) {
-                const subParts = rightPart.split("(").map((p) => p.trim());
-                checkOut = subParts[0];
-                nightsCount = subParts[1]
-                  .replace(")", "")
-                  .replace("noches", "")
-                  .replace("noche", "")
-                  .trim();
-              } else {
-                checkOut = rightPart;
-              }
-            } else if (dateRangeRaw.includes(" to ")) {
-              const parts = dateRangeRaw.split(" to ");
-              checkIn = parts[0];
-              checkOut = parts[1] || "N/A";
-            } else {
-              checkIn = dateRangeRaw;
-            }
-
-            message = `
-*Estimado Hotel Ensueños por favor necesito que me ayude con una reserva de GRUPO:*
-
-➢ Check In: ${checkIn}
-➢ Check Out: ${checkOut}
-➢ Cantidad de Noches: ${nightsCount}
-➢ Adultos: ${formData.get("groupAdults")}
-➢ Adolescentes: ${formData.get("groupTeens")}
-➢ Niños: ${formData.get("groupKids")}
-➢ Infantes: ${formData.get("groupInfants")}
-➢ Distribución: ${
-              (document.getElementById("distributionType") as HTMLSelectElement)
-                ?.options[
-                (
-                  document.getElementById(
-                    "distributionType",
-                  ) as HTMLSelectElement
-                )?.selectedIndex
-              ]?.text || formData.get("distributionType")
-            }
-➢ Desayuno incluido: ${formData.get("breakfast") === "on" ? "Sí" : "No"}
-`;
-
-            const notes = formData.get("groupNotes");
-            if (notes) {
-              message += `\n➢ Petición Especial: ${notes}`;
-            }
-          } else {
-            message = `
-*Estimado Hotel Ensueños por favor necesito que me ayude con una reserva:*
-
-➢ Check In: ${processing.checkin}
-➢ Check Out: ${processing.checkout}
-➢ Cantidad de Noches: ${processing.nights}
-➢ Adultos: ${processing.adults}
-➢ Niños: ${processing.children}
-➢ Habitaciones: ${processing.rooms}
-➢ Desayuno incluido: ${processing.breakfast === "true" ? "Sí" : "No"}`;
-          }
-
           const isVehicleChecked =
             vehicleSwitchButton?.getAttribute("aria-checked") === "true";
-          if (isVehicleChecked && vehicleSection) {
-            message += `\n➢ *Vehículos:*`;
-            const vehicleItems =
-              vehicleSection.querySelectorAll(".vehicle-item");
-            vehicleItems.forEach((item, index) => {
-              const type = (
-                item.querySelector(
-                  `select[name^="vehicleType"]`,
-                ) as HTMLSelectElement
-              )?.value;
-              const plate = (
-                item.querySelector(
-                  `input[name^="vehiclePlate"]`,
-                ) as HTMLInputElement
-              )?.value;
-              if (type) {
-                message += `\n   ${index + 1}. Tipo: ${type}, Placa: ${plate || "N/A"}`;
-              }
-            });
-          }
 
-          message += `\n\nSi hace falta información adicional, por favor responder a este mensaje.`;
+          const distributionLabel =
+            (document.getElementById("distributionType") as HTMLSelectElement)
+              ?.options[
+              (
+                document.getElementById(
+                  "distributionType",
+                ) as HTMLSelectElement
+              )?.selectedIndex
+            ]?.text || formData.get("distributionType");
+
+          const vehicleItems = Array.from(
+            vehicleSection?.querySelectorAll(".vehicle-item") || [],
+          ).map((item) => ({
+            type: (
+              item.querySelector(
+                `select[name^="vehicleType"]`,
+              ) as HTMLSelectElement
+            )?.value,
+            plate: (
+              item.querySelector(
+                `input[name^="vehiclePlate"]`,
+              ) as HTMLInputElement
+            )?.value,
+          }));
+
+          const message = buildBookingMessage({
+            isGroupMode,
+            dateRangeRaw: formData.get("dateRangeGroup")?.toString() || "",
+            groupAdults: formData.get("groupAdults"),
+            groupTeens: formData.get("groupTeens"),
+            groupKids: formData.get("groupKids"),
+            groupInfants: formData.get("groupInfants"),
+            distributionLabel,
+            groupNotes: formData.get("groupNotes"),
+            processing: {
+              checkin: processing.checkin,
+              checkout: processing.checkout,
+              nights: processing.nights,
+              adults: processing.adults,
+              children: processing.children,
+              rooms: processing.rooms,
+              breakfast: isGroupMode
+                ? String(formData.get("breakfast") ?? "")
+                : String(processing.breakfast ?? ""),
+            },
+            isVehicleChecked,
+            vehicleItems,
+          });
+
           const encodedMessage = encodeURIComponent(message.trim());
 
           if (whatsappNumber) {

@@ -1,7 +1,12 @@
 ---
 import ImagenBase from "./ImagenBase.astro";
 
-const { src, alt } = Astro.props;
+interface Props {
+	src: string;
+	alt: string;
+}
+
+const { src, alt } = Astro.props as Props;
 ---
 
 <ImagenBase src={src} alt={alt} />

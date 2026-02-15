@@ -16,33 +16,49 @@ const { config, lang, headerBgClass = "" } = Astro.props;
 
 const t = Translations(lang);
 
+type CategoryLike = {
+	id: string;
+	category?: LocalizedText;
+};
+
+const getCategoryLabel = (item: CategoryLike): string | undefined =>
+	item.category?.[lang] ?? item.category?.es;
+
 const uniqueRooms =
-    config?.rooms?.filter((room, index, self) => {
-        const getCat = (r: any) => r.category?.[lang] ?? r.category?.es;
-        return index === self.findIndex((r) => getCat(r) === getCat(room));
-    }) || [];
+	(config?.rooms?.filter((room, index, self) =>
+		index ===
+		self.findIndex((candidate) =>
+			getCategoryLabel(candidate as CategoryLike) ===
+			getCategoryLabel(room as CategoryLike),
+		),
+	) ?? []);
 
 const uniqueDestinations =
-    config?.destinations?.filter((destination, index, self) => {
-        const getCat = (d: any) => d.category?.[lang] ?? d.category?.es;
-        return (
-            index === self.findIndex((d) => getCat(d) === getCat(destination))
-        );
-    }) || [];
+	(config?.destinations?.filter((destination, index, self) =>
+		index ===
+		self.findIndex((candidate) =>
+			getCategoryLabel(candidate as CategoryLike) ===
+			getCategoryLabel(destination as CategoryLike),
+		),
+	) ?? []);
 
 const uniqueGastronomies =
-    config?.gastronomies?.filter((gastronomy, index, self) => {
-        const getCat = (g: any) => g.category?.[lang] ?? g.category?.es;
-        return (
-            index === self.findIndex((g) => getCat(g) === getCat(gastronomy))
-        );
-    }) || [];
+	(config?.gastronomies?.filter((gastronomy, index, self) =>
+		index ===
+		self.findIndex((candidate) =>
+			getCategoryLabel(candidate as CategoryLike) ===
+			getCategoryLabel(gastronomy as CategoryLike),
+		),
+	) ?? []);
 
 const uniqueTours =
-    config?.tours?.filter((tour, index, self) => {
-        const getCat = (t: any) => t.category?.[lang] ?? t.category?.es;
-        return index === self.findIndex((t) => getCat(t) === getCat(tour));
-    }) || [];
+	(config?.tours?.filter((tour, index, self) =>
+		index ===
+		self.findIndex((candidate) =>
+			getCategoryLabel(candidate as CategoryLike) ===
+			getCategoryLabel(tour as CategoryLike),
+		),
+	) ?? []);
 ---
 
 <header
@@ -245,7 +261,7 @@ const uniqueTours =
 
         <!-- Right: Controls and Hamburger Button -->
         <div class="flex items-center space-x-4">
-            <LangSelector currentLang={lang} />
+            <LangSelector />
             <CurrencySelector
                 supportedCurrencies={config?.supportedCurrencies}
             />

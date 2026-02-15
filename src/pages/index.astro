@@ -30,7 +30,7 @@ log.info("Recursos para el carousel:", carouselResources);
 
 <script>
     import { DEFAULT_LANG } from "@/i18n/translation";
-    import { getCookie, setCookie } from "@/utils/cookies.ts";
+    import { getCookie, setCookie } from "@/adapters/browser/Cookies.ts";
 
     // Redirección de idioma en el lado del cliente
     const lang = getCookie("lang") || DEFAULT_LANG;

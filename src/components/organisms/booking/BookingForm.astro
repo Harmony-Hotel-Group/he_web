@@ -1,8 +1,8 @@
 ---
 // src/components/organisms/booking/BookingForm.astro
 import Button from "@/components/atoms/button/Button.astro";
-import Label from "@/components/atoms/Label.astro";
 import TextAreaInput from "@/components/atoms/TextAreaInput.astro";
+import Label from "@/components/atoms/Label.astro";
 
 import DatePickerField from "@/components/molecules/forms/DatePickerField.astro";
 import DropDownField from "@/components/molecules/forms/DropdownField.astro";
@@ -18,53 +18,53 @@ import BookingVehicleSection from "./BookingVehicleSection.astro";
 import Icono from "@/components/atoms/Icono.astro";
 
 interface Props {
-	lang: string;
-	config: SiteConfig;
+  lang: string;
+  config: SiteConfig;
 }
 const { lang, config } = Astro.props;
 
 const t = Translations(lang);
 
 const adultsOptions = range(1, 9).map((i, index, array) => {
-	if (index === array.length - 1) {
-		return {
-			value: "group",
-			label: t("booking.dropdown.optGroup"),
-		};
-	}
-	return {
-		value: `${i}`,
-		label: `${t("booking.dropdown.optAdults", {
-			i: i,
-			s: i > 1 ? "s" : "",
-		})}`,
-	};
+  if (index === array.length - 1) {
+    return {
+      value: "group",
+      label: t("booking.dropdown.optGroup"),
+    };
+  }
+  return {
+    value: `${i}`,
+    label: `${t("booking.dropdown.optAdults", {
+      i: i,
+      s: i > 1 ? "s" : "",
+    })}`,
+  };
 });
 
 const childrenOptions = range(0, 8).map((i) => {
-	return {
-		value: `${i}`,
-		label: `${t("booking.dropdown.optChildren", {
-			i: i === 0 ? "Sin" : i,
-			s: i === 0 ? "s" : i > 1 ? "s" : "",
-		})}`,
-	};
+  return {
+    value: `${i}`,
+    label: `${t("booking.dropdown.optChildren", {
+      i: i === 0 ? "Sin" : i,
+      s: i === 0 ? "s" : i > 1 ? "s" : "",
+    })}`,
+  };
 });
 
 const roomsOptions = range(1, 5).map((i) => {
-	return {
-		value: `${i}`,
-		label: `${t("booking.dropdown.optRooms", {
-			i: i,
-			s: i > 1 ? "es" : "",
-		})}`,
-	};
+  return {
+    value: `${i}`,
+    label: `${t("booking.dropdown.optRooms", {
+      i: i,
+      s: i > 1 ? "es" : "",
+    })}`,
+  };
 });
 
 const distributionOptions = [
-	{ value: "shared_beds", label: "Camas Compartidas" },
-	{ value: "shared_rooms", label: "Habitaciones Compartidas" },
-	{ value: "individual_rooms", label: "Habitaciones Individuales" },
+  { value: "shared_beds", label: "Camas Compartidas" },
+  { value: "shared_rooms", label: "Habitaciones Compartidas" },
+  { value: "individual_rooms", label: "Habitaciones Individuales" },
 ];
 
 const whatsappNumber = config?.contactInfo?.whatsapp ?? "";
@@ -126,7 +126,7 @@ const email = config?.contactInfo?.email ?? "";
       <h3
         class="text-lg font-semibold text-gray-800 dark:text-gray-100 flex items-center gap-2"
       >
-        <Icono name='form/group' size="lg" />
+        <Icono name="form/group" size="lg" />
         {t("booking.group.title") || "Reserva Grupal"}
       </h3>
       <button
@@ -188,7 +188,7 @@ const email = config?.contactInfo?.email ?? "";
         fieldId="distributionType"
         name="distributionType"
         icon="form/bed"
-        lblKey="Tipo de Distribución"
+        lblKey="booking.group.distribution"
         lang={lang}
         options={distributionOptions}
       />
@@ -487,11 +487,8 @@ const email = config?.contactInfo?.email ?? "";
           const distributionLabel =
             (document.getElementById("distributionType") as HTMLSelectElement)
               ?.options[
-              (
-                document.getElementById(
-                  "distributionType",
-                ) as HTMLSelectElement
-              )?.selectedIndex
+              (document.getElementById("distributionType") as HTMLSelectElement)
+                ?.selectedIndex
             ]?.text || formData.get("distributionType");
 
           const vehicleItems = Array.from(

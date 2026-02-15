@@ -1,6 +1,13 @@
 ---
 import ImagenBase from "./ImagenBase.astro";
 
+interface Props {
+	src: string;
+	alt: string;
+	loading?: "lazy" | "eager" | null | undefined;
+	[key: string]: any;
+}
+
 const { src, alt } = Astro.props;
 ---
 

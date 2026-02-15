@@ -5,18 +5,20 @@ import { z } from "astro:schema";
 export const booking = defineAction({
     accept: "form",
     input: z.object({
-        dateRange: z.string(),
-        adults: z.string(),
-        children: z.string(),
-        rooms: z.string(),
-        breakfast: z.string(),
-        vehicle: z.string(),
+        dateRange: z.string().optional(),
+        dateRangeGroup: z.string().optional(),
+        adults: z.string().optional(),
+        children: z.string().optional(),
+        rooms: z.string().optional(),
+        breakfast: z.string().optional(),
+        vehicle: z.string().optional(),
         // Campos opcionales de grupos (por si se envían desde el formulario principal)
         groupAdults: z.string().optional(),
         groupTeens: z.string().optional(),
         groupKids: z.string().optional(),
         groupInfants: z.string().optional(),
         groupNotes: z.string().optional(),
+        distributionType: z.string().optional(),
         // Campos opcionales de vehículos
         vehicleType1: z.string().optional(),
         vehiclePlate1: z.string().optional(),
@@ -33,6 +35,8 @@ export const booking = defineAction({
     handler: async (input) => {
         const {
             dateRange,
+            dateRangeGroup,
+            adults,
             groupAdults,
             groupTeens,
             groupKids,
@@ -43,14 +47,20 @@ export const booking = defineAction({
             ...rest
         } = input; // extrae campos específicos y guarda el resto
 
+        // Determine if we are in group mode based on the 'adults' field value
+        const isGroupMode = adults === "group";
+
+        // Select the appropriate date range
+        const dateRangeToUse = (isGroupMode && dateRangeGroup) ? dateRangeGroup : dateRange;
+
         // Expresión regular para capturar las partes
         // Acepta tanto / como - como separadores de fecha (YYYY/MM/DD o YYYY-MM-DD)
         const regex =
             /(\d{4}[-\/]\d{2}[-\/]\d{2})\s*➜\s*(\d{4}[-\/]\d{2}[-\/]\d{2})\s*\(([^)]+)\)/;
 
         // Ejecutamos el match
-        console.log("dateRange recibido:", dateRange);
-        const match = dateRange?.match(regex);
+        console.log("dateRange recibido:", dateRangeToUse);
+        const match = dateRangeToUse?.match(regex);
         console.log("Match result:", match);
 
         let checkin: string | null = null;
@@ -64,7 +74,7 @@ export const booking = defineAction({
             nights = match[3];
             console.log("Fechas extraídas:", { checkin, checkout, nights });
         } else {
-            console.warn("⚠️ No se encontraron coincidencias en dateRange:", dateRange);
+            console.warn("⚠️ No se encontraron coincidencias en dateRange:", dateRangeToUse);
         }
 
         // Procesar vehículos si están incluidos
@@ -91,6 +101,7 @@ export const booking = defineAction({
                 checkin,
                 checkout,
                 nights,
+                adults,
                 // Incluir campos de grupo si están presentes
                 ...(groupAdults && { groupAdults }),
                 ...(groupTeens && { groupTeens }),

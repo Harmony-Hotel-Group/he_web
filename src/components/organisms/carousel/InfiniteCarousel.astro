@@ -1,6 +1,6 @@
 ---
-interface Props {
-	items: any[];
+interface Props<T = Record<string, any>> {
+	items: T[];
 	component: any;
 	itemClass?: string;
 	speed?: number; // Reemplazamos duration por velocidad (px por frame)

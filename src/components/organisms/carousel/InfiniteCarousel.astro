@@ -1,7 +1,10 @@
 ---
+type CarouselItem = Record<string, unknown>;
+type CarouselComponent = (props: CarouselItem) => unknown;
+
 interface Props {
-	items: any[];
-	component: any;
+	items: CarouselItem[];
+	component: CarouselComponent;
 	itemClass?: string;
 	speed?: number; // Reemplazamos duration por velocidad (px por frame)
 	gap?: string;

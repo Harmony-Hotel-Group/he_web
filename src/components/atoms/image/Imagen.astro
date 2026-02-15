@@ -2,7 +2,14 @@
 import ImagenLocal from "./ImagenLocal.astro";
 import ImagenValidada from "./ImagenValidada.astro";
 
-const { src } = Astro.props;
+interface Props {
+	src: string;
+	alt: string;
+	loading?: "lazy" | "eager" | null | undefined;
+	[rest: string]: unknown;
+}
+
+const { src } = Astro.props as Props;
 
 const isRemote = typeof src === "string" && src.startsWith("http");
 ---

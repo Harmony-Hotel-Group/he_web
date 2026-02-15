@@ -2,7 +2,12 @@
 import ImagenBase from "./ImagenBase.astro";
 import { validateImageSource } from "@/adapters/image/image.adapter";
 
-const { src, alt } = Astro.props;
+interface Props {
+	src: string;
+	alt: string;
+}
+
+const { src, alt } = Astro.props as Props;
 const safeSrc = validateImageSource(src);
 ---
 

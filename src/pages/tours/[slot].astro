@@ -6,7 +6,7 @@ import { api } from "@/services/api";
 import type { SiteConfig } from "@/types/config";
 import type { Tour } from "@/types/tours";
 import { logger } from "@/services/logger.ts";
-import { formatPrice } from "@/utils/currency";
+import { formatPrice } from "@/domain/money/CurrencyFormatter";
 
 const log = logger("tours:[slot]");
 

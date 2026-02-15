@@ -3,7 +3,7 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import { api } from "@/services/api";
 import type { SiteConfig } from "@/types/config";
 import type { Room } from "@/types/rooms";
-import { formatPrice } from "@/utils/currency";
+import { formatPrice } from "@/domain/money/CurrencyFormatter";
 
 // Determinar idioma basado en URL
 const lang = Astro.url.pathname.startsWith("/en") ? "en" : "es";

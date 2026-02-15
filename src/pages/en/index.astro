@@ -24,7 +24,7 @@ log.info("Recursos para el carousel:", carouselResources);
 ---
 
 <script>
-    import { getCookie, setCookie } from "@/utils/cookies.ts";
+    import { getCookie, setCookie } from "@/adapters/browser/Cookies.ts";
 
     // Redirección de idioma en el lado del cliente
     const lang = getCookie("lang") || "es";

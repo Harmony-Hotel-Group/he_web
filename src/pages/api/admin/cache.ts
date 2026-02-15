@@ -1,5 +1,5 @@
 import type { APIContext } from "astro";
-import { configureCacheControl } from "@/utils/apiHelpers";
+import { configureCacheControl } from "@/services/data/DataLoader";
 import { logger } from "@/services/logger";
 
 export const prerender = false;

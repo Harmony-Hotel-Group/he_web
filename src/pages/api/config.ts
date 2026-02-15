@@ -2,7 +2,7 @@ import path from "node:path";
 import type { APIContext } from "astro";
 import { logger } from "@/services/logger";
 import type { SiteConfig } from "@/types/config";
-import { json200, loadData } from "@/utils/apiHelpers";
+import { json200, loadData } from "@/services/data/DataLoader";
 
 const log = logger("ApiConfig");
 

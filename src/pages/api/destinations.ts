@@ -2,7 +2,7 @@
 
 import path from "node:path";
 import type { APIContext } from "astro";
-import { json200, loadData } from "@/utils/apiHelpers";
+import { json200, loadData } from "@/services/data/DataLoader";
 
 interface Destination {
 	id: string;

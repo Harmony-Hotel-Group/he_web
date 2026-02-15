@@ -107,6 +107,7 @@
 			"notes": "Petición Especial",
 			"notesPlaceholder": "Describa si desea alguna información adicional",
 			"vehicle": "Vamos con vehiculos",
+			"distribution": "Tipo de Distribución",
 			"modal": {
 				"title": "Reserva Grupal",
 				"cancel": "Cancelar",

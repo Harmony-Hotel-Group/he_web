@@ -1,5 +1,166 @@
 {
+	"site": {
+		"title": "Hotel Ensueños by HHG"
+	},
+	"nav": {
+		"home": "Home",
+		"about": "About Us",
+		"contact": "Contact",
+		"rooms": "Rooms",
+		"destinations": "Destinations",
+		"gastronomy": "Gastronomy",
+		"tours": "Tours",
+		"booking": "Book Now",
+		"cancellation": "Cancellation Policy",
+		"gallery": "Photo Gallery",
+		"privacy": "Privacy Policy",
+		"terms": "Terms and Conditions",
+		"faq": "FAQ",
+		"404": "Page Not Found",
+		"500": "Server Error"
+	},
+	"header": {},
+	"home": {
+		"explore_category": "Explore category"
+	},
+	"buttons": {
+		"see_more": "See more"
+	},
+	"meta": {
+		"description": "Hotel Ensueños by HHG - Your home away from home in the heart of Cuenca, Ecuador."
+	},
+	"components": {
+		"dateRangePicker": "{{n}} night{{s}}",
+		"errors": {
+			"dateRangePicker": "Please select a date range",
+			"missingVehicleOptions": "No vehicle types configured yet. Continue with your booking or contact the administrator."
+		}
+	},
+	"footer": {
+		"description": "Enjoy a comfortable and cozy stay at our hotel, located in a privileged area of the city. We offer comfortable rooms, personalized attention, and services designed for your rest. Our team is ready to help you with recommendations and local experiences that will make your visit even more special.",
+		"navigation": "Navigation",
+		"interest": "Information",
+		"legal": "Legal",
+		"social": "Follow Us",
+		"rights": "All rights reserved",
+		"developed": "Developed by",
+		"about": "About Us",
+		"gallery": "Gallery",
+		"contact": "Contact",
+		"booking": "Book Now",
+		"privacy": "Privacy Policy",
+		"terms": "Terms and Conditions",
+		"cancellation": "Cancellation Policy",
+		"faq": "FAQ"
+	},
 	"booking": {
-		"title": "Booking to Aventure"
+		"title": "Book Your Adventure",
+		"subtitle": "Find and secure your spot for the next great experience.",
+		"dropdown": {
+			"lblAdults": "Adults",
+			"optAdults": "{{i}} Adult{{s}}",
+			"optGroup": "Group",
+			"lblChildren": "Children",
+			"optChildren": "{{i}} Child{{ren}}",
+			"lblRooms": "Rooms",
+			"optRooms": "{{i}} Room{{s}}",
+			"error": "Please select an option"
+		},
+		"switch": {
+			"breakfast": "Include Breakfast",
+			"vehicle": "I have a vehicle",
+			"special_request": "Special Request"
+		},
+		"btn": {
+			"search": "Book with an Advisor"
+		},
+		"dateRange": {
+			"title": "Select your dates",
+			"placeholder": "Select a date range",
+			"error": "No date selected"
+		},
+		"number": {
+			"error": "Choose a valid number"
+		},
+		"vehicles": {
+			"title": "Book Vehicle",
+			"vehicle": "Vehicle",
+			"vehicles": {
+				"notesPlaceholder": "Additional information about parking, arrival times, etc."
+			},
+			"type": "Type",
+			"add": "Add Vehicle",
+			"remove": "Remove Vehicle",
+			"plate": {
+				"title": "Plate",
+				"placeholder": "ABC-1234 (Optional)"
+			},
+			"notes": "Additional Note",
+			"notesPlaceHolder": "Describe additional notes"
+		},
+		"group": {
+			"title": "Group Information",
+			"adults": "Adults +18",
+			"teens": "Teens +12",
+			"kids": "Children +5",
+			"infants": "Infants -5",
+			"notes": "Special Request",
+			"notesPlaceholder": "Describe if you want any additional information",
+			"vehicle": "We have vehicles",
+			"distribution": "Distribution Type",
+			"modal": {
+				"title": "Group Booking",
+				"cancel": "Cancel",
+				"confirm": "Confirm",
+				"includeVehicles": "Include vehicle information?"
+			}
+		}
+	},
+	"underConstruction": {
+		"back": "Back to home",
+		"404": {
+			"title": "Page Not Found",
+			"message": "We are gathering the most common questions to help you. It will be available soon."
+		},
+		"500": {
+			"title": "Page Not Found",
+			"message": "Sorry, something went wrong on our server. Please try again later."
+		},
+		"about": {
+			"title": "About Us",
+			"message": "We are updating our policies to offer you greater flexibility. They will be available soon."
+		},
+		"booking": {
+			"title": "Bookings",
+			"message": "We are building our page to facilitate your bookings. It will be available soon."
+		},
+		"cancellation": {
+			"title": "Cancellation Policy",
+			"message": "We are building our cancellation policy page. It will be available soon."
+		},
+		"contact": {
+			"title": "Contact",
+			"message": "We are building our contact page. It will be available soon."
+		},
+		"faq": {
+			"title": "FAQ",
+			"message": "We are gathering the most common questions to help you. It will be available soon."
+		},
+		"gallery": {
+			"title": "Gallery",
+			"message": "We are building our gallery page. It will be available soon."
+		},
+		"privacy": {
+			"title": "Privacy Policy",
+			"message": "We are building our privacy page. It will be available soon."
+		},
+		"terms": {
+			"title": "Terms and Conditions",
+			"message": "We are building our terms and conditions page. It will be available soon."
+		},
+		"tours": {
+			"title": "Tours List",
+			"message": "We are building our tours page. It will be available soon"
+		}
 	}
 }

@@ -1,4 +1,1 @@
-export interface ApiResponse<T> {
-	data: T;
-	error?: string;
-}
+export * from "./utils/common";

@@ -20,7 +20,29 @@
 	::before,
 	::backdrop,
 	::file-selector-button {
-		border-color: var(--color-gray-200, currentcolor);
+		border-color: var(--color-gray-300, currentcolor);
+	}
+
+	h1 {
+		@apply text-4xl md:text-5xl lg:text-6xl leading-tight font-semibold;
+	}
+
+	h2 {
+		@apply text-3xl md:text-4xl leading-tight font-semibold;
+	}
+
+	h3 {
+		@apply text-xl md:text-2xl leading-snug font-semibold;
+	}
+
+	p {
+		@apply text-base leading-7;
+	}
+}
+
+@layer utilities {
+	.transition-base {
+		@apply transition-all duration-300 ease-out;
 	}
 }
 
@@ -33,6 +55,15 @@ body {
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Playfair Display', serif;
 }
+
+/*
+  Escala de grises permitida para implementación incremental:
+  gray-50, gray-100, gray-300, gray-600, gray-900.
+
+  Advertencia (auditado en src/): todavía existen usos de
+  gray-200, gray-400, gray-500, gray-700, gray-800, gray-950.
+  No se corrigen aquí por restricción de no tocar componentes/páginas.
+*/
 
 /* Custom styles for react-day-picker */
 :root {

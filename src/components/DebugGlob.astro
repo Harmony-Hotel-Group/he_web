@@ -1,0 +1,13 @@
+---
+const assets = import.meta.glob("/src/assets/**/*");
+const keys = Object.keys(assets);
+---
+
+<div class="bg-black text-white p-4 overflow-auto max-h-96 text-xs">
+    <h3>Glob Keys ({keys.length})</h3>
+    <ul>
+        {keys.slice(0, 20).map(key => (
+            <li>{key}</li>
+        ))}
+    </ul>
+</div>

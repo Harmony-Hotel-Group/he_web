@@ -1,15 +1,19 @@
 ---
+import type { ImageMetadata } from "astro";
+
 interface Props {
-	src: string;
+	src: string | ImageMetadata;
 	alt: string;
 	loading?: "lazy" | "eager" | null | undefined;
 }
 
 const { src, alt, loading = "lazy", ...rest } = Astro.props;
+
+const imageSrc = typeof src === "object" && "src" in src ? src.src : src;
 ---
 
 <img
-        src={src}
+        src={imageSrc}
         alt={alt}
         loading={loading}
         decoding="async"

@@ -342,7 +342,7 @@
 	"destinations": [
 		{
 			"id": "nature_reserves",
-			"src": "src/assets/img/nature_reserves/el_cajas_park.webp",
+			"src": "src/assets/img/destinations/nature_reserves/el_cajas_park.webp",
 			"name": {
 				"es": "Parque Nacional El Cajas",
 				"en": "El Cajas National Park"

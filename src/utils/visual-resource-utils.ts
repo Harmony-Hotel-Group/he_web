@@ -9,6 +9,7 @@ import { logger } from "@/services/logger";
 import type { ImageMetadata } from "astro";
 
 // Definir globs para diferentes tipos de recursos
+// Usamos rutas relativas para asegurar compatibilidad
 const assets = import.meta.glob<{ default: ImageMetadata }>("/src/assets/**/*");
 const localImages = import.meta.glob<{ default: ImageMetadata }>(
 	"/src/assets/img/**/*.{jpeg,jpg,png,gif,webp,svg,avif}",
@@ -18,6 +19,16 @@ const localVideos = import.meta.glob<{ default: string }>(
 );
 
 const log = logger("VisualResourceUtils");
+
+// Debug: Log keys once to understand structure
+const assetKeys = Object.keys(assets);
+if (assetKeys.length > 0) {
+	log.info(
+		`[VisualResourceUtils] Glob keys sample: ${assetKeys.slice(0, 3).join(", ")}`,
+	);
+} else {
+	log.warn(`[VisualResourceUtils] No assets found in glob /src/assets/**/*`);
+}
 
 // ==================== TYPES ====================
 
@@ -145,93 +156,73 @@ export function getYouTubeEmbedUrl(
  */
 async function validateLocalFile(src: string): Promise<ValidationResult> {
 	// Normalizar ruta para coincidir con las claves del glob
-	// Asegurar que empiece con /src/ si no lo tiene
 	let normalizedPath = src;
+
+	// Asegurar slash inicial
 	if (!src.startsWith("/")) {
 		normalizedPath = "/" + src;
 	}
-	if (!normalizedPath.startsWith("/src/")) {
-		// Si es una ruta relativa o de alias, intentar resolverla o asumir que es relativa a src
-		// Por ahora, intentamos buscarla tal cual si empieza con /src, o añadimos /src si parece estar en assets
-		if (normalizedPath.startsWith("/assets/")) {
-			normalizedPath = "/src" + normalizedPath;
+
+	// Manejar alias o rutas relativas comunes
+	if (normalizedPath.startsWith("/assets/")) {
+		normalizedPath = "/src" + normalizedPath;
+	}
+
+	// 1. Intento de coincidencia exacta
+	if (assets[normalizedPath]) {
+		try {
+			const mod = await assets[normalizedPath]();
+			// log.info(`[validateLocalFile] ✓ Encontrado (exacto): ${normalizedPath}`);
+			return {
+				isValid: true,
+				finalSrc: mod.default,
+			};
+		} catch (e) {
+			log.error(
+				`[validateLocalFile] Error cargando módulo: ${normalizedPath}`,
+				e,
+			);
 		}
 	}
 
-	// Generar variaciones de ruta para buscar en diferentes ubicaciones
-	const possibleImgPaths: string[] = [normalizedPath];
+	// 2. Búsqueda robusta (Case insensitive y coincidencia parcial)
+	const lowerTarget = normalizedPath.toLowerCase();
 
-	// Si busca en /src/resources/img/, también buscar en /src/assets/img/
-	if (normalizedPath.startsWith("/src/resources/img/")) {
-		const assetsPath = normalizedPath.replace(
-			"/src/resources/img/",
-			"/src/assets/img/",
-		);
-		possibleImgPaths.push(assetsPath);
-	}
+	// Iterar sobre todas las claves del glob
+	for (const key of Object.keys(assets)) {
+		const lowerKey = key.toLowerCase();
 
-	// Si busca en /src/assets/img/, también buscar en /src/resources/img/ (legacy)
-	if (normalizedPath.startsWith("/src/assets/img/")) {
-		const resourcesPath = normalizedPath.replace(
-			"/src/assets/img/",
-			"/src/resources/img/",
-		);
-		possibleImgPaths.push(resourcesPath);
-	}
-
-	// 1. Verificar en assets glob (general) - busca en /src/assets/**/*
-	for (const p of possibleImgPaths) {
-		if (assets[p]) {
+		// Coincidencia exacta insensible a mayúsculas/minúsculas
+		// O si la clave termina con la ruta objetivo (para manejar prefijos faltantes)
+		// O si la clave contiene la ruta objetivo (para manejar rutas relativas cortas)
+		if (
+			lowerKey === lowerTarget ||
+			lowerKey.endsWith(lowerTarget) ||
+			(lowerTarget.startsWith("/src/assets") && lowerKey.includes(lowerTarget))
+		) {
 			try {
-				const mod = await assets[p]();
-				log.info(`[validateLocalFile] ✓ Encontrado en assets: ${p}`);
+				const mod = await assets[key]();
+				// log.info(`[validateLocalFile] ✓ Encontrado (fuzzy): ${key} (buscado: ${normalizedPath})`);
 				return {
 					isValid: true,
 					finalSrc: mod.default,
 				};
 			} catch (e) {
-				log.error(`[validateLocalFile] Error cargando módulo: ${p}`, e);
+				log.error(`[validateLocalFile] Error cargando módulo fuzzy: ${key}`, e);
 			}
 		}
 	}
 
-	// 2. Verificar en /src/resources/img/ (Imágenes legacy/específicas)
-	for (const p of possibleImgPaths) {
-		if (localImages[p]) {
-			try {
-				const mod = await localImages[p]();
-				log.info(`[validateLocalFile] ✓ Encontrado en src (img): ${p}`);
-				return {
-					isValid: true,
-					finalSrc: mod.default,
-				};
-			} catch (e) {
-				log.error(`[validateLocalFile] Error cargando módulo: ${p}`, e);
-			}
-		}
-	}
-
-	// 3. Verificar en /src/resources/vid/ (Videos)
-	const possibleVidPaths = [
-		normalizedPath,
-		`/src/resources/vid${normalizedPath.startsWith("/src/resources/vid") ? normalizedPath.replace("/src/resources/vid", "") : normalizedPath}`,
-	];
-
-	for (const p of possibleVidPaths) {
-		if (localVideos[p]) {
-			try {
-				const mod = await localVideos[p]();
-				// Para videos, el default suele ser la URL (string)
-				log.info(
-					`[validateLocalFile] ✓ Encontrado en src (vid): ${mod.default}`,
-				);
-				return {
-					isValid: true,
-					finalSrc: mod.default,
-				};
-			} catch (e) {
-				log.error(`[validateLocalFile] Error cargando módulo: ${p}`, e);
-			}
+	// 3. Verificar en /src/resources/vid/ (Videos) - Legacy support
+	if (localVideos[normalizedPath]) {
+		try {
+			const mod = await localVideos[normalizedPath]();
+			return { isValid: true, finalSrc: mod.default };
+		} catch (e) {
+			log.error(
+				`[validateLocalFile] Error cargando video: ${normalizedPath}`,
+				e,
+			);
 		}
 	}
 
@@ -248,7 +239,9 @@ async function validateLocalFile(src: string): Promise<ValidationResult> {
 		};
 	}
 
-	log.info(`[validateLocalFile] ✗ Archivo no encontrado en globs: ${src}`);
+	log.warn(
+		`[validateLocalFile] ✗ Archivo no encontrado en globs: ${src} (Norm: ${normalizedPath})`,
+	);
 	return {
 		isValid: false,
 		error: `Archivo local no encontrado en globs: ${src}`,

@@ -21,7 +21,8 @@
 			"@/types/*": ["src/types/*"],
 			"@/pages/*": ["src/pages/*"],
 			"@/constants/*": ["src/constants/*"],
-			"@/contracts/*": ["src/contracts/*"]
+			"@/contracts/*": ["src/contracts/*"],
+			"@/domain/*": ["src/domain/*"]
 		}
 	}
 }

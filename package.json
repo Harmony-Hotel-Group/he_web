@@ -27,7 +27,7 @@
 		"@biomejs/biome": "2.2.7",
 		"@tailwindcss/postcss": "^4.1.16",
 		"@types/node": "^24.6.2",
-		"astro": "^5.17.3",
+		"astro": "^5.18.0",
 		"tailwindcss": "^4.1.16",
 		"typescript": "^5.9.3"
 	}

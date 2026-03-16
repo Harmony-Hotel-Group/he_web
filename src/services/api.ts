@@ -38,7 +38,7 @@ export class Api {
 		this.apiTimeout = options.timeout ?? 8000; // 8 segundos por defecto
 		this.cacheDuration = options.cacheDuration ?? 5 * 60 * 1000; // 5 minutos por defecto
 		log.info("Servicio de API inicializado con opciones:", options);
-		log.info("Info cache:", this.cache);
+		log.info("Cache inicializado, entradas:", this.cache.size);
 	}
 
 	// ============== Métodos Públicos ==============

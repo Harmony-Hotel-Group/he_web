@@ -1,6 +1,9 @@
 // src/actions/bookingGroup.ts
 import { defineAction } from "astro:actions";
 import { z } from "astro:schema";
+import { logger } from "@/services/logger";
+
+const log = logger("BookingGroup");
 
 export const bookingGroup = defineAction({
 	accept: "form",
@@ -50,10 +53,7 @@ export const bookingGroup = defineAction({
 		if (match) {
 			[, checkin, checkout, nights] = match;
 		} else {
-			console.warn(
-				"No se encontraron coincidencias en dateRangeGroup:",
-				dateRangeGroup,
-			);
+			log.warn("No se encontraron coincidencias en dateRangeGroup:", dateRangeGroup);
 		}
 
 		// Procesar vehículos si están incluidos

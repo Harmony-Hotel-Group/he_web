@@ -1,6 +1,9 @@
 // src/actions/booking.ts
 import { defineAction } from "astro:actions";
 import { z } from "astro:schema";
+import { logger } from "@/services/logger";
+
+const log = logger("Booking");
 
 export const booking = defineAction({
     accept: "form",
@@ -49,9 +52,7 @@ export const booking = defineAction({
             /(\d{4}[-\/]\d{2}[-\/]\d{2})\s*➜\s*(\d{4}[-\/]\d{2}[-\/]\d{2})\s*\(([^)]+)\)/;
 
         // Ejecutamos el match
-        console.log("dateRange recibido:", dateRange);
         const match = dateRange?.match(regex);
-        console.log("Match result:", match);
 
         let checkin: string | null = null;
         let checkout: string | null = null;
@@ -62,9 +63,8 @@ export const booking = defineAction({
             checkin = match[1];
             checkout = match[2];
             nights = match[3];
-            console.log("Fechas extraídas:", { checkin, checkout, nights });
         } else {
-            console.warn("⚠️ No se encontraron coincidencias en dateRange:", dateRange);
+            log.warn("No se encontraron coincidencias en dateRange:", dateRange);
         }
 
         // Procesar vehículos si están incluidos

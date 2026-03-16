@@ -1,29 +1,101 @@
 ---
-//pages/booking.astro
+// pages/booking.astro
 
-// export const prerender = false;
-
+import BaseLayout from "@/layouts/BaseLayout.astro";
 import { Translations } from "@/i18n/translation.ts";
-import { logger } from "@/services/logger.ts";
-
-interface Props {
-	lang: string;
-}
-
-const { lang = "es" } = Astro.props;
-
-const log = logger("booking");
-
-import UnderConstructionPage from "@/components/pages/UnderConstructionPage.astro";
-
+import { api } from "@/services/api.ts";
+import type { SiteConfig } from "@/types/config";
+import type { Room } from "@/types/rooms";
+import BookingForm from "@/components/organisms/booking/BookingForm.astro";
+import BookingCart from "@/components/islands/BookingCart";
+import { validateResource } from "@/utils/visual-resource-utils.ts";
+const lang = Astro.url.pathname.startsWith("/en") ? "en" : "es";
 const t = Translations(lang);
-log.info(`Rendering about page with language: ${lang}`);
+
+const config = (await api.fetch("config", { params: { lang } })) as SiteConfig;
+const rooms = (await api.fetch("rooms", { params: { lang } })) as Room[] | null;
+const safeRooms = Array.isArray(rooms) ? rooms : [];
+const placeholder =
+	"data:image/svg+xml;charset=utf-8," +
+	encodeURIComponent(
+		`<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64"><rect width="100%" height="100%" fill="#f3f4f6"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#9ca3af" font-family="Arial, sans-serif" font-size="10">IMG</text></svg>`,
+	);
+
+const roomsForCart = await Promise.all(
+	safeRooms.map(async (room) => {
+		const src = room.images?.[0]?.src;
+		if (!src) return { ...room, images: [{ src: placeholder }] };
+		const validation = await validateResource(src, "image");
+		const finalSrc = validation.isValid ? validation.finalSrc : undefined;
+		const normalized =
+			typeof finalSrc === "string"
+				? finalSrc
+				: finalSrc && typeof finalSrc === "object" && "src" in finalSrc
+					? finalSrc.src
+					: placeholder;
+		return { ...room, images: [{ src: normalized }] };
+	}),
+);
 ---
 
-<UnderConstructionPage
-        titleHead={t("nav.booking")}
-        title={t("underConstruction.booking.title")}
-        message={t("underConstruction.booking.message")}
-        btnBackLabel={t("underConstruction.back")}
-        lang={lang}
-/>
+<BaseLayout
+	titleKey="nav.booking"
+	lang={lang}
+	config={config}
+	headerBgClass="text-gray-900"
+>
+	<section class="bg-gray-100/90 backdrop-blur border-b border-gray-200">
+		<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-[6.5rem] pb-10">
+			<h1 class="text-3xl md:text-4xl font-serif text-primary font-bold mb-2">
+				{t("booking.title")}
+			</h1>
+			<p class="text-gray-600 max-w-2xl">
+				{t("booking.subtitle")}
+			</p>
+		</div>
+	</section>
+
+	<section class="py-10 md:py-14 bg-gradient-to-b from-gray-100 via-gray-50 to-white">
+		<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+			<div class="bg-white shadow-xl rounded-xl p-6 md:p-8 border border-gray-100">
+				<BookingForm lang={lang} config={config} />
+			</div>
+
+			<div class="mt-8">
+				<BookingCart rooms={roomsForCart} lang={lang} client:load />
+			</div>
+		</div>
+	</section>
+
+	<section class="py-12 md:py-16">
+		<div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+			<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+				<div class="p-6 border border-gray-200 rounded-lg">
+					<h3 class="text-lg font-semibold text-primary mb-2">
+						WhatsApp
+					</h3>
+					<p class="text-gray-600">
+						{config?.contactInfo?.whatsapp || "—"}
+					</p>
+				</div>
+				<div class="p-6 border border-gray-200 rounded-lg">
+					<h3 class="text-lg font-semibold text-primary mb-2">
+						Email
+					</h3>
+					<p class="text-gray-600">
+						{config?.contactInfo?.email || "—"}
+					</p>
+				</div>
+				<div class="p-6 border border-gray-200 rounded-lg">
+					<h3 class="text-lg font-semibold text-primary mb-2">
+						{lang === "es" ? "Dirección" : "Address"}
+					</h3>
+					<p class="text-gray-600">
+						{config?.contactInfo?.address || "—"}
+					</p>
+				</div>
+			</div>
+		</div>
+	</section>
+
+</BaseLayout>

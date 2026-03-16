@@ -22,7 +22,7 @@ const ERP_TOURS_MOCK: ErpTourContract[] = [
 		name: "Tour Galápagos Full Day",
 		description: "Excursión de día completo con guía local y actividades en playa.",
 		price: 120,
-		image: "/images/tours/galapagos-full-day.webp",
+		image: "src/assets/img/cities/cuenca/calderon-catedral.webp",
 		active: true,
 	},
 	{
@@ -30,7 +30,7 @@ const ERP_TOURS_MOCK: ErpTourContract[] = [
 		name: "Aventura Isabela",
 		description: "Recorrido por túneles de lava, senderos y puntos de avistamiento.",
 		price: 95,
-		image: "/images/tours/isabela-adventure.webp",
+		image: "src/assets/img/destinations/nature_reserves/el_cajas_park.webp",
 		active: true,
 	},
 ];

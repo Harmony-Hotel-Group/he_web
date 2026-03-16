@@ -16,8 +16,8 @@
 		"price": 20,
 		"currency": "USD",
 		"images": [
-			"/images/gastronomy/ceviche1.jpg",
-			"/images/gastronomy/ceviche2.jpg"
+			"src/assets/img/hotel/foods/motepillo.webp",
+			"src/assets/img/hotel/foods/motepillo2.webp"
 		]
 	},
 	{
@@ -37,8 +37,8 @@
 		"price": 25,
 		"currency": "USD",
 		"images": [
-			"/images/gastronomy/lomo_saltado1.jpg",
-			"/images/gastronomy/lomo_saltado2.jpg"
+			"src/assets/img/hotel/foods/bolon.webp",
+			"src/assets/img/hotel/foods/bolon2.webp"
 		]
 	},
 	{
@@ -57,6 +57,6 @@
 		},
 		"price": 10,
 		"currency": "USD",
-		"images": ["/images/gastronomy/suspiro1.jpg"]
+		"images": ["src/assets/img/hotel/foods/tigrillo.webp"]
 	}
 ]

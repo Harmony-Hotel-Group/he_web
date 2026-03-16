@@ -1,6 +1,6 @@
 ---
 import type { ImageMetadata } from "astro";
-import VisualResource from "@/components/molecules/media/VisualResource.astro";
+import ImageResource from "@/components/molecules/media/ImageResource.astro";
 import { logger } from "@/services/logger.ts";
 
 const log = logger("PhotoCollage");
@@ -276,15 +276,14 @@ const imageConfigs = getImageConfigs(imagesToDisplay.length);
                             data-collage-image
                             data-card-index={index}
                         >
-                            <VisualResource
+                            <ImageResource
                                 src={image.src}
                                 alt={image.alt}
-                                type="image"
-                                class:list={[
-                                    "w-full h-full object-cover rounded-xs",
-                                    "transition-opacity duration-300",
-                                    "opacity-90 hover:opacity-100",
-                                ]}
+                                width={900}
+                                height={675}
+                                loading="lazy"
+                                classes="w-full h-full object-cover rounded-xs transition-opacity duration-300 opacity-90 hover:opacity-100"
+                                wrapperClasses="w-full h-full"
                             />
                         </div>
                     );

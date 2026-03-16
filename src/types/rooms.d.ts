@@ -11,6 +11,8 @@ export interface Room {
     description: LocalizedText;
     pricePerNight: number;
     currency: string;
+    minPersons?: number;
+    maxPersons?: number;
     images: RoomImage[];
     amenities: {
         es: string[];

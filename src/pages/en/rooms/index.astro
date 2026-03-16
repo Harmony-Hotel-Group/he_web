@@ -3,6 +3,7 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import { api } from "@/services/api";
 import type { SiteConfig } from "@/types/config";
 import type { Room } from "@/types/rooms";
+import ImageResource from "@/components/molecules/media/ImageResource.astro";
 
 // Determinar idioma basado en URL
 const lang = "en" as string;
@@ -31,11 +32,12 @@ const formatPrice = (price: number, currency: string) => {
   <!-- Hero Section -->
   <section class="relative h-[50vh] min-h-[400px] flex items-center justify-center overflow-hidden">
     <div class="absolute inset-0 bg-gray-900/40 z-10"></div>
-    <img 
-      src="/images/headers/rooms-header.jpg" 
-      alt="Luxury Rooms" 
-      class="absolute inset-0 w-full h-full object-cover"
-      onerror="const fallback='https://images.unsplash.com/photo-1578683010236-d716f9a3f461?q=80&w=2070&auto=format&fit=crop'; if(this.getAttribute('src')!==fallback)this.setAttribute('src',fallback);"
+    <ImageResource
+      src="src/assets/img/hotel/facade/sun.webp"
+      alt="Luxury Rooms"
+      loading="eager"
+      classes="absolute inset-0 w-full h-full object-cover"
+      wrapperClasses="absolute inset-0"
     />
     <div class="relative z-20 text-center px-4 max-w-4xl mx-auto">
       <h1 class="text-4xl md:text-5xl lg:text-6xl font-serif text-white font-bold mb-4 drop-shadow-lg tracking-wide">
@@ -58,11 +60,12 @@ const formatPrice = (price: number, currency: string) => {
             <article class="group relative bg-white rounded-sm shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col h-full border border-gray-100">
               <!-- Image -->
               <div class="relative overflow-hidden aspect-[4/3]">
-                <img 
-                  src={room.images.find(img => img.frontpage)?.src || room.images[0]?.src} 
+                <ImageResource
+                  src={room.images.find(img => img.frontpage)?.src || room.images[0]?.src}
                   alt={room.images[0]?.alt[lang] || room.name[lang]}
-                  class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   loading="lazy"
+                  classes="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  wrapperClasses="w-full h-full"
                 />
                 <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-4 py-1.5 text-primary font-serif font-bold text-lg shadow-sm">
                   {formatPrice(room.pricePerNight, room.currency)} <span class="text-xs font-sans font-normal text-gray-500">/ {lang === 'es' ? 'noche' : 'night'}</span>

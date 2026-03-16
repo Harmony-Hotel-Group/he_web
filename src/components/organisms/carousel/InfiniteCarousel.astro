@@ -73,8 +73,14 @@ const duplicatedItems = [...items, ...items];
 
             this.offset = 0;
             this.isDragging = false;
+            this.isPointerDown = false;
+            this.isHovering = false;
             this.startX = 0;
             this.lastX = 0;
+            this.dragDistance = 0;
+            this.wasDragged = false;
+            this.dragThreshold = 10;
+            this.blockClickUntil = 0;
 
             this.animationId = null;
 
@@ -98,44 +104,77 @@ const duplicatedItems = [...items, ...items];
             window.addEventListener('touchmove', (e) => this.onDrag(e.touches[0]));
 
             // Pausa al hacer hover (opcional, si quieres que pare solo al posar el mouse sin click)
-            this.container.addEventListener('mouseenter', () => this.speed = 0);
+            this.container.addEventListener('mouseenter', () => {
+                this.isHovering = true;
+                this.speed = 0;
+            });
             this.container.addEventListener('mouseleave', () => {
+                this.isHovering = false;
                 if (!this.isDragging) this.speed = this.baseSpeed;
             });
+
+            // Evitar navegación cuando el usuario arrastra
+            this.container.addEventListener('click', (e) => {
+                if (this.wasDragged || Date.now() < this.blockClickUntil) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                }
+            }, true);
 
             // Iniciar Loop
             this.animate();
         }
 
         startDrag(e) {
-            this.isDragging = true;
+            if (e.button !== undefined && e.button !== 0) return;
+            this.isPointerDown = true;
+            this.isDragging = false;
             this.startX = e.clientX;
             this.lastX = e.clientX;
+            this.dragDistance = 0;
+            this.wasDragged = false;
+            this.blockClickUntil = 0;
             this.speed = 0; // Detenemos el auto-scroll al agarrar
             this.container.style.cursor = 'grabbing';
         }
 
         endDrag() {
-            if (!this.isDragging) return;
+            if (!this.isPointerDown) return;
+            this.isPointerDown = false;
+            const dragged = this.isDragging;
             this.isDragging = false;
             this.speed = this.baseSpeed; // Restauramos velocidad
             this.container.style.cursor = 'grab';
+            if (dragged || this.wasDragged) {
+                this.wasDragged = true;
+                this.blockClickUntil = Date.now() + 200;
+                setTimeout(() => {
+                    this.wasDragged = false;
+                }, 250);
+            }
         }
 
         onDrag(e) {
-            if (!this.isDragging) return;
+            if (!this.isPointerDown) return;
 
             const currentX = e.clientX;
             const delta = currentX - this.lastX;
+            this.dragDistance = Math.abs(currentX - this.startX);
+            if (this.dragDistance > this.dragThreshold) {
+                this.wasDragged = true;
+                this.isDragging = true;
+            }
 
             // Movemos el track basado en el arrastre
-            this.offset += delta;
+            if (this.isDragging) {
+                this.offset += delta;
+            }
             this.lastX = currentX;
         }
 
         animate() {
             // Movimiento automático (si no se arrastra y speed > 0)
-            if (!this.isDragging) {
+            if (!this.isDragging && !this.isHovering) {
                 this.offset -= this.speed;
             }
 

@@ -1,6 +1,6 @@
 ---
 // src/components/organisms/carousel/VisualCarousel.astro
-import Imagen from "@/components/atoms/image/Imagen.astro";
+import ImageResource from "@/components/molecules/media/ImageResource.astro";
 import type { Resource } from "@/types/resource";
 import { validateResource } from "@/utils/visual-resource-utils.ts";
 
@@ -23,11 +23,23 @@ const {
 } = Astro.props;
 
 const carouselId = `carousel-${String(Math.random().toString(36)).substring(2, 9)}`;
+const placeholder = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(
+	`<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080"><rect width="100%" height="100%" fill="#111827"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#f3f4f6" font-family="Arial, sans-serif" font-size="36">Imagen no disponible</text></svg>`,
+);
 
 // Validar recursos y filtrar los inválidos
 const validatedResources = (
 	await Promise.all(
-		resources.map(async (item) => {
+		(resources.length > 0
+			? resources
+			: [
+					{
+						src: placeholder,
+						type: "image",
+						alt: "Imagen no disponible",
+					},
+				]
+		).map(async (item) => {
 			const validation = await validateResource(item.src, "image");
 			if (validation.isValid && validation.finalSrc) {
 				return {
@@ -35,7 +47,11 @@ const validatedResources = (
 					src: validation.finalSrc,
 				};
 			}
-			return null;
+			return {
+				...item,
+				src: placeholder,
+				alt: item.alt || "Imagen no disponible",
+			};
 		}),
 	)
 ).filter((item): item is Resource => item !== null);
@@ -53,13 +69,15 @@ const validatedResources = (
         {validatedResources && validatedResources.length > 0 ? (
             validatedResources.map((item, index) => (
                 <div class="absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out opacity-0">
-                    <Imagen
+                    <ImageResource
                         src={item.src}
                         alt={item.alt}
-                        class="w-full h-full object-cover"
+                        classes="w-full h-full object-cover"
                         loading={index === 0 ? "eager" : "lazy"}
-                        fetchpriority={index === 0 ? "high" : "auto"}
-                     height={1080} width={1920}/>
+                        wrapperClasses="absolute inset-0"
+                        height={1080}
+                        width={1920}
+                    />
                 </div>
             ))
         ) : (

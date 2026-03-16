@@ -121,7 +121,7 @@ export class Api {
 				headers: finalHeaders,
 			});
 			if (!res.ok) {
-				new Error(`Respuesta no exitosa de la API: ${res.status}`);
+				throw new Error(`Respuesta no exitosa de la API: ${res.status}`);
 			}
 			const payload = await res.json().catch(() => null);
 			log.info(`Payload crudo recibido para '${key}':`, payload);
@@ -263,10 +263,13 @@ log.info(
 
 export const api = new Api({
 	baseUrl:
-		import.meta.env.PUBLIC_API_BASE_URL || import.meta.env.VERCEL_URL
+		(import.meta.env.PUBLIC_API_BASE_URL as string | undefined) ||
+		(import.meta.env.VERCEL_URL
 			? `https://${import.meta.env.VERCEL_URL}`
-			: // @ts-expect-error
-				"" || import.meta.env.BASE_URL,
+			: "") ||
+		// @ts-expect-error
+		(import.meta.env.BASE_URL as string | undefined) ||
+		"",
 	cacheDuration: cacheDurationMs,
 });
 

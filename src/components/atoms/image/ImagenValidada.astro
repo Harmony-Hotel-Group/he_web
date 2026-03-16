@@ -6,10 +6,11 @@ import type { ImageMetadata } from "astro";
 interface Props {
 	src: string | ImageMetadata;
 	alt: string;
+	[rest: string]: unknown;
 }
 
-const { src, alt } = Astro.props as Props;
+const { src, alt, ...rest } = Astro.props as Props;
 const safeSrc = validateImageSource(src);
 ---
 
-<ImagenBase src={safeSrc} alt={alt} />
+<ImagenBase src={safeSrc} alt={alt} {...rest} />

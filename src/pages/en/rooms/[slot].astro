@@ -3,6 +3,7 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import { api } from "@/services/api";
 import type { SiteConfig } from "@/types/config";
 import type { Room } from "@/types/rooms";
+import ImageResource from "@/components/molecules/media/ImageResource.astro";
 
 export const prerender = false;
 
@@ -45,11 +46,13 @@ const formatPrice = (price: number, currency: string) => {
 			class="absolute inset-0 bg-gradient-to-t from-gray-900/80 via-transparent to-gray-900/30 z-10"
 		>
 		</div>
-		<img
+		<ImageResource
 			src={room.images.find((img) => img.frontpage)?.src ||
 				room.images[0].src}
 			alt={room.name[lang]}
-			class="w-full h-full object-cover transition-transform duration-1000 animate-slow-zoom"
+			loading="eager"
+			classes="w-full h-full object-cover transition-transform duration-1000 animate-slow-zoom"
+			wrapperClasses="absolute inset-0"
 		/>
 
 		<div class="absolute bottom-0 left-0 right-0 z-20 p-8 md:p-12 lg:p-20">
@@ -135,10 +138,12 @@ const formatPrice = (price: number, currency: string) => {
 									<div
 										class={`relative overflow-hidden rounded-sm aspect-video ${index === 0 ? "md:col-span-2 md:aspect-[2/1]" : ""}`}
 									>
-										<img
+										<ImageResource
 											src={img.src}
 											alt={img.alt[lang]}
-											class="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+											loading="lazy"
+											classes="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+											wrapperClasses="w-full h-full"
 										/>
 									</div>
 								))}
@@ -212,7 +217,7 @@ const formatPrice = (price: number, currency: string) => {
 						</div>
 
 						<a
-							href="/booking"
+							href={`/booking?room=${room.id}`}
 							class="block w-full bg-accent text-white text-center py-4 font-bold uppercase tracking-widest hover:bg-primary transition-colors duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
 						>
 							{

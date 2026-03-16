@@ -144,6 +144,14 @@ const {
                 datePickerSync.register(pickerId, instance, syncGroup);
                 inputElement.dataset.flatpickrInitialized = "true"; // Marcar como inicializado
                 log.info(`Initialized: ${pickerId}`);
+
+                // Default: 1 night (today -> tomorrow) if empty
+                if (!inputElement.value) {
+                    const start = new Date();
+                    const end = new Date();
+                    end.setDate(start.getDate() + 1);
+                    instance.setDate([start, end], true);
+                }
             },
 
             onDestroy: () => {

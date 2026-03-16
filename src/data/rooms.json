@@ -1,44 +1,354 @@
 [
 	{
-		"id": "room1",
+		"id": "double",
 		"name": {
-			"es": "Habitación Estándar",
-			"en": "Standard Room"
+			"es": "Estándar",
+			"en": "Standard"
 		},
 		"type": {
 			"es": "Estándar",
 			"en": "Standard"
 		},
 		"description": {
-			"es": "Una cómoda habitación con todas las comodidades básicas para una estancia agradable.",
-			"en": "A comfortable room with all basic amenities for a pleasant stay."
+			"es": "Habitación acogedora ideal para parejas, con todas las comodidades para una estancia romántica y relajante en el centro de la ciudad.",
+			"en": "Cozy room ideal for couples, with all the amenities for a romantic and relaxing stay in the city center."
 		},
-		"pricePerNight": 100,
+		"pricePerNight": 25,
 		"currency": "USD",
+		"minPersons": 1,
+		"maxPersons": 2,
 		"images": [
 			{
-				"src": "/images/rooms/standard1.jpg",
+				"src": "src/assets/img/hotel/rooms/matrimonial/1.webp",
 				"frontpage": true,
 				"alt": {
-					"es": "Fotografia frontal de habitacion estandar",
-					"en": "Fotografia frontal de habitacion estandar"
+					"es": "Habitación estándar - vista principal",
+					"en": "Standard room - main view"
 				}
 			},
 			{
-				"src": "/images/rooms/standard2.jpg",
+				"src": "src/assets/img/hotel/rooms/matrimonial/2.webp",
 				"alt": {
-					"es": "fotografia lateral de habiracion estandar",
-					"en": "fotografia lateral de habiracion estandar"
+					"es": "Habitación estándar - vista interior",
+					"en": "Standard room - interior view"
 				}
 			}
 		],
 		"amenities": {
-			"es": ["Cama doble", "Baño privado", "TV", "Wi-Fi"],
-			"en": ["Double bed", "Private bathroom", "TV", "Wi-Fi"]
+			"es": ["Cama Matrimonial", "TV Cable", "WiFi", "Baño Privado"],
+			"en": ["Double Bed", "Cable TV", "WiFi", "Private Bathroom"]
 		},
 		"category": {
-			"es": "Estandar",
+			"es": "Estándar",
 			"en": "Standard"
+		}
+	},
+	{
+		"id": "twin",
+		"name": {
+			"es": "Doble individual",
+			"en": "Twin"
+		},
+		"type": {
+			"es": "Estándar",
+			"en": "Standard"
+		},
+		"description": {
+			"es": "Perfecta para amigos o compañeros de viaje, ofrece dos camas individuales cómodas y espacio optimizado para el descanso.",
+			"en": "Perfect for friends or travel companions, offering two comfortable single beds and optimized space for rest."
+		},
+		"pricePerNight": 45,
+		"currency": "USD",
+		"minPersons": 1,
+		"maxPersons": 2,
+		"images": [
+			{
+				"src": "src/assets/img/hotel/rooms/doble_individual/1.webp",
+				"frontpage": true,
+				"alt": {
+					"es": "Habitación doble individual - vista principal",
+					"en": "Twin room - main view"
+				}
+			},
+			{
+				"src": "src/assets/img/hotel/rooms/doble_individual/2.webp",
+				"alt": {
+					"es": "Habitación doble individual - vista interior",
+					"en": "Twin room - interior view"
+				}
+			}
+		],
+		"amenities": {
+			"es": ["2 Camas Individuales", "Escritorio", "WiFi", "Agua Caliente"],
+			"en": ["2 Single Beds", "Desk", "WiFi", "Hot Water"]
+		},
+		"category": {
+			"es": "Estándar",
+			"en": "Standard"
+		}
+	},
+	{
+		"id": "triple",
+		"name": {
+			"es": "Triple",
+			"en": "Triple"
+		},
+		"type": {
+			"es": "Estándar",
+			"en": "Standard"
+		},
+		"description": {
+			"es": "Espaciosa habitación diseñada para pequeñas familias o grupos de amigos, combinando confort y funcionalidad.",
+			"en": "Spacious room designed for small families or groups of friends, combining comfort and functionality."
+		},
+		"pricePerNight": 60,
+		"currency": "USD",
+		"minPersons": 1,
+		"maxPersons": 3,
+		"images": [
+			{
+				"src": "src/assets/img/hotel/rooms/triple/1.webp",
+				"frontpage": true,
+				"alt": {
+					"es": "Habitación triple - vista principal",
+					"en": "Triple room - main view"
+				}
+			},
+			{
+				"src": "src/assets/img/hotel/rooms/triple/2.webp",
+				"alt": {
+					"es": "Habitación triple - vista interior",
+					"en": "Triple room - interior view"
+				}
+			}
+		],
+		"amenities": {
+			"es": ["3 Camas", "Espacio Amplio", "TV", "Baño Privado"],
+			"en": ["3 Beds", "Spacious", "TV", "Private Bathroom"]
+		},
+		"category": {
+			"es": "Estándar",
+			"en": "Standard"
+		}
+	},
+	{
+		"id": "quadruple",
+		"name": {
+			"es": "Quadruple",
+			"en": "Family"
+		},
+		"type": {
+			"es": "Familiar",
+			"en": "Family"
+		},
+		"description": {
+			"es": "La mejor opción para grupos y familias, asegurando que todos compartan el mismo espacio con total comodidad.",
+			"en": "The best option for groups and families, ensuring everyone shares the same space with total comfort."
+		},
+		"pricePerNight": 80,
+		"currency": "USD",
+		"minPersons": 1,
+		"maxPersons": 4,
+		"images": [
+			{
+				"src": "src/assets/img/hotel/rooms/cuadruple_2_camas/1.webp",
+				"frontpage": true,
+				"alt": {
+					"es": "Habitación cuadruple - vista principal",
+					"en": "Quadruple room - main view"
+				}
+			},
+			{
+				"src": "src/assets/img/hotel/rooms/cuadruple_2_camas/2.webp",
+				"alt": {
+					"es": "Habitación cuadruple - vista interior",
+					"en": "Quadruple room - interior view"
+				}
+			}
+		],
+		"amenities": {
+			"es": ["4 Camas", "Ideal Grupos", "Amenities", "WiFi"],
+			"en": ["4 Beds", "Ideal for Groups", "Amenities", "WiFi"]
+		},
+		"category": {
+			"es": "Familiar",
+			"en": "Family"
+		}
+	},
+	{
+		"id": "quintuple",
+		"name": {
+			"es": "Quintuple",
+			"en": "Quintuple"
+		},
+		"type": {
+			"es": "Familiar",
+			"en": "Family"
+		},
+		"description": {
+			"es": "Amplitud garantizada para grupos grandes, con espacio suficiente para moverse y descansar plácidamente.",
+			"en": "Guaranteed spaciousness for large groups, with enough room to move around and rest peacefully."
+		},
+		"pricePerNight": 90,
+		"currency": "USD",
+		"minPersons": 1,
+		"maxPersons": 5,
+		"images": [
+			{
+				"src": "src/assets/img/hotel/rooms/quintuple/1.webp",
+				"frontpage": true,
+				"alt": {
+					"es": "Habitación quintuple - vista principal",
+					"en": "Quintuple room - main view"
+				}
+			},
+			{
+				"src": "src/assets/img/hotel/rooms/quintuple/2.webp",
+				"alt": {
+					"es": "Habitación quintuple - vista interior",
+					"en": "Quintuple room - interior view"
+				}
+			}
+		],
+		"amenities": {
+			"es": ["5 Camas", "Gran Espacio", "Baño Privado", "WiFi"],
+			"en": ["5 Beds", "Great Space", "Private Bathroom", "WiFi"]
+		},
+		"category": {
+			"es": "Familiar",
+			"en": "Family"
+		}
+	},
+	{
+		"id": "sextuple",
+		"name": {
+			"es": "Séxtuple",
+			"en": "Sextuple"
+		},
+		"type": {
+			"es": "Familiar",
+			"en": "Family"
+		},
+		"description": {
+			"es": "Nuestra habitación de mayor capacidad, perfecta para excursiones o familias numerosas que viajan juntas.",
+			"en": "Our highest capacity room, perfect for excursions or large families traveling together."
+		},
+		"pricePerNight": 105,
+		"currency": "USD",
+		"minPersons": 1,
+		"maxPersons": 6,
+		"images": [
+			{
+				"src": "src/assets/img/hotel/rooms/sextuple/1.webp",
+				"frontpage": true,
+				"alt": {
+					"es": "Habitación séxtuple - vista principal",
+					"en": "Sextuple room - main view"
+				}
+			},
+			{
+				"src": "src/assets/img/hotel/rooms/sextuple/2.webp",
+				"alt": {
+					"es": "Habitación séxtuple - vista interior",
+					"en": "Sextuple room - interior view"
+				}
+			}
+		],
+		"amenities": {
+			"es": ["6 Camas", "Capacidad Máxima", "Confort", "WiFi"],
+			"en": ["6 Beds", "Max Capacity", "Comfort", "WiFi"]
+		},
+		"category": {
+			"es": "Familiar",
+			"en": "Family"
+		}
+	},
+	{
+		"id": "suitematrimonial",
+		"name": {
+			"es": "Suite Matrimonial",
+			"en": "Honeymoon Suite"
+		},
+		"type": {
+			"es": "Suite",
+			"en": "Suite"
+		},
+		"description": {
+			"es": "Nuestra suite más exclusiva para parejas, con acabados de lujo, mayor espacio y vistas privilegiadas.",
+			"en": "Our most exclusive suite for couples, with luxury finishes, extra space, and privileged views."
+		},
+		"pricePerNight": 100,
+		"currency": "USD",
+		"minPersons": 1,
+		"maxPersons": 2,
+		"images": [
+			{
+				"src": "src/assets/img/hotel/rooms/suite1/1.webp",
+				"frontpage": true,
+				"alt": {
+					"es": "Suite matrimonial - vista principal",
+					"en": "Honeymoon suite - main view"
+				}
+			},
+			{
+				"src": "src/assets/img/hotel/rooms/suite1/2.webp",
+				"alt": {
+					"es": "Suite matrimonial - vista interior",
+					"en": "Honeymoon suite - interior view"
+				}
+			}
+		],
+		"amenities": {
+			"es": ["Cama King", "Vista Panorámica", "Minibar", "Sala de Estar"],
+			"en": ["King Bed", "Panoramic View", "Minibar", "Living Room"]
+		},
+		"category": {
+			"es": "Suite",
+			"en": "Suite"
+		}
+	},
+	{
+		"id": "suitefamiliar",
+		"name": {
+			"es": "Suite Familiar",
+			"en": "Family Suite"
+		},
+		"type": {
+			"es": "Suite",
+			"en": "Suite"
+		},
+		"description": {
+			"es": "Lujo y amplitud para toda la familia. Disfrute de áreas separadas y comodidades superiores para sentirse como en casa.",
+			"en": "Luxury and space for the whole family. Enjoy separate areas and superior amenities to feel right at home."
+		},
+		"pricePerNight": 160,
+		"currency": "USD",
+		"minPersons": 1,
+		"maxPersons": 4,
+		"images": [
+			{
+				"src": "src/assets/img/hotel/rooms/suite2/1.webp",
+				"frontpage": true,
+				"alt": {
+					"es": "Suite familiar - vista principal",
+					"en": "Family suite - main view"
+				}
+			},
+			{
+				"src": "src/assets/img/hotel/rooms/suite2/2.webp",
+				"alt": {
+					"es": "Suite familiar - vista interior",
+					"en": "Family suite - interior view"
+				}
+			}
+		],
+		"amenities": {
+			"es": ["Camas Premium", "Sala de Estar", "Refrigerador", "Vistas"],
+			"en": ["Premium Beds", "Living Room", "Fridge", "Views"]
+		},
+		"category": {
+			"es": "Suite",
+			"en": "Suite"
 		}
 	}
 ]

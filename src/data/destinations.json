@@ -14,8 +14,8 @@
 			"en": "North Coast"
 		},
 		"images": [
-			"/images/destinations/beach1.jpg",
-			"/images/destinations/beach2.jpg"
+			"src/assets/img/cities/cuenca/plaza-orquideas.webp",
+			"src/assets/img/cities/cuenca/plaza-sanfrancisco.webp"
 		],
 		"category": {
 			"es": "Playa",
@@ -37,8 +37,8 @@
 			"en": "Central Highlands"
 		},
 		"images": [
-			"/images/destinations/mountains1.jpg",
-			"/images/destinations/mountains2.jpg"
+			"src/assets/img/destinations/nature_reserves/el_cajas_park.webp",
+			"src/assets/img/cities/cuenca/vista-aerea-catedral.webp"
 		]
 	}
 ]

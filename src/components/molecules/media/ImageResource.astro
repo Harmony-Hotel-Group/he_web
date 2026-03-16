@@ -34,12 +34,32 @@ const {
 	wrapperClasses = "",
 } = Astro.props;
 
+function getInlinePlaceholder(
+	w: number,
+	h: number,
+	text: string,
+): string {
+	const safeW = Number.isFinite(w) && w > 0 ? Math.round(w) : 600;
+	const safeH = Number.isFinite(h) && h > 0 ? Math.round(h) : 400;
+	const safeText = (text || "Imagen no disponible").slice(0, 40);
+	const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${safeW}" height="${safeH}" viewBox="0 0 ${safeW} ${safeH}"><rect width="100%" height="100%" fill="#f0f0f0"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#9ca3af" font-family="Arial, sans-serif" font-size="16">${safeText}</text></svg>`;
+	return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+}
+
+const placeholderSrc = getInlinePlaceholder(
+	width,
+	height,
+	alt || "Imagen no disponible",
+);
+
 // Validar si src es string
 let finalSrc = src;
 if (typeof src === "string") {
 	const validation = await validateResource(src, "image");
 	if (validation.isValid && validation.finalSrc) {
 		finalSrc = validation.finalSrc;
+	} else {
+		finalSrc = placeholderSrc;
 	}
 }
 
@@ -56,6 +76,7 @@ const imageId = `img-${String(Math.random().toString(36)).substring(2, 9)}`;
         height={height}
         loading={loading}
         decoding={decoding}
+        data-placeholder={placeholderSrc}
         class={`image-resource ${classes}`}
     />
 
@@ -69,22 +90,20 @@ const imageId = `img-${String(Math.random().toString(36)).substring(2, 9)}`;
     .image-resource-wrapper {
         position: relative;
         width: 100%;
-        height: auto;
+        height: 100%;
         overflow: hidden;
         background: #f5f5f5;
     }
 
     .image-resource {
         width: 100%;
-        height: auto;
+        height: 100%;
         object-fit: cover;
         display: block;
-        opacity: 0;
-        transition: opacity 0.3s ease;
-    }
-
-    .image-resource.loaded {
         opacity: 1;
+        transition: opacity 0.3s ease;
+        position: relative;
+        z-index: 1;
     }
 
     /* Skeleton loading effect */
@@ -98,6 +117,7 @@ const imageId = `img-${String(Math.random().toString(36)).substring(2, 9)}`;
         overflow: hidden;
         pointer-events: none;
         transition: opacity 0.3s ease;
+        z-index: 2;
     }
 
     .image-skeleton.hidden {
@@ -156,34 +176,30 @@ const imageId = `img-${String(Math.random().toString(36)).substring(2, 9)}`;
      */
 
     class ImageResourceManager {
-        private images: Map<string, HTMLImageElement> = new Map();
-        private skeletons: Map<string, HTMLElement> = new Map();
-        private log: ReturnType<typeof import("@/services/logger").logger>;
-
-        constructor(loggerInstance: any) {
+        constructor(loggerInstance) {
+            this.images = new Map();
+            this.skeletons = new Map();
             this.log = loggerInstance;
             if (document.readyState === "loading") {
-                document.addEventListener("DOMContentLoaded", () =>
-                    this.initImages(),
-                );
+                document.addEventListener("DOMContentLoaded", () => {
+                    this.initImages();
+                });
             } else {
                 this.initImages();
             }
         }
 
-        private initImages() {
+        initImages() {
             const wrappers = document.querySelectorAll("[data-image-id]");
 
             wrappers.forEach((wrapper) => {
                 const imageId = wrapper.getAttribute("data-image-id");
                 if (!imageId) return;
 
-                const img = wrapper.querySelector(
-                    `#${imageId}`,
-                ) as HTMLImageElement;
+                const img = wrapper.querySelector(`#${imageId}`);
                 const skeleton = wrapper.querySelector(
                     `[data-skeleton-for="${imageId}"]`,
-                ) as HTMLElement;
+                );
 
                 if (!img) return;
 
@@ -192,8 +208,11 @@ const imageId = `img-${String(Math.random().toString(36)).substring(2, 9)}`;
                     this.skeletons.set(imageId, skeleton);
                 }
 
+                const placeholder = img.dataset.placeholder;
                 // Si la imagen ya está cargada (cached)
                 if (img.complete && img.naturalHeight !== 0) {
+                    this.handleImageLoad(imageId, img, skeleton);
+                } else if (placeholder && img.src === placeholder) {
                     this.handleImageLoad(imageId, img, skeleton);
                 } else {
                     // Event listeners para carga
@@ -202,23 +221,24 @@ const imageId = `img-${String(Math.random().toString(36)).substring(2, 9)}`;
                     });
 
                     img.addEventListener("error", () => {
-                        this.handleImageError(
-                            imageId,
-                            wrapper as HTMLElement,
-                            skeleton,
-                        );
+                        this.handleImageError(imageId, wrapper, skeleton, img);
                     });
                 }
+
+                // Fallback: evitar skeleton infinito si por alguna razón no se disparan eventos
+                setTimeout(() => {
+                    if (skeleton && !skeleton.classList.contains("hidden")) {
+                        if (img.complete || img.naturalHeight !== 0 || img.currentSrc) {
+                            this.handleImageLoad(imageId, img, skeleton);
+                        }
+                    }
+                }, 1500);
             });
 
             this.log.info(`Initialized ${this.images.size} image(s)`);
         }
 
-        private handleImageLoad(
-            imageId: string,
-            img: HTMLImageElement,
-            skeleton: HTMLElement | null,
-        ) {
+        handleImageLoad(imageId, img, skeleton) {
             // Ocultar skeleton
             if (skeleton) {
                 skeleton.classList.add("hidden");
@@ -230,11 +250,7 @@ const imageId = `img-${String(Math.random().toString(36)).substring(2, 9)}`;
             this.log.info(`Image loaded: ${imageId}`);
         }
 
-        private handleImageError(
-            imageId: string,
-            wrapper: HTMLElement,
-            skeleton: HTMLElement | null,
-        ) {
+        handleImageError(imageId, wrapper, skeleton, img) {
             this.log.error(`Failed to load image: ${imageId}`);
 
             // Marcar wrapper como error
@@ -244,13 +260,23 @@ const imageId = `img-${String(Math.random().toString(36)).substring(2, 9)}`;
             if (skeleton) {
                 skeleton.classList.remove("hidden");
             }
+
+            const placeholder = img.dataset.placeholder;
+            if (placeholder && img.src !== placeholder) {
+                img.src = placeholder;
+                img.addEventListener(
+                    "load",
+                    () => this.handleImageLoad(imageId, img, skeleton),
+                    { once: true },
+                );
+            }
         }
 
-        public getImageCount(): number {
+        getImageCount() {
             return this.images.size;
         }
 
-        public getLoadedCount(): number {
+        getLoadedCount() {
             let count = 0;
             this.images.forEach((img) => {
                 if (img.classList.contains("loaded")) {
@@ -261,12 +287,13 @@ const imageId = `img-${String(Math.random().toString(36)).substring(2, 9)}`;
         }
     }
 
-    // Inicialización asíncrona para cargar el logger dinámicamente
-    (async () => {
-        const { logger } = await import("@/services/logger.ts");
-        const log = logger("ImageResource");
-        // Instanciar el manager una vez que el logger está listo
-        // y pasarle la instancia del logger.
+    // Inicialización sin dependencias para evitar fallos por imports en scripts inline
+    (() => {
+        const log = {
+            info: (...args: unknown[]) => console.log("[ImageResource]", ...args),
+            warn: (...args: unknown[]) => console.warn("[ImageResource]", ...args),
+            error: (...args: unknown[]) => console.error("[ImageResource]", ...args),
+        };
         new ImageResourceManager(log);
     })();
 </script>

@@ -1,13 +1,12 @@
 ---
 // src/components/atoms/WhatsAppButton.astro
 import config from "@/data/config.json";
+import { buildContactMessage, buildWhatsAppUrl } from "@/adapters/booking/whatsapp.adapter";
 
 const { whatsapp } = config.contactInfo;
-const phoneNumber = whatsapp.replace(/\+/g, ""); // Remove + for link
-const message = encodeURIComponent(
-    "Hola, estoy interesado en reservar una habitación en Hotel Ensueños.",
-);
-const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
+const phoneNumber = whatsapp.replace(/\+/g, "");
+const message = buildContactMessage();
+const whatsappUrl = buildWhatsAppUrl(phoneNumber, message);
 ---
 
 <a

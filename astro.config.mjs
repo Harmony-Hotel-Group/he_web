@@ -1,6 +1,7 @@
 // astro.config.mjs
 import vercel from "@astrojs/vercel";
 import tailwindcss from "@tailwindcss/vite";
+import sitemap from "@astrojs/sitemap";
 import { defineConfig } from "astro/config";
 import icon from "astro-icon";
 import preact from "@astrojs/preact";
@@ -27,6 +28,7 @@ export default defineConfig({
 	},
 	integrations: [
 		preact(),
+		sitemap(),
 		tailwindcss(),
 		icon({ iconSets: [{ name: "astro", svg: { dir: "src/icons" } }] }),
 	],

@@ -81,7 +81,13 @@ describe('date.utils', () => {
 
   describe('validateDates', () => {
     it('debería retornar array vacío para fechas válidas', () => {
-      const errors = validateDates('2024-12-01', '2024-12-05');
+      const futureCheckin = new Date();
+      futureCheckin.setDate(futureCheckin.getDate() + 30);
+      const futureCheckout = new Date();
+      futureCheckout.setDate(futureCheckout.getDate() + 34);
+      const checkin = futureCheckin.toISOString().split('T')[0];
+      const checkout = futureCheckout.toISOString().split('T')[0];
+      const errors = validateDates(checkin, checkout);
       expect(errors).toHaveLength(0);
     });
 

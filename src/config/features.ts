@@ -1,6 +1,6 @@
 export const features = {
-	groupBooking: false,
-	vehicles: false,
-	toursAdvanced: false,
-	cart: false,
+	groupBooking: true,
+	vehicles: true,
+	toursAdvanced: true,
+	cart: true,
 } as const;

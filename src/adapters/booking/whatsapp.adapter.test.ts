@@ -28,8 +28,8 @@ describe('whatsapp.adapter', () => {
 
       expect(message).toContain('NUEVA RESERVACIÓN');
       expect(message).toContain('Juan Pérez');
-      expect(message).toContain('4 noches');
-      expect(message).toContain('Habitaciones: 2');
+      expect(message).toContain('*Noches:* 4');
+      expect(message).toContain('*Habitaciones:* 2');
     });
 
     it('debería crear mensaje grupal', () => {

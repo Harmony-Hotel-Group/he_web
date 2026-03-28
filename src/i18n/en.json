@@ -1,8 +1,23 @@
 {
-	"booking": {
-		"title": "Booking to Aventure"
-	},
-	"nav": {
-		"blog": "Blog"
-	}
+  "booking": {
+    "title": "Booking to Aventure"
+  },
+  "nav": {
+    "home": "Home",
+    "about": "About Us",
+    "contact": "Contact",
+    "rooms": "Rooms",
+    "destinations": "Destinations",
+    "gastronomy": "Gastronomy",
+    "tours": "Tours",
+    "booking": "Book Now",
+    "blog": "Blog",
+    "cancellation": "Cancellation Policy",
+    "gallery": "Photo Gallery",
+    "privacy": "Privacy Policy",
+    "terms": "Terms & Conditions",
+    "faq": "FAQ",
+    "404": "Page Not Found",
+    "500": "Server Error"
+  }
 }

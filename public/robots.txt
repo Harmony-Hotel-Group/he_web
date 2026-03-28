@@ -1,4 +1,7 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://hotelensuenos.com/sitemap-index.xml
+Sitemap: https://www.hotelensueños.com/sitemap-index.xml
+
+Disallow: /api/
+Disallow: /en/api/

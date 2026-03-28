@@ -1,0 +1,67 @@
+[
+	{
+		"id": "review-1",
+		"author": "María González",
+		"country": "Ecuador",
+		"rating": 5,
+		"date": "2026-02-15",
+		"text": {
+			"es": "Excelente ubicación en el centro histórico de Cuenca. Las habitaciones son cómodas y el personal muy amable. El desayuno incluido es delicioso con comida típica ecuatoriana.",
+			"en": "Excellent location in Cuenca's historic center. The rooms are comfortable and the staff very friendly. The included breakfast is delicious with typical Ecuadorian food."
+		},
+		"platform": "Google",
+		"verified": true
+	},
+	{
+		"id": "review-2",
+		"author": "Carlos y Ana Martínez",
+		"country": "Colombia",
+		"rating": 5,
+		"date": "2026-01-28",
+		"text": {
+			"es": "Pasamos nuestra luna de miel aquí y fue mágico. La suite matrimonial tiene vistas hermosas y el servicio fue impecable. Volveremos sin duda.",
+			"en": "We spent our honeymoon here and it was magical. The honeymoon suite has beautiful views and the service was impeccable. We'll definitely come back."
+		},
+		"platform": "TripAdvisor",
+		"verified": true
+	},
+	{
+		"id": "review-3",
+		"author": "John Smith",
+		"country": "United States",
+		"rating": 4,
+		"date": "2026-03-05",
+		"text": {
+			"es": "Muy buen hotel para el precio. La ubicación es perfecta para explorar el centro histórico. El WiFi funciona bien y las habitaciones son limpias.",
+			"en": "Very good hotel for the price. The location is perfect for exploring the historic center. WiFi works well and rooms are clean."
+		},
+		"platform": "Booking.com",
+		"verified": true
+	},
+	{
+		"id": "review-4",
+		"author": "Familia Rodríguez",
+		"country": "Perú",
+		"rating": 5,
+		"date": "2026-02-01",
+		"text": {
+			"es": "Nos hospedamos en la suite familiar y fue perfecto para nosotros con niños. El personal nos ayudó a organizar tours por la ciudad. Muy recomendado.",
+			"en": "We stayed in the family suite and it was perfect for us with kids. The staff helped us organize city tours. Highly recommended."
+		},
+		"platform": "Google",
+		"verified": true
+	},
+	{
+		"id": "review-5",
+		"author": "Sophie Dupont",
+		"country": "France",
+		"rating": 5,
+		"date": "2025-12-20",
+		"text": {
+			"es": "Un hotel con encanto colonial. Me encantó la atención personalizada y la tranquilidad del lugar. Perfecto para desconectarse.",
+			"en": "A charming colonial hotel. I loved the personalized attention and the tranquility of the place. Perfect to disconnect."
+		},
+		"platform": "TripAdvisor",
+		"verified": true
+	}
+]

@@ -5,6 +5,7 @@ import BookingBar from "@/components/organisms/booking/BookingBar.astro";
 import PhotoCollage from "@/components/organisms/collage/PhotoCollage.astro";
 import HomeHero from "@/components/organisms/hero/HomeHero.astro";
 import HomeSection from "@/components/organisms/home/HomeSection.astro";
+import ReviewsSection from "@/components/organisms/reviews/ReviewsSection.astro";
 
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { api } from "@/services/api.ts";
@@ -21,6 +22,10 @@ log.info("Datos de configuración (config) cargados:", config);
 
 const carouselResources = config?.carouselResources || [];
 log.info("Recursos para el carousel:", carouselResources);
+
+// Cargar reviews
+import reviewsData from "@/data/reviews.json";
+const reviews = reviewsData;
 ---
 
 <script>
@@ -134,5 +139,7 @@ log.info("Recursos para el carousel:", carouselResources);
                 />
             )
         }
+
+        <ReviewsSection reviews={reviews} lang={lang} />
     </div>
 </BaseLayout>

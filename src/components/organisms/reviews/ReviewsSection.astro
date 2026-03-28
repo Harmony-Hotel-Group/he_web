@@ -1,0 +1,93 @@
+---
+// src/components/organisms/reviews/ReviewsSection.astro
+// Sección de reviews/testimonios de huéspedes
+
+interface Review {
+	id: string;
+	author: string;
+	country: string;
+	rating: number;
+	date: string;
+	text: Record<string, string>;
+	platform: string;
+	verified: boolean;
+}
+
+interface Props {
+	reviews: Review[];
+	lang?: string;
+	title?: string;
+}
+
+const { reviews, lang = "es", title } = Astro.props;
+
+const sectionTitle = title || (lang === "es" ? "Lo que dicen nuestros huéspedes" : "What our guests say");
+
+function renderStars(rating: number): string {
+	return "★".repeat(rating) + "☆".repeat(5 - rating);
+---
+
+<section class="py-16 md:py-20 bg-gray-50">
+	<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+		<h2 class="text-3xl md:text-4xl font-serif text-primary font-bold text-center mb-12">
+			{sectionTitle}
+		</h2>
+
+		{/* Rating promedio */}
+		{reviews.length > 0 && (
+			<div class="text-center mb-10">
+				<span class="text-5xl font-bold text-accent">
+					{(reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length).toFixed(1)}
+				</span>
+				<span class="text-yellow-500 text-2xl ml-2">
+					{renderStars(Math.round(reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length))}
+				</span>
+				<p class="text-gray-500 mt-1">
+					{lang === "es"
+						? `Basado en ${reviews.length} opiniones`
+						: `Based on ${reviews.length} reviews`}
+				</p>
+			</div>
+		)}
+
+		{/* Grid de reviews */}
+		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+			{reviews.map((review) => (
+				<article class="bg-white rounded-lg shadow-sm border border-gray-100 p-6 hover:shadow-md transition-shadow duration-300">
+					{/* Header */}
+					<div class="flex items-center justify-between mb-4">
+						<div>
+							<p class="font-semibold text-primary">{review.author}</p>
+							<p class="text-sm text-gray-400">{review.country}</p>
+						</div>
+						{review.verified && (
+							<span class="text-xs text-green-600 bg-green-50 px-2 py-1 rounded-full">
+								✓ {lang === "es" ? "Verificado" : "Verified"}
+							</span>
+						)}
+					</div>
+
+					{/* Rating + Platform */}
+					<div class="flex items-center gap-2 mb-3">
+						<span class="text-yellow-500">{renderStars(review.rating)}</span>
+						<span class="text-xs text-gray-400">via {review.platform}</span>
+					</div>
+
+					{/* Texto */}
+					<p class="text-gray-600 text-sm leading-relaxed">
+						{review.text[lang] || review.text.es}
+					</p>
+
+					{/* Fecha */}
+					<p class="text-xs text-gray-300 mt-4">
+						{new Date(review.date).toLocaleDateString(lang === "es" ? "es-EC" : "en-US", {
+							year: "numeric",
+							month: "long",
+							day: "numeric",
+						})}
+					</p>
+				</article>
+			))}
+		</div>
+	</div>
+</section>

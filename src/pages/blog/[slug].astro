@@ -1,0 +1,94 @@
+---
+// src/pages/blog/[slug].astro
+// Página de detalle de artículo del blog
+
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { Translations } from "@/i18n/translation.ts";
+import { api } from "@/services/api.ts";
+import type { SiteConfig } from "@/types/config";
+
+const lang = Astro.url.pathname.startsWith("/en") ? "en" : "es";
+const t = Translations(lang);
+const config = (await api.fetch("config", { params: { lang } })) as SiteConfig;
+
+// Importar todos los posts
+const allPosts = Object.values(
+	import.meta.glob<{ frontmatter: Record<string, unknown>; Content: () => unknown }>("../../content/blog/*.md", { eager: true })
+);
+
+// Buscar el post por slug
+const { slug } = Astro.params;
+const post = allPosts.find((p) => p.frontmatter.slug === slug);
+
+if (!post) {
+	return new Response(null, { status: 404 });
+}
+
+const title = lang === "en" && post.frontmatter.titleEn ? post.frontmatter.titleEn : post.frontmatter.title;
+const description = lang === "en" && post.frontmatter.descriptionEn ? post.frontmatter.descriptionEn : post.frontmatter.description;
+const Content = post.Content;
+---
+
+<BaseLayout titleKey={title as string} lang={lang} config={config} description={description as string}>
+	<article class="bg-white">
+		{/* Header */}
+		<section class="bg-gray-100/90 backdrop-blur border-b border-gray-200">
+			<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-[6.5rem] pb-10">
+				{post.frontmatter.category && (
+					<span class="inline-block text-sm font-bold text-accent uppercase tracking-wide mb-3">
+						{post.frontmatter.category}
+					</span>
+				)}
+				<h1 class="text-3xl md:text-4xl lg:text-5xl font-serif text-primary font-bold mb-4">
+					{title}
+				</h1>
+				<div class="flex items-center gap-4 text-sm text-gray-500">
+					<span>{post.frontmatter.author}</span>
+					<span>•</span>
+					<span>
+						{new Date(post.frontmatter.date as string).toLocaleDateString(lang === "es" ? "es-EC" : "en-US", {
+							year: "numeric",
+							month: "long",
+							day: "numeric",
+						})}
+					</span>
+				</div>
+				{post.frontmatter.tags && (
+					<div class="flex gap-2 mt-4">
+						{(post.frontmatter.tags as string[]).map((tag) => (
+							<span class="text-xs text-gray-500 bg-gray-200 px-3 py-1 rounded-full">
+								{tag}
+							</span>
+						))}
+					</div>
+				)}
+			</div>
+		</section>
+
+		{/* Contenido */}
+		<section class="py-16 md:py-20">
+			<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+				<div class="prose prose-lg prose-primary max-w-none">
+					<Content />
+				</div>
+			</div>
+		</section>
+
+		{/* CTA */}
+		<section class="py-12 bg-gray-50 border-t border-gray-100">
+			<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+				<p class="text-gray-600 mb-4">
+					{lang === "es"
+						? "¿Te gustaría visitar Cuenca? Reserva tu habitación ahora."
+						: "Would you like to visit Cuenca? Book your room now."}
+				</p>
+				<a
+					href="/booking"
+					class="inline-block bg-accent text-white font-bold py-3 px-8 rounded-xl hover:bg-primary transition-colors duration-300"
+				>
+					{lang === "es" ? "Reservar Ahora" : "Book Now"}
+				</a>
+			</div>
+		</section>
+	</article>
+</BaseLayout>

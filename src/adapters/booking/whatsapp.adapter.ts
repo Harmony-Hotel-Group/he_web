@@ -206,8 +206,15 @@ export function buildWhatsAppUrl(phone: string, message: string): string {
 }
 
 /**
+ * Construye un mensaje simple de contacto (para botón flotante)
+ */
+export function buildContactMessage(hotelName: string = "Hotel Ensueños"): string {
+  return `Hola, estoy interesado en reservar una habitación en ${hotelName}.`;
+}
+
+/**
  * Valida que los datos de la reservación tengan los campos requeridos
- * 
+ *
  * @param data - Datos de la reservación
  * @returns true si los datos son válidos
  */
@@ -215,10 +222,10 @@ export function validateBookingData(data: BookingData): boolean {
   if (!data.guestName || data.guestName.trim() === '') return false;
   if (!data.checkin || !data.checkout) return false;
   if (data.rooms < 1 || data.adults < 1) return false;
-  
+
   // Validar formato de fecha
   const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
   if (!dateRegex.test(data.checkin) || !dateRegex.test(data.checkout)) return false;
-  
+
   return true;
 }

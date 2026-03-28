@@ -1,5 +1,8 @@
 {
 	"booking": {
 		"title": "Booking to Aventure"
+	},
+	"nav": {
+		"blog": "Blog"
 	}
 }

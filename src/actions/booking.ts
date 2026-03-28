@@ -2,6 +2,7 @@
 import { defineAction } from "astro:actions";
 import { z } from "astro:schema";
 import { logger } from "@/services/logger";
+import { notifyAllChannels } from "@/services/messages/notifications";
 
 const log = logger("Booking");
 
@@ -85,23 +86,39 @@ export const booking = defineAction({
             }
         }
 
+        // Notificar a canales configurados (no bloqueante)
+        notifyAllChannels({
+            type: vehicles.length > 0 ? "vehicle" : groupAdults ? "group" : "standard",
+            checkin,
+            checkout,
+            nights,
+            adults: rest.adults,
+            children: rest.children,
+            rooms: rest.rooms,
+            breakfast: rest.breakfast,
+            groupAdults,
+            groupTeens,
+            groupKids,
+            groupInfants,
+            groupNotes,
+            vehicles,
+            vehicleNotes,
+        }).catch((err) => log.error("Error enviando notificaciones:", err));
+
         return {
             success: true,
             processing: {
                 checkin,
                 checkout,
                 nights,
-                // Incluir campos de grupo si están presentes
                 ...(groupAdults && { groupAdults }),
                 ...(groupTeens && { groupTeens }),
                 ...(groupKids && { groupKids }),
                 ...(groupInfants && { groupInfants }),
                 ...(groupNotes && { groupNotes }),
-                // Incluir información de vehículos procesada
                 ...(vehicles.length > 0 && { vehicles }),
                 vehicleCount: vehicles.length,
                 ...(vehicleNotes && { vehicleNotes }),
-                // Campos originales
                 ...rest,
             },
         };

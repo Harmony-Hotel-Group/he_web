@@ -1,12 +1,6 @@
 ---
-import UnderConstructionPage from "@/components/pages/UnderConstructionPage.astro";
+// pages/en/terms.astro
 
-export const prerender = false;
+// Redirect to main terms (which is bilingual)
+Astro.redirect("/terms");
 ---
-
-<UnderConstructionPage
-    titleHead="footer.terms"
-    title="Términos y Condiciones"
-    message="Estamos revisando nuestros términos legales para garantizar claridad y transparencia."
-    lang="en"
-/>

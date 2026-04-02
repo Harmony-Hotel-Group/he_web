@@ -1,29 +1,365 @@
 ---
-//pages/faq.astro
+// pages/faq.astro
 
-// export const prerender = false;
-
+import BaseLayout from "@/layouts/BaseLayout.astro";
 import { Translations } from "@/i18n/translation.ts";
-import { logger } from "@/services/logger.ts";
+import { api } from "@/services/api.ts";
+import type { SiteConfig } from "@/types/config";
 
-interface Props {
-	lang: string;
-}
-
-const { lang = "es" } = Astro.props;
-
-const log = logger("faq");
-
-import UnderConstructionPage from "@/components/pages/UnderConstructionPage.astro";
-
+const lang = Astro.url.pathname.startsWith("/en") ? "en" : "es";
 const t = Translations(lang);
-log.info(`Rendering faq page with language: ${lang}`);
+const config = (await api.fetch("config", { params: { lang } })) as SiteConfig;
+
+// Preguntas frecuentes
+const faqs = {
+    es: [
+        {
+            category: "Reservas",
+            questions: [
+                {
+                    q: "¿Cómo puedo hacer una reserva?",
+                    a: "Puedes hacer una reserva directamente desde nuestro sitio web usando el formulario de booking, o contactarnos por WhatsApp al +593 97 888 8020 o email a reservas@hotelensuenos.com."
+                },
+                {
+                    q: "¿Necesito pagar por adelantado?",
+                    a: "No, no requerimos pago por adelantado. El pago se realiza directamente en el hotel durante tu estancia. Aceptamos efectivo y todas las tarjetas principales."
+                },
+                {
+                    q: "¿Puedo cancelar o modificar mi reserva?",
+                    a: "Sí, puedes cancelar o modificar tu reserva sin costo hasta 24 horas antes de tu llegada. Después de ese tiempo, se cobrará una noche como penalidad."
+                },
+                {
+                    q: "¿Cuál es el precio por noche?",
+                    a: "Nuestros precios varían desde $25 hasta $160 por noche, dependiendo del tipo de habitación y temporada. Visita nuestra sección de Habitaciones para ver precios detallados."
+                }
+            ]
+        },
+        {
+            category: "Check-in / Check-out",
+            questions: [
+                {
+                    q: "¿A qué hora es el check-in y check-out?",
+                    a: "El check-in es a partir de las 14:00 (2:00 PM) y el check-out es hasta las 12:00 (12:00 PM). Podemos accommodating early check-in o late check-out según disponibilidad."
+                },
+                {
+                    q: "¿Hay recepción 24 horas?",
+                    a: "Sí, contamos con recepción 24/7 para atender todas tus necesidades."
+                },
+                {
+                    q: "¿Puedo dejar mi equipaje antes del check-in?",
+                    a: "Sí, ofrecemos servicio de consigna de equipaje gratuito para que puedas explorar la ciudad antes de tu check-in."
+                }
+            ]
+        },
+        {
+            category: "Servicios",
+            questions: [
+                {
+                    q: "¿El WiFi es gratuito?",
+                    a: "Sí, ofrecemos WiFi de alta velocidad gratuito en todas las habitaciones y áreas comunes."
+                },
+                {
+                    q: "¿El desayuno está incluido?",
+                    a: "Ofrecemos desayuno continental opcional con un costo adicional de $15 por persona. Incluye opciones locales e internacionales."
+                },
+                {
+                    q: "¿Tienen estacionamiento?",
+                    a: "Contamos con estacionamiento público cerca del hotel. El costo es aproximadamente $10-15 por día."
+                },
+                {
+                    q: "¿Aceptan mascotas?",
+                    a: "Las mascotas son bienvenidas bajo consulta previa. Por favor contáctanos para conocer nuestra política de mascotas y costos adicionales."
+                }
+            ]
+        },
+        {
+            category: "Ubicación",
+            questions: [
+                {
+                    q: "¿Dónde está ubicado el hotel?",
+                    a: "Estamos ubicados en Gran Colombia 182 y Manuel Vega, en el corazón del centro histórico de Cuenca, a pocos pasos de la Catedral."
+                },
+                {
+                    q: "¿Qué tan lejos está del aeropuerto?",
+                    a: "El aeropuerto Mariscal Lamar está a solo 3 km del hotel, aproximadamente 10 minutos en taxi."
+                },
+                {
+                    q: "¿Ofrecen servicio de transporte desde/hacia el aeropuerto?",
+                    a: "Sí, podemos organizar transporte privado desde/hacia el aeropuerto con costo adicional. Por favor solicita este servicio al momento de reservar."
+                }
+            ]
+        },
+        {
+            category: "Políticas",
+            questions: [
+                {
+                    q: "¿Cuál es la edad mínima para hacer check-in?",
+                    a: "La edad mínima para hacer check-in es 18 años. Los menores de edad deben estar acompañados por un adulto."
+                },
+                {
+                    q: "¿Hay habitaciones para familias con niños?",
+                    a: "Sí, contamos con habitaciones familiares que pueden alojar hasta 6 personas. Los niños menores de 5 años se hospedan gratis."
+                },
+                {
+                    q: "¿El hotel es accesible para personas con discapacidad?",
+                    a: "Contamos con ascensor y áreas comunes accesibles. Por favor contáctanos para asegurar que podemos atender tus necesidades específicas."
+                }
+            ]
+        }
+    ],
+    en: [
+        {
+            category: "Bookings",
+            questions: [
+                {
+                    q: "How can I make a reservation?",
+                    a: "You can make a reservation directly from our website using the booking form, or contact us via WhatsApp at +593 97 888 8020 or email at reservas@hotelensuenos.com."
+                },
+                {
+                    q: "Do I need to pay in advance?",
+                    a: "No, we don't require advance payment. Payment is made directly at the hotel during your stay. We accept cash and all major credit cards."
+                },
+                {
+                    q: "Can I cancel or modify my reservation?",
+                    a: "Yes, you can cancel or modify your reservation at no cost up to 24 hours before your arrival. After that time, one night will be charged as a penalty."
+                },
+                {
+                    q: "What is the price per night?",
+                    a: "Our prices range from $25 to $160 per night, depending on room type and season. Visit our Rooms section for detailed pricing."
+                }
+            ]
+        },
+        {
+            category: "Check-in / Check-out",
+            questions: [
+                {
+                    q: "What are the check-in and check-out times?",
+                    a: "Check-in is from 2:00 PM and check-out is until 12:00 PM. We can accommodate early check-in or late check-out based on availability."
+                },
+                {
+                    q: "Is there 24-hour reception?",
+                    a: "Yes, we have 24/7 reception to attend to all your needs."
+                },
+                {
+                    q: "Can I leave my luggage before check-in?",
+                    a: "Yes, we offer complimentary luggage storage so you can explore the city before your check-in."
+                }
+            ]
+        },
+        {
+            category: "Services",
+            questions: [
+                {
+                    q: "Is WiFi free?",
+                    a: "Yes, we offer free high-speed WiFi in all rooms and common areas."
+                },
+                {
+                    q: "Is breakfast included?",
+                    a: "We offer optional continental breakfast for an additional $15 per person. It includes local and international options."
+                },
+                {
+                    q: "Do you have parking?",
+                    a: "We have public parking near the hotel. The cost is approximately $10-15 per day."
+                },
+                {
+                    q: "Are pets allowed?",
+                    a: "Pets are welcome upon prior consultation. Please contact us to learn about our pet policy and additional costs."
+                }
+            ]
+        },
+        {
+            category: "Location",
+            questions: [
+                {
+                    q: "Where is the hotel located?",
+                    a: "We are located at Gran Colombia 182 y Manuel Vega, in the heart of Cuenca's historic center, steps away from the Cathedral."
+                },
+                {
+                    q: "How far is it from the airport?",
+                    a: "Mariscal Lamar Airport is only 3 km from the hotel, approximately 10 minutes by taxi."
+                },
+                {
+                    q: "Do you offer airport transportation?",
+                    a: "Yes, we can arrange private transportation from/to the airport for an additional fee. Please request this service when booking."
+                }
+            ]
+        },
+        {
+            category: "Policies",
+            questions: [
+                {
+                    q: "What is the minimum age to check-in?",
+                    a: "The minimum age to check-in is 18 years. Minors must be accompanied by an adult."
+                },
+                {
+                    q: "Are there rooms for families with children?",
+                    a: "Yes, we have family rooms that can accommodate up to 6 guests. Children under 5 stay free."
+                },
+                {
+                    q: "Is the hotel accessible for people with disabilities?",
+                    a: "We have an elevator and accessible common areas. Please contact us to ensure we can meet your specific needs."
+                }
+            ]
+        }
+    ]
+};
+
+const currentFaqs = faqs[lang as "es" | "en"] || faqs.es;
+
+const texts = {
+    es: {
+        title: "Preguntas Frecuentes",
+        subtitle: "Encuentra respuestas a las preguntas más comunes",
+        contact: "¿No encuentras tu respuesta?",
+        contactText: "Contáctanos y te ayudaremos con gusto",
+    },
+    en: {
+        title: "Frequently Asked Questions",
+        subtitle: "Find answers to the most common questions",
+        contact: "Can't find your answer?",
+        contactText: "Contact us and we'll be happy to help",
+    },
+};
+
+const currentTexts = texts[lang as "es" | "en"] || texts.es;
 ---
 
-<UnderConstructionPage
-        titleHead={t("nav.faq")}
-        title={t("underConstruction.faq.title")}
-        message={t("underConstruction.faq.message")}
-        btnBackLabel={t("underConstruction.back")}
-        lang={lang}
-/>
+<BaseLayout
+    titleKey="nav.faq"
+    lang={lang}
+    config={config}
+    headerBgClass="text-gray-900"
+>
+    <!-- Hero Section -->
+    <section class="relative bg-gradient-to-br from-primary via-primary/95 to-accent/90 py-16 md:py-24">
+        <div class="absolute inset-0 bg-black/20"></div>
+        <div class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="inline-flex items-center justify-center w-16 h-16 bg-white/20 rounded-full mb-6 backdrop-blur-sm">
+                <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+            </div>
+            <h1 class="text-4xl md:text-5xl font-serif text-white font-bold mb-4">
+                {currentTexts.title}
+            </h1>
+            <p class="text-xl text-white/90 max-w-2xl mx-auto">
+                {currentTexts.subtitle}
+            </p>
+        </div>
+    </section>
+
+    <!-- FAQ Content -->
+    <section class="py-16 md:py-24 bg-gray-50">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            {currentFaqs.map((category) => (
+                <div class="mb-12">
+                    <h2 class="text-2xl font-bold text-primary mb-6 flex items-center gap-3">
+                        <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                        </svg>
+                        {category.category}
+                    </h2>
+                    <div class="space-y-4">
+                        {category.questions.map((faq) => (
+                            <div class="faq-item bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+                                <button
+                                    class="faq-question w-full px-6 py-4 text-left flex justify-between items-center gap-4 hover:bg-gray-50 transition-colors"
+                                >
+                                    <span class="font-semibold text-gray-900 text-lg">
+                                        {faq.q}
+                                    </span>
+                                    <svg class="faq-icon w-6 h-6 text-accent transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                    </svg>
+                                </button>
+                                <div class="faq-answer hidden px-6 pb-4">
+                                    <p class="text-gray-600 leading-relaxed">
+                                        {faq.a}
+                                    </p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            ))}
+
+            <!-- Contact CTA -->
+            <div class="mt-16 bg-gradient-to-r from-accent to-accent/80 rounded-2xl p-8 text-center text-white">
+                <h3 class="text-2xl font-bold mb-4">
+                    {currentTexts.contact}
+                </h3>
+                <p class="text-white/90 mb-6">
+                    {currentTexts.contactText}
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a
+                        href="mailto:reservas@hotelensuenos.com"
+                        class="inline-flex items-center justify-center gap-2 bg-white text-accent font-bold py-3 px-6 rounded-lg hover:bg-white/90 transition-all"
+                    >
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
+                        reservas@hotelensuenos.com
+                    </a>
+                    <a
+                        href="https://wa.me/593978888020"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="inline-flex items-center justify-center gap-2 bg-green-500 text-white font-bold py-3 px-6 rounded-lg hover:bg-green-600 transition-all"
+                    >
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+                        </svg>
+                        +593 97 888 8020
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+</BaseLayout>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const faqQuestions = document.querySelectorAll(".faq-question");
+
+        faqQuestions.forEach(question => {
+            question.addEventListener("click", () => {
+                const faqItem = question.closest(".faq-item");
+                const answer = faqItem?.querySelector(".faq-answer");
+                const icon = faqItem?.querySelector(".faq-icon");
+
+                if (!answer || !icon) return;
+
+                // Toggle current
+                const isOpen = !answer.classList.contains("hidden");
+                
+                // Close all others
+                faqQuestions.forEach(q => {
+                    const otherItem = q.closest(".faq-item");
+                    const otherAnswer = otherItem?.querySelector(".faq-answer");
+                    const otherIcon = otherItem?.querySelector(".faq-icon");
+                    
+                    if (otherAnswer && otherAnswer !== answer) {
+                        otherAnswer.classList.add("hidden");
+                        otherIcon?.classList.remove("rotate-180");
+                    }
+                });
+
+                // Toggle current
+                if (isOpen) {
+                    answer.classList.add("hidden");
+                    icon.classList.remove("rotate-180");
+                } else {
+                    answer.classList.remove("hidden");
+                    icon.classList.add("rotate-180");
+                }
+            });
+        });
+    });
+</script>
+
+<style>
+    .faq-icon.rotate-180 {
+        transform: rotate(180deg);
+    }
+</style>

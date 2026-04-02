@@ -5,6 +5,7 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import { Translations } from "@/i18n/translation.ts";
 import { api } from "@/services/api.ts";
 import type { SiteConfig } from "@/types/config";
+import CSRFToken from "@/components/atoms/CSRFToken.astro";
 
 const lang = Astro.url.pathname.startsWith("/en") ? "en" : "es";
 const t = Translations(lang);
@@ -44,6 +45,9 @@ const config = (await api.fetch("config", { params: { lang } })) as SiteConfig;
 					</h2>
 
 					<form id="contact-form" class="space-y-6">
+						<!-- CSRF Token -->
+						<CSRFToken />
+						
 						<!-- Name -->
 						<div>
 							<label

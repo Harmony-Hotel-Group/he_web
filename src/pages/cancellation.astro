@@ -1,29 +1,169 @@
 ---
-//pages/cancellation.astro
+// pages/cancellation.astro
 
-// export const prerender = false;
-
+import BaseLayout from "@/layouts/BaseLayout.astro";
 import { Translations } from "@/i18n/translation.ts";
-import { logger } from "@/services/logger.ts";
+import { api } from "@/services/api.ts";
+import type { SiteConfig } from "@/types/config";
 
-interface Props {
-	lang: string;
-}
-
-const { lang = "es" } = Astro.props;
-
-const log = logger("cancellation");
-
-import UnderConstructionPage from "@/components/pages/UnderConstructionPage.astro";
-
+const lang = Astro.url.pathname.startsWith("/en") ? "en" : "es";
 const t = Translations(lang);
-log.info(`Rendering cancellation page with language: ${lang}`);
+const config = (await api.fetch("config", { params: { lang } })) as SiteConfig;
+
+const texts = {
+    es: {
+        title: "Política de Cancelación",
+        subtitle: "Nuestra política de cancelación flexible para tu tranquilidad",
+        sections: [
+            {
+                title: "Cancelaciones Estándar",
+                content: "Las reservas pueden cancelarse sin costo hasta 24 horas antes de la hora de llegada programada (14:00). Después de este período, se cobrará una noche de estadía como penalidad."
+            },
+            {
+                title: "Temporada Alta",
+                content: "Durante temporada alta (diciembre-enero, Semana Santa, festividades locales), las cancelaciones deben realizarse con 72 horas de anticipación para evitar cargos."
+            },
+            {
+                title: "Reservas Grupales",
+                content: "Para reservas de 5 o más habitaciones, las cancelaciones deben realizarse con 7 días de anticipación. Pueden aplicar políticas diferentes para grupos más grandes."
+            },
+            {
+                title: "No-Show",
+                content: "La no-presentación (no-show) sin cancelación previa resultará en el cargo completo de la primera noche de la reserva."
+            },
+            {
+                title: "Modificaciones",
+                content: "Las modificaciones de fechas están sujetas a disponibilidad. Si la nueva tarifa es mayor, se pagará la diferencia. Si es menor, no habrá reembolso."
+            },
+            {
+                title: "Reembolsos",
+                content: "Los reembolsos aplicables se procesarán dentro de 7-10 días hábiles al mismo método de pago utilizado para la reserva original."
+            },
+            {
+                title: "Circunstancias Excepcionales",
+                content: "En casos de fuerza mayor (desastres naturales, emergencias médicas, restricciones de viaje), podemos ofrecer cancelación gratuita con documentación apropiada."
+            }
+        ],
+        contact: {
+            title: "¿Necesitas Cancelar?",
+            content: "Contáctanos lo antes posible para procesar tu cancelación",
+            phone: "+593 97 888 8020",
+            email: "reservas@hotelensuenos.com",
+            hours: "Disponible 24/7"
+        }
+    },
+    en: {
+        title: "Cancellation Policy",
+        subtitle: "Our flexible cancellation policy for your peace of mind",
+        sections: [
+            {
+                title: "Standard Cancellations",
+                content: "Reservations can be cancelled at no cost up to 24 hours before the scheduled arrival time (2:00 PM). After this period, one night's stay will be charged as a penalty."
+            },
+            {
+                title: "High Season",
+                content: "During high season (December-January, Holy Week, local holidays), cancellations must be made 72 hours in advance to avoid charges."
+            },
+            {
+                title: "Group Reservations",
+                content: "For reservations of 5 or more rooms, cancellations must be made 7 days in advance. Different policies may apply for larger groups."
+            },
+            {
+                title: "No-Show",
+                content: "No-show without prior cancellation will result in a full charge for the first night of the reservation."
+            },
+            {
+                title: "Modifications",
+                content: "Date modifications are subject to availability. If the new rate is higher, the difference will be charged. If lower, no refund will be given."
+            },
+            {
+                title: "Refunds",
+                content: "Applicable refunds will be processed within 7-10 business days to the same payment method used for the original reservation."
+            },
+            {
+                title: "Exceptional Circumstances",
+                content: "In cases of force majeure (natural disasters, medical emergencies, travel restrictions), we may offer free cancellation with appropriate documentation."
+            }
+        ],
+        contact: {
+            title: "Need to Cancel?",
+            content: "Contact us as soon as possible to process your cancellation",
+            phone: "+593 97 888 8020",
+            email: "reservas@hotelensuenos.com",
+            hours: "Available 24/7"
+        }
+    }
+};
+
+const currentTexts = texts[lang as "es" | "en"] || texts.es;
 ---
 
-<UnderConstructionPage
-        titleHead={t("nav.cancellation")}
-        title={t("underConstruction.cancellation.title")}
-        message={t("underConstruction.cancellation.message")}
-        btnBackLabel={t("underConstruction.back")}
-        lang={lang}
-/>
+<BaseLayout
+    titleKey="nav.cancellation"
+    lang={lang}
+    config={config}
+    headerBgClass="text-gray-900"
+>
+    <!-- Hero Section -->
+    <section class="relative bg-gradient-to-br from-primary via-primary/95 to-accent/90 py-16 md:py-24">
+        <div class="absolute inset-0 bg-black/20"></div>
+        <div class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="inline-flex items-center justify-center w-16 h-16 bg-white/20 rounded-full mb-6 backdrop-blur-sm">
+                <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+            </div>
+            <h1 class="text-4xl md:text-5xl font-serif text-white font-bold mb-4">
+                {currentTexts.title}
+            </h1>
+            <p class="text-xl text-white/90 max-w-2xl mx-auto">
+                {currentTexts.subtitle}
+            </p>
+        </div>
+    </section>
+
+    <!-- Content Section -->
+    <section class="py-16 md:py-24 bg-gray-50">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+                {currentTexts.sections.map((section) => (
+                    <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+                        <h2 class="text-xl font-bold text-primary mb-3">
+                            {section.title}
+                        </h2>
+                        <p class="text-gray-700 leading-relaxed">
+                            {section.content}
+                        </p>
+                    </div>
+                ))}
+            </div>
+
+            <!-- Contact Card -->
+            <div class="bg-gradient-to-r from-accent to-accent/80 rounded-2xl p-8 text-white text-center">
+                <h2 class="text-2xl font-bold mb-4">
+                    {currentTexts.contact.title}
+                </h2>
+                <p class="text-white/90 mb-6">
+                    {currentTexts.contact.content}
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <div class="flex items-center justify-center gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                        </svg>
+                        <span class="font-semibold">{currentTexts.contact.phone}</span>
+                    </div>
+                    <div class="flex items-center justify-center gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
+                        <span class="font-semibold">{currentTexts.contact.email}</span>
+                    </div>
+                </div>
+                <p class="text-white/70 text-sm mt-4">
+                    {currentTexts.contact.hours}
+                </p>
+            </div>
+        </div>
+    </section>
+</BaseLayout>

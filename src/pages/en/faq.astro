@@ -1,12 +1,6 @@
 ---
-import UnderConstructionPage from "@/components/pages/UnderConstructionPage.astro";
+// pages/en/faq.astro
 
-export const prerender = false;
+// Redirect to main FAQ (which is bilingual)
+Astro.redirect("/faq");
 ---
-
-<UnderConstructionPage
-    titleHead="nav.faq"
-    title="Preguntas Frecuentes"
-    message="Estamos recopilando las preguntas más habituales para ayudarte. Pronto estará disponible."
-    lang="en"
-/>

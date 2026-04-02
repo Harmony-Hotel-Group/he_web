@@ -1,29 +1,210 @@
 ---
-//pages/privacy.astro
+// pages/privacy.astro
 
-// export const prerender = false;
-
+import BaseLayout from "@/layouts/BaseLayout.astro";
 import { Translations } from "@/i18n/translation.ts";
-import { logger } from "@/services/logger.ts";
+import { api } from "@/services/api.ts";
+import type { SiteConfig } from "@/types/config";
 
-interface Props {
-	lang: string;
-}
-
-const { lang = "es" } = Astro.props;
-
-const log = logger("privacy");
-
-import UnderConstructionPage from "@/components/pages/UnderConstructionPage.astro";
-
+const lang = Astro.url.pathname.startsWith("/en") ? "en" : "es";
 const t = Translations(lang);
-log.info(`Rendering privacy page with language: ${lang}`);
+const config = (await api.fetch("config", { params: { lang } })) as SiteConfig;
+
+const texts = {
+    es: {
+        title: "Política de Privacidad",
+        lastUpdated: "Última actualización",
+        sections: {
+            intro: {
+                title: "Introducción",
+                content: "En Hotel Ensueños, nos tomamos muy en serio la privacidad de tus datos personales. Esta Política de Privacidad describe cómo recopilamos, usamos y protegemos tu información cuando utilizas nuestros servicios."
+            },
+            dataCollection: {
+                title: "Información que Recopilamos",
+                content: "Recopilamos información que nos proporcionas directamente cuando haces una reserva, te registras en nuestro sitio web o te comunicas con nosotros. Esto puede incluir: nombre, dirección de correo electrónico, número de teléfono, información de pago, y preferencias de estancia."
+            },
+            dataUsage: {
+                title: "Cómo Usamos Tu Información",
+                content: "Usamos tu información para procesar reservas, proporcionar servicios solicitados, enviar comunicaciones relacionadas con tu estancia, mejorar nuestros servicios, y cumplir con obligaciones legales."
+            },
+            dataProtection: {
+                title: "Protección de Datos",
+                content: "Implementamos medidas de seguridad técnicas y organizativas apropiadas para proteger tu información personal contra acceso no autorizado, pérdida, alteración o divulgación."
+            },
+            thirdParties: {
+                title: "Compartición con Terceros",
+                content: "No vendemos ni alquilamos tu información personal a terceros. Podemos compartir tu información con proveedores de servicios que nos ayudan a operar nuestro negocio, siempre que estén sujetos a obligaciones de confidencialidad."
+            },
+            rights: {
+                title: "Tus Derechos",
+                content: "Tienes derecho a acceder, rectificar, eliminar o limitar el tratamiento de tus datos personales. También puedes oponerte al tratamiento o solicitar la portabilidad de tus datos. Para ejercer estos derechos, contáctanos en privacidad@hotelensuenos.com."
+            },
+            cookies: {
+                title: "Cookies",
+                content: "Nuestro sitio web utiliza cookies para mejorar tu experiencia de navegación. Puedes configurar tu navegador para rechazar las cookies, pero esto puede afectar la funcionalidad del sitio."
+            },
+            contact: {
+                title: "Contacto",
+                content: "Si tienes preguntas sobre esta Política de Privacidad, contáctanos en privacidad@hotelensuenos.com o Gran Colombia 182 y Manuel Vega, Cuenca, Ecuador."
+            }
+        }
+    },
+    en: {
+        title: "Privacy Policy",
+        lastUpdated: "Last updated",
+        sections: {
+            intro: {
+                title: "Introduction",
+                content: "At Hotel Ensueños, we take your personal data privacy very seriously. This Privacy Policy describes how we collect, use, and protect your information when you use our services."
+            },
+            dataCollection: {
+                title: "Information We Collect",
+                content: "We collect information you provide directly when making a reservation, registering on our website, or contacting us. This may include: name, email address, phone number, payment information, and stay preferences."
+            },
+            dataUsage: {
+                title: "How We Use Your Information",
+                content: "We use your information to process reservations, provide requested services, send communications related to your stay, improve our services, and comply with legal obligations."
+            },
+            dataProtection: {
+                title: "Data Protection",
+                content: "We implement appropriate technical and organizational security measures to protect your personal information against unauthorized access, loss, alteration, or disclosure."
+            },
+            thirdParties: {
+                title: "Sharing with Third Parties",
+                content: "We do not sell or rent your personal information to third parties. We may share your information with service providers who help us operate our business, provided they are subject to confidentiality obligations."
+            },
+            rights: {
+                title: "Your Rights",
+                content: "You have the right to access, rectify, delete, or limit the processing of your personal data. You may also object to processing or request data portability. To exercise these rights, contact us at privacidad@hotelensuenos.com."
+            },
+            cookies: {
+                title: "Cookies",
+                content: "Our website uses cookies to improve your browsing experience. You can configure your browser to reject cookies, but this may affect site functionality."
+            },
+            contact: {
+                title: "Contact",
+                content: "If you have questions about this Privacy Policy, contact us at privacidad@hotelensuenos.com or Gran Colombia 182 y Manuel Vega, Cuenca, Ecuador."
+            }
+        }
+    }
+};
+
+const currentTexts = texts[lang as "es" | "en"] || texts.es;
+const lastUpdated = "April 1, 2026";
 ---
 
-<UnderConstructionPage
-        titleHead={t("nav.privacy")}
-        title={t("underConstruction.privacy.title")}
-        message={t("underConstruction.privacy.message")}
-        btnBackLabel={t("underConstruction.back")}
-        lang={lang}
-/>
+<BaseLayout
+    titleKey="nav.privacy"
+    lang={lang}
+    config={config}
+    headerBgClass="text-gray-900"
+>
+    <!-- Hero Section -->
+    <section class="relative bg-gradient-to-br from-primary via-primary/95 to-accent/90 py-16 md:py-24">
+        <div class="absolute inset-0 bg-black/20"></div>
+        <div class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="inline-flex items-center justify-center w-16 h-16 bg-white/20 rounded-full mb-6 backdrop-blur-sm">
+                <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                </svg>
+            </div>
+            <h1 class="text-4xl md:text-5xl font-serif text-white font-bold mb-4">
+                {currentTexts.title}
+            </h1>
+            <p class="text-white/80">
+                {currentTexts.lastUpdated}: {lastUpdated}
+            </p>
+        </div>
+    </section>
+
+    <!-- Content Section -->
+    <section class="py-16 md:py-24 bg-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="prose prose-lg max-w-none">
+                <!-- Introduction -->
+                <div class="mb-12">
+                    <h2 class="text-2xl font-bold text-primary mb-4">
+                        {currentTexts.sections.intro.title}
+                    </h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        {currentTexts.sections.intro.content}
+                    </p>
+                </div>
+
+                <!-- Data Collection -->
+                <div class="mb-12">
+                    <h2 class="text-2xl font-bold text-primary mb-4">
+                        {currentTexts.sections.dataCollection.title}
+                    </h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        {currentTexts.sections.dataCollection.content}
+                    </p>
+                </div>
+
+                <!-- Data Usage -->
+                <div class="mb-12">
+                    <h2 class="text-2xl font-bold text-primary mb-4">
+                        {currentTexts.sections.dataUsage.title}
+                    </h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        {currentTexts.sections.dataUsage.content}
+                    </p>
+                </div>
+
+                <!-- Data Protection -->
+                <div class="mb-12">
+                    <h2 class="text-2xl font-bold text-primary mb-4">
+                        {currentTexts.sections.dataProtection.title}
+                    </h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        {currentTexts.sections.dataProtection.content}
+                    </p>
+                </div>
+
+                <!-- Third Parties -->
+                <div class="mb-12">
+                    <h2 class="text-2xl font-bold text-primary mb-4">
+                        {currentTexts.sections.thirdParties.title}
+                    </h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        {currentTexts.sections.thirdParties.content}
+                    </p>
+                </div>
+
+                <!-- Rights -->
+                <div class="mb-12">
+                    <h2 class="text-2xl font-bold text-primary mb-4">
+                        {currentTexts.sections.rights.title}
+                    </h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        {currentTexts.sections.rights.content}
+                    </p>
+                </div>
+
+                <!-- Cookies -->
+                <div class="mb-12">
+                    <h2 class="text-2xl font-bold text-primary mb-4">
+                        {currentTexts.sections.cookies.title}
+                    </h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        {currentTexts.sections.cookies.content}
+                    </p>
+                </div>
+
+                <!-- Contact -->
+                <div class="mb-12 bg-gray-50 rounded-xl p-8 border border-gray-100">
+                    <h2 class="text-2xl font-bold text-primary mb-4">
+                        {currentTexts.sections.contact.title}
+                    </h2>
+                    <p class="text-gray-700 leading-relaxed mb-4">
+                        {currentTexts.sections.contact.content}
+                    </p>
+                    <div class="flex flex-col gap-2 text-gray-600">
+                        <p>📧 privacidad@hotelensuenos.com</p>
+                        <p>📍 Gran Colombia 182 y Manuel Vega, Cuenca, Ecuador</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</BaseLayout>

@@ -3,6 +3,7 @@
 import Button from "@/components/atoms/button/Button.astro";
 import Label from "@/components/atoms/Label.astro";
 import TextAreaInput from "@/components/atoms/TextAreaInput.astro";
+import CSRFToken from "@/components/atoms/CSRFToken.astro";
 
 import DatePickerField from "@/components/molecules/forms/DatePickerField.astro";
 import DropDownField from "@/components/molecules/forms/DropdownField.astro";
@@ -79,6 +80,9 @@ const email = config?.contactInfo?.email ?? "";
   data-whatsapp={whatsappNumber}
   data-email={email}
 >
+  <!-- CSRF Token -->
+  <CSRFToken />
+  
   <!-- Standard Fields Container -->
   <div id="standard-fields">
     <Grid cols={5}>
@@ -261,11 +265,9 @@ const email = config?.contactInfo?.email ?? "";
   <script>
     import { actions } from "astro:actions";
     import { buildBookingMessage } from "@/domain/booking/buildBookingMessage";
-    import { Translations } from "@/i18n/translation.ts";
 
     // Get lang from Astro.props
     const lang = Astro.props.lang;
-    const t = Translations(lang);
 
     document.addEventListener("DOMContentLoaded", async () => {
       const form: HTMLFormElement = document.getElementById(
@@ -471,10 +473,50 @@ const email = config?.contactInfo?.email ?? "";
         return isValid;
       }
 
+      async function checkAvailability(dateRange: string, roomId?: string): Promise<{ available: boolean; message: string }> {
+        // Parse date range para obtener checkin y checkout
+        const regex = /(\d{4}[-/]\d{2}[-/]\d{2})\s*➜\s*(\d{4}[-/]\d{2}[-/]\d{2})/;
+        const match = dateRange.match(regex);
+
+        if (!match) {
+          return { available: false, message: 'Fechas inválidas' };
+        }
+
+        const checkin = match[1];
+        const checkout = match[2];
+
+        // Para esta implementación básica, verificamos disponibilidad genérica
+        // En producción, verificar por roomId específico
+        try {
+          const response = await fetch(`/api/availability?checkin=${checkin}&checkout=${checkout}&roomId=${roomId || 'double'}`);
+          const data = await response.json();
+
+          if (data.available) {
+            return { available: true, message: 'Habitación disponible' };
+          } else {
+            return { available: false, message: 'Habitación no disponible para estas fechas' };
+          }
+        } catch (error) {
+          console.error('Error checking availability:', error);
+          return { available: true, message: 'No se pudo verificar disponibilidad, continuando...' };
+        }
+      }
+
       const btn = document.getElementById("btnSubmit") as HTMLButtonElement;
       btn?.addEventListener("click", async () => {
         if (!validateForm()) {
           return;
+        }
+
+        // Verificar disponibilidad antes de continuar
+        const dateRangeValue = (document.getElementById("dateRange") as HTMLInputElement)?.value;
+        if (dateRangeValue) {
+          const availability = await checkAvailability(dateRangeValue);
+
+          if (!availability.available) {
+            window.showToast(availability.message, 'error');
+            return;
+          }
         }
 
         clearValidationErrors();
@@ -483,7 +525,7 @@ const email = config?.contactInfo?.email ?? "";
         }
         const originalButtonHTML = btn.innerHTML;
         btn.disabled = true;
-        btn.innerHTML = `<svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Enviando...`;
+        btn.innerHTML = `<svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Verificando disponibilidad...`;
 
         try {
           const formData = new FormData(form);
@@ -500,7 +542,7 @@ const email = config?.contactInfo?.email ?? "";
             return;
           }
 
-          const { processing } = data;
+          const { processing, bookingNumber } = data;
           const isVehicleChecked =
             vehicleSwitchButton?.getAttribute("aria-checked") === "true";
 
@@ -543,7 +585,7 @@ const email = config?.contactInfo?.email ?? "";
             groupNotes: formData.get("groupNotes"),
             breakfast: isGroupMode
               ? String(formData.get("breakfast") ?? "")
-              : String(processing.breakfast ?? ""),
+              : String(processing?.breakfast ?? ""),
             whatsappNumber,
           });
 
@@ -562,7 +604,6 @@ const email = config?.contactInfo?.email ?? "";
       // Booking Summary Modal Functions
       function showBookingSummary(bookingData: any) {
         const modal = document.getElementById("booking-summary-modal");
-        const modalContent = document.getElementById("modal-content");
         const closeBtn = document.getElementById("modal-close");
         const cancelBtn = document.getElementById("modal-cancel");
         const confirmBtn = document.getElementById("modal-confirm");
@@ -680,7 +721,7 @@ const email = config?.contactInfo?.email ?? "";
         document.getElementById("summary-total")!.textContent = lang === "es" ? "Consultar" : "Check Availability";
       }
 
-      function sendToWhatsApp(bookingData: any) {
+      function sendToWhatsApp(bookingData: any, bookingNumber?: string) {
         const { processing, isGroupMode, isVehicleChecked, vehicleItems, whatsappNumber } = bookingData;
 
         const message = buildBookingMessage({
@@ -712,8 +753,13 @@ const email = config?.contactInfo?.email ?? "";
             `https://wa.me/${whatsappNumber}?text=${encodedMessage}`,
             "_blank",
           );
+          
+          // Redirigir a página de confirmación con datos
+          const confirmationUrl = `/booking/confirmation?booking=${bookingNumber || "RES-XXXXXX"}&checkin=${processing.checkin}&checkout=${processing.checkout}&nights=${processing.nights}&adults=${processing.adults}&children=${processing.children}&rooms=${processing.rooms}&total=${processing.totalPrice || "0"}`;
+          window.location.href = confirmationUrl;
+          
           window.showToast(
-            "Tu solicitud de reserva ha sido enviada.",
+            `Reserva #${bookingNumber || 'XXXXXX'} creada exitosamente`,
             "success",
           );
         } else {

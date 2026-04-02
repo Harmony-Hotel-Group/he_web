@@ -1,12 +1,6 @@
 ---
-import UnderConstructionPage from "@/components/pages/UnderConstructionPage.astro";
+// pages/en/gallery.astro
 
-export const prerender = false;
+// Redirect to main gallery (which is bilingual)
+Astro.redirect("/gallery");
 ---
-
-<UnderConstructionPage
-    titleHead="nav.gallery"
-    title="Galería de Fotos"
-    message="Estamos seleccionando las mejores imágenes para mostrarte nuestras instalaciones. Vuelve pronto para verlas."
-    lang="en"
-/>

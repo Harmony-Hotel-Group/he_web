@@ -1,29 +1,127 @@
 ---
-//pages/terms.astro
+// pages/terms.astro
 
-// export const prerender = false;
-
+import BaseLayout from "@/layouts/BaseLayout.astro";
 import { Translations } from "@/i18n/translation.ts";
-import { logger } from "@/services/logger.ts";
+import { api } from "@/services/api.ts";
+import type { SiteConfig } from "@/types/config";
 
-interface Props {
-	lang: string;
-}
-
-const { lang = "es" } = Astro.props;
-
-const log = logger("terms");
-
-import UnderConstructionPage from "@/components/pages/UnderConstructionPage.astro";
-
+const lang = Astro.url.pathname.startsWith("/en") ? "en" : "es";
 const t = Translations(lang);
-log.info(`Rendering terms page with language: ${lang}`);
+const config = (await api.fetch("config", { params: { lang } })) as SiteConfig;
+
+const texts = {
+    es: {
+        title: "Términos y Condiciones",
+        lastUpdated: "Última actualización",
+        sections: [
+            {
+                title: "Aceptación de Términos",
+                content: "Al utilizar nuestros servicios y sitio web, aceptas cumplir y estar sujeto a estos Términos y Condiciones. Si no estás de acuerdo, por favor no utilices nuestros servicios."
+            },
+            {
+                title: "Reservas y Pagos",
+                content: "Las reservas están sujetas a disponibilidad. Los precios pueden variar según temporada y tipo de habitación. El pago se realiza directamente en el hotel. Aceptamos efectivo y tarjetas de crédito principales."
+            },
+            {
+                title: "Cancelaciones",
+                content: "Las cancelaciones pueden realizarse hasta 24 horas antes de la llegada sin costo. Cancelaciones posteriores o no-presentación (no-show) serán cobradas con una noche de estadía."
+            },
+            {
+                title: "Check-in / Check-out",
+                content: "Check-in: 14:00 | Check-out: 12:00. Early check-in y late check-out están sujetos a disponibilidad y pueden tener costo adicional."
+            },
+            {
+                title: "Responsabilidad",
+                content: "No nos hacemos responsables por pérdida o daño de objetos personales. Recomendamos usar la caja de seguridad de la habitación para valores importantes."
+            },
+            {
+                title: "Modificaciones",
+                content: "Nos reservamos el derecho de modificar estos términos en cualquier momento. Los cambios entrarán en vigor inmediatamente después de su publicación en el sitio web."
+            },
+            {
+                title: "Contacto",
+                content: "Para preguntas sobre estos términos, contáctanos en legal@hotelensuenos.com"
+            }
+        ]
+    },
+    en: {
+        title: "Terms and Conditions",
+        lastUpdated: "Last updated",
+        sections: [
+            {
+                title: "Acceptance of Terms",
+                content: "By using our services and website, you agree to comply with and be bound by these Terms and Conditions. If you disagree, please do not use our services."
+            },
+            {
+                title: "Reservations and Payments",
+                content: "Reservations are subject to availability. Prices may vary by season and room type. Payment is made directly at the hotel. We accept cash and major credit cards."
+            },
+            {
+                title: "Cancellations",
+                content: "Cancellations can be made up to 24 hours before arrival at no cost. Late cancellations or no-shows will be charged one night's stay."
+            },
+            {
+                title: "Check-in / Check-out",
+                content: "Check-in: 2:00 PM | Check-out: 12:00 PM. Early check-in and late check-out are subject to availability and may have additional cost."
+            },
+            {
+                title: "Liability",
+                content: "We are not responsible for loss or damage to personal belongings. We recommend using the in-room safe for valuables."
+            },
+            {
+                title: "Modifications",
+                content: "We reserve the right to modify these terms at any time. Changes will take effect immediately upon posting on the website."
+            },
+            {
+                title: "Contact",
+                content: "For questions about these terms, contact us at legal@hotelensuenos.com"
+            }
+        ]
+    }
+};
+
+const currentTexts = texts[lang as "es" | "en"] || texts.es;
+const lastUpdated = "April 1, 2026";
 ---
 
-<UnderConstructionPage
-        titleHead={t("nav.terms")}
-        title={t("underConstruction.terms.title")}
-        message={t("underConstruction.terms.message")}
-        btnBackLabel={t("underConstruction.back")}
-        lang={lang}
-/>
+<BaseLayout
+    titleKey="nav.terms"
+    lang={lang}
+    config={config}
+    headerBgClass="text-gray-900"
+>
+    <!-- Hero Section -->
+    <section class="relative bg-gradient-to-br from-primary via-primary/95 to-accent/90 py-16 md:py-24">
+        <div class="absolute inset-0 bg-black/20"></div>
+        <div class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="inline-flex items-center justify-center w-16 h-16 bg-white/20 rounded-full mb-6 backdrop-blur-sm">
+                <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+            </div>
+            <h1 class="text-4xl md:text-5xl font-serif text-white font-bold mb-4">
+                {currentTexts.title}
+            </h1>
+            <p class="text-white/80">
+                {currentTexts.lastUpdated}: {lastUpdated}
+            </p>
+        </div>
+    </section>
+
+    <!-- Content Section -->
+    <section class="py-16 md:py-24 bg-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            {currentTexts.sections.map((section) => (
+                <div class="mb-12">
+                    <h2 class="text-2xl font-bold text-primary mb-4">
+                        {section.title}
+                    </h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        {section.content}
+                    </p>
+                </div>
+            ))}
+        </div>
+    </section>
+</BaseLayout>

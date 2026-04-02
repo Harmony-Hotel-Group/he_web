@@ -1,0 +1,18 @@
+---
+// src/components/atoms/CSRFToken.astro
+/**
+ * Componente para generar input oculto con token CSRF
+ */
+
+import { getSessionHash, generateCSRFToken } from '@/utils/csrf';
+
+const sessionId = await getSessionHash(Astro.request);
+const csrfToken = await generateCSRFToken(sessionId);
+---
+
+<input 
+    type="hidden" 
+    name="_csrf" 
+    value={csrfToken} 
+    data-csrf-token
+/>

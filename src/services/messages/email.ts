@@ -79,3 +79,27 @@ export async function sendAdminEmail(
 	}
 	return sendEmail({ to: ENV.ADMIN_EMAIL, subject, text, html });
 }
+
+/**
+ * Envía email de confirmación de reserva al huésped
+ */
+export async function sendBookingConfirmationEmail(
+	guestEmail: string,
+	subject: string,
+	html: string,
+	text: string,
+) {
+	if (!guestEmail || !guestEmail.includes('@')) {
+		if (ENV.DEV)
+			console.warn("[messages/email] Guest email invalid, skipping confirmation");
+		return { ok: false, skipped: true } as const;
+	}
+	
+	return sendEmail({
+		to: guestEmail,
+		subject,
+		html,
+		text,
+		from: `Hotel Ensueños <${ENV.SENDER_EMAIL}>`,
+	});
+}

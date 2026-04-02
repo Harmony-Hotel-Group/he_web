@@ -1,29 +1,378 @@
 ---
-//pages/gallery.astro
+// pages/gallery.astro
 
-// export const prerender = false;
-
+import BaseLayout from "@/layouts/BaseLayout.astro";
 import { Translations } from "@/i18n/translation.ts";
-import { logger } from "@/services/logger.ts";
+import { api } from "@/services/api.ts";
+import type { SiteConfig } from "@/types/config";
 
-interface Props {
-	lang: string;
-}
-
-const { lang = "es" } = Astro.props;
-
-const log = logger("gallery");
-
-import UnderConstructionPage from "@/components/pages/UnderConstructionPage.astro";
-
+const lang = Astro.url.pathname.startsWith("/en") ? "en" : "es";
 const t = Translations(lang);
-log.info(`Rendering gallery page with language: ${lang}`);
+const config = (await api.fetch("config", { params: { lang } })) as SiteConfig;
+
+// Obtener imágenes de aboutUs y rooms
+const aboutImages = config?.aboutUs?.images || [];
+const allImages = [
+    ...aboutImages.slice(0, 10),
+    // Agregar imágenes de habitaciones
+    ...(config?.rooms?.slice(0, 4).map((room: any) => ({
+        src: room.src,
+        alt: room.name?.[lang] || "Room",
+        category: "rooms",
+    })) || []),
+];
+
+// Categorías de galería
+const categories = [
+    { id: "all", label: lang === "es" ? "Todas" : "All" },
+    { id: "lobby", label: lang === "es" ? "Lobby" : "Lobby" },
+    { id: "lounge", label: lang === "es" ? "Lounge" : "Lounge" },
+    { id: "rooms", label: lang === "es" ? "Habitaciones" : "Rooms" },
+    { id: "exterior", label: lang === "es" ? "Exterior" : "Exterior" },
+];
+
+const texts = {
+    es: {
+        title: "Galería de Fotos",
+        subtitle: "Explora nuestras instalaciones y espacios",
+        filter: "Filtrar por",
+        viewLarger: "Click para ver en tamaño grande",
+        backToTop: "Volver arriba",
+    },
+    en: {
+        title: "Photo Gallery",
+        subtitle: "Explore our facilities and spaces",
+        filter: "Filter by",
+        viewLarger: "Click to view in full size",
+        backToTop: "Back to top",
+    },
+};
+
+const currentTexts = texts[lang as "es" | "en"] || texts.es;
 ---
 
-<UnderConstructionPage
-        titleHead={t("nav.gallery")}
-        title={t("underConstruction.gallery.title")}
-        message={t("underConstruction.gallery.message")}
-        btnBackLabel={t("underConstruction.back")}
-        lang={lang}
-/>
+<BaseLayout
+    titleKey="nav.gallery"
+    lang={lang}
+    config={config}
+    headerBgClass="text-gray-900"
+>
+    <!-- Hero Section -->
+    <section class="relative bg-gradient-to-br from-primary via-primary/95 to-accent/90 py-16 md:py-24">
+        <div class="absolute inset-0 bg-black/20"></div>
+        <div class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="inline-flex items-center justify-center w-16 h-16 bg-white/20 rounded-full mb-6 backdrop-blur-sm">
+                <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+            </div>
+            <h1 class="text-4xl md:text-5xl font-serif text-white font-bold mb-4">
+                {currentTexts.title}
+            </h1>
+            <p class="text-xl text-white/90 max-w-2xl mx-auto">
+                {currentTexts.subtitle}
+            </p>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="py-16 md:py-24 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Filter Buttons -->
+            <div class="flex flex-wrap justify-center gap-3 mb-12">
+                {categories.map((category) => (
+                    <button
+                        data-category={category.id}
+                        class="gallery-filter px-6 py-3 text-sm font-semibold rounded-full transition-all {category.id === 'all' ? 'bg-accent text-white shadow-lg' : 'bg-white text-gray-700 hover:bg-accent hover:text-white border border-gray-200'}"
+                    >
+                        {category.label}
+                    </button>
+                ))}
+            </div>
+
+            <!-- Gallery Grid -->
+            <div class="gallery-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                {allImages.map((image: any, index: number) => {
+                    const category = image.src.includes('lobby') ? 'lobby' : 
+                                   image.src.includes('lounge') ? 'lounge' : 
+                                   image.src.includes('facade') || image.src.includes('exterior') ? 'exterior' : 'rooms';
+                    
+                    return (
+                        <div
+                            class="gallery-item relative aspect-square overflow-hidden rounded-xl shadow-md cursor-pointer transform transition-all duration-300 hover:scale-105 hover:shadow-xl"
+                            data-category={category}
+                            data-index={index}
+                        >
+                            <img
+                                src={image.src}
+                                alt={image.alt || `Gallery image ${index + 1}`}
+                                loading="lazy"
+                                class="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                            />
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300">
+                                <div class="absolute bottom-4 left-4 text-white">
+                                    <p class="text-sm font-semibold capitalize">{category}</p>
+                                </div>
+                            </div>
+                        </div>
+                    );
+                })}
+            </div>
+
+            <!-- Back to Top -->
+            <div class="text-center mt-12">
+                <button
+                    id="back-to-top"
+                    class="hidden fixed bottom-8 right-8 bg-accent text-white p-4 rounded-full shadow-lg hover:bg-accent/90 transition-all transform hover:scale-110 z-50"
+                    aria-label={currentTexts.backToTop}
+                >
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lightbox Modal -->
+    <div
+        id="lightbox"
+        class="fixed inset-0 z-[9999] hidden bg-black/95 backdrop-blur-sm"
+        role="dialog"
+        aria-modal="true"
+    >
+        <!-- Close button -->
+        <button
+            id="lightbox-close"
+            class="absolute top-6 right-6 p-3 text-white/80 hover:text-white hover:bg-white/10 rounded-full transition-all z-50"
+            aria-label="Close lightbox"
+        >
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
+
+        <!-- Navigation -->
+        <button
+            id="lightbox-prev"
+            class="absolute left-6 top-1/2 -translate-y-1/2 p-3 text-white/80 hover:text-white hover:bg-white/10 rounded-full transition-all z-50"
+            aria-label="Previous image"
+        >
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+            </svg>
+        </button>
+        <button
+            id="lightbox-next"
+            class="absolute right-6 top-1/2 -translate-y-1/2 p-3 text-white/80 hover:text-white hover:bg-white/10 rounded-full transition-all z-50"
+            aria-label="Next image"
+        >
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+        </button>
+
+        <!-- Image container -->
+        <div class="flex items-center justify-center h-full p-4">
+            <img
+                id="lightbox-image"
+                src=""
+                alt=""
+                class="max-w-full max-h-full object-contain"
+            />
+        </div>
+
+        <!-- Image counter -->
+        <div class="absolute bottom-6 left-1/2 -translate-x-1/2 text-white text-sm font-semibold">
+            <span id="lightbox-counter">1 / 1</span>
+        </div>
+    </div>
+</BaseLayout>
+
+<style>
+    .gallery-filter.active {
+        background: rgb(217 119 6);
+        color: white;
+        box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    }
+
+    .gallery-item.hidden {
+        display: none;
+    }
+
+    #lightbox.active {
+        display: block;
+        animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+
+    #lightbox-image {
+        animation: zoomIn 0.3s ease;
+    }
+
+    @keyframes zoomIn {
+        from {
+            transform: scale(0.9);
+        }
+        to {
+            transform: scale(1);
+        }
+    }
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const filters = document.querySelectorAll(".gallery-filter");
+        const galleryItems = document.querySelectorAll(".gallery-item");
+        const lightbox = document.getElementById("lightbox");
+        const lightboxImage = document.getElementById("lightbox-image") as HTMLImageElement;
+        const lightboxClose = document.getElementById("lightbox-close");
+        const lightboxPrev = document.getElementById("lightbox-prev");
+        const lightboxNext = document.getElementById("lightbox-next");
+        const lightboxCounter = document.getElementById("lightbox-counter");
+        const backToTop = document.getElementById("back-to-top");
+
+        let currentImageIndex = 0;
+        const visibleImages: HTMLImageElement[] = [];
+
+        // Filter functionality
+        filters.forEach(filter => {
+            filter.addEventListener("click", () => {
+                const category = filter.getAttribute("data-category");
+
+                // Update active filter
+                filters.forEach(f => f.classList.remove("active"));
+                filter.classList.add("active");
+
+                // Filter images
+                galleryItems.forEach(item => {
+                    const itemCategory = item.getAttribute("data-category");
+                    if (category === "all" || itemCategory === category) {
+                        item.classList.remove("hidden");
+                    } else {
+                        item.classList.add("hidden");
+                    }
+                });
+
+                updateVisibleImages();
+            });
+        });
+
+        function updateVisibleImages() {
+            visibleImages.length = 0;
+            galleryItems.forEach(item => {
+                if (!item.classList.contains("hidden")) {
+                    const img = item.querySelector("img");
+                    if (img) visibleImages.push(img);
+                }
+            });
+        }
+
+        // Lightbox functionality
+        galleryItems.forEach((item, index) => {
+            item.addEventListener("click", () => {
+                const img = item.querySelector("img");
+                if (img) {
+                    currentImageIndex = visibleImages.indexOf(img);
+                    openLightbox(img.src, img.alt);
+                }
+            });
+        });
+
+        function openLightbox(src: string, alt: string) {
+            if (!lightboxImage || !lightbox) return;
+            
+            lightboxImage.src = src;
+            lightboxImage.alt = alt;
+            lightbox.classList.remove("hidden");
+            lightbox.classList.add("active");
+            updateCounter();
+            document.body.style.overflow = "hidden";
+        }
+
+        function closeLightbox() {
+            if (!lightbox) return;
+            
+            lightbox.classList.remove("active");
+            setTimeout(() => {
+                lightbox.classList.add("hidden");
+            }, 300);
+            document.body.style.overflow = "";
+        }
+
+        function showPrevious() {
+            if (visibleImages.length === 0) return;
+            currentImageIndex = (currentImageIndex - 1 + visibleImages.length) % visibleImages.length;
+            const img = visibleImages[currentImageIndex];
+            if (img) {
+                openLightbox(img.src, img.alt);
+            }
+        }
+
+        function showNext() {
+            if (visibleImages.length === 0) return;
+            currentImageIndex = (currentImageIndex + 1) % visibleImages.length;
+            const img = visibleImages[currentImageIndex];
+            if (img) {
+                openLightbox(img.src, img.alt);
+            }
+        }
+
+        function updateCounter() {
+            if (lightboxCounter) {
+                lightboxCounter.textContent = `${currentImageIndex + 1} / ${visibleImages.length}`;
+            }
+        }
+
+        // Event listeners
+        lightboxClose?.addEventListener("click", closeLightbox);
+        lightboxPrev?.addEventListener("click", showPrevious);
+        lightboxNext?.addEventListener("click", showNext);
+
+        // Close on backdrop click
+        lightbox?.addEventListener("click", (e) => {
+            if (e.target === lightbox) {
+                closeLightbox();
+            }
+        });
+
+        // Keyboard navigation
+        document.addEventListener("keydown", (e) => {
+            if (!lightbox || lightbox.classList.contains("hidden")) return;
+            
+            if (e.key === "Escape") {
+                closeLightbox();
+            } else if (e.key === "ArrowLeft") {
+                showPrevious();
+            } else if (e.key === "ArrowRight") {
+                showNext();
+            }
+        });
+
+        // Back to top button
+        window.addEventListener("scroll", () => {
+            if (!backToTop) return;
+            
+            if (window.scrollY > 500) {
+                backToTop.classList.remove("hidden");
+            } else {
+                backToTop.classList.add("hidden");
+            }
+        });
+
+        backToTop?.addEventListener("click", () => {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+
+        // Initialize
+        updateVisibleImages();
+    });
+</script>

@@ -1,12 +1,6 @@
 ---
-import UnderConstructionPage from "@/components/pages/UnderConstructionPage.astro";
+// pages/en/privacy.astro
 
-export const prerender = false;
+// Redirect to main privacy (which is bilingual)
+Astro.redirect("/privacy");
 ---
-
-<UnderConstructionPage
-    titleHead="footer.privacy"
-    title="Política de Privacidad"
-    message="Tu privacidad es importante para nosotros. Estamos redactando los detalles de protección de datos."
-    lang="en"
-/>

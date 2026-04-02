@@ -1,29 +1,308 @@
 ---
-//pages/about.astro
+// pages/about.astro
 
-// export const prerender = false;
-
+import BaseLayout from "@/layouts/BaseLayout.astro";
 import { Translations } from "@/i18n/translation.ts";
-import { logger } from "@/services/logger.ts";
+import { api } from "@/services/api.ts";
+import type { SiteConfig } from "@/types/config";
 
-interface Props {
-	lang: string;
+const lang = Astro.url.pathname.startsWith("/en") ? "en" : "es";
+const t = Translations(lang);
+
+const config = (await api.fetch("config", { params: { lang } })) as SiteConfig;
+
+// Datos de about us desde config
+const aboutUs = config?.aboutUs;
+
+// Estadísticas del hotel
+const stats = {
+	es: [
+		{ number: "15", label: "Habitaciones", icon: "bed" },
+		{ number: "24/7", label: "Servicio", icon: "service" },
+		{ number: "+5", label: "Años de Experiencia", icon: "star" },
+		{ number: "100%", label: "Clientes Satisfechos", icon: "heart" },
+	],
+	en: [
+		{ number: "15", label: "Rooms", icon: "bed" },
+		{ number: "24/7", label: "Service", icon: "service" },
+		{ number: "+5", label: "Years of Experience", icon: "star" },
+		{ number: "100%", label: "Satisfied Guests", icon: "heart" },
+	],
+};
+
+// Valores del hotel
+const values = {
+	es: [
+		{
+			title: "Calidad",
+			description: "Nos esforzamos por ofrecer un servicio de excelencia en cada detalle.",
+			icon: "quality",
+		},
+		{
+			title: "Hospitalidad",
+			description: "Tratamos a cada huésped como parte de nuestra familia.",
+			icon: "hospitality",
+		},
+		{
+			title: "Ubicación",
+			description: "En el corazón del centro histórico de Cuenca, Patrimonio de la Humanidad.",
+			icon: "location",
+		},
+		{
+			title: "Sostenibilidad",
+			description: "Comprometidos con prácticas responsables con el medio ambiente.",
+			icon: "sustainability",
+		},
+	],
+	en: [
+		{
+			title: "Quality",
+			description: "We strive to offer excellent service in every detail.",
+			icon: "quality",
+		},
+		{
+			title: "Hospitality",
+			description: "We treat every guest as part of our family.",
+			icon: "hospitality",
+		},
+		{
+			title: "Location",
+			description: "In the heart of Cuenca's historic center, a World Heritage Site.",
+			icon: "location",
+		},
+		{
+			title: "Sustainability",
+			description: "Committed to environmentally responsible practices.",
+			icon: "sustainability",
+		},
+	],
+};
+
+// Historia del hotel
+const history = {
+	es: {
+		title: "Nuestra Historia",
+		subtitle: "Más de 5 años creando experiencias inolvidables",
+		paragraphs: [
+			"Hotel Ensueños nació en 2021 con una misión clara: ofrecer una experiencia de hospedaje única en el corazón de Cuenca, Ecuador. Ubicados en un edificio colonial cuidadosamente restaurado, combinamos la arquitectura tradicional con las comodidades modernas.",
+			"Desde nuestros inicios, nos hemos dedicado a brindar un servicio personalizado y cálido. Cada habitación ha sido diseñada pensando en el confort de nuestros huéspedes, desde viajeros individuales hasta familias completas.",
+			"Nuestra ubicación privilegiada, a pocos pasos de la majestuosa Catedral de la Inmaculada Concepción y rodeados del vibrante centro histórico, nos permite ofrecer a nuestros huéspedes una experiencia auténtica de la cultura cuencana.",
+		],
+	},
+	en: {
+		title: "Our History",
+		subtitle: "More than 5 years creating unforgettable experiences",
+		paragraphs: [
+			"Ensueños Hotel was born in 2021 with a clear mission: to offer a unique lodging experience in the heart of Cuenca, Ecuador. Located in a carefully restored colonial building, we combine traditional architecture with modern amenities.",
+			"Since our beginnings, we have been dedicated to providing personalized and warm service. Each room has been designed with the comfort of our guests in mind, from individual travelers to complete families.",
+			"Our privileged location, just steps from the majestic Cathedral of the Immaculate Conception and surrounded by the vibrant historic center, allows us to offer our guests an authentic experience of Cuencan culture.",
+		],
+	},
+};
+
+const currentStats = stats[lang];
+const currentValues = values[lang];
+const currentHistory = history[lang];
+
+// Icon helper functions
+function getStatIcon(icon: string) {
+	const icons: Record<string, string> = {
+		bed: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />',
+		service: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />',
+		star: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />',
+		heart: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />',
+	};
+	return icons[icon] || icons.star;
 }
 
-const { lang = "es" } = Astro.props;
-
-const log = logger("about");
-
-import UnderConstructionPage from "@/components/pages/UnderConstructionPage.astro";
-
-const t = Translations(lang);
-log.info(`Rendering about page with language: ${lang}`);
+function getValueIcon(icon: string) {
+	const icons: Record<string, string> = {
+		quality: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />',
+		hospitality: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />',
+		location: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />',
+		sustainability: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />',
+	};
+	return icons[icon] || icons.quality;
+}
 ---
 
-<UnderConstructionPage
-        titleHead={t("nav.about")}
-        title={t("underConstruction.about.title")}
-        message={t("underConstruction.about.message")}
-        btnBackLabel={t("underConstruction.back")}
-        lang={lang}
-/>
+<BaseLayout
+	titleKey="nav.about"
+	lang={lang}
+	config={config}
+	headerBgClass="text-gray-900"
+>
+	<!-- Hero Section -->
+	<section class="relative bg-gradient-to-br from-primary via-primary/95 to-accent/90 overflow-hidden">
+		<div class="absolute inset-0 bg-black/20"></div>
+		<div class="absolute inset-0 opacity-10">
+			<div class="absolute top-20 left-10 w-72 h-72 bg-white rounded-full blur-3xl"></div>
+			<div class="absolute bottom-20 right-10 w-96 h-96 bg-accent rounded-full blur-3xl"></div>
+		</div>
+		<div class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32">
+			<div class="text-center">
+				<div class="flex justify-center mb-6">
+					<div class="p-4 bg-white/10 rounded-full backdrop-blur-sm">
+						<svg class="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+						</svg>
+					</div>
+				</div>
+				<h1 class="text-4xl md:text-5xl lg:text-6xl font-serif text-white font-bold mb-4">
+					{t("nav.about")}
+				</h1>
+				<p class="text-lg md:text-xl text-white/90 max-w-2xl mx-auto">
+					{lang === "es" ? "Tu hogar lejos de casa" : "Your home away from home"}
+				</p>
+			</div>
+		</div>
+	</section>
+
+	<!-- Welcome Section -->
+	<section class="py-16 md:py-24 bg-white">
+		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+			<div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+				<div>
+					<h2 class="text-3xl md:text-4xl font-serif text-primary font-bold mb-6">
+						{aboutUs?.mainTitle?.[lang] || "Bienvenido a Hotel Ensueños"}
+					</h2>
+					<p class="text-gray-600 leading-relaxed mb-4 text-lg">
+						{aboutUs?.welcomeParagraph?.[lang] || "Ubicado en el corazón del centro histórico de Cuenca, Ecuador, nuestro hotel te invita a vivir una experiencia única."}
+					</p>
+					<p class="text-gray-600 leading-relaxed text-lg">
+						{aboutUs?.commitmentParagraph?.[lang] || "En Hotel Ensueños, estamos comprometidos con su satisfacción y comodidad. Desde el momento en que ingrese a nuestro acogedor vestíbulo, sentirá la calidez y la atención personalizada que nos distingue."}
+					</p>
+				</div>
+				<div class="relative">
+					<div class="grid grid-cols-2 gap-4">
+						{aboutUs?.images?.slice(0, 4).map((image: any, index: number) => (
+							<div class={`relative overflow-hidden rounded-2xl ${index === 0 ? 'col-span-2 aspect-video' : 'aspect-square'}`}>
+								<img
+									src={image.src}
+									alt={image.alt}
+									class="w-full h-full object-cover hover:scale-110 transition-transform duration-700"
+									loading={index === 0 ? "eager" : "lazy"}
+								/>
+							</div>
+						))}
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Stats Section -->
+	<section class="py-16 bg-gradient-to-r from-accent to-accent/80">
+		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+			<div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+				{currentStats.map((stat, index) => (
+					<div class="text-center">
+						<div class="inline-flex items-center justify-center w-16 h-16 bg-white/20 rounded-full mb-4">
+							{getStatIcon(stat.icon)}
+						</div>
+						<p class="text-4xl md:text-5xl font-bold text-white mb-2">{stat.number}</p>
+						<p class="text-white/90 font-medium">{stat.label}</p>
+					</div>
+				))}
+			</div>
+		</div>
+	</section>
+
+	<!-- History Section -->
+	<section class="py-16 md:py-24 bg-gray-50">
+		<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+			<div class="text-center mb-12">
+				<h2 class="text-3xl md:text-4xl font-serif text-primary font-bold mb-4">
+					{currentHistory.title}
+				</h2>
+				<p class="text-lg text-gray-600">
+					{currentHistory.subtitle}
+				</p>
+			</div>
+			<div class="space-y-6">
+				{currentHistory.paragraphs.map((paragraph: string) => (
+					<p class="text-gray-700 leading-relaxed text-lg">
+						{paragraph}
+					</p>
+				))}
+			</div>
+		</div>
+	</section>
+
+	<!-- Values Section -->
+	<section class="py-16 md:py-24 bg-white">
+		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+			<div class="text-center mb-16">
+				<h2 class="text-3xl md:text-4xl font-serif text-primary font-bold mb-4">
+					{lang === 'es' ? 'Nuestros Valores' : 'Our Values'}
+				</h2>
+				<p class="text-lg text-gray-600 max-w-2xl mx-auto">
+					{lang === 'es' 
+						? 'Los principios que guían cada aspecto de nuestro servicio' 
+						: 'The principles that guide every aspect of our service'}
+				</p>
+			</div>
+			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+				{currentValues.map((value, index) => (
+					<div class="text-center p-6 rounded-2xl bg-gradient-to-br from-gray-50 to-white border border-gray-100 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+						<div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-accent to-accent/70 rounded-2xl mb-6 text-white">
+							{getValueIcon(value.icon)}
+						</div>
+						<h3 class="text-xl font-bold text-primary mb-3">
+							{value.title}
+						</h3>
+						<p class="text-gray-600 leading-relaxed">
+							{value.description}
+						</p>
+					</div>
+				))}
+			</div>
+		</div>
+	</section>
+
+	<!-- CTA Section -->
+	<section class="py-16 md:py-24 bg-gradient-to-br from-primary to-primary/90">
+		<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+			<div class="mb-8">
+				<svg class="w-16 h-16 text-white/80 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+				</svg>
+			</div>
+			<h2 class="text-3xl md:text-4xl font-serif text-white font-bold mb-4">
+				{lang === 'es' ? '¿Listo para vivir la experiencia Ensueños?' : 'Ready to live the Ensueños experience?'}
+			</h2>
+			<p class="text-lg text-white/90 mb-8 max-w-xl mx-auto">
+				{lang === 'es' 
+					? 'Descubre por qué nuestros huéspedes nos eligen una y otra vez. Te esperamos con los brazos abiertos.' 
+					: 'Discover why our guests choose us again and again. We await you with open arms.'}
+			</p>
+			<div class="flex flex-col sm:flex-row gap-4 justify-center">
+				<a
+					href="/booking"
+					class="inline-flex items-center justify-center gap-2 bg-accent text-primary font-bold py-4 px-8 rounded-xl text-lg hover:bg-accent/90 transition-all transform hover:scale-105 shadow-xl hover:shadow-2xl"
+				>
+					<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+					</svg>
+					<span>{lang === 'es' ? 'Reservar Ahora' : 'Book Now'}</span>
+				</a>
+				<a
+					href="/rooms"
+					class="inline-flex items-center justify-center gap-2 bg-white/10 text-white font-bold py-4 px-8 rounded-xl text-lg hover:bg-white/20 transition-all border-2 border-white/30"
+				>
+					<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+					</svg>
+					<span>{lang === 'es' ? 'Ver Habitaciones' : 'View Rooms'}</span>
+				</a>
+			</div>
+		</div>
+	</section>
+</BaseLayout>
+
+<style>
+	/* Smooth scroll behavior */
+	html {
+		scroll-behavior: smooth;
+	}
+</style>

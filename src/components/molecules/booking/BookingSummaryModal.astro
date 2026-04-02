@@ -1,0 +1,297 @@
+---
+// src/components/molecules/booking/BookingSummaryModal.astro
+
+interface Props {
+	lang: string;
+}
+
+const { lang } = Astro.props;
+
+const texts = {
+	es: {
+		title: "Resumen de Reserva",
+		subtitle: "Por favor, verifica que toda la información sea correcta",
+		dates: "Fechas",
+		checkin: "Llegada",
+		checkout: "Salida",
+		nights: "Noches",
+		guests: "Huéspedes",
+		adults: "Adultos",
+		children: "Niños",
+		rooms: "Habitaciones",
+		breakfast: "Desayuno",
+		yes: "Sí",
+		no: "No",
+		vehicle: "Vehículo",
+		plate: "Placa",
+		type: "Tipo",
+		total: "Total Estimado",
+		policies: "He leído y acepto las políticas de cancelación y términos del hotel",
+		policiesLink: "Ver políticas",
+		cancel: "Cancelar",
+		confirm: "Confirmar y Enviar",
+		sending: "Enviando...",
+		groupInfo: "Información de Grupo",
+		teens: "Adolescentes (12-17)",
+		kids: "Niños (5-11)",
+		infants: "Infantes (0-4)",
+		distribution: "Distribución",
+		notes: "Notas Especiales",
+	},
+	en: {
+		title: "Booking Summary",
+		subtitle: "Please verify that all information is correct",
+		dates: "Dates",
+		checkin: "Check-in",
+		checkout: "Check-out",
+		nights: "Nights",
+		guests: "Guests",
+		adults: "Adults",
+		children: "Children",
+		rooms: "Rooms",
+		breakfast: "Breakfast",
+		yes: "Yes",
+		no: "No",
+		vehicle: "Vehicle",
+		plate: "Plate",
+		type: "Type",
+		total: "Estimated Total",
+		policies: "I have read and accept the cancellation policies and hotel terms",
+		policiesLink: "View policies",
+		cancel: "Cancel",
+		confirm: "Confirm and Send",
+		sending: "Sending...",
+		groupInfo: "Group Information",
+		teens: "Teens (12-17)",
+		kids: "Kids (5-11)",
+		infants: "Infants (0-4)",
+		distribution: "Distribution",
+		notes: "Special Notes",
+	},
+};
+
+const t = texts[lang] || texts.es;
+---
+
+<div
+	id="booking-summary-modal"
+	class="fixed inset-0 z-[9999] hidden"
+	role="dialog"
+	aria-modal="true"
+	aria-labelledby="modal-title"
+>
+	<!-- Backdrop -->
+	<div
+		class="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity"
+		id="modal-backdrop"
+	></div>
+
+	<!-- Modal Container -->
+	<div class="fixed inset-0 flex items-center justify-center p-4 pointer-events-none">
+		<div
+			class="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto pointer-events-auto transform transition-all"
+			id="modal-content"
+		>
+			<!-- Header -->
+			<div class="sticky top-0 bg-gradient-to-r from-primary to-primary/90 text-white px-6 py-4 rounded-t-2xl flex items-center justify-between">
+				<div>
+					<h2 id="modal-title" class="text-xl font-bold">{t.title}</h2>
+					<p class="text-sm text-white/80 mt-1">{t.subtitle}</p>
+				</div>
+				<button
+					type="button"
+					id="modal-close"
+					class="p-2 hover:bg-white/20 rounded-lg transition-colors"
+					aria-label="Close modal"
+				>
+					<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+					</svg>
+				</button>
+			</div>
+
+			<!-- Content -->
+			<div class="p-6 space-y-6">
+				<!-- Dates Section -->
+				<div class="border border-gray-200 rounded-xl p-4">
+					<div class="flex items-center gap-2 mb-3">
+						<svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+						</svg>
+						<h3 class="font-bold text-gray-900">{t.dates}</h3>
+					</div>
+					<div class="grid grid-cols-3 gap-4">
+						<div>
+							<p class="text-xs text-gray-500 uppercase">{t.checkin}</p>
+							<p id="summary-checkin" class="font-semibold text-gray-900">-</p>
+						</div>
+						<div>
+							<p class="text-xs text-gray-500 uppercase">{t.checkout}</p>
+							<p id="summary-checkout" class="font-semibold text-gray-900">-</p>
+						</div>
+						<div>
+							<p class="text-xs text-gray-500 uppercase">{t.nights}</p>
+							<p id="summary-nights" class="font-semibold text-accent">-</p>
+						</div>
+					</div>
+				</div>
+
+				<!-- Guests Section -->
+				<div class="border border-gray-200 rounded-xl p-4">
+					<div class="flex items-center gap-2 mb-3">
+						<svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+						</svg>
+						<h3 class="font-bold text-gray-900">{t.guests}</h3>
+					</div>
+					<div class="grid grid-cols-3 gap-4">
+						<div>
+							<p class="text-xs text-gray-500 uppercase">{t.adults}</p>
+							<p id="summary-adults" class="font-semibold text-gray-900">-</p>
+						</div>
+						<div>
+							<p class="text-xs text-gray-500 uppercase">{t.children}</p>
+							<p id="summary-children" class="font-semibold text-gray-900">-</p>
+						</div>
+						<div>
+							<p class="text-xs text-gray-500 uppercase">{t.rooms}</p>
+							<p id="summary-rooms" class="font-semibold text-gray-900">-</p>
+						</div>
+					</div>
+					<div class="mt-3 flex items-center gap-2">
+						<svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+						</svg>
+						<span class="text-sm text-gray-600">{t.breakfast}:</span>
+						<span id="summary-breakfast" class="text-sm font-medium text-gray-900">{t.yes}</span>
+					</div>
+				</div>
+
+				<!-- Group Info (Hidden by default) -->
+				<div id="summary-group-section" class="hidden border border-gray-200 rounded-xl p-4">
+					<div class="flex items-center gap-2 mb-3">
+						<svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+						</svg>
+						<h3 class="font-bold text-gray-900">{t.groupInfo}</h3>
+					</div>
+					<div class="grid grid-cols-2 gap-4">
+						<div>
+							<p class="text-xs text-gray-500 uppercase">{t.adults}</p>
+							<p id="summary-group-adults" class="font-semibold text-gray-900">-</p>
+						</div>
+						<div>
+							<p class="text-xs text-gray-500 uppercase">{t.teens}</p>
+							<p id="summary-group-teens" class="font-semibold text-gray-900">-</p>
+						</div>
+						<div>
+							<p class="text-xs text-gray-500 uppercase">{t.kids}</p>
+							<p id="summary-group-kids" class="font-semibold text-gray-900">-</p>
+						</div>
+						<div>
+							<p class="text-xs text-gray-500 uppercase">{t.infants}</p>
+							<p id="summary-group-infants" class="font-semibold text-gray-900">-</p>
+						</div>
+					</div>
+					<div class="mt-3">
+						<p class="text-xs text-gray-500 uppercase">{t.distribution}</p>
+						<p id="summary-distribution" class="font-medium text-gray-900">-</p>
+					</div>
+					<div class="mt-3" id="summary-group-notes-container">
+						<p class="text-xs text-gray-500 uppercase">{t.notes}</p>
+						<p id="summary-group-notes" class="text-sm text-gray-600 italic">-</p>
+					</div>
+				</div>
+
+				<!-- Vehicle Section (Hidden by default) -->
+				<div id="summary-vehicle-section" class="hidden border border-gray-200 rounded-xl p-4">
+					<div class="flex items-center gap-2 mb-3">
+						<svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+						</svg>
+						<h3 class="font-bold text-gray-900">{t.vehicle}</h3>
+					</div>
+					<div id="summary-vehicle-list" class="space-y-3">
+						<!-- Vehicle items will be inserted here -->
+					</div>
+				</div>
+
+				<!-- Total Section -->
+				<div class="bg-gradient-to-r from-accent/10 to-accent/5 rounded-xl p-4 border border-accent/20">
+					<div class="flex justify-between items-center">
+						<div>
+							<p class="text-sm text-gray-600">{t.total}</p>
+							<p class="text-xs text-gray-500 mt-1">*Precio sujeto a disponibilidad</p>
+						</div>
+						<p id="summary-total" class="text-2xl font-bold text-accent">-</p>
+					</div>
+				</div>
+
+				<!-- Policies Checkbox -->
+				<label class="flex items-start gap-3 p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-gray-100 transition-colors">
+					<input
+						type="checkbox"
+						id="summary-policies-checkbox"
+						class="mt-1 w-5 h-5 text-accent border-gray-300 rounded focus:ring-accent"
+					/>
+					<div>
+						<p class="text-sm text-gray-700">{t.policies}</p>
+						<a href="/policies" target="_blank" class="text-xs text-accent hover:underline mt-1 inline-block">
+							{t.policiesLink} →
+						</a>
+					</div>
+				</label>
+			</div>
+
+			<!-- Footer Actions -->
+			<div class="sticky bottom-0 bg-gray-50 px-6 py-4 border-t border-gray-200 rounded-b-2xl flex gap-3">
+				<button
+					type="button"
+					id="modal-cancel"
+					class="flex-1 px-6 py-3 border-2 border-gray-300 text-gray-700 font-bold rounded-xl hover:bg-gray-100 transition-all"
+				>
+					{t.cancel}
+				</button>
+				<button
+					type="button"
+					id="modal-confirm"
+					class="flex-1 px-6 py-3 bg-accent text-white font-bold rounded-xl hover:bg-accent/90 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+					disabled
+				>
+					{t.confirm}
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<style>
+	#booking-summary-modal {
+		opacity: 0;
+		visibility: hidden;
+		transition: opacity 0.3s ease, visibility 0.3s ease;
+	}
+
+	#booking-summary-modal.active {
+		opacity: 1;
+		visibility: visible;
+	}
+
+	#booking-summary-modal.active #modal-content {
+		transform: scale(1);
+	}
+
+	#modal-content {
+		transform: scale(0.95);
+		transition: transform 0.3s ease;
+	}
+
+	#modal-backdrop {
+		opacity: 0;
+		transition: opacity 0.3s ease;
+	}
+
+	#booking-summary-modal.active #modal-backdrop {
+		opacity: 1;
+	}
+</style>

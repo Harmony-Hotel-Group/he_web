@@ -16,6 +16,7 @@ import { range } from "@/utils/math.ts";
 import NumberField from "@/components/molecules/forms/NumberField.astro";
 import BookingVehicleSection from "./BookingVehicleSection.astro";
 import Icono from "@/components/atoms/Icono.astro";
+import BookingSummaryModal from "@/components/molecules/booking/BookingSummaryModal.astro";
 
 interface Props {
 	lang: string;
@@ -254,9 +255,17 @@ const email = config?.contactInfo?.email ?? "";
     />
   </div>
 
+  <!-- Booking Summary Modal -->
+  <BookingSummaryModal lang={lang} />
+
   <script>
     import { actions } from "astro:actions";
     import { buildBookingMessage } from "@/domain/booking/buildBookingMessage";
+    import { Translations } from "@/i18n/translation.ts";
+
+    // Get lang from Astro.props
+    const lang = Astro.props.lang;
+    const t = Translations(lang);
 
     document.addEventListener("DOMContentLoaded", async () => {
       const form: HTMLFormElement = document.getElementById(
@@ -520,47 +529,24 @@ const email = config?.contactInfo?.email ?? "";
             )?.value,
           }));
 
-          const message = buildBookingMessage({
+          // Show booking summary modal before sending to WhatsApp
+          showBookingSummary({
+            processing,
             isGroupMode,
-            dateRangeRaw: formData.get("dateRangeGroup")?.toString() || "",
+            isVehicleChecked,
+            vehicleItems,
+            distributionLabel,
             groupAdults: formData.get("groupAdults"),
             groupTeens: formData.get("groupTeens"),
             groupKids: formData.get("groupKids"),
             groupInfants: formData.get("groupInfants"),
-            distributionLabel,
             groupNotes: formData.get("groupNotes"),
-            processing: {
-              checkin: processing.checkin,
-              checkout: processing.checkout,
-              nights: processing.nights,
-              adults: processing.adults,
-              children: processing.children,
-              rooms: processing.rooms,
-              breakfast: isGroupMode
-                ? String(formData.get("breakfast") ?? "")
-                : String(processing.breakfast ?? ""),
-            },
-            isVehicleChecked,
-            vehicleItems,
+            breakfast: isGroupMode
+              ? String(formData.get("breakfast") ?? "")
+              : String(processing.breakfast ?? ""),
+            whatsappNumber,
           });
 
-          const encodedMessage = encodeURIComponent(message.trim());
-
-          if (whatsappNumber) {
-            window.open(
-              `https://wa.me/${whatsappNumber}?text=${encodedMessage}`,
-              "_blank",
-            );
-            window.showToast(
-              "Tu solicitud de reserva ha sido enviada.",
-              "success",
-            );
-          } else {
-            window.showToast(
-              "No se pudo enviar el mensaje, el número de WhatsApp no está configurado.",
-              "error",
-            );
-          }
         } catch (err) {
           console.error("Error inesperado al enviar la reserva:", err);
           window.showToast(
@@ -572,6 +558,171 @@ const email = config?.contactInfo?.email ?? "";
           btn.innerHTML = originalButtonHTML;
         }
       });
+
+      // Booking Summary Modal Functions
+      function showBookingSummary(bookingData: any) {
+        const modal = document.getElementById("booking-summary-modal");
+        const modalContent = document.getElementById("modal-content");
+        const closeBtn = document.getElementById("modal-close");
+        const cancelBtn = document.getElementById("modal-cancel");
+        const confirmBtn = document.getElementById("modal-confirm");
+        const policiesCheckbox = document.getElementById("summary-policies-checkbox") as HTMLInputElement;
+
+        if (!modal) return;
+
+        // Fill summary data
+        fillSummaryData(bookingData);
+
+        // Show modal
+        modal.classList.remove("hidden");
+        setTimeout(() => {
+          modal.classList.add("active");
+        }, 10);
+
+        // Enable confirm button when policies are accepted
+        policiesCheckbox?.addEventListener("change", function() {
+          if (confirmBtn) {
+            (confirmBtn as HTMLButtonElement).disabled = !this.checked;
+          }
+        });
+
+        // Close modal function
+        const closeModal = () => {
+          modal.classList.remove("active");
+          setTimeout(() => {
+            modal.classList.add("hidden");
+          }, 300);
+        };
+
+        // Event listeners
+        closeBtn?.addEventListener("click", closeModal);
+        cancelBtn?.addEventListener("click", closeModal);
+
+        // Close on backdrop click
+        modal.addEventListener("click", (e) => {
+          const target = e.target as HTMLElement;
+          if (target === modal || target.id === "modal-backdrop") {
+            closeModal();
+          }
+        });
+
+        // Confirm and send to WhatsApp
+        confirmBtn?.addEventListener("click", () => {
+          sendToWhatsApp(bookingData);
+          closeModal();
+        });
+
+        // Close on escape key
+        const handleEscape = (e: KeyboardEvent) => {
+          if (e.key === "Escape") {
+            closeModal();
+            document.removeEventListener("keydown", handleEscape);
+          }
+        };
+        document.addEventListener("keydown", handleEscape);
+      }
+
+      function fillSummaryData(bookingData: any) {
+        const { processing, isGroupMode, isVehicleChecked, vehicleItems, distributionLabel } = bookingData;
+
+        // Dates
+        document.getElementById("summary-checkin")!.textContent = processing.checkin || "-";
+        document.getElementById("summary-checkout")!.textContent = processing.checkout || "-";
+        document.getElementById("summary-nights")!.textContent = `${processing.nights} ${lang === "es" ? "noches" : "nights"}`;
+
+        // Guests
+        document.getElementById("summary-adults")!.textContent = processing.adults || "-";
+        document.getElementById("summary-children")!.textContent = processing.children || "0";
+        document.getElementById("summary-rooms")!.textContent = processing.rooms || "1";
+        document.getElementById("summary-breakfast")!.textContent = bookingData.breakfast === "true" ? (lang === "es" ? "Sí" : "Yes") : (lang === "es" ? "No" : "No");
+
+        // Group info
+        const groupSection = document.getElementById("summary-group-section");
+        if (isGroupMode) {
+          groupSection?.classList.remove("hidden");
+          document.getElementById("summary-group-adults")!.textContent = bookingData.groupAdults || "-";
+          document.getElementById("summary-group-teens")!.textContent = bookingData.groupTeens || "0";
+          document.getElementById("summary-group-kids")!.textContent = bookingData.groupKids || "0";
+          document.getElementById("summary-group-infants")!.textContent = bookingData.groupInfants || "0";
+          document.getElementById("summary-distribution")!.textContent = distributionLabel || "-";
+          
+          const notesContainer = document.getElementById("summary-group-notes-container");
+          const notesText = document.getElementById("summary-group-notes");
+          if (bookingData.groupNotes && notesText) {
+            notesContainer?.classList.remove("hidden");
+            notesText.textContent = bookingData.groupNotes;
+          } else {
+            notesContainer?.classList.add("hidden");
+          }
+        } else {
+          groupSection?.classList.add("hidden");
+        }
+
+        // Vehicle info
+        const vehicleSection = document.getElementById("summary-vehicle-section");
+        const vehicleList = document.getElementById("summary-vehicle-list");
+        if (isVehicleChecked && vehicleItems?.length > 0) {
+          vehicleSection?.classList.remove("hidden");
+          vehicleList!.innerHTML = vehicleItems.map((v: any, i: number) => `
+            <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+              <div class="flex items-center gap-3">
+                <span class="text-xs font-bold text-gray-500 uppercase">${lang === "es" ? "Vehículo" : "Vehicle"} ${i + 1}</span>
+                <span class="text-sm font-medium text-gray-900">${v.type || "-"}</span>
+              </div>
+              ${v.plate && v.plate !== "No especificada" ? `<span class="text-xs text-gray-600">${lang === "es" ? "Placa" : "Plate"}: ${v.plate}</span>` : ""}
+            </div>
+          `).join("");
+        } else {
+          vehicleSection?.classList.add("hidden");
+        }
+
+        // Total (placeholder - would need room price to calculate)
+        document.getElementById("summary-total")!.textContent = lang === "es" ? "Consultar" : "Check Availability";
+      }
+
+      function sendToWhatsApp(bookingData: any) {
+        const { processing, isGroupMode, isVehicleChecked, vehicleItems, whatsappNumber } = bookingData;
+
+        const message = buildBookingMessage({
+          isGroupMode,
+          dateRangeRaw: "",
+          groupAdults: bookingData.groupAdults,
+          groupTeens: bookingData.groupTeens,
+          groupKids: bookingData.groupKids,
+          groupInfants: bookingData.groupInfants,
+          distributionLabel: bookingData.distributionLabel,
+          groupNotes: bookingData.groupNotes,
+          processing: {
+            checkin: processing.checkin,
+            checkout: processing.checkout,
+            nights: processing.nights,
+            adults: processing.adults,
+            children: processing.children,
+            rooms: processing.rooms,
+            breakfast: bookingData.breakfast,
+          },
+          isVehicleChecked,
+          vehicleItems,
+        });
+
+        const encodedMessage = encodeURIComponent(message.trim());
+
+        if (whatsappNumber) {
+          window.open(
+            `https://wa.me/${whatsappNumber}?text=${encodedMessage}`,
+            "_blank",
+          );
+          window.showToast(
+            "Tu solicitud de reserva ha sido enviada.",
+            "success",
+          );
+        } else {
+          window.showToast(
+            "No se pudo enviar el mensaje, el número de WhatsApp no está configurado.",
+            "error",
+          );
+        }
+      }
     });
   </script>
 

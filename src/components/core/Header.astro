@@ -248,6 +248,11 @@ const uniqueTours =
             </div>
 
             <a
+                href="/amenities"
+                class="px-2 py-2 text-sm font-serif uppercase tracking-widest hover:text-accent transition-colors"
+                >{t("nav.amenities")}</a
+            >
+            <a
                 href="/blog"
                 class="px-2 py-2 text-sm font-serif uppercase tracking-widest hover:text-accent transition-colors"
                 >{t("nav.blog")}</a
@@ -273,7 +278,9 @@ const uniqueTours =
 
             <button
                 id="mobile-menu-button"
-                class="text-current focus:outline-none lg:hidden"
+                class="text-current focus:outline-none lg:hidden cursor-pointer"
+                type="button"
+                aria-label="Open menu"
             >
                 <svg
                     class="w-8 h-8"
@@ -295,36 +302,549 @@ const uniqueTours =
     <!-- Mobile menu container -->
     <div
         id="mobile-menu"
-        class="hidden sm:hidden bg-primary bg-opacity-95 absolute top-full left-0 right-0 py-4 text-center"
+        class="fixed inset-0 z-50 bg-gradient-to-b from-primary via-primary/98 to-primary/95 backdrop-blur-md lg:hidden transform transition-transform duration-500 ease-out translate-x-full opacity-0 invisible"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Mobile navigation menu"
+        aria-hidden="true"
     >
-        {/* Updated colors */}
-        <div class="flex flex-col space-y-2">
-            <!-- <a href="/rooms" class="block px-4 py-2 text-background hover:bg-accent hover:text-primary transition-colors">{t('nav.rooms')}</a>
-            <a href="/destinations"
-               class="block px-4 py-2 text-background hover:bg-accent hover:text-primary transition-colors">{t('nav.destinations')}</a>
-            <a href="/gastronomy"
-               class="block px-4 py-2 text-background hover:bg-accent hover:text-primary transition-colors">{t('nav.gastronomy')}</a>
-            <a href="/tours" class="block px-4 py-2 text-background hover:bg-accent hover:text-primary transition-colors">{t('nav.tours')}</a>
-            <a href="/about" class="block px-4 py-2 text-background hover:bg-accent hover:text-primary transition-colors">{t('nav.about')}</a>
-            <a href="/contact"
-               class="block px-4 py-2 text-background hover:bg-accent hover:text-primary transition-colors">{t('nav.contact')}</a>
-            <a href="/booking"
-               class="block bg-accent text-primary font-bold py-2 px-4 rounded-lg transition-opacity hover:opacity-90 mx-4 mt-2">
-                {t('nav.booking')}
-            </a> -->
+        <!-- Close button -->
+        <button
+            id="mobile-menu-close"
+            class="absolute top-5 right-5 p-3 text-white/70 hover:text-white hover:bg-white/15 rounded-xl transition-all focus:outline-none focus:ring-2 focus:ring-accent shadow-lg z-50"
+            aria-label="Close menu"
+            type="button"
+        >
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
+
+        <!-- Menu content -->
+        <div class="flex flex-col h-full px-6 pt-20 pb-8 overflow-y-auto">
+            <!-- Logo in mobile menu -->
+            <div class="absolute top-5 left-6">
+                <img src="/favicon.png" alt="Hotel Ensueños Logo" class="h-12 w-auto drop-shadow-lg" />
+            </div>
+
+            <!-- Navigation links -->
+            <nav class="flex flex-col space-y-1 mt-4">
+                <a href="/" class="mobile-nav-link">
+                    <svg class="mobile-nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                    </svg>
+                    <span class="text-lg font-medium">{t("nav.home")}</span>
+                </a>
+
+                <!-- Rooms with subcategories -->
+                <div class="mobile-nav-group">
+                    <button class="mobile-nav-link w-full flex justify-between items-center" data-submenu="rooms">
+                        <div class="flex items-center gap-3">
+                            <svg class="mobile-nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                            </svg>
+                            <span class="text-lg font-medium">{t("nav.rooms")}</span>
+                        </div>
+                        <svg class="w-5 h-5 text-white/50 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                    </button>
+                    {uniqueRooms && uniqueRooms[0].category && (
+                        <div id="mobile-rooms-submenu" class="hidden ml-4 mt-2 space-y-1 border-l-2 border-white/20 pl-4">
+                            {uniqueRooms.map((room) => (
+                                <a href={`/rooms/${room.id}`} class="mobile-nav-sublink">
+                                    {room.category?.[lang] ?? room.category?.es}
+                                </a>
+                            ))}
+                        </div>
+                    )}
+                </div>
+
+                <!-- Destinations with subcategories -->
+                <div class="mobile-nav-group">
+                    <button class="mobile-nav-link w-full flex justify-between items-center" data-submenu="destinations">
+                        <div class="flex items-center gap-3">
+                            <svg class="mobile-nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                            <span class="text-lg font-medium">{t("nav.destinations")}</span>
+                        </div>
+                        <svg class="w-5 h-5 text-white/50 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                    </button>
+                    {uniqueDestinations && uniqueDestinations[0].category && (
+                        <div id="mobile-destinations-submenu" class="hidden ml-4 mt-2 space-y-1 border-l-2 border-white/20 pl-4">
+                            {uniqueDestinations.map((destination) => (
+                                <a href={`/destinations/${destination.id}`} class="mobile-nav-sublink">
+                                    {destination.category?.[lang] ?? destination.category?.es}
+                                </a>
+                            ))}
+                        </div>
+                    )}
+                </div>
+
+                <!-- Gastronomy with subcategories -->
+                <div class="mobile-nav-group">
+                    <button class="mobile-nav-link w-full flex justify-between items-center" data-submenu="gastronomy">
+                        <div class="flex items-center gap-3">
+                            <svg class="mobile-nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                            </svg>
+                            <span class="text-lg font-medium">{t("nav.gastronomy")}</span>
+                        </div>
+                        <svg class="w-5 h-5 text-white/50 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                    </button>
+                    {uniqueGastronomies && uniqueGastronomies[0].category && (
+                        <div id="mobile-gastronomy-submenu" class="hidden ml-4 mt-2 space-y-1 border-l-2 border-white/20 pl-4">
+                            {uniqueGastronomies.map((gastronomy) => (
+                                <a href={`/gastronomy/${gastronomy.id}`} class="mobile-nav-sublink">
+                                    {gastronomy.category?.[lang] ?? gastronomy.category?.es}
+                                </a>
+                            ))}
+                        </div>
+                    )}
+                </div>
+
+                <!-- Tours with subcategories -->
+                <div class="mobile-nav-group">
+                    <button class="mobile-nav-link w-full flex justify-between items-center" data-submenu="tours">
+                        <div class="flex items-center gap-3">
+                            <svg class="mobile-nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <span class="text-lg font-medium">{t("nav.tours")}</span>
+                        </div>
+                        <svg class="w-5 h-5 text-white/50 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                    </button>
+                    {uniqueTours && uniqueTours[0].category && (
+                        <div id="mobile-tours-submenu" class="hidden ml-4 mt-2 space-y-1 border-l-2 border-white/20 pl-4">
+                            {uniqueTours.map((tour) => (
+                                <a href={`/tours/${tour.id}`} class="mobile-nav-sublink">
+                                    {tour.category?.[lang] ?? tour.category?.es}
+                                </a>
+                            ))}
+                        </div>
+                    )}
+                </div>
+
+                <a href="/blog" class="mobile-nav-link">
+                    <svg class="mobile-nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+                    </svg>
+                    <span class="text-lg font-medium">{t("nav.blog")}</span>
+                </a>
+
+                <a href="/about" class="mobile-nav-link">
+                    <svg class="mobile-nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span class="text-lg font-medium">{t("nav.about")}</span>
+                </a>
+
+                <a href="/contact" class="mobile-nav-link">
+                    <svg class="mobile-nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                    <span class="text-lg font-medium">{t("nav.contact")}</span>
+                </a>
+
+                <a href="/gallery" class="mobile-nav-link">
+                    <svg class="mobile-nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    <span class="text-lg font-medium">{t("nav.gallery")}</span>
+                </a>
+
+                <!-- CTA Button for Booking -->
+                <div class="pt-6 mt-4 border-t border-white/10">
+                    <a
+                        href="/booking"
+                        class="flex items-center justify-center gap-2 w-full bg-gradient-to-r from-accent to-accent/80 text-primary font-bold py-4 px-6 rounded-xl text-lg hover:from-accent/90 hover:to-accent transition-all transform hover:scale-[1.02] shadow-xl hover:shadow-2xl"
+                    >
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                        <span>{t("nav.booking")}</span>
+                    </a>
+                </div>
+
+                <!-- Language and Currency selectors in mobile -->
+                <div class="grid grid-cols-2 gap-3 mt-8 pt-6 border-t border-white/10">
+                    <!-- Language Selector -->
+                    <div class="mobile-selector-card">
+                        <div class="flex items-center gap-2 mb-2">
+                            <svg class="w-4 h-4 text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
+                            </svg>
+                            <span class="text-xs text-white/60 uppercase tracking-wider">Idioma</span>
+                        </div>
+                        <div class="flex gap-1">
+                            <a href="/en/" class="mobile-lang-option">
+                                <img src="/@fs/D:/Coders/he_web/src/assets/img/flags/en.svg?origWidth=640&#38;origHeight=480&#38;origFormat=svg" alt="English" class="w-5 h-5 rounded-sm" />
+                            </a>
+                            <a href="/" class="mobile-lang-option active">
+                                <img src="/@fs/D:/Coders/he_web/src/assets/img/flags/es.svg?origWidth=640&#38;origHeight=480&#38;origFormat=svg" alt="Español" class="w-5 h-5 rounded-sm" />
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Currency Selector -->
+                    <div class="mobile-selector-card">
+                        <div class="flex items-center gap-2 mb-2">
+                            <svg class="w-4 h-4 text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <span class="text-xs text-white/60 uppercase tracking-wider">Moneda</span>
+                        </div>
+                        <div class="flex gap-1" id="mobile-currency-options">
+                            <button type="button" class="mobile-currency-option active" data-currency="USD" data-symbol="$">
+                                <span class="text-xs font-bold">USD</span>
+                            </button>
+                            <button type="button" class="mobile-currency-option" data-currency="EUR" data-symbol="€">
+                                <span class="text-xs font-bold">EUR</span>
+                            </button>
+                            <button type="button" class="mobile-currency-option" data-currency="GBP" data-symbol="£">
+                                <span class="text-xs font-bold">GBP</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </nav>
         </div>
     </div>
 </header>
 
+<style>
+    /* Mobile navigation styles */
+    .mobile-nav-link {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.875rem 1rem;
+        color: rgb(255 255 255 / 0.85);
+        border-radius: 0.75rem;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        text-align: left;
+        background: transparent;
+        border: none;
+        width: 100%;
+        cursor: pointer;
+        font-size: 1rem;
+    }
+
+    .mobile-nav-link:hover {
+        background: rgb(255 255 255 / 0.12);
+        color: rgb(255 255 255);
+        transform: translateX(4px);
+    }
+
+    .mobile-nav-link:active {
+        transform: scale(0.98);
+    }
+
+    .mobile-nav-icon {
+        width: 1.25rem;
+        height: 1.25rem;
+        flex-shrink: 0;
+        opacity: 0.7;
+        transition: opacity 0.3s;
+    }
+
+    .mobile-nav-link:hover .mobile-nav-icon {
+        opacity: 1;
+    }
+
+    .mobile-nav-sublink {
+        display: block;
+        padding: 0.625rem 0.75rem 0.625rem 1rem;
+        color: rgb(255 255 255 / 0.65);
+        font-size: 0.9375rem;
+        transition: all 0.2s;
+        border-radius: 0.5rem;
+        margin-left: 0.5rem;
+    }
+
+    .mobile-nav-sublink:hover {
+        color: rgb(255 255 255);
+        background: rgb(255 255 255 / 0.08);
+        padding-left: 1.25rem;
+    }
+
+    .mobile-nav-group.active .mobile-nav-link[data-submenu] svg:last-child {
+        transform: rotate(90deg);
+    }
+
+    .mobile-nav-group.active > .mobile-nav-link {
+        background: rgb(255 255 255 / 0.1);
+        color: rgb(255 255 255);
+    }
+
+    #mobile-menu.menu-open {
+        transform: translateX(0);
+        opacity: 1;
+        visibility: visible;
+    }
+
+    /* Prevent body scroll when menu is open */
+    body.menu-open {
+        overflow: hidden;
+    }
+
+    /* Mobile selector card */
+    .mobile-selector-card {
+        background: rgb(255 255 255 / 0.08);
+        border-radius: 0.75rem;
+        padding: 0.75rem;
+        transition: background 0.3s;
+    }
+
+    .mobile-selector-card:hover {
+        background: rgb(255 255 255 / 0.12);
+    }
+
+    /* Language option */
+    .mobile-lang-option {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.375rem;
+        border-radius: 0.375rem;
+        transition: all 0.2s;
+        background: transparent;
+        border: 2px solid transparent;
+    }
+
+    .mobile-lang-option:hover {
+        background: rgb(255 255 255 / 0.15);
+    }
+
+    .mobile-lang-option.active {
+        background: rgb(255 255 255 / 0.2);
+        border-color: rgb(255 255 255 / 0.3);
+    }
+
+    .mobile-lang-option img {
+        transition: transform 0.2s;
+    }
+
+    .mobile-lang-option:hover img {
+        transform: scale(1.1);
+    }
+
+    /* Currency option */
+    .mobile-currency-option {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.5rem 0.25rem;
+        border-radius: 0.375rem;
+        transition: all 0.2s;
+        background: transparent;
+        border: 2px solid transparent;
+        color: rgb(255 255 255 / 0.7);
+        cursor: pointer;
+    }
+
+    .mobile-currency-option:hover {
+        background: rgb(255 255 255 / 0.15);
+        color: rgb(255 255 255);
+    }
+
+    .mobile-currency-option.active {
+        background: rgb(255 255 255 / 0.2);
+        border-color: rgb(255 255 255 / 0.3);
+        color: rgb(255 255 255);
+    }
+
+    /* Custom scrollbar */
+    #mobile-menu::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    #mobile-menu::-webkit-scrollbar-track {
+        background: rgb(255 255 255 / 0.05);
+        border-radius: 3px;
+    }
+
+    #mobile-menu::-webkit-scrollbar-thumb {
+        background: rgb(255 255 255 / 0.2);
+        border-radius: 3px;
+    }
+
+    #mobile-menu::-webkit-scrollbar-thumb:hover {
+        background: rgb(255 255 255 / 0.3);
+    }
+</style>
+
 <script>
-    document.addEventListener("DOMContentLoaded", () => {
-        // Hamburger menu logic
-        const mobileMenuButton = document.getElementById("mobile-menu-button");
-        const mobileMenu = document.getElementById("mobile-menu");
-        if (mobileMenuButton && mobileMenu) {
-            mobileMenuButton.addEventListener("click", () => {
-                mobileMenu.classList.toggle("hidden");
+    (function() {
+        // Use IIFE for better scope isolation
+        let mobileMenuButton = null;
+        let mobileMenu = null;
+        let mobileMenuClose = null;
+        let mobileSubmenus = [];
+
+        // Initialize when DOM is ready
+        function init() {
+            // Get elements
+            mobileMenuButton = document.getElementById("mobile-menu-button");
+            mobileMenu = document.getElementById("mobile-menu");
+            mobileMenuClose = document.getElementById("mobile-menu-close");
+            mobileSubmenus = document.querySelectorAll("[data-submenu]");
+
+            // Debug log
+            console.log("Mobile menu init:", {
+                button: !!mobileMenuButton,
+                menu: !!mobileMenu,
+                close: !!mobileMenuClose
+            });
+
+            if (!mobileMenu || !mobileMenuButton) {
+                console.error("Mobile menu elements not found!");
+                return;
+            }
+
+            // Open menu
+            function openMenu() {
+                console.log("Opening mobile menu");
+                mobileMenu.classList.remove("translate-x-full", "opacity-0", "invisible");
+                mobileMenu.classList.add("menu-open");
+                document.body.classList.add("menu-open");
+                mobileMenu.setAttribute("aria-hidden", "false");
+            }
+
+            // Close menu
+            function closeMenu() {
+                console.log("Closing mobile menu");
+                mobileMenu.classList.add("translate-x-full", "opacity-0", "invisible");
+                mobileMenu.classList.remove("menu-open");
+                document.body.classList.remove("menu-open");
+                mobileMenu.setAttribute("aria-hidden", "true");
+                
+                // Close all submenus
+                mobileSubmenus.forEach(btn => {
+                    const submenuId = `mobile-${btn.getAttribute("data-submenu")}-submenu`;
+                    const submenu = document.getElementById(submenuId);
+                    if (submenu) {
+                        submenu.classList.add("hidden");
+                        btn.parentElement?.classList.remove("active");
+                    }
+                });
+            }
+
+            // Toggle menu on hamburger click - use touchstart for better mobile support
+            mobileMenuButton.addEventListener("click", function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                openMenu();
+            });
+            
+            // Also support touchstart
+            mobileMenuButton.addEventListener("touchstart", function(e) {
+                e.preventDefault();
+                openMenu();
+            }, { passive: true });
+
+            // Close on X button
+            if (mobileMenuClose) {
+                mobileMenuClose.addEventListener("click", closeMenu);
+                mobileMenuClose.addEventListener("touchstart", closeMenu, { passive: true });
+            }
+
+            // Close on escape key
+            document.addEventListener("keydown", function onKeydown(e) {
+                if (e.key === "Escape" && !mobileMenu.classList.contains("translate-x-full")) {
+                    closeMenu();
+                }
+            });
+
+            // Close on backdrop click
+            mobileMenu.addEventListener("click", function onClick(e) {
+                if (e.target === mobileMenu) {
+                    closeMenu();
+                }
+            });
+
+            // Submenu toggle
+            mobileSubmenus.forEach(btn => {
+                btn.addEventListener("click", function onSubmenuClick(e) {
+                    e.preventDefault();
+                    const submenuId = `mobile-${btn.getAttribute("data-submenu")}-submenu`;
+                    const submenu = document.getElementById(submenuId);
+                    const parent = btn.parentElement;
+
+                    if (submenu && parent) {
+                        const isHidden = submenu.classList.contains("hidden");
+                        
+                        // Close other submenus
+                        document.querySelectorAll(".mobile-nav-group").forEach(group => {
+                            const otherSubmenu = group.querySelector("[id^='mobile-'][id$='-submenu']");
+                            if (otherSubmenu && otherSubmenu.id !== submenuId) {
+                                otherSubmenu.classList.add("hidden");
+                                group.classList.remove("active");
+                            }
+                        });
+
+                        // Toggle current submenu
+                        submenu.classList.toggle("hidden", !isHidden);
+                        parent.classList.toggle("active", isHidden);
+                    }
+                });
+            });
+
+            // Close menu when clicking a link
+            document.querySelectorAll("#mobile-menu a[href^='/']").forEach(link => {
+                link.addEventListener("click", function onLinkClick() {
+                    // Don't close if it's a submenu toggle button
+                    if (!link.hasAttribute("data-submenu")) {
+                        setTimeout(closeMenu, 200);
+                    }
+                });
             });
         }
-    });
+
+        // Try to initialize immediately if DOM is ready
+        if (document.readyState === "loading") {
+            document.addEventListener("DOMContentLoaded", init);
+        } else {
+            init();
+        }
+        
+        // Also initialize on pageshow (for back/forward navigation)
+        window.addEventListener("pageshow", function() {
+            if (!mobileMenuButton) {
+                setTimeout(init, 100);
+            }
+        });
+
+        // Currency selector functionality
+        const currencyOptions = document.querySelectorAll(".mobile-currency-option");
+        currencyOptions.forEach(option => {
+            option.addEventListener("click", function() {
+                const currency = this.getAttribute("data-currency");
+                const symbol = this.getAttribute("data-symbol");
+                
+                // Update active state
+                currencyOptions.forEach(opt => opt.classList.remove("active"));
+                this.classList.add("active");
+                
+                // Store in localStorage
+                localStorage.setItem("selectedCurrency", JSON.stringify({ code: currency, symbol: symbol }));
+                
+                // Dispatch event for other components to listen
+                window.dispatchEvent(new CustomEvent("currencyChanged", { 
+                    detail: { code: currency, symbol: symbol } 
+                }));
+                
+                console.log(`Currency changed to: ${currency} (${symbol})`);
+            });
+        });
+    })();
 </script>

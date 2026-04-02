@@ -18,7 +18,82 @@
     "faq": "Preguntas Frecuentes",
     "404": "Pagina no Encontrada",
     "500": "Error de Servidor",
-    "blog": "Blog"
+    "blog": "Blog",
+    "amenities": "Servicios"
+  },
+  "contact": {
+    "title": "Contáctanos",
+    "subtitle": "Estamos aquí para ayudarte. Envíanos un mensaje y te responderemos lo antes posible.",
+    "form": {
+      "title": "Envíanos un mensaje",
+      "name": {
+        "label": "Nombre completo",
+        "placeholder": "Ej: Juan Pérez",
+        "error": "Ingresa tu nombre completo"
+      },
+      "email": {
+        "label": "Correo electrónico",
+        "placeholder": "Ej: juan@ejemplo.com",
+        "error": "Ingresa un correo electrónico válido"
+      },
+      "phone": {
+        "label": "Teléfono (opcional)",
+        "placeholder": "Ej: +593 99 123 4567",
+        "error": "Ingresa un número de teléfono válido"
+      },
+      "subject": {
+        "label": "Asunto",
+        "placeholder": "Ej: Consulta sobre reservas",
+        "error": "Ingresa un asunto"
+      },
+      "message": {
+        "label": "Mensaje",
+        "placeholder": "Escribe tu mensaje aquí...",
+        "error": "Ingresa tu mensaje"
+      },
+      "submit": "Enviar mensaje",
+      "sending": "Enviando...",
+      "success": "¡Mensaje enviado! Te responderemos pronto.",
+      "error": "Error al enviar. Por favor intenta de nuevo."
+    },
+    "info": {
+      "title": "Información de contacto",
+      "address": "Dirección",
+      "phone": "Teléfono",
+      "email": "Correo electrónico",
+      "whatsapp": "WhatsApp",
+      "hours": {
+        "title": "Horarios de atención",
+        "reception": "Recepción",
+        "reservations": "Reservas",
+        "support": "Soporte",
+        "247": "24/7"
+      }
+    },
+    "faq": {
+      "title": "Preguntas frecuentes",
+      "q1": "¿Cuál es el tiempo de respuesta?",
+      "a1": "Respondemos todos los mensajes dentro de las 2-4 horas hábiles.",
+      "q2": "¿Puedo reservar por este medio?",
+      "a2": "Sí, puedes enviarnos tu consulta y te guiaremos en el proceso de reserva.",
+      "q3": "¿Aceptan tarjetas de crédito?",
+      "a3": "Sí, aceptamos todas las tarjetas principales. También aceptamos efectivo.",
+      "q4": "¿Cómo puedo cancelar una reserva?",
+      "a4": "Puedes cancelar enviándonos un correo o WhatsApp. Consulta nuestra política de cancelación."
+    },
+    "map": {
+      "title": "Nuestra ubicación",
+      "directions": "Cómo llegar"
+    }
+  },
+  "amenities": {
+    "title": "Servicios y Amenidades",
+    "subtitle": "Todo lo que necesitas para una estancia cómoda y placentera",
+    "highlights_title": "Nuestros Servicios Destacados",
+    "all_amenities": "Todas las Amenidades",
+    "cta_title": "¿Listo para reservar?",
+    "cta_subtitle": "Disfruta de todos nuestros servicios y más",
+    "cta_button": "Reservar Ahora"
   },
   "header": {},
   "home": {

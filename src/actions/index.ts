@@ -2,9 +2,11 @@
 import { booking } from "./booking";
 import { bookingGroup } from "./bookingGroup";
 import { bookingVehicle } from "./bookingVehicle";
+import { contact } from "./contact";
 
 export const server = {
 	booking,
 	bookingGroup,
 	bookingVehicle,
+	contact,
 };

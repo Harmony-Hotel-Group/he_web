@@ -120,7 +120,7 @@ function formatPlainMessage(data: BookingNotificationData): string {
 async function dispatchToTelegram(text: string): Promise<NotificationResult> {
 	try {
 		const result = await sendTelegramMessage(text, ENV.TELEGRAM_CHAT_ID);
-		if (result.skipped) {
+		if ("skipped" in result && result.skipped) {
 			log.info("Telegram: no configurado, omitido");
 			return { channel: "telegram", ok: false, skipped: true };
 		}
@@ -212,4 +212,90 @@ export async function notifyAllChannels(
 		channels: ["telegram", "email"],
 		webhookUrl: ENV.BOOKING_WEBHOOK_URL,
 	});
+}
+
+// ============== Notificación de Contacto ==============
+
+export interface ContactFormData {
+	name: string;
+	email: string;
+	phone: string;
+	subject: string;
+	message: string;
+}
+
+function formatContactMessage(data: ContactFormData): string {
+	const lines: string[] = [];
+
+	lines.push("📧 *Nuevo mensaje de contacto — Hotel Ensueños*");
+	lines.push("");
+	lines.push(`👤 *Nombre:* ${data.name}`);
+	lines.push(`📧 *Email:* ${data.email}`);
+	lines.push(`📱 *Teléfono:* ${data.phone}`);
+	lines.push(`📝 *Asunto:* ${data.subject}`);
+	lines.push("");
+	lines.push(`💬 *Mensaje:*`);
+	lines.push(data.message);
+	lines.push("");
+	lines.push("_Enviado desde hotelensuenos.com_");
+
+	return lines.join("\n");
+}
+
+function formatContactEmail(data: ContactFormData): string {
+	const lines: string[] = [];
+
+	lines.push("Nuevo mensaje de contacto desde el sitio web:");
+	lines.push("");
+	lines.push(`Nombre: ${data.name}`);
+	lines.push(`Email: ${data.email}`);
+	lines.push(`Teléfono: ${data.phone}`);
+	lines.push(`Asunto: ${data.subject}`);
+	lines.push("");
+	lines.push("Mensaje:");
+	lines.push(data.message);
+	lines.push("");
+	lines.push("Enviado desde hotelensuenos.com");
+
+	return lines.join("\n");
+}
+
+/**
+ * Envía una notificación de formulario de contacto a los canales configurados.
+ */
+export async function notifyContactForm(
+	data: ContactFormData,
+	options: NotifyOptions = {},
+): Promise<NotificationResult[]> {
+	const text = formatContactMessage(data);
+	const plainText = formatContactEmail(data);
+	const subject = `Contacto: ${data.subject} — ${data.name}`;
+
+	const channels = options.channels ?? ["telegram", "email"];
+	const webhookUrl = options.webhookUrl ?? ENV.BOOKING_WEBHOOK_URL;
+
+	const results: NotificationResult[] = [];
+
+	for (const channel of channels) {
+		switch (channel) {
+			case "telegram":
+				results.push(await dispatchToTelegram(text));
+				break;
+			case "email":
+				results.push(await dispatchToEmail(subject, plainText));
+				break;
+			case "webhook":
+				if (webhookUrl) {
+					results.push(await dispatchToWebhook(webhookUrl, { type: "standard", ...data } as BookingNotificationData));
+				} else {
+					results.push({ channel: "webhook", ok: false, skipped: true });
+				}
+				break;
+		}
+	}
+
+	const sent = results.filter((r) => r.ok).length;
+	log.info(`Notificación de contacto enviada: ${sent}/${results.length} canales`);
+
+	return results;
 }

@@ -1,44 +1,44 @@
 ---
+import { CURRENTS } from "@/constants/img.ts";
 // src/components/core/CurrencySelector.astro
 import { logger } from "@/services/logger.ts";
 import type { Currency } from "@/types/config";
-import { CURRENTS } from "@/constants/img.ts";
 
 const log = logger("CurrencySelector");
 
 interface Props {
-    supportedCurrencies?: Currency[];
+	supportedCurrencies?: Currency[];
 }
 
 const { supportedCurrencies } = Astro.props;
 
 const flagMap: Record<string, string> = {
-    USD: CURRENTS.USD.src,
-    EUR: CURRENTS.EUR.src,
-    GBP: CURRENTS.GBP.src,
+	USD: CURRENTS.USD.src,
+	EUR: CURRENTS.EUR.src,
+	GBP: CURRENTS.GBP.src,
 };
 
 // Definir monedas disponibles
 let currencies = [
-    { code: "USD", symbol: "$", image: CURRENTS.USD.src },
-    { code: "EUR", symbol: "€", image: CURRENTS.EUR.src },
-    { code: "GBP", symbol: "£", image: CURRENTS.GBP.src },
+	{ code: "USD", symbol: "$", image: CURRENTS.USD.src },
+	{ code: "EUR", symbol: "€", image: CURRENTS.EUR.src },
+	{ code: "GBP", symbol: "£", image: CURRENTS.GBP.src },
 ];
 
 if (supportedCurrencies && supportedCurrencies.length > 0) {
-    currencies = supportedCurrencies.map((c) => ({
-        code: c.code,
-        symbol: c.symbol,
-        image: flagMap[c.code] || CURRENTS.USD.src,
-        exchangeRate: c.exchangeRate,
-    }));
+	currencies = supportedCurrencies.map((c) => ({
+		code: c.code,
+		symbol: c.symbol,
+		image: flagMap[c.code] || CURRENTS.USD.src,
+		exchangeRate: c.exchangeRate,
+	}));
 }
 
 const defaultCurrency = currencies[0];
 
 log.info(
-    "🟢 [SSR] CurrencySelector cargado con monedas:",
-    currencies.map((c) => c.code),
+	"🟢 [SSR] CurrencySelector cargado con monedas:",
+	currencies.map((c) => c.code),
 );
 ---
 

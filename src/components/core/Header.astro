@@ -7,9 +7,9 @@ import { Translations } from "@/i18n/translation.ts";
 import type { SiteConfig } from "@/types/config";
 
 interface Props {
-    lang: string;
-    config: SiteConfig;
-    headerBgClass?: string;
+	lang: string;
+	config: SiteConfig;
+	headerBgClass?: string;
 }
 
 const { config, lang, headerBgClass = "" } = Astro.props;
@@ -25,40 +25,48 @@ const getCategoryLabel = (item: CategoryLike): string | undefined =>
 	item.category?.[lang] ?? item.category?.es;
 
 const uniqueRooms =
-	(config?.rooms?.filter((room, index, self) =>
-		index ===
-		self.findIndex((candidate) =>
-			getCategoryLabel(candidate as CategoryLike) ===
-			getCategoryLabel(room as CategoryLike),
-		),
-	) ?? []);
+	config?.rooms?.filter(
+		(room, index, self) =>
+			index ===
+			self.findIndex(
+				(candidate) =>
+					getCategoryLabel(candidate as CategoryLike) ===
+					getCategoryLabel(room as CategoryLike),
+			),
+	) ?? [];
 
 const uniqueDestinations =
-	(config?.destinations?.filter((destination, index, self) =>
-		index ===
-		self.findIndex((candidate) =>
-			getCategoryLabel(candidate as CategoryLike) ===
-			getCategoryLabel(destination as CategoryLike),
-		),
-	) ?? []);
+	config?.destinations?.filter(
+		(destination, index, self) =>
+			index ===
+			self.findIndex(
+				(candidate) =>
+					getCategoryLabel(candidate as CategoryLike) ===
+					getCategoryLabel(destination as CategoryLike),
+			),
+	) ?? [];
 
 const uniqueGastronomies =
-	(config?.gastronomies?.filter((gastronomy, index, self) =>
-		index ===
-		self.findIndex((candidate) =>
-			getCategoryLabel(candidate as CategoryLike) ===
-			getCategoryLabel(gastronomy as CategoryLike),
-		),
-	) ?? []);
+	config?.gastronomies?.filter(
+		(gastronomy, index, self) =>
+			index ===
+			self.findIndex(
+				(candidate) =>
+					getCategoryLabel(candidate as CategoryLike) ===
+					getCategoryLabel(gastronomy as CategoryLike),
+			),
+	) ?? [];
 
 const uniqueTours =
-	(config?.tours?.filter((tour, index, self) =>
-		index ===
-		self.findIndex((candidate) =>
-			getCategoryLabel(candidate as CategoryLike) ===
-			getCategoryLabel(tour as CategoryLike),
-		),
-	) ?? []);
+	config?.tours?.filter(
+		(tour, index, self) =>
+			index ===
+			self.findIndex(
+				(candidate) =>
+					getCategoryLabel(candidate as CategoryLike) ===
+					getCategoryLabel(tour as CategoryLike),
+			),
+	) ?? [];
 ---
 
 <header
@@ -493,10 +501,10 @@ const uniqueTours =
                         </div>
                         <div class="flex gap-1">
                             <a href="/en/" class="mobile-lang-option">
-                                <img src="/@fs/D:/Coders/he_web/src/assets/img/flags/en.svg?origWidth=640&#38;origHeight=480&#38;origFormat=svg" alt="English" class="w-5 h-5 rounded-sm" />
+                                <img src="/assets/img/flags/en.svg" alt="English" class="w-5 h-5 rounded-sm" />
                             </a>
                             <a href="/" class="mobile-lang-option active">
-                                <img src="/@fs/D:/Coders/he_web/src/assets/img/flags/es.svg?origWidth=640&#38;origHeight=480&#38;origFormat=svg" alt="Español" class="w-5 h-5 rounded-sm" />
+                                <img src="/assets/img/flags/es.svg" alt="Español" class="w-5 h-5 rounded-sm" />
                             </a>
                         </div>
                     </div>
@@ -693,10 +701,10 @@ const uniqueTours =
 <script>
     (function() {
         // Use IIFE for better scope isolation
-        let mobileMenuButton = null;
-        let mobileMenu = null;
-        let mobileMenuClose = null;
-        let mobileSubmenus = [];
+        let mobileMenuButton: HTMLElement | null = null;
+        let mobileMenu: HTMLElement | null = null;
+        let mobileMenuClose: HTMLElement | null = null;
+        let mobileSubmenus: NodeListOf<Element> = document.querySelectorAll("[data-submenu]");
 
         // Initialize when DOM is ready
         function init() {

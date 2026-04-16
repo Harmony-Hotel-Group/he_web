@@ -12,7 +12,9 @@ const log = logger("LangSelector");
 const currentLangCode = getCurrentLang(Astro.url);
 log.info("🟢 [SSR] Lang para selector:", currentLangCode);
 
-const uiLanguages = languages.filter((l) =>	SUPPORTED_LANGS.includes(l.code as SupportedLang),);
+const uiLanguages = languages.filter((l) =>
+	SUPPORTED_LANGS.includes(l.code as SupportedLang),
+);
 log.info("🟢 [SSR] Langs uiLanguages:", uiLanguages);
 
 const selectedLang =

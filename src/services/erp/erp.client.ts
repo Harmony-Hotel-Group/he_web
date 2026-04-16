@@ -30,9 +30,13 @@ export class ErpClient {
 	private readonly headers: Record<string, string>;
 
 	constructor(options: ErpClientOptions = {}) {
-		this.mode = options.mode ?? ((import.meta.env.PUBLIC_ERP_MODE as ErpMode) || "mock");
-		this.baseUrl = options.baseUrl ?? (import.meta.env.PUBLIC_ERP_BASE_URL as string) ?? "";
-		this.timeoutMs = options.timeoutMs ?? Number(import.meta.env.PUBLIC_ERP_TIMEOUT_MS || 8000);
+		this.mode =
+			options.mode ?? ((import.meta.env.PUBLIC_ERP_MODE as ErpMode) || "mock");
+		this.baseUrl =
+			options.baseUrl ?? (import.meta.env.PUBLIC_ERP_BASE_URL as string) ?? "";
+		this.timeoutMs =
+			options.timeoutMs ??
+			Number(import.meta.env.PUBLIC_ERP_TIMEOUT_MS || 8000);
 		this.headers = options.headers ?? { Accept: "application/json" };
 	}
 

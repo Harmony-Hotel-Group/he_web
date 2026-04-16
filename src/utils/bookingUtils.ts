@@ -3,32 +3,32 @@
  * Utilidades para gestión de reservas
  */
 
-import { logger } from '@/services/logger';
+import { logger } from "@/services/logger";
 
-const log = logger('BookingUtils');
+const log = logger("BookingUtils");
 
 /**
  * Genera un número de reserva único
  * Formato: RES-YYYYMMDD-XXXX (ej: RES-20260401-A3F7)
- * 
+ *
  * @param date - Fecha de generación (default: ahora)
  * @returns Número de reserva único
  */
 export function generateBookingNumber(date: Date = new Date()): string {
-    // Formato de fecha
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    const datePart = `${year}${month}${day}`;
-    
-    // Generar código aleatorio de 4 caracteres usando Math.random
-    const code = Math.random().toString(16).substring(2, 6).toUpperCase();
-    
-    const bookingNumber = `RES-${datePart}-${code}`;
-    
-    log.info(`Número de reserva generado: ${bookingNumber}`);
-    
-    return bookingNumber;
+	// Formato de fecha
+	const year = date.getFullYear();
+	const month = String(date.getMonth() + 1).padStart(2, "0");
+	const day = String(date.getDate()).padStart(2, "0");
+	const datePart = `${year}${month}${day}`;
+
+	// Generar código aleatorio de 4 caracteres usando Math.random
+	const code = Math.random().toString(16).substring(2, 6).toUpperCase();
+
+	const bookingNumber = `RES-${datePart}-${code}`;
+
+	log.info(`Número de reserva generado: ${bookingNumber}`);
+
+	return bookingNumber;
 }
 
 /**
@@ -38,13 +38,13 @@ export function generateBookingNumber(date: Date = new Date()): string {
  * @returns Número de noches
  */
 export function calculateNights(checkin: string, checkout: string): number {
-    const checkinDate = new Date(checkin);
-    const checkoutDate = new Date(checkout);
-    
-    const diffTime = Math.abs(checkoutDate.getTime() - checkinDate.getTime());
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    
-    return diffDays;
+	const checkinDate = new Date(checkin);
+	const checkoutDate = new Date(checkout);
+
+	const diffTime = Math.abs(checkoutDate.getTime() - checkinDate.getTime());
+	const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+	return diffDays;
 }
 
 /**
@@ -57,16 +57,18 @@ export function calculateNights(checkin: string, checkout: string): number {
  * @returns Precio total
  */
 export function calculateTotalPrice(
-    pricePerNight: number,
-    nights: number,
-    includeBreakfast: boolean = false,
-    breakfastPrice: number = 15,
-    adults: number = 2
+	pricePerNight: number,
+	nights: number,
+	includeBreakfast: boolean = false,
+	breakfastPrice: number = 15,
+	adults: number = 2,
 ): number {
-    const roomTotal = pricePerNight * nights;
-    const breakfastTotal = includeBreakfast ? (breakfastPrice * adults * nights) : 0;
-    
-    return roomTotal + breakfastTotal;
+	const roomTotal = pricePerNight * nights;
+	const breakfastTotal = includeBreakfast
+		? breakfastPrice * adults * nights
+		: 0;
+
+	return roomTotal + breakfastTotal;
 }
 
 /**
@@ -75,13 +77,13 @@ export function calculateTotalPrice(
  * @param locale - Locale (default: es-EC)
  * @returns Precio formateado
  */
-export function formatPrice(amount: number, locale: string = 'es-EC'): string {
-    return new Intl.NumberFormat(locale, {
-        style: 'currency',
-        currency: 'USD',
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 0,
-    }).format(amount);
+export function formatPrice(amount: number, locale: string = "es-EC"): string {
+	return new Intl.NumberFormat(locale, {
+		style: "currency",
+		currency: "USD",
+		minimumFractionDigits: 0,
+		maximumFractionDigits: 0,
+	}).format(amount);
 }
 
 /**
@@ -90,28 +92,29 @@ export function formatPrice(amount: number, locale: string = 'es-EC'): string {
  * @returns true si es válida
  */
 export function isValidDate(date: string): boolean {
-    const parsed = new Date(date);
-    return !isNaN(parsed.getTime()) && parsed >= new Date();
+	const parsed = new Date(date);
+	return !isNaN(parsed.getTime()) && parsed >= new Date();
 }
 
 /**
  * Genera un resumen de reserva para email
  */
 export interface BookingSummary {
-    bookingNumber: string;
-    checkin: string;
-    checkout: string;
-    nights: number;
-    adults: number;
-    children: number;
-    rooms: number;
-    roomType?: string;
-    pricePerNight: number;
-    totalPrice: number;
-    breakfast: boolean;
-    guestName?: string;
-    guestEmail?: string;
-    specialRequests?: string;
+	bookingNumber: string;
+	checkin: string;
+	checkout: string;
+	nights: number;
+	adults: number;
+	children: number;
+	rooms: number;
+	roomType?: string;
+	pricePerNight: number;
+	totalPrice: number;
+	breakfast: boolean;
+	guestName?: string;
+	guestEmail?: string;
+	guestPhone?: string;
+	specialRequests?: string;
 }
 
 /**
@@ -121,69 +124,71 @@ export interface BookingSummary {
  * @returns Contenido del email
  */
 export function generateBookingEmailContent(
-    summary: BookingSummary,
-    lang: string = 'es'
+	summary: BookingSummary,
+	lang: string = "es",
 ): { subject: string; html: string; text: string } {
-    const texts = {
-        es: {
-            subject: `Confirmación de Reserva #${summary.bookingNumber}`,
-            greeting: '¡Gracias por tu reserva!',
-            bookingNumber: 'Número de Reserva',
-            details: 'Detalles de tu Reserva',
-            checkin: 'Fecha de Llegada',
-            checkout: 'Fecha de Salida',
-            nights: 'Noches',
-            guests: 'Huéspedes',
-            adults: 'Adultos',
-            children: 'Niños',
-            rooms: 'Habitaciones',
-            roomType: 'Tipo de Habitación',
-            pricePerNight: 'Precio por Noche',
-            breakfast: 'Desayuno',
-            yes: 'Sí',
-            no: 'No',
-            totalPrice: 'Precio Total',
-            specialRequests: 'Peticiones Especiales',
-            none: 'Ninguna',
-            nextSteps: 'Próximos Pasos',
-            nextStepsText: 'Nos pondremos en contacto contigo dentro de las próximas 24 horas para confirmar la disponibilidad y procesar tu reserva.',
-            contact: 'Si tienes alguna pregunta, no dudes en contactarnos:',
-            phone: 'Teléfono',
-            email: 'Email',
-            footer: 'Este es un correo automático, por favor no respondas.',
-        },
-        en: {
-            subject: `Booking Confirmation #${summary.bookingNumber}`,
-            greeting: 'Thank you for your booking!',
-            bookingNumber: 'Booking Number',
-            details: 'Booking Details',
-            checkin: 'Check-in Date',
-            checkout: 'Check-out Date',
-            nights: 'Nights',
-            guests: 'Guests',
-            adults: 'Adults',
-            children: 'Children',
-            rooms: 'Rooms',
-            roomType: 'Room Type',
-            pricePerNight: 'Price per Night',
-            breakfast: 'Breakfast',
-            yes: 'Yes',
-            no: 'No',
-            totalPrice: 'Total Price',
-            specialRequests: 'Special Requests',
-            none: 'None',
-            nextSteps: 'Next Steps',
-            nextStepsText: 'We will contact you within the next 24 hours to confirm availability and process your booking.',
-            contact: 'If you have any questions, feel free to contact us:',
-            phone: 'Phone',
-            email: 'Email',
-            footer: 'This is an automated email, please do not reply.',
-        },
-    };
+	const texts = {
+		es: {
+			subject: `Confirmación de Reserva #${summary.bookingNumber}`,
+			greeting: "¡Gracias por tu reserva!",
+			bookingNumber: "Número de Reserva",
+			details: "Detalles de tu Reserva",
+			checkin: "Fecha de Llegada",
+			checkout: "Fecha de Salida",
+			nights: "Noches",
+			guests: "Huéspedes",
+			adults: "Adultos",
+			children: "Niños",
+			rooms: "Habitaciones",
+			roomType: "Tipo de Habitación",
+			pricePerNight: "Precio por Noche",
+			breakfast: "Desayuno",
+			yes: "Sí",
+			no: "No",
+			totalPrice: "Precio Total",
+			specialRequests: "Peticiones Especiales",
+			none: "Ninguna",
+			nextSteps: "Próximos Pasos",
+			nextStepsText:
+				"Nos pondremos en contacto contigo dentro de las próximas 24 horas para confirmar la disponibilidad y procesar tu reserva.",
+			contact: "Si tienes alguna pregunta, no dudes en contactarnos:",
+			phone: "Teléfono",
+			email: "Email",
+			footer: "Este es un correo automático, por favor no respondas.",
+		},
+		en: {
+			subject: `Booking Confirmation #${summary.bookingNumber}`,
+			greeting: "Thank you for your booking!",
+			bookingNumber: "Booking Number",
+			details: "Booking Details",
+			checkin: "Check-in Date",
+			checkout: "Check-out Date",
+			nights: "Nights",
+			guests: "Guests",
+			adults: "Adults",
+			children: "Children",
+			rooms: "Rooms",
+			roomType: "Room Type",
+			pricePerNight: "Price per Night",
+			breakfast: "Breakfast",
+			yes: "Yes",
+			no: "No",
+			totalPrice: "Total Price",
+			specialRequests: "Special Requests",
+			none: "None",
+			nextSteps: "Next Steps",
+			nextStepsText:
+				"We will contact you within the next 24 hours to confirm availability and process your booking.",
+			contact: "If you have any questions, feel free to contact us:",
+			phone: "Phone",
+			email: "Email",
+			footer: "This is an automated email, please do not reply.",
+		},
+	};
 
-    const t = texts[lang as 'es' | 'en'] || texts.es;
+	const t = texts[lang as "es" | "en"] || texts.es;
 
-    const html = `
+	const html = `
 <!DOCTYPE html>
 <html>
 <head>
@@ -230,18 +235,22 @@ export function generateBookingEmailContent(
                 </div>
                 <div class="detail-row">
                     <span class="label">${t.guests}:</span>
-                    <span class="value">${t.adults}: ${summary.adults}${summary.children > 0 ? ` | ${t.children}: ${summary.children}` : ''}</span>
+                    <span class="value">${t.adults}: ${summary.adults}${summary.children > 0 ? ` | ${t.children}: ${summary.children}` : ""}</span>
                 </div>
                 <div class="detail-row">
                     <span class="label">${t.rooms}:</span>
                     <span class="value">${summary.rooms}</span>
                 </div>
-                ${summary.roomType ? `
+                ${
+									summary.roomType
+										? `
                 <div class="detail-row">
                     <span class="label">${t.roomType}:</span>
                     <span class="value">${summary.roomType}</span>
                 </div>
-                ` : ''}
+                `
+										: ""
+								}
                 <div class="detail-row">
                     <span class="label">${t.breakfast}:</span>
                     <span class="value">${summary.breakfast ? t.yes : t.no}</span>
@@ -250,12 +259,16 @@ export function generateBookingEmailContent(
                     <span class="label">${t.pricePerNight}:</span>
                     <span class="value">${formatPrice(summary.pricePerNight)}</span>
                 </div>
-                ${summary.specialRequests ? `
+                ${
+									summary.specialRequests
+										? `
                 <div class="detail-row">
                     <span class="label">${t.specialRequests}:</span>
                     <span class="value">${summary.specialRequests}</span>
                 </div>
-                ` : ''}
+                `
+										: ""
+								}
                 <div class="detail-row total">
                     <span class="label">${t.totalPrice}:</span>
                     <span class="value">${formatPrice(summary.totalPrice)}</span>
@@ -281,7 +294,7 @@ export function generateBookingEmailContent(
 </html>
     `.trim();
 
-    const text = `
+	const text = `
 ${t.greeting}
 
 ${t.bookingNumber}: ${summary.bookingNumber}
@@ -290,12 +303,12 @@ ${t.details}
 ${t.checkin}: ${summary.checkin}
 ${t.checkout}: ${summary.checkout}
 ${t.nights}: ${summary.nights}
-${t.guests}: ${t.adults}: ${summary.adults}${summary.children > 0 ? ` | ${t.children}: ${summary.children}` : ''}
+${t.guests}: ${t.adults}: ${summary.adults}${summary.children > 0 ? ` | ${t.children}: ${summary.children}` : ""}
 ${t.rooms}: ${summary.rooms}
-${summary.roomType ? `${t.roomType}: ${summary.roomType}` : ''}
+${summary.roomType ? `${t.roomType}: ${summary.roomType}` : ""}
 ${t.breakfast}: ${summary.breakfast ? t.yes : t.no}
 ${t.pricePerNight}: ${formatPrice(summary.pricePerNight)}
-${summary.specialRequests ? `${t.specialRequests}: ${summary.specialRequests}` : ''}
+${summary.specialRequests ? `${t.specialRequests}: ${summary.specialRequests}` : ""}
 ${t.totalPrice}: ${formatPrice(summary.totalPrice)}
 
 ${t.nextSteps}
@@ -309,9 +322,9 @@ ${t.footer}
 © ${new Date().getFullYear()} Hotel Ensueños
     `.trim();
 
-    return {
-        subject: t.subject,
-        html,
-        text,
-    };
+	return {
+		subject: t.subject,
+		html,
+		text,
+	};
 }

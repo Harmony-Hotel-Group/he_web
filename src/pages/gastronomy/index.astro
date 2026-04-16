@@ -1,11 +1,211 @@
 ---
-import UnderConstructionPage from "@/components/pages/UnderConstructionPage.astro";
+// pages/gastronomy/index.astro
 
-export const prerender = false;
+import ImageResource from "@/components/molecules/media/ImageResource.astro";
+import { Translations } from "@/i18n/translation.ts";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { api } from "@/services/api.ts";
+import type { SiteConfig } from "@/types/config";
+
+const lang = Astro.url.pathname.startsWith("/en") ? "en" : "es";
+const t = Translations(lang);
+const config = (await api.fetch("config", { params: { lang } })) as SiteConfig;
+
+// Obtener gastronomía y agrupar por categoría
+const gastronomies = config?.gastronomies || [];
+
+// Agrupar por categoría
+const categories = gastronomies.reduce(
+	(acc: Record<string, any[]>, item: any) => {
+		const category = item.category?.[lang] || item.category?.es || "Otros";
+		if (!acc[category]) {
+			acc[category] = [];
+		}
+		acc[category].push(item);
+		return acc;
+	},
+	{},
+);
+
+const texts = {
+	es: {
+		title: "Gastronomía Cuencana",
+		subtitle: "Descubre los sabores tradicionales de Cuenca y Ecuador",
+		explore: "Explorar categoría",
+		noGastronomy: "No hay información gastronómica disponible en este momento",
+		categories: "Categorías",
+		all: "Todas",
+	},
+	en: {
+		title: "Cuencan Gastronomy",
+		subtitle: "Discover the traditional flavors of Cuenca and Ecuador",
+		explore: "Explore category",
+		noGastronomy: "No gastronomic information available at the moment",
+		categories: "Categories",
+		all: "All",
+	},
+};
+
+const currentTexts = texts[lang as "es" | "en"] || texts.es;
+const categoryList = Object.keys(categories);
 ---
 
-<UnderConstructionPage
-        titleHead="nav.gastronomy"
-        title="Gastronomía"
-        message="Estamos preparando información sobre nuestra oferta gastronómica. Pronto estará disponible."
-/>
+<BaseLayout
+    titleKey="nav.gastronomy"
+    lang={lang}
+    config={config}
+    headerBgClass="text-gray-900"
+>
+    <!-- Hero Section -->
+    <section class="relative bg-gradient-to-br from-primary via-primary/95 to-accent/90 py-16 md:py-24">
+        <div class="absolute inset-0 bg-black/20"></div>
+        <div class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="inline-flex items-center justify-center w-16 h-16 bg-white/20 rounded-full mb-6 backdrop-blur-sm">
+                <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                </svg>
+            </div>
+            <h1 class="text-4xl md:text-5xl font-serif text-white font-bold mb-4">
+                {currentTexts.title}
+            </h1>
+            <p class="text-xl text-white/90 max-w-2xl mx-auto">
+                {currentTexts.subtitle}
+            </p>
+        </div>
+    </section>
+
+    <!-- Gastronomy Content -->
+    <section class="py-16 md:py-24 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            {gastronomies.length > 0 ? (
+                <>
+                    <!-- Categories Filter -->
+                    <div class="flex flex-wrap justify-center gap-3 mb-12">
+                        <button
+                            data-category="all"
+                            class="gastro-filter px-6 py-3 text-sm font-semibold rounded-full bg-accent text-white shadow-lg transition-all"
+                        >
+                            {currentTexts.all}
+                        </button>
+                        {categoryList.map((category) => (
+                            <button
+                                data-category={category}
+                                class="gastro-filter px-6 py-3 text-sm font-semibold rounded-full bg-white text-gray-700 hover:bg-accent hover:text-white border border-gray-200 transition-all"
+                            >
+                                {category}
+                            </button>
+                        ))}
+                    </div>
+
+                    <!-- Gastronomy Grid -->
+                    <div class="gastro-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        {gastronomies.map((item: any) => {
+                            const category = item.category?.[lang] || item.category?.es || "Otros";
+                            return (
+                                <div
+                                    class="gastro-card bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+                                    data-category={category}
+                                >
+                                    <!-- Icon/Image placeholder -->
+                                    <div class="relative aspect-video bg-gradient-to-br from-accent/20 to-accent/40 flex items-center justify-center">
+                                        <svg class="w-20 h-20 text-accent/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                                        </svg>
+                                        <div class="absolute top-4 left-4">
+                                            <span class="px-3 py-1 bg-white/90 backdrop-blur-sm text-primary text-xs font-bold rounded-full uppercase tracking-wider">
+                                                {category}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Content -->
+                                    <div class="p-6">
+                                        <h3 class="text-xl font-bold text-primary mb-3">
+                                            {item.name?.[lang] || item.name?.es}
+                                        </h3>
+                                        
+                                        <!-- Tags -->
+                                        {item.tags && item.tags[lang] && (
+                                            <div class="flex flex-wrap gap-2 mb-4">
+                                                {item.tags[lang].split(",").map((tag: string) => (
+                                                    <span class="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full">
+                                                        {tag.trim()}
+                                                    </span>
+                                                ))}
+                                            </div>
+                                        )}
+                                        
+                                        <!-- CTA -->
+                                        <a
+                                            href={`/gastronomy/${item.id}`}
+                                            class="inline-flex items-center gap-2 text-accent font-semibold hover:text-accent/80 transition-colors"
+                                        >
+                                            {currentTexts.explore}
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                            </svg>
+                                        </a>
+                                    </div>
+                                </div>
+                            );
+                        })}
+                    </div>
+                </>
+            ) : (
+                <div class="text-center py-20">
+                    <svg class="w-24 h-24 mx-auto text-gray-300 mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                    </svg>
+                    <h3 class="text-2xl font-bold text-gray-600 mb-4">
+                        {currentTexts.noGastronomy}
+                    </h3>
+                </div>
+            )}
+        </div>
+    </section>
+</BaseLayout>
+
+<style>
+    .gastro-filter.active {
+        background: rgb(217 119 6);
+        color: white;
+        box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    }
+    
+    .gastro-card.hidden {
+        display: none;
+    }
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const filters = document.querySelectorAll(".gastro-filter");
+        const cards = document.querySelectorAll(".gastro-card");
+
+        filters.forEach(filter => {
+            filter.addEventListener("click", () => {
+                const category = filter.getAttribute("data-category");
+
+                // Update active filter
+                filters.forEach(f => {
+                    f.classList.remove("active");
+                    f.classList.remove("bg-accent", "text-white");
+                    f.classList.add("bg-white", "text-gray-700");
+                });
+                filter.classList.add("active");
+                filter.classList.remove("bg-white", "text-gray-700");
+                filter.classList.add("bg-accent", "text-white");
+
+                // Filter cards
+                cards.forEach(card => {
+                    const cardCategory = card.getAttribute("data-category");
+                    if (category === "all" || cardCategory === category) {
+                        card.classList.remove("hidden");
+                    } else {
+                        card.classList.add("hidden");
+                    }
+                });
+            });
+        });
+    });
+</script>

@@ -1,5 +1,5 @@
 import type { Room } from "@/types/rooms";
-import { erpClient, type ErpClient } from "./erp.client";
+import { type ErpClient, erpClient } from "./erp.client";
 
 export interface ErpRoomContract {
 	id: string;
@@ -68,11 +68,12 @@ export function mapErpRoomToDomain(item: ErpRoomContract): Room {
 	};
 }
 
-export async function fetchErpRooms(client: ErpClient = erpClient): Promise<ErpRoomsResponse> {
-	const data = await client.get<{ items: ErpRoomContract[] }>(
-		"/erp/rooms",
-		{ items: ERP_ROOMS_MOCK },
-	);
+export async function fetchErpRooms(
+	client: ErpClient = erpClient,
+): Promise<ErpRoomsResponse> {
+	const data = await client.get<{ items: ErpRoomContract[] }>("/erp/rooms", {
+		items: ERP_ROOMS_MOCK,
+	});
 
 	const items = Array.isArray(data?.items) ? data.items : ERP_ROOMS_MOCK;
 

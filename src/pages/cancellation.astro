@@ -1,8 +1,8 @@
 ---
 // pages/cancellation.astro
 
-import BaseLayout from "@/layouts/BaseLayout.astro";
 import { Translations } from "@/i18n/translation.ts";
+import BaseLayout from "@/layouts/BaseLayout.astro";
 import { api } from "@/services/api.ts";
 import type { SiteConfig } from "@/types/config";
 
@@ -11,88 +11,102 @@ const t = Translations(lang);
 const config = (await api.fetch("config", { params: { lang } })) as SiteConfig;
 
 const texts = {
-    es: {
-        title: "Política de Cancelación",
-        subtitle: "Nuestra política de cancelación flexible para tu tranquilidad",
-        sections: [
-            {
-                title: "Cancelaciones Estándar",
-                content: "Las reservas pueden cancelarse sin costo hasta 24 horas antes de la hora de llegada programada (14:00). Después de este período, se cobrará una noche de estadía como penalidad."
-            },
-            {
-                title: "Temporada Alta",
-                content: "Durante temporada alta (diciembre-enero, Semana Santa, festividades locales), las cancelaciones deben realizarse con 72 horas de anticipación para evitar cargos."
-            },
-            {
-                title: "Reservas Grupales",
-                content: "Para reservas de 5 o más habitaciones, las cancelaciones deben realizarse con 7 días de anticipación. Pueden aplicar políticas diferentes para grupos más grandes."
-            },
-            {
-                title: "No-Show",
-                content: "La no-presentación (no-show) sin cancelación previa resultará en el cargo completo de la primera noche de la reserva."
-            },
-            {
-                title: "Modificaciones",
-                content: "Las modificaciones de fechas están sujetas a disponibilidad. Si la nueva tarifa es mayor, se pagará la diferencia. Si es menor, no habrá reembolso."
-            },
-            {
-                title: "Reembolsos",
-                content: "Los reembolsos aplicables se procesarán dentro de 7-10 días hábiles al mismo método de pago utilizado para la reserva original."
-            },
-            {
-                title: "Circunstancias Excepcionales",
-                content: "En casos de fuerza mayor (desastres naturales, emergencias médicas, restricciones de viaje), podemos ofrecer cancelación gratuita con documentación apropiada."
-            }
-        ],
-        contact: {
-            title: "¿Necesitas Cancelar?",
-            content: "Contáctanos lo antes posible para procesar tu cancelación",
-            phone: "+593 97 888 8020",
-            email: "reservas@hotelensuenos.com",
-            hours: "Disponible 24/7"
-        }
-    },
-    en: {
-        title: "Cancellation Policy",
-        subtitle: "Our flexible cancellation policy for your peace of mind",
-        sections: [
-            {
-                title: "Standard Cancellations",
-                content: "Reservations can be cancelled at no cost up to 24 hours before the scheduled arrival time (2:00 PM). After this period, one night's stay will be charged as a penalty."
-            },
-            {
-                title: "High Season",
-                content: "During high season (December-January, Holy Week, local holidays), cancellations must be made 72 hours in advance to avoid charges."
-            },
-            {
-                title: "Group Reservations",
-                content: "For reservations of 5 or more rooms, cancellations must be made 7 days in advance. Different policies may apply for larger groups."
-            },
-            {
-                title: "No-Show",
-                content: "No-show without prior cancellation will result in a full charge for the first night of the reservation."
-            },
-            {
-                title: "Modifications",
-                content: "Date modifications are subject to availability. If the new rate is higher, the difference will be charged. If lower, no refund will be given."
-            },
-            {
-                title: "Refunds",
-                content: "Applicable refunds will be processed within 7-10 business days to the same payment method used for the original reservation."
-            },
-            {
-                title: "Exceptional Circumstances",
-                content: "In cases of force majeure (natural disasters, medical emergencies, travel restrictions), we may offer free cancellation with appropriate documentation."
-            }
-        ],
-        contact: {
-            title: "Need to Cancel?",
-            content: "Contact us as soon as possible to process your cancellation",
-            phone: "+593 97 888 8020",
-            email: "reservas@hotelensuenos.com",
-            hours: "Available 24/7"
-        }
-    }
+	es: {
+		title: "Política de Cancelación",
+		subtitle: "Nuestra política de cancelación flexible para tu tranquilidad",
+		sections: [
+			{
+				title: "Cancelaciones Estándar",
+				content:
+					"Las reservas pueden cancelarse sin costo hasta 24 horas antes de la hora de llegada programada (14:00). Después de este período, se cobrará una noche de estadía como penalidad.",
+			},
+			{
+				title: "Temporada Alta",
+				content:
+					"Durante temporada alta (diciembre-enero, Semana Santa, festividades locales), las cancelaciones deben realizarse con 72 horas de anticipación para evitar cargos.",
+			},
+			{
+				title: "Reservas Grupales",
+				content:
+					"Para reservas de 5 o más habitaciones, las cancelaciones deben realizarse con 7 días de anticipación. Pueden aplicar políticas diferentes para grupos más grandes.",
+			},
+			{
+				title: "No-Show",
+				content:
+					"La no-presentación (no-show) sin cancelación previa resultará en el cargo completo de la primera noche de la reserva.",
+			},
+			{
+				title: "Modificaciones",
+				content:
+					"Las modificaciones de fechas están sujetas a disponibilidad. Si la nueva tarifa es mayor, se pagará la diferencia. Si es menor, no habrá reembolso.",
+			},
+			{
+				title: "Reembolsos",
+				content:
+					"Los reembolsos aplicables se procesarán dentro de 7-10 días hábiles al mismo método de pago utilizado para la reserva original.",
+			},
+			{
+				title: "Circunstancias Excepcionales",
+				content:
+					"En casos de fuerza mayor (desastres naturales, emergencias médicas, restricciones de viaje), podemos ofrecer cancelación gratuita con documentación apropiada.",
+			},
+		],
+		contact: {
+			title: "¿Necesitas Cancelar?",
+			content: "Contáctanos lo antes posible para procesar tu cancelación",
+			phone: "+593 97 888 8020",
+			email: "reservas@hotelensuenos.com",
+			hours: "Disponible 24/7",
+		},
+	},
+	en: {
+		title: "Cancellation Policy",
+		subtitle: "Our flexible cancellation policy for your peace of mind",
+		sections: [
+			{
+				title: "Standard Cancellations",
+				content:
+					"Reservations can be cancelled at no cost up to 24 hours before the scheduled arrival time (2:00 PM). After this period, one night's stay will be charged as a penalty.",
+			},
+			{
+				title: "High Season",
+				content:
+					"During high season (December-January, Holy Week, local holidays), cancellations must be made 72 hours in advance to avoid charges.",
+			},
+			{
+				title: "Group Reservations",
+				content:
+					"For reservations of 5 or more rooms, cancellations must be made 7 days in advance. Different policies may apply for larger groups.",
+			},
+			{
+				title: "No-Show",
+				content:
+					"No-show without prior cancellation will result in a full charge for the first night of the reservation.",
+			},
+			{
+				title: "Modifications",
+				content:
+					"Date modifications are subject to availability. If the new rate is higher, the difference will be charged. If lower, no refund will be given.",
+			},
+			{
+				title: "Refunds",
+				content:
+					"Applicable refunds will be processed within 7-10 business days to the same payment method used for the original reservation.",
+			},
+			{
+				title: "Exceptional Circumstances",
+				content:
+					"In cases of force majeure (natural disasters, medical emergencies, travel restrictions), we may offer free cancellation with appropriate documentation.",
+			},
+		],
+		contact: {
+			title: "Need to Cancel?",
+			content: "Contact us as soon as possible to process your cancellation",
+			phone: "+593 97 888 8020",
+			email: "reservas@hotelensuenos.com",
+			hours: "Available 24/7",
+		},
+	},
 };
 
 const currentTexts = texts[lang as "es" | "en"] || texts.es;

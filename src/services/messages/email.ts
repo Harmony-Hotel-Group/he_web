@@ -89,12 +89,14 @@ export async function sendBookingConfirmationEmail(
 	html: string,
 	text: string,
 ) {
-	if (!guestEmail || !guestEmail.includes('@')) {
+	if (!guestEmail || !guestEmail.includes("@")) {
 		if (ENV.DEV)
-			console.warn("[messages/email] Guest email invalid, skipping confirmation");
+			console.warn(
+				"[messages/email] Guest email invalid, skipping confirmation",
+			);
 		return { ok: false, skipped: true } as const;
 	}
-	
+
 	return sendEmail({
 		to: guestEmail,
 		subject,

@@ -1,8 +1,8 @@
 ---
 // pages/faq.astro
 
-import BaseLayout from "@/layouts/BaseLayout.astro";
 import { Translations } from "@/i18n/translation.ts";
+import BaseLayout from "@/layouts/BaseLayout.astro";
 import { api } from "@/services/api.ts";
 import type { SiteConfig } from "@/types/config";
 
@@ -12,213 +12,213 @@ const config = (await api.fetch("config", { params: { lang } })) as SiteConfig;
 
 // Preguntas frecuentes
 const faqs = {
-    es: [
-        {
-            category: "Reservas",
-            questions: [
-                {
-                    q: "¿Cómo puedo hacer una reserva?",
-                    a: "Puedes hacer una reserva directamente desde nuestro sitio web usando el formulario de booking, o contactarnos por WhatsApp al +593 97 888 8020 o email a reservas@hotelensuenos.com."
-                },
-                {
-                    q: "¿Necesito pagar por adelantado?",
-                    a: "No, no requerimos pago por adelantado. El pago se realiza directamente en el hotel durante tu estancia. Aceptamos efectivo y todas las tarjetas principales."
-                },
-                {
-                    q: "¿Puedo cancelar o modificar mi reserva?",
-                    a: "Sí, puedes cancelar o modificar tu reserva sin costo hasta 24 horas antes de tu llegada. Después de ese tiempo, se cobrará una noche como penalidad."
-                },
-                {
-                    q: "¿Cuál es el precio por noche?",
-                    a: "Nuestros precios varían desde $25 hasta $160 por noche, dependiendo del tipo de habitación y temporada. Visita nuestra sección de Habitaciones para ver precios detallados."
-                }
-            ]
-        },
-        {
-            category: "Check-in / Check-out",
-            questions: [
-                {
-                    q: "¿A qué hora es el check-in y check-out?",
-                    a: "El check-in es a partir de las 14:00 (2:00 PM) y el check-out es hasta las 12:00 (12:00 PM). Podemos accommodating early check-in o late check-out según disponibilidad."
-                },
-                {
-                    q: "¿Hay recepción 24 horas?",
-                    a: "Sí, contamos con recepción 24/7 para atender todas tus necesidades."
-                },
-                {
-                    q: "¿Puedo dejar mi equipaje antes del check-in?",
-                    a: "Sí, ofrecemos servicio de consigna de equipaje gratuito para que puedas explorar la ciudad antes de tu check-in."
-                }
-            ]
-        },
-        {
-            category: "Servicios",
-            questions: [
-                {
-                    q: "¿El WiFi es gratuito?",
-                    a: "Sí, ofrecemos WiFi de alta velocidad gratuito en todas las habitaciones y áreas comunes."
-                },
-                {
-                    q: "¿El desayuno está incluido?",
-                    a: "Ofrecemos desayuno continental opcional con un costo adicional de $15 por persona. Incluye opciones locales e internacionales."
-                },
-                {
-                    q: "¿Tienen estacionamiento?",
-                    a: "Contamos con estacionamiento público cerca del hotel. El costo es aproximadamente $10-15 por día."
-                },
-                {
-                    q: "¿Aceptan mascotas?",
-                    a: "Las mascotas son bienvenidas bajo consulta previa. Por favor contáctanos para conocer nuestra política de mascotas y costos adicionales."
-                }
-            ]
-        },
-        {
-            category: "Ubicación",
-            questions: [
-                {
-                    q: "¿Dónde está ubicado el hotel?",
-                    a: "Estamos ubicados en Gran Colombia 182 y Manuel Vega, en el corazón del centro histórico de Cuenca, a pocos pasos de la Catedral."
-                },
-                {
-                    q: "¿Qué tan lejos está del aeropuerto?",
-                    a: "El aeropuerto Mariscal Lamar está a solo 3 km del hotel, aproximadamente 10 minutos en taxi."
-                },
-                {
-                    q: "¿Ofrecen servicio de transporte desde/hacia el aeropuerto?",
-                    a: "Sí, podemos organizar transporte privado desde/hacia el aeropuerto con costo adicional. Por favor solicita este servicio al momento de reservar."
-                }
-            ]
-        },
-        {
-            category: "Políticas",
-            questions: [
-                {
-                    q: "¿Cuál es la edad mínima para hacer check-in?",
-                    a: "La edad mínima para hacer check-in es 18 años. Los menores de edad deben estar acompañados por un adulto."
-                },
-                {
-                    q: "¿Hay habitaciones para familias con niños?",
-                    a: "Sí, contamos con habitaciones familiares que pueden alojar hasta 6 personas. Los niños menores de 5 años se hospedan gratis."
-                },
-                {
-                    q: "¿El hotel es accesible para personas con discapacidad?",
-                    a: "Contamos con ascensor y áreas comunes accesibles. Por favor contáctanos para asegurar que podemos atender tus necesidades específicas."
-                }
-            ]
-        }
-    ],
-    en: [
-        {
-            category: "Bookings",
-            questions: [
-                {
-                    q: "How can I make a reservation?",
-                    a: "You can make a reservation directly from our website using the booking form, or contact us via WhatsApp at +593 97 888 8020 or email at reservas@hotelensuenos.com."
-                },
-                {
-                    q: "Do I need to pay in advance?",
-                    a: "No, we don't require advance payment. Payment is made directly at the hotel during your stay. We accept cash and all major credit cards."
-                },
-                {
-                    q: "Can I cancel or modify my reservation?",
-                    a: "Yes, you can cancel or modify your reservation at no cost up to 24 hours before your arrival. After that time, one night will be charged as a penalty."
-                },
-                {
-                    q: "What is the price per night?",
-                    a: "Our prices range from $25 to $160 per night, depending on room type and season. Visit our Rooms section for detailed pricing."
-                }
-            ]
-        },
-        {
-            category: "Check-in / Check-out",
-            questions: [
-                {
-                    q: "What are the check-in and check-out times?",
-                    a: "Check-in is from 2:00 PM and check-out is until 12:00 PM. We can accommodate early check-in or late check-out based on availability."
-                },
-                {
-                    q: "Is there 24-hour reception?",
-                    a: "Yes, we have 24/7 reception to attend to all your needs."
-                },
-                {
-                    q: "Can I leave my luggage before check-in?",
-                    a: "Yes, we offer complimentary luggage storage so you can explore the city before your check-in."
-                }
-            ]
-        },
-        {
-            category: "Services",
-            questions: [
-                {
-                    q: "Is WiFi free?",
-                    a: "Yes, we offer free high-speed WiFi in all rooms and common areas."
-                },
-                {
-                    q: "Is breakfast included?",
-                    a: "We offer optional continental breakfast for an additional $15 per person. It includes local and international options."
-                },
-                {
-                    q: "Do you have parking?",
-                    a: "We have public parking near the hotel. The cost is approximately $10-15 per day."
-                },
-                {
-                    q: "Are pets allowed?",
-                    a: "Pets are welcome upon prior consultation. Please contact us to learn about our pet policy and additional costs."
-                }
-            ]
-        },
-        {
-            category: "Location",
-            questions: [
-                {
-                    q: "Where is the hotel located?",
-                    a: "We are located at Gran Colombia 182 y Manuel Vega, in the heart of Cuenca's historic center, steps away from the Cathedral."
-                },
-                {
-                    q: "How far is it from the airport?",
-                    a: "Mariscal Lamar Airport is only 3 km from the hotel, approximately 10 minutes by taxi."
-                },
-                {
-                    q: "Do you offer airport transportation?",
-                    a: "Yes, we can arrange private transportation from/to the airport for an additional fee. Please request this service when booking."
-                }
-            ]
-        },
-        {
-            category: "Policies",
-            questions: [
-                {
-                    q: "What is the minimum age to check-in?",
-                    a: "The minimum age to check-in is 18 years. Minors must be accompanied by an adult."
-                },
-                {
-                    q: "Are there rooms for families with children?",
-                    a: "Yes, we have family rooms that can accommodate up to 6 guests. Children under 5 stay free."
-                },
-                {
-                    q: "Is the hotel accessible for people with disabilities?",
-                    a: "We have an elevator and accessible common areas. Please contact us to ensure we can meet your specific needs."
-                }
-            ]
-        }
-    ]
+	es: [
+		{
+			category: "Reservas",
+			questions: [
+				{
+					q: "¿Cómo puedo hacer una reserva?",
+					a: "Puedes hacer una reserva directamente desde nuestro sitio web usando el formulario de booking, o contactarnos por WhatsApp al +593 97 888 8020 o email a reservas@hotelensuenos.com.",
+				},
+				{
+					q: "¿Necesito pagar por adelantado?",
+					a: "No, no requerimos pago por adelantado. El pago se realiza directamente en el hotel durante tu estancia. Aceptamos efectivo y todas las tarjetas principales.",
+				},
+				{
+					q: "¿Puedo cancelar o modificar mi reserva?",
+					a: "Sí, puedes cancelar o modificar tu reserva sin costo hasta 24 horas antes de tu llegada. Después de ese tiempo, se cobrará una noche como penalidad.",
+				},
+				{
+					q: "¿Cuál es el precio por noche?",
+					a: "Nuestros precios varían desde $25 hasta $160 por noche, dependiendo del tipo de habitación y temporada. Visita nuestra sección de Habitaciones para ver precios detallados.",
+				},
+			],
+		},
+		{
+			category: "Check-in / Check-out",
+			questions: [
+				{
+					q: "¿A qué hora es el check-in y check-out?",
+					a: "El check-in es a partir de las 14:00 (2:00 PM) y el check-out es hasta las 12:00 (12:00 PM). Podemos accommodating early check-in o late check-out según disponibilidad.",
+				},
+				{
+					q: "¿Hay recepción 24 horas?",
+					a: "Sí, contamos con recepción 24/7 para atender todas tus necesidades.",
+				},
+				{
+					q: "¿Puedo dejar mi equipaje antes del check-in?",
+					a: "Sí, ofrecemos servicio de consigna de equipaje gratuito para que puedas explorar la ciudad antes de tu check-in.",
+				},
+			],
+		},
+		{
+			category: "Servicios",
+			questions: [
+				{
+					q: "¿El WiFi es gratuito?",
+					a: "Sí, ofrecemos WiFi de alta velocidad gratuito en todas las habitaciones y áreas comunes.",
+				},
+				{
+					q: "¿El desayuno está incluido?",
+					a: "Ofrecemos desayuno continental opcional con un costo adicional de $15 por persona. Incluye opciones locales e internacionales.",
+				},
+				{
+					q: "¿Tienen estacionamiento?",
+					a: "Contamos con estacionamiento público cerca del hotel. El costo es aproximadamente $10-15 por día.",
+				},
+				{
+					q: "¿Aceptan mascotas?",
+					a: "Las mascotas son bienvenidas bajo consulta previa. Por favor contáctanos para conocer nuestra política de mascotas y costos adicionales.",
+				},
+			],
+		},
+		{
+			category: "Ubicación",
+			questions: [
+				{
+					q: "¿Dónde está ubicado el hotel?",
+					a: "Estamos ubicados en Gran Colombia 182 y Manuel Vega, en el corazón del centro histórico de Cuenca, a pocos pasos de la Catedral.",
+				},
+				{
+					q: "¿Qué tan lejos está del aeropuerto?",
+					a: "El aeropuerto Mariscal Lamar está a solo 3 km del hotel, aproximadamente 10 minutos en taxi.",
+				},
+				{
+					q: "¿Ofrecen servicio de transporte desde/hacia el aeropuerto?",
+					a: "Sí, podemos organizar transporte privado desde/hacia el aeropuerto con costo adicional. Por favor solicita este servicio al momento de reservar.",
+				},
+			],
+		},
+		{
+			category: "Políticas",
+			questions: [
+				{
+					q: "¿Cuál es la edad mínima para hacer check-in?",
+					a: "La edad mínima para hacer check-in es 18 años. Los menores de edad deben estar acompañados por un adulto.",
+				},
+				{
+					q: "¿Hay habitaciones para familias con niños?",
+					a: "Sí, contamos con habitaciones familiares que pueden alojar hasta 6 personas. Los niños menores de 5 años se hospedan gratis.",
+				},
+				{
+					q: "¿El hotel es accesible para personas con discapacidad?",
+					a: "Contamos con ascensor y áreas comunes accesibles. Por favor contáctanos para asegurar que podemos atender tus necesidades específicas.",
+				},
+			],
+		},
+	],
+	en: [
+		{
+			category: "Bookings",
+			questions: [
+				{
+					q: "How can I make a reservation?",
+					a: "You can make a reservation directly from our website using the booking form, or contact us via WhatsApp at +593 97 888 8020 or email at reservas@hotelensuenos.com.",
+				},
+				{
+					q: "Do I need to pay in advance?",
+					a: "No, we don't require advance payment. Payment is made directly at the hotel during your stay. We accept cash and all major credit cards.",
+				},
+				{
+					q: "Can I cancel or modify my reservation?",
+					a: "Yes, you can cancel or modify your reservation at no cost up to 24 hours before your arrival. After that time, one night will be charged as a penalty.",
+				},
+				{
+					q: "What is the price per night?",
+					a: "Our prices range from $25 to $160 per night, depending on room type and season. Visit our Rooms section for detailed pricing.",
+				},
+			],
+		},
+		{
+			category: "Check-in / Check-out",
+			questions: [
+				{
+					q: "What are the check-in and check-out times?",
+					a: "Check-in is from 2:00 PM and check-out is until 12:00 PM. We can accommodate early check-in or late check-out based on availability.",
+				},
+				{
+					q: "Is there 24-hour reception?",
+					a: "Yes, we have 24/7 reception to attend to all your needs.",
+				},
+				{
+					q: "Can I leave my luggage before check-in?",
+					a: "Yes, we offer complimentary luggage storage so you can explore the city before your check-in.",
+				},
+			],
+		},
+		{
+			category: "Services",
+			questions: [
+				{
+					q: "Is WiFi free?",
+					a: "Yes, we offer free high-speed WiFi in all rooms and common areas.",
+				},
+				{
+					q: "Is breakfast included?",
+					a: "We offer optional continental breakfast for an additional $15 per person. It includes local and international options.",
+				},
+				{
+					q: "Do you have parking?",
+					a: "We have public parking near the hotel. The cost is approximately $10-15 per day.",
+				},
+				{
+					q: "Are pets allowed?",
+					a: "Pets are welcome upon prior consultation. Please contact us to learn about our pet policy and additional costs.",
+				},
+			],
+		},
+		{
+			category: "Location",
+			questions: [
+				{
+					q: "Where is the hotel located?",
+					a: "We are located at Gran Colombia 182 y Manuel Vega, in the heart of Cuenca's historic center, steps away from the Cathedral.",
+				},
+				{
+					q: "How far is it from the airport?",
+					a: "Mariscal Lamar Airport is only 3 km from the hotel, approximately 10 minutes by taxi.",
+				},
+				{
+					q: "Do you offer airport transportation?",
+					a: "Yes, we can arrange private transportation from/to the airport for an additional fee. Please request this service when booking.",
+				},
+			],
+		},
+		{
+			category: "Policies",
+			questions: [
+				{
+					q: "What is the minimum age to check-in?",
+					a: "The minimum age to check-in is 18 years. Minors must be accompanied by an adult.",
+				},
+				{
+					q: "Are there rooms for families with children?",
+					a: "Yes, we have family rooms that can accommodate up to 6 guests. Children under 5 stay free.",
+				},
+				{
+					q: "Is the hotel accessible for people with disabilities?",
+					a: "We have an elevator and accessible common areas. Please contact us to ensure we can meet your specific needs.",
+				},
+			],
+		},
+	],
 };
 
 const currentFaqs = faqs[lang as "es" | "en"] || faqs.es;
 
 const texts = {
-    es: {
-        title: "Preguntas Frecuentes",
-        subtitle: "Encuentra respuestas a las preguntas más comunes",
-        contact: "¿No encuentras tu respuesta?",
-        contactText: "Contáctanos y te ayudaremos con gusto",
-    },
-    en: {
-        title: "Frequently Asked Questions",
-        subtitle: "Find answers to the most common questions",
-        contact: "Can't find your answer?",
-        contactText: "Contact us and we'll be happy to help",
-    },
+	es: {
+		title: "Preguntas Frecuentes",
+		subtitle: "Encuentra respuestas a las preguntas más comunes",
+		contact: "¿No encuentras tu respuesta?",
+		contactText: "Contáctanos y te ayudaremos con gusto",
+	},
+	en: {
+		title: "Frequently Asked Questions",
+		subtitle: "Find answers to the most common questions",
+		contact: "Can't find your answer?",
+		contactText: "Contact us and we'll be happy to help",
+	},
 };
 
 const currentTexts = texts[lang as "es" | "en"] || texts.es;

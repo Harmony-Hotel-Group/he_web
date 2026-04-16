@@ -1,8 +1,8 @@
 ---
 // pages/terms.astro
 
-import BaseLayout from "@/layouts/BaseLayout.astro";
 import { Translations } from "@/i18n/translation.ts";
+import BaseLayout from "@/layouts/BaseLayout.astro";
 import { api } from "@/services/api.ts";
 import type { SiteConfig } from "@/types/config";
 
@@ -11,74 +11,88 @@ const t = Translations(lang);
 const config = (await api.fetch("config", { params: { lang } })) as SiteConfig;
 
 const texts = {
-    es: {
-        title: "Términos y Condiciones",
-        lastUpdated: "Última actualización",
-        sections: [
-            {
-                title: "Aceptación de Términos",
-                content: "Al utilizar nuestros servicios y sitio web, aceptas cumplir y estar sujeto a estos Términos y Condiciones. Si no estás de acuerdo, por favor no utilices nuestros servicios."
-            },
-            {
-                title: "Reservas y Pagos",
-                content: "Las reservas están sujetas a disponibilidad. Los precios pueden variar según temporada y tipo de habitación. El pago se realiza directamente en el hotel. Aceptamos efectivo y tarjetas de crédito principales."
-            },
-            {
-                title: "Cancelaciones",
-                content: "Las cancelaciones pueden realizarse hasta 24 horas antes de la llegada sin costo. Cancelaciones posteriores o no-presentación (no-show) serán cobradas con una noche de estadía."
-            },
-            {
-                title: "Check-in / Check-out",
-                content: "Check-in: 14:00 | Check-out: 12:00. Early check-in y late check-out están sujetos a disponibilidad y pueden tener costo adicional."
-            },
-            {
-                title: "Responsabilidad",
-                content: "No nos hacemos responsables por pérdida o daño de objetos personales. Recomendamos usar la caja de seguridad de la habitación para valores importantes."
-            },
-            {
-                title: "Modificaciones",
-                content: "Nos reservamos el derecho de modificar estos términos en cualquier momento. Los cambios entrarán en vigor inmediatamente después de su publicación en el sitio web."
-            },
-            {
-                title: "Contacto",
-                content: "Para preguntas sobre estos términos, contáctanos en legal@hotelensuenos.com"
-            }
-        ]
-    },
-    en: {
-        title: "Terms and Conditions",
-        lastUpdated: "Last updated",
-        sections: [
-            {
-                title: "Acceptance of Terms",
-                content: "By using our services and website, you agree to comply with and be bound by these Terms and Conditions. If you disagree, please do not use our services."
-            },
-            {
-                title: "Reservations and Payments",
-                content: "Reservations are subject to availability. Prices may vary by season and room type. Payment is made directly at the hotel. We accept cash and major credit cards."
-            },
-            {
-                title: "Cancellations",
-                content: "Cancellations can be made up to 24 hours before arrival at no cost. Late cancellations or no-shows will be charged one night's stay."
-            },
-            {
-                title: "Check-in / Check-out",
-                content: "Check-in: 2:00 PM | Check-out: 12:00 PM. Early check-in and late check-out are subject to availability and may have additional cost."
-            },
-            {
-                title: "Liability",
-                content: "We are not responsible for loss or damage to personal belongings. We recommend using the in-room safe for valuables."
-            },
-            {
-                title: "Modifications",
-                content: "We reserve the right to modify these terms at any time. Changes will take effect immediately upon posting on the website."
-            },
-            {
-                title: "Contact",
-                content: "For questions about these terms, contact us at legal@hotelensuenos.com"
-            }
-        ]
-    }
+	es: {
+		title: "Términos y Condiciones",
+		lastUpdated: "Última actualización",
+		sections: [
+			{
+				title: "Aceptación de Términos",
+				content:
+					"Al utilizar nuestros servicios y sitio web, aceptas cumplir y estar sujeto a estos Términos y Condiciones. Si no estás de acuerdo, por favor no utilices nuestros servicios.",
+			},
+			{
+				title: "Reservas y Pagos",
+				content:
+					"Las reservas están sujetas a disponibilidad. Los precios pueden variar según temporada y tipo de habitación. El pago se realiza directamente en el hotel. Aceptamos efectivo y tarjetas de crédito principales.",
+			},
+			{
+				title: "Cancelaciones",
+				content:
+					"Las cancelaciones pueden realizarse hasta 24 horas antes de la llegada sin costo. Cancelaciones posteriores o no-presentación (no-show) serán cobradas con una noche de estadía.",
+			},
+			{
+				title: "Check-in / Check-out",
+				content:
+					"Check-in: 14:00 | Check-out: 12:00. Early check-in y late check-out están sujetos a disponibilidad y pueden tener costo adicional.",
+			},
+			{
+				title: "Responsabilidad",
+				content:
+					"No nos hacemos responsables por pérdida o daño de objetos personales. Recomendamos usar la caja de seguridad de la habitación para valores importantes.",
+			},
+			{
+				title: "Modificaciones",
+				content:
+					"Nos reservamos el derecho de modificar estos términos en cualquier momento. Los cambios entrarán en vigor inmediatamente después de su publicación en el sitio web.",
+			},
+			{
+				title: "Contacto",
+				content:
+					"Para preguntas sobre estos términos, contáctanos en legal@hotelensuenos.com",
+			},
+		],
+	},
+	en: {
+		title: "Terms and Conditions",
+		lastUpdated: "Last updated",
+		sections: [
+			{
+				title: "Acceptance of Terms",
+				content:
+					"By using our services and website, you agree to comply with and be bound by these Terms and Conditions. If you disagree, please do not use our services.",
+			},
+			{
+				title: "Reservations and Payments",
+				content:
+					"Reservations are subject to availability. Prices may vary by season and room type. Payment is made directly at the hotel. We accept cash and major credit cards.",
+			},
+			{
+				title: "Cancellations",
+				content:
+					"Cancellations can be made up to 24 hours before arrival at no cost. Late cancellations or no-shows will be charged one night's stay.",
+			},
+			{
+				title: "Check-in / Check-out",
+				content:
+					"Check-in: 2:00 PM | Check-out: 12:00 PM. Early check-in and late check-out are subject to availability and may have additional cost.",
+			},
+			{
+				title: "Liability",
+				content:
+					"We are not responsible for loss or damage to personal belongings. We recommend using the in-room safe for valuables.",
+			},
+			{
+				title: "Modifications",
+				content:
+					"We reserve the right to modify these terms at any time. Changes will take effect immediately upon posting on the website.",
+			},
+			{
+				title: "Contact",
+				content:
+					"For questions about these terms, contact us at legal@hotelensuenos.com",
+			},
+		],
+	},
 };
 
 const currentTexts = texts[lang as "es" | "en"] || texts.es;

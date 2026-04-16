@@ -1,10 +1,10 @@
 ---
+import ImageResource from "@/components/molecules/media/ImageResource.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { api } from "@/services/api";
 import type { SiteConfig } from "@/types/config";
 import type { Room } from "@/types/rooms";
 import { formatPrice } from "@/utils/currency";
-import ImageResource from "@/components/molecules/media/ImageResource.astro";
 
 // Determinar idioma basado en URL
 const lang = Astro.url.pathname.startsWith("/en") ? "en" : "es";
@@ -12,8 +12,8 @@ const lang = Astro.url.pathname.startsWith("/en") ? "en" : "es";
 // Multi-fetch de configuración y habitaciones
 // Se hace cast del resultado para tener tipado fuerte en el destructuring
 const { config, rooms } = (await api.multiFetch({
-  config: { params: { lang } },
-  rooms: { params: { lang } },
+	config: { params: { lang } },
+	rooms: { params: { lang } },
 })) as { config: SiteConfig; rooms: Room[] | Error | null };
 
 // Validación de seguridad para habitaciones
@@ -47,9 +47,119 @@ const safeRooms = Array.isArray(rooms) ? rooms : [];
   <section class="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
     <div class="max-w-7xl mx-auto">
       {safeRooms.length > 0 ? (
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12">
-          {safeRooms.map((room) => (
-            <article class="group relative bg-white rounded-sm shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col h-full border border-gray-100">
+        <>
+          <!-- Filters -->
+          <div class="mb-12 bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+            <div class="flex flex-col md:flex-row gap-6">
+              <!-- Price Range -->
+              <div class="flex-1">
+                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                  {lang === 'es' ? 'Rango de Precio' : 'Price Range'}
+                </label>
+                <div class="flex items-center gap-4">
+                  <input
+                    type="range"
+                    id="price-range"
+                    min="25"
+                    max="160"
+                    step="5"
+                    value="160"
+                    class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-accent"
+                  />
+                  <span id="price-value" class="text-lg font-bold text-accent whitespace-nowrap">
+                    $160
+                  </span>
+                </div>
+              </div>
+              
+              <!-- Capacity -->
+              <div class="flex-1">
+                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                  {lang === 'es' ? 'Capacidad' : 'Capacity'}
+                </label>
+                <div class="flex flex-wrap gap-2">
+                  <button
+                    data-capacity="all"
+                    class="capacity-filter px-4 py-2 text-sm font-semibold rounded-full bg-accent text-white transition-all"
+                  >
+                    {lang === 'es' ? 'Todas' : 'All'}
+                  </button>
+                  <button
+                    data-capacity="2"
+                    class="capacity-filter px-4 py-2 text-sm font-semibold rounded-full bg-gray-100 text-gray-700 hover:bg-accent hover:text-white transition-all"
+                  >
+                    1-2
+                  </button>
+                  <button
+                    data-capacity="4"
+                    class="capacity-filter px-4 py-2 text-sm font-semibold rounded-full bg-gray-100 text-gray-700 hover:bg-accent hover:text-white transition-all"
+                  >
+                    3-4
+                  </button>
+                  <button
+                    data-capacity="6"
+                    class="capacity-filter px-4 py-2 text-sm font-semibold rounded-full bg-gray-100 text-gray-700 hover:bg-accent hover:text-white transition-all"
+                  >
+                    5-6+
+                  </button>
+                </div>
+              </div>
+              
+              <!-- Category -->
+              <div class="flex-1">
+                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                  {lang === 'es' ? 'Categoría' : 'Category'}
+                </label>
+                <div class="flex flex-wrap gap-2">
+                  <button
+                    data-category="all"
+                    class="category-filter px-4 py-2 text-sm font-semibold rounded-full bg-accent text-white transition-all"
+                  >
+                    {lang === 'es' ? 'Todas' : 'All'}
+                  </button>
+                  <button
+                    data-category="Estándar"
+                    class="category-filter px-4 py-2 text-sm font-semibold rounded-full bg-gray-100 text-gray-700 hover:bg-accent hover:text-white transition-all"
+                  >
+                    {lang === 'es' ? 'Estándar' : 'Standard'}
+                  </button>
+                  <button
+                    data-category="Familiar"
+                    class="category-filter px-4 py-2 text-sm font-semibold rounded-full bg-gray-100 text-gray-700 hover:bg-accent hover:text-white transition-all"
+                  >
+                    {lang === 'es' ? 'Familiar' : 'Family'}
+                  </button>
+                  <button
+                    data-category="Suite"
+                    class="category-filter px-4 py-2 text-sm font-semibold rounded-full bg-gray-100 text-gray-700 hover:bg-accent hover:text-white transition-all"
+                  >
+                    Suite
+                  </button>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Results count -->
+            <div class="mt-4 pt-4 border-t border-gray-100">
+              <p class="text-sm text-gray-600">
+                <span id="results-count">{safeRooms.length}</span> 
+                {lang === 'es' ? 'habitaciones encontradas' : 'rooms found'}
+              </p>
+            </div>
+          </div>
+
+          <!-- Rooms Grid -->
+          <div class="rooms-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12">
+            {safeRooms.map((room) => {
+              const maxPersons = room.maxPersons || 2;
+              const category = room.category?.[lang] || room.category?.es || '';
+              return (
+                <article
+                  class="room-card group relative bg-white rounded-sm shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col h-full border border-gray-100"
+                  data-price={room.pricePerNight}
+                  data-capacity={maxPersons}
+                  data-category={category}
+                >
               <!-- Image -->
               <div class="relative overflow-hidden aspect-[4/3]">
                 <ImageResource
@@ -102,8 +212,20 @@ const safeRooms = Array.isArray(rooms) ? rooms : [];
                 </div>
               </div>
             </article>
-          ))}
-        </div>
+              );
+            })}
+          </div>
+          
+          <!-- No results message -->
+          <div id="no-results" class="hidden text-center py-12">
+            <svg class="w-16 h-16 mx-auto text-gray-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <p class="text-gray-600 text-lg">
+              {lang === 'es' ? 'No se encontraron habitaciones con estos filtros' : 'No rooms found with these filters'}
+            </p>
+          </div>
+        </>
       ) : (
         <div class="text-center py-20">
           <h2 class="text-2xl font-serif text-gray-600">
@@ -114,3 +236,126 @@ const safeRooms = Array.isArray(rooms) ? rooms : [];
     </div>
   </section>
 </BaseLayout>
+
+<style>
+  .capacity-filter.active,
+  .category-filter.active {
+    background: rgb(217 119 6);
+    color: white;
+  }
+  
+  .room-card.hidden {
+    display: none;
+  }
+</style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const priceRange = document.getElementById("price-range") as HTMLInputElement;
+    const priceValue = document.getElementById("price-value");
+    const capacityFilters = document.querySelectorAll(".capacity-filter");
+    const categoryFilters = document.querySelectorAll(".category-filter");
+    const roomCards = document.querySelectorAll(".room-card");
+    const resultsCount = document.getElementById("results-count");
+    const noResults = document.getElementById("no-results");
+
+    let currentMaxPrice = 160;
+    let currentCapacity = "all";
+    let currentCategory = "all";
+
+    function updateFilters() {
+      let visibleCount = 0;
+
+      roomCards.forEach(card => {
+        const price = parseInt(card.getAttribute("data-price") || "0");
+        const capacity = parseInt(card.getAttribute("data-capacity") || "0");
+        const category = card.getAttribute("data-category") || "";
+
+        // Check price
+        const priceMatch = price <= currentMaxPrice;
+        
+        // Check capacity
+        let capacityMatch = true;
+        if (currentCapacity === "2") {
+          capacityMatch = capacity <= 2;
+        } else if (currentCapacity === "4") {
+          capacityMatch = capacity >= 3 && capacity <= 4;
+        } else if (currentCapacity === "6") {
+          capacityMatch = capacity >= 5;
+        }
+
+        // Check category
+        const categoryMatch = currentCategory === "all" || category === currentCategory;
+
+        // Show/hide
+        if (priceMatch && capacityMatch && categoryMatch) {
+          card.classList.remove("hidden");
+          visibleCount++;
+        } else {
+          card.classList.add("hidden");
+        }
+      });
+
+      // Update count
+      if (resultsCount) {
+        resultsCount.textContent = visibleCount.toString();
+      }
+
+      // Show/hide no results message
+      if (noResults) {
+        if (visibleCount === 0) {
+          noResults.classList.remove("hidden");
+        } else {
+          noResults.classList.add("hidden");
+        }
+      }
+    }
+
+    // Price range
+    priceRange?.addEventListener("input", () => {
+      currentMaxPrice = parseInt(priceRange.value);
+      if (priceValue) {
+        priceValue.textContent = `$${currentMaxPrice}`;
+      }
+      updateFilters();
+    });
+
+    // Capacity filters
+    capacityFilters.forEach(filter => {
+      filter.addEventListener("click", () => {
+        const capacity = filter.getAttribute("data-capacity");
+        
+        capacityFilters.forEach(f => {
+          f.classList.remove("active");
+          f.classList.remove("bg-accent", "text-white");
+          f.classList.add("bg-gray-100", "text-gray-700");
+        });
+        filter.classList.add("active");
+        filter.classList.remove("bg-gray-100", "text-gray-700");
+        filter.classList.add("bg-accent", "text-white");
+        
+        currentCapacity = capacity || "all";
+        updateFilters();
+      });
+    });
+
+    // Category filters
+    categoryFilters.forEach(filter => {
+      filter.addEventListener("click", () => {
+        const category = filter.getAttribute("data-category");
+        
+        categoryFilters.forEach(f => {
+          f.classList.remove("active");
+          f.classList.remove("bg-accent", "text-white");
+          f.classList.add("bg-gray-100", "text-gray-700");
+        });
+        filter.classList.add("active");
+        filter.classList.remove("bg-gray-100", "text-gray-700");
+        filter.classList.add("bg-accent", "text-white");
+        
+        currentCategory = category || "all";
+        updateFilters();
+      });
+    });
+  });
+</script>

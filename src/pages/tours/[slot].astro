@@ -1,13 +1,13 @@
 ---
 // src/pages/tours/[slot].astro
 
+import ImageResource from "@/components/molecules/media/ImageResource.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { api } from "@/services/api";
+import { logger } from "@/services/logger.ts";
 import type { SiteConfig } from "@/types/config";
 import type { Tour } from "@/types/tours";
-import { logger } from "@/services/logger.ts";
 import { formatPrice } from "@/utils/currency";
-import ImageResource from "@/components/molecules/media/ImageResource.astro";
 
 const log = logger("tours:[slot]");
 

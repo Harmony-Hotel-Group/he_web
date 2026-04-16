@@ -1,11 +1,221 @@
 ---
-import UnderConstructionPage from "@/components/pages/UnderConstructionPage.astro";
+// pages/destinations/index.astro
 
-export const prerender = false;
+import ImageResource from "@/components/molecules/media/ImageResource.astro";
+import { Translations } from "@/i18n/translation.ts";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { api } from "@/services/api.ts";
+import type { SiteConfig } from "@/types/config";
+
+const lang = Astro.url.pathname.startsWith("/en") ? "en" : "es";
+const t = Translations(lang);
+const config = (await api.fetch("config", { params: { lang } })) as SiteConfig;
+
+// Obtener destinos y agrupar por categoría
+const destinations = config?.destinations || [];
+
+// Agrupar por categoría
+const categories = destinations.reduce(
+	(acc: Record<string, any[]>, dest: any) => {
+		const category = dest.category?.[lang] || dest.category?.es || "Otros";
+		if (!acc[category]) {
+			acc[category] = [];
+		}
+		acc[category].push(dest);
+		return acc;
+	},
+	{},
+);
+
+const texts = {
+	es: {
+		title: "Destinos Turísticos",
+		subtitle:
+			"Descubre los mejores lugares para visitar en Cuenca y alrededores",
+		explore: "Explorar destino",
+		noDestinations: "No hay destinos disponibles en este momento",
+		categories: "Categorías",
+		all: "Todos",
+	},
+	en: {
+		title: "Tourist Destinations",
+		subtitle: "Discover the best places to visit in Cuenca and surroundings",
+		explore: "Explore destination",
+		noDestinations: "No destinations available at the moment",
+		categories: "Categories",
+		all: "All",
+	},
+};
+
+const currentTexts = texts[lang as "es" | "en"] || texts.es;
+const categoryList = Object.keys(categories);
 ---
 
-<UnderConstructionPage
-    titleHead="nav.destinations"
-    title="Destinos"
-    message="Estamos recopilando los destinos más habituales para ayudarte. Pronto estará disponible."
-/>
+<BaseLayout
+    titleKey="nav.destinations"
+    lang={lang}
+    config={config}
+    headerBgClass="text-gray-900"
+>
+    <!-- Hero Section -->
+    <section class="relative bg-gradient-to-br from-primary via-primary/95 to-accent/90 py-16 md:py-24">
+        <div class="absolute inset-0 bg-black/20"></div>
+        <div class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="inline-flex items-center justify-center w-16 h-16 bg-white/20 rounded-full mb-6 backdrop-blur-sm">
+                <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+            </div>
+            <h1 class="text-4xl md:text-5xl font-serif text-white font-bold mb-4">
+                {currentTexts.title}
+            </h1>
+            <p class="text-xl text-white/90 max-w-2xl mx-auto">
+                {currentTexts.subtitle}
+            </p>
+        </div>
+    </section>
+
+    <!-- Destinations Content -->
+    <section class="py-16 md:py-24 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            {destinations.length > 0 ? (
+                <>
+                    <!-- Categories Filter -->
+                    <div class="flex flex-wrap justify-center gap-3 mb-12">
+                        <button
+                            data-category="all"
+                            class="dest-filter px-6 py-3 text-sm font-semibold rounded-full bg-accent text-white shadow-lg transition-all"
+                        >
+                            {currentTexts.all}
+                        </button>
+                        {categoryList.map((category) => (
+                            <button
+                                data-category={category}
+                                class="dest-filter px-6 py-3 text-sm font-semibold rounded-full bg-white text-gray-700 hover:bg-accent hover:text-white border border-gray-200 transition-all"
+                            >
+                                {category}
+                            </button>
+                        ))}
+                    </div>
+
+                    <!-- Destinations Grid -->
+                    <div class="destinations-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        {destinations.map((dest: any) => {
+                            const category = dest.category?.[lang] || dest.category?.es || "Otros";
+                            return (
+                                <div
+                                    class="dest-card bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+                                    data-category={category}
+                                >
+                                    <!-- Image -->
+                                    <div class="relative aspect-video overflow-hidden">
+                                        <ImageResource
+                                            src={dest.src || "src/assets/img/destinations/nature_reserves/el_cajas_park.webp"}
+                                            alt={dest.name?.[lang] || dest.name?.es || "Destination"}
+                                            loading="lazy"
+                                            classes="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                                            wrapperClasses="w-full h-full"
+                                        />
+                                        <div class="absolute top-4 left-4">
+                                            <span class="px-3 py-1 bg-white/90 backdrop-blur-sm text-primary text-xs font-bold rounded-full uppercase tracking-wider">
+                                                {category}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Content -->
+                                    <div class="p-6">
+                                        <h3 class="text-xl font-bold text-primary mb-3">
+                                            {dest.name?.[lang] || dest.name?.es}
+                                        </h3>
+                                        <p class="text-gray-600 text-sm leading-relaxed mb-4 line-clamp-3">
+                                            {dest.description?.[lang] || dest.description?.es}
+                                        </p>
+                                        
+                                        <!-- Tags -->
+                                        {dest.tags && dest.tags[lang] && (
+                                            <div class="flex flex-wrap gap-2 mb-4">
+                                                {dest.tags[lang].split(",").map((tag: string) => (
+                                                    <span class="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full">
+                                                        {tag.trim()}
+                                                    </span>
+                                                ))}
+                                            </div>
+                                        )}
+                                        
+                                        <!-- CTA -->
+                                        <a
+                                            href={`/destinations/${dest.id}`}
+                                            class="inline-flex items-center gap-2 text-accent font-semibold hover:text-accent/80 transition-colors"
+                                        >
+                                            {currentTexts.explore}
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                            </svg>
+                                        </a>
+                                    </div>
+                                </div>
+                            );
+                        })}
+                    </div>
+                </>
+            ) : (
+                <div class="text-center py-20">
+                    <svg class="w-24 h-24 mx-auto text-gray-300 mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                    <h3 class="text-2xl font-bold text-gray-600 mb-4">
+                        {currentTexts.noDestinations}
+                    </h3>
+                </div>
+            )}
+        </div>
+    </section>
+</BaseLayout>
+
+<style>
+    .dest-filter.active {
+        background: rgb(217 119 6);
+        color: white;
+        box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    }
+    
+    .dest-card.hidden {
+        display: none;
+    }
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const filters = document.querySelectorAll(".dest-filter");
+        const cards = document.querySelectorAll(".dest-card");
+
+        filters.forEach(filter => {
+            filter.addEventListener("click", () => {
+                const category = filter.getAttribute("data-category");
+
+                // Update active filter
+                filters.forEach(f => {
+                    f.classList.remove("active");
+                    f.classList.remove("bg-accent", "text-white");
+                    f.classList.add("bg-white", "text-gray-700");
+                });
+                filter.classList.add("active");
+                filter.classList.remove("bg-white", "text-gray-700");
+                filter.classList.add("bg-accent", "text-white");
+
+                // Filter cards
+                cards.forEach(card => {
+                    const cardCategory = card.getAttribute("data-category");
+                    if (category === "all" || cardCategory === category) {
+                        card.classList.remove("hidden");
+                    } else {
+                        card.classList.add("hidden");
+                    }
+                });
+            });
+        });
+    });
+</script>

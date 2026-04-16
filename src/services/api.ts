@@ -267,8 +267,6 @@ export const api = new Api({
 		(import.meta.env.VERCEL_URL
 			? `https://${import.meta.env.VERCEL_URL}`
 			: "") ||
-		// @ts-expect-error
-		(import.meta.env.BASE_URL as string | undefined) ||
 		"",
 	cacheDuration: cacheDurationMs,
 });

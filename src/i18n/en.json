@@ -1,98 +1,160 @@
 {
-  "booking": {
-    "title": "Booking to Aventure"
-  },
-  "nav": {
-    "home": "Home",
-    "about": "About Us",
-    "contact": "Contact",
-    "rooms": "Rooms",
-    "destinations": "Destinations",
-    "gastronomy": "Gastronomy",
-    "tours": "Tours",
-    "booking": "Book Now",
-    "blog": "Blog",
-    "cancellation": "Cancellation Policy",
-    "gallery": "Photo Gallery",
-    "privacy": "Privacy Policy",
-    "terms": "Terms & Conditions",
-    "faq": "FAQ",
-    "404": "Page Not Found",
-    "500": "Server Error",
-    "amenities": "Amenities"
-  },
-  "contact": {
-    "title": "Contact Us",
-    "subtitle": "We're here to help. Send us a message and we'll respond as soon as possible.",
-    "form": {
-      "title": "Send us a message",
-      "name": {
-        "label": "Full name",
-        "placeholder": "E.g: John Smith",
-        "error": "Please enter your full name"
-      },
-      "email": {
-        "label": "Email address",
-        "placeholder": "E.g: john@example.com",
-        "error": "Please enter a valid email address"
-      },
-      "phone": {
-        "label": "Phone (optional)",
-        "placeholder": "E.g: +1 234 567 8900",
-        "error": "Please enter a valid phone number"
-      },
-      "subject": {
-        "label": "Subject",
-        "placeholder": "E.g: Booking inquiry",
-        "error": "Please enter a subject"
-      },
-      "message": {
-        "label": "Message",
-        "placeholder": "Write your message here...",
-        "error": "Please enter your message"
-      },
-      "submit": "Send message",
-      "sending": "Sending...",
-      "success": "Message sent! We'll respond soon.",
-      "error": "Error sending. Please try again."
-    },
-    "info": {
-      "title": "Contact information",
-      "address": "Address",
-      "phone": "Phone",
-      "email": "Email",
-      "whatsapp": "WhatsApp",
-      "hours": {
-        "title": "Office hours",
-        "reception": "Reception",
-        "reservations": "Reservations",
-        "support": "Support",
-        "247": "24/7"
-      }
-    },
-    "faq": {
-      "title": "Frequently asked questions",
-      "q1": "What is the response time?",
-      "a1": "We respond to all messages within 2-4 business hours.",
-      "q2": "Can I book through this form?",
-      "a2": "Yes, you can send us your inquiry and we'll guide you through the booking process.",
-      "q3": "Do you accept credit cards?",
-      "a3": "Yes, we accept all major cards. We also accept cash.",
-      "q4": "How can I cancel a reservation?",
-      "a4": "You can cancel by sending us an email or WhatsApp. Check our cancellation policy."
-    },
-    "map": {
-      "title": "Our location",
-      "directions": "Get directions"
-    }
-  },
-  "amenities": {
-    "title": "Services & Amenities",
-    "subtitle": "Everything you need for a comfortable and enjoyable stay",
-    "highlights_title": "Our Featured Services",
-    "all_amenities": "All Amenities",
-    "cta_title": "Ready to book?",
-    "cta_subtitle": "Enjoy all our services and more",
-    "cta_button": "Book Now"
-  }
+	"booking": {
+		"title": "Book Your Adventure",
+		"subtitle": "Find and secure your spot for the next great experience.",
+		"guestName": "Full Name",
+		"guestEmail": "Email Address",
+		"guestPhone": "Phone (optional)",
+		"dropdown": {
+			"lblAdults": "Adults",
+			"optAdults": "{{i}} Adult{{s}}",
+			"optGroup": "Group",
+			"lblChildren": "Children",
+			"optChildren": "{{i}} Child{{s}}",
+			"lblRooms": "Rooms",
+			"optRooms": "{{i}} Room{{s}}",
+			"error": "Please select an option"
+		},
+		"switch": {
+			"breakfast": "Include Breakfast",
+			"vehicle": "I have a vehicle",
+			"special_request": "Special Request"
+		},
+		"btn": {
+			"search": "Book with an Advisor"
+		},
+		"dateRange": {
+			"title": "Select your dates",
+			"placeholder": "Select a date range",
+			"error": "No date selected"
+		},
+		"number": {
+			"error": "Please enter a valid number"
+		},
+		"vehicles": {
+			"title": "Reserve Vehicle",
+			"vehicle": "Vehicle",
+			"vehicles": {
+				"notesPlaceholder": "Additional information about parking, arrival times, etc."
+			},
+			"type": "Type",
+			"add": "Add Vehicle",
+			"remove": "Remove Vehicle",
+			"plate": {
+				"title": "Plate",
+				"placeholder": "ABC-1234 (Optional)"
+			},
+			"notes": "Additional note",
+			"notesPlaceHolder": "Describe additional notes"
+		},
+		"group": {
+			"title": "Group Information",
+			"adults": "Adults 18+",
+			"teens": "Teens 12-17",
+			"kids": "Kids 5-11",
+			"infants": "Infants 0-4",
+			"notes": "Special Request",
+			"notesPlaceholder": "Describe any special requests",
+			"vehicle": "We have vehicles",
+			"modal": {
+				"title": "Group Booking",
+				"cancel": "Cancel",
+				"confirm": "Confirm",
+				"includeVehicles": "Include vehicle information?"
+			}
+		}
+	},
+	"nav": {
+		"home": "Home",
+		"about": "About Us",
+		"contact": "Contact",
+		"rooms": "Rooms",
+		"destinations": "Destinations",
+		"gastronomy": "Gastronomy",
+		"tours": "Tours",
+		"booking": "Book Now",
+		"blog": "Blog",
+		"cancellation": "Cancellation Policy",
+		"gallery": "Photo Gallery",
+		"privacy": "Privacy Policy",
+		"terms": "Terms & Conditions",
+		"faq": "FAQ",
+		"404": "Page Not Found",
+		"500": "Server Error",
+		"amenities": "Amenities"
+	},
+	"contact": {
+		"title": "Contact Us",
+		"subtitle": "We're here to help. Send us a message and we'll respond as soon as possible.",
+		"form": {
+			"title": "Send us a message",
+			"name": {
+				"label": "Full name",
+				"placeholder": "E.g: John Smith",
+				"error": "Please enter your full name"
+			},
+			"email": {
+				"label": "Email address",
+				"placeholder": "E.g: john@example.com",
+				"error": "Please enter a valid email address"
+			},
+			"phone": {
+				"label": "Phone (optional)",
+				"placeholder": "E.g: +1 234 567 8900",
+				"error": "Please enter a valid phone number"
+			},
+			"subject": {
+				"label": "Subject",
+				"placeholder": "E.g: Booking inquiry",
+				"error": "Please enter a subject"
+			},
+			"message": {
+				"label": "Message",
+				"placeholder": "Write your message here...",
+				"error": "Please enter your message"
+			},
+			"submit": "Send message",
+			"sending": "Sending...",
+			"success": "Message sent! We'll respond soon.",
+			"error": "Error sending. Please try again."
+		},
+		"info": {
+			"title": "Contact information",
+			"address": "Address",
+			"phone": "Phone",
+			"email": "Email",
+			"whatsapp": "WhatsApp",
+			"hours": {
+				"title": "Office hours",
+				"reception": "Reception",
+				"reservations": "Reservations",
+				"support": "Support",
+				"247": "24/7"
+			}
+		},
+		"faq": {
+			"title": "Frequently asked questions",
+			"q1": "What is the response time?",
+			"a1": "We respond to all messages within 2-4 business hours.",
+			"q2": "Can I book through this form?",
+			"a2": "Yes, you can send us your inquiry and we'll guide you through the booking process.",
+			"q3": "Do you accept credit cards?",
+			"a3": "Yes, we accept all major cards. We also accept cash.",
+			"q4": "How can I cancel a reservation?",
+			"a4": "You can cancel by sending us an email or WhatsApp. Check our cancellation policy."
+		},
+		"map": {
+			"title": "Our location",
+			"directions": "Get directions"
+		}
+	},
+	"amenities": {
+		"title": "Services & Amenities",
+		"subtitle": "Everything you need for a comfortable and enjoyable stay",
+		"highlights_title": "Our Featured Services",
+		"all_amenities": "All Amenities",
+		"cta_title": "Ready to book?",
+		"cta_subtitle": "Enjoy all our services and more",
+		"cta_button": "Book Now"
+	}
 }

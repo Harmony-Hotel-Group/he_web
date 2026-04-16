@@ -117,16 +117,16 @@ export function logger(context: string) {
 
 	const base =
 		(level: "INFO" | "WARN" | "ERROR", type: "log" | "warn" | "error") =>
-			(...args: unknown[]) => {
-				if (!active) return;
+		(...args: unknown[]) => {
+			if (!active) return;
 
-				// Usar formato apropiado según el entorno
-				const formattedArgs = isServer
-					? formatLineServer(level, context, args)
-					: formatLineBrowser(level, context, args);
+			// Usar formato apropiado según el entorno
+			const formattedArgs = isServer
+				? formatLineServer(level, context, args)
+				: formatLineBrowser(level, context, args);
 
-				console[type](...formattedArgs);
-			};
+			console[type](...formattedArgs);
+		};
 
 	return {
 		info: base("INFO", "log"),

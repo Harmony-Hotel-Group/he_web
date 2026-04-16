@@ -5,8 +5,8 @@
  * Con validación de archivos locales usando glob
  */
 
-import { logger } from "@/services/logger";
 import type { ImageMetadata } from "astro";
+import { logger } from "@/services/logger";
 
 // Definir globs para diferentes tipos de recursos
 // Usamos rutas relativas para asegurar compatibilidad

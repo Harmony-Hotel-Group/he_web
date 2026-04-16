@@ -4,22 +4,25 @@
  * Genera y valida tokens para proteger formularios
  */
 
-import { logger } from '@/services/logger';
+import { logger } from "@/services/logger";
 
-const log = logger('CSRF');
+const log = logger("CSRF");
 
 // Almacenamiento de tokens en memoria (para producción usar Redis o similar)
 const tokenStore = new Map<string, { token: string; expires: number }>();
 
 // Limpiar tokens expirados cada 10 minutos
-setInterval(() => {
-    const now = Date.now();
-    for (const [key, value] of tokenStore.entries()) {
-        if (value.expires < now) {
-            tokenStore.delete(key);
-        }
-    }
-}, 10 * 60 * 1000);
+setInterval(
+	() => {
+		const now = Date.now();
+		for (const [key, value] of tokenStore.entries()) {
+			if (value.expires < now) {
+				tokenStore.delete(key);
+			}
+		}
+	},
+	10 * 60 * 1000,
+);
 
 /**
  * Genera un token CSRF único
@@ -27,15 +30,15 @@ setInterval(() => {
  * @returns Token CSRF
  */
 export async function generateCSRFToken(sessionId: string): Promise<string> {
-    const crypto = await import('crypto');
-    const token = crypto.randomBytes(32).toString('hex');
-    const expires = Date.now() + 60 * 60 * 1000; // 1 hora de validez
+	const crypto = await import("crypto");
+	const token = crypto.randomBytes(32).toString("hex");
+	const expires = Date.now() + 60 * 60 * 1000; // 1 hora de validez
 
-    tokenStore.set(sessionId, { token, expires });
+	tokenStore.set(sessionId, { token, expires });
 
-    log.info(`Token CSRF generado para sesión: ${sessionId.substring(0, 8)}...`);
+	log.info(`Token CSRF generado para sesión: ${sessionId.substring(0, 8)}...`);
 
-    return token;
+	return token;
 }
 
 /**
@@ -44,51 +47,62 @@ export async function generateCSRFToken(sessionId: string): Promise<string> {
  * @param token - Token a validar
  * @returns true si es válido, false si no
  */
-export async function validateCSRFToken(sessionId: string, token: string): Promise<boolean> {
-    const crypto = await import('crypto');
-    
-    if (!sessionId || !token) {
-        log.warn('Intento de validación CSRF sin sessionId o token');
-        return false;
-    }
+export async function validateCSRFToken(
+	sessionId: string,
+	token: string,
+): Promise<boolean> {
+	const crypto = await import("crypto");
 
-    const stored = tokenStore.get(sessionId);
+	if (!sessionId || !token) {
+		log.warn("Intento de validación CSRF sin sessionId o token");
+		return false;
+	}
 
-    if (!stored) {
-        log.warn(`Token CSRF no encontrado para sesión: ${sessionId.substring(0, 8)}...`);
-        return false;
-    }
+	const stored = tokenStore.get(sessionId);
 
-    if (stored.expires < Date.now()) {
-        log.warn(`Token CSRF expirado para sesión: ${sessionId.substring(0, 8)}...`);
-        tokenStore.delete(sessionId);
-        return false;
-    }
+	if (!stored) {
+		log.warn(
+			`Token CSRF no encontrado para sesión: ${sessionId.substring(0, 8)}...`,
+		);
+		return false;
+	}
 
-    // Comparación constante para prevenir timing attacks
-    try {
-        const isValid = crypto.timingSafeEqual(
-            Buffer.from(stored.token),
-            Buffer.from(token)
-        );
+	if (stored.expires < Date.now()) {
+		log.warn(
+			`Token CSRF expirado para sesión: ${sessionId.substring(0, 8)}...`,
+		);
+		tokenStore.delete(sessionId);
+		return false;
+	}
 
-        if (!isValid) {
-            log.warn(`Token CSRF inválido para sesión: ${sessionId.substring(0, 8)}...`);
-        }
+	// Comparación constante para prevenir timing attacks
+	try {
+		const isValid = crypto.timingSafeEqual(
+			Buffer.from(stored.token),
+			Buffer.from(token),
+		);
 
-        // Invalidar token después de usarlo (one-time use)
-        tokenStore.delete(sessionId);
+		if (!isValid) {
+			log.warn(
+				`Token CSRF inválido para sesión: ${sessionId.substring(0, 8)}...`,
+			);
+		}
 
-        return isValid;
-    } catch {
-        // Fallback para tokens de longitud diferente
-        const isValid = stored.token === token;
-        if (!isValid) {
-            log.warn(`Token CSRF inválido para sesión: ${sessionId.substring(0, 8)}...`);
-        }
-        tokenStore.delete(sessionId);
-        return isValid;
-    }
+		// Invalidar token después de usarlo (one-time use)
+		tokenStore.delete(sessionId);
+
+		return isValid;
+	} catch {
+		// Fallback para tokens de longitud diferente
+		const isValid = stored.token === token;
+		if (!isValid) {
+			log.warn(
+				`Token CSRF inválido para sesión: ${sessionId.substring(0, 8)}...`,
+			);
+		}
+		tokenStore.delete(sessionId);
+		return isValid;
+	}
 }
 
 /**
@@ -97,21 +111,19 @@ export async function validateCSRFToken(sessionId: string, token: string): Promi
  * @returns Hash de sesión
  */
 export async function getSessionHash(request: Request): Promise<string> {
-    const crypto = await import('crypto');
-    
-    // Obtener IP del cliente (considerando proxies)
-    const forwardedFor = request.headers.get('x-forwarded-for');
-    const ip = forwardedFor 
-        ? forwardedFor.split(',')[0].trim() 
-        : 'unknown';
-    
-    const userAgent = request.headers.get('user-agent') || 'unknown';
-    
-    // Crear hash único
-    const data = `${ip}:${userAgent}`;
-    const hash = crypto.createHash('sha256').update(data).digest('hex');
-    
-    return hash;
+	const crypto = await import("crypto");
+
+	// Obtener IP del cliente (considerando proxies)
+	const forwardedFor = request.headers.get("x-forwarded-for");
+	const ip = forwardedFor ? forwardedFor.split(",")[0].trim() : "unknown";
+
+	const userAgent = request.headers.get("user-agent") || "unknown";
+
+	// Crear hash único
+	const data = `${ip}:${userAgent}`;
+	const hash = crypto.createHash("sha256").update(data).digest("hex");
+
+	return hash;
 }
 
 /**
@@ -121,17 +133,17 @@ export async function getSessionHash(request: Request): Promise<string> {
  * @returns true si es válido, lanza error si no
  */
 export async function validateCSRFInAction(
-    request: Request,
-    formData: FormData
+	request: Request,
+	formData: FormData,
 ): Promise<boolean> {
-    const sessionId = await getSessionHash(request);
-    const token = formData.get('_csrf') as string;
+	const sessionId = await getSessionHash(request);
+	const token = formData.get("_csrf") as string;
 
-    const isValid = await validateCSRFToken(sessionId, token);
+	const isValid = await validateCSRFToken(sessionId, token);
 
-    if (!isValid) {
-        throw new Error('Token CSRF inválido o expirado');
-    }
+	if (!isValid) {
+		throw new Error("Token CSRF inválido o expirado");
+	}
 
-    return true;
+	return true;
 }

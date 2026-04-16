@@ -1,13 +1,13 @@
 ---
 //pages/tours/index.astro
 
-import BaseLayout from "@/layouts/BaseLayout.astro";
+import ImageResource from "@/components/molecules/media/ImageResource.astro";
 import { Translations } from "@/i18n/translation.ts";
+import BaseLayout from "@/layouts/BaseLayout.astro";
 import { api } from "@/services/api.ts";
 import { logger } from "@/services/logger.ts";
 import type { SiteConfig } from "@/types/config";
 import type { Tour } from "@/types/tours";
-import ImageResource from "@/components/molecules/media/ImageResource.astro";
 import { formatPrice } from "@/utils/currency";
 
 interface Props {

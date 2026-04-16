@@ -2,14 +2,15 @@
 // src/layouts/BaseLayout.astro
 // Layout principal con SEO unificado (OG, Twitter, JSON-LD, hreflang, canonical)
 
+import { ClientRouter } from "astro:transitions";
+import ScrollToTop from "@/components/atoms/ScrollToTop.astro";
+import WhatsAppButton from "@/components/atoms/WhatsAppButton.astro";
 import Footer from "@/components/core/Footer.astro";
 import Header from "@/components/core/Header.astro";
-import WhatsAppButton from "@/components/atoms/WhatsAppButton.astro";
 import ToastContainer from "@/components/organisms/notifications/ToastContainer.astro";
 import SizeIndicator from "@/dev/SizeIndicator.astro";
 import { getCurrentLang, Translations } from "@/i18n/translation";
 import type { SiteConfig } from "@/types/config";
-import { ClientRouter } from "astro:transitions";
 import "@glidejs/glide/dist/css/glide.core.min.css";
 import "@glidejs/glide/dist/css/glide.theme.min.css";
 import "@/styles/global.css";
@@ -62,35 +63,40 @@ const socialImageURL = new URL(ogImage || "/open-graph.jpg", baseUrl).href;
 const hotelSchema = {
 	"@context": "https://schema.org",
 	"@type": "Hotel",
-	"name": "Hotel Ensueños",
-	"description": "Hotel boutique en el centro histórico de Cuenca, Ecuador",
-	"url": baseUrl,
-	"telephone": "+593978888020",
-	"email": "reservas@hotelensueños.com",
-	"address": {
+	name: "Hotel Ensueños",
+	description: "Hotel boutique en el centro histórico de Cuenca, Ecuador",
+	url: baseUrl,
+	telephone: "+593978888020",
+	email: "reservas@hotelensueños.com",
+	address: {
 		"@type": "PostalAddress",
-		"streetAddress": "Gran Colombia 182 y Manuel Vega",
-		"addressLocality": "Cuenca",
-		"addressRegion": "Azuay",
-		"addressCountry": "EC"
+		streetAddress: "Gran Colombia 182 y Manuel Vega",
+		addressLocality: "Cuenca",
+		addressRegion: "Azuay",
+		addressCountry: "EC",
 	},
-	"geo": {
+	geo: {
 		"@type": "GeoCoordinates",
-		"latitude": "-2.8976",
-		"longitude": "-78.9973"
+		latitude: "-2.8976",
+		longitude: "-78.9973",
 	},
-	"checkinTime": "14:00",
-	"checkoutTime": "12:00",
-	"priceRange": "$25-$160",
-	"amenityFeature": [
-		{ "@type": "LocationFeatureSpecification", "name": "WiFi", "value": true },
-		{ "@type": "LocationFeatureSpecification", "name": "Desayuno", "value": true },
-		{ "@type": "LocationFeatureSpecification", "name": "Estacionamiento", "value": true }
-	]
+	checkinTime: "14:00",
+	checkoutTime: "12:00",
+	priceRange: "$25-$160",
+	amenityFeature: [
+		{ "@type": "LocationFeatureSpecification", name: "WiFi", value: true },
+		{ "@type": "LocationFeatureSpecification", name: "Desayuno", value: true },
+		{
+			"@type": "LocationFeatureSpecification",
+			name: "Estacionamiento",
+			value: true,
+		},
+	],
 };
 
 // SEO: keywords
-const siteKeywords = "hotel, hoteles, hotel en cuenca, hotel ecuador, reservas de hotel, habitaciones, suites, hospedaje, turismo, cuenca ecuador, centro historico, hotel boutique, alojamiento, hotel con wifi, hotel con desayuno, reservas online";
+const siteKeywords =
+	"hotel, hoteles, hotel en cuenca, hotel ecuador, reservas de hotel, habitaciones, suites, hospedaje, turismo, cuenca ecuador, centro historico, hotel boutique, alojamiento, hotel con wifi, hotel con desayuno, reservas online";
 ---
 
 <html lang={currentLang}>
@@ -168,7 +174,7 @@ const siteKeywords = "hotel, hoteles, hotel en cuenca, hotel ecuador, reservas d
             })
         </script>
     </head>
-    <body class="min-w-[850px] flex flex-col min-h-screen overflow-x-hidden">
+    <body class="flex flex-col min-h-screen overflow-x-hidden">
         <Header
             config={config as SiteConfig}
             lang={lang}
@@ -178,6 +184,7 @@ const siteKeywords = "hotel, hoteles, hotel en cuenca, hotel ecuador, reservas d
             <slot />
         </main>
         <WhatsAppButton />
+        <ScrollToTop />
         <Footer t={t} config={config as SiteConfig} lang={lang} />
         <ToastContainer />
         <SizeIndicator />

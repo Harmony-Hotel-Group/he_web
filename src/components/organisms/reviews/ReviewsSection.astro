@@ -21,7 +21,9 @@ interface Props {
 
 const { reviews, lang = "es", title } = Astro.props;
 
-const sectionTitle = title || (lang === "es" ? "Lo que dicen nuestros huéspedes" : "What our guests say");
+const sectionTitle =
+	title ||
+	(lang === "es" ? "Lo que dicen nuestros huéspedes" : "What our guests say");
 
 function renderStars(rating: number): string {
 	return "★".repeat(rating) + "☆".repeat(5 - rating);

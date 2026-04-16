@@ -12,11 +12,11 @@
  *   await notify.booking({ ... });
  */
 
-import { sendWhatsappMessage } from "./whatsapp";
-import { sendEmail, sendAdminEmail } from "./email";
+import { logger } from "@/services/logger";
+import { sendAdminEmail, sendEmail } from "./email";
 import { sendTelegramMessage } from "./telegram";
 import { postWebhook } from "./webhooks";
-import { logger } from "@/services/logger";
+import { sendWhatsappMessage } from "./whatsapp";
 
 const log = logger("messages:notifications");
 
@@ -59,7 +59,9 @@ interface NotifyOptions {
 const ENV = {
 	TELEGRAM_CHAT_ID: import.meta.env.TELEGRAM_CHAT_ID as string | undefined,
 	ADMIN_EMAIL: import.meta.env.ADMIN_EMAIL as string | undefined,
-	BOOKING_WEBHOOK_URL: import.meta.env.BOOKING_WEBHOOK_URL as string | undefined,
+	BOOKING_WEBHOOK_URL: import.meta.env.BOOKING_WEBHOOK_URL as
+		| string
+		| undefined,
 	DEV: import.meta.env.DEV as boolean,
 };
 
@@ -86,7 +88,8 @@ function formatBookingMessage(data: BookingNotificationData): string {
 	if (data.adults) lines.push(`👤 Adultos: ${data.adults}`);
 	if (data.children) lines.push(`👶 Niños: ${data.children}`);
 	if (data.rooms) lines.push(`🚪 Habitaciones: ${data.rooms}`);
-	if (data.breakfast) lines.push(`🍳 Desayuno: ${data.breakfast === "true" ? "Sí" : "No"}`);
+	if (data.breakfast)
+		lines.push(`🍳 Desayuno: ${data.breakfast === "true" ? "Sí" : "No"}`);
 
 	if (data.groupAdults) lines.push(`👤 Adultos (grupo): ${data.groupAdults}`);
 	if (data.groupTeens) lines.push(`👦 Adolescentes: ${data.groupTeens}`);
@@ -110,9 +113,7 @@ function formatBookingMessage(data: BookingNotificationData): string {
 }
 
 function formatPlainMessage(data: BookingNotificationData): string {
-	return formatBookingMessage(data)
-		.replace(/\*/g, "")
-		.replace(/_/g, "");
+	return formatBookingMessage(data).replace(/\*/g, "").replace(/_/g, "");
 }
 
 // ============== Despacho por canal ==============
@@ -130,10 +131,14 @@ async function dispatchToTelegram(text: string): Promise<NotificationResult> {
 	}
 }
 
-async function dispatchToEmail(subject: string, text: string): Promise<NotificationResult> {
+async function dispatchToEmail(
+	subject: string,
+	text: string,
+): Promise<NotificationResult> {
 	try {
 		const result = await sendAdminEmail(subject, text);
-		if (result.skipped) {
+		const skipped = "skipped" in result && result.skipped;
+		if (skipped) {
 			log.info("Email: no configurado, omitido");
 			return { channel: "email", ok: false, skipped: true };
 		}
@@ -143,7 +148,10 @@ async function dispatchToEmail(subject: string, text: string): Promise<Notificat
 	}
 }
 
-async function dispatchToWebhook(url: string, data: BookingNotificationData): Promise<NotificationResult> {
+async function dispatchToWebhook(
+	url: string,
+	data: BookingNotificationData,
+): Promise<NotificationResult> {
 	try {
 		const result = await postWebhook(url, {
 			type: "booking",
@@ -286,7 +294,12 @@ export async function notifyContactForm(
 				break;
 			case "webhook":
 				if (webhookUrl) {
-					results.push(await dispatchToWebhook(webhookUrl, { type: "standard", ...data } as BookingNotificationData));
+					results.push(
+						await dispatchToWebhook(webhookUrl, {
+							type: "standard",
+							...data,
+						} as BookingNotificationData),
+					);
 				} else {
 					results.push({ channel: "webhook", ok: false, skipped: true });
 				}
@@ -295,7 +308,9 @@ export async function notifyContactForm(
 	}
 
 	const sent = results.filter((r) => r.ok).length;
-	log.info(`Notificación de contacto enviada: ${sent}/${results.length} canales`);
+	log.info(
+		`Notificación de contacto enviada: ${sent}/${results.length} canales`,
+	);
 
 	return results;
 }

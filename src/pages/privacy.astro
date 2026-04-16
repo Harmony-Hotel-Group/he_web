@@ -1,8 +1,8 @@
 ---
 // pages/privacy.astro
 
-import BaseLayout from "@/layouts/BaseLayout.astro";
 import { Translations } from "@/i18n/translation.ts";
+import BaseLayout from "@/layouts/BaseLayout.astro";
 import { api } from "@/services/api.ts";
 import type { SiteConfig } from "@/types/config";
 
@@ -11,82 +11,98 @@ const t = Translations(lang);
 const config = (await api.fetch("config", { params: { lang } })) as SiteConfig;
 
 const texts = {
-    es: {
-        title: "Política de Privacidad",
-        lastUpdated: "Última actualización",
-        sections: {
-            intro: {
-                title: "Introducción",
-                content: "En Hotel Ensueños, nos tomamos muy en serio la privacidad de tus datos personales. Esta Política de Privacidad describe cómo recopilamos, usamos y protegemos tu información cuando utilizas nuestros servicios."
-            },
-            dataCollection: {
-                title: "Información que Recopilamos",
-                content: "Recopilamos información que nos proporcionas directamente cuando haces una reserva, te registras en nuestro sitio web o te comunicas con nosotros. Esto puede incluir: nombre, dirección de correo electrónico, número de teléfono, información de pago, y preferencias de estancia."
-            },
-            dataUsage: {
-                title: "Cómo Usamos Tu Información",
-                content: "Usamos tu información para procesar reservas, proporcionar servicios solicitados, enviar comunicaciones relacionadas con tu estancia, mejorar nuestros servicios, y cumplir con obligaciones legales."
-            },
-            dataProtection: {
-                title: "Protección de Datos",
-                content: "Implementamos medidas de seguridad técnicas y organizativas apropiadas para proteger tu información personal contra acceso no autorizado, pérdida, alteración o divulgación."
-            },
-            thirdParties: {
-                title: "Compartición con Terceros",
-                content: "No vendemos ni alquilamos tu información personal a terceros. Podemos compartir tu información con proveedores de servicios que nos ayudan a operar nuestro negocio, siempre que estén sujetos a obligaciones de confidencialidad."
-            },
-            rights: {
-                title: "Tus Derechos",
-                content: "Tienes derecho a acceder, rectificar, eliminar o limitar el tratamiento de tus datos personales. También puedes oponerte al tratamiento o solicitar la portabilidad de tus datos. Para ejercer estos derechos, contáctanos en privacidad@hotelensuenos.com."
-            },
-            cookies: {
-                title: "Cookies",
-                content: "Nuestro sitio web utiliza cookies para mejorar tu experiencia de navegación. Puedes configurar tu navegador para rechazar las cookies, pero esto puede afectar la funcionalidad del sitio."
-            },
-            contact: {
-                title: "Contacto",
-                content: "Si tienes preguntas sobre esta Política de Privacidad, contáctanos en privacidad@hotelensuenos.com o Gran Colombia 182 y Manuel Vega, Cuenca, Ecuador."
-            }
-        }
-    },
-    en: {
-        title: "Privacy Policy",
-        lastUpdated: "Last updated",
-        sections: {
-            intro: {
-                title: "Introduction",
-                content: "At Hotel Ensueños, we take your personal data privacy very seriously. This Privacy Policy describes how we collect, use, and protect your information when you use our services."
-            },
-            dataCollection: {
-                title: "Information We Collect",
-                content: "We collect information you provide directly when making a reservation, registering on our website, or contacting us. This may include: name, email address, phone number, payment information, and stay preferences."
-            },
-            dataUsage: {
-                title: "How We Use Your Information",
-                content: "We use your information to process reservations, provide requested services, send communications related to your stay, improve our services, and comply with legal obligations."
-            },
-            dataProtection: {
-                title: "Data Protection",
-                content: "We implement appropriate technical and organizational security measures to protect your personal information against unauthorized access, loss, alteration, or disclosure."
-            },
-            thirdParties: {
-                title: "Sharing with Third Parties",
-                content: "We do not sell or rent your personal information to third parties. We may share your information with service providers who help us operate our business, provided they are subject to confidentiality obligations."
-            },
-            rights: {
-                title: "Your Rights",
-                content: "You have the right to access, rectify, delete, or limit the processing of your personal data. You may also object to processing or request data portability. To exercise these rights, contact us at privacidad@hotelensuenos.com."
-            },
-            cookies: {
-                title: "Cookies",
-                content: "Our website uses cookies to improve your browsing experience. You can configure your browser to reject cookies, but this may affect site functionality."
-            },
-            contact: {
-                title: "Contact",
-                content: "If you have questions about this Privacy Policy, contact us at privacidad@hotelensuenos.com or Gran Colombia 182 y Manuel Vega, Cuenca, Ecuador."
-            }
-        }
-    }
+	es: {
+		title: "Política de Privacidad",
+		lastUpdated: "Última actualización",
+		sections: {
+			intro: {
+				title: "Introducción",
+				content:
+					"En Hotel Ensueños, nos tomamos muy en serio la privacidad de tus datos personales. Esta Política de Privacidad describe cómo recopilamos, usamos y protegemos tu información cuando utilizas nuestros servicios.",
+			},
+			dataCollection: {
+				title: "Información que Recopilamos",
+				content:
+					"Recopilamos información que nos proporcionas directamente cuando haces una reserva, te registras en nuestro sitio web o te comunicas con nosotros. Esto puede incluir: nombre, dirección de correo electrónico, número de teléfono, información de pago, y preferencias de estancia.",
+			},
+			dataUsage: {
+				title: "Cómo Usamos Tu Información",
+				content:
+					"Usamos tu información para procesar reservas, proporcionar servicios solicitados, enviar comunicaciones relacionadas con tu estancia, mejorar nuestros servicios, y cumplir con obligaciones legales.",
+			},
+			dataProtection: {
+				title: "Protección de Datos",
+				content:
+					"Implementamos medidas de seguridad técnicas y organizativas apropiadas para proteger tu información personal contra acceso no autorizado, pérdida, alteración o divulgación.",
+			},
+			thirdParties: {
+				title: "Compartición con Terceros",
+				content:
+					"No vendemos ni alquilamos tu información personal a terceros. Podemos compartir tu información con proveedores de servicios que nos ayudan a operar nuestro negocio, siempre que estén sujetos a obligaciones de confidencialidad.",
+			},
+			rights: {
+				title: "Tus Derechos",
+				content:
+					"Tienes derecho a acceder, rectificar, eliminar o limitar el tratamiento de tus datos personales. También puedes oponerte al tratamiento o solicitar la portabilidad de tus datos. Para ejercer estos derechos, contáctanos en privacidad@hotelensuenos.com.",
+			},
+			cookies: {
+				title: "Cookies",
+				content:
+					"Nuestro sitio web utiliza cookies para mejorar tu experiencia de navegación. Puedes configurar tu navegador para rechazar las cookies, pero esto puede afectar la funcionalidad del sitio.",
+			},
+			contact: {
+				title: "Contacto",
+				content:
+					"Si tienes preguntas sobre esta Política de Privacidad, contáctanos en privacidad@hotelensuenos.com o Gran Colombia 182 y Manuel Vega, Cuenca, Ecuador.",
+			},
+		},
+	},
+	en: {
+		title: "Privacy Policy",
+		lastUpdated: "Last updated",
+		sections: {
+			intro: {
+				title: "Introduction",
+				content:
+					"At Hotel Ensueños, we take your personal data privacy very seriously. This Privacy Policy describes how we collect, use, and protect your information when you use our services.",
+			},
+			dataCollection: {
+				title: "Information We Collect",
+				content:
+					"We collect information you provide directly when making a reservation, registering on our website, or contacting us. This may include: name, email address, phone number, payment information, and stay preferences.",
+			},
+			dataUsage: {
+				title: "How We Use Your Information",
+				content:
+					"We use your information to process reservations, provide requested services, send communications related to your stay, improve our services, and comply with legal obligations.",
+			},
+			dataProtection: {
+				title: "Data Protection",
+				content:
+					"We implement appropriate technical and organizational security measures to protect your personal information against unauthorized access, loss, alteration, or disclosure.",
+			},
+			thirdParties: {
+				title: "Sharing with Third Parties",
+				content:
+					"We do not sell or rent your personal information to third parties. We may share your information with service providers who help us operate our business, provided they are subject to confidentiality obligations.",
+			},
+			rights: {
+				title: "Your Rights",
+				content:
+					"You have the right to access, rectify, delete, or limit the processing of your personal data. You may also object to processing or request data portability. To exercise these rights, contact us at privacidad@hotelensuenos.com.",
+			},
+			cookies: {
+				title: "Cookies",
+				content:
+					"Our website uses cookies to improve your browsing experience. You can configure your browser to reject cookies, but this may affect site functionality.",
+			},
+			contact: {
+				title: "Contact",
+				content:
+					"If you have questions about this Privacy Policy, contact us at privacidad@hotelensuenos.com or Gran Colombia 182 y Manuel Vega, Cuenca, Ecuador.",
+			},
+		},
+	},
 };
 
 const currentTexts = texts[lang as "es" | "en"] || texts.es;

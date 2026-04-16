@@ -1,8 +1,8 @@
 ---
 // pages/gallery.astro
 
-import BaseLayout from "@/layouts/BaseLayout.astro";
 import { Translations } from "@/i18n/translation.ts";
+import BaseLayout from "@/layouts/BaseLayout.astro";
 import { api } from "@/services/api.ts";
 import type { SiteConfig } from "@/types/config";
 
@@ -13,39 +13,39 @@ const config = (await api.fetch("config", { params: { lang } })) as SiteConfig;
 // Obtener imágenes de aboutUs y rooms
 const aboutImages = config?.aboutUs?.images || [];
 const allImages = [
-    ...aboutImages.slice(0, 10),
-    // Agregar imágenes de habitaciones
-    ...(config?.rooms?.slice(0, 4).map((room: any) => ({
-        src: room.src,
-        alt: room.name?.[lang] || "Room",
-        category: "rooms",
-    })) || []),
+	...aboutImages.slice(0, 10),
+	// Agregar imágenes de habitaciones
+	...(config?.rooms?.slice(0, 4).map((room: any) => ({
+		src: room.src,
+		alt: room.name?.[lang] || "Room",
+		category: "rooms",
+	})) || []),
 ];
 
 // Categorías de galería
 const categories = [
-    { id: "all", label: lang === "es" ? "Todas" : "All" },
-    { id: "lobby", label: lang === "es" ? "Lobby" : "Lobby" },
-    { id: "lounge", label: lang === "es" ? "Lounge" : "Lounge" },
-    { id: "rooms", label: lang === "es" ? "Habitaciones" : "Rooms" },
-    { id: "exterior", label: lang === "es" ? "Exterior" : "Exterior" },
+	{ id: "all", label: lang === "es" ? "Todas" : "All" },
+	{ id: "lobby", label: lang === "es" ? "Lobby" : "Lobby" },
+	{ id: "lounge", label: lang === "es" ? "Lounge" : "Lounge" },
+	{ id: "rooms", label: lang === "es" ? "Habitaciones" : "Rooms" },
+	{ id: "exterior", label: lang === "es" ? "Exterior" : "Exterior" },
 ];
 
 const texts = {
-    es: {
-        title: "Galería de Fotos",
-        subtitle: "Explora nuestras instalaciones y espacios",
-        filter: "Filtrar por",
-        viewLarger: "Click para ver en tamaño grande",
-        backToTop: "Volver arriba",
-    },
-    en: {
-        title: "Photo Gallery",
-        subtitle: "Explore our facilities and spaces",
-        filter: "Filter by",
-        viewLarger: "Click to view in full size",
-        backToTop: "Back to top",
-    },
+	es: {
+		title: "Galería de Fotos",
+		subtitle: "Explora nuestras instalaciones y espacios",
+		filter: "Filtrar por",
+		viewLarger: "Click para ver en tamaño grande",
+		backToTop: "Volver arriba",
+	},
+	en: {
+		title: "Photo Gallery",
+		subtitle: "Explore our facilities and spaces",
+		filter: "Filter by",
+		viewLarger: "Click to view in full size",
+		backToTop: "Back to top",
+	},
 };
 
 const currentTexts = texts[lang as "es" | "en"] || texts.es;

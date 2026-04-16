@@ -154,7 +154,7 @@ async function safeWriteLocal<T>(
 async function ensureLocalDir(localFile: string) {
 	try {
 		await fs.mkdir(path.dirname(localFile), { recursive: true });
-	} catch { }
+	} catch {}
 }
 
 function deepEqual(a: unknown, b: unknown): boolean {
@@ -182,7 +182,8 @@ export function configureCacheControl(options: {
 	const GLOBAL_CACHE = globalThis.__API_CACHE__;
 	const CACHE_CONTROL = globalThis.__CACHE_CONTROL__;
 
-	const targets = options.targets && options.targets.length > 0 ? options.targets : ["ALL"];
+	const targets =
+		options.targets && options.targets.length > 0 ? options.targets : ["ALL"];
 	const missingKeys: string[] = [];
 
 	// Validation: Check if targets exist (except ALL)

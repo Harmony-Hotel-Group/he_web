@@ -1,5 +1,5 @@
 import type { Tour } from "@/types/tour";
-import { erpClient, type ErpClient } from "./erp.client";
+import { type ErpClient, erpClient } from "./erp.client";
 
 export interface ErpTourContract {
 	id: string;
@@ -20,7 +20,8 @@ const ERP_TOURS_MOCK: ErpTourContract[] = [
 	{
 		id: "tour-galapagos-full-day",
 		name: "Tour Galápagos Full Day",
-		description: "Excursión de día completo con guía local y actividades en playa.",
+		description:
+			"Excursión de día completo con guía local y actividades en playa.",
 		price: 120,
 		image: "src/assets/img/cities/cuenca/calderon-catedral.webp",
 		active: true,
@@ -28,7 +29,8 @@ const ERP_TOURS_MOCK: ErpTourContract[] = [
 	{
 		id: "tour-isabela-adventure",
 		name: "Aventura Isabela",
-		description: "Recorrido por túneles de lava, senderos y puntos de avistamiento.",
+		description:
+			"Recorrido por túneles de lava, senderos y puntos de avistamiento.",
 		price: 95,
 		image: "src/assets/img/destinations/nature_reserves/el_cajas_park.webp",
 		active: true,
@@ -46,11 +48,12 @@ export function mapErpTourToDomain(item: ErpTourContract): Tour {
 	};
 }
 
-export async function fetchErpTours(client: ErpClient = erpClient): Promise<ErpToursResponse> {
-	const data = await client.get<{ items: ErpTourContract[] }>(
-		"/erp/tours",
-		{ items: ERP_TOURS_MOCK },
-	);
+export async function fetchErpTours(
+	client: ErpClient = erpClient,
+): Promise<ErpToursResponse> {
+	const data = await client.get<{ items: ErpTourContract[] }>("/erp/tours", {
+		items: ERP_TOURS_MOCK,
+	});
 
 	const items = Array.isArray(data?.items) ? data.items : ERP_TOURS_MOCK;
 

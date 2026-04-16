@@ -1,23 +1,21 @@
 ---
 // src/components/organisms/booking/BookingForm.astro
 import Button from "@/components/atoms/button/Button.astro";
+import CSRFToken from "@/components/atoms/CSRFToken.astro";
+import Icono from "@/components/atoms/Icono.astro";
 import Label from "@/components/atoms/Label.astro";
 import TextAreaInput from "@/components/atoms/TextAreaInput.astro";
-import CSRFToken from "@/components/atoms/CSRFToken.astro";
-
+import BookingSummaryModal from "@/components/molecules/booking/BookingSummaryModal.astro";
 import DatePickerField from "@/components/molecules/forms/DatePickerField.astro";
 import DropDownField from "@/components/molecules/forms/DropdownField.astro";
+import NumberField from "@/components/molecules/forms/NumberField.astro";
 import SwitchField from "@/components/molecules/forms/SwitchField.astro";
 import { Translations } from "@/i18n/translation.ts";
 import Grid from "@/layouts/GridLayout.astro";
 import Row from "@/layouts/Row.astro";
 import type { SiteConfig } from "@/types/config";
-
 import { range } from "@/utils/math.ts";
-import NumberField from "@/components/molecules/forms/NumberField.astro";
 import BookingVehicleSection from "./BookingVehicleSection.astro";
-import Icono from "@/components/atoms/Icono.astro";
-import BookingSummaryModal from "@/components/molecules/booking/BookingSummaryModal.astro";
 
 interface Props {
 	lang: string;
@@ -77,6 +75,7 @@ const email = config?.contactInfo?.email ?? "";
   id="booking-form"
   method="post"
   class="rounded-xl space-y-3"
+  data-lang={lang}
   data-whatsapp={whatsappNumber}
   data-email={email}
 >
@@ -266,18 +265,18 @@ const email = config?.contactInfo?.email ?? "";
     import { actions } from "astro:actions";
     import { buildBookingMessage } from "@/domain/booking/buildBookingMessage";
 
-    // Get lang from Astro.props
-    const lang = Astro.props.lang;
-
-    document.addEventListener("DOMContentLoaded", async () => {
+    document.addEventListener("astro:page-load", async () => {
       const form: HTMLFormElement = document.getElementById(
         "booking-form",
       ) as HTMLFormElement;
       if (!form) return;
+      if (form.dataset.initialized === "true") return;
+      form.dataset.initialized = "true";
+
+      const lang = form.dataset.lang || "es";
 
       const bookingBar = form.closest("#booking-bar");
       const vehicleSection = document.getElementById("vehicle-section");
-      const vehicleSwitchButton = form.querySelector("button#vehicle");
 
       // Elements for Group Mode
       const standardFields = document.getElementById("standard-fields");
@@ -296,47 +295,56 @@ const email = config?.contactInfo?.email ?? "";
         "dateRangeGroup",
       ) as HTMLInputElement;
 
-      // Toggle Vehicle Section
-      if (vehicleSwitchButton && vehicleSection) {
-        const observer = new MutationObserver((mutations) => {
-          const mutation = mutations[0];
-          if (mutation.attributeName !== "aria-checked") return;
-
-          const isChecked =
-            vehicleSwitchButton.getAttribute("aria-checked") === "true";
-          vehicleSection.classList.toggle("hidden", !isChecked);
-          bookingBar?.classList.toggle("max-h-[80vh]", isChecked);
-          bookingBar?.classList.toggle("overflow-y-auto", isChecked);
-        });
-
-        observer.observe(vehicleSwitchButton, {
-          attributes: true,
-          attributeFilter: ["aria-checked"],
-        });
+      // Toggle Vehicle Section - Listen to switch:change event
+      if (vehicleSection) {
+        const handleVehicleSwitch = (e: Event) => {
+          const detail = (e as CustomEvent).detail;
+          console.log("[BookingForm] Vehicle switch event received:", detail);
+          if (detail && detail.name === 'vehicle') {
+            vehicleSection.classList.toggle("hidden", !detail.checked);
+            bookingBar?.classList.toggle("max-h-[80vh]", detail.checked);
+            bookingBar?.classList.toggle("overflow-y-auto", detail.checked);
+          }
+        };
+        
+        form.addEventListener("switch:change", handleVehicleSwitch);
+        
+        // Set initial state based on vehicle switch checked attribute
+        setTimeout(() => {
+          const vehicleSwitch = form.querySelector('[data-switch-name="vehicle"]') as HTMLButtonElement;
+          if (vehicleSwitch) {
+            const initialVehicleChecked = vehicleSwitch.getAttribute("aria-checked") === "true";
+            console.log("[BookingForm] Initial vehicle checked:", initialVehicleChecked);
+            if (initialVehicleChecked) {
+              vehicleSection.classList.remove("hidden");
+            }
+          }
+        }, 100);
       }
 
-      // Toggle Special Request Section (Switch)
-      // The SwitchField component usually uses a button with role="switch" inside.
-      // We need to find the button associated with 'special_request'.
-      const specialRequestSwitchBtn = form.querySelector(
-        "button#special_request",
-      );
-
-      if (specialRequestSwitchBtn && specialRequestSection) {
-        const observer = new MutationObserver((mutations) => {
-          const mutation = mutations[0];
-          if (mutation.attributeName !== "aria-checked") return;
-
-          const isChecked =
-            specialRequestSwitchBtn.getAttribute("aria-checked") === "true";
-          specialRequestSection.classList.toggle("hidden", !isChecked);
-          // Optional: auto-scroll or expand layout if needed
-        });
-
-        observer.observe(specialRequestSwitchBtn, {
-          attributes: true,
-          attributeFilter: ["aria-checked"],
-        });
+      // Toggle Special Request Section - Listen to switch:change event
+      if (specialRequestSection) {
+        const handleSpecialRequestSwitch = (e: Event) => {
+          const detail = (e as CustomEvent).detail;
+          console.log("[BookingForm] Special request switch event received:", detail);
+          if (detail && detail.name === 'special_request') {
+            specialRequestSection.classList.toggle("hidden", !detail.checked);
+          }
+        };
+        
+        form.addEventListener("switch:change", handleSpecialRequestSwitch);
+        
+        // Set initial state based on special_request switch checked attribute
+        setTimeout(() => {
+          const specialSwitch = form.querySelector('[data-switch-name="special_request"]') as HTMLButtonElement;
+          if (specialSwitch) {
+            const initialSpecialChecked = specialSwitch.getAttribute("aria-checked") === "true";
+            console.log("[BookingForm] Initial special_request checked:", initialSpecialChecked);
+            if (initialSpecialChecked) {
+              specialRequestSection.classList.remove("hidden");
+            }
+          }
+        }, 100);
       }
 
       // Group Mode Logic
@@ -365,10 +373,12 @@ const email = config?.contactInfo?.email ?? "";
       if (adultsDropdown) {
         adultsDropdown.addEventListener("change", (e) => {
           const target = e.target as HTMLSelectElement;
-          if (target.value === "group") {
-            toggleGroupMode(true);
-          }
+          toggleGroupMode(target.value === "group");
         });
+      }
+
+      if (adultsDropdown?.value === "group") {
+        toggleGroupMode(true);
       }
 
       if (btnCancelGroup) {
@@ -509,7 +519,10 @@ const email = config?.contactInfo?.email ?? "";
         }
 
         // Verificar disponibilidad antes de continuar
-        const dateRangeValue = (document.getElementById("dateRange") as HTMLInputElement)?.value;
+        const isGroupMode = !groupFields?.classList.contains("hidden");
+        const dateRangeValue = isGroupMode
+          ? (document.getElementById("dateRangeGroup") as HTMLInputElement)?.value
+          : (document.getElementById("dateRange") as HTMLInputElement)?.value;
         if (dateRangeValue) {
           const availability = await checkAvailability(dateRangeValue);
 
@@ -543,8 +556,8 @@ const email = config?.contactInfo?.email ?? "";
           }
 
           const { processing, bookingNumber } = data;
-          const isVehicleChecked =
-            vehicleSwitchButton?.getAttribute("aria-checked") === "true";
+          const vehicleSwitchForSubmit = form.querySelector('[data-switch-name="vehicle"]') as HTMLButtonElement;
+          const isVehicleChecked = vehicleSwitchForSubmit?.getAttribute("aria-checked") === "true";
 
           const distributionLabel =
             (document.getElementById("distributionType") as HTMLSelectElement)
@@ -574,6 +587,7 @@ const email = config?.contactInfo?.email ?? "";
           // Show booking summary modal before sending to WhatsApp
           showBookingSummary({
             processing,
+            bookingNumber,
             isGroupMode,
             isVehicleChecked,
             vehicleItems,
@@ -620,12 +634,21 @@ const email = config?.contactInfo?.email ?? "";
           modal.classList.add("active");
         }, 10);
 
+        if (policiesCheckbox) {
+          policiesCheckbox.checked = false;
+        }
+        if (confirmBtn) {
+          (confirmBtn as HTMLButtonElement).disabled = true;
+        }
+
         // Enable confirm button when policies are accepted
-        policiesCheckbox?.addEventListener("change", function() {
-          if (confirmBtn) {
-            (confirmBtn as HTMLButtonElement).disabled = !this.checked;
-          }
-        });
+        if (policiesCheckbox) {
+          policiesCheckbox.onchange = function() {
+            if (confirmBtn) {
+              (confirmBtn as HTMLButtonElement).disabled = !this.checked;
+            }
+          };
+        }
 
         // Close modal function
         const closeModal = () => {
@@ -636,22 +659,22 @@ const email = config?.contactInfo?.email ?? "";
         };
 
         // Event listeners
-        closeBtn?.addEventListener("click", closeModal);
-        cancelBtn?.addEventListener("click", closeModal);
+        if (closeBtn) closeBtn.onclick = closeModal;
+        if (cancelBtn) cancelBtn.onclick = closeModal;
 
         // Close on backdrop click
-        modal.addEventListener("click", (e) => {
+        modal.onclick = (e) => {
           const target = e.target as HTMLElement;
           if (target === modal || target.id === "modal-backdrop") {
             closeModal();
           }
-        });
+        };
 
         // Confirm and send to WhatsApp
-        confirmBtn?.addEventListener("click", () => {
-          sendToWhatsApp(bookingData);
+        if (confirmBtn) confirmBtn.onclick = () => {
+          sendToWhatsApp(bookingData, bookingData.bookingNumber);
           closeModal();
-        });
+        };
 
         // Close on escape key
         const handleEscape = (e: KeyboardEvent) => {

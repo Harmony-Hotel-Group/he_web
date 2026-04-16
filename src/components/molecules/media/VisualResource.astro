@@ -6,15 +6,15 @@
  */
 
 import type { ImageMetadata } from "astro";
-import ImageResource from "./ImageResource.astro";
-import VideoResource from "./VideoResource.astro";
 import { logger } from "@/services/logger.ts";
 import {
 	detectResourceType,
+	extractYouTubeId,
 	type ResourceType,
 	validateResource,
-	extractYouTubeId,
 } from "@/utils/visual-resource-utils.ts";
+import ImageResource from "./ImageResource.astro";
+import VideoResource from "./VideoResource.astro";
 import YouTubeResource from "./YouTubeResource.astro";
 
 const log = logger("VisualResource");
@@ -53,11 +53,7 @@ const {
 	sizes,
 } = Astro.props;
 
-function getInlinePlaceholder(
-	w: number,
-	h: number,
-	text: string,
-): string {
+function getInlinePlaceholder(w: number, h: number, text: string): string {
 	const safeW = Number.isFinite(w) && w > 0 ? Math.round(w) : 600;
 	const safeH = Number.isFinite(h) && h > 0 ? Math.round(h) : 400;
 	const safeText = (text || "Recurso no encontrado").slice(0, 40);
@@ -65,7 +61,11 @@ function getInlinePlaceholder(
 	return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
 }
 
-const PlaceHolder = getInlinePlaceholder(width, height, alt || "Recurso no encontrado");
+const PlaceHolder = getInlinePlaceholder(
+	width,
+	height,
+	alt || "Recurso no encontrado",
+);
 
 // Detectar tipo de recurso
 const detectedType: ResourceType =

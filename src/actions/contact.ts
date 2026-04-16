@@ -3,9 +3,13 @@ import { defineAction } from "astro:actions";
 import { z } from "astro:schema";
 import { logger } from "@/services/logger";
 import { notifyContactForm } from "@/services/messages/notifications";
-import { validateFormData, contactFormSchema, sanitizeText } from "@/utils/validation";
 import { validateCSRFInAction } from "@/utils/csrf";
 import { applyRateLimit, presets } from "@/utils/rateLimit";
+import {
+	contactFormSchema,
+	sanitizeText,
+	validateFormData,
+} from "@/utils/validation";
 
 const log = logger("Contact");
 
@@ -28,7 +32,10 @@ export const contact = defineAction({
 			return {
 				success: false,
 				error: {
-					message: error instanceof Error ? error.message : "Demasiados intentos. Por favor espera un momento.",
+					message:
+						error instanceof Error
+							? error.message
+							: "Demasiados intentos. Por favor espera un momento.",
 				},
 			};
 		}
@@ -41,7 +48,8 @@ export const contact = defineAction({
 			return {
 				success: false,
 				error: {
-					message: "Error de seguridad. Por favor recarga la página e intenta de nuevo.",
+					message:
+						"Error de seguridad. Por favor recarga la página e intenta de nuevo.",
 				},
 			};
 		}

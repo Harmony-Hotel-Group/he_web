@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "skills": {
+    "astro": {
+      "source": "claude-dev-suite/claude-dev-suite",
+      "sourceType": "github",
+      "computedHash": "4e525df59892e318e872c086416fd23f24999525b3139b7d1f203c19aed6a416"
+    }
+  }
+}

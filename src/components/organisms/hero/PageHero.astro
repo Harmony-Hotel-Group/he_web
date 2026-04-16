@@ -6,39 +6,39 @@
 import { formatPrice } from "@/utils/currency";
 
 interface Props {
-  backgroundImage: string;
-  fallbackImage?: string;
-  title: string;
-  subtitle?: string;
-  badge?: string;
-  priceInfo?: {
-    amount: number;
-    currency: string;
-    period: string;
-  };
-  height?: "sm" | "md" | "lg";
-  overlayOpacity?: number;
-  lang?: "es" | "en";
-  animated?: boolean;
+	backgroundImage: string;
+	fallbackImage?: string;
+	title: string;
+	subtitle?: string;
+	badge?: string;
+	priceInfo?: {
+		amount: number;
+		currency: string;
+		period: string;
+	};
+	height?: "sm" | "md" | "lg";
+	overlayOpacity?: number;
+	lang?: "es" | "en";
+	animated?: boolean;
 }
 
 const {
-  backgroundImage,
-  fallbackImage,
-  title,
-  subtitle,
-  badge,
-  priceInfo,
-  height = "md",
-  overlayOpacity = 40,
-  lang = "es",
-  animated = false,
+	backgroundImage,
+	fallbackImage,
+	title,
+	subtitle,
+	badge,
+	priceInfo,
+	height = "md",
+	overlayOpacity = 40,
+	lang = "es",
+	animated = false,
 } = Astro.props;
 
 const heightClasses = {
-  sm: "h-[40vh] min-h-[300px]",
-  md: "h-[50vh] min-h-[400px]",
-  lg: "h-[60vh] min-h-[500px]",
+	sm: "h-[40vh] min-h-[300px]",
+	md: "h-[50vh] min-h-[400px]",
+	lg: "h-[60vh] min-h-[500px]",
 };
 ---
 

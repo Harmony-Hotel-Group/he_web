@@ -1,0 +1,49 @@
+---
+// src/components/atoms/ScrollToTop.astro
+---
+
+<button
+    id="scroll-to-top"
+    class="fixed bottom-8 right-8 bg-accent text-white p-4 rounded-full shadow-lg hover:bg-accent/90 transition-all transform hover:scale-110 opacity-0 invisible z-50"
+    aria-label="Scroll to top"
+    type="button"
+>
+    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+    </svg>
+</button>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const scrollBtn = document.getElementById("scroll-to-top");
+        
+        if (!scrollBtn) return;
+
+        // Show/hide on scroll
+        window.addEventListener("scroll", () => {
+            if (window.scrollY > 500) {
+                scrollBtn.classList.remove("opacity-0", "invisible");
+            } else {
+                scrollBtn.classList.add("opacity-0", "invisible");
+            }
+        });
+
+        // Scroll to top on click
+        scrollBtn.addEventListener("click", () => {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth",
+            });
+        });
+    });
+</script>
+
+<style>
+    #scroll-to-top {
+        transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.2s ease;
+    }
+    
+    #scroll-to-top:hover {
+        transform: scale(1.15);
+    }
+</style>

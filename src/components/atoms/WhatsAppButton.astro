@@ -1,7 +1,10 @@
 ---
+import {
+	buildContactMessage,
+	buildWhatsAppUrl,
+} from "@/adapters/booking/whatsapp.adapter";
 // src/components/atoms/WhatsAppButton.astro
 import config from "@/data/config.json";
-import { buildContactMessage, buildWhatsAppUrl } from "@/adapters/booking/whatsapp.adapter";
 
 const { whatsapp } = config.contactInfo;
 const phoneNumber = whatsapp.replace(/\+/g, "");

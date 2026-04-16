@@ -4,7 +4,7 @@
  * Componente para generar input oculto con token CSRF
  */
 
-import { getSessionHash, generateCSRFToken } from '@/utils/csrf';
+import { generateCSRFToken, getSessionHash } from "@/utils/csrf";
 
 const sessionId = await getSessionHash(Astro.request);
 const csrfToken = await generateCSRFToken(sessionId);

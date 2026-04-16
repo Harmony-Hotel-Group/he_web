@@ -9,7 +9,6 @@ interface Props {
 	checked?: boolean;
 	disabled?: boolean;
 	classes?: string;
-	onChange?: (checked: boolean) => void;
 }
 
 const {
@@ -18,17 +17,18 @@ const {
 	checked = false,
 	disabled = false,
 	classes = "",
-	onChange,
 } = Astro.props;
+
+const switchId = id || `switch-${name}-${Math.random().toString(36).slice(2, 9)}`;
 ---
 
-<div class:list={["relative inline-block", classes]}>
+<div class:list={["relative inline-block", classes]} data-switch-root={switchId}>
     <button
-            id={id}
+            id={switchId}
             type="button"
             role="switch"
             aria-checked={checked}
-            data-switch={name}
+            data-switch-name={name}
             class:list={[
                 "relative inline-flex items-center h-4 w-9 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out",
                 "focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2",
@@ -49,47 +49,62 @@ const {
 
     <input type="hidden" name={name} value={checked.toString()}/>
 
-    <script is:inline define:vars={{onChange}}>
+    <script is:inline define:vars={{ switchId }}>
         (() => {
-            const script = document.currentScript;
-            const root = script?.closest('div');
-            if (!root) return;
-
-            const button = root.querySelector('button[role="switch"]');
-            const input = root.querySelector('input[type="hidden"]');
-            const handle = button?.querySelector('span[aria-hidden="true"]');
-            if (!button || !input || !handle) return;
-
-            if (button.dataset.initialized) return;
-            button.dataset.initialized = "true";
-
-            const toggle = () => {
-                if (button.disabled) return;
-                const isChecked = button.getAttribute("aria-checked") === "true";
-                const newState = !isChecked;
-                button.setAttribute("aria-checked", String(newState));
-                input.value = String(newState);
-
-                button.classList.toggle("bg-accent", newState);
-                button.classList.toggle("bg-gray-200", !newState);
-                handle.classList.toggle("translate-x-5", newState);
-                handle.classList.toggle("translate-x-0", !newState);
-
-                // Call the onChange callback if provided
-                console.log("onChange called with newState:", newState);
-                if (onChange) {
-                    onChange(newState);
+            console.log(`[Switch:${switchId}] Initializing script`);
+            document.addEventListener("astro:page-load", () => {
+                console.log(`[Switch:${switchId}] Page loaded, finding elements`);
+                const root = document.querySelector(`[data-switch-root="${switchId}"]`);
+                if (!root) {
+                    console.error(`[Switch:${switchId}] Root not found`);
+                    return;
                 }
-            };
+                console.log(`[Switch:${switchId}] Root found`);
 
-
-            // Click + teclado accesible
-            button.addEventListener("click", toggle);
-            button.addEventListener("keydown", (e) => {
-                if (e.key === " " || e.key === "Enter") {
-                    e.preventDefault();
-                    toggle();
+                const button = root.querySelector('button[role="switch"]');
+                const input = root.querySelector('input[type="hidden"]');
+                const handle = button?.querySelector('span[aria-hidden="true"]');
+                if (!button || !input || !handle) {
+                    console.error(`[Switch:${switchId}] Elements not found`);
+                    return;
                 }
+                console.log(`[Switch:${switchId}] Elements found, switchName: ${button.dataset.switchName}`);
+
+                const switchName = button.dataset.switchName;
+
+                const toggle = () => {
+                    if (button.disabled) return;
+                    const isChecked = button.getAttribute("aria-checked") === "true";
+                    const newState = !isChecked;
+                    console.log(`[Switch:${switchId}] Toggling from ${isChecked} to ${newState}`);
+                    button.setAttribute("aria-checked", String(newState));
+                    input.value = String(newState);
+
+                    button.classList.toggle("bg-accent", newState);
+                    button.classList.toggle("bg-gray-200", !newState);
+                    handle.classList.toggle("translate-x-5", newState);
+                    handle.classList.toggle("translate-x-0", !newState);
+
+                    const event = new CustomEvent('switch:change', {
+                        bubbles: true,
+                        composed: true,
+                        detail: { 
+                            name: switchName, 
+                            checked: newState,
+                            element: button
+                        }
+                    });
+                    console.log(`[Switch:${switchId}] Dispatching event:`, event.detail);
+                    button.dispatchEvent(event);
+                };
+
+                button.addEventListener("click", toggle);
+                button.addEventListener("keydown", (e) => {
+                    if (e.key === " " || e.key === "Enter") {
+                        e.preventDefault();
+                        toggle();
+                    }
+                });
             });
         })();
     </script>

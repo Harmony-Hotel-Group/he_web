@@ -1,0 +1,69 @@
+---
+// src/components/atoms/CTAButton.astro
+
+interface Props {
+	href: string;
+	label: string;
+	variant?: "primary" | "accent" | "outline" | "ghost";
+	size?: "sm" | "md" | "lg";
+	icon?: string;
+	fullWidth?: boolean;
+	className?: string;
+}
+
+const {
+	href,
+	label,
+	variant = "accent",
+	size = "md",
+	icon,
+	fullWidth = false,
+	className = "",
+} = Astro.props;
+
+// Base classes
+let baseClasses =
+	"inline-flex items-center justify-center gap-2 font-bold transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg";
+
+// Size classes
+const sizeClasses = {
+	sm: "px-4 py-2 text-sm rounded-lg",
+	md: "px-6 py-3 text-base rounded-xl",
+	lg: "px-8 py-4 text-lg rounded-xl",
+};
+
+// Variant classes
+const variantClasses = {
+	primary: "bg-primary text-white hover:bg-primary/90",
+	accent: "bg-accent text-white hover:bg-accent/90",
+	outline:
+		"border-2 border-accent text-accent hover:bg-accent hover:text-white",
+	ghost: "text-accent hover:bg-accent/10",
+};
+
+baseClasses += ` ${sizeClasses[size]} ${variantClasses[variant]} ${fullWidth ? "w-full" : ""} ${className}`;
+---
+
+<a href={href} class={baseClasses}>
+    {icon && (
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            {icon === "calendar" && (
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            )}
+            {icon === "phone" && (
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+            )}
+            {icon === "email" && (
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+            )}
+            {icon === "arrow-right" && (
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            )}
+            {icon === "check" && (
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            )}
+        </svg>
+    )}
+    {label}
+    <slot />
+</a>

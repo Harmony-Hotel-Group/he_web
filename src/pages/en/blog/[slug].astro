@@ -2,8 +2,8 @@
 // src/pages/blog/[slug].astro
 // Página de detalle de artículo del blog
 
-import BaseLayout from "@/layouts/BaseLayout.astro";
 import { Translations } from "@/i18n/translation.ts";
+import BaseLayout from "@/layouts/BaseLayout.astro";
 import { api } from "@/services/api.ts";
 import type { SiteConfig } from "@/types/config";
 
@@ -13,7 +13,10 @@ const config = (await api.fetch("config", { params: { lang } })) as SiteConfig;
 
 // Importar todos los posts
 const allPosts = Object.values(
-	import.meta.glob<{ frontmatter: Record<string, unknown>; Content: () => unknown }>("../../content/blog/*.md", { eager: true })
+	import.meta.glob<{
+		frontmatter: Record<string, unknown>;
+		Content: () => unknown;
+	}>("../../content/blog/*.md", { eager: true }),
 );
 
 // Buscar el post por slug
@@ -24,8 +27,14 @@ if (!post) {
 	return new Response(null, { status: 404 });
 }
 
-const title = lang === "en" && post.frontmatter.titleEn ? post.frontmatter.titleEn : post.frontmatter.title;
-const description = lang === "en" && post.frontmatter.descriptionEn ? post.frontmatter.descriptionEn : post.frontmatter.description;
+const title =
+	lang === "en" && post.frontmatter.titleEn
+		? post.frontmatter.titleEn
+		: post.frontmatter.title;
+const description =
+	lang === "en" && post.frontmatter.descriptionEn
+		? post.frontmatter.descriptionEn
+		: post.frontmatter.description;
 const Content = post.Content;
 ---
 

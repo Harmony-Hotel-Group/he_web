@@ -1,7 +1,22 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.hotelensueños.com/sitemap-index.xml
+# Sitemap
+Sitemap: https://hotelensuenos.com/sitemap-index.xml
 
+# Disallow admin areas
+Disallow: /admin/
 Disallow: /api/
-Disallow: /en/api/
+
+# Allow all public pages
+Allow: /rooms/
+Allow: /booking
+Allow: /contact
+Allow: /about
+Allow: /amenities
+Allow: /gallery
+Allow: /faq
+Allow: /blog/
+
+# Crawl-delay (optional)
+Crawl-delay: 1

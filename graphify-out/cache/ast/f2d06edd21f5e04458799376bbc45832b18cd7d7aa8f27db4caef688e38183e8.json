@@ -1,0 +1,222 @@
+{
+	"nodes": [
+		{
+			"id": "mnt_d_coders_work_hhg_projects_he_web_src_contracts_erp_contract_ts",
+			"label": "erp.contract.ts",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/contracts/erp.contract.ts",
+			"source_location": "L1"
+		},
+		{
+			"id": "contracts_erp_contract_erproom",
+			"label": "ERPRoom",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/contracts/erp.contract.ts",
+			"source_location": "L10"
+		},
+		{
+			"id": "contracts_erp_contract_erpavailability",
+			"label": "ERPAvailability",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/contracts/erp.contract.ts",
+			"source_location": "L24"
+		},
+		{
+			"id": "contracts_erp_contract_erptour",
+			"label": "ERPTour",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/contracts/erp.contract.ts",
+			"source_location": "L32"
+		},
+		{
+			"id": "contracts_erp_contract_erplocation",
+			"label": "ERPLocation",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/contracts/erp.contract.ts",
+			"source_location": "L48"
+		},
+		{
+			"id": "contracts_erp_contract_erpschedule",
+			"label": "ERPSchedule",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/contracts/erp.contract.ts",
+			"source_location": "L58"
+		},
+		{
+			"id": "contracts_erp_contract_erpdestination",
+			"label": "ERPDestination",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/contracts/erp.contract.ts",
+			"source_location": "L66"
+		},
+		{
+			"id": "contracts_erp_contract_erpgastronomy",
+			"label": "ERPGastronomy",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/contracts/erp.contract.ts",
+			"source_location": "L79"
+		},
+		{
+			"id": "contracts_erp_contract_erpresponse",
+			"label": "ERPResponse",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/contracts/erp.contract.ts",
+			"source_location": "L92"
+		},
+		{
+			"id": "contracts_erp_contract_erpmetadata",
+			"label": "ERPMetadata",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/contracts/erp.contract.ts",
+			"source_location": "L100"
+		},
+		{
+			"id": "contracts_erp_contract_erpconfig",
+			"label": "ERPConfig",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/contracts/erp.contract.ts",
+			"source_location": "L108"
+		},
+		{
+			"id": "contracts_erp_contract_erpendpoint",
+			"label": "ERPEndpoint",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/contracts/erp.contract.ts",
+			"source_location": "L118"
+		},
+		{
+			"id": "contracts_erp_contract_iserpresponsesuccess",
+			"label": "isERPResponseSuccess()",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/contracts/erp.contract.ts",
+			"source_location": "L134"
+		},
+		{
+			"id": "contracts_erp_contract_erphoteldata",
+			"label": "ERPHotelData",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/contracts/erp.contract.ts",
+			"source_location": "L141"
+		}
+	],
+	"edges": [
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_contracts_erp_contract_ts",
+			"target": "contracts_erp_contract_erproom",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/contracts/erp.contract.ts",
+			"source_location": "L10",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_contracts_erp_contract_ts",
+			"target": "contracts_erp_contract_erpavailability",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/contracts/erp.contract.ts",
+			"source_location": "L24",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_contracts_erp_contract_ts",
+			"target": "contracts_erp_contract_erptour",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/contracts/erp.contract.ts",
+			"source_location": "L32",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_contracts_erp_contract_ts",
+			"target": "contracts_erp_contract_erplocation",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/contracts/erp.contract.ts",
+			"source_location": "L48",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_contracts_erp_contract_ts",
+			"target": "contracts_erp_contract_erpschedule",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/contracts/erp.contract.ts",
+			"source_location": "L58",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_contracts_erp_contract_ts",
+			"target": "contracts_erp_contract_erpdestination",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/contracts/erp.contract.ts",
+			"source_location": "L66",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_contracts_erp_contract_ts",
+			"target": "contracts_erp_contract_erpgastronomy",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/contracts/erp.contract.ts",
+			"source_location": "L79",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_contracts_erp_contract_ts",
+			"target": "contracts_erp_contract_erpresponse",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/contracts/erp.contract.ts",
+			"source_location": "L92",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_contracts_erp_contract_ts",
+			"target": "contracts_erp_contract_erpmetadata",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/contracts/erp.contract.ts",
+			"source_location": "L100",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_contracts_erp_contract_ts",
+			"target": "contracts_erp_contract_erpconfig",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/contracts/erp.contract.ts",
+			"source_location": "L108",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_contracts_erp_contract_ts",
+			"target": "contracts_erp_contract_erpendpoint",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/contracts/erp.contract.ts",
+			"source_location": "L118",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_contracts_erp_contract_ts",
+			"target": "contracts_erp_contract_iserpresponsesuccess",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/contracts/erp.contract.ts",
+			"source_location": "L134",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_contracts_erp_contract_ts",
+			"target": "contracts_erp_contract_erphoteldata",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/contracts/erp.contract.ts",
+			"source_location": "L141",
+			"weight": 1.0
+		}
+	],
+	"raw_calls": []
+}

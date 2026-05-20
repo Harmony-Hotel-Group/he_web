@@ -1,0 +1,253 @@
+{
+	"nodes": [
+		{
+			"id": "mnt_d_coders_work_hhg_projects_he_web_src_services_messages_email_ts",
+			"label": "email.ts",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/email.ts",
+			"source_location": "L1"
+		},
+		{
+			"id": "messages_email_sendemailinput",
+			"label": "SendEmailInput",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/email.ts",
+			"source_location": "L4"
+		},
+		{
+			"id": "messages_email_env",
+			"label": "ENV",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/email.ts",
+			"source_location": "L12"
+		},
+		{
+			"id": "messages_email_getbasicauth",
+			"label": "getBasicAuth()",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/email.ts",
+			"source_location": "L22"
+		},
+		{
+			"id": "messages_email_domailgunsend",
+			"label": "doMailgunSend()",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/email.ts",
+			"source_location": "L28"
+		},
+		{
+			"id": "messages_email_sendemail",
+			"label": "sendEmail()",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/email.ts",
+			"source_location": "L46"
+		},
+		{
+			"id": "messages_email_sendadminemail",
+			"label": "sendAdminEmail()",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/email.ts",
+			"source_location": "L68"
+		}
+	],
+	"edges": [
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_services_messages_email_ts",
+			"target": "messages_email_sendemailinput",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/email.ts",
+			"source_location": "L4",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_services_messages_email_ts",
+			"target": "messages_email_env",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/email.ts",
+			"source_location": "L12",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_services_messages_email_ts",
+			"target": "messages_email_getbasicauth",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/email.ts",
+			"source_location": "L22",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_services_messages_email_ts",
+			"target": "messages_email_domailgunsend",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/email.ts",
+			"source_location": "L28",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_services_messages_email_ts",
+			"target": "messages_email_sendemail",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/email.ts",
+			"source_location": "L46",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_services_messages_email_ts",
+			"target": "messages_email_sendadminemail",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/email.ts",
+			"source_location": "L68",
+			"weight": 1.0
+		},
+		{
+			"source": "messages_email_domailgunsend",
+			"target": "messages_email_getbasicauth",
+			"relation": "calls",
+			"context": "call",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/email.ts",
+			"source_location": "L38",
+			"weight": 1.0
+		},
+		{
+			"source": "messages_email_sendemail",
+			"target": "messages_email_domailgunsend",
+			"relation": "calls",
+			"context": "call",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/email.ts",
+			"source_location": "L58",
+			"weight": 1.0
+		},
+		{
+			"source": "messages_email_sendadminemail",
+			"target": "messages_email_sendemail",
+			"relation": "calls",
+			"context": "call",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/email.ts",
+			"source_location": "L80",
+			"weight": 1.0
+		}
+	],
+	"raw_calls": [
+		{
+			"caller_nid": "messages_email_getbasicauth",
+			"callee": "toString",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/email.ts",
+			"source_location": "L24"
+		},
+		{
+			"caller_nid": "messages_email_getbasicauth",
+			"callee": "from",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/email.ts",
+			"source_location": "L24"
+		},
+		{
+			"caller_nid": "messages_email_domailgunsend",
+			"callee": "warn",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/email.ts",
+			"source_location": "L31"
+		},
+		{
+			"caller_nid": "messages_email_domailgunsend",
+			"callee": "fetch",
+			"is_member_call": false,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/email.ts",
+			"source_location": "L35"
+		},
+		{
+			"caller_nid": "messages_email_domailgunsend",
+			"callee": "toString",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/email.ts",
+			"source_location": "L41"
+		},
+		{
+			"caller_nid": "messages_email_sendemail",
+			"callee": "isArray",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/email.ts",
+			"source_location": "L47"
+		},
+		{
+			"caller_nid": "messages_email_sendemail",
+			"callee": "join",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/email.ts",
+			"source_location": "L47"
+		},
+		{
+			"caller_nid": "messages_email_sendemail",
+			"callee": "set",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/email.ts",
+			"source_location": "L51"
+		},
+		{
+			"caller_nid": "messages_email_sendemail",
+			"callee": "set",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/email.ts",
+			"source_location": "L52"
+		},
+		{
+			"caller_nid": "messages_email_sendemail",
+			"callee": "set",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/email.ts",
+			"source_location": "L53"
+		},
+		{
+			"caller_nid": "messages_email_sendemail",
+			"callee": "set",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/email.ts",
+			"source_location": "L54"
+		},
+		{
+			"caller_nid": "messages_email_sendemail",
+			"callee": "set",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/email.ts",
+			"source_location": "L55"
+		},
+		{
+			"caller_nid": "messages_email_sendemail",
+			"callee": "log",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/email.ts",
+			"source_location": "L59"
+		},
+		{
+			"caller_nid": "messages_email_sendemail",
+			"callee": "String",
+			"is_member_call": false,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/email.ts",
+			"source_location": "L62"
+		},
+		{
+			"caller_nid": "messages_email_sendemail",
+			"callee": "error",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/email.ts",
+			"source_location": "L63"
+		},
+		{
+			"caller_nid": "messages_email_sendadminemail",
+			"callee": "warn",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/email.ts",
+			"source_location": "L75"
+		}
+	]
+}

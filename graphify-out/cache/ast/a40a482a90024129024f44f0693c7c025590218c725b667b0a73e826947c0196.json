@@ -1,0 +1,103 @@
+{
+	"nodes": [
+		{
+			"id": "mnt_d_coders_work_hhg_projects_he_web_src_services_messages_webhooks_ts",
+			"label": "webhooks.ts",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/webhooks.ts",
+			"source_location": "L1"
+		},
+		{
+			"id": "messages_webhooks_webhookoptions",
+			"label": "WebhookOptions",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/webhooks.ts",
+			"source_location": "L4"
+		},
+		{
+			"id": "messages_webhooks_postwebhook",
+			"label": "postWebhook()",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/webhooks.ts",
+			"source_location": "L9"
+		}
+	],
+	"edges": [
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_services_messages_webhooks_ts",
+			"target": "messages_webhooks_webhookoptions",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/webhooks.ts",
+			"source_location": "L4",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_services_messages_webhooks_ts",
+			"target": "messages_webhooks_postwebhook",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/webhooks.ts",
+			"source_location": "L9",
+			"weight": 1.0
+		}
+	],
+	"raw_calls": [
+		{
+			"caller_nid": "messages_webhooks_postwebhook",
+			"callee": "setTimeout",
+			"is_member_call": false,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/webhooks.ts",
+			"source_location": "L16"
+		},
+		{
+			"caller_nid": "messages_webhooks_postwebhook",
+			"callee": "fetch",
+			"is_member_call": false,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/webhooks.ts",
+			"source_location": "L18"
+		},
+		{
+			"caller_nid": "messages_webhooks_postwebhook",
+			"callee": "stringify",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/webhooks.ts",
+			"source_location": "L24"
+		},
+		{
+			"caller_nid": "messages_webhooks_postwebhook",
+			"callee": "clearTimeout",
+			"is_member_call": false,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/webhooks.ts",
+			"source_location": "L27"
+		},
+		{
+			"caller_nid": "messages_webhooks_postwebhook",
+			"callee": "catch",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/webhooks.ts",
+			"source_location": "L28"
+		},
+		{
+			"caller_nid": "messages_webhooks_postwebhook",
+			"callee": "text",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/webhooks.ts",
+			"source_location": "L28"
+		},
+		{
+			"caller_nid": "messages_webhooks_postwebhook",
+			"callee": "clearTimeout",
+			"is_member_call": false,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/webhooks.ts",
+			"source_location": "L31"
+		},
+		{
+			"caller_nid": "messages_webhooks_postwebhook",
+			"callee": "String",
+			"is_member_call": false,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/webhooks.ts",
+			"source_location": "L32"
+		}
+	]
+}

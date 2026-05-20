@@ -1,0 +1,166 @@
+{
+	"nodes": [
+		{
+			"id": "mnt_d_coders_work_hhg_projects_he_web_src_utils_cookies_ts",
+			"label": "cookies.ts",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/cookies.ts",
+			"source_location": "L1"
+		},
+		{
+			"id": "utils_cookies_cookieoptions",
+			"label": "CookieOptions",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/cookies.ts",
+			"source_location": "L6"
+		},
+		{
+			"id": "utils_cookies_setcookie",
+			"label": "setCookie()",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/cookies.ts",
+			"source_location": "L27"
+		},
+		{
+			"id": "utils_cookies_getcookie",
+			"label": "getCookie()",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/cookies.ts",
+			"source_location": "L75"
+		},
+		{
+			"id": "utils_cookies_deletecookie",
+			"label": "deleteCookie()",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/cookies.ts",
+			"source_location": "L95"
+		}
+	],
+	"edges": [
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_utils_cookies_ts",
+			"target": "utils_cookies_cookieoptions",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/cookies.ts",
+			"source_location": "L6",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_utils_cookies_ts",
+			"target": "utils_cookies_setcookie",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/cookies.ts",
+			"source_location": "L27",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_utils_cookies_ts",
+			"target": "utils_cookies_getcookie",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/cookies.ts",
+			"source_location": "L75",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_utils_cookies_ts",
+			"target": "utils_cookies_deletecookie",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/cookies.ts",
+			"source_location": "L95",
+			"weight": 1.0
+		},
+		{
+			"source": "utils_cookies_deletecookie",
+			"target": "utils_cookies_setcookie",
+			"relation": "calls",
+			"context": "call",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/cookies.ts",
+			"source_location": "L97",
+			"weight": 1.0
+		}
+	],
+	"raw_calls": [
+		{
+			"caller_nid": "utils_cookies_setcookie",
+			"callee": "encodeURIComponent",
+			"is_member_call": false,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/cookies.ts",
+			"source_location": "L37"
+		},
+		{
+			"caller_nid": "utils_cookies_setcookie",
+			"callee": "encodeURIComponent",
+			"is_member_call": false,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/cookies.ts",
+			"source_location": "L37"
+		},
+		{
+			"caller_nid": "utils_cookies_setcookie",
+			"callee": "setTime",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/cookies.ts",
+			"source_location": "L42"
+		},
+		{
+			"caller_nid": "utils_cookies_setcookie",
+			"callee": "getTime",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/cookies.ts",
+			"source_location": "L42"
+		},
+		{
+			"caller_nid": "utils_cookies_setcookie",
+			"callee": "toUTCString",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/cookies.ts",
+			"source_location": "L43"
+		},
+		{
+			"caller_nid": "utils_cookies_getcookie",
+			"callee": "split",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/cookies.ts",
+			"source_location": "L81"
+		},
+		{
+			"caller_nid": "utils_cookies_getcookie",
+			"callee": "encodeURIComponent",
+			"is_member_call": false,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/cookies.ts",
+			"source_location": "L81"
+		},
+		{
+			"caller_nid": "utils_cookies_getcookie",
+			"callee": "decodeURIComponent",
+			"is_member_call": false,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/cookies.ts",
+			"source_location": "L84"
+		},
+		{
+			"caller_nid": "utils_cookies_getcookie",
+			"callee": "shift",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/cookies.ts",
+			"source_location": "L84"
+		},
+		{
+			"caller_nid": "utils_cookies_getcookie",
+			"callee": "split",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/cookies.ts",
+			"source_location": "L84"
+		},
+		{
+			"caller_nid": "utils_cookies_getcookie",
+			"callee": "pop",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/cookies.ts",
+			"source_location": "L84"
+		}
+	]
+}

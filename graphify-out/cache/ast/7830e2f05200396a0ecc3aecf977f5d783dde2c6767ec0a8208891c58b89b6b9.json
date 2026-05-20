@@ -1,0 +1,110 @@
+{
+	"nodes": [
+		{
+			"id": "mnt_d_coders_work_hhg_projects_he_web_src_adapters_erp_erp_sync_adapter_test_ts",
+			"label": "erp-sync.adapter.test.ts",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/erp/erp-sync.adapter.test.ts",
+			"source_location": "L1"
+		},
+		{
+			"id": "erp_erp_sync_adapter_test_status",
+			"label": "status",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/erp/erp-sync.adapter.test.ts",
+			"source_location": "L17"
+		}
+	],
+	"edges": [
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_adapters_erp_erp_sync_adapter_test_ts",
+			"target": "vitest",
+			"relation": "imports_from",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/erp/erp-sync.adapter.test.ts",
+			"source_location": "L4",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_adapters_erp_erp_sync_adapter_test_ts",
+			"target": "mnt_d_coders_work_hhg_projects_he_web_src_adapters_erp_erp_sync_adapter_ts",
+			"relation": "imports_from",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/erp/erp-sync.adapter.test.ts",
+			"source_location": "L5",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_adapters_erp_erp_sync_adapter_test_ts",
+			"target": "erp_erp_sync_adapter_getrooms",
+			"relation": "imports",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/erp/erp-sync.adapter.test.ts",
+			"source_location": "L5",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_adapters_erp_erp_sync_adapter_test_ts",
+			"target": "erp_erp_sync_adapter_gettours",
+			"relation": "imports",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/erp/erp-sync.adapter.test.ts",
+			"source_location": "L5",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_adapters_erp_erp_sync_adapter_test_ts",
+			"target": "erp_erp_sync_adapter_getdestinations",
+			"relation": "imports",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/erp/erp-sync.adapter.test.ts",
+			"source_location": "L5",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_adapters_erp_erp_sync_adapter_test_ts",
+			"target": "erp_erp_sync_adapter_getgastronomy",
+			"relation": "imports",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/erp/erp-sync.adapter.test.ts",
+			"source_location": "L5",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_adapters_erp_erp_sync_adapter_test_ts",
+			"target": "erp_erp_sync_adapter_getallhoteldata",
+			"relation": "imports",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/erp/erp-sync.adapter.test.ts",
+			"source_location": "L5",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_adapters_erp_erp_sync_adapter_test_ts",
+			"target": "erp_erp_sync_adapter_getsyncstatus",
+			"relation": "imports",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/erp/erp-sync.adapter.test.ts",
+			"source_location": "L5",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_adapters_erp_erp_sync_adapter_test_ts",
+			"target": "erp_erp_sync_adapter_test_status",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/erp/erp-sync.adapter.test.ts",
+			"source_location": "L17",
+			"weight": 1.0
+		}
+	],
+	"raw_calls": []
+}

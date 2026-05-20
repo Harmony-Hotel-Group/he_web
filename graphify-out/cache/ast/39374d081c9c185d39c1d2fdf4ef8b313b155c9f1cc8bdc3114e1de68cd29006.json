@@ -1,0 +1,304 @@
+{
+	"nodes": [
+		{
+			"id": "mnt_d_coders_work_hhg_projects_he_web_src_domain_booking_currency_utils_ts",
+			"label": "currency.utils.ts",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/domain/booking/currency.utils.ts",
+			"source_location": "L1"
+		},
+		{
+			"id": "booking_currency_utils_currency",
+			"label": "Currency",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/domain/booking/currency.utils.ts",
+			"source_location": "L9"
+		},
+		{
+			"id": "booking_currency_utils_money",
+			"label": "Money",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/domain/booking/currency.utils.ts",
+			"source_location": "L11"
+		},
+		{
+			"id": "booking_currency_utils_exchangerates",
+			"label": "ExchangeRates",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/domain/booking/currency.utils.ts",
+			"source_location": "L16"
+		},
+		{
+			"id": "booking_currency_utils_default_exchange_rates",
+			"label": "DEFAULT_EXCHANGE_RATES",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/domain/booking/currency.utils.ts",
+			"source_location": "L24"
+		},
+		{
+			"id": "booking_currency_utils_currency_symbols",
+			"label": "CURRENCY_SYMBOLS",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/domain/booking/currency.utils.ts",
+			"source_location": "L33"
+		},
+		{
+			"id": "booking_currency_utils_currency_names",
+			"label": "CURRENCY_NAMES",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/domain/booking/currency.utils.ts",
+			"source_location": "L42"
+		},
+		{
+			"id": "booking_currency_utils_getpreferredcurrency",
+			"label": "getPreferredCurrency()",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/domain/booking/currency.utils.ts",
+			"source_location": "L54"
+		},
+		{
+			"id": "booking_currency_utils_isvalidcurrency",
+			"label": "isValidCurrency()",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/domain/booking/currency.utils.ts",
+			"source_location": "L70"
+		},
+		{
+			"id": "booking_currency_utils_convertcurrency",
+			"label": "convertCurrency()",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/domain/booking/currency.utils.ts",
+			"source_location": "L83"
+		},
+		{
+			"id": "booking_currency_utils_formatmoney",
+			"label": "formatMoney()",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/domain/booking/currency.utils.ts",
+			"source_location": "L108"
+		},
+		{
+			"id": "booking_currency_utils_formatmoneyfull",
+			"label": "formatMoneyFull()",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/domain/booking/currency.utils.ts",
+			"source_location": "L126"
+		},
+		{
+			"id": "booking_currency_utils_getexchangerate",
+			"label": "getExchangeRate()",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/domain/booking/currency.utils.ts",
+			"source_location": "L144"
+		},
+		{
+			"id": "booking_currency_utils_convertandformat",
+			"label": "convertAndFormat()",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/domain/booking/currency.utils.ts",
+			"source_location": "L164"
+		},
+		{
+			"id": "booking_currency_utils_isvalidamount",
+			"label": "isValidAmount()",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/domain/booking/currency.utils.ts",
+			"source_location": "L179"
+		}
+	],
+	"edges": [
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_domain_booking_currency_utils_ts",
+			"target": "booking_currency_utils_currency",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/domain/booking/currency.utils.ts",
+			"source_location": "L9",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_domain_booking_currency_utils_ts",
+			"target": "booking_currency_utils_money",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/domain/booking/currency.utils.ts",
+			"source_location": "L11",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_domain_booking_currency_utils_ts",
+			"target": "booking_currency_utils_exchangerates",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/domain/booking/currency.utils.ts",
+			"source_location": "L16",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_domain_booking_currency_utils_ts",
+			"target": "booking_currency_utils_default_exchange_rates",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/domain/booking/currency.utils.ts",
+			"source_location": "L24",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_domain_booking_currency_utils_ts",
+			"target": "booking_currency_utils_currency_symbols",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/domain/booking/currency.utils.ts",
+			"source_location": "L33",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_domain_booking_currency_utils_ts",
+			"target": "booking_currency_utils_currency_names",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/domain/booking/currency.utils.ts",
+			"source_location": "L42",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_domain_booking_currency_utils_ts",
+			"target": "booking_currency_utils_getpreferredcurrency",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/domain/booking/currency.utils.ts",
+			"source_location": "L54",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_domain_booking_currency_utils_ts",
+			"target": "booking_currency_utils_isvalidcurrency",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/domain/booking/currency.utils.ts",
+			"source_location": "L70",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_domain_booking_currency_utils_ts",
+			"target": "booking_currency_utils_convertcurrency",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/domain/booking/currency.utils.ts",
+			"source_location": "L83",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_domain_booking_currency_utils_ts",
+			"target": "booking_currency_utils_formatmoney",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/domain/booking/currency.utils.ts",
+			"source_location": "L108",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_domain_booking_currency_utils_ts",
+			"target": "booking_currency_utils_formatmoneyfull",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/domain/booking/currency.utils.ts",
+			"source_location": "L126",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_domain_booking_currency_utils_ts",
+			"target": "booking_currency_utils_getexchangerate",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/domain/booking/currency.utils.ts",
+			"source_location": "L144",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_domain_booking_currency_utils_ts",
+			"target": "booking_currency_utils_convertandformat",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/domain/booking/currency.utils.ts",
+			"source_location": "L164",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_domain_booking_currency_utils_ts",
+			"target": "booking_currency_utils_isvalidamount",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/domain/booking/currency.utils.ts",
+			"source_location": "L179",
+			"weight": 1.0
+		},
+		{
+			"source": "booking_currency_utils_getpreferredcurrency",
+			"target": "booking_currency_utils_isvalidcurrency",
+			"relation": "calls",
+			"context": "call",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/domain/booking/currency.utils.ts",
+			"source_location": "L57",
+			"weight": 1.0
+		},
+		{
+			"source": "booking_currency_utils_convertandformat",
+			"target": "booking_currency_utils_convertcurrency",
+			"relation": "calls",
+			"context": "call",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/domain/booking/currency.utils.ts",
+			"source_location": "L169",
+			"weight": 1.0
+		},
+		{
+			"source": "booking_currency_utils_convertandformat",
+			"target": "booking_currency_utils_formatmoney",
+			"relation": "calls",
+			"context": "call",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/domain/booking/currency.utils.ts",
+			"source_location": "L170",
+			"weight": 1.0
+		}
+	],
+	"raw_calls": [
+		{
+			"caller_nid": "booking_currency_utils_isvalidcurrency",
+			"callee": "includes",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/domain/booking/currency.utils.ts",
+			"source_location": "L71"
+		},
+		{
+			"caller_nid": "booking_currency_utils_isvalidcurrency",
+			"callee": "toUpperCase",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/domain/booking/currency.utils.ts",
+			"source_location": "L71"
+		},
+		{
+			"caller_nid": "booking_currency_utils_formatmoney",
+			"callee": "toFixed",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/domain/booking/currency.utils.ts",
+			"source_location": "L114"
+		},
+		{
+			"caller_nid": "booking_currency_utils_formatmoneyfull",
+			"callee": "toFixed",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/domain/booking/currency.utils.ts",
+			"source_location": "L133"
+		},
+		{
+			"caller_nid": "booking_currency_utils_isvalidamount",
+			"callee": "isNaN",
+			"is_member_call": false,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/domain/booking/currency.utils.ts",
+			"source_location": "L184"
+		}
+	]
+}

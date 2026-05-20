@@ -1,0 +1,431 @@
+{
+	"nodes": [
+		{
+			"id": "mnt_d_coders_work_hhg_projects_he_web_docs_molecules_frontend_architecture_audit_md",
+			"label": "molecules-frontend-architecture-audit.md",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/molecules-frontend-architecture-audit.md",
+			"source_location": "L1"
+		},
+		{
+			"id": "docs_molecules_frontend_architecture_audit_auditor_a_de_arquitectura_frontend_src_components_molecules",
+			"label": "Auditor\u00eda de arquitectura frontend \u2014 `src/components/molecules`",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/molecules-frontend-architecture-audit.md",
+			"source_location": "L1"
+		},
+		{
+			"id": "docs_molecules_frontend_architecture_audit_alcance",
+			"label": "Alcance",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/molecules-frontend-architecture-audit.md",
+			"source_location": "L3"
+		},
+		{
+			"id": "docs_molecules_frontend_architecture_audit_1_l_gica_de_negocio_detectada",
+			"label": "1) L\u00f3gica de negocio detectada",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/molecules-frontend-architecture-audit.md",
+			"source_location": "L9"
+		},
+		{
+			"id": "docs_molecules_frontend_architecture_audit_hallazgo_a_infocard_astro_contiene_l_gica_de_dominio_de_precios_moneda",
+			"label": "Hallazgo A \u2014 `InfoCard.astro` contiene l\u00f3gica de dominio de precios/moneda",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/molecules-frontend-architecture-audit.md",
+			"source_location": "L11"
+		},
+		{
+			"id": "docs_molecules_frontend_architecture_audit_hallazgo_b_visualresource_astro_decide_estrategia_de_recurso_y_fallback",
+			"label": "Hallazgo B \u2014 `VisualResource.astro` decide estrategia de recurso y fallback",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/molecules-frontend-architecture-audit.md",
+			"source_location": "L19"
+		},
+		{
+			"id": "docs_molecules_frontend_architecture_audit_hallazgo_c_youtuberesource_astro_contiene_l_gica_operativa_compleja_en_cliente",
+			"label": "Hallazgo C \u2014 `YouTubeResource.astro` contiene l\u00f3gica operativa compleja en cliente",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/molecules-frontend-architecture-audit.md",
+			"source_location": "L26"
+		},
+		{
+			"id": "docs_molecules_frontend_architecture_audit_hallazgo_d_videoresource_astro_implementa_manager_completo_de_runtime",
+			"label": "Hallazgo D \u2014 `VideoResource.astro` implementa manager completo de runtime",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/molecules-frontend-architecture-audit.md",
+			"source_location": "L33"
+		},
+		{
+			"id": "docs_molecules_frontend_architecture_audit_2_construcci_n_de_mensajes_de_whatsapp",
+			"label": "2) Construcci\u00f3n de mensajes de WhatsApp",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/molecules-frontend-architecture-audit.md",
+			"source_location": "L39"
+		},
+		{
+			"id": "docs_molecules_frontend_architecture_audit_3_validaciones_indebidas",
+			"label": "3) Validaciones indebidas",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/molecules-frontend-architecture-audit.md",
+			"source_location": "L44"
+		},
+		{
+			"id": "docs_molecules_frontend_architecture_audit_casos_detectados",
+			"label": "Casos detectados",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/molecules-frontend-architecture-audit.md",
+			"source_location": "L46"
+		},
+		{
+			"id": "docs_molecules_frontend_architecture_audit_4_dependencias_directas_de_adapters_utils",
+			"label": "4) Dependencias directas de adapters/utils",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/molecules-frontend-architecture-audit.md",
+			"source_location": "L52"
+		},
+		{
+			"id": "docs_molecules_frontend_architecture_audit_dependencias_directas_observadas",
+			"label": "Dependencias directas observadas",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/molecules-frontend-architecture-audit.md",
+			"source_location": "L54"
+		},
+		{
+			"id": "docs_molecules_frontend_architecture_audit_nota",
+			"label": "Nota",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/molecules-frontend-architecture-audit.md",
+			"source_location": "L59"
+		},
+		{
+			"id": "docs_molecules_frontend_architecture_audit_5_qu_mover_a_adapters",
+			"label": "5) Qu\u00e9 mover a `adapters`",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/molecules-frontend-architecture-audit.md",
+			"source_location": "L62"
+		},
+		{
+			"id": "docs_molecules_frontend_architecture_audit_a_adapters_pricing_nuevo",
+			"label": "A `adapters/pricing` (nuevo)",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/molecules-frontend-architecture-audit.md",
+			"source_location": "L64"
+		},
+		{
+			"id": "docs_molecules_frontend_architecture_audit_a_adapters_media_nuevo",
+			"label": "A `adapters/media` (nuevo)",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/molecules-frontend-architecture-audit.md",
+			"source_location": "L71"
+		},
+		{
+			"id": "docs_molecules_frontend_architecture_audit_a_adapters_video_o_utils_video_controller",
+			"label": "A `adapters/video` o `utils/video-controller`",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/molecules-frontend-architecture-audit.md",
+			"source_location": "L81"
+		},
+		{
+			"id": "docs_molecules_frontend_architecture_audit_6_qu_simplificar",
+			"label": "6) Qu\u00e9 simplificar",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/molecules-frontend-architecture-audit.md",
+			"source_location": "L87"
+		},
+		{
+			"id": "docs_molecules_frontend_architecture_audit_7_qu_archivos_pueden_unificarse",
+			"label": "7) Qu\u00e9 archivos pueden unificarse",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/molecules-frontend-architecture-audit.md",
+			"source_location": "L110"
+		},
+		{
+			"id": "docs_molecules_frontend_architecture_audit_opci_n_1_recomendada_unificaci_n_de_runtime_multimedia",
+			"label": "Opci\u00f3n 1 (recomendada): unificaci\u00f3n de runtime multimedia",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/molecules-frontend-architecture-audit.md",
+			"source_location": "L112"
+		},
+		{
+			"id": "docs_molecules_frontend_architecture_audit_opci_n_2_consolidaci_n_de_resoluci_n_de_recursos",
+			"label": "Opci\u00f3n 2: consolidaci\u00f3n de resoluci\u00f3n de recursos",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/molecules-frontend-architecture-audit.md",
+			"source_location": "L117"
+		},
+		{
+			"id": "docs_molecules_frontend_architecture_audit_opci_n_3_fields_de_formulario_base",
+			"label": "Opci\u00f3n 3: fields de formulario base",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/molecules-frontend-architecture-audit.md",
+			"source_location": "L122"
+		},
+		{
+			"id": "docs_molecules_frontend_architecture_audit_priorizaci_n_de_refactor",
+			"label": "Priorizaci\u00f3n de refactor",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/molecules-frontend-architecture-audit.md",
+			"source_location": "L126"
+		},
+		{
+			"id": "docs_molecules_frontend_architecture_audit_alta",
+			"label": "Alta",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/molecules-frontend-architecture-audit.md",
+			"source_location": "L128"
+		},
+		{
+			"id": "docs_molecules_frontend_architecture_audit_media",
+			"label": "Media",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/molecules-frontend-architecture-audit.md",
+			"source_location": "L134"
+		},
+		{
+			"id": "docs_molecules_frontend_architecture_audit_baja",
+			"label": "Baja",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/molecules-frontend-architecture-audit.md",
+			"source_location": "L137"
+		}
+	],
+	"edges": [
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_docs_molecules_frontend_architecture_audit_md",
+			"target": "docs_molecules_frontend_architecture_audit_auditor_a_de_arquitectura_frontend_src_components_molecules",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/molecules-frontend-architecture-audit.md",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_molecules_frontend_architecture_audit_auditor_a_de_arquitectura_frontend_src_components_molecules",
+			"target": "docs_molecules_frontend_architecture_audit_alcance",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/molecules-frontend-architecture-audit.md",
+			"source_location": "L3",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_molecules_frontend_architecture_audit_auditor_a_de_arquitectura_frontend_src_components_molecules",
+			"target": "docs_molecules_frontend_architecture_audit_1_l_gica_de_negocio_detectada",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/molecules-frontend-architecture-audit.md",
+			"source_location": "L9",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_molecules_frontend_architecture_audit_1_l_gica_de_negocio_detectada",
+			"target": "docs_molecules_frontend_architecture_audit_hallazgo_a_infocard_astro_contiene_l_gica_de_dominio_de_precios_moneda",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/molecules-frontend-architecture-audit.md",
+			"source_location": "L11",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_molecules_frontend_architecture_audit_1_l_gica_de_negocio_detectada",
+			"target": "docs_molecules_frontend_architecture_audit_hallazgo_b_visualresource_astro_decide_estrategia_de_recurso_y_fallback",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/molecules-frontend-architecture-audit.md",
+			"source_location": "L19",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_molecules_frontend_architecture_audit_1_l_gica_de_negocio_detectada",
+			"target": "docs_molecules_frontend_architecture_audit_hallazgo_c_youtuberesource_astro_contiene_l_gica_operativa_compleja_en_cliente",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/molecules-frontend-architecture-audit.md",
+			"source_location": "L26",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_molecules_frontend_architecture_audit_1_l_gica_de_negocio_detectada",
+			"target": "docs_molecules_frontend_architecture_audit_hallazgo_d_videoresource_astro_implementa_manager_completo_de_runtime",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/molecules-frontend-architecture-audit.md",
+			"source_location": "L33",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_molecules_frontend_architecture_audit_auditor_a_de_arquitectura_frontend_src_components_molecules",
+			"target": "docs_molecules_frontend_architecture_audit_2_construcci_n_de_mensajes_de_whatsapp",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/molecules-frontend-architecture-audit.md",
+			"source_location": "L39",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_molecules_frontend_architecture_audit_auditor_a_de_arquitectura_frontend_src_components_molecules",
+			"target": "docs_molecules_frontend_architecture_audit_3_validaciones_indebidas",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/molecules-frontend-architecture-audit.md",
+			"source_location": "L44",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_molecules_frontend_architecture_audit_3_validaciones_indebidas",
+			"target": "docs_molecules_frontend_architecture_audit_casos_detectados",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/molecules-frontend-architecture-audit.md",
+			"source_location": "L46",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_molecules_frontend_architecture_audit_auditor_a_de_arquitectura_frontend_src_components_molecules",
+			"target": "docs_molecules_frontend_architecture_audit_4_dependencias_directas_de_adapters_utils",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/molecules-frontend-architecture-audit.md",
+			"source_location": "L52",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_molecules_frontend_architecture_audit_4_dependencias_directas_de_adapters_utils",
+			"target": "docs_molecules_frontend_architecture_audit_dependencias_directas_observadas",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/molecules-frontend-architecture-audit.md",
+			"source_location": "L54",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_molecules_frontend_architecture_audit_4_dependencias_directas_de_adapters_utils",
+			"target": "docs_molecules_frontend_architecture_audit_nota",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/molecules-frontend-architecture-audit.md",
+			"source_location": "L59",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_molecules_frontend_architecture_audit_auditor_a_de_arquitectura_frontend_src_components_molecules",
+			"target": "docs_molecules_frontend_architecture_audit_5_qu_mover_a_adapters",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/molecules-frontend-architecture-audit.md",
+			"source_location": "L62",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_molecules_frontend_architecture_audit_auditor_a_de_arquitectura_frontend_src_components_molecules",
+			"target": "docs_molecules_frontend_architecture_audit_a_adapters_pricing_nuevo",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/molecules-frontend-architecture-audit.md",
+			"source_location": "L64",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_molecules_frontend_architecture_audit_auditor_a_de_arquitectura_frontend_src_components_molecules",
+			"target": "docs_molecules_frontend_architecture_audit_a_adapters_media_nuevo",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/molecules-frontend-architecture-audit.md",
+			"source_location": "L71",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_molecules_frontend_architecture_audit_auditor_a_de_arquitectura_frontend_src_components_molecules",
+			"target": "docs_molecules_frontend_architecture_audit_a_adapters_video_o_utils_video_controller",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/molecules-frontend-architecture-audit.md",
+			"source_location": "L81",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_molecules_frontend_architecture_audit_auditor_a_de_arquitectura_frontend_src_components_molecules",
+			"target": "docs_molecules_frontend_architecture_audit_6_qu_simplificar",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/molecules-frontend-architecture-audit.md",
+			"source_location": "L87",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_molecules_frontend_architecture_audit_auditor_a_de_arquitectura_frontend_src_components_molecules",
+			"target": "docs_molecules_frontend_architecture_audit_7_qu_archivos_pueden_unificarse",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/molecules-frontend-architecture-audit.md",
+			"source_location": "L110",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_molecules_frontend_architecture_audit_7_qu_archivos_pueden_unificarse",
+			"target": "docs_molecules_frontend_architecture_audit_opci_n_1_recomendada_unificaci_n_de_runtime_multimedia",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/molecules-frontend-architecture-audit.md",
+			"source_location": "L112",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_molecules_frontend_architecture_audit_7_qu_archivos_pueden_unificarse",
+			"target": "docs_molecules_frontend_architecture_audit_opci_n_2_consolidaci_n_de_resoluci_n_de_recursos",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/molecules-frontend-architecture-audit.md",
+			"source_location": "L117",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_molecules_frontend_architecture_audit_7_qu_archivos_pueden_unificarse",
+			"target": "docs_molecules_frontend_architecture_audit_opci_n_3_fields_de_formulario_base",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/molecules-frontend-architecture-audit.md",
+			"source_location": "L122",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_molecules_frontend_architecture_audit_auditor_a_de_arquitectura_frontend_src_components_molecules",
+			"target": "docs_molecules_frontend_architecture_audit_priorizaci_n_de_refactor",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/molecules-frontend-architecture-audit.md",
+			"source_location": "L126",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_molecules_frontend_architecture_audit_priorizaci_n_de_refactor",
+			"target": "docs_molecules_frontend_architecture_audit_alta",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/molecules-frontend-architecture-audit.md",
+			"source_location": "L128",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_molecules_frontend_architecture_audit_priorizaci_n_de_refactor",
+			"target": "docs_molecules_frontend_architecture_audit_media",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/molecules-frontend-architecture-audit.md",
+			"source_location": "L134",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_molecules_frontend_architecture_audit_priorizaci_n_de_refactor",
+			"target": "docs_molecules_frontend_architecture_audit_baja",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/molecules-frontend-architecture-audit.md",
+			"source_location": "L137",
+			"weight": 1.0
+		}
+	],
+	"input_tokens": 0,
+	"output_tokens": 0
+}

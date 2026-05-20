@@ -1,0 +1,78 @@
+{
+	"nodes": [
+		{
+			"id": "mnt_d_coders_work_hhg_projects_he_web_src_types_global_d_ts",
+			"label": "global.d.ts",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/types/global.d.ts",
+			"source_location": "L1"
+		},
+		{
+			"id": "types_global_d_flatpickrinstance",
+			"label": "FlatpickrInstance",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/types/global.d.ts",
+			"source_location": "L3"
+		},
+		{
+			"id": "types_global_d_htmlelement",
+			"label": "HTMLElement",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/types/global.d.ts",
+			"source_location": "L9"
+		},
+		{
+			"id": "types_global_d_window",
+			"label": "Window",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/types/global.d.ts",
+			"source_location": "L13"
+		},
+		{
+			"id": "types_global_d_localizedtext",
+			"label": "LocalizedText",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/types/global.d.ts",
+			"source_location": "L42"
+		}
+	],
+	"edges": [
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_types_global_d_ts",
+			"target": "types_global_d_flatpickrinstance",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/types/global.d.ts",
+			"source_location": "L3",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_types_global_d_ts",
+			"target": "types_global_d_htmlelement",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/types/global.d.ts",
+			"source_location": "L9",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_types_global_d_ts",
+			"target": "types_global_d_window",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/types/global.d.ts",
+			"source_location": "L13",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_types_global_d_ts",
+			"target": "types_global_d_localizedtext",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/types/global.d.ts",
+			"source_location": "L42",
+			"weight": 1.0
+		}
+	],
+	"raw_calls": []
+}

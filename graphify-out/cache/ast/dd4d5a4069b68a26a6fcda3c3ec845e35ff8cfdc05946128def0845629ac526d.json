@@ -1,0 +1,189 @@
+{
+	"nodes": [
+		{
+			"id": "mnt_d_coders_work_hhg_projects_he_web_src_adapters_booking_whatsapp_adapter_test_ts",
+			"label": "whatsapp.adapter.test.ts",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/booking/whatsapp.adapter.test.ts",
+			"source_location": "L1"
+		},
+		{
+			"id": "booking_whatsapp_adapter_test_basedata",
+			"label": "baseData",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/booking/whatsapp.adapter.test.ts",
+			"source_location": "L13"
+		},
+		{
+			"id": "booking_whatsapp_adapter_test_message",
+			"label": "message",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/booking/whatsapp.adapter.test.ts",
+			"source_location": "L24"
+		},
+		{
+			"id": "booking_whatsapp_adapter_test_url",
+			"label": "url",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/booking/whatsapp.adapter.test.ts",
+			"source_location": "L62"
+		},
+		{
+			"id": "booking_whatsapp_adapter_test_validdata",
+			"label": "validData",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/booking/whatsapp.adapter.test.ts",
+			"source_location": "L75"
+		},
+		{
+			"id": "booking_whatsapp_adapter_test_invaliddata",
+			"label": "invalidData",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/booking/whatsapp.adapter.test.ts",
+			"source_location": "L87"
+		}
+	],
+	"edges": [
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_adapters_booking_whatsapp_adapter_test_ts",
+			"target": "vitest",
+			"relation": "imports_from",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/booking/whatsapp.adapter.test.ts",
+			"source_location": "L4",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_adapters_booking_whatsapp_adapter_test_ts",
+			"target": "mnt_d_coders_work_hhg_projects_he_web_src_adapters_booking_whatsapp_adapter_ts",
+			"relation": "imports_from",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/booking/whatsapp.adapter.test.ts",
+			"source_location": "L5",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_adapters_booking_whatsapp_adapter_test_ts",
+			"target": "booking_whatsapp_adapter_buildwhatsappmessage",
+			"relation": "imports",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/booking/whatsapp.adapter.test.ts",
+			"source_location": "L5",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_adapters_booking_whatsapp_adapter_test_ts",
+			"target": "booking_whatsapp_adapter_buildwhatsappurl",
+			"relation": "imports",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/booking/whatsapp.adapter.test.ts",
+			"source_location": "L5",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_adapters_booking_whatsapp_adapter_test_ts",
+			"target": "booking_whatsapp_adapter_validatebookingdata",
+			"relation": "imports",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/booking/whatsapp.adapter.test.ts",
+			"source_location": "L5",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_adapters_booking_whatsapp_adapter_test_ts",
+			"target": "booking_whatsapp_adapter_test_basedata",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/booking/whatsapp.adapter.test.ts",
+			"source_location": "L13",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_adapters_booking_whatsapp_adapter_test_ts",
+			"target": "booking_whatsapp_adapter_test_message",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/booking/whatsapp.adapter.test.ts",
+			"source_location": "L24",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_adapters_booking_whatsapp_adapter_test_ts",
+			"target": "booking_whatsapp_adapter_test_message",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/booking/whatsapp.adapter.test.ts",
+			"source_location": "L36",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_adapters_booking_whatsapp_adapter_test_ts",
+			"target": "booking_whatsapp_adapter_test_message",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/booking/whatsapp.adapter.test.ts",
+			"source_location": "L45",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_adapters_booking_whatsapp_adapter_test_ts",
+			"target": "booking_whatsapp_adapter_test_url",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/booking/whatsapp.adapter.test.ts",
+			"source_location": "L62",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_adapters_booking_whatsapp_adapter_test_ts",
+			"target": "booking_whatsapp_adapter_test_url",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/booking/whatsapp.adapter.test.ts",
+			"source_location": "L68",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_adapters_booking_whatsapp_adapter_test_ts",
+			"target": "booking_whatsapp_adapter_test_validdata",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/booking/whatsapp.adapter.test.ts",
+			"source_location": "L75",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_adapters_booking_whatsapp_adapter_test_ts",
+			"target": "booking_whatsapp_adapter_test_invaliddata",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/booking/whatsapp.adapter.test.ts",
+			"source_location": "L87",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_adapters_booking_whatsapp_adapter_test_ts",
+			"target": "booking_whatsapp_adapter_test_invaliddata",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/booking/whatsapp.adapter.test.ts",
+			"source_location": "L99",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_adapters_booking_whatsapp_adapter_test_ts",
+			"target": "booking_whatsapp_adapter_test_invaliddata",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/booking/whatsapp.adapter.test.ts",
+			"source_location": "L111",
+			"weight": 1.0
+		}
+	],
+	"raw_calls": []
+}

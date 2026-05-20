@@ -1,0 +1,50 @@
+{
+	"nodes": [
+		{
+			"id": "mnt_d_coders_work_hhg_projects_he_web_src_types_tour_ts",
+			"label": "tour.ts",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/types/tour.ts",
+			"source_location": "L1"
+		},
+		{
+			"id": "types_tour_tour",
+			"label": "Tour",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/types/tour.ts",
+			"source_location": "L3"
+		}
+	],
+	"edges": [
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_types_tour_ts",
+			"target": "mnt_d_coders_work_hhg_projects_he_web_src_types_image_ts",
+			"relation": "imports_from",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/types/tour.ts",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_types_tour_ts",
+			"target": "types_image_imagesource",
+			"relation": "imports",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/types/tour.ts",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_types_tour_ts",
+			"target": "types_tour_tour",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/types/tour.ts",
+			"source_location": "L3",
+			"weight": 1.0
+		}
+	],
+	"raw_calls": []
+}

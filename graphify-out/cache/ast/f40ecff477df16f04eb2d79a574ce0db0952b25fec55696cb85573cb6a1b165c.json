@@ -1,0 +1,319 @@
+{
+	"nodes": [
+		{
+			"id": "mnt_d_coders_work_hhg_projects_he_web_docs_atoms_frontend_architecture_audit_md",
+			"label": "atoms-frontend-architecture-audit.md",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/atoms-frontend-architecture-audit.md",
+			"source_location": "L1"
+		},
+		{
+			"id": "docs_atoms_frontend_architecture_audit_auditor_a_de_arquitectura_frontend_src_components_atoms",
+			"label": "Auditor\u00eda de arquitectura frontend \u2014 `src/components/atoms`",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/atoms-frontend-architecture-audit.md",
+			"source_location": "L1"
+		},
+		{
+			"id": "docs_atoms_frontend_architecture_audit_objetivo",
+			"label": "Objetivo",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/atoms-frontend-architecture-audit.md",
+			"source_location": "L3"
+		},
+		{
+			"id": "docs_atoms_frontend_architecture_audit_hallazgos_principales",
+			"label": "Hallazgos principales",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/atoms-frontend-architecture-audit.md",
+			"source_location": "L6"
+		},
+		{
+			"id": "docs_atoms_frontend_architecture_audit_1_l_gica_de_negocio_detectada_dentro_de_atoms",
+			"label": "1) L\u00f3gica de negocio detectada dentro de atoms",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/atoms-frontend-architecture-audit.md",
+			"source_location": "L8"
+		},
+		{
+			"id": "docs_atoms_frontend_architecture_audit_2_validaciones_o_transformaciones_indebidas_para_una_capa_at_mica",
+			"label": "2) Validaciones o transformaciones indebidas para una capa at\u00f3mica",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/atoms-frontend-architecture-audit.md",
+			"source_location": "L28"
+		},
+		{
+			"id": "docs_atoms_frontend_architecture_audit_archivos_que_deber_an_priorizar_refactor",
+			"label": "Archivos que deber\u00edan priorizar refactor",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/atoms-frontend-architecture-audit.md",
+			"source_location": "L45"
+		},
+		{
+			"id": "docs_atoms_frontend_architecture_audit_prioridad_alta",
+			"label": "Prioridad alta",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/atoms-frontend-architecture-audit.md",
+			"source_location": "L47"
+		},
+		{
+			"id": "docs_atoms_frontend_architecture_audit_prioridad_media",
+			"label": "Prioridad media",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/atoms-frontend-architecture-audit.md",
+			"source_location": "L52"
+		},
+		{
+			"id": "docs_atoms_frontend_architecture_audit_prioridad_baja_ajustes_de_pureza",
+			"label": "Prioridad baja (ajustes de pureza)",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/atoms-frontend-architecture-audit.md",
+			"source_location": "L60"
+		},
+		{
+			"id": "docs_atoms_frontend_architecture_audit_qu_c_digo_mover_a_adapters_o_utils",
+			"label": "Qu\u00e9 c\u00f3digo mover a `adapters` o `utils`",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/atoms-frontend-architecture-audit.md",
+			"source_location": "L64"
+		},
+		{
+			"id": "docs_atoms_frontend_architecture_audit_a_adapters_booking_o_utils_booking",
+			"label": "A `adapters/booking` o `utils/booking`",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/atoms-frontend-architecture-audit.md",
+			"source_location": "L66"
+		},
+		{
+			"id": "docs_atoms_frontend_architecture_audit_a_adapters_search_o_utils_search",
+			"label": "A `adapters/search` o `utils/search`",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/atoms-frontend-architecture-audit.md",
+			"source_location": "L73"
+		},
+		{
+			"id": "docs_atoms_frontend_architecture_audit_a_adapters_contact_o_utils_contact",
+			"label": "A `adapters/contact` o `utils/contact`",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/atoms-frontend-architecture-audit.md",
+			"source_location": "L79"
+		},
+		{
+			"id": "docs_atoms_frontend_architecture_audit_a_adapters_forms",
+			"label": "A `adapters/forms`",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/atoms-frontend-architecture-audit.md",
+			"source_location": "L85"
+		},
+		{
+			"id": "docs_atoms_frontend_architecture_audit_a_capa_superior_molecule_organism_page_loader",
+			"label": "A capa superior (molecule/organism/page loader)",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/atoms-frontend-architecture-audit.md",
+			"source_location": "L89"
+		},
+		{
+			"id": "docs_atoms_frontend_architecture_audit_a_adapters_image",
+			"label": "A `adapters/image`",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/atoms-frontend-architecture-audit.md",
+			"source_location": "L94"
+		},
+		{
+			"id": "docs_atoms_frontend_architecture_audit_estructura_ideal_final_sugerida",
+			"label": "Estructura ideal final sugerida",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/atoms-frontend-architecture-audit.md",
+			"source_location": "L99"
+		},
+		{
+			"id": "docs_atoms_frontend_architecture_audit_codeblock_1",
+			"label": "code:txt (src/)",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/atoms-frontend-architecture-audit.md",
+			"source_location": "L101"
+		},
+		{
+			"id": "docs_atoms_frontend_architecture_audit_criterio_objetivo_para_atoms_limpios",
+			"label": "Criterio objetivo para atoms \u201climpios\u201d",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/atoms-frontend-architecture-audit.md",
+			"source_location": "L140"
+		}
+	],
+	"edges": [
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_docs_atoms_frontend_architecture_audit_md",
+			"target": "docs_atoms_frontend_architecture_audit_auditor_a_de_arquitectura_frontend_src_components_atoms",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/atoms-frontend-architecture-audit.md",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_atoms_frontend_architecture_audit_auditor_a_de_arquitectura_frontend_src_components_atoms",
+			"target": "docs_atoms_frontend_architecture_audit_objetivo",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/atoms-frontend-architecture-audit.md",
+			"source_location": "L3",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_atoms_frontend_architecture_audit_auditor_a_de_arquitectura_frontend_src_components_atoms",
+			"target": "docs_atoms_frontend_architecture_audit_hallazgos_principales",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/atoms-frontend-architecture-audit.md",
+			"source_location": "L6",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_atoms_frontend_architecture_audit_hallazgos_principales",
+			"target": "docs_atoms_frontend_architecture_audit_1_l_gica_de_negocio_detectada_dentro_de_atoms",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/atoms-frontend-architecture-audit.md",
+			"source_location": "L8",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_atoms_frontend_architecture_audit_hallazgos_principales",
+			"target": "docs_atoms_frontend_architecture_audit_2_validaciones_o_transformaciones_indebidas_para_una_capa_at_mica",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/atoms-frontend-architecture-audit.md",
+			"source_location": "L28",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_atoms_frontend_architecture_audit_auditor_a_de_arquitectura_frontend_src_components_atoms",
+			"target": "docs_atoms_frontend_architecture_audit_archivos_que_deber_an_priorizar_refactor",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/atoms-frontend-architecture-audit.md",
+			"source_location": "L45",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_atoms_frontend_architecture_audit_archivos_que_deber_an_priorizar_refactor",
+			"target": "docs_atoms_frontend_architecture_audit_prioridad_alta",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/atoms-frontend-architecture-audit.md",
+			"source_location": "L47",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_atoms_frontend_architecture_audit_archivos_que_deber_an_priorizar_refactor",
+			"target": "docs_atoms_frontend_architecture_audit_prioridad_media",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/atoms-frontend-architecture-audit.md",
+			"source_location": "L52",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_atoms_frontend_architecture_audit_archivos_que_deber_an_priorizar_refactor",
+			"target": "docs_atoms_frontend_architecture_audit_prioridad_baja_ajustes_de_pureza",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/atoms-frontend-architecture-audit.md",
+			"source_location": "L60",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_atoms_frontend_architecture_audit_auditor_a_de_arquitectura_frontend_src_components_atoms",
+			"target": "docs_atoms_frontend_architecture_audit_qu_c_digo_mover_a_adapters_o_utils",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/atoms-frontend-architecture-audit.md",
+			"source_location": "L64",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_atoms_frontend_architecture_audit_qu_c_digo_mover_a_adapters_o_utils",
+			"target": "docs_atoms_frontend_architecture_audit_a_adapters_booking_o_utils_booking",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/atoms-frontend-architecture-audit.md",
+			"source_location": "L66",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_atoms_frontend_architecture_audit_qu_c_digo_mover_a_adapters_o_utils",
+			"target": "docs_atoms_frontend_architecture_audit_a_adapters_search_o_utils_search",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/atoms-frontend-architecture-audit.md",
+			"source_location": "L73",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_atoms_frontend_architecture_audit_qu_c_digo_mover_a_adapters_o_utils",
+			"target": "docs_atoms_frontend_architecture_audit_a_adapters_contact_o_utils_contact",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/atoms-frontend-architecture-audit.md",
+			"source_location": "L79",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_atoms_frontend_architecture_audit_qu_c_digo_mover_a_adapters_o_utils",
+			"target": "docs_atoms_frontend_architecture_audit_a_adapters_forms",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/atoms-frontend-architecture-audit.md",
+			"source_location": "L85",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_atoms_frontend_architecture_audit_qu_c_digo_mover_a_adapters_o_utils",
+			"target": "docs_atoms_frontend_architecture_audit_a_capa_superior_molecule_organism_page_loader",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/atoms-frontend-architecture-audit.md",
+			"source_location": "L89",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_atoms_frontend_architecture_audit_qu_c_digo_mover_a_adapters_o_utils",
+			"target": "docs_atoms_frontend_architecture_audit_a_adapters_image",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/atoms-frontend-architecture-audit.md",
+			"source_location": "L94",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_atoms_frontend_architecture_audit_auditor_a_de_arquitectura_frontend_src_components_atoms",
+			"target": "docs_atoms_frontend_architecture_audit_estructura_ideal_final_sugerida",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/atoms-frontend-architecture-audit.md",
+			"source_location": "L99",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_atoms_frontend_architecture_audit_estructura_ideal_final_sugerida",
+			"target": "docs_atoms_frontend_architecture_audit_codeblock_1",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/atoms-frontend-architecture-audit.md",
+			"source_location": "L101",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_atoms_frontend_architecture_audit_auditor_a_de_arquitectura_frontend_src_components_atoms",
+			"target": "docs_atoms_frontend_architecture_audit_criterio_objetivo_para_atoms_limpios",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/atoms-frontend-architecture-audit.md",
+			"source_location": "L140",
+			"weight": 1.0
+		}
+	],
+	"input_tokens": 0,
+	"output_tokens": 0
+}

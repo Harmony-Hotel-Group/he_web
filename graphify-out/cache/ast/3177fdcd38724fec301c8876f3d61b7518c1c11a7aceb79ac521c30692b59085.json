@@ -1,0 +1,479 @@
+{
+	"nodes": [
+		{
+			"id": "mnt_d_coders_work_hhg_projects_he_web_docs_seo_performance_astro_audit_md",
+			"label": "seo-performance-astro-audit.md",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/seo-performance-astro-audit.md",
+			"source_location": "L1"
+		},
+		{
+			"id": "docs_seo_performance_astro_audit_auditor_a_astro_seo_performance",
+			"label": "Auditor\u00eda Astro \u2014 SEO & Performance",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/seo-performance-astro-audit.md",
+			"source_location": "L1"
+		},
+		{
+			"id": "docs_seo_performance_astro_audit_alcance",
+			"label": "Alcance",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/seo-performance-astro-audit.md",
+			"source_location": "L3"
+		},
+		{
+			"id": "docs_seo_performance_astro_audit_hallazgos",
+			"label": "Hallazgos",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/seo-performance-astro-audit.md",
+			"source_location": "L12"
+		},
+		{
+			"id": "docs_seo_performance_astro_audit_1_meta_tags_din_micos_centralizaci_n",
+			"label": "1) Meta tags din\u00e1micos / centralizaci\u00f3n",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/seo-performance-astro-audit.md",
+			"source_location": "L14"
+		},
+		{
+			"id": "docs_seo_performance_astro_audit_situaci_n_actual",
+			"label": "Situaci\u00f3n actual",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/seo-performance-astro-audit.md",
+			"source_location": "L16"
+		},
+		{
+			"id": "docs_seo_performance_astro_audit_riesgo",
+			"label": "Riesgo",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/seo-performance-astro-audit.md",
+			"source_location": "L20"
+		},
+		{
+			"id": "docs_seo_performance_astro_audit_evidencia",
+			"label": "Evidencia",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/seo-performance-astro-audit.md",
+			"source_location": "L23"
+		},
+		{
+			"id": "docs_seo_performance_astro_audit_2_uso_de_title",
+			"label": "2) Uso de `<title>`",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/seo-performance-astro-audit.md",
+			"source_location": "L29"
+		},
+		{
+			"id": "docs_seo_performance_astro_audit_situaci_n_actual_31",
+			"label": "Situaci\u00f3n actual",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/seo-performance-astro-audit.md",
+			"source_location": "L31"
+		},
+		{
+			"id": "docs_seo_performance_astro_audit_riesgo_35",
+			"label": "Riesgo",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/seo-performance-astro-audit.md",
+			"source_location": "L35"
+		},
+		{
+			"id": "docs_seo_performance_astro_audit_3_structured_data_json_ld",
+			"label": "3) Structured Data (JSON-LD)",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/seo-performance-astro-audit.md",
+			"source_location": "L40"
+		},
+		{
+			"id": "docs_seo_performance_astro_audit_situaci_n_actual_42",
+			"label": "Situaci\u00f3n actual",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/seo-performance-astro-audit.md",
+			"source_location": "L42"
+		},
+		{
+			"id": "docs_seo_performance_astro_audit_riesgo_46",
+			"label": "Riesgo",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/seo-performance-astro-audit.md",
+			"source_location": "L46"
+		},
+		{
+			"id": "docs_seo_performance_astro_audit_4_opengraph_twitter",
+			"label": "4) OpenGraph / Twitter",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/seo-performance-astro-audit.md",
+			"source_location": "L51"
+		},
+		{
+			"id": "docs_seo_performance_astro_audit_situaci_n_actual_53",
+			"label": "Situaci\u00f3n actual",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/seo-performance-astro-audit.md",
+			"source_location": "L53"
+		},
+		{
+			"id": "docs_seo_performance_astro_audit_riesgo_57",
+			"label": "Riesgo",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/seo-performance-astro-audit.md",
+			"source_location": "L57"
+		},
+		{
+			"id": "docs_seo_performance_astro_audit_5_lazy_loading_y_atributos_de_imagen",
+			"label": "5) Lazy loading y atributos de imagen",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/seo-performance-astro-audit.md",
+			"source_location": "L62"
+		},
+		{
+			"id": "docs_seo_performance_astro_audit_hallazgos_64",
+			"label": "Hallazgos",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/seo-performance-astro-audit.md",
+			"source_location": "L64"
+		},
+		{
+			"id": "docs_seo_performance_astro_audit_riesgo_69",
+			"label": "Riesgo",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/seo-performance-astro-audit.md",
+			"source_location": "L69"
+		},
+		{
+			"id": "docs_seo_performance_astro_audit_6_peso_de_im_genes",
+			"label": "6) Peso de im\u00e1genes",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/seo-performance-astro-audit.md",
+			"source_location": "L74"
+		},
+		{
+			"id": "docs_seo_performance_astro_audit_resultado_del_muestreo_local_src_assets_img",
+			"label": "Resultado del muestreo local (`src/assets/img`)",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/seo-performance-astro-audit.md",
+			"source_location": "L76"
+		},
+		{
+			"id": "docs_seo_performance_astro_audit_lectura",
+			"label": "Lectura",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/seo-performance-astro-audit.md",
+			"source_location": "L81"
+		},
+		{
+			"id": "docs_seo_performance_astro_audit_propuesta_de_estructura_seo_centralizada",
+			"label": "Propuesta de estructura SEO centralizada",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/seo-performance-astro-audit.md",
+			"source_location": "L86"
+		},
+		{
+			"id": "docs_seo_performance_astro_audit_codeblock_1",
+			"label": "code:txt (src/)",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/seo-performance-astro-audit.md",
+			"source_location": "L88"
+		},
+		{
+			"id": "docs_seo_performance_astro_audit_responsabilidad_por_capa",
+			"label": "Responsabilidad por capa",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/seo-performance-astro-audit.md",
+			"source_location": "L100"
+		},
+		{
+			"id": "docs_seo_performance_astro_audit_propuesta_de_componente_seohead_astro",
+			"label": "Propuesta de componente `SeoHead.astro`",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/seo-performance-astro-audit.md",
+			"source_location": "L107"
+		},
+		{
+			"id": "docs_seo_performance_astro_audit_datos_estructurados_propuestos_para_hotel",
+			"label": "Datos estructurados propuestos para Hotel",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/seo-performance-astro-audit.md",
+			"source_location": "L130"
+		},
+		{
+			"id": "docs_seo_performance_astro_audit_plan_de_adopci_n_incremental_sin_romper_runtime",
+			"label": "Plan de adopci\u00f3n incremental (sin romper runtime)",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/seo-performance-astro-audit.md",
+			"source_location": "L151"
+		},
+		{
+			"id": "docs_seo_performance_astro_audit_checklist_t_cnico_sugerido",
+			"label": "Checklist t\u00e9cnico sugerido",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/seo-performance-astro-audit.md",
+			"source_location": "L165"
+		}
+	],
+	"edges": [
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_docs_seo_performance_astro_audit_md",
+			"target": "docs_seo_performance_astro_audit_auditor_a_astro_seo_performance",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/seo-performance-astro-audit.md",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_seo_performance_astro_audit_auditor_a_astro_seo_performance",
+			"target": "docs_seo_performance_astro_audit_alcance",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/seo-performance-astro-audit.md",
+			"source_location": "L3",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_seo_performance_astro_audit_auditor_a_astro_seo_performance",
+			"target": "docs_seo_performance_astro_audit_hallazgos",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/seo-performance-astro-audit.md",
+			"source_location": "L12",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_seo_performance_astro_audit_hallazgos",
+			"target": "docs_seo_performance_astro_audit_1_meta_tags_din_micos_centralizaci_n",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/seo-performance-astro-audit.md",
+			"source_location": "L14",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_seo_performance_astro_audit_auditor_a_astro_seo_performance",
+			"target": "docs_seo_performance_astro_audit_situaci_n_actual",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/seo-performance-astro-audit.md",
+			"source_location": "L16",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_seo_performance_astro_audit_auditor_a_astro_seo_performance",
+			"target": "docs_seo_performance_astro_audit_riesgo",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/seo-performance-astro-audit.md",
+			"source_location": "L20",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_seo_performance_astro_audit_auditor_a_astro_seo_performance",
+			"target": "docs_seo_performance_astro_audit_evidencia",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/seo-performance-astro-audit.md",
+			"source_location": "L23",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_seo_performance_astro_audit_evidencia",
+			"target": "docs_seo_performance_astro_audit_2_uso_de_title",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/seo-performance-astro-audit.md",
+			"source_location": "L29",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_seo_performance_astro_audit_auditor_a_astro_seo_performance",
+			"target": "docs_seo_performance_astro_audit_situaci_n_actual_31",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/seo-performance-astro-audit.md",
+			"source_location": "L31",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_seo_performance_astro_audit_auditor_a_astro_seo_performance",
+			"target": "docs_seo_performance_astro_audit_riesgo_35",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/seo-performance-astro-audit.md",
+			"source_location": "L35",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_seo_performance_astro_audit_riesgo_35",
+			"target": "docs_seo_performance_astro_audit_3_structured_data_json_ld",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/seo-performance-astro-audit.md",
+			"source_location": "L40",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_seo_performance_astro_audit_auditor_a_astro_seo_performance",
+			"target": "docs_seo_performance_astro_audit_situaci_n_actual_42",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/seo-performance-astro-audit.md",
+			"source_location": "L42",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_seo_performance_astro_audit_auditor_a_astro_seo_performance",
+			"target": "docs_seo_performance_astro_audit_riesgo_46",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/seo-performance-astro-audit.md",
+			"source_location": "L46",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_seo_performance_astro_audit_riesgo_46",
+			"target": "docs_seo_performance_astro_audit_4_opengraph_twitter",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/seo-performance-astro-audit.md",
+			"source_location": "L51",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_seo_performance_astro_audit_auditor_a_astro_seo_performance",
+			"target": "docs_seo_performance_astro_audit_situaci_n_actual_53",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/seo-performance-astro-audit.md",
+			"source_location": "L53",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_seo_performance_astro_audit_auditor_a_astro_seo_performance",
+			"target": "docs_seo_performance_astro_audit_riesgo_57",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/seo-performance-astro-audit.md",
+			"source_location": "L57",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_seo_performance_astro_audit_riesgo_57",
+			"target": "docs_seo_performance_astro_audit_5_lazy_loading_y_atributos_de_imagen",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/seo-performance-astro-audit.md",
+			"source_location": "L62",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_seo_performance_astro_audit_auditor_a_astro_seo_performance",
+			"target": "docs_seo_performance_astro_audit_hallazgos_64",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/seo-performance-astro-audit.md",
+			"source_location": "L64",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_seo_performance_astro_audit_auditor_a_astro_seo_performance",
+			"target": "docs_seo_performance_astro_audit_riesgo_69",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/seo-performance-astro-audit.md",
+			"source_location": "L69",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_seo_performance_astro_audit_riesgo_69",
+			"target": "docs_seo_performance_astro_audit_6_peso_de_im_genes",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/seo-performance-astro-audit.md",
+			"source_location": "L74",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_seo_performance_astro_audit_auditor_a_astro_seo_performance",
+			"target": "docs_seo_performance_astro_audit_resultado_del_muestreo_local_src_assets_img",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/seo-performance-astro-audit.md",
+			"source_location": "L76",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_seo_performance_astro_audit_auditor_a_astro_seo_performance",
+			"target": "docs_seo_performance_astro_audit_lectura",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/seo-performance-astro-audit.md",
+			"source_location": "L81",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_seo_performance_astro_audit_auditor_a_astro_seo_performance",
+			"target": "docs_seo_performance_astro_audit_propuesta_de_estructura_seo_centralizada",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/seo-performance-astro-audit.md",
+			"source_location": "L86",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_seo_performance_astro_audit_propuesta_de_estructura_seo_centralizada",
+			"target": "docs_seo_performance_astro_audit_codeblock_1",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/seo-performance-astro-audit.md",
+			"source_location": "L88",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_seo_performance_astro_audit_propuesta_de_estructura_seo_centralizada",
+			"target": "docs_seo_performance_astro_audit_responsabilidad_por_capa",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/seo-performance-astro-audit.md",
+			"source_location": "L100",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_seo_performance_astro_audit_auditor_a_astro_seo_performance",
+			"target": "docs_seo_performance_astro_audit_propuesta_de_componente_seohead_astro",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/seo-performance-astro-audit.md",
+			"source_location": "L107",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_seo_performance_astro_audit_auditor_a_astro_seo_performance",
+			"target": "docs_seo_performance_astro_audit_datos_estructurados_propuestos_para_hotel",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/seo-performance-astro-audit.md",
+			"source_location": "L130",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_seo_performance_astro_audit_auditor_a_astro_seo_performance",
+			"target": "docs_seo_performance_astro_audit_plan_de_adopci_n_incremental_sin_romper_runtime",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/seo-performance-astro-audit.md",
+			"source_location": "L151",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_seo_performance_astro_audit_auditor_a_astro_seo_performance",
+			"target": "docs_seo_performance_astro_audit_checklist_t_cnico_sugerido",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/seo-performance-astro-audit.md",
+			"source_location": "L165",
+			"weight": 1.0
+		}
+	],
+	"input_tokens": 0,
+	"output_tokens": 0
+}

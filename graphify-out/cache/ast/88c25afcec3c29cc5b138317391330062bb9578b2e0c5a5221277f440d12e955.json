@@ -1,0 +1,99 @@
+{
+	"nodes": [
+		{
+			"id": "mnt_d_coders_work_hhg_projects_he_web_src_adapters_tour_adapter_ts",
+			"label": "tour.adapter.ts",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/tour.adapter.ts",
+			"source_location": "L1"
+		},
+		{
+			"id": "adapters_tour_adapter_adapttour",
+			"label": "adaptTour()",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/tour.adapter.ts",
+			"source_location": "L4"
+		}
+	],
+	"edges": [
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_adapters_tour_adapter_ts",
+			"target": "mnt_d_coders_work_hhg_projects_he_web_src_types_tour_ts",
+			"relation": "imports_from",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/tour.adapter.ts",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_adapters_tour_adapter_ts",
+			"target": "types_tour_tour",
+			"relation": "imports",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/tour.adapter.ts",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_adapters_tour_adapter_ts",
+			"target": "mnt_d_coders_work_hhg_projects_he_web_src_adapters_image_adapter",
+			"relation": "imports_from",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/tour.adapter.ts",
+			"source_location": "L2",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_adapters_tour_adapter_ts",
+			"target": "adapters_image_adaptimagesource",
+			"relation": "imports",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/tour.adapter.ts",
+			"source_location": "L2",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_adapters_tour_adapter_ts",
+			"target": "adapters_tour_adapter_adapttour",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/tour.adapter.ts",
+			"source_location": "L4",
+			"weight": 1.0
+		}
+	],
+	"raw_calls": [
+		{
+			"caller_nid": "adapters_tour_adapter_adapttour",
+			"callee": "String",
+			"is_member_call": false,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/tour.adapter.ts",
+			"source_location": "L6"
+		},
+		{
+			"caller_nid": "adapters_tour_adapter_adapttour",
+			"callee": "Number",
+			"is_member_call": false,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/tour.adapter.ts",
+			"source_location": "L9"
+		},
+		{
+			"caller_nid": "adapters_tour_adapter_adapttour",
+			"callee": "adaptImageSource",
+			"is_member_call": false,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/tour.adapter.ts",
+			"source_location": "L10"
+		},
+		{
+			"caller_nid": "adapters_tour_adapter_adapttour",
+			"callee": "Boolean",
+			"is_member_call": false,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/tour.adapter.ts",
+			"source_location": "L11"
+		}
+	]
+}

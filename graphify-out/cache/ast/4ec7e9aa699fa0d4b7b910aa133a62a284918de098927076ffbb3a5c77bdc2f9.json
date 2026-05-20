@@ -1,0 +1,831 @@
+{
+	"nodes": [
+		{
+			"id": "mnt_d_coders_work_hhg_projects_he_web_readme_md",
+			"label": "README.md",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L1"
+		},
+		{
+			"id": "he_web_readme_hotel_ensue_os_project_context_documentation",
+			"label": "Hotel Ensue\u00f1os - Project Context & Documentation",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L1"
+		},
+		{
+			"id": "he_web_readme_overview",
+			"label": "Overview",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L3"
+		},
+		{
+			"id": "he_web_readme_project_information",
+			"label": "Project Information",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L6"
+		},
+		{
+			"id": "he_web_readme_technical_stack",
+			"label": "Technical Stack",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L13"
+		},
+		{
+			"id": "he_web_readme_core_framework",
+			"label": "Core Framework",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L15"
+		},
+		{
+			"id": "he_web_readme_styling_ui",
+			"label": "Styling & UI",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L20"
+		},
+		{
+			"id": "he_web_readme_development_tools",
+			"label": "Development Tools",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L25"
+		},
+		{
+			"id": "he_web_readme_deployment_hosting",
+			"label": "Deployment & Hosting",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L30"
+		},
+		{
+			"id": "he_web_readme_architecture",
+			"label": "Architecture",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L34"
+		},
+		{
+			"id": "he_web_readme_project_structure",
+			"label": "Project Structure",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L36"
+		},
+		{
+			"id": "he_web_readme_codeblock_1",
+			"label": "code:block1 (he_web/)",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L37"
+		},
+		{
+			"id": "he_web_readme_component_architecture_atomic_design",
+			"label": "Component Architecture (Atomic Design)",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L60"
+		},
+		{
+			"id": "he_web_readme_features",
+			"label": "Features",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L69"
+		},
+		{
+			"id": "he_web_readme_core_features",
+			"label": "Core Features",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L71"
+		},
+		{
+			"id": "he_web_readme_content_sections",
+			"label": "Content Sections",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L79"
+		},
+		{
+			"id": "he_web_readme_technical_features",
+			"label": "Technical Features",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L86"
+		},
+		{
+			"id": "he_web_readme_configuration",
+			"label": "Configuration",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L93"
+		},
+		{
+			"id": "he_web_readme_site_configuration_src_data_config_json",
+			"label": "Site Configuration (`src/data/config.json`)",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L95"
+		},
+		{
+			"id": "he_web_readme_astro_configuration_astro_config_mjs",
+			"label": "Astro Configuration (`astro.config.mjs`)",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L103"
+		},
+		{
+			"id": "he_web_readme_development",
+			"label": "Development",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L110"
+		},
+		{
+			"id": "he_web_readme_available_scripts",
+			"label": "Available Scripts",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L112"
+		},
+		{
+			"id": "he_web_readme_codeblock_2",
+			"label": "code:bash (npm run dev      # Start development server)",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L113"
+		},
+		{
+			"id": "he_web_readme_development_tools_119",
+			"label": "Development Tools",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L119"
+		},
+		{
+			"id": "he_web_readme_debugging_logging",
+			"label": "Debugging & Logging",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L125"
+		},
+		{
+			"id": "he_web_readme_how_it_works",
+			"label": "How It Works",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L129"
+		},
+		{
+			"id": "he_web_readme_configuration_env_file",
+			"label": "Configuration (`.env` file)",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L134"
+		},
+		{
+			"id": "he_web_readme_codeblock_3",
+			"label": "code:env (# ==================================================)",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L142"
+		},
+		{
+			"id": "he_web_readme_usage_examples",
+			"label": "Usage Examples",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L158"
+		},
+		{
+			"id": "he_web_readme_codeblock_4",
+			"label": "code:env (LOG_ENABLED=false)",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L161"
+		},
+		{
+			"id": "he_web_readme_codeblock_5",
+			"label": "code:env (LOG_CONTEXTS=*)",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L166"
+		},
+		{
+			"id": "he_web_readme_codeblock_6",
+			"label": "code:env (LOG_CONTEXTS=Api)",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L171"
+		},
+		{
+			"id": "he_web_readme_codeblock_7",
+			"label": "code:env (LOG_CONTEXTS=Api,Translation)",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L176"
+		},
+		{
+			"id": "he_web_readme_how_to_add_logs_in_code",
+			"label": "How to Add Logs in Code",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L180"
+		},
+		{
+			"id": "he_web_readme_codeblock_8",
+			"label": "code:typescript (import { log, warn, error } from '@/services/logger';)",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L183"
+		},
+		{
+			"id": "he_web_readme_deployment",
+			"label": "Deployment",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L193"
+		},
+		{
+			"id": "he_web_readme_production_deployment",
+			"label": "Production Deployment",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L195"
+		},
+		{
+			"id": "he_web_readme_environment_variables",
+			"label": "Environment Variables",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L201"
+		},
+		{
+			"id": "he_web_readme_internationalization_i18n",
+			"label": "Internationalization (i18n)",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L206"
+		},
+		{
+			"id": "he_web_readme_supported_languages",
+			"label": "Supported Languages",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L208"
+		},
+		{
+			"id": "he_web_readme_translation_system",
+			"label": "Translation System",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L212"
+		},
+		{
+			"id": "he_web_readme_content_management",
+			"label": "Content Management",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L218"
+		},
+		{
+			"id": "he_web_readme_data_structure",
+			"label": "Data Structure",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L220"
+		},
+		{
+			"id": "he_web_readme_media_assets",
+			"label": "Media Assets",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L227"
+		},
+		{
+			"id": "he_web_readme_performance_considerations",
+			"label": "Performance Considerations",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L232"
+		},
+		{
+			"id": "he_web_readme_optimization_features",
+			"label": "Optimization Features",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L234"
+		},
+		{
+			"id": "he_web_readme_seo_features",
+			"label": "SEO Features",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L240"
+		},
+		{
+			"id": "he_web_readme_future_enhancements",
+			"label": "Future Enhancements",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L246"
+		},
+		{
+			"id": "he_web_readme_potential_improvements",
+			"label": "Potential Improvements",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L248"
+		},
+		{
+			"id": "he_web_readme_development_notes",
+			"label": "Development Notes",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L255"
+		},
+		{
+			"id": "he_web_readme_code_organization",
+			"label": "Code Organization",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L257"
+		},
+		{
+			"id": "he_web_readme_quality_assurance",
+			"label": "Quality Assurance",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L264"
+		}
+	],
+	"edges": [
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_readme_md",
+			"target": "he_web_readme_hotel_ensue_os_project_context_documentation",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "he_web_readme_hotel_ensue_os_project_context_documentation",
+			"target": "he_web_readme_overview",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L3",
+			"weight": 1.0
+		},
+		{
+			"source": "he_web_readme_hotel_ensue_os_project_context_documentation",
+			"target": "he_web_readme_project_information",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L6",
+			"weight": 1.0
+		},
+		{
+			"source": "he_web_readme_hotel_ensue_os_project_context_documentation",
+			"target": "he_web_readme_technical_stack",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L13",
+			"weight": 1.0
+		},
+		{
+			"source": "he_web_readme_technical_stack",
+			"target": "he_web_readme_core_framework",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L15",
+			"weight": 1.0
+		},
+		{
+			"source": "he_web_readme_technical_stack",
+			"target": "he_web_readme_styling_ui",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L20",
+			"weight": 1.0
+		},
+		{
+			"source": "he_web_readme_technical_stack",
+			"target": "he_web_readme_development_tools",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L25",
+			"weight": 1.0
+		},
+		{
+			"source": "he_web_readme_technical_stack",
+			"target": "he_web_readme_deployment_hosting",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L30",
+			"weight": 1.0
+		},
+		{
+			"source": "he_web_readme_hotel_ensue_os_project_context_documentation",
+			"target": "he_web_readme_architecture",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L34",
+			"weight": 1.0
+		},
+		{
+			"source": "he_web_readme_architecture",
+			"target": "he_web_readme_project_structure",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L36",
+			"weight": 1.0
+		},
+		{
+			"source": "he_web_readme_project_structure",
+			"target": "he_web_readme_codeblock_1",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L37",
+			"weight": 1.0
+		},
+		{
+			"source": "he_web_readme_architecture",
+			"target": "he_web_readme_component_architecture_atomic_design",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L60",
+			"weight": 1.0
+		},
+		{
+			"source": "he_web_readme_hotel_ensue_os_project_context_documentation",
+			"target": "he_web_readme_features",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L69",
+			"weight": 1.0
+		},
+		{
+			"source": "he_web_readme_features",
+			"target": "he_web_readme_core_features",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L71",
+			"weight": 1.0
+		},
+		{
+			"source": "he_web_readme_features",
+			"target": "he_web_readme_content_sections",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L79",
+			"weight": 1.0
+		},
+		{
+			"source": "he_web_readme_features",
+			"target": "he_web_readme_technical_features",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L86",
+			"weight": 1.0
+		},
+		{
+			"source": "he_web_readme_hotel_ensue_os_project_context_documentation",
+			"target": "he_web_readme_configuration",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L93",
+			"weight": 1.0
+		},
+		{
+			"source": "he_web_readme_configuration",
+			"target": "he_web_readme_site_configuration_src_data_config_json",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L95",
+			"weight": 1.0
+		},
+		{
+			"source": "he_web_readme_configuration",
+			"target": "he_web_readme_astro_configuration_astro_config_mjs",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L103",
+			"weight": 1.0
+		},
+		{
+			"source": "he_web_readme_hotel_ensue_os_project_context_documentation",
+			"target": "he_web_readme_development",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L110",
+			"weight": 1.0
+		},
+		{
+			"source": "he_web_readme_development",
+			"target": "he_web_readme_available_scripts",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L112",
+			"weight": 1.0
+		},
+		{
+			"source": "he_web_readme_available_scripts",
+			"target": "he_web_readme_codeblock_2",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L113",
+			"weight": 1.0
+		},
+		{
+			"source": "he_web_readme_development",
+			"target": "he_web_readme_development_tools_119",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L119",
+			"weight": 1.0
+		},
+		{
+			"source": "he_web_readme_hotel_ensue_os_project_context_documentation",
+			"target": "he_web_readme_debugging_logging",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L125",
+			"weight": 1.0
+		},
+		{
+			"source": "he_web_readme_debugging_logging",
+			"target": "he_web_readme_how_it_works",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L129",
+			"weight": 1.0
+		},
+		{
+			"source": "he_web_readme_debugging_logging",
+			"target": "he_web_readme_configuration_env_file",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L134",
+			"weight": 1.0
+		},
+		{
+			"source": "he_web_readme_configuration_env_file",
+			"target": "he_web_readme_codeblock_3",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L142",
+			"weight": 1.0
+		},
+		{
+			"source": "he_web_readme_debugging_logging",
+			"target": "he_web_readme_usage_examples",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L158",
+			"weight": 1.0
+		},
+		{
+			"source": "he_web_readme_usage_examples",
+			"target": "he_web_readme_codeblock_4",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L161",
+			"weight": 1.0
+		},
+		{
+			"source": "he_web_readme_usage_examples",
+			"target": "he_web_readme_codeblock_5",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L166",
+			"weight": 1.0
+		},
+		{
+			"source": "he_web_readme_usage_examples",
+			"target": "he_web_readme_codeblock_6",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L171",
+			"weight": 1.0
+		},
+		{
+			"source": "he_web_readme_usage_examples",
+			"target": "he_web_readme_codeblock_7",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L176",
+			"weight": 1.0
+		},
+		{
+			"source": "he_web_readme_debugging_logging",
+			"target": "he_web_readme_how_to_add_logs_in_code",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L180",
+			"weight": 1.0
+		},
+		{
+			"source": "he_web_readme_how_to_add_logs_in_code",
+			"target": "he_web_readme_codeblock_8",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L183",
+			"weight": 1.0
+		},
+		{
+			"source": "he_web_readme_hotel_ensue_os_project_context_documentation",
+			"target": "he_web_readme_deployment",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L193",
+			"weight": 1.0
+		},
+		{
+			"source": "he_web_readme_deployment",
+			"target": "he_web_readme_production_deployment",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L195",
+			"weight": 1.0
+		},
+		{
+			"source": "he_web_readme_deployment",
+			"target": "he_web_readme_environment_variables",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L201",
+			"weight": 1.0
+		},
+		{
+			"source": "he_web_readme_hotel_ensue_os_project_context_documentation",
+			"target": "he_web_readme_internationalization_i18n",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L206",
+			"weight": 1.0
+		},
+		{
+			"source": "he_web_readme_internationalization_i18n",
+			"target": "he_web_readme_supported_languages",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L208",
+			"weight": 1.0
+		},
+		{
+			"source": "he_web_readme_internationalization_i18n",
+			"target": "he_web_readme_translation_system",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L212",
+			"weight": 1.0
+		},
+		{
+			"source": "he_web_readme_hotel_ensue_os_project_context_documentation",
+			"target": "he_web_readme_content_management",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L218",
+			"weight": 1.0
+		},
+		{
+			"source": "he_web_readme_content_management",
+			"target": "he_web_readme_data_structure",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L220",
+			"weight": 1.0
+		},
+		{
+			"source": "he_web_readme_content_management",
+			"target": "he_web_readme_media_assets",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L227",
+			"weight": 1.0
+		},
+		{
+			"source": "he_web_readme_hotel_ensue_os_project_context_documentation",
+			"target": "he_web_readme_performance_considerations",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L232",
+			"weight": 1.0
+		},
+		{
+			"source": "he_web_readme_performance_considerations",
+			"target": "he_web_readme_optimization_features",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L234",
+			"weight": 1.0
+		},
+		{
+			"source": "he_web_readme_performance_considerations",
+			"target": "he_web_readme_seo_features",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L240",
+			"weight": 1.0
+		},
+		{
+			"source": "he_web_readme_hotel_ensue_os_project_context_documentation",
+			"target": "he_web_readme_future_enhancements",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L246",
+			"weight": 1.0
+		},
+		{
+			"source": "he_web_readme_future_enhancements",
+			"target": "he_web_readme_potential_improvements",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L248",
+			"weight": 1.0
+		},
+		{
+			"source": "he_web_readme_hotel_ensue_os_project_context_documentation",
+			"target": "he_web_readme_development_notes",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L255",
+			"weight": 1.0
+		},
+		{
+			"source": "he_web_readme_development_notes",
+			"target": "he_web_readme_code_organization",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L257",
+			"weight": 1.0
+		},
+		{
+			"source": "he_web_readme_development_notes",
+			"target": "he_web_readme_quality_assurance",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/README.md",
+			"source_location": "L264",
+			"weight": 1.0
+		}
+	],
+	"input_tokens": 0,
+	"output_tokens": 0
+}

@@ -1,0 +1,398 @@
+{
+	"nodes": [
+		{
+			"id": "mnt_d_coders_work_hhg_projects_he_web_src_pages_api_availability_ts",
+			"label": "availability.ts",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/availability.ts",
+			"source_location": "L1"
+		},
+		{
+			"id": "api_availability_availabilityprice",
+			"label": "AvailabilityPrice",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/availability.ts",
+			"source_location": "L7"
+		},
+		{
+			"id": "api_availability_availabilityroom",
+			"label": "AvailabilityRoom",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/availability.ts",
+			"source_location": "L14"
+		},
+		{
+			"id": "api_availability_availabilityresponse",
+			"label": "AvailabilityResponse",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/availability.ts",
+			"source_location": "L25"
+		},
+		{
+			"id": "api_availability_rooms_file",
+			"label": "ROOMS_FILE",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/availability.ts",
+			"source_location": "L34"
+		},
+		{
+			"id": "api_availability_isvaliddatestring",
+			"label": "isValidDateString()",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/availability.ts",
+			"source_location": "L38"
+		},
+		{
+			"id": "api_availability_toutcdate",
+			"label": "toUtcDate()",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/availability.ts",
+			"source_location": "L42"
+		},
+		{
+			"id": "api_availability_diffnights",
+			"label": "diffNights()",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/availability.ts",
+			"source_location": "L50"
+		},
+		{
+			"id": "api_availability_buildmockresponse",
+			"label": "buildMockResponse()",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/availability.ts",
+			"source_location": "L55"
+		},
+		{
+			"id": "api_availability_get",
+			"label": "GET()",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/availability.ts",
+			"source_location": "L99"
+		}
+	],
+	"edges": [
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_pages_api_availability_ts",
+			"target": "astro",
+			"relation": "imports_from",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/availability.ts",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_pages_api_availability_ts",
+			"target": "mnt_d_coders_work_hhg_projects_he_web_src_utils_apihelpers_ts",
+			"relation": "imports_from",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/availability.ts",
+			"source_location": "L2",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_pages_api_availability_ts",
+			"target": "utils_apihelpers_json200",
+			"relation": "imports",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/availability.ts",
+			"source_location": "L2",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_pages_api_availability_ts",
+			"target": "mnt_d_coders_work_hhg_projects_he_web_src_services_erp_erp_client_ts",
+			"relation": "imports_from",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/availability.ts",
+			"source_location": "L3",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_pages_api_availability_ts",
+			"target": "erp_erp_client_erpclient",
+			"relation": "imports",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/availability.ts",
+			"source_location": "L3",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_pages_api_availability_ts",
+			"target": "mnt_d_coders_work_hhg_projects_he_web_src_utils_apihelpers_ts",
+			"relation": "imports_from",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/availability.ts",
+			"source_location": "L4",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_pages_api_availability_ts",
+			"target": "utils_apihelpers_loaddata",
+			"relation": "imports",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/availability.ts",
+			"source_location": "L4",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_pages_api_availability_ts",
+			"target": "node_path",
+			"relation": "imports_from",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/availability.ts",
+			"source_location": "L5",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_pages_api_availability_ts",
+			"target": "api_availability_availabilityprice",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/availability.ts",
+			"source_location": "L7",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_pages_api_availability_ts",
+			"target": "api_availability_availabilityroom",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/availability.ts",
+			"source_location": "L14",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_pages_api_availability_ts",
+			"target": "api_availability_availabilityresponse",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/availability.ts",
+			"source_location": "L25",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_pages_api_availability_ts",
+			"target": "api_availability_rooms_file",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/availability.ts",
+			"source_location": "L34",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_pages_api_availability_ts",
+			"target": "api_availability_isvaliddatestring",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/availability.ts",
+			"source_location": "L38",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_pages_api_availability_ts",
+			"target": "api_availability_toutcdate",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/availability.ts",
+			"source_location": "L42",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_pages_api_availability_ts",
+			"target": "api_availability_diffnights",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/availability.ts",
+			"source_location": "L50",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_pages_api_availability_ts",
+			"target": "api_availability_buildmockresponse",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/availability.ts",
+			"source_location": "L55",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_pages_api_availability_ts",
+			"target": "api_availability_get",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/availability.ts",
+			"source_location": "L99",
+			"weight": 1.0
+		},
+		{
+			"source": "api_availability_toutcdate",
+			"target": "api_availability_isvaliddatestring",
+			"relation": "calls",
+			"context": "call",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/availability.ts",
+			"source_location": "L43",
+			"weight": 1.0
+		},
+		{
+			"source": "api_availability_get",
+			"target": "api_availability_toutcdate",
+			"relation": "calls",
+			"context": "call",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/availability.ts",
+			"source_location": "L106",
+			"weight": 1.0
+		},
+		{
+			"source": "api_availability_get",
+			"target": "api_availability_diffnights",
+			"relation": "calls",
+			"context": "call",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/availability.ts",
+			"source_location": "L116",
+			"weight": 1.0
+		},
+		{
+			"source": "api_availability_get",
+			"target": "api_availability_buildmockresponse",
+			"relation": "calls",
+			"context": "call",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/availability.ts",
+			"source_location": "L124",
+			"weight": 1.0
+		}
+	],
+	"raw_calls": [
+		{
+			"caller_nid": "api_availability_isvaliddatestring",
+			"callee": "test",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/availability.ts",
+			"source_location": "L39"
+		},
+		{
+			"caller_nid": "api_availability_toutcdate",
+			"callee": "map",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/availability.ts",
+			"source_location": "L44"
+		},
+		{
+			"caller_nid": "api_availability_toutcdate",
+			"callee": "split",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/availability.ts",
+			"source_location": "L44"
+		},
+		{
+			"caller_nid": "api_availability_toutcdate",
+			"callee": "UTC",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/availability.ts",
+			"source_location": "L46"
+		},
+		{
+			"caller_nid": "api_availability_toutcdate",
+			"callee": "isNaN",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/availability.ts",
+			"source_location": "L47"
+		},
+		{
+			"caller_nid": "api_availability_toutcdate",
+			"callee": "getTime",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/availability.ts",
+			"source_location": "L47"
+		},
+		{
+			"caller_nid": "api_availability_diffnights",
+			"callee": "floor",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/availability.ts",
+			"source_location": "L52"
+		},
+		{
+			"caller_nid": "api_availability_diffnights",
+			"callee": "getTime",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/availability.ts",
+			"source_location": "L52"
+		},
+		{
+			"caller_nid": "api_availability_diffnights",
+			"callee": "getTime",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/availability.ts",
+			"source_location": "L52"
+		},
+		{
+			"caller_nid": "api_availability_buildmockresponse",
+			"callee": "await loadData",
+			"is_member_call": false,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/availability.ts",
+			"source_location": "L61"
+		},
+		{
+			"caller_nid": "api_availability_buildmockresponse",
+			"callee": "isArray",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/availability.ts",
+			"source_location": "L67"
+		},
+		{
+			"caller_nid": "api_availability_buildmockresponse",
+			"callee": "filter",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/availability.ts",
+			"source_location": "L69"
+		},
+		{
+			"caller_nid": "api_availability_buildmockresponse",
+			"callee": "map",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/availability.ts",
+			"source_location": "L72"
+		},
+		{
+			"caller_nid": "api_availability_get",
+			"callee": "stringify",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/availability.ts",
+			"source_location": "L111"
+		},
+		{
+			"caller_nid": "api_availability_get",
+			"callee": "stringify",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/availability.ts",
+			"source_location": "L119"
+		},
+		{
+			"caller_nid": "api_availability_get",
+			"callee": "await erpClient.get",
+			"is_member_call": false,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/availability.ts",
+			"source_location": "L126"
+		},
+		{
+			"caller_nid": "api_availability_get",
+			"callee": "json200",
+			"is_member_call": false,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/availability.ts",
+			"source_location": "L139"
+		}
+	]
+}

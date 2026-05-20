@@ -1,0 +1,383 @@
+{
+	"nodes": [
+		{
+			"id": "mnt_d_coders_work_hhg_projects_he_web_docs_tour_intent_channel_strategy_architecture_md",
+			"label": "tour-intent-channel-strategy-architecture.md",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/tour-intent-channel-strategy-architecture.md",
+			"source_location": "L1"
+		},
+		{
+			"id": "docs_tour_intent_channel_strategy_architecture_arquitectura_propuesta_tour_intent_canal_desacoplado_strategy_adapter",
+			"label": "Arquitectura propuesta \u2014 Tour Intent + Canal desacoplado (Strategy/Adapter)",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/tour-intent-channel-strategy-architecture.md",
+			"source_location": "L1"
+		},
+		{
+			"id": "docs_tour_intent_channel_strategy_architecture_objetivo",
+			"label": "Objetivo",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/tour-intent-channel-strategy-architecture.md",
+			"source_location": "L3"
+		},
+		{
+			"id": "docs_tour_intent_channel_strategy_architecture_1_diagn_stico_del_estado_actual",
+			"label": "1) Diagn\u00f3stico del estado actual",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/tour-intent-channel-strategy-architecture.md",
+			"source_location": "L15"
+		},
+		{
+			"id": "docs_tour_intent_channel_strategy_architecture_consecuencia",
+			"label": "Consecuencia",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/tour-intent-channel-strategy-architecture.md",
+			"source_location": "L26"
+		},
+		{
+			"id": "docs_tour_intent_channel_strategy_architecture_2_principio_arquitect_nico",
+			"label": "2) Principio arquitect\u00f3nico",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/tour-intent-channel-strategy-architecture.md",
+			"source_location": "L31"
+		},
+		{
+			"id": "docs_tour_intent_channel_strategy_architecture_3_modelo_de_dominio_recomendado",
+			"label": "3) Modelo de dominio recomendado",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/tour-intent-channel-strategy-architecture.md",
+			"source_location": "L50"
+		},
+		{
+			"id": "docs_tour_intent_channel_strategy_architecture_codeblock_1",
+			"label": "code:ts (export interface TourIntent {)",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/tour-intent-channel-strategy-architecture.md",
+			"source_location": "L54"
+		},
+		{
+			"id": "docs_tour_intent_channel_strategy_architecture_4_estructura_de_carpetas_archivos_propuesta",
+			"label": "4) Estructura de carpetas/archivos propuesta",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/tour-intent-channel-strategy-architecture.md",
+			"source_location": "L84"
+		},
+		{
+			"id": "docs_tour_intent_channel_strategy_architecture_codeblock_2",
+			"label": "code:txt (src/)",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/tour-intent-channel-strategy-architecture.md",
+			"source_location": "L86"
+		},
+		{
+			"id": "docs_tour_intent_channel_strategy_architecture_5_interfaces_clave_strategy_adapter",
+			"label": "5) Interfaces clave (Strategy + Adapter)",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/tour-intent-channel-strategy-architecture.md",
+			"source_location": "L126"
+		},
+		{
+			"id": "docs_tour_intent_channel_strategy_architecture_5_1_action_strategy",
+			"label": "5.1 Action Strategy",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/tour-intent-channel-strategy-architecture.md",
+			"source_location": "L128"
+		},
+		{
+			"id": "docs_tour_intent_channel_strategy_architecture_codeblock_3",
+			"label": "code:ts (export interface ActionStrategy {)",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/tour-intent-channel-strategy-architecture.md",
+			"source_location": "L130"
+		},
+		{
+			"id": "docs_tour_intent_channel_strategy_architecture_5_2_channel_port",
+			"label": "5.2 Channel Port",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/tour-intent-channel-strategy-architecture.md",
+			"source_location": "L141"
+		},
+		{
+			"id": "docs_tour_intent_channel_strategy_architecture_codeblock_4",
+			"label": "code:ts (export interface ChannelPort<TPayload = unknown> {)",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/tour-intent-channel-strategy-architecture.md",
+			"source_location": "L143"
+		},
+		{
+			"id": "docs_tour_intent_channel_strategy_architecture_5_3_adapters",
+			"label": "5.3 Adapters",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/tour-intent-channel-strategy-architecture.md",
+			"source_location": "L155"
+		},
+		{
+			"id": "docs_tour_intent_channel_strategy_architecture_6_flujo_por_fases",
+			"label": "6) Flujo por fases",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/tour-intent-channel-strategy-architecture.md",
+			"source_location": "L161"
+		},
+		{
+			"id": "docs_tour_intent_channel_strategy_architecture_fase_actual_agregar_tours_a_whatsapp",
+			"label": "Fase actual \u2014 \u201cAgregar tours a WhatsApp\u201d",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/tour-intent-channel-strategy-architecture.md",
+			"source_location": "L163"
+		},
+		{
+			"id": "docs_tour_intent_channel_strategy_architecture_compatibilidad",
+			"label": "Compatibilidad",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/tour-intent-channel-strategy-architecture.md",
+			"source_location": "L171"
+		},
+		{
+			"id": "docs_tour_intent_channel_strategy_architecture_fase_futura_agregar_tours_a_carrito",
+			"label": "Fase futura \u2014 \u201cAgregar tours a carrito\u201d",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/tour-intent-channel-strategy-architecture.md",
+			"source_location": "L175"
+		},
+		{
+			"id": "docs_tour_intent_channel_strategy_architecture_fase_futura_pasarela_erp",
+			"label": "Fase futura \u2014 \u201cPasarela/ERP\u201d",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/tour-intent-channel-strategy-architecture.md",
+			"source_location": "L180"
+		},
+		{
+			"id": "docs_tour_intent_channel_strategy_architecture_7_no_ruptura_del_flujo_actual",
+			"label": "7) No ruptura del flujo actual",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/tour-intent-channel-strategy-architecture.md",
+			"source_location": "L187"
+		},
+		{
+			"id": "docs_tour_intent_channel_strategy_architecture_8_reglas_de_dise_o_importantes",
+			"label": "8) Reglas de dise\u00f1o (importantes)",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/tour-intent-channel-strategy-architecture.md",
+			"source_location": "L200"
+		},
+		{
+			"id": "docs_tour_intent_channel_strategy_architecture_9_mapeo_expl_cito_con_archivos_actuales",
+			"label": "9) Mapeo expl\u00edcito con archivos actuales",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/tour-intent-channel-strategy-architecture.md",
+			"source_location": "L210"
+		}
+	],
+	"edges": [
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_docs_tour_intent_channel_strategy_architecture_md",
+			"target": "docs_tour_intent_channel_strategy_architecture_arquitectura_propuesta_tour_intent_canal_desacoplado_strategy_adapter",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/tour-intent-channel-strategy-architecture.md",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_tour_intent_channel_strategy_architecture_arquitectura_propuesta_tour_intent_canal_desacoplado_strategy_adapter",
+			"target": "docs_tour_intent_channel_strategy_architecture_objetivo",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/tour-intent-channel-strategy-architecture.md",
+			"source_location": "L3",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_tour_intent_channel_strategy_architecture_arquitectura_propuesta_tour_intent_canal_desacoplado_strategy_adapter",
+			"target": "docs_tour_intent_channel_strategy_architecture_1_diagn_stico_del_estado_actual",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/tour-intent-channel-strategy-architecture.md",
+			"source_location": "L15",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_tour_intent_channel_strategy_architecture_1_diagn_stico_del_estado_actual",
+			"target": "docs_tour_intent_channel_strategy_architecture_consecuencia",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/tour-intent-channel-strategy-architecture.md",
+			"source_location": "L26",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_tour_intent_channel_strategy_architecture_arquitectura_propuesta_tour_intent_canal_desacoplado_strategy_adapter",
+			"target": "docs_tour_intent_channel_strategy_architecture_2_principio_arquitect_nico",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/tour-intent-channel-strategy-architecture.md",
+			"source_location": "L31",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_tour_intent_channel_strategy_architecture_arquitectura_propuesta_tour_intent_canal_desacoplado_strategy_adapter",
+			"target": "docs_tour_intent_channel_strategy_architecture_3_modelo_de_dominio_recomendado",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/tour-intent-channel-strategy-architecture.md",
+			"source_location": "L50",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_tour_intent_channel_strategy_architecture_3_modelo_de_dominio_recomendado",
+			"target": "docs_tour_intent_channel_strategy_architecture_codeblock_1",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/tour-intent-channel-strategy-architecture.md",
+			"source_location": "L54",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_tour_intent_channel_strategy_architecture_arquitectura_propuesta_tour_intent_canal_desacoplado_strategy_adapter",
+			"target": "docs_tour_intent_channel_strategy_architecture_4_estructura_de_carpetas_archivos_propuesta",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/tour-intent-channel-strategy-architecture.md",
+			"source_location": "L84",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_tour_intent_channel_strategy_architecture_4_estructura_de_carpetas_archivos_propuesta",
+			"target": "docs_tour_intent_channel_strategy_architecture_codeblock_2",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/tour-intent-channel-strategy-architecture.md",
+			"source_location": "L86",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_tour_intent_channel_strategy_architecture_arquitectura_propuesta_tour_intent_canal_desacoplado_strategy_adapter",
+			"target": "docs_tour_intent_channel_strategy_architecture_5_interfaces_clave_strategy_adapter",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/tour-intent-channel-strategy-architecture.md",
+			"source_location": "L126",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_tour_intent_channel_strategy_architecture_arquitectura_propuesta_tour_intent_canal_desacoplado_strategy_adapter",
+			"target": "docs_tour_intent_channel_strategy_architecture_5_1_action_strategy",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/tour-intent-channel-strategy-architecture.md",
+			"source_location": "L128",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_tour_intent_channel_strategy_architecture_5_1_action_strategy",
+			"target": "docs_tour_intent_channel_strategy_architecture_codeblock_3",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/tour-intent-channel-strategy-architecture.md",
+			"source_location": "L130",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_tour_intent_channel_strategy_architecture_arquitectura_propuesta_tour_intent_canal_desacoplado_strategy_adapter",
+			"target": "docs_tour_intent_channel_strategy_architecture_5_2_channel_port",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/tour-intent-channel-strategy-architecture.md",
+			"source_location": "L141",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_tour_intent_channel_strategy_architecture_5_2_channel_port",
+			"target": "docs_tour_intent_channel_strategy_architecture_codeblock_4",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/tour-intent-channel-strategy-architecture.md",
+			"source_location": "L143",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_tour_intent_channel_strategy_architecture_arquitectura_propuesta_tour_intent_canal_desacoplado_strategy_adapter",
+			"target": "docs_tour_intent_channel_strategy_architecture_5_3_adapters",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/tour-intent-channel-strategy-architecture.md",
+			"source_location": "L155",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_tour_intent_channel_strategy_architecture_arquitectura_propuesta_tour_intent_canal_desacoplado_strategy_adapter",
+			"target": "docs_tour_intent_channel_strategy_architecture_6_flujo_por_fases",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/tour-intent-channel-strategy-architecture.md",
+			"source_location": "L161",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_tour_intent_channel_strategy_architecture_arquitectura_propuesta_tour_intent_canal_desacoplado_strategy_adapter",
+			"target": "docs_tour_intent_channel_strategy_architecture_fase_actual_agregar_tours_a_whatsapp",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/tour-intent-channel-strategy-architecture.md",
+			"source_location": "L163",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_tour_intent_channel_strategy_architecture_fase_actual_agregar_tours_a_whatsapp",
+			"target": "docs_tour_intent_channel_strategy_architecture_compatibilidad",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/tour-intent-channel-strategy-architecture.md",
+			"source_location": "L171",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_tour_intent_channel_strategy_architecture_arquitectura_propuesta_tour_intent_canal_desacoplado_strategy_adapter",
+			"target": "docs_tour_intent_channel_strategy_architecture_fase_futura_agregar_tours_a_carrito",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/tour-intent-channel-strategy-architecture.md",
+			"source_location": "L175",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_tour_intent_channel_strategy_architecture_arquitectura_propuesta_tour_intent_canal_desacoplado_strategy_adapter",
+			"target": "docs_tour_intent_channel_strategy_architecture_fase_futura_pasarela_erp",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/tour-intent-channel-strategy-architecture.md",
+			"source_location": "L180",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_tour_intent_channel_strategy_architecture_arquitectura_propuesta_tour_intent_canal_desacoplado_strategy_adapter",
+			"target": "docs_tour_intent_channel_strategy_architecture_7_no_ruptura_del_flujo_actual",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/tour-intent-channel-strategy-architecture.md",
+			"source_location": "L187",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_tour_intent_channel_strategy_architecture_arquitectura_propuesta_tour_intent_canal_desacoplado_strategy_adapter",
+			"target": "docs_tour_intent_channel_strategy_architecture_8_reglas_de_dise_o_importantes",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/tour-intent-channel-strategy-architecture.md",
+			"source_location": "L200",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_tour_intent_channel_strategy_architecture_arquitectura_propuesta_tour_intent_canal_desacoplado_strategy_adapter",
+			"target": "docs_tour_intent_channel_strategy_architecture_9_mapeo_expl_cito_con_archivos_actuales",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/tour-intent-channel-strategy-architecture.md",
+			"source_location": "L210",
+			"weight": 1.0
+		}
+	],
+	"input_tokens": 0,
+	"output_tokens": 0
+}

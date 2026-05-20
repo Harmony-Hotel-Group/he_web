@@ -1,0 +1,175 @@
+{
+	"nodes": [
+		{
+			"id": "mnt_d_coders_work_hhg_projects_he_web_src_content_blog_gastronomia_cuencana_10_platos_md",
+			"label": "gastronomia-cuencana-10-platos.md",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/content/blog/gastronomia-cuencana-10-platos.md",
+			"source_location": "L1"
+		},
+		{
+			"id": "blog_gastronomia_cuencana_10_platos_1_mote_pillo",
+			"label": "1. Mote Pillo",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/content/blog/gastronomia-cuencana-10-platos.md",
+			"source_location": "L15"
+		},
+		{
+			"id": "blog_gastronomia_cuencana_10_platos_2_cuy_asado",
+			"label": "2. Cuy Asado",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/content/blog/gastronomia-cuencana-10-platos.md",
+			"source_location": "L18"
+		},
+		{
+			"id": "blog_gastronomia_cuencana_10_platos_3_locro_de_papa",
+			"label": "3. Locro de Papa",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/content/blog/gastronomia-cuencana-10-platos.md",
+			"source_location": "L21"
+		},
+		{
+			"id": "blog_gastronomia_cuencana_10_platos_4_mote_sucio",
+			"label": "4. Mote Sucio",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/content/blog/gastronomia-cuencana-10-platos.md",
+			"source_location": "L24"
+		},
+		{
+			"id": "blog_gastronomia_cuencana_10_platos_5_fritada",
+			"label": "5. Fritada",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/content/blog/gastronomia-cuencana-10-platos.md",
+			"source_location": "L27"
+		},
+		{
+			"id": "blog_gastronomia_cuencana_10_platos_6_bol_n_de_verde",
+			"label": "6. Bol\u00f3n de Verde",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/content/blog/gastronomia-cuencana-10-platos.md",
+			"source_location": "L30"
+		},
+		{
+			"id": "blog_gastronomia_cuencana_10_platos_7_ceviche_de_chancho",
+			"label": "7. Ceviche de Chancho",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/content/blog/gastronomia-cuencana-10-platos.md",
+			"source_location": "L33"
+		},
+		{
+			"id": "blog_gastronomia_cuencana_10_platos_8_tigrillo",
+			"label": "8. Tigrillo",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/content/blog/gastronomia-cuencana-10-platos.md",
+			"source_location": "L36"
+		},
+		{
+			"id": "blog_gastronomia_cuencana_10_platos_9_hornado",
+			"label": "9. Hornado",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/content/blog/gastronomia-cuencana-10-platos.md",
+			"source_location": "L39"
+		},
+		{
+			"id": "blog_gastronomia_cuencana_10_platos_10_morocho",
+			"label": "10. Morocho",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/content/blog/gastronomia-cuencana-10-platos.md",
+			"source_location": "L42"
+		}
+	],
+	"edges": [
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_content_blog_gastronomia_cuencana_10_platos_md",
+			"target": "blog_gastronomia_cuencana_10_platos_1_mote_pillo",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/content/blog/gastronomia-cuencana-10-platos.md",
+			"source_location": "L15",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_content_blog_gastronomia_cuencana_10_platos_md",
+			"target": "blog_gastronomia_cuencana_10_platos_2_cuy_asado",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/content/blog/gastronomia-cuencana-10-platos.md",
+			"source_location": "L18",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_content_blog_gastronomia_cuencana_10_platos_md",
+			"target": "blog_gastronomia_cuencana_10_platos_3_locro_de_papa",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/content/blog/gastronomia-cuencana-10-platos.md",
+			"source_location": "L21",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_content_blog_gastronomia_cuencana_10_platos_md",
+			"target": "blog_gastronomia_cuencana_10_platos_4_mote_sucio",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/content/blog/gastronomia-cuencana-10-platos.md",
+			"source_location": "L24",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_content_blog_gastronomia_cuencana_10_platos_md",
+			"target": "blog_gastronomia_cuencana_10_platos_5_fritada",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/content/blog/gastronomia-cuencana-10-platos.md",
+			"source_location": "L27",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_content_blog_gastronomia_cuencana_10_platos_md",
+			"target": "blog_gastronomia_cuencana_10_platos_6_bol_n_de_verde",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/content/blog/gastronomia-cuencana-10-platos.md",
+			"source_location": "L30",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_content_blog_gastronomia_cuencana_10_platos_md",
+			"target": "blog_gastronomia_cuencana_10_platos_7_ceviche_de_chancho",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/content/blog/gastronomia-cuencana-10-platos.md",
+			"source_location": "L33",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_content_blog_gastronomia_cuencana_10_platos_md",
+			"target": "blog_gastronomia_cuencana_10_platos_8_tigrillo",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/content/blog/gastronomia-cuencana-10-platos.md",
+			"source_location": "L36",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_content_blog_gastronomia_cuencana_10_platos_md",
+			"target": "blog_gastronomia_cuencana_10_platos_9_hornado",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/content/blog/gastronomia-cuencana-10-platos.md",
+			"source_location": "L39",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_content_blog_gastronomia_cuencana_10_platos_md",
+			"target": "blog_gastronomia_cuencana_10_platos_10_morocho",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/content/blog/gastronomia-cuencana-10-platos.md",
+			"source_location": "L42",
+			"weight": 1.0
+		}
+	],
+	"input_tokens": 0,
+	"output_tokens": 0
+}

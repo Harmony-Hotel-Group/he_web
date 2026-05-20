@@ -1,0 +1,152 @@
+{
+	"nodes": [
+		{
+			"id": "mnt_d_coders_work_hhg_projects_he_web_tests_home_spec_ts",
+			"label": "home.spec.ts",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/tests/home.spec.ts",
+			"source_location": "L1"
+		},
+		{
+			"id": "tests_home_spec_hero",
+			"label": "hero",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/tests/home.spec.ts",
+			"source_location": "L13"
+		},
+		{
+			"id": "tests_home_spec_whatsapplink",
+			"label": "whatsappLink",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/tests/home.spec.ts",
+			"source_location": "L18"
+		},
+		{
+			"id": "tests_home_spec_rooms",
+			"label": "rooms",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/tests/home.spec.ts",
+			"source_location": "L23"
+		},
+		{
+			"id": "tests_home_spec_reviews",
+			"label": "reviews",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/tests/home.spec.ts",
+			"source_location": "L28"
+		},
+		{
+			"id": "tests_home_spec_form",
+			"label": "form",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/tests/home.spec.ts",
+			"source_location": "L41"
+		},
+		{
+			"id": "tests_home_spec_bloglink",
+			"label": "blogLink",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/tests/home.spec.ts",
+			"source_location": "L56"
+		},
+		{
+			"id": "tests_home_spec_langselector",
+			"label": "langSelector",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/tests/home.spec.ts",
+			"source_location": "L62"
+		},
+		{
+			"id": "tests_home_spec_currencyselector",
+			"label": "currencySelector",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/tests/home.spec.ts",
+			"source_location": "L68"
+		}
+	],
+	"edges": [
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_tests_home_spec_ts",
+			"target": "test",
+			"relation": "imports_from",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/tests/home.spec.ts",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_tests_home_spec_ts",
+			"target": "tests_home_spec_hero",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/tests/home.spec.ts",
+			"source_location": "L13",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_tests_home_spec_ts",
+			"target": "tests_home_spec_whatsapplink",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/tests/home.spec.ts",
+			"source_location": "L18",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_tests_home_spec_ts",
+			"target": "tests_home_spec_rooms",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/tests/home.spec.ts",
+			"source_location": "L23",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_tests_home_spec_ts",
+			"target": "tests_home_spec_reviews",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/tests/home.spec.ts",
+			"source_location": "L28",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_tests_home_spec_ts",
+			"target": "tests_home_spec_form",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/tests/home.spec.ts",
+			"source_location": "L41",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_tests_home_spec_ts",
+			"target": "tests_home_spec_bloglink",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/tests/home.spec.ts",
+			"source_location": "L56",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_tests_home_spec_ts",
+			"target": "tests_home_spec_langselector",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/tests/home.spec.ts",
+			"source_location": "L62",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_tests_home_spec_ts",
+			"target": "tests_home_spec_currencyselector",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/tests/home.spec.ts",
+			"source_location": "L68",
+			"weight": 1.0
+		}
+	],
+	"raw_calls": []
+}

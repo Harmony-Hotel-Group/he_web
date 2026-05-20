@@ -1,0 +1,30 @@
+{
+	"nodes": [
+		{
+			"id": "mnt_d_coders_work_hhg_projects_he_web_src_config_features_ts",
+			"label": "features.ts",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/config/features.ts",
+			"source_location": "L1"
+		},
+		{
+			"id": "config_features_features",
+			"label": "features",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/config/features.ts",
+			"source_location": "L1"
+		}
+	],
+	"edges": [
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_config_features_ts",
+			"target": "config_features_features",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/config/features.ts",
+			"source_location": "L1",
+			"weight": 1.0
+		}
+	],
+	"raw_calls": []
+}

@@ -1,0 +1,144 @@
+{
+	"nodes": [
+		{
+			"id": "mnt_d_coders_work_hhg_projects_he_web_src_utils_page_helpers_ts",
+			"label": "page-helpers.ts",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/page-helpers.ts",
+			"source_location": "L1"
+		},
+		{
+			"id": "utils_page_helpers_getlangfromurl",
+			"label": "getLangFromUrl()",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/page-helpers.ts",
+			"source_location": "L16"
+		},
+		{
+			"id": "utils_page_helpers_getpageconfig",
+			"label": "getPageConfig()",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/page-helpers.ts",
+			"source_location": "L28"
+		},
+		{
+			"id": "utils_page_helpers_getconfigforlang",
+			"label": "getConfigForLang()",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/page-helpers.ts",
+			"source_location": "L45"
+		}
+	],
+	"edges": [
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_utils_page_helpers_ts",
+			"target": "mnt_d_coders_work_hhg_projects_he_web_src_services_api_ts",
+			"relation": "imports_from",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/page-helpers.ts",
+			"source_location": "L4",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_utils_page_helpers_ts",
+			"target": "services_api_api",
+			"relation": "imports",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/page-helpers.ts",
+			"source_location": "L4",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_utils_page_helpers_ts",
+			"target": "mnt_d_coders_work_hhg_projects_he_web_src_types_config",
+			"relation": "imports_from",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/page-helpers.ts",
+			"source_location": "L5",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_utils_page_helpers_ts",
+			"target": "types_config_siteconfig",
+			"relation": "imports",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/page-helpers.ts",
+			"source_location": "L5",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_utils_page_helpers_ts",
+			"target": "astro",
+			"relation": "imports_from",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/page-helpers.ts",
+			"source_location": "L6",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_utils_page_helpers_ts",
+			"target": "utils_page_helpers_getlangfromurl",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/page-helpers.ts",
+			"source_location": "L16",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_utils_page_helpers_ts",
+			"target": "utils_page_helpers_getpageconfig",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/page-helpers.ts",
+			"source_location": "L28",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_utils_page_helpers_ts",
+			"target": "utils_page_helpers_getconfigforlang",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/page-helpers.ts",
+			"source_location": "L45",
+			"weight": 1.0
+		},
+		{
+			"source": "utils_page_helpers_getpageconfig",
+			"target": "utils_page_helpers_getlangfromurl",
+			"relation": "calls",
+			"context": "call",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/page-helpers.ts",
+			"source_location": "L31",
+			"weight": 1.0
+		}
+	],
+	"raw_calls": [
+		{
+			"caller_nid": "utils_page_helpers_getlangfromurl",
+			"callee": "startsWith",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/page-helpers.ts",
+			"source_location": "L17"
+		},
+		{
+			"caller_nid": "utils_page_helpers_getpageconfig",
+			"callee": "fetch",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/page-helpers.ts",
+			"source_location": "L32"
+		},
+		{
+			"caller_nid": "utils_page_helpers_getconfigforlang",
+			"callee": "fetch",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/page-helpers.ts",
+			"source_location": "L46"
+		}
+	]
+}

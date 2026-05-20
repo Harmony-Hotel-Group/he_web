@@ -1,0 +1,881 @@
+{
+	"nodes": [
+		{
+			"id": "mnt_d_coders_work_hhg_projects_he_web_src_utils_visual_resource_utils_ts",
+			"label": "visual-resource-utils.ts",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L1"
+		},
+		{
+			"id": "utils_visual_resource_utils_assets",
+			"label": "assets",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L13"
+		},
+		{
+			"id": "utils_visual_resource_utils_localimages",
+			"label": "localImages",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L14"
+		},
+		{
+			"id": "utils_visual_resource_utils_localvideos",
+			"label": "localVideos",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L17"
+		},
+		{
+			"id": "utils_visual_resource_utils_log",
+			"label": "log",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L21"
+		},
+		{
+			"id": "utils_visual_resource_utils_assetkeys",
+			"label": "assetKeys",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L24"
+		},
+		{
+			"id": "utils_visual_resource_utils_resourcetype",
+			"label": "ResourceType",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L35"
+		},
+		{
+			"id": "utils_visual_resource_utils_validationresult",
+			"label": "ValidationResult",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L37"
+		},
+		{
+			"id": "utils_visual_resource_utils_cacheentry",
+			"label": "CacheEntry",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L43"
+		},
+		{
+			"id": "utils_visual_resource_utils_validationcache",
+			"label": "validationCache",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L50"
+		},
+		{
+			"id": "utils_visual_resource_utils_detectresourcetype",
+			"label": "detectResourceType()",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L58"
+		},
+		{
+			"id": "utils_visual_resource_utils_isyoutubeurl",
+			"label": "isYouTubeUrl()",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L77"
+		},
+		{
+			"id": "utils_visual_resource_utils_extractyoutubeid",
+			"label": "extractYouTubeId()",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L89"
+		},
+		{
+			"id": "utils_visual_resource_utils_getyoutubeembedurl",
+			"label": "getYouTubeEmbedUrl()",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L109"
+		},
+		{
+			"id": "utils_visual_resource_utils_validatelocalfile",
+			"label": "validateLocalFile()",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L157"
+		},
+		{
+			"id": "utils_visual_resource_utils_validateresource",
+			"label": "validateResource()",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L257"
+		},
+		{
+			"id": "utils_visual_resource_utils_getcachedvalidation",
+			"label": "getCachedValidation()",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L372"
+		},
+		{
+			"id": "utils_visual_resource_utils_cachevalidation",
+			"label": "cacheValidation()",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L389"
+		},
+		{
+			"id": "utils_visual_resource_utils_getplaceholderurl",
+			"label": "getPlaceholderUrl()",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L411"
+		},
+		{
+			"id": "utils_visual_resource_utils_clearvalidationcache",
+			"label": "clearValidationCache()",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L428"
+		},
+		{
+			"id": "utils_visual_resource_utils_getcachestats",
+			"label": "getCacheStats()",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L436"
+		},
+		{
+			"id": "utils_visual_resource_utils_findresource",
+			"label": "findResource()",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L447"
+		},
+		{
+			"id": "utils_visual_resource_utils_imagepath",
+			"label": "imagePath()",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L486"
+		}
+	],
+	"edges": [
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_utils_visual_resource_utils_ts",
+			"target": "mnt_d_coders_work_hhg_projects_he_web_src_services_logger_ts",
+			"relation": "imports_from",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L8",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_utils_visual_resource_utils_ts",
+			"target": "services_logger_logger",
+			"relation": "imports",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L8",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_utils_visual_resource_utils_ts",
+			"target": "astro",
+			"relation": "imports_from",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L9",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_utils_visual_resource_utils_ts",
+			"target": "utils_visual_resource_utils_assets",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L13",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_utils_visual_resource_utils_ts",
+			"target": "utils_visual_resource_utils_localimages",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L14",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_utils_visual_resource_utils_ts",
+			"target": "utils_visual_resource_utils_localvideos",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L17",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_utils_visual_resource_utils_ts",
+			"target": "utils_visual_resource_utils_log",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L21",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_utils_visual_resource_utils_ts",
+			"target": "utils_visual_resource_utils_assetkeys",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L24",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_utils_visual_resource_utils_ts",
+			"target": "utils_visual_resource_utils_resourcetype",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L35",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_utils_visual_resource_utils_ts",
+			"target": "utils_visual_resource_utils_validationresult",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L37",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_utils_visual_resource_utils_ts",
+			"target": "utils_visual_resource_utils_cacheentry",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L43",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_utils_visual_resource_utils_ts",
+			"target": "utils_visual_resource_utils_validationcache",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L50",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_utils_visual_resource_utils_ts",
+			"target": "utils_visual_resource_utils_detectresourcetype",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L58",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_utils_visual_resource_utils_ts",
+			"target": "utils_visual_resource_utils_isyoutubeurl",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L77",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_utils_visual_resource_utils_ts",
+			"target": "utils_visual_resource_utils_extractyoutubeid",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L89",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_utils_visual_resource_utils_ts",
+			"target": "utils_visual_resource_utils_getyoutubeembedurl",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L109",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_utils_visual_resource_utils_ts",
+			"target": "utils_visual_resource_utils_validatelocalfile",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L157",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_utils_visual_resource_utils_ts",
+			"target": "utils_visual_resource_utils_validateresource",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L257",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_utils_visual_resource_utils_ts",
+			"target": "utils_visual_resource_utils_getcachedvalidation",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L372",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_utils_visual_resource_utils_ts",
+			"target": "utils_visual_resource_utils_cachevalidation",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L389",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_utils_visual_resource_utils_ts",
+			"target": "utils_visual_resource_utils_getplaceholderurl",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L411",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_utils_visual_resource_utils_ts",
+			"target": "utils_visual_resource_utils_clearvalidationcache",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L428",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_utils_visual_resource_utils_ts",
+			"target": "utils_visual_resource_utils_getcachestats",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L436",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_utils_visual_resource_utils_ts",
+			"target": "utils_visual_resource_utils_findresource",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L447",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_utils_visual_resource_utils_ts",
+			"target": "utils_visual_resource_utils_imagepath",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L486",
+			"weight": 1.0
+		},
+		{
+			"source": "utils_visual_resource_utils_detectresourcetype",
+			"target": "utils_visual_resource_utils_isyoutubeurl",
+			"relation": "calls",
+			"context": "call",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L63",
+			"weight": 1.0
+		},
+		{
+			"source": "utils_visual_resource_utils_validateresource",
+			"target": "utils_visual_resource_utils_getcachedvalidation",
+			"relation": "calls",
+			"context": "call",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L270",
+			"weight": 1.0
+		},
+		{
+			"source": "utils_visual_resource_utils_validateresource",
+			"target": "utils_visual_resource_utils_extractyoutubeid",
+			"relation": "calls",
+			"context": "call",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L277",
+			"weight": 1.0
+		},
+		{
+			"source": "utils_visual_resource_utils_validateresource",
+			"target": "utils_visual_resource_utils_cachevalidation",
+			"relation": "calls",
+			"context": "call",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L280",
+			"weight": 1.0
+		},
+		{
+			"source": "utils_visual_resource_utils_validateresource",
+			"target": "utils_visual_resource_utils_validatelocalfile",
+			"relation": "calls",
+			"context": "call",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L289",
+			"weight": 1.0
+		}
+	],
+	"raw_calls": [
+		{
+			"caller_nid": "utils_visual_resource_utils_detectresourcetype",
+			"callee": "toLowerCase",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L69"
+		},
+		{
+			"caller_nid": "utils_visual_resource_utils_detectresourcetype",
+			"callee": "some",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L70"
+		},
+		{
+			"caller_nid": "utils_visual_resource_utils_isyoutubeurl",
+			"callee": "some",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L83"
+		},
+		{
+			"caller_nid": "utils_visual_resource_utils_extractyoutubeid",
+			"callee": "match",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L97"
+		},
+		{
+			"caller_nid": "utils_visual_resource_utils_getyoutubeembedurl",
+			"callee": "set",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L134"
+		},
+		{
+			"caller_nid": "utils_visual_resource_utils_getyoutubeembedurl",
+			"callee": "set",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L135"
+		},
+		{
+			"caller_nid": "utils_visual_resource_utils_getyoutubeembedurl",
+			"callee": "set",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L138"
+		},
+		{
+			"caller_nid": "utils_visual_resource_utils_getyoutubeembedurl",
+			"callee": "set",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L139"
+		},
+		{
+			"caller_nid": "utils_visual_resource_utils_getyoutubeembedurl",
+			"callee": "set",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L141"
+		},
+		{
+			"caller_nid": "utils_visual_resource_utils_getyoutubeembedurl",
+			"callee": "set",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L143"
+		},
+		{
+			"caller_nid": "utils_visual_resource_utils_getyoutubeembedurl",
+			"callee": "set",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L144"
+		},
+		{
+			"caller_nid": "utils_visual_resource_utils_getyoutubeembedurl",
+			"callee": "set",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L145"
+		},
+		{
+			"caller_nid": "utils_visual_resource_utils_getyoutubeembedurl",
+			"callee": "toString",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L148"
+		},
+		{
+			"caller_nid": "utils_visual_resource_utils_validatelocalfile",
+			"callee": "startsWith",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L162"
+		},
+		{
+			"caller_nid": "utils_visual_resource_utils_validatelocalfile",
+			"callee": "startsWith",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L167"
+		},
+		{
+			"caller_nid": "utils_visual_resource_utils_validatelocalfile",
+			"callee": "assets[normalizedPath]",
+			"is_member_call": false,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L174"
+		},
+		{
+			"caller_nid": "utils_visual_resource_utils_validatelocalfile",
+			"callee": "error",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L181"
+		},
+		{
+			"caller_nid": "utils_visual_resource_utils_validatelocalfile",
+			"callee": "toLowerCase",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L189"
+		},
+		{
+			"caller_nid": "utils_visual_resource_utils_validatelocalfile",
+			"callee": "keys",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L192"
+		},
+		{
+			"caller_nid": "utils_visual_resource_utils_validatelocalfile",
+			"callee": "toLowerCase",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L193"
+		},
+		{
+			"caller_nid": "utils_visual_resource_utils_validatelocalfile",
+			"callee": "endsWith",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L200"
+		},
+		{
+			"caller_nid": "utils_visual_resource_utils_validatelocalfile",
+			"callee": "startsWith",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L201"
+		},
+		{
+			"caller_nid": "utils_visual_resource_utils_validatelocalfile",
+			"callee": "includes",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L201"
+		},
+		{
+			"caller_nid": "utils_visual_resource_utils_validatelocalfile",
+			"callee": "assets[key]",
+			"is_member_call": false,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L204"
+		},
+		{
+			"caller_nid": "utils_visual_resource_utils_validatelocalfile",
+			"callee": "error",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L211"
+		},
+		{
+			"caller_nid": "utils_visual_resource_utils_validatelocalfile",
+			"callee": "localVideos[normalizedPath]",
+			"is_member_call": false,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L219"
+		},
+		{
+			"caller_nid": "utils_visual_resource_utils_validatelocalfile",
+			"callee": "error",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L222"
+		},
+		{
+			"caller_nid": "utils_visual_resource_utils_validatelocalfile",
+			"callee": "startsWith",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L235"
+		},
+		{
+			"caller_nid": "utils_visual_resource_utils_validatelocalfile",
+			"callee": "warn",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L242"
+		},
+		{
+			"caller_nid": "utils_visual_resource_utils_validateresource",
+			"callee": "startsWith",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L287"
+		},
+		{
+			"caller_nid": "utils_visual_resource_utils_validateresource",
+			"callee": "startsWith",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L287"
+		},
+		{
+			"caller_nid": "utils_visual_resource_utils_validateresource",
+			"callee": "setTimeout",
+			"is_member_call": false,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L317"
+		},
+		{
+			"caller_nid": "utils_visual_resource_utils_validateresource",
+			"callee": "fetch",
+			"is_member_call": false,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L319"
+		},
+		{
+			"caller_nid": "utils_visual_resource_utils_validateresource",
+			"callee": "clearTimeout",
+			"is_member_call": false,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L324"
+		},
+		{
+			"caller_nid": "utils_visual_resource_utils_validateresource",
+			"callee": "String",
+			"is_member_call": false,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L336"
+		},
+		{
+			"caller_nid": "utils_visual_resource_utils_validateresource",
+			"callee": "info",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L338"
+		},
+		{
+			"caller_nid": "utils_visual_resource_utils_validateresource",
+			"callee": "includes",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L342"
+		},
+		{
+			"caller_nid": "utils_visual_resource_utils_validateresource",
+			"callee": "toLowerCase",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L342"
+		},
+		{
+			"caller_nid": "utils_visual_resource_utils_validateresource",
+			"callee": "includes",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L343"
+		},
+		{
+			"caller_nid": "utils_visual_resource_utils_validateresource",
+			"callee": "toLowerCase",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L343"
+		},
+		{
+			"caller_nid": "utils_visual_resource_utils_validateresource",
+			"callee": "includes",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L344"
+		},
+		{
+			"caller_nid": "utils_visual_resource_utils_validateresource",
+			"callee": "toLowerCase",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L344"
+		},
+		{
+			"caller_nid": "utils_visual_resource_utils_validateresource",
+			"callee": "includes",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L345"
+		},
+		{
+			"caller_nid": "utils_visual_resource_utils_validateresource",
+			"callee": "toLowerCase",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L345"
+		},
+		{
+			"caller_nid": "utils_visual_resource_utils_getcachedvalidation",
+			"callee": "get",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L373"
+		},
+		{
+			"caller_nid": "utils_visual_resource_utils_getcachedvalidation",
+			"callee": "now",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L378"
+		},
+		{
+			"caller_nid": "utils_visual_resource_utils_getcachedvalidation",
+			"callee": "delete",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L379"
+		},
+		{
+			"caller_nid": "utils_visual_resource_utils_cachevalidation",
+			"callee": "set",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L390"
+		},
+		{
+			"caller_nid": "utils_visual_resource_utils_cachevalidation",
+			"callee": "now",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L392"
+		},
+		{
+			"caller_nid": "utils_visual_resource_utils_cachevalidation",
+			"callee": "now",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L397"
+		},
+		{
+			"caller_nid": "utils_visual_resource_utils_cachevalidation",
+			"callee": "entries",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L398"
+		},
+		{
+			"caller_nid": "utils_visual_resource_utils_cachevalidation",
+			"callee": "delete",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L400"
+		},
+		{
+			"caller_nid": "utils_visual_resource_utils_clearvalidationcache",
+			"callee": "clear",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L429"
+		},
+		{
+			"caller_nid": "utils_visual_resource_utils_clearvalidationcache",
+			"callee": "info",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L430"
+		},
+		{
+			"caller_nid": "utils_visual_resource_utils_getcachestats",
+			"callee": "from",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L439"
+		},
+		{
+			"caller_nid": "utils_visual_resource_utils_getcachestats",
+			"callee": "keys",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L439"
+		},
+		{
+			"caller_nid": "utils_visual_resource_utils_findresource",
+			"callee": "keys",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L455"
+		},
+		{
+			"caller_nid": "utils_visual_resource_utils_findresource",
+			"callee": "endsWith",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L456"
+		},
+		{
+			"caller_nid": "utils_visual_resource_utils_imagepath",
+			"callee": "startsWith",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L489"
+		},
+		{
+			"caller_nid": "utils_visual_resource_utils_imagepath",
+			"callee": "startsWith",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L495"
+		},
+		{
+			"caller_nid": "utils_visual_resource_utils_imagepath",
+			"callee": "startsWith",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L495"
+		},
+		{
+			"caller_nid": "utils_visual_resource_utils_imagepath",
+			"callee": "substring",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/visual-resource-utils.ts",
+			"source_location": "L495"
+		}
+	]
+}

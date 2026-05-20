@@ -1,0 +1,527 @@
+{
+	"nodes": [
+		{
+			"id": "mnt_d_coders_work_hhg_projects_he_web_docs_whatsapp_message_centralization_audit_md",
+			"label": "whatsapp-message-centralization-audit.md",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/whatsapp-message-centralization-audit.md",
+			"source_location": "L1"
+		},
+		{
+			"id": "docs_whatsapp_message_centralization_audit_auditor_a_global_construcci_n_de_mensajes_de_whatsapp",
+			"label": "Auditor\u00eda global \u2014 Construcci\u00f3n de mensajes de WhatsApp",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/whatsapp-message-centralization-audit.md",
+			"source_location": "L1"
+		},
+		{
+			"id": "docs_whatsapp_message_centralization_audit_objetivo_de_esta_auditor_a",
+			"label": "Objetivo de esta auditor\u00eda",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/whatsapp-message-centralization-audit.md",
+			"source_location": "L3"
+		},
+		{
+			"id": "docs_whatsapp_message_centralization_audit_resultado_corto",
+			"label": "Resultado corto",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/whatsapp-message-centralization-audit.md",
+			"source_location": "L8"
+		},
+		{
+			"id": "docs_whatsapp_message_centralization_audit_1_d_nde_se_construyen_mensajes_de_whatsapp_hallazgos",
+			"label": "1) D\u00f3nde se construyen mensajes de WhatsApp (hallazgos)",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/whatsapp-message-centralization-audit.md",
+			"source_location": "L13"
+		},
+		{
+			"id": "docs_whatsapp_message_centralization_audit_a_src_components_atoms_whatsappbutton_astro",
+			"label": "A. `src/components/atoms/WhatsAppButton.astro`",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/whatsapp-message-centralization-audit.md",
+			"source_location": "L15"
+		},
+		{
+			"id": "docs_whatsapp_message_centralization_audit_b_src_components_organisms_booking_bookingform_astro",
+			"label": "B. `src/components/organisms/booking/BookingForm.astro`",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/whatsapp-message-centralization-audit.md",
+			"source_location": "L21"
+		},
+		{
+			"id": "docs_whatsapp_message_centralization_audit_c_src_services_messages_whatsapp_ts",
+			"label": "C. `src/services/messages/whatsapp.ts`",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/whatsapp-message-centralization-audit.md",
+			"source_location": "L28"
+		},
+		{
+			"id": "docs_whatsapp_message_centralization_audit_d_c_digo_legado_referencia",
+			"label": "D. C\u00f3digo legado/referencia",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/whatsapp-message-centralization-audit.md",
+			"source_location": "L34"
+		},
+		{
+			"id": "docs_whatsapp_message_centralization_audit_2_problemas_arquitect_nicos_detectados",
+			"label": "2) Problemas arquitect\u00f3nicos detectados",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/whatsapp-message-centralization-audit.md",
+			"source_location": "L41"
+		},
+		{
+			"id": "docs_whatsapp_message_centralization_audit_3_propuesta_obligatoria_de_centralizaci_n",
+			"label": "3) Propuesta obligatoria de centralizaci\u00f3n",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/whatsapp-message-centralization-audit.md",
+			"source_location": "L60"
+		},
+		{
+			"id": "docs_whatsapp_message_centralization_audit_codeblock_1",
+			"label": "code:txt (src/adapters/booking/whatsapp.adapter.ts)",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/whatsapp-message-centralization-audit.md",
+			"source_location": "L64"
+		},
+		{
+			"id": "docs_whatsapp_message_centralization_audit_codeblock_2",
+			"label": "code:ts (buildWhatsappMessage(intent: BookingIntent): string)",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/whatsapp-message-centralization-audit.md",
+			"source_location": "L70"
+		},
+		{
+			"id": "docs_whatsapp_message_centralization_audit_principios_de_dise_o",
+			"label": "Principios de dise\u00f1o",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/whatsapp-message-centralization-audit.md",
+			"source_location": "L74"
+		},
+		{
+			"id": "docs_whatsapp_message_centralization_audit_4_reemplazos_necesarios_archivo_por_archivo",
+			"label": "4) Reemplazos necesarios (archivo por archivo)",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/whatsapp-message-centralization-audit.md",
+			"source_location": "L82"
+		},
+		{
+			"id": "docs_whatsapp_message_centralization_audit_4_1_src_components_organisms_booking_bookingform_astro",
+			"label": "4.1 `src/components/organisms/booking/BookingForm.astro`",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/whatsapp-message-centralization-audit.md",
+			"source_location": "L84"
+		},
+		{
+			"id": "docs_whatsapp_message_centralization_audit_reemplazar",
+			"label": "Reemplazar",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/whatsapp-message-centralization-audit.md",
+			"source_location": "L86"
+		},
+		{
+			"id": "docs_whatsapp_message_centralization_audit_por",
+			"label": "Por",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/whatsapp-message-centralization-audit.md",
+			"source_location": "L90"
+		},
+		{
+			"id": "docs_whatsapp_message_centralization_audit_4_2_src_components_atoms_whatsappbutton_astro",
+			"label": "4.2 `src/components/atoms/WhatsAppButton.astro`",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/whatsapp-message-centralization-audit.md",
+			"source_location": "L98"
+		},
+		{
+			"id": "docs_whatsapp_message_centralization_audit_reemplazar_100",
+			"label": "Reemplazar",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/whatsapp-message-centralization-audit.md",
+			"source_location": "L100"
+		},
+		{
+			"id": "docs_whatsapp_message_centralization_audit_por_103",
+			"label": "Por",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/whatsapp-message-centralization-audit.md",
+			"source_location": "L103"
+		},
+		{
+			"id": "docs_whatsapp_message_centralization_audit_4_3_src_services_messages_whatsapp_ts",
+			"label": "4.3 `src/services/messages/whatsapp.ts`",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/whatsapp-message-centralization-audit.md",
+			"source_location": "L107"
+		},
+		{
+			"id": "docs_whatsapp_message_centralization_audit_reemplazar_109",
+			"label": "Reemplazar",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/whatsapp-message-centralization-audit.md",
+			"source_location": "L109"
+		},
+		{
+			"id": "docs_whatsapp_message_centralization_audit_por_112",
+			"label": "Por",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/whatsapp-message-centralization-audit.md",
+			"source_location": "L112"
+		},
+		{
+			"id": "docs_whatsapp_message_centralization_audit_4_4_src_adapters_booking_adapter_ts",
+			"label": "4.4 `src/adapters/booking.adapter.ts`",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/whatsapp-message-centralization-audit.md",
+			"source_location": "L118"
+		},
+		{
+			"id": "docs_whatsapp_message_centralization_audit_reemplazar_ajustar",
+			"label": "Reemplazar / ajustar",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/whatsapp-message-centralization-audit.md",
+			"source_location": "L120"
+		},
+		{
+			"id": "docs_whatsapp_message_centralization_audit_por_123",
+			"label": "Por",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/whatsapp-message-centralization-audit.md",
+			"source_location": "L123"
+		},
+		{
+			"id": "docs_whatsapp_message_centralization_audit_4_5_limpieza_de_legado",
+			"label": "4.5 Limpieza de legado",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/whatsapp-message-centralization-audit.md",
+			"source_location": "L127"
+		},
+		{
+			"id": "docs_whatsapp_message_centralization_audit_5_contrato_recomendado_de_dominio",
+			"label": "5) Contrato recomendado de dominio",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/whatsapp-message-centralization-audit.md",
+			"source_location": "L132"
+		},
+		{
+			"id": "docs_whatsapp_message_centralization_audit_6_estructura_final_sugerida",
+			"label": "6) Estructura final sugerida",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/whatsapp-message-centralization-audit.md",
+			"source_location": "L144"
+		},
+		{
+			"id": "docs_whatsapp_message_centralization_audit_codeblock_3",
+			"label": "code:txt (src/)",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/whatsapp-message-centralization-audit.md",
+			"source_location": "L146"
+		},
+		{
+			"id": "docs_whatsapp_message_centralization_audit_7_criterio_de_aceptaci_n_de_la_centralizaci_n",
+			"label": "7) Criterio de aceptaci\u00f3n de la centralizaci\u00f3n",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/whatsapp-message-centralization-audit.md",
+			"source_location": "L166"
+		},
+		{
+			"id": "docs_whatsapp_message_centralization_audit_8_riesgos_actuales_si_no_se_centraliza",
+			"label": "8) Riesgos actuales si no se centraliza",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/whatsapp-message-centralization-audit.md",
+			"source_location": "L176"
+		}
+	],
+	"edges": [
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_docs_whatsapp_message_centralization_audit_md",
+			"target": "docs_whatsapp_message_centralization_audit_auditor_a_global_construcci_n_de_mensajes_de_whatsapp",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/whatsapp-message-centralization-audit.md",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_whatsapp_message_centralization_audit_auditor_a_global_construcci_n_de_mensajes_de_whatsapp",
+			"target": "docs_whatsapp_message_centralization_audit_objetivo_de_esta_auditor_a",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/whatsapp-message-centralization-audit.md",
+			"source_location": "L3",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_whatsapp_message_centralization_audit_auditor_a_global_construcci_n_de_mensajes_de_whatsapp",
+			"target": "docs_whatsapp_message_centralization_audit_resultado_corto",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/whatsapp-message-centralization-audit.md",
+			"source_location": "L8",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_whatsapp_message_centralization_audit_auditor_a_global_construcci_n_de_mensajes_de_whatsapp",
+			"target": "docs_whatsapp_message_centralization_audit_1_d_nde_se_construyen_mensajes_de_whatsapp_hallazgos",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/whatsapp-message-centralization-audit.md",
+			"source_location": "L13",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_whatsapp_message_centralization_audit_auditor_a_global_construcci_n_de_mensajes_de_whatsapp",
+			"target": "docs_whatsapp_message_centralization_audit_a_src_components_atoms_whatsappbutton_astro",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/whatsapp-message-centralization-audit.md",
+			"source_location": "L15",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_whatsapp_message_centralization_audit_auditor_a_global_construcci_n_de_mensajes_de_whatsapp",
+			"target": "docs_whatsapp_message_centralization_audit_b_src_components_organisms_booking_bookingform_astro",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/whatsapp-message-centralization-audit.md",
+			"source_location": "L21",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_whatsapp_message_centralization_audit_auditor_a_global_construcci_n_de_mensajes_de_whatsapp",
+			"target": "docs_whatsapp_message_centralization_audit_c_src_services_messages_whatsapp_ts",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/whatsapp-message-centralization-audit.md",
+			"source_location": "L28",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_whatsapp_message_centralization_audit_auditor_a_global_construcci_n_de_mensajes_de_whatsapp",
+			"target": "docs_whatsapp_message_centralization_audit_d_c_digo_legado_referencia",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/whatsapp-message-centralization-audit.md",
+			"source_location": "L34",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_whatsapp_message_centralization_audit_auditor_a_global_construcci_n_de_mensajes_de_whatsapp",
+			"target": "docs_whatsapp_message_centralization_audit_2_problemas_arquitect_nicos_detectados",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/whatsapp-message-centralization-audit.md",
+			"source_location": "L41",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_whatsapp_message_centralization_audit_auditor_a_global_construcci_n_de_mensajes_de_whatsapp",
+			"target": "docs_whatsapp_message_centralization_audit_3_propuesta_obligatoria_de_centralizaci_n",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/whatsapp-message-centralization-audit.md",
+			"source_location": "L60",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_whatsapp_message_centralization_audit_3_propuesta_obligatoria_de_centralizaci_n",
+			"target": "docs_whatsapp_message_centralization_audit_codeblock_1",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/whatsapp-message-centralization-audit.md",
+			"source_location": "L64",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_whatsapp_message_centralization_audit_3_propuesta_obligatoria_de_centralizaci_n",
+			"target": "docs_whatsapp_message_centralization_audit_codeblock_2",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/whatsapp-message-centralization-audit.md",
+			"source_location": "L70",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_whatsapp_message_centralization_audit_3_propuesta_obligatoria_de_centralizaci_n",
+			"target": "docs_whatsapp_message_centralization_audit_principios_de_dise_o",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/whatsapp-message-centralization-audit.md",
+			"source_location": "L74",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_whatsapp_message_centralization_audit_auditor_a_global_construcci_n_de_mensajes_de_whatsapp",
+			"target": "docs_whatsapp_message_centralization_audit_4_reemplazos_necesarios_archivo_por_archivo",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/whatsapp-message-centralization-audit.md",
+			"source_location": "L82",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_whatsapp_message_centralization_audit_auditor_a_global_construcci_n_de_mensajes_de_whatsapp",
+			"target": "docs_whatsapp_message_centralization_audit_4_1_src_components_organisms_booking_bookingform_astro",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/whatsapp-message-centralization-audit.md",
+			"source_location": "L84",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_whatsapp_message_centralization_audit_4_1_src_components_organisms_booking_bookingform_astro",
+			"target": "docs_whatsapp_message_centralization_audit_reemplazar",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/whatsapp-message-centralization-audit.md",
+			"source_location": "L86",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_whatsapp_message_centralization_audit_4_1_src_components_organisms_booking_bookingform_astro",
+			"target": "docs_whatsapp_message_centralization_audit_por",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/whatsapp-message-centralization-audit.md",
+			"source_location": "L90",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_whatsapp_message_centralization_audit_auditor_a_global_construcci_n_de_mensajes_de_whatsapp",
+			"target": "docs_whatsapp_message_centralization_audit_4_2_src_components_atoms_whatsappbutton_astro",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/whatsapp-message-centralization-audit.md",
+			"source_location": "L98",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_whatsapp_message_centralization_audit_4_2_src_components_atoms_whatsappbutton_astro",
+			"target": "docs_whatsapp_message_centralization_audit_reemplazar_100",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/whatsapp-message-centralization-audit.md",
+			"source_location": "L100",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_whatsapp_message_centralization_audit_4_2_src_components_atoms_whatsappbutton_astro",
+			"target": "docs_whatsapp_message_centralization_audit_por_103",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/whatsapp-message-centralization-audit.md",
+			"source_location": "L103",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_whatsapp_message_centralization_audit_auditor_a_global_construcci_n_de_mensajes_de_whatsapp",
+			"target": "docs_whatsapp_message_centralization_audit_4_3_src_services_messages_whatsapp_ts",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/whatsapp-message-centralization-audit.md",
+			"source_location": "L107",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_whatsapp_message_centralization_audit_4_3_src_services_messages_whatsapp_ts",
+			"target": "docs_whatsapp_message_centralization_audit_reemplazar_109",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/whatsapp-message-centralization-audit.md",
+			"source_location": "L109",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_whatsapp_message_centralization_audit_4_3_src_services_messages_whatsapp_ts",
+			"target": "docs_whatsapp_message_centralization_audit_por_112",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/whatsapp-message-centralization-audit.md",
+			"source_location": "L112",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_whatsapp_message_centralization_audit_auditor_a_global_construcci_n_de_mensajes_de_whatsapp",
+			"target": "docs_whatsapp_message_centralization_audit_4_4_src_adapters_booking_adapter_ts",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/whatsapp-message-centralization-audit.md",
+			"source_location": "L118",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_whatsapp_message_centralization_audit_4_4_src_adapters_booking_adapter_ts",
+			"target": "docs_whatsapp_message_centralization_audit_reemplazar_ajustar",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/whatsapp-message-centralization-audit.md",
+			"source_location": "L120",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_whatsapp_message_centralization_audit_4_4_src_adapters_booking_adapter_ts",
+			"target": "docs_whatsapp_message_centralization_audit_por_123",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/whatsapp-message-centralization-audit.md",
+			"source_location": "L123",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_whatsapp_message_centralization_audit_auditor_a_global_construcci_n_de_mensajes_de_whatsapp",
+			"target": "docs_whatsapp_message_centralization_audit_4_5_limpieza_de_legado",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/whatsapp-message-centralization-audit.md",
+			"source_location": "L127",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_whatsapp_message_centralization_audit_auditor_a_global_construcci_n_de_mensajes_de_whatsapp",
+			"target": "docs_whatsapp_message_centralization_audit_5_contrato_recomendado_de_dominio",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/whatsapp-message-centralization-audit.md",
+			"source_location": "L132",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_whatsapp_message_centralization_audit_auditor_a_global_construcci_n_de_mensajes_de_whatsapp",
+			"target": "docs_whatsapp_message_centralization_audit_6_estructura_final_sugerida",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/whatsapp-message-centralization-audit.md",
+			"source_location": "L144",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_whatsapp_message_centralization_audit_6_estructura_final_sugerida",
+			"target": "docs_whatsapp_message_centralization_audit_codeblock_3",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/whatsapp-message-centralization-audit.md",
+			"source_location": "L146",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_whatsapp_message_centralization_audit_auditor_a_global_construcci_n_de_mensajes_de_whatsapp",
+			"target": "docs_whatsapp_message_centralization_audit_7_criterio_de_aceptaci_n_de_la_centralizaci_n",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/whatsapp-message-centralization-audit.md",
+			"source_location": "L166",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_whatsapp_message_centralization_audit_auditor_a_global_construcci_n_de_mensajes_de_whatsapp",
+			"target": "docs_whatsapp_message_centralization_audit_8_riesgos_actuales_si_no_se_centraliza",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/whatsapp-message-centralization-audit.md",
+			"source_location": "L176",
+			"weight": 1.0
+		}
+	],
+	"input_tokens": 0,
+	"output_tokens": 0
+}

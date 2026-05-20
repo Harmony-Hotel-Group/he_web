@@ -1,0 +1,24 @@
+{
+	"nodes": [
+		{
+			"id": "mnt_d_coders_work_hhg_projects_he_web_playwright_config_ts",
+			"label": "playwright.config.ts",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/playwright.config.ts",
+			"source_location": "L1"
+		}
+	],
+	"edges": [
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_playwright_config_ts",
+			"target": "test",
+			"relation": "imports_from",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/playwright.config.ts",
+			"source_location": "L1",
+			"weight": 1.0
+		}
+	],
+	"raw_calls": []
+}

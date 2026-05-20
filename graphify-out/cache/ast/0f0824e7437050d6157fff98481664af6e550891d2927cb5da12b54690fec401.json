@@ -1,0 +1,76 @@
+{
+	"nodes": [
+		{
+			"id": "mnt_d_coders_work_hhg_projects_he_web_src_adapters_image_image_adapter_ts",
+			"label": "image.adapter.ts",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/image/image.adapter.ts",
+			"source_location": "L1"
+		},
+		{
+			"id": "image_image_adapter_adaptimagesource",
+			"label": "adaptImageSource()",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/image/image.adapter.ts",
+			"source_location": "L4"
+		},
+		{
+			"id": "image_image_adapter_validateimagesource",
+			"label": "validateImageSource()",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/image/image.adapter.ts",
+			"source_location": "L18"
+		}
+	],
+	"edges": [
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_adapters_image_image_adapter_ts",
+			"target": "astro",
+			"relation": "imports_from",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/image/image.adapter.ts",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_adapters_image_image_adapter_ts",
+			"target": "mnt_d_coders_work_hhg_projects_he_web_src_types_image_ts",
+			"relation": "imports_from",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/image/image.adapter.ts",
+			"source_location": "L2",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_adapters_image_image_adapter_ts",
+			"target": "types_image_imagesource",
+			"relation": "imports",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/image/image.adapter.ts",
+			"source_location": "L2",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_adapters_image_image_adapter_ts",
+			"target": "image_image_adapter_adaptimagesource",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/image/image.adapter.ts",
+			"source_location": "L4",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_adapters_image_image_adapter_ts",
+			"target": "image_image_adapter_validateimagesource",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/image/image.adapter.ts",
+			"source_location": "L18",
+			"weight": 1.0
+		}
+	],
+	"raw_calls": []
+}

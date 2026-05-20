@@ -1,0 +1,363 @@
+{
+	"nodes": [
+		{
+			"id": "mnt_d_coders_work_hhg_projects_he_web_src_adapters_erp_erp_sync_adapter_ts",
+			"label": "erp-sync.adapter.ts",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/erp/erp-sync.adapter.ts",
+			"source_location": "L1"
+		},
+		{
+			"id": "erp_erp_sync_adapter_log",
+			"label": "log",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/erp/erp-sync.adapter.ts",
+			"source_location": "L28"
+		},
+		{
+			"id": "erp_erp_sync_adapter_erpconfig",
+			"label": "erpConfig",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/erp/erp-sync.adapter.ts",
+			"source_location": "L30"
+		},
+		{
+			"id": "erp_erp_sync_adapter_getrooms",
+			"label": "getRooms()",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/erp/erp-sync.adapter.ts",
+			"source_location": "L40"
+		},
+		{
+			"id": "erp_erp_sync_adapter_gettours",
+			"label": "getTours()",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/erp/erp-sync.adapter.ts",
+			"source_location": "L48"
+		},
+		{
+			"id": "erp_erp_sync_adapter_getdestinations",
+			"label": "getDestinations()",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/erp/erp-sync.adapter.ts",
+			"source_location": "L56"
+		},
+		{
+			"id": "erp_erp_sync_adapter_getgastronomy",
+			"label": "getGastronomy()",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/erp/erp-sync.adapter.ts",
+			"source_location": "L64"
+		},
+		{
+			"id": "erp_erp_sync_adapter_getallhoteldata",
+			"label": "getAllHotelData()",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/erp/erp-sync.adapter.ts",
+			"source_location": "L72"
+		},
+		{
+			"id": "erp_erp_sync_adapter_getsyncstatus",
+			"label": "getSyncStatus()",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/erp/erp-sync.adapter.ts",
+			"source_location": "L97"
+		}
+	],
+	"edges": [
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_adapters_erp_erp_sync_adapter_ts",
+			"target": "mnt_d_coders_work_hhg_projects_he_web_src_contracts_erp_contract_ts",
+			"relation": "imports_from",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/erp/erp-sync.adapter.ts",
+			"source_location": "L17",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_adapters_erp_erp_sync_adapter_ts",
+			"target": "contracts_erp_contract_erproom",
+			"relation": "imports",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/erp/erp-sync.adapter.ts",
+			"source_location": "L17",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_adapters_erp_erp_sync_adapter_ts",
+			"target": "contracts_erp_contract_erptour",
+			"relation": "imports",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/erp/erp-sync.adapter.ts",
+			"source_location": "L17",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_adapters_erp_erp_sync_adapter_ts",
+			"target": "contracts_erp_contract_erpdestination",
+			"relation": "imports",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/erp/erp-sync.adapter.ts",
+			"source_location": "L17",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_adapters_erp_erp_sync_adapter_ts",
+			"target": "contracts_erp_contract_erpgastronomy",
+			"relation": "imports",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/erp/erp-sync.adapter.ts",
+			"source_location": "L17",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_adapters_erp_erp_sync_adapter_ts",
+			"target": "contracts_erp_contract_erphoteldata",
+			"relation": "imports",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/erp/erp-sync.adapter.ts",
+			"source_location": "L17",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_adapters_erp_erp_sync_adapter_ts",
+			"target": "contracts_erp_contract_erpconfig",
+			"relation": "imports",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/erp/erp-sync.adapter.ts",
+			"source_location": "L17",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_adapters_erp_erp_sync_adapter_ts",
+			"target": "mnt_d_coders_work_hhg_projects_he_web_src_services_api_ts",
+			"relation": "imports_from",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/erp/erp-sync.adapter.ts",
+			"source_location": "L25",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_adapters_erp_erp_sync_adapter_ts",
+			"target": "services_api_api",
+			"relation": "imports",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/erp/erp-sync.adapter.ts",
+			"source_location": "L25",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_adapters_erp_erp_sync_adapter_ts",
+			"target": "mnt_d_coders_work_hhg_projects_he_web_src_services_logger_ts",
+			"relation": "imports_from",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/erp/erp-sync.adapter.ts",
+			"source_location": "L26",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_adapters_erp_erp_sync_adapter_ts",
+			"target": "services_logger_logger",
+			"relation": "imports",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/erp/erp-sync.adapter.ts",
+			"source_location": "L26",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_adapters_erp_erp_sync_adapter_ts",
+			"target": "erp_erp_sync_adapter_log",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/erp/erp-sync.adapter.ts",
+			"source_location": "L28",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_adapters_erp_erp_sync_adapter_ts",
+			"target": "erp_erp_sync_adapter_erpconfig",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/erp/erp-sync.adapter.ts",
+			"source_location": "L30",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_adapters_erp_erp_sync_adapter_ts",
+			"target": "erp_erp_sync_adapter_getrooms",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/erp/erp-sync.adapter.ts",
+			"source_location": "L40",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_adapters_erp_erp_sync_adapter_ts",
+			"target": "erp_erp_sync_adapter_gettours",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/erp/erp-sync.adapter.ts",
+			"source_location": "L48",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_adapters_erp_erp_sync_adapter_ts",
+			"target": "erp_erp_sync_adapter_getdestinations",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/erp/erp-sync.adapter.ts",
+			"source_location": "L56",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_adapters_erp_erp_sync_adapter_ts",
+			"target": "erp_erp_sync_adapter_getgastronomy",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/erp/erp-sync.adapter.ts",
+			"source_location": "L64",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_adapters_erp_erp_sync_adapter_ts",
+			"target": "erp_erp_sync_adapter_getallhoteldata",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/erp/erp-sync.adapter.ts",
+			"source_location": "L72",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_adapters_erp_erp_sync_adapter_ts",
+			"target": "erp_erp_sync_adapter_getsyncstatus",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/erp/erp-sync.adapter.ts",
+			"source_location": "L97",
+			"weight": 1.0
+		},
+		{
+			"source": "erp_erp_sync_adapter_getallhoteldata",
+			"target": "erp_erp_sync_adapter_getrooms",
+			"relation": "calls",
+			"context": "call",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/erp/erp-sync.adapter.ts",
+			"source_location": "L74",
+			"weight": 1.0
+		},
+		{
+			"source": "erp_erp_sync_adapter_getallhoteldata",
+			"target": "erp_erp_sync_adapter_gettours",
+			"relation": "calls",
+			"context": "call",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/erp/erp-sync.adapter.ts",
+			"source_location": "L75",
+			"weight": 1.0
+		},
+		{
+			"source": "erp_erp_sync_adapter_getallhoteldata",
+			"target": "erp_erp_sync_adapter_getdestinations",
+			"relation": "calls",
+			"context": "call",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/erp/erp-sync.adapter.ts",
+			"source_location": "L76",
+			"weight": 1.0
+		},
+		{
+			"source": "erp_erp_sync_adapter_getallhoteldata",
+			"target": "erp_erp_sync_adapter_getgastronomy",
+			"relation": "calls",
+			"context": "call",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/erp/erp-sync.adapter.ts",
+			"source_location": "L77",
+			"weight": 1.0
+		}
+	],
+	"raw_calls": [
+		{
+			"caller_nid": "erp_erp_sync_adapter_getrooms",
+			"callee": "await api.fetch",
+			"is_member_call": false,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/erp/erp-sync.adapter.ts",
+			"source_location": "L41"
+		},
+		{
+			"caller_nid": "erp_erp_sync_adapter_getrooms",
+			"callee": "isArray",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/erp/erp-sync.adapter.ts",
+			"source_location": "L42"
+		},
+		{
+			"caller_nid": "erp_erp_sync_adapter_gettours",
+			"callee": "await api.fetch",
+			"is_member_call": false,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/erp/erp-sync.adapter.ts",
+			"source_location": "L49"
+		},
+		{
+			"caller_nid": "erp_erp_sync_adapter_gettours",
+			"callee": "isArray",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/erp/erp-sync.adapter.ts",
+			"source_location": "L50"
+		},
+		{
+			"caller_nid": "erp_erp_sync_adapter_getdestinations",
+			"callee": "await api.fetch",
+			"is_member_call": false,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/erp/erp-sync.adapter.ts",
+			"source_location": "L57"
+		},
+		{
+			"caller_nid": "erp_erp_sync_adapter_getdestinations",
+			"callee": "isArray",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/erp/erp-sync.adapter.ts",
+			"source_location": "L58"
+		},
+		{
+			"caller_nid": "erp_erp_sync_adapter_getgastronomy",
+			"callee": "await api.fetch",
+			"is_member_call": false,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/erp/erp-sync.adapter.ts",
+			"source_location": "L65"
+		},
+		{
+			"caller_nid": "erp_erp_sync_adapter_getgastronomy",
+			"callee": "isArray",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/erp/erp-sync.adapter.ts",
+			"source_location": "L66"
+		},
+		{
+			"caller_nid": "erp_erp_sync_adapter_getallhoteldata",
+			"callee": "all",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/erp/erp-sync.adapter.ts",
+			"source_location": "L73"
+		},
+		{
+			"caller_nid": "erp_erp_sync_adapter_getallhoteldata",
+			"callee": "toISOString",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/erp/erp-sync.adapter.ts",
+			"source_location": "L86"
+		}
+	]
+}

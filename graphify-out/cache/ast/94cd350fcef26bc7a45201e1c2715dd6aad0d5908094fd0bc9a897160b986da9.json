@@ -1,0 +1,62 @@
+{
+	"nodes": [
+		{
+			"id": "mnt_d_coders_work_hhg_projects_he_web_src_domain_booking_types_ts",
+			"label": "types.ts",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/domain/booking/types.ts",
+			"source_location": "L1"
+		},
+		{
+			"id": "booking_types_bookingprocessingdata",
+			"label": "BookingProcessingData",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/domain/booking/types.ts",
+			"source_location": "L1"
+		},
+		{
+			"id": "booking_types_bookingvehicleitem",
+			"label": "BookingVehicleItem",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/domain/booking/types.ts",
+			"source_location": "L11"
+		},
+		{
+			"id": "booking_types_buildbookingmessageinput",
+			"label": "BuildBookingMessageInput",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/domain/booking/types.ts",
+			"source_location": "L16"
+		}
+	],
+	"edges": [
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_domain_booking_types_ts",
+			"target": "booking_types_bookingprocessingdata",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/domain/booking/types.ts",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_domain_booking_types_ts",
+			"target": "booking_types_bookingvehicleitem",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/domain/booking/types.ts",
+			"source_location": "L11",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_domain_booking_types_ts",
+			"target": "booking_types_buildbookingmessageinput",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/domain/booking/types.ts",
+			"source_location": "L16",
+			"weight": 1.0
+		}
+	],
+	"raw_calls": []
+}

@@ -1,0 +1,31 @@
+{
+	"nodes": [
+		{
+			"id": "mnt_d_coders_work_hhg_projects_he_web_src_backup_readme_md",
+			"label": "README.md",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/backup/README.md",
+			"source_location": "L1"
+		},
+		{
+			"id": "backup_readme_backup",
+			"label": "Backup",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/backup/README.md",
+			"source_location": "L1"
+		}
+	],
+	"edges": [
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_backup_readme_md",
+			"target": "backup_readme_backup",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/backup/README.md",
+			"source_location": "L1",
+			"weight": 1.0
+		}
+	],
+	"input_tokens": 0,
+	"output_tokens": 0
+}

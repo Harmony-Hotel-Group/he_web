@@ -1,0 +1,223 @@
+{
+	"nodes": [
+		{
+			"id": "mnt_d_coders_work_hhg_projects_he_web_docs_generate_secret_md",
+			"label": "generate_secret.md",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/generate_secret.md",
+			"source_location": "L1"
+		},
+		{
+			"id": "docs_generate_secret_generate_secret_tool_herramienta_de_generaci_n_de_secretos",
+			"label": "Generate Secret Tool / Herramienta de Generaci\u00f3n de Secretos",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/generate_secret.md",
+			"source_location": "L1"
+		},
+		{
+			"id": "docs_generate_secret_english",
+			"label": "\ud83c\uddec\ud83c\udde7 English",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/generate_secret.md",
+			"source_location": "L8"
+		},
+		{
+			"id": "docs_generate_secret_overview",
+			"label": "Overview",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/generate_secret.md",
+			"source_location": "L10"
+		},
+		{
+			"id": "docs_generate_secret_usage",
+			"label": "Usage",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/generate_secret.md",
+			"source_location": "L13"
+		},
+		{
+			"id": "docs_generate_secret_codeblock_1",
+			"label": "code:bash (node tools/generate_secret.js)",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/generate_secret.md",
+			"source_location": "L17"
+		},
+		{
+			"id": "docs_generate_secret_codeblock_2",
+			"label": "code:env (CACHE_PRIVATE_KEY=a1b2c3d4e5f6...)",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/generate_secret.md",
+			"source_location": "L23"
+		},
+		{
+			"id": "docs_generate_secret_why_is_this_needed",
+			"label": "Why is this needed?",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/generate_secret.md",
+			"source_location": "L30"
+		},
+		{
+			"id": "docs_generate_secret_espa_ol",
+			"label": "\ud83c\uddea\ud83c\uddf8 Espa\u00f1ol",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/generate_secret.md",
+			"source_location": "L36"
+		},
+		{
+			"id": "docs_generate_secret_descripci_n_general",
+			"label": "Descripci\u00f3n General",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/generate_secret.md",
+			"source_location": "L38"
+		},
+		{
+			"id": "docs_generate_secret_uso",
+			"label": "Uso",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/generate_secret.md",
+			"source_location": "L41"
+		},
+		{
+			"id": "docs_generate_secret_codeblock_3",
+			"label": "code:bash (node tools/generate_secret.js)",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/generate_secret.md",
+			"source_location": "L45"
+		},
+		{
+			"id": "docs_generate_secret_codeblock_4",
+			"label": "code:env (CACHE_PRIVATE_KEY=a1b2c3d4e5f6...)",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/generate_secret.md",
+			"source_location": "L51"
+		},
+		{
+			"id": "docs_generate_secret_por_qu_es_necesario_esto",
+			"label": "\u00bfPor qu\u00e9 es necesario esto?",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/generate_secret.md",
+			"source_location": "L58"
+		}
+	],
+	"edges": [
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_docs_generate_secret_md",
+			"target": "docs_generate_secret_generate_secret_tool_herramienta_de_generaci_n_de_secretos",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/generate_secret.md",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_generate_secret_generate_secret_tool_herramienta_de_generaci_n_de_secretos",
+			"target": "docs_generate_secret_english",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/generate_secret.md",
+			"source_location": "L8",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_generate_secret_english",
+			"target": "docs_generate_secret_overview",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/generate_secret.md",
+			"source_location": "L10",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_generate_secret_english",
+			"target": "docs_generate_secret_usage",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/generate_secret.md",
+			"source_location": "L13",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_generate_secret_usage",
+			"target": "docs_generate_secret_codeblock_1",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/generate_secret.md",
+			"source_location": "L17",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_generate_secret_usage",
+			"target": "docs_generate_secret_codeblock_2",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/generate_secret.md",
+			"source_location": "L23",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_generate_secret_english",
+			"target": "docs_generate_secret_why_is_this_needed",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/generate_secret.md",
+			"source_location": "L30",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_generate_secret_generate_secret_tool_herramienta_de_generaci_n_de_secretos",
+			"target": "docs_generate_secret_espa_ol",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/generate_secret.md",
+			"source_location": "L36",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_generate_secret_espa_ol",
+			"target": "docs_generate_secret_descripci_n_general",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/generate_secret.md",
+			"source_location": "L38",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_generate_secret_espa_ol",
+			"target": "docs_generate_secret_uso",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/generate_secret.md",
+			"source_location": "L41",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_generate_secret_uso",
+			"target": "docs_generate_secret_codeblock_3",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/generate_secret.md",
+			"source_location": "L45",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_generate_secret_uso",
+			"target": "docs_generate_secret_codeblock_4",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/generate_secret.md",
+			"source_location": "L51",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_generate_secret_espa_ol",
+			"target": "docs_generate_secret_por_qu_es_necesario_esto",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/generate_secret.md",
+			"source_location": "L58",
+			"weight": 1.0
+		}
+	],
+	"input_tokens": 0,
+	"output_tokens": 0
+}

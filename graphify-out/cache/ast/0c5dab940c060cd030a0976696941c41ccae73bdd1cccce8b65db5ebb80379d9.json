@@ -1,0 +1,75 @@
+{
+	"nodes": [
+		{
+			"id": "mnt_d_coders_work_hhg_projects_he_web_src_services_messages_telegram_ts",
+			"label": "telegram.ts",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/telegram.ts",
+			"source_location": "L1"
+		},
+		{
+			"id": "messages_telegram_env",
+			"label": "ENV",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/telegram.ts",
+			"source_location": "L4"
+		},
+		{
+			"id": "messages_telegram_sendtelegrammessage",
+			"label": "sendTelegramMessage()",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/telegram.ts",
+			"source_location": "L10"
+		}
+	],
+	"edges": [
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_services_messages_telegram_ts",
+			"target": "messages_telegram_env",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/telegram.ts",
+			"source_location": "L4",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_services_messages_telegram_ts",
+			"target": "messages_telegram_sendtelegrammessage",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/telegram.ts",
+			"source_location": "L10",
+			"weight": 1.0
+		}
+	],
+	"raw_calls": [
+		{
+			"caller_nid": "messages_telegram_sendtelegrammessage",
+			"callee": "warn",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/telegram.ts",
+			"source_location": "L15"
+		},
+		{
+			"caller_nid": "messages_telegram_sendtelegrammessage",
+			"callee": "fetch",
+			"is_member_call": false,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/telegram.ts",
+			"source_location": "L23"
+		},
+		{
+			"caller_nid": "messages_telegram_sendtelegrammessage",
+			"callee": "stringify",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/telegram.ts",
+			"source_location": "L26"
+		},
+		{
+			"caller_nid": "messages_telegram_sendtelegrammessage",
+			"callee": "String",
+			"is_member_call": false,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/telegram.ts",
+			"source_location": "L30"
+		}
+	]
+}

@@ -1,0 +1,134 @@
+{
+	"nodes": [
+		{
+			"id": "mnt_d_coders_work_hhg_projects_he_web_src_pages_api_gastronomy_ts",
+			"label": "gastronomy.ts",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/gastronomy.ts",
+			"source_location": "L1"
+		},
+		{
+			"id": "api_gastronomy_gastronomyitem",
+			"label": "GastronomyItem",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/gastronomy.ts",
+			"source_location": "L5"
+		},
+		{
+			"id": "api_gastronomy_local_file",
+			"label": "LOCAL_FILE",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/gastronomy.ts",
+			"source_location": "L16"
+		},
+		{
+			"id": "api_gastronomy_get",
+			"label": "GET()",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/gastronomy.ts",
+			"source_location": "L27"
+		}
+	],
+	"edges": [
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_pages_api_gastronomy_ts",
+			"target": "node_path",
+			"relation": "imports_from",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/gastronomy.ts",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_pages_api_gastronomy_ts",
+			"target": "astro",
+			"relation": "imports_from",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/gastronomy.ts",
+			"source_location": "L2",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_pages_api_gastronomy_ts",
+			"target": "mnt_d_coders_work_hhg_projects_he_web_src_utils_apihelpers_ts",
+			"relation": "imports_from",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/gastronomy.ts",
+			"source_location": "L3",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_pages_api_gastronomy_ts",
+			"target": "utils_apihelpers_json200",
+			"relation": "imports",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/gastronomy.ts",
+			"source_location": "L3",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_pages_api_gastronomy_ts",
+			"target": "utils_apihelpers_loaddata",
+			"relation": "imports",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/gastronomy.ts",
+			"source_location": "L3",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_pages_api_gastronomy_ts",
+			"target": "api_gastronomy_gastronomyitem",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/gastronomy.ts",
+			"source_location": "L5",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_pages_api_gastronomy_ts",
+			"target": "api_gastronomy_local_file",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/gastronomy.ts",
+			"source_location": "L16",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_pages_api_gastronomy_ts",
+			"target": "api_gastronomy_get",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/gastronomy.ts",
+			"source_location": "L27",
+			"weight": 1.0
+		}
+	],
+	"raw_calls": [
+		{
+			"caller_nid": "api_gastronomy_get",
+			"callee": "await loadData",
+			"is_member_call": false,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/gastronomy.ts",
+			"source_location": "L28"
+		},
+		{
+			"caller_nid": "api_gastronomy_get",
+			"callee": "stringify",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/gastronomy.ts",
+			"source_location": "L36"
+		},
+		{
+			"caller_nid": "api_gastronomy_get",
+			"callee": "json200",
+			"is_member_call": false,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/gastronomy.ts",
+			"source_location": "L45"
+		}
+	]
+}

@@ -1,0 +1,201 @@
+{
+	"nodes": [
+		{
+			"id": "mnt_d_coders_work_hhg_projects_he_web_src_services_erp_erp_rooms_ts",
+			"label": "erp.rooms.ts",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erp.rooms.ts",
+			"source_location": "L1"
+		},
+		{
+			"id": "erp_erp_rooms_erproomcontract",
+			"label": "ErpRoomContract",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erp.rooms.ts",
+			"source_location": "L4"
+		},
+		{
+			"id": "erp_erp_rooms_erproomsresponse",
+			"label": "ErpRoomsResponse",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erp.rooms.ts",
+			"source_location": "L16"
+		},
+		{
+			"id": "erp_erp_rooms_erp_rooms_mock",
+			"label": "ERP_ROOMS_MOCK",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erp.rooms.ts",
+			"source_location": "L22"
+		},
+		{
+			"id": "erp_erp_rooms_maperproomtodomain",
+			"label": "mapErpRoomToDomain()",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erp.rooms.ts",
+			"source_location": "L47"
+		},
+		{
+			"id": "erp_erp_rooms_fetcherprooms",
+			"label": "fetchErpRooms()",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erp.rooms.ts",
+			"source_location": "L71"
+		}
+	],
+	"edges": [
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_services_erp_erp_rooms_ts",
+			"target": "mnt_d_coders_work_hhg_projects_he_web_src_types_rooms",
+			"relation": "imports_from",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erp.rooms.ts",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_services_erp_erp_rooms_ts",
+			"target": "types_rooms_room",
+			"relation": "imports",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erp.rooms.ts",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_services_erp_erp_rooms_ts",
+			"target": "mnt_d_coders_work_hhg_projects_he_web_src_services_erp_erp_client_ts",
+			"relation": "imports_from",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erp.rooms.ts",
+			"source_location": "L2",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_services_erp_erp_rooms_ts",
+			"target": "erp_erp_client_erpclient",
+			"relation": "imports",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erp.rooms.ts",
+			"source_location": "L2",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_services_erp_erp_rooms_ts",
+			"target": "erp_erp_client_erpclient",
+			"relation": "imports",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erp.rooms.ts",
+			"source_location": "L2",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_services_erp_erp_rooms_ts",
+			"target": "erp_erp_rooms_erproomcontract",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erp.rooms.ts",
+			"source_location": "L4",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_services_erp_erp_rooms_ts",
+			"target": "erp_erp_rooms_erproomsresponse",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erp.rooms.ts",
+			"source_location": "L16",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_services_erp_erp_rooms_ts",
+			"target": "erp_erp_rooms_erp_rooms_mock",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erp.rooms.ts",
+			"source_location": "L22",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_services_erp_erp_rooms_ts",
+			"target": "erp_erp_rooms_maperproomtodomain",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erp.rooms.ts",
+			"source_location": "L47",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_services_erp_erp_rooms_ts",
+			"target": "erp_erp_rooms_fetcherprooms",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erp.rooms.ts",
+			"source_location": "L71",
+			"weight": 1.0
+		}
+	],
+	"raw_calls": [
+		{
+			"caller_nid": "erp_erp_rooms_maperproomtodomain",
+			"callee": "localized",
+			"is_member_call": false,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erp.rooms.ts",
+			"source_location": "L52"
+		},
+		{
+			"caller_nid": "erp_erp_rooms_maperproomtodomain",
+			"callee": "localized",
+			"is_member_call": false,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erp.rooms.ts",
+			"source_location": "L53"
+		},
+		{
+			"caller_nid": "erp_erp_rooms_maperproomtodomain",
+			"callee": "localized",
+			"is_member_call": false,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erp.rooms.ts",
+			"source_location": "L54"
+		},
+		{
+			"caller_nid": "erp_erp_rooms_maperproomtodomain",
+			"callee": "localized",
+			"is_member_call": false,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erp.rooms.ts",
+			"source_location": "L60"
+		},
+		{
+			"caller_nid": "erp_erp_rooms_maperproomtodomain",
+			"callee": "localized",
+			"is_member_call": false,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erp.rooms.ts",
+			"source_location": "L67"
+		},
+		{
+			"caller_nid": "erp_erp_rooms_fetcherprooms",
+			"callee": "await client.get",
+			"is_member_call": false,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erp.rooms.ts",
+			"source_location": "L72"
+		},
+		{
+			"caller_nid": "erp_erp_rooms_fetcherprooms",
+			"callee": "isArray",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erp.rooms.ts",
+			"source_location": "L77"
+		},
+		{
+			"caller_nid": "erp_erp_rooms_fetcherprooms",
+			"callee": "getMode",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erp.rooms.ts",
+			"source_location": "L82"
+		}
+	]
+}

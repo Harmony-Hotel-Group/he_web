@@ -1,0 +1,261 @@
+{
+	"nodes": [
+		{
+			"id": "mnt_d_coders_work_hhg_projects_he_web_src_services_logger_ts",
+			"label": "logger.ts",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/logger.ts",
+			"source_location": "L1"
+		},
+		{
+			"id": "services_logger_allowedcontexts",
+			"label": "allowedContexts",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/logger.ts",
+			"source_location": "L12"
+		},
+		{
+			"id": "services_logger_shouldlog",
+			"label": "shouldLog()",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/logger.ts",
+			"source_location": "L19"
+		},
+		{
+			"id": "services_logger_ansicolors",
+			"label": "ansiColors",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/logger.ts",
+			"source_location": "L27"
+		},
+		{
+			"id": "services_logger_csscolors",
+			"label": "cssColors",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/logger.ts",
+			"source_location": "L39"
+		},
+		{
+			"id": "services_logger_timestamp",
+			"label": "timeStamp()",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/logger.ts",
+			"source_location": "L51"
+		},
+		{
+			"id": "services_logger_servercolormap",
+			"label": "serverColorMap",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/logger.ts",
+			"source_location": "L60"
+		},
+		{
+			"id": "services_logger_formatlineserver",
+			"label": "formatLineServer()",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/logger.ts",
+			"source_location": "L66"
+		},
+		{
+			"id": "services_logger_browsercolormap",
+			"label": "browserColorMap",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/logger.ts",
+			"source_location": "L77"
+		},
+		{
+			"id": "services_logger_formatlinebrowser",
+			"label": "formatLineBrowser()",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/logger.ts",
+			"source_location": "L83"
+		},
+		{
+			"id": "services_logger_logger",
+			"label": "logger()",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/logger.ts",
+			"source_location": "L115"
+		}
+	],
+	"edges": [
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_services_logger_ts",
+			"target": "services_logger_allowedcontexts",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/logger.ts",
+			"source_location": "L12",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_services_logger_ts",
+			"target": "services_logger_shouldlog",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/logger.ts",
+			"source_location": "L19",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_services_logger_ts",
+			"target": "services_logger_ansicolors",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/logger.ts",
+			"source_location": "L27",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_services_logger_ts",
+			"target": "services_logger_csscolors",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/logger.ts",
+			"source_location": "L39",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_services_logger_ts",
+			"target": "services_logger_timestamp",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/logger.ts",
+			"source_location": "L51",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_services_logger_ts",
+			"target": "services_logger_servercolormap",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/logger.ts",
+			"source_location": "L60",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_services_logger_ts",
+			"target": "services_logger_formatlineserver",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/logger.ts",
+			"source_location": "L66",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_services_logger_ts",
+			"target": "services_logger_browsercolormap",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/logger.ts",
+			"source_location": "L77",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_services_logger_ts",
+			"target": "services_logger_formatlinebrowser",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/logger.ts",
+			"source_location": "L83",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_services_logger_ts",
+			"target": "services_logger_logger",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/logger.ts",
+			"source_location": "L115",
+			"weight": 1.0
+		},
+		{
+			"source": "services_logger_formatlineserver",
+			"target": "services_logger_timestamp",
+			"relation": "calls",
+			"context": "call",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/logger.ts",
+			"source_location": "L73",
+			"weight": 1.0
+		},
+		{
+			"source": "services_logger_formatlinebrowser",
+			"target": "services_logger_timestamp",
+			"relation": "calls",
+			"context": "call",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/logger.ts",
+			"source_location": "L89",
+			"weight": 1.0
+		},
+		{
+			"source": "services_logger_logger",
+			"target": "services_logger_shouldlog",
+			"relation": "calls",
+			"context": "call",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/logger.ts",
+			"source_location": "L116",
+			"weight": 1.0
+		}
+	],
+	"raw_calls": [
+		{
+			"caller_nid": "services_logger_shouldlog",
+			"callee": "includes",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/logger.ts",
+			"source_location": "L21"
+		},
+		{
+			"caller_nid": "services_logger_shouldlog",
+			"callee": "includes",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/logger.ts",
+			"source_location": "L21"
+		},
+		{
+			"caller_nid": "services_logger_timestamp",
+			"callee": "split",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/logger.ts",
+			"source_location": "L53"
+		},
+		{
+			"caller_nid": "services_logger_timestamp",
+			"callee": "toTimeString",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/logger.ts",
+			"source_location": "L53"
+		},
+		{
+			"caller_nid": "services_logger_logger",
+			"callee": "base",
+			"is_member_call": false,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/logger.ts",
+			"source_location": "L132"
+		},
+		{
+			"caller_nid": "services_logger_logger",
+			"callee": "base",
+			"is_member_call": false,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/logger.ts",
+			"source_location": "L133"
+		},
+		{
+			"caller_nid": "services_logger_logger",
+			"callee": "base",
+			"is_member_call": false,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/logger.ts",
+			"source_location": "L134"
+		},
+		{
+			"caller_nid": "services_logger_logger",
+			"callee": "base",
+			"is_member_call": false,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/logger.ts",
+			"source_location": "L135"
+		}
+	]
+}

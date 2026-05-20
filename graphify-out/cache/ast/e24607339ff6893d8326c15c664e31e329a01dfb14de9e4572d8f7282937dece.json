@@ -1,0 +1,13 @@
+{
+	"nodes": [
+		{
+			"id": "mnt_d_coders_work_hhg_projects_he_web_src_env_d_ts",
+			"label": "env.d.ts",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/env.d.ts",
+			"source_location": "L1"
+		}
+	],
+	"edges": [],
+	"raw_calls": []
+}

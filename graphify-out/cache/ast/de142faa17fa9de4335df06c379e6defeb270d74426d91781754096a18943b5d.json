@@ -1,0 +1,95 @@
+{
+	"nodes": [
+		{
+			"id": "mnt_d_coders_work_hhg_projects_he_web_src_content_blog_5_excursiones_dia_cuenca_md",
+			"label": "5-excursiones-dia-cuenca.md",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/content/blog/5-excursiones-dia-cuenca.md",
+			"source_location": "L1"
+		},
+		{
+			"id": "blog_5_excursiones_dia_cuenca_1_parque_nacional_el_cajas",
+			"label": "1. Parque Nacional El Cajas",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/content/blog/5-excursiones-dia-cuenca.md",
+			"source_location": "L16"
+		},
+		{
+			"id": "blog_5_excursiones_dia_cuenca_2_ba_os_de_agua_santa",
+			"label": "2. Ba\u00f1os de Agua Santa",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/content/blog/5-excursiones-dia-cuenca.md",
+			"source_location": "L21"
+		},
+		{
+			"id": "blog_5_excursiones_dia_cuenca_3_gualaceo_y_chordeleg",
+			"label": "3. Gualaceo y Chordeleg",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/content/blog/5-excursiones-dia-cuenca.md",
+			"source_location": "L26"
+		},
+		{
+			"id": "blog_5_excursiones_dia_cuenca_4_ingapirca",
+			"label": "4. Ingapirca",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/content/blog/5-excursiones-dia-cuenca.md",
+			"source_location": "L31"
+		},
+		{
+			"id": "blog_5_excursiones_dia_cuenca_5_reserva_biol_gica_el_sillar",
+			"label": "5. Reserva Biol\u00f3gica El Sillar",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/content/blog/5-excursiones-dia-cuenca.md",
+			"source_location": "L36"
+		}
+	],
+	"edges": [
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_content_blog_5_excursiones_dia_cuenca_md",
+			"target": "blog_5_excursiones_dia_cuenca_1_parque_nacional_el_cajas",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/content/blog/5-excursiones-dia-cuenca.md",
+			"source_location": "L16",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_content_blog_5_excursiones_dia_cuenca_md",
+			"target": "blog_5_excursiones_dia_cuenca_2_ba_os_de_agua_santa",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/content/blog/5-excursiones-dia-cuenca.md",
+			"source_location": "L21",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_content_blog_5_excursiones_dia_cuenca_md",
+			"target": "blog_5_excursiones_dia_cuenca_3_gualaceo_y_chordeleg",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/content/blog/5-excursiones-dia-cuenca.md",
+			"source_location": "L26",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_content_blog_5_excursiones_dia_cuenca_md",
+			"target": "blog_5_excursiones_dia_cuenca_4_ingapirca",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/content/blog/5-excursiones-dia-cuenca.md",
+			"source_location": "L31",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_content_blog_5_excursiones_dia_cuenca_md",
+			"target": "blog_5_excursiones_dia_cuenca_5_reserva_biol_gica_el_sillar",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/content/blog/5-excursiones-dia-cuenca.md",
+			"source_location": "L36",
+			"weight": 1.0
+		}
+	],
+	"input_tokens": 0,
+	"output_tokens": 0
+}

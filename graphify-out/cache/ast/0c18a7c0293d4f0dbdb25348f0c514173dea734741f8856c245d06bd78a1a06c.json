@@ -1,0 +1,30 @@
+{
+	"nodes": [
+		{
+			"id": "mnt_d_coders_work_hhg_projects_he_web_src_types_booking_ts",
+			"label": "booking.ts",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/types/booking.ts",
+			"source_location": "L1"
+		},
+		{
+			"id": "types_booking_bookingintent",
+			"label": "BookingIntent",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/types/booking.ts",
+			"source_location": "L1"
+		}
+	],
+	"edges": [
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_types_booking_ts",
+			"target": "types_booking_bookingintent",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/types/booking.ts",
+			"source_location": "L1",
+			"weight": 1.0
+		}
+	],
+	"raw_calls": []
+}

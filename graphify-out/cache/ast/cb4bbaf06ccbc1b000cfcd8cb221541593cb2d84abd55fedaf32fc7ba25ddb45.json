@@ -1,0 +1,65 @@
+{
+	"nodes": [
+		{
+			"id": "mnt_d_coders_work_hhg_projects_he_web_src_adapters_booking_adapter_ts",
+			"label": "booking.adapter.ts",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/booking.adapter.ts",
+			"source_location": "L1"
+		},
+		{
+			"id": "adapters_booking_adapter_createbookingintent",
+			"label": "createBookingIntent()",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/booking.adapter.ts",
+			"source_location": "L3"
+		}
+	],
+	"edges": [
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_adapters_booking_adapter_ts",
+			"target": "mnt_d_coders_work_hhg_projects_he_web_src_types_booking_ts",
+			"relation": "imports_from",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/booking.adapter.ts",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_adapters_booking_adapter_ts",
+			"target": "types_booking_bookingintent",
+			"relation": "imports",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/booking.adapter.ts",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_adapters_booking_adapter_ts",
+			"target": "adapters_booking_adapter_createbookingintent",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/booking.adapter.ts",
+			"source_location": "L3",
+			"weight": 1.0
+		}
+	],
+	"raw_calls": [
+		{
+			"caller_nid": "adapters_booking_adapter_createbookingintent",
+			"callee": "join",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/booking.adapter.ts",
+			"source_location": "L11"
+		},
+		{
+			"caller_nid": "adapters_booking_adapter_createbookingintent",
+			"callee": "filter",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/adapters/booking.adapter.ts",
+			"source_location": "L11"
+		}
+	]
+}

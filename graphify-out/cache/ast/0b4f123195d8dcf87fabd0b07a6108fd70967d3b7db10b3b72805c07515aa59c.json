@@ -1,0 +1,180 @@
+{
+	"nodes": [
+		{
+			"id": "mnt_d_coders_work_hhg_projects_he_web_src_services_erp_erpclient_ts",
+			"label": "erpClient.ts",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erpClient.ts",
+			"source_location": "L1"
+		},
+		{
+			"id": "erp_erpclient_default_erp_config",
+			"label": "DEFAULT_ERP_CONFIG",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erpClient.ts",
+			"source_location": "L8"
+		},
+		{
+			"id": "erp_erpclient_mock_tours",
+			"label": "MOCK_TOURS",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erpClient.ts",
+			"source_location": "L14"
+		},
+		{
+			"id": "erp_erpclient_mock_rooms",
+			"label": "MOCK_ROOMS",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erpClient.ts",
+			"source_location": "L25"
+		},
+		{
+			"id": "erp_erpclient_geterpconfig",
+			"label": "getErpConfig()",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erpClient.ts",
+			"source_location": "L35"
+		},
+		{
+			"id": "erp_erpclient_geterptoursstub",
+			"label": "getErpToursStub()",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erpClient.ts",
+			"source_location": "L42"
+		},
+		{
+			"id": "erp_erpclient_geterproomsstub",
+			"label": "getErpRoomsStub()",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erpClient.ts",
+			"source_location": "L54"
+		}
+	],
+	"edges": [
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_services_erp_erpclient_ts",
+			"target": "mnt_d_coders_work_hhg_projects_he_web_src_services_erp_erptypes_ts",
+			"relation": "imports_from",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erpClient.ts",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_services_erp_erpclient_ts",
+			"target": "erp_erptypes_erpclientconfig",
+			"relation": "imports",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erpClient.ts",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_services_erp_erpclient_ts",
+			"target": "erp_erptypes_erpresult",
+			"relation": "imports",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erpClient.ts",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_services_erp_erpclient_ts",
+			"target": "erp_erptypes_erproomrecord",
+			"relation": "imports",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erpClient.ts",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_services_erp_erpclient_ts",
+			"target": "erp_erptypes_erptourrecord",
+			"relation": "imports",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erpClient.ts",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_services_erp_erpclient_ts",
+			"target": "erp_erpclient_default_erp_config",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erpClient.ts",
+			"source_location": "L8",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_services_erp_erpclient_ts",
+			"target": "erp_erpclient_mock_tours",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erpClient.ts",
+			"source_location": "L14",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_services_erp_erpclient_ts",
+			"target": "erp_erpclient_mock_rooms",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erpClient.ts",
+			"source_location": "L25",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_services_erp_erpclient_ts",
+			"target": "erp_erpclient_geterpconfig",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erpClient.ts",
+			"source_location": "L35",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_services_erp_erpclient_ts",
+			"target": "erp_erpclient_geterptoursstub",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erpClient.ts",
+			"source_location": "L42",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_services_erp_erpclient_ts",
+			"target": "erp_erpclient_geterproomsstub",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erpClient.ts",
+			"source_location": "L54",
+			"weight": 1.0
+		},
+		{
+			"source": "erp_erpclient_geterptoursstub",
+			"target": "erp_erpclient_geterpconfig",
+			"relation": "calls",
+			"context": "call",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erpClient.ts",
+			"source_location": "L45",
+			"weight": 1.0
+		},
+		{
+			"source": "erp_erpclient_geterproomsstub",
+			"target": "erp_erpclient_geterpconfig",
+			"relation": "calls",
+			"context": "call",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erpClient.ts",
+			"source_location": "L57",
+			"weight": 1.0
+		}
+	],
+	"raw_calls": []
+}

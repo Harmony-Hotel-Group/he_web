@@ -1,0 +1,94 @@
+{
+	"nodes": [
+		{
+			"id": "mnt_d_coders_work_hhg_projects_he_web_src_services_erp_erptypes_ts",
+			"label": "erpTypes.ts",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erpTypes.ts",
+			"source_location": "L1"
+		},
+		{
+			"id": "erp_erptypes_erpmode",
+			"label": "ErpMode",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erpTypes.ts",
+			"source_location": "L1"
+		},
+		{
+			"id": "erp_erptypes_erpclientconfig",
+			"label": "ErpClientConfig",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erpTypes.ts",
+			"source_location": "L3"
+		},
+		{
+			"id": "erp_erptypes_erproomrecord",
+			"label": "ErpRoomRecord",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erpTypes.ts",
+			"source_location": "L9"
+		},
+		{
+			"id": "erp_erptypes_erptourrecord",
+			"label": "ErpTourRecord",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erpTypes.ts",
+			"source_location": "L17"
+		},
+		{
+			"id": "erp_erptypes_erpresult",
+			"label": "ErpResult",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erpTypes.ts",
+			"source_location": "L26"
+		}
+	],
+	"edges": [
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_services_erp_erptypes_ts",
+			"target": "erp_erptypes_erpmode",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erpTypes.ts",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_services_erp_erptypes_ts",
+			"target": "erp_erptypes_erpclientconfig",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erpTypes.ts",
+			"source_location": "L3",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_services_erp_erptypes_ts",
+			"target": "erp_erptypes_erproomrecord",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erpTypes.ts",
+			"source_location": "L9",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_services_erp_erptypes_ts",
+			"target": "erp_erptypes_erptourrecord",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erpTypes.ts",
+			"source_location": "L17",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_services_erp_erptypes_ts",
+			"target": "erp_erptypes_erpresult",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erpTypes.ts",
+			"source_location": "L26",
+			"weight": 1.0
+		}
+	],
+	"raw_calls": []
+}

@@ -1,0 +1,134 @@
+{
+	"nodes": [
+		{
+			"id": "mnt_d_coders_work_hhg_projects_he_web_src_pages_api_destinations_ts",
+			"label": "destinations.ts",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/destinations.ts",
+			"source_location": "L1"
+		},
+		{
+			"id": "api_destinations_destination",
+			"label": "Destination",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/destinations.ts",
+			"source_location": "L7"
+		},
+		{
+			"id": "api_destinations_local_file",
+			"label": "LOCAL_FILE",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/destinations.ts",
+			"source_location": "L18"
+		},
+		{
+			"id": "api_destinations_get",
+			"label": "GET()",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/destinations.ts",
+			"source_location": "L29"
+		}
+	],
+	"edges": [
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_pages_api_destinations_ts",
+			"target": "node_path",
+			"relation": "imports_from",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/destinations.ts",
+			"source_location": "L3",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_pages_api_destinations_ts",
+			"target": "astro",
+			"relation": "imports_from",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/destinations.ts",
+			"source_location": "L4",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_pages_api_destinations_ts",
+			"target": "mnt_d_coders_work_hhg_projects_he_web_src_utils_apihelpers_ts",
+			"relation": "imports_from",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/destinations.ts",
+			"source_location": "L5",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_pages_api_destinations_ts",
+			"target": "utils_apihelpers_json200",
+			"relation": "imports",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/destinations.ts",
+			"source_location": "L5",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_pages_api_destinations_ts",
+			"target": "utils_apihelpers_loaddata",
+			"relation": "imports",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/destinations.ts",
+			"source_location": "L5",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_pages_api_destinations_ts",
+			"target": "api_destinations_destination",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/destinations.ts",
+			"source_location": "L7",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_pages_api_destinations_ts",
+			"target": "api_destinations_local_file",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/destinations.ts",
+			"source_location": "L18",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_pages_api_destinations_ts",
+			"target": "api_destinations_get",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/destinations.ts",
+			"source_location": "L29",
+			"weight": 1.0
+		}
+	],
+	"raw_calls": [
+		{
+			"caller_nid": "api_destinations_get",
+			"callee": "await loadData",
+			"is_member_call": false,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/destinations.ts",
+			"source_location": "L30"
+		},
+		{
+			"caller_nid": "api_destinations_get",
+			"callee": "stringify",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/destinations.ts",
+			"source_location": "L38"
+		},
+		{
+			"caller_nid": "api_destinations_get",
+			"callee": "json200",
+			"is_member_call": false,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/destinations.ts",
+			"source_location": "L47"
+		}
+	]
+}

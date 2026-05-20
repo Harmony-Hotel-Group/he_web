@@ -1,0 +1,111 @@
+{
+	"nodes": [
+		{
+			"id": "mnt_d_coders_work_hhg_projects_he_web_src_content_blog_guia_centro_historico_md",
+			"label": "guia-centro-historico.md",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/content/blog/guia-centro-historico.md",
+			"source_location": "L1"
+		},
+		{
+			"id": "blog_guia_centro_historico_qu_ver",
+			"label": "Qu\u00e9 ver",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/content/blog/guia-centro-historico.md",
+			"source_location": "L16"
+		},
+		{
+			"id": "blog_guia_centro_historico_catedral_de_la_inmaculada_concepci_n",
+			"label": "Catedral de la Inmaculada Concepci\u00f3n",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/content/blog/guia-centro-historico.md",
+			"source_location": "L18"
+		},
+		{
+			"id": "blog_guia_centro_historico_plaza_abd_n_calder_n",
+			"label": "Plaza Abd\u00f3n Calder\u00f3n",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/content/blog/guia-centro-historico.md",
+			"source_location": "L21"
+		},
+		{
+			"id": "blog_guia_centro_historico_museo_pumapungo",
+			"label": "Museo Pumapungo",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/content/blog/guia-centro-historico.md",
+			"source_location": "L24"
+		},
+		{
+			"id": "blog_guia_centro_historico_r_o_tomebamba",
+			"label": "R\u00edo Tomebamba",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/content/blog/guia-centro-historico.md",
+			"source_location": "L27"
+		},
+		{
+			"id": "blog_guia_centro_historico_d_nde_comer",
+			"label": "D\u00f3nde comer",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/content/blog/guia-centro-historico.md",
+			"source_location": "L30"
+		}
+	],
+	"edges": [
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_content_blog_guia_centro_historico_md",
+			"target": "blog_guia_centro_historico_qu_ver",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/content/blog/guia-centro-historico.md",
+			"source_location": "L16",
+			"weight": 1.0
+		},
+		{
+			"source": "blog_guia_centro_historico_qu_ver",
+			"target": "blog_guia_centro_historico_catedral_de_la_inmaculada_concepci_n",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/content/blog/guia-centro-historico.md",
+			"source_location": "L18",
+			"weight": 1.0
+		},
+		{
+			"source": "blog_guia_centro_historico_qu_ver",
+			"target": "blog_guia_centro_historico_plaza_abd_n_calder_n",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/content/blog/guia-centro-historico.md",
+			"source_location": "L21",
+			"weight": 1.0
+		},
+		{
+			"source": "blog_guia_centro_historico_qu_ver",
+			"target": "blog_guia_centro_historico_museo_pumapungo",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/content/blog/guia-centro-historico.md",
+			"source_location": "L24",
+			"weight": 1.0
+		},
+		{
+			"source": "blog_guia_centro_historico_qu_ver",
+			"target": "blog_guia_centro_historico_r_o_tomebamba",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/content/blog/guia-centro-historico.md",
+			"source_location": "L27",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_content_blog_guia_centro_historico_md",
+			"target": "blog_guia_centro_historico_d_nde_comer",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/content/blog/guia-centro-historico.md",
+			"source_location": "L30",
+			"weight": 1.0
+		}
+	],
+	"input_tokens": 0,
+	"output_tokens": 0
+}

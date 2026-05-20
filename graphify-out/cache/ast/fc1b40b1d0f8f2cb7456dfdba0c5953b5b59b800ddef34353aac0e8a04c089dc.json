@@ -1,0 +1,50 @@
+{
+	"nodes": [
+		{
+			"id": "mnt_d_coders_work_hhg_projects_he_web_src_types_destinations_d_ts",
+			"label": "destinations.d.ts",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/types/destinations.d.ts",
+			"source_location": "L1"
+		},
+		{
+			"id": "types_destinations_d_destination",
+			"label": "Destination",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/types/destinations.d.ts",
+			"source_location": "L3"
+		}
+	],
+	"edges": [
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_types_destinations_d_ts",
+			"target": "mnt_d_coders_work_hhg_projects_he_web_src_types_resource",
+			"relation": "imports_from",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/types/destinations.d.ts",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_types_destinations_d_ts",
+			"target": "types_resource_resource",
+			"relation": "imports",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/types/destinations.d.ts",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_types_destinations_d_ts",
+			"target": "types_destinations_d_destination",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/types/destinations.d.ts",
+			"source_location": "L3",
+			"weight": 1.0
+		}
+	],
+	"raw_calls": []
+}

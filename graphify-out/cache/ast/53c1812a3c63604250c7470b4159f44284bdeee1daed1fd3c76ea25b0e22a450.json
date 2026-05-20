@@ -1,0 +1,38 @@
+{
+	"nodes": [
+		{
+			"id": "mnt_d_coders_work_hhg_projects_he_web_src_utils_text_ts",
+			"label": "text.ts",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/text.ts",
+			"source_location": "L1"
+		},
+		{
+			"id": "utils_text_truncate",
+			"label": "truncate()",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/text.ts",
+			"source_location": "L1"
+		}
+	],
+	"edges": [
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_utils_text_ts",
+			"target": "utils_text_truncate",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/text.ts",
+			"source_location": "L1",
+			"weight": 1.0
+		}
+	],
+	"raw_calls": [
+		{
+			"caller_nid": "utils_text_truncate",
+			"callee": "slice",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/text.ts",
+			"source_location": "L2"
+		}
+	]
+}

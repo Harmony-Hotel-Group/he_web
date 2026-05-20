@@ -1,0 +1,56 @@
+{
+	"nodes": [
+		{
+			"id": "mnt_d_coders_work_hhg_projects_he_web_src_types_image_ts",
+			"label": "image.ts",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/types/image.ts",
+			"source_location": "L1"
+		},
+		{
+			"id": "types_image_imagesource",
+			"label": "ImageSource",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/types/image.ts",
+			"source_location": "L3"
+		},
+		{
+			"id": "types_image_imageprops",
+			"label": "ImageProps",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/types/image.ts",
+			"source_location": "L8"
+		}
+	],
+	"edges": [
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_types_image_ts",
+			"target": "astro",
+			"relation": "imports_from",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/types/image.ts",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_types_image_ts",
+			"target": "types_image_imagesource",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/types/image.ts",
+			"source_location": "L3",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_types_image_ts",
+			"target": "types_image_imageprops",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/types/image.ts",
+			"source_location": "L8",
+			"weight": 1.0
+		}
+	],
+	"raw_calls": []
+}

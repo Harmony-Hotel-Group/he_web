@@ -1,0 +1,338 @@
+{
+	"nodes": [
+		{
+			"id": "mnt_d_coders_work_hhg_projects_he_web_src_services_messages_whatsapp_ts",
+			"label": "whatsapp.ts",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/whatsapp.ts",
+			"source_location": "L1"
+		},
+		{
+			"id": "messages_whatsapp_log",
+			"label": "log",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/whatsapp.ts",
+			"source_location": "L4"
+		},
+		{
+			"id": "messages_whatsapp_whatsappoptions",
+			"label": "WhatsAppOptions",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/whatsapp.ts",
+			"source_location": "L6"
+		},
+		{
+			"id": "messages_whatsapp_env",
+			"label": "ENV",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/whatsapp.ts",
+			"source_location": "L11"
+		},
+		{
+			"id": "messages_whatsapp_formatbookingmessage",
+			"label": "formatBookingMessage()",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/whatsapp.ts",
+			"source_location": "L24"
+		},
+		{
+			"id": "messages_whatsapp_sendwhatsappmessage",
+			"label": "sendWhatsappMessage()",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/whatsapp.ts",
+			"source_location": "L95"
+		}
+	],
+	"edges": [
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_services_messages_whatsapp_ts",
+			"target": "mnt_d_coders_work_hhg_projects_he_web_src_services_logger_ts",
+			"relation": "imports_from",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/whatsapp.ts",
+			"source_location": "L2",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_services_messages_whatsapp_ts",
+			"target": "services_logger_logger",
+			"relation": "imports",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/whatsapp.ts",
+			"source_location": "L2",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_services_messages_whatsapp_ts",
+			"target": "messages_whatsapp_log",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/whatsapp.ts",
+			"source_location": "L4",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_services_messages_whatsapp_ts",
+			"target": "messages_whatsapp_whatsappoptions",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/whatsapp.ts",
+			"source_location": "L6",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_services_messages_whatsapp_ts",
+			"target": "messages_whatsapp_env",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/whatsapp.ts",
+			"source_location": "L11",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_services_messages_whatsapp_ts",
+			"target": "messages_whatsapp_formatbookingmessage",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/whatsapp.ts",
+			"source_location": "L24",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_services_messages_whatsapp_ts",
+			"target": "messages_whatsapp_sendwhatsappmessage",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/whatsapp.ts",
+			"source_location": "L95",
+			"weight": 1.0
+		},
+		{
+			"source": "messages_whatsapp_sendwhatsappmessage",
+			"target": "messages_whatsapp_log",
+			"relation": "calls",
+			"context": "call",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/whatsapp.ts",
+			"source_location": "L116",
+			"weight": 1.0
+		},
+		{
+			"source": "messages_whatsapp_sendwhatsappmessage",
+			"target": "messages_whatsapp_formatbookingmessage",
+			"relation": "calls",
+			"context": "call",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/whatsapp.ts",
+			"source_location": "L117",
+			"weight": 1.0
+		}
+	],
+	"raw_calls": [
+		{
+			"caller_nid": "messages_whatsapp_formatbookingmessage",
+			"callee": "get",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/whatsapp.ts",
+			"source_location": "L32"
+		},
+		{
+			"caller_nid": "messages_whatsapp_formatbookingmessage",
+			"callee": "get",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/whatsapp.ts",
+			"source_location": "L33"
+		},
+		{
+			"caller_nid": "messages_whatsapp_formatbookingmessage",
+			"callee": "Number",
+			"is_member_call": false,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/whatsapp.ts",
+			"source_location": "L35"
+		},
+		{
+			"caller_nid": "messages_whatsapp_formatbookingmessage",
+			"callee": "get",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/whatsapp.ts",
+			"source_location": "L35"
+		},
+		{
+			"caller_nid": "messages_whatsapp_formatbookingmessage",
+			"callee": "Number",
+			"is_member_call": false,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/whatsapp.ts",
+			"source_location": "L39"
+		},
+		{
+			"caller_nid": "messages_whatsapp_formatbookingmessage",
+			"callee": "get",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/whatsapp.ts",
+			"source_location": "L39"
+		},
+		{
+			"caller_nid": "messages_whatsapp_formatbookingmessage",
+			"callee": "Number",
+			"is_member_call": false,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/whatsapp.ts",
+			"source_location": "L43"
+		},
+		{
+			"caller_nid": "messages_whatsapp_formatbookingmessage",
+			"callee": "get",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/whatsapp.ts",
+			"source_location": "L43"
+		},
+		{
+			"caller_nid": "messages_whatsapp_formatbookingmessage",
+			"callee": "get",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/whatsapp.ts",
+			"source_location": "L48"
+		},
+		{
+			"caller_nid": "messages_whatsapp_formatbookingmessage",
+			"callee": "get",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/whatsapp.ts",
+			"source_location": "L50"
+		},
+		{
+			"caller_nid": "messages_whatsapp_formatbookingmessage",
+			"callee": "get",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/whatsapp.ts",
+			"source_location": "L60"
+		},
+		{
+			"caller_nid": "messages_whatsapp_formatbookingmessage",
+			"callee": "get",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/whatsapp.ts",
+			"source_location": "L61"
+		},
+		{
+			"caller_nid": "messages_whatsapp_formatbookingmessage",
+			"callee": "push",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/whatsapp.ts",
+			"source_location": "L63"
+		},
+		{
+			"caller_nid": "messages_whatsapp_formatbookingmessage",
+			"callee": "toUpperCase",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/whatsapp.ts",
+			"source_location": "L64"
+		},
+		{
+			"caller_nid": "messages_whatsapp_formatbookingmessage",
+			"callee": "join",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/whatsapp.ts",
+			"source_location": "L70"
+		},
+		{
+			"caller_nid": "messages_whatsapp_formatbookingmessage",
+			"callee": "get",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/whatsapp.ts",
+			"source_location": "L75"
+		},
+		{
+			"caller_nid": "messages_whatsapp_sendwhatsappmessage",
+			"callee": "join",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/whatsapp.ts",
+			"source_location": "L105"
+		},
+		{
+			"caller_nid": "messages_whatsapp_sendwhatsappmessage",
+			"callee": "filter",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/whatsapp.ts",
+			"source_location": "L105"
+		},
+		{
+			"caller_nid": "messages_whatsapp_sendwhatsappmessage",
+			"callee": "warn",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/whatsapp.ts",
+			"source_location": "L111"
+		},
+		{
+			"caller_nid": "messages_whatsapp_sendwhatsappmessage",
+			"callee": "warn",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/whatsapp.ts",
+			"source_location": "L114"
+		},
+		{
+			"caller_nid": "messages_whatsapp_sendwhatsappmessage",
+			"callee": "info",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/whatsapp.ts",
+			"source_location": "L134"
+		},
+		{
+			"caller_nid": "messages_whatsapp_sendwhatsappmessage",
+			"callee": "fetch",
+			"is_member_call": false,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/whatsapp.ts",
+			"source_location": "L135"
+		},
+		{
+			"caller_nid": "messages_whatsapp_sendwhatsappmessage",
+			"callee": "stringify",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/whatsapp.ts",
+			"source_location": "L141"
+		},
+		{
+			"caller_nid": "messages_whatsapp_sendwhatsappmessage",
+			"callee": "catch",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/whatsapp.ts",
+			"source_location": "L144"
+		},
+		{
+			"caller_nid": "messages_whatsapp_sendwhatsappmessage",
+			"callee": "text",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/whatsapp.ts",
+			"source_location": "L144"
+		},
+		{
+			"caller_nid": "messages_whatsapp_sendwhatsappmessage",
+			"callee": "info",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/whatsapp.ts",
+			"source_location": "L147"
+		},
+		{
+			"caller_nid": "messages_whatsapp_sendwhatsappmessage",
+			"callee": "error",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/whatsapp.ts",
+			"source_location": "L150"
+		},
+		{
+			"caller_nid": "messages_whatsapp_sendwhatsappmessage",
+			"callee": "String",
+			"is_member_call": false,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/whatsapp.ts",
+			"source_location": "L155"
+		},
+		{
+			"caller_nid": "messages_whatsapp_sendwhatsappmessage",
+			"callee": "error",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/messages/whatsapp.ts",
+			"source_location": "L156"
+		}
+	]
+}

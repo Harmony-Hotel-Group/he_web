@@ -1,0 +1,317 @@
+{
+	"nodes": [
+		{
+			"id": "mnt_d_coders_work_hhg_projects_he_web_src_services_erp_erp_client_ts",
+			"label": "erp.client.ts",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erp.client.ts",
+			"source_location": "L1"
+		},
+		{
+			"id": "erp_erp_client_log",
+			"label": "log",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erp.client.ts",
+			"source_location": "L3"
+		},
+		{
+			"id": "erp_erp_client_erpmode",
+			"label": "ErpMode",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erp.client.ts",
+			"source_location": "L5"
+		},
+		{
+			"id": "erp_erp_client_erpclientoptions",
+			"label": "ErpClientOptions",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erp.client.ts",
+			"source_location": "L7"
+		},
+		{
+			"id": "erp_erp_client_erprequestoptions",
+			"label": "ErpRequestOptions",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erp.client.ts",
+			"source_location": "L14"
+		},
+		{
+			"id": "erp_erp_client_deepclone",
+			"label": "deepClone()",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erp.client.ts",
+			"source_location": "L19"
+		},
+		{
+			"id": "erp_erp_client_erpclient",
+			"label": "ErpClient",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erp.client.ts",
+			"source_location": "L26"
+		},
+		{
+			"id": "erp_erp_client_erpclient_constructor",
+			"label": ".constructor()",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erp.client.ts",
+			"source_location": "L32"
+		},
+		{
+			"id": "erp_erp_client_erpclient_getmode",
+			"label": ".getMode()",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erp.client.ts",
+			"source_location": "L39"
+		},
+		{
+			"id": "erp_erp_client_erpclient_get",
+			"label": ".get()",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erp.client.ts",
+			"source_location": "L43"
+		}
+	],
+	"edges": [
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_services_erp_erp_client_ts",
+			"target": "mnt_d_coders_work_hhg_projects_he_web_src_services_logger_ts",
+			"relation": "imports_from",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erp.client.ts",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_services_erp_erp_client_ts",
+			"target": "services_logger_logger",
+			"relation": "imports",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erp.client.ts",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_services_erp_erp_client_ts",
+			"target": "erp_erp_client_log",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erp.client.ts",
+			"source_location": "L3",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_services_erp_erp_client_ts",
+			"target": "erp_erp_client_erpmode",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erp.client.ts",
+			"source_location": "L5",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_services_erp_erp_client_ts",
+			"target": "erp_erp_client_erpclientoptions",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erp.client.ts",
+			"source_location": "L7",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_services_erp_erp_client_ts",
+			"target": "erp_erp_client_erprequestoptions",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erp.client.ts",
+			"source_location": "L14",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_services_erp_erp_client_ts",
+			"target": "erp_erp_client_deepclone",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erp.client.ts",
+			"source_location": "L19",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_services_erp_erp_client_ts",
+			"target": "erp_erp_client_erpclient",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erp.client.ts",
+			"source_location": "L26",
+			"weight": 1.0
+		},
+		{
+			"source": "erp_erp_client_erpclient",
+			"target": "erp_erp_client_erpclient_constructor",
+			"relation": "method",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erp.client.ts",
+			"source_location": "L32",
+			"weight": 1.0
+		},
+		{
+			"source": "erp_erp_client_erpclient",
+			"target": "erp_erp_client_erpclient_getmode",
+			"relation": "method",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erp.client.ts",
+			"source_location": "L39",
+			"weight": 1.0
+		},
+		{
+			"source": "erp_erp_client_erpclient",
+			"target": "erp_erp_client_erpclient_get",
+			"relation": "method",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erp.client.ts",
+			"source_location": "L43",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_services_erp_erp_client_ts",
+			"target": "erp_erp_client_erpclient",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erp.client.ts",
+			"source_location": "L95",
+			"weight": 1.0
+		},
+		{
+			"source": "erp_erp_client_erpclient_get",
+			"target": "erp_erp_client_deepclone",
+			"relation": "calls",
+			"context": "call",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erp.client.ts",
+			"source_location": "L50",
+			"weight": 1.0
+		}
+	],
+	"raw_calls": [
+		{
+			"caller_nid": "erp_erp_client_deepclone",
+			"callee": "structuredClone",
+			"is_member_call": false,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erp.client.ts",
+			"source_location": "L21"
+		},
+		{
+			"caller_nid": "erp_erp_client_deepclone",
+			"callee": "parse",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erp.client.ts",
+			"source_location": "L23"
+		},
+		{
+			"caller_nid": "erp_erp_client_deepclone",
+			"callee": "stringify",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erp.client.ts",
+			"source_location": "L23"
+		},
+		{
+			"caller_nid": "erp_erp_client_erpclient_constructor",
+			"callee": "Number",
+			"is_member_call": false,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erp.client.ts",
+			"source_location": "L35"
+		},
+		{
+			"caller_nid": "erp_erp_client_erpclient_get",
+			"callee": "info",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erp.client.ts",
+			"source_location": "L49"
+		},
+		{
+			"caller_nid": "erp_erp_client_erpclient_get",
+			"callee": "warn",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erp.client.ts",
+			"source_location": "L54"
+		},
+		{
+			"caller_nid": "erp_erp_client_erpclient_get",
+			"callee": "entries",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erp.client.ts",
+			"source_location": "L61"
+		},
+		{
+			"caller_nid": "erp_erp_client_erpclient_get",
+			"callee": "set",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erp.client.ts",
+			"source_location": "L63"
+		},
+		{
+			"caller_nid": "erp_erp_client_erpclient_get",
+			"callee": "String",
+			"is_member_call": false,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erp.client.ts",
+			"source_location": "L63"
+		},
+		{
+			"caller_nid": "erp_erp_client_erpclient_get",
+			"callee": "setTimeout",
+			"is_member_call": false,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erp.client.ts",
+			"source_location": "L68"
+		},
+		{
+			"caller_nid": "erp_erp_client_erpclient_get",
+			"callee": "info",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erp.client.ts",
+			"source_location": "L71"
+		},
+		{
+			"caller_nid": "erp_erp_client_erpclient_get",
+			"callee": "toString",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erp.client.ts",
+			"source_location": "L71"
+		},
+		{
+			"caller_nid": "erp_erp_client_erpclient_get",
+			"callee": "fetch",
+			"is_member_call": false,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erp.client.ts",
+			"source_location": "L72"
+		},
+		{
+			"caller_nid": "erp_erp_client_erpclient_get",
+			"callee": "toString",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erp.client.ts",
+			"source_location": "L72"
+		},
+		{
+			"caller_nid": "erp_erp_client_erpclient_get",
+			"callee": "json",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erp.client.ts",
+			"source_location": "L85"
+		},
+		{
+			"caller_nid": "erp_erp_client_erpclient_get",
+			"callee": "error",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erp.client.ts",
+			"source_location": "L87"
+		},
+		{
+			"caller_nid": "erp_erp_client_erpclient_get",
+			"callee": "clearTimeout",
+			"is_member_call": false,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erp.client.ts",
+			"source_location": "L90"
+		}
+	]
+}

@@ -1,0 +1,130 @@
+{
+	"nodes": [
+		{
+			"id": "mnt_d_coders_work_hhg_projects_he_web_src_types_config_d_ts",
+			"label": "config.d.ts",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/types/config.d.ts",
+			"source_location": "L1"
+		},
+		{
+			"id": "types_config_d_category",
+			"label": "Category",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/types/config.d.ts",
+			"source_location": "L5"
+		},
+		{
+			"id": "types_config_d_imageresource",
+			"label": "ImageResource",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/types/config.d.ts",
+			"source_location": "L17"
+		},
+		{
+			"id": "types_config_d_carouselresource",
+			"label": "CarouselResource",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/types/config.d.ts",
+			"source_location": "L18"
+		},
+		{
+			"id": "types_config_d_siteconfig",
+			"label": "SiteConfig",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/types/config.d.ts",
+			"source_location": "L20"
+		},
+		{
+			"id": "types_config_d_currency",
+			"label": "Currency",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/types/config.d.ts",
+			"source_location": "L59"
+		},
+		{
+			"id": "types_config_d_translationfunction",
+			"label": "TranslationFunction",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/types/config.d.ts",
+			"source_location": "L66"
+		}
+	],
+	"edges": [
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_types_config_d_ts",
+			"target": "mnt_d_coders_work_hhg_projects_he_web_src_types_resource",
+			"relation": "imports_from",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/types/config.d.ts",
+			"source_location": "L3",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_types_config_d_ts",
+			"target": "types_resource_resource",
+			"relation": "imports",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/types/config.d.ts",
+			"source_location": "L3",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_types_config_d_ts",
+			"target": "types_config_d_category",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/types/config.d.ts",
+			"source_location": "L5",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_types_config_d_ts",
+			"target": "types_config_d_imageresource",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/types/config.d.ts",
+			"source_location": "L17",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_types_config_d_ts",
+			"target": "types_config_d_carouselresource",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/types/config.d.ts",
+			"source_location": "L18",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_types_config_d_ts",
+			"target": "types_config_d_siteconfig",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/types/config.d.ts",
+			"source_location": "L20",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_types_config_d_ts",
+			"target": "types_config_d_currency",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/types/config.d.ts",
+			"source_location": "L59",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_types_config_d_ts",
+			"target": "types_config_d_translationfunction",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/types/config.d.ts",
+			"source_location": "L66",
+			"weight": 1.0
+		}
+	],
+	"raw_calls": []
+}

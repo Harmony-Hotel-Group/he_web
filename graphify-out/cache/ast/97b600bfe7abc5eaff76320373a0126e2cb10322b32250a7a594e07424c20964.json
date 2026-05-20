@@ -1,0 +1,166 @@
+{
+	"nodes": [
+		{
+			"id": "mnt_d_coders_work_hhg_projects_he_web_src_services_erp_erp_tours_ts",
+			"label": "erp.tours.ts",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erp.tours.ts",
+			"source_location": "L1"
+		},
+		{
+			"id": "erp_erp_tours_erptourcontract",
+			"label": "ErpTourContract",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erp.tours.ts",
+			"source_location": "L4"
+		},
+		{
+			"id": "erp_erp_tours_erptoursresponse",
+			"label": "ErpToursResponse",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erp.tours.ts",
+			"source_location": "L13"
+		},
+		{
+			"id": "erp_erp_tours_erp_tours_mock",
+			"label": "ERP_TOURS_MOCK",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erp.tours.ts",
+			"source_location": "L19"
+		},
+		{
+			"id": "erp_erp_tours_maperptourtodomain",
+			"label": "mapErpTourToDomain()",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erp.tours.ts",
+			"source_location": "L38"
+		},
+		{
+			"id": "erp_erp_tours_fetcherptours",
+			"label": "fetchErpTours()",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erp.tours.ts",
+			"source_location": "L49"
+		}
+	],
+	"edges": [
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_services_erp_erp_tours_ts",
+			"target": "mnt_d_coders_work_hhg_projects_he_web_src_types_tour_ts",
+			"relation": "imports_from",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erp.tours.ts",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_services_erp_erp_tours_ts",
+			"target": "types_tour_tour",
+			"relation": "imports",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erp.tours.ts",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_services_erp_erp_tours_ts",
+			"target": "mnt_d_coders_work_hhg_projects_he_web_src_services_erp_erp_client_ts",
+			"relation": "imports_from",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erp.tours.ts",
+			"source_location": "L2",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_services_erp_erp_tours_ts",
+			"target": "erp_erp_client_erpclient",
+			"relation": "imports",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erp.tours.ts",
+			"source_location": "L2",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_services_erp_erp_tours_ts",
+			"target": "erp_erp_client_erpclient",
+			"relation": "imports",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erp.tours.ts",
+			"source_location": "L2",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_services_erp_erp_tours_ts",
+			"target": "erp_erp_tours_erptourcontract",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erp.tours.ts",
+			"source_location": "L4",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_services_erp_erp_tours_ts",
+			"target": "erp_erp_tours_erptoursresponse",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erp.tours.ts",
+			"source_location": "L13",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_services_erp_erp_tours_ts",
+			"target": "erp_erp_tours_erp_tours_mock",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erp.tours.ts",
+			"source_location": "L19",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_services_erp_erp_tours_ts",
+			"target": "erp_erp_tours_maperptourtodomain",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erp.tours.ts",
+			"source_location": "L38",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_services_erp_erp_tours_ts",
+			"target": "erp_erp_tours_fetcherptours",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erp.tours.ts",
+			"source_location": "L49",
+			"weight": 1.0
+		}
+	],
+	"raw_calls": [
+		{
+			"caller_nid": "erp_erp_tours_fetcherptours",
+			"callee": "await client.get",
+			"is_member_call": false,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erp.tours.ts",
+			"source_location": "L50"
+		},
+		{
+			"caller_nid": "erp_erp_tours_fetcherptours",
+			"callee": "isArray",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erp.tours.ts",
+			"source_location": "L55"
+		},
+		{
+			"caller_nid": "erp_erp_tours_fetcherptours",
+			"callee": "getMode",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/services/erp/erp.tours.ts",
+			"source_location": "L60"
+		}
+	]
+}

@@ -1,0 +1,447 @@
+{
+	"nodes": [
+		{
+			"id": "mnt_d_coders_work_hhg_projects_he_web_docs_premium_ui_ux_audit_2026_md",
+			"label": "premium-ui-ux-audit-2026.md",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/premium-ui-ux-audit-2026.md",
+			"source_location": "L1"
+		},
+		{
+			"id": "docs_premium_ui_ux_audit_2026_plan_t_cnico_de_implementaci_n_incremental_ui_ux_basado_en_auditor_a_existente",
+			"label": "Plan t\u00e9cnico de implementaci\u00f3n incremental UI/UX (basado en auditor\u00eda existente)",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/premium-ui-ux-audit-2026.md",
+			"source_location": "L1"
+		},
+		{
+			"id": "docs_premium_ui_ux_audit_2026_fase_1_cambios_globales_seguros",
+			"label": "Fase 1 \u2013 Cambios globales seguros",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/premium-ui-ux-audit-2026.md",
+			"source_location": "L7"
+		},
+		{
+			"id": "docs_premium_ui_ux_audit_2026_1_1_normalizar_jerarqu_a_tipogr_fica_global",
+			"label": "1.1 Normalizar jerarqu\u00eda tipogr\u00e1fica global",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/premium-ui-ux-audit-2026.md",
+			"source_location": "L9"
+		},
+		{
+			"id": "docs_premium_ui_ux_audit_2026_1_2_unificar_espaciado_vertical_entre_secciones",
+			"label": "1.2 Unificar espaciado vertical entre secciones",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/premium-ui-ux-audit-2026.md",
+			"source_location": "L21"
+		},
+		{
+			"id": "docs_premium_ui_ux_audit_2026_1_3_cerrar_escala_de_grises_y_superficies",
+			"label": "1.3 Cerrar escala de grises y superficies",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/premium-ui-ux-audit-2026.md",
+			"source_location": "L34"
+		},
+		{
+			"id": "docs_premium_ui_ux_audit_2026_fase_2_componentes_base",
+			"label": "Fase 2 \u2013 Componentes base",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/premium-ui-ux-audit-2026.md",
+			"source_location": "L49"
+		},
+		{
+			"id": "docs_premium_ui_ux_audit_2026_2_1_unificar_sistema_visual_de_botones_reutilizando_componente_existente",
+			"label": "2.1 Unificar sistema visual de botones reutilizando componente existente",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/premium-ui-ux-audit-2026.md",
+			"source_location": "L51"
+		},
+		{
+			"id": "docs_premium_ui_ux_audit_2026_2_2_estandarizar_radio_y_sombra_en_cards_base",
+			"label": "2.2 Estandarizar radio y sombra en cards base",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/premium-ui-ux-audit-2026.md",
+			"source_location": "L67"
+		},
+		{
+			"id": "docs_premium_ui_ux_audit_2026_2_3_ajustar_contenedores_y_anchuras_narrativas",
+			"label": "2.3 Ajustar contenedores y anchuras narrativas",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/premium-ui-ux-audit-2026.md",
+			"source_location": "L79"
+		},
+		{
+			"id": "docs_premium_ui_ux_audit_2026_fase_3_secciones_principales",
+			"label": "Fase 3 \u2013 Secciones principales",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/premium-ui-ux-audit-2026.md",
+			"source_location": "L93"
+		},
+		{
+			"id": "docs_premium_ui_ux_audit_2026_3_1_estabilizar_contraste_y_overlay_en_hero_home",
+			"label": "3.1 Estabilizar contraste y overlay en hero home",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/premium-ui-ux-audit-2026.md",
+			"source_location": "L95"
+		},
+		{
+			"id": "docs_premium_ui_ux_audit_2026_3_2_homologar_hero_reutilizable_de_p_ginas_internas",
+			"label": "3.2 Homologar hero reutilizable de p\u00e1ginas internas",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/premium-ui-ux-audit-2026.md",
+			"source_location": "L104"
+		},
+		{
+			"id": "docs_premium_ui_ux_audit_2026_3_3_mejorar_legibilidad_del_bloque_de_reserva_sobre_hero",
+			"label": "3.3 Mejorar legibilidad del bloque de reserva sobre hero",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/premium-ui-ux-audit-2026.md",
+			"source_location": "L113"
+		},
+		{
+			"id": "docs_premium_ui_ux_audit_2026_3_4_reducir_ruido_visual_en_navegaci_n_y_footer",
+			"label": "3.4 Reducir ruido visual en navegaci\u00f3n y footer",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/premium-ui-ux-audit-2026.md",
+			"source_location": "L122"
+		},
+		{
+			"id": "docs_premium_ui_ux_audit_2026_3_5_consistencia_de_proporciones_de_imagen_en_cards_listados",
+			"label": "3.5 Consistencia de proporciones de imagen en cards/listados",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/premium-ui-ux-audit-2026.md",
+			"source_location": "L133"
+		},
+		{
+			"id": "docs_premium_ui_ux_audit_2026_fase_4_microinteracciones",
+			"label": "Fase 4 \u2013 Microinteracciones",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/premium-ui-ux-audit-2026.md",
+			"source_location": "L146"
+		},
+		{
+			"id": "docs_premium_ui_ux_audit_2026_4_1_estandarizar_hover_y_transiciones_en_cards",
+			"label": "4.1 Estandarizar hover y transiciones en cards",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/premium-ui-ux-audit-2026.md",
+			"source_location": "L148"
+		},
+		{
+			"id": "docs_premium_ui_ux_audit_2026_4_2_estandarizar_estados_interactivos_de_botones_y_links_clave",
+			"label": "4.2 Estandarizar estados interactivos de botones y links clave",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/premium-ui-ux-audit-2026.md",
+			"source_location": "L158"
+		},
+		{
+			"id": "docs_premium_ui_ux_audit_2026_4_3_aplicar_entrada_suave_de_secciones_con_accesibilidad",
+			"label": "4.3 Aplicar entrada suave de secciones con accesibilidad",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/premium-ui-ux-audit-2026.md",
+			"source_location": "L170"
+		},
+		{
+			"id": "docs_premium_ui_ux_audit_2026_4_4_uniformar_foco_visual_en_campos_del_booking",
+			"label": "4.4 Uniformar foco visual en campos del booking",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/premium-ui-ux-audit-2026.md",
+			"source_location": "L181"
+		},
+		{
+			"id": "docs_premium_ui_ux_audit_2026_cambios_identificados_como_bajo_riesgo_global_no_afectan_l_gica",
+			"label": "Cambios identificados como: Bajo riesgo + Global + No afectan l\u00f3gica",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/premium-ui-ux-audit-2026.md",
+			"source_location": "L195"
+		},
+		{
+			"id": "docs_premium_ui_ux_audit_2026_a_normalizar_jerarqu_a_tipogr_fica_global",
+			"label": "A) Normalizar jerarqu\u00eda tipogr\u00e1fica global",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/premium-ui-ux-audit-2026.md",
+			"source_location": "L202"
+		},
+		{
+			"id": "docs_premium_ui_ux_audit_2026_b_unificar_espaciado_vertical_entre_secciones",
+			"label": "B) Unificar espaciado vertical entre secciones",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/premium-ui-ux-audit-2026.md",
+			"source_location": "L213"
+		},
+		{
+			"id": "docs_premium_ui_ux_audit_2026_c_cerrar_escala_de_grises_y_superficies",
+			"label": "C) Cerrar escala de grises y superficies",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/premium-ui-ux-audit-2026.md",
+			"source_location": "L227"
+		},
+		{
+			"id": "docs_premium_ui_ux_audit_2026_d_estandarizar_estados_interactivos_base_transiciones",
+			"label": "D) Estandarizar estados interactivos base (transiciones)",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/premium-ui-ux-audit-2026.md",
+			"source_location": "L238"
+		},
+		{
+			"id": "docs_premium_ui_ux_audit_2026_e_uniformar_foco_visual_accesible_en_formularios",
+			"label": "E) Uniformar foco visual accesible en formularios",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/premium-ui-ux-audit-2026.md",
+			"source_location": "L248"
+		},
+		{
+			"id": "docs_premium_ui_ux_audit_2026_orden_de_ejecuci_n_recomendado",
+			"label": "Orden de ejecuci\u00f3n recomendado",
+			"file_type": "document",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/premium-ui-ux-audit-2026.md",
+			"source_location": "L260"
+		}
+	],
+	"edges": [
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_docs_premium_ui_ux_audit_2026_md",
+			"target": "docs_premium_ui_ux_audit_2026_plan_t_cnico_de_implementaci_n_incremental_ui_ux_basado_en_auditor_a_existente",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/premium-ui-ux-audit-2026.md",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_premium_ui_ux_audit_2026_plan_t_cnico_de_implementaci_n_incremental_ui_ux_basado_en_auditor_a_existente",
+			"target": "docs_premium_ui_ux_audit_2026_fase_1_cambios_globales_seguros",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/premium-ui-ux-audit-2026.md",
+			"source_location": "L7",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_premium_ui_ux_audit_2026_fase_1_cambios_globales_seguros",
+			"target": "docs_premium_ui_ux_audit_2026_1_1_normalizar_jerarqu_a_tipogr_fica_global",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/premium-ui-ux-audit-2026.md",
+			"source_location": "L9",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_premium_ui_ux_audit_2026_fase_1_cambios_globales_seguros",
+			"target": "docs_premium_ui_ux_audit_2026_1_2_unificar_espaciado_vertical_entre_secciones",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/premium-ui-ux-audit-2026.md",
+			"source_location": "L21",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_premium_ui_ux_audit_2026_fase_1_cambios_globales_seguros",
+			"target": "docs_premium_ui_ux_audit_2026_1_3_cerrar_escala_de_grises_y_superficies",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/premium-ui-ux-audit-2026.md",
+			"source_location": "L34",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_premium_ui_ux_audit_2026_plan_t_cnico_de_implementaci_n_incremental_ui_ux_basado_en_auditor_a_existente",
+			"target": "docs_premium_ui_ux_audit_2026_fase_2_componentes_base",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/premium-ui-ux-audit-2026.md",
+			"source_location": "L49",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_premium_ui_ux_audit_2026_fase_2_componentes_base",
+			"target": "docs_premium_ui_ux_audit_2026_2_1_unificar_sistema_visual_de_botones_reutilizando_componente_existente",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/premium-ui-ux-audit-2026.md",
+			"source_location": "L51",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_premium_ui_ux_audit_2026_fase_2_componentes_base",
+			"target": "docs_premium_ui_ux_audit_2026_2_2_estandarizar_radio_y_sombra_en_cards_base",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/premium-ui-ux-audit-2026.md",
+			"source_location": "L67",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_premium_ui_ux_audit_2026_fase_2_componentes_base",
+			"target": "docs_premium_ui_ux_audit_2026_2_3_ajustar_contenedores_y_anchuras_narrativas",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/premium-ui-ux-audit-2026.md",
+			"source_location": "L79",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_premium_ui_ux_audit_2026_plan_t_cnico_de_implementaci_n_incremental_ui_ux_basado_en_auditor_a_existente",
+			"target": "docs_premium_ui_ux_audit_2026_fase_3_secciones_principales",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/premium-ui-ux-audit-2026.md",
+			"source_location": "L93",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_premium_ui_ux_audit_2026_fase_3_secciones_principales",
+			"target": "docs_premium_ui_ux_audit_2026_3_1_estabilizar_contraste_y_overlay_en_hero_home",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/premium-ui-ux-audit-2026.md",
+			"source_location": "L95",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_premium_ui_ux_audit_2026_fase_3_secciones_principales",
+			"target": "docs_premium_ui_ux_audit_2026_3_2_homologar_hero_reutilizable_de_p_ginas_internas",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/premium-ui-ux-audit-2026.md",
+			"source_location": "L104",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_premium_ui_ux_audit_2026_fase_3_secciones_principales",
+			"target": "docs_premium_ui_ux_audit_2026_3_3_mejorar_legibilidad_del_bloque_de_reserva_sobre_hero",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/premium-ui-ux-audit-2026.md",
+			"source_location": "L113",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_premium_ui_ux_audit_2026_fase_3_secciones_principales",
+			"target": "docs_premium_ui_ux_audit_2026_3_4_reducir_ruido_visual_en_navegaci_n_y_footer",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/premium-ui-ux-audit-2026.md",
+			"source_location": "L122",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_premium_ui_ux_audit_2026_fase_3_secciones_principales",
+			"target": "docs_premium_ui_ux_audit_2026_3_5_consistencia_de_proporciones_de_imagen_en_cards_listados",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/premium-ui-ux-audit-2026.md",
+			"source_location": "L133",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_premium_ui_ux_audit_2026_plan_t_cnico_de_implementaci_n_incremental_ui_ux_basado_en_auditor_a_existente",
+			"target": "docs_premium_ui_ux_audit_2026_fase_4_microinteracciones",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/premium-ui-ux-audit-2026.md",
+			"source_location": "L146",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_premium_ui_ux_audit_2026_fase_4_microinteracciones",
+			"target": "docs_premium_ui_ux_audit_2026_4_1_estandarizar_hover_y_transiciones_en_cards",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/premium-ui-ux-audit-2026.md",
+			"source_location": "L148",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_premium_ui_ux_audit_2026_fase_4_microinteracciones",
+			"target": "docs_premium_ui_ux_audit_2026_4_2_estandarizar_estados_interactivos_de_botones_y_links_clave",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/premium-ui-ux-audit-2026.md",
+			"source_location": "L158",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_premium_ui_ux_audit_2026_fase_4_microinteracciones",
+			"target": "docs_premium_ui_ux_audit_2026_4_3_aplicar_entrada_suave_de_secciones_con_accesibilidad",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/premium-ui-ux-audit-2026.md",
+			"source_location": "L170",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_premium_ui_ux_audit_2026_fase_4_microinteracciones",
+			"target": "docs_premium_ui_ux_audit_2026_4_4_uniformar_foco_visual_en_campos_del_booking",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/premium-ui-ux-audit-2026.md",
+			"source_location": "L181",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_premium_ui_ux_audit_2026_plan_t_cnico_de_implementaci_n_incremental_ui_ux_basado_en_auditor_a_existente",
+			"target": "docs_premium_ui_ux_audit_2026_cambios_identificados_como_bajo_riesgo_global_no_afectan_l_gica",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/premium-ui-ux-audit-2026.md",
+			"source_location": "L195",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_premium_ui_ux_audit_2026_cambios_identificados_como_bajo_riesgo_global_no_afectan_l_gica",
+			"target": "docs_premium_ui_ux_audit_2026_a_normalizar_jerarqu_a_tipogr_fica_global",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/premium-ui-ux-audit-2026.md",
+			"source_location": "L202",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_premium_ui_ux_audit_2026_cambios_identificados_como_bajo_riesgo_global_no_afectan_l_gica",
+			"target": "docs_premium_ui_ux_audit_2026_b_unificar_espaciado_vertical_entre_secciones",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/premium-ui-ux-audit-2026.md",
+			"source_location": "L213",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_premium_ui_ux_audit_2026_cambios_identificados_como_bajo_riesgo_global_no_afectan_l_gica",
+			"target": "docs_premium_ui_ux_audit_2026_c_cerrar_escala_de_grises_y_superficies",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/premium-ui-ux-audit-2026.md",
+			"source_location": "L227",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_premium_ui_ux_audit_2026_cambios_identificados_como_bajo_riesgo_global_no_afectan_l_gica",
+			"target": "docs_premium_ui_ux_audit_2026_d_estandarizar_estados_interactivos_base_transiciones",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/premium-ui-ux-audit-2026.md",
+			"source_location": "L238",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_premium_ui_ux_audit_2026_cambios_identificados_como_bajo_riesgo_global_no_afectan_l_gica",
+			"target": "docs_premium_ui_ux_audit_2026_e_uniformar_foco_visual_accesible_en_formularios",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/premium-ui-ux-audit-2026.md",
+			"source_location": "L248",
+			"weight": 1.0
+		},
+		{
+			"source": "docs_premium_ui_ux_audit_2026_plan_t_cnico_de_implementaci_n_incremental_ui_ux_basado_en_auditor_a_existente",
+			"target": "docs_premium_ui_ux_audit_2026_orden_de_ejecuci_n_recomendado",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/docs/premium-ui-ux-audit-2026.md",
+			"source_location": "L260",
+			"weight": 1.0
+		}
+	],
+	"input_tokens": 0,
+	"output_tokens": 0
+}

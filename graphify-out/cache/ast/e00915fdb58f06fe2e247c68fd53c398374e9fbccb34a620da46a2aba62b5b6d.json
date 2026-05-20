@@ -1,0 +1,52 @@
+{
+	"nodes": [
+		{
+			"id": "mnt_d_coders_work_hhg_projects_he_web_src_utils_math_ts",
+			"label": "math.ts",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/math.ts",
+			"source_location": "L1"
+		},
+		{
+			"id": "utils_math_range",
+			"label": "range()",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/math.ts",
+			"source_location": "L5"
+		}
+	],
+	"edges": [
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_utils_math_ts",
+			"target": "utils_math_range",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/math.ts",
+			"source_location": "L5",
+			"weight": 1.0
+		}
+	],
+	"raw_calls": [
+		{
+			"caller_nid": "utils_math_range",
+			"callee": "max",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/math.ts",
+			"source_location": "L21"
+		},
+		{
+			"caller_nid": "utils_math_range",
+			"callee": "ceil",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/math.ts",
+			"source_location": "L22"
+		},
+		{
+			"caller_nid": "utils_math_range",
+			"callee": "from",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/utils/math.ts",
+			"source_location": "L27"
+		}
+	]
+}

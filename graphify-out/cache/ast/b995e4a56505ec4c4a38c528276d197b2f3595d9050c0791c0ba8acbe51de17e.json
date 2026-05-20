@@ -1,0 +1,188 @@
+{
+	"nodes": [
+		{
+			"id": "mnt_d_coders_work_hhg_projects_he_web_src_pages_api_admin_cache_ts",
+			"label": "cache.ts",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/admin/cache.ts",
+			"source_location": "L1"
+		},
+		{
+			"id": "admin_cache_log",
+			"label": "log",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/admin/cache.ts",
+			"source_location": "L7"
+		},
+		{
+			"id": "admin_cache_post",
+			"label": "POST()",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/admin/cache.ts",
+			"source_location": "L9"
+		}
+	],
+	"edges": [
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_pages_api_admin_cache_ts",
+			"target": "astro",
+			"relation": "imports_from",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/admin/cache.ts",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_pages_api_admin_cache_ts",
+			"target": "mnt_d_coders_work_hhg_projects_he_web_src_utils_apihelpers_ts",
+			"relation": "imports_from",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/admin/cache.ts",
+			"source_location": "L2",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_pages_api_admin_cache_ts",
+			"target": "utils_apihelpers_configurecachecontrol",
+			"relation": "imports",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/admin/cache.ts",
+			"source_location": "L2",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_pages_api_admin_cache_ts",
+			"target": "mnt_d_coders_work_hhg_projects_he_web_src_services_logger_ts",
+			"relation": "imports_from",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/admin/cache.ts",
+			"source_location": "L3",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_pages_api_admin_cache_ts",
+			"target": "services_logger_logger",
+			"relation": "imports",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/admin/cache.ts",
+			"source_location": "L3",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_pages_api_admin_cache_ts",
+			"target": "admin_cache_log",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/admin/cache.ts",
+			"source_location": "L7",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_pages_api_admin_cache_ts",
+			"target": "admin_cache_post",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/admin/cache.ts",
+			"source_location": "L9",
+			"weight": 1.0
+		}
+	],
+	"raw_calls": [
+		{
+			"caller_nid": "admin_cache_post",
+			"callee": "get",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/admin/cache.ts",
+			"source_location": "L10"
+		},
+		{
+			"caller_nid": "admin_cache_post",
+			"callee": "warn",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/admin/cache.ts",
+			"source_location": "L14"
+		},
+		{
+			"caller_nid": "admin_cache_post",
+			"callee": "stringify",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/admin/cache.ts",
+			"source_location": "L15"
+		},
+		{
+			"caller_nid": "admin_cache_post",
+			"callee": "json",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/admin/cache.ts",
+			"source_location": "L22"
+		},
+		{
+			"caller_nid": "admin_cache_post",
+			"callee": "stringify",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/admin/cache.ts",
+			"source_location": "L26"
+		},
+		{
+			"caller_nid": "admin_cache_post",
+			"callee": "configureCacheControl",
+			"is_member_call": false,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/admin/cache.ts",
+			"source_location": "L32"
+		},
+		{
+			"caller_nid": "admin_cache_post",
+			"callee": "stringify",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/admin/cache.ts",
+			"source_location": "L42"
+		},
+		{
+			"caller_nid": "admin_cache_post",
+			"callee": "join",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/admin/cache.ts",
+			"source_location": "L43"
+		},
+		{
+			"caller_nid": "admin_cache_post",
+			"callee": "stringify",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/admin/cache.ts",
+			"source_location": "L51"
+		},
+		{
+			"caller_nid": "admin_cache_post",
+			"callee": "info",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/admin/cache.ts",
+			"source_location": "L57"
+		},
+		{
+			"caller_nid": "admin_cache_post",
+			"callee": "stringify",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/admin/cache.ts",
+			"source_location": "L63"
+		},
+		{
+			"caller_nid": "admin_cache_post",
+			"callee": "error",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/admin/cache.ts",
+			"source_location": "L68"
+		},
+		{
+			"caller_nid": "admin_cache_post",
+			"callee": "stringify",
+			"is_member_call": true,
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/pages/api/admin/cache.ts",
+			"source_location": "L69"
+		}
+	]
+}

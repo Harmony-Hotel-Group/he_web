@@ -1,0 +1,46 @@
+{
+	"nodes": [
+		{
+			"id": "mnt_d_coders_work_hhg_projects_he_web_src_types_rooms_d_ts",
+			"label": "rooms.d.ts",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/types/rooms.d.ts",
+			"source_location": "L1"
+		},
+		{
+			"id": "types_rooms_d_roomimage",
+			"label": "RoomImage",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/types/rooms.d.ts",
+			"source_location": "L1"
+		},
+		{
+			"id": "types_rooms_d_room",
+			"label": "Room",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/types/rooms.d.ts",
+			"source_location": "L7"
+		}
+	],
+	"edges": [
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_types_rooms_d_ts",
+			"target": "types_rooms_d_roomimage",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/types/rooms.d.ts",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_types_rooms_d_ts",
+			"target": "types_rooms_d_room",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/types/rooms.d.ts",
+			"source_location": "L7",
+			"weight": 1.0
+		}
+	],
+	"raw_calls": []
+}

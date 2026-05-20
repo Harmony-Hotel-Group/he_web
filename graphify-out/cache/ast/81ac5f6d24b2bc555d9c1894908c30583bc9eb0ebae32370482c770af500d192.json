@@ -1,0 +1,56 @@
+{
+	"nodes": [
+		{
+			"id": "mnt_d_coders_work_hhg_projects_he_web_src_types_resource_d_ts",
+			"label": "resource.d.ts",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/types/resource.d.ts",
+			"source_location": "L1"
+		},
+		{
+			"id": "types_resource_d_resourcetype",
+			"label": "ResourceType",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/types/resource.d.ts",
+			"source_location": "L3"
+		},
+		{
+			"id": "types_resource_d_resource",
+			"label": "Resource",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/types/resource.d.ts",
+			"source_location": "L5"
+		}
+	],
+	"edges": [
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_types_resource_d_ts",
+			"target": "astro",
+			"relation": "imports_from",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/types/resource.d.ts",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_types_resource_d_ts",
+			"target": "types_resource_d_resourcetype",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/types/resource.d.ts",
+			"source_location": "L3",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_types_resource_d_ts",
+			"target": "types_resource_d_resource",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/types/resource.d.ts",
+			"source_location": "L5",
+			"weight": 1.0
+		}
+	],
+	"raw_calls": []
+}

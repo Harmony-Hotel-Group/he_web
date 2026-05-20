@@ -1,0 +1,78 @@
+{
+	"nodes": [
+		{
+			"id": "mnt_d_coders_work_hhg_projects_he_web_src_contracts_booking_intent_ts",
+			"label": "booking.intent.ts",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/contracts/booking.intent.ts",
+			"source_location": "L1"
+		},
+		{
+			"id": "contracts_booking_intent_bookingchannel",
+			"label": "BookingChannel",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/contracts/booking.intent.ts",
+			"source_location": "L3"
+		},
+		{
+			"id": "contracts_booking_intent_bookingsource",
+			"label": "BookingSource",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/contracts/booking.intent.ts",
+			"source_location": "L4"
+		},
+		{
+			"id": "contracts_booking_intent_bookingintenttype",
+			"label": "BookingIntentType",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/contracts/booking.intent.ts",
+			"source_location": "L5"
+		},
+		{
+			"id": "contracts_booking_intent_bookingintentv1",
+			"label": "BookingIntentV1",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/contracts/booking.intent.ts",
+			"source_location": "L7"
+		}
+	],
+	"edges": [
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_contracts_booking_intent_ts",
+			"target": "contracts_booking_intent_bookingchannel",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/contracts/booking.intent.ts",
+			"source_location": "L3",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_contracts_booking_intent_ts",
+			"target": "contracts_booking_intent_bookingsource",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/contracts/booking.intent.ts",
+			"source_location": "L4",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_contracts_booking_intent_ts",
+			"target": "contracts_booking_intent_bookingintenttype",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/contracts/booking.intent.ts",
+			"source_location": "L5",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_src_contracts_booking_intent_ts",
+			"target": "contracts_booking_intent_bookingintentv1",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/src/contracts/booking.intent.ts",
+			"source_location": "L7",
+			"weight": 1.0
+		}
+	],
+	"raw_calls": []
+}

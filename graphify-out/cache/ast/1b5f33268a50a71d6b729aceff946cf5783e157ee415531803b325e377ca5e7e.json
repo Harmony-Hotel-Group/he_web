@@ -1,0 +1,40 @@
+{
+	"nodes": [
+		{
+			"id": "mnt_d_coders_work_hhg_projects_he_web_tools_generate_secret_js",
+			"label": "generate_secret.js",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/tools/generate_secret.js",
+			"source_location": "L1"
+		},
+		{
+			"id": "tools_generate_secret_secret",
+			"label": "secret",
+			"file_type": "code",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/tools/generate_secret.js",
+			"source_location": "L3"
+		}
+	],
+	"edges": [
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_tools_generate_secret_js",
+			"target": "node_crypto",
+			"relation": "imports_from",
+			"context": "import",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/tools/generate_secret.js",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "mnt_d_coders_work_hhg_projects_he_web_tools_generate_secret_js",
+			"target": "tools_generate_secret_secret",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "/mnt/d/Coders/work/HHG Projects/he_web/tools/generate_secret.js",
+			"source_location": "L3",
+			"weight": 1.0
+		}
+	],
+	"raw_calls": []
+}

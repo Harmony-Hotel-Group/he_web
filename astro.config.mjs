@@ -14,9 +14,10 @@ export default defineConfig({
 	vite: {
 		assetsInclude: ["**/*.lottie"],
 		resolve: {
-			alias: {
-				picocolors: "/src/polyfills/picocolors.js",
-			},
+			alias: [
+				{ find: '^@/(.*)$', replacement: '/src/$1' },
+				{ find: 'picocolors', replacement: '/src/polyfills/picocolors.js' },
+			],
 		},
 	},
 	// Configurar i18n

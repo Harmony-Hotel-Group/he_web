@@ -23,6 +23,7 @@
 			"@/constants/*": ["src/constants/*"],
 			"@/contracts/*": ["src/contracts/*"],
 			"@/domain/*": ["src/domain/*"]
-		}
+		,
+			"@/composables/*": ["src/composables/*"]}
 	}
 }

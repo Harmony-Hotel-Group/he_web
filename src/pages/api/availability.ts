@@ -1,8 +1,8 @@
 import path from "node:path";
 import type { APIContext } from "astro";
+import { buildMockAvailabilityFromJson } from "@/domain/booking/availability.utils";
 import { erpClient } from "@/services/erp/erp.client";
 import { json200, loadData } from "@/utils/apiHelpers";
-import { buildMockAvailabilityFromJson } from "@/domain/booking/availability.utils";
 
 const ROOMS_FILE = path.resolve(process.cwd(), "src", "data", "rooms.json");
 
@@ -63,20 +63,22 @@ export async function GET(ctx: APIContext) {
 		undefined,
 		"api/availability",
 	);
-	const mock = buildMockAvailabilityFromJson(roomsData, checkin, checkout, roomId);
-
-	const data = await erpClient.get<typeof mock>(
-		"/availability",
-		mock,
-		{
-			params: {
-				checkin,
-				checkout,
-				roomId: roomId || undefined,
-				currency,
-			},
-		},
+	const safeRooms = roomsData ?? [];
+	const mock = buildMockAvailabilityFromJson(
+		safeRooms,
+		checkin,
+		checkout,
+		roomId,
 	);
+
+	const data = await erpClient.get<typeof mock>("/availability", mock, {
+		params: {
+			checkin,
+			checkout,
+			roomId: roomId || undefined,
+			currency,
+		},
+	});
 
 	return json200(data, false);
 }

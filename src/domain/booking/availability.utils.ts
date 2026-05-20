@@ -46,9 +46,8 @@ export interface AvailabilityResponse {
 	nights: number;
 	currency: string;
 	rooms: AvailabilityRoom[];
-	source?: 'mock' | 'real';
+	source?: "mock" | "real";
 }
-
 
 /**
  * Parámetros para consulta de disponibilidad
@@ -65,11 +64,17 @@ export interface AvailabilityQuery {
  * para el servicio existente
  */
 export interface ErpAvailabilityRecord {
+	id: string;
 	available: number;
 	prices: {
 		base: { perNight: number; total: number };
 		withBreakfast: { perNight: number; total: number };
-		promo?: { perNight: number; total: number; label?: string; discountPercent?: number };
+		promo?: {
+			perNight: number;
+			total: number;
+			label?: string;
+			discountPercent?: number;
+		};
 	};
 }
 
@@ -93,15 +98,15 @@ export function calculateNights(checkin: string, checkout: string): number {
  * @returns Símbolo de moneda legible
  */
 export const CURRENCY_SYMBOLS: Record<string, string> = {
-	USD: '$',
-	EUR: '€',
-	GBP: '£',
-	MXN: 'MXN $',
-	COP: 'COL $',
+	USD: "$",
+	EUR: "€",
+	GBP: "£",
+	MXN: "MXN $",
+	COP: "COL $",
 };
 
 export function currencySymbol(currency?: string): string {
-	if (!currency) return '$';
+	if (!currency) return "$";
 	const upper = currency.toUpperCase();
 	return CURRENCY_SYMBOLS[upper] || upper.charAt(0);
 }
@@ -140,7 +145,7 @@ export function buildPrices(
 	perNight: number,
 	nights: number,
 	withBreakfastPerNight?: number,
-): AvailabilityPrice['prices'] {
+): { base: AvailabilityPrice; withBreakfast: AvailabilityPrice } {
 	const base: AvailabilityPrice = {
 		perNight,
 		total: perNight * nights,
@@ -156,11 +161,10 @@ export function buildPrices(
 		withBreakfast,
 	};
 
-	if (withBreakfastPerNight != null) {
-		prices.withBreakfast = withBreakfast;
-	}
-
-	return prices as AvailabilityPrice['prices'];
+	return prices as {
+		base: AvailabilityPrice;
+		withBreakfast: AvailabilityPrice;
+	};
 }
 
 /**
@@ -176,17 +180,18 @@ export function buildPrices(
 export function buildAvailabilityResponse(
 	records: ErpAvailabilityRecord[] | AvailabilityRoom[],
 	query: AvailabilityQuery,
-	roomTypes?: SiteConfig['rooms'],
-	source: 'mock' | 'real' = 'mock',
+	_roomTypes?: SiteConfig["rooms"],
+	source: "mock" | "real" = "mock",
 ): AvailabilityResponse {
 	const checkin = query.checkin;
 	const checkout = query.checkout;
 	const nights = calculateNights(checkin, checkout);
-	const currency = query.currency || 'USD';
-	const symbol = currencySymbol(currency);
+	const currency = query.currency || "USD";
+	const _symbol = currencySymbol(currency);
 
 	const mapped: AvailabilityRoom[] = records.map((record) => {
-		const roomId = (record as AvailabilityRoom).id ?? (record as ErpAvailabilityRecord)['id'];
+		const roomId =
+			(record as AvailabilityRoom).id ?? (record as ErpAvailabilityRecord).id;
 		const priceInfo = (record as ErpAvailabilityRecord).prices;
 		const priceBase = priceInfo.base.perNight;
 		const priceWithBreakfast = priceInfo.withBreakfast.perNight;
@@ -235,7 +240,9 @@ export function buildMockAvailabilityFromJson(
 	roomId?: string | null,
 ): AvailabilityResponse {
 	const safeRooms = Array.isArray(roomsData) ? roomsData : [];
-	const filtered = roomId ? safeRooms.filter((r) => String(r.id) === String(roomId)) : safeRooms;
+	const filtered = roomId
+		? safeRooms.filter((r) => String(r.id) === String(roomId))
+		: safeRooms;
 	const nights = calculateNights(checkin, checkout);
 
 	const records: ErpAvailabilityRecord[] = filtered.map((room) => {
@@ -245,10 +252,18 @@ export function buildMockAvailabilityFromJson(
 			available: 1,
 			prices: {
 				base: { perNight: basePerNight, total: basePerNight * nights },
-				withBreakfast: { perNight: withBreakfastPerNight, total: withBreakfastPerNight * nights },
+				withBreakfast: {
+					perNight: withBreakfastPerNight,
+					total: withBreakfastPerNight * nights,
+				},
 			},
 		} as ErpAvailabilityRecord;
 	});
 
-	return buildAvailabilityResponse(records, { checkin, checkout, currency: 'USD' }, undefined, 'mock');
+	return buildAvailabilityResponse(
+		records,
+		{ checkin, checkout, currency: "USD" },
+		undefined,
+		"mock",
+	);
 }

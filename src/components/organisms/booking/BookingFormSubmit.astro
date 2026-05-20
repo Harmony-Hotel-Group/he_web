@@ -1,0 +1,23 @@
+---
+// src/components/organisms/booking/BookingFormSubmit.astro
+import Button from "@/components/atoms/button/Button.astro";
+import { Translations } from "@/i18n/translation.ts";
+
+interface Props {
+	lang: string;
+	disabled?: boolean;
+	pending?: boolean;
+}
+
+const { lang, disabled = false, pending = false } = Astro.props;
+const t = Translations(lang);
+---
+<Button
+	type="submit"
+	disabled={disabled || pending}
+	class="w-full"
+	variant="primary"
+	aria-busy={pending}
+>
+	{pending ? t("booking.sending") : t("booking.confirm")}
+</Button>

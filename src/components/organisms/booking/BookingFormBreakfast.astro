@@ -1,0 +1,24 @@
+---
+// src/components/organisms/booking/BookingFormBreakfast.astro
+import Switch from "@/components/atoms/Switch.astro";
+import { Translations } from "@/i18n/translation.ts";
+
+interface Props {
+	lang: string;
+	withBreakfast?: boolean;
+	onBreakfastChange?: (value: boolean) => void;
+}
+
+const { lang, withBreakfast = false, onBreakfastChange } = Astro.props;
+const t = Translations(lang);
+---
+<div class="flex items-center space-x-3">
+	<Switch
+		id="breakfast-toggle"
+		name="withBreakfast"
+		checked={withBreakfast}
+		onChange={onBreakfastChange}
+		aria-label={t("booking.breakfast.label")}
+	/>
+	<span class="text-sm">{t("booking.breakfast.label")}</span>
+</div>

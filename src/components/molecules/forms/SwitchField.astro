@@ -8,18 +8,18 @@ import { Translations } from "@/i18n/translation.ts";
 import Row from "@/layouts/Row.astro";
 
 interface Props {
-    fieldId: string;
-    name: string;
-    lblKey: string; // This is the translation key
-    lang: string;
-    icon?: string;
-    checked?: boolean;
-    className?: string;
-    onChange?: (value: boolean) => void; // Add onChange prop
+	fieldId: string;
+	name: string;
+	lblKey: string; // This is the translation key
+	lang: string;
+	icon?: string;
+	checked?: boolean;
+	className?: string;
+	onChange?: (value: boolean) => void; // Add onChange prop
 }
 
 const { fieldId, name, lblKey, checked, className, onChange, lang, icon } =
-    Astro.props;
+	Astro.props;
 const t = Translations(lang);
 ---
 

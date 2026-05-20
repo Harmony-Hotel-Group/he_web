@@ -53,7 +53,9 @@ function normalizeDate(value: string): string {
 	return value.replace(/\//g, "-");
 }
 
-function parseDateRange(value: string): { checkin: string; checkout: string } | null {
+function parseDateRange(
+	value: string,
+): { checkin: string; checkout: string } | null {
 	if (!value || value === "—") return null;
 	const match = value.match(
 		/(\d{4}[-/]\d{2}[-/]\d{2})\s*➜\s*(\d{4}[-/]\d{2}[-/]\d{2})/,
@@ -66,14 +68,20 @@ function parseDateRange(value: string): { checkin: string; checkout: string } | 
 }
 
 function getFieldValue(id: string) {
-	const el = document.getElementById(id) as HTMLInputElement | HTMLSelectElement | null;
+	const el = document.getElementById(id) as
+		| HTMLInputElement
+		| HTMLSelectElement
+		| null;
 	if (!el) return "";
 	return el.value || "";
 }
 
 function setFieldValue(id: string, value: string | undefined) {
 	if (value == null) return;
-	const el = document.getElementById(id) as HTMLInputElement | HTMLSelectElement | null;
+	const el = document.getElementById(id) as
+		| HTMLInputElement
+		| HTMLSelectElement
+		| null;
 	if (!el) return;
 	el.value = value;
 }
@@ -85,7 +93,9 @@ function getSwitchValue(id: string) {
 
 function setSwitchValue(id: string, value: boolean | undefined) {
 	if (value == null) return;
-	const btn = document.querySelector(`button#${id}`) as HTMLButtonElement | null;
+	const btn = document.querySelector(
+		`button#${id}`,
+	) as HTMLButtonElement | null;
 	if (!btn) return;
 	const isChecked = btn.getAttribute("aria-checked") === "true";
 	if (value !== isChecked) btn.click();
@@ -105,10 +115,12 @@ export default function BookingCart({
 	const [roomsCount, setRoomsCount] = useState<string>("—");
 	const [breakfast, setBreakfast] = useState<boolean>(false);
 	const [vehicle, setVehicle] = useState<boolean>(false);
-	const [availabilityById, setAvailabilityById] = useState<Record<string, AvailabilityRoom>>({});
-	const [availabilityStatus, setAvailabilityStatus] = useState<"idle" | "loading" | "error">(
-		"idle",
-	);
+	const [availabilityById, setAvailabilityById] = useState<
+		Record<string, AvailabilityRoom>
+	>({});
+	const [availabilityStatus, setAvailabilityStatus] = useState<
+		"idle" | "loading" | "error"
+	>("idle");
 	const [nights, setNights] = useState<number | null>(null);
 
 	const getEffectivePrice = (roomId: string, fallback: number) => {
@@ -262,9 +274,18 @@ export default function BookingCart({
 			setRoomsCount(roomsParam);
 			setFieldValue("rooms", roomsParam);
 		}
-		if (breakfastParam) setSwitchValue("breakfast", ["true", "1", "yes"].includes(breakfastParam));
-		if (vehicleParam) setSwitchValue("vehicle", ["true", "1", "yes"].includes(vehicleParam));
-		if (specialParam) setSwitchValue("special_request", ["true", "1", "yes"].includes(specialParam));
+		if (breakfastParam)
+			setSwitchValue(
+				"breakfast",
+				["true", "1", "yes"].includes(breakfastParam),
+			);
+		if (vehicleParam)
+			setSwitchValue("vehicle", ["true", "1", "yes"].includes(vehicleParam));
+		if (specialParam)
+			setSwitchValue(
+				"special_request",
+				["true", "1", "yes"].includes(specialParam),
+			);
 
 		if (preRoom) {
 			const room = rooms.find((r) => r.id === preRoom);
@@ -276,7 +297,8 @@ export default function BookingCart({
 		const onChange = () => {
 			const currentDates =
 				getFieldValue("dateRange") || getFieldValue("dateRangeGroup") || "—";
-			const currentAdults = getFieldValue("adults") || getFieldValue("groupAdults") || "—";
+			const currentAdults =
+				getFieldValue("adults") || getFieldValue("groupAdults") || "—";
 			const currentChildren = getFieldValue("children") || "—";
 			const currentRooms = getFieldValue("rooms") || "—";
 			const currentBreakfast = getSwitchValue("breakfast");
@@ -322,10 +344,13 @@ export default function BookingCart({
 					nights?: number;
 				} | null;
 				const list = Array.isArray(data?.rooms) ? data.rooms : [];
-				const map = list.reduce<Record<string, AvailabilityRoom>>((acc, item) => {
-					acc[String(item.id)] = item;
-					return acc;
-				}, {});
+				const map = list.reduce<Record<string, AvailabilityRoom>>(
+					(acc, item) => {
+						acc[String(item.id)] = item;
+						return acc;
+					},
+					{},
+				);
 				setAvailabilityById(map);
 				setNights(typeof data?.nights === "number" ? data.nights : null);
 				setAvailabilityStatus("idle");
@@ -354,16 +379,17 @@ export default function BookingCart({
 	useEffect(() => {
 		if (availabilityStatus !== "idle") return;
 		if (!nights) return;
-		setCart((prev) =>
-			prev
-				.map((item) => {
-					const available = availabilityById[item.id]?.available;
-					if (typeof available !== "number") return item;
-					if (available <= 0) return null;
-					if (item.qty > available) return { ...item, qty: available };
-					return item;
-				})
-				.filter(Boolean) as CartItem[],
+		setCart(
+			(prev) =>
+				prev
+					.map((item) => {
+						const available = availabilityById[item.id]?.available;
+						if (typeof available !== "number") return item;
+						if (available <= 0) return null;
+						if (item.qty > available) return { ...item, qty: available };
+						return item;
+					})
+					.filter(Boolean) as CartItem[],
 		);
 	}, [availabilityById, availabilityStatus, nights]);
 
@@ -396,12 +422,16 @@ export default function BookingCart({
 				)}
 				{availabilityStatus === "loading" && (
 					<p class="text-sm text-gray-400 mb-4">
-						{lang === "es" ? "Consultando disponibilidad..." : "Checking availability..."}
+						{lang === "es"
+							? "Consultando disponibilidad..."
+							: "Checking availability..."}
 					</p>
 				)}
 				{availabilityStatus === "error" && (
 					<p class="text-sm text-red-500 mb-4">
-						{lang === "es" ? "No se pudo obtener disponibilidad." : "Availability not available."}
+						{lang === "es"
+							? "No se pudo obtener disponibilidad."
+							: "Availability not available."}
 					</p>
 				)}
 				<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -414,101 +444,110 @@ export default function BookingCart({
 							return availability.available > 0;
 						})
 						.map((room) => (
-						<div
-							class="border border-gray-200 rounded-lg p-4 flex gap-4 items-center"
-							key={room.id}
-						>
-							{(() => {
-								const availability = availabilityById[room.id];
-								const available = availability?.available ?? null;
-								const price = getEffectivePrice(room.id, room.pricePerNight);
-								const promo = getPromoPrice(room.id);
-								const isSoldOut = available !== null && available <= 0;
-								const limit = getRoomsLimit();
-								const canAddMore = !limit || totalRoomsInCart < limit;
-								const roomQty = cart.find((item) => item.id === room.id)?.qty ?? 0;
-								const hasRoomAvailability =
-									available === null || roomQty < available;
-								const roomMax = room.maxPersons ?? room.minPersons ?? null;
-								const projectedCapacity =
-									roomMax && requiredPeople > 0 ? selectedCapacity + roomMax : null;
-								const withinCapacity =
-									projectedCapacity === null || projectedCapacity <= requiredPeople;
-								const canSelect =
-									nights &&
-									availabilityStatus === "idle" &&
-									canAddMore &&
-									hasRoomAvailability &&
-									withinCapacity &&
-									!isSoldOut;
-								return (
-									<>
-										<div class="min-w-[64px] h-[64px] rounded-md bg-gray-100 overflow-hidden">
-											<img
-												src={room.images[0]?.src}
-												alt={room.name[lang]}
-												class="w-full h-full object-cover"
-											/>
-										</div>
-										<div class="flex-1">
-											<p class="text-sm text-gray-500">{room.type[lang]}</p>
-											<p class="font-semibold text-primary">{room.name[lang]}</p>
-											<p class="text-sm text-gray-600">
-												${price} / {lang === "es" ? "noche" : "night"}
-											</p>
-											{promo && (
-												<p class="text-xs text-emerald-600">
-													{lang === "es" ? "Promo" : "Promo"}: ${promo.perNight}
+							<div
+								class="border border-gray-200 rounded-lg p-4 flex gap-4 items-center"
+								key={room.id}
+							>
+								{(() => {
+									const availability = availabilityById[room.id];
+									const available = availability?.available ?? null;
+									const price = getEffectivePrice(room.id, room.pricePerNight);
+									const promo = getPromoPrice(room.id);
+									const isSoldOut = available !== null && available <= 0;
+									const limit = getRoomsLimit();
+									const canAddMore = !limit || totalRoomsInCart < limit;
+									const roomQty =
+										cart.find((item) => item.id === room.id)?.qty ?? 0;
+									const hasRoomAvailability =
+										available === null || roomQty < available;
+									const roomMax = room.maxPersons ?? room.minPersons ?? null;
+									const projectedCapacity =
+										roomMax && requiredPeople > 0
+											? selectedCapacity + roomMax
+											: null;
+									const withinCapacity =
+										projectedCapacity === null ||
+										projectedCapacity <= requiredPeople;
+									const canSelect =
+										nights &&
+										availabilityStatus === "idle" &&
+										canAddMore &&
+										hasRoomAvailability &&
+										withinCapacity &&
+										!isSoldOut;
+									return (
+										<>
+											<div class="min-w-[64px] h-[64px] rounded-md bg-gray-100 overflow-hidden">
+												<img
+													src={room.images[0]?.src}
+													alt={room.name[lang]}
+													class="w-full h-full object-cover"
+												/>
+											</div>
+											<div class="flex-1">
+												<p class="text-sm text-gray-500">{room.type[lang]}</p>
+												<p class="font-semibold text-primary">
+													{room.name[lang]}
 												</p>
-											)}
-											{available !== null && (
-												<p class={`text-xs ${isSoldOut ? "text-red-500" : "text-gray-400"}`}>
-													{lang === "es"
-														? `Disponibles: ${available}`
-														: `Available: ${available}`}
+												<p class="text-sm text-gray-600">
+													${price} / {lang === "es" ? "noche" : "night"}
 												</p>
-											)}
-											{limit && (
-												<p class="text-xs text-gray-400">
-													{lang === "es"
-														? `Seleccionadas: ${totalRoomsInCart} / ${limit}`
-														: `Selected: ${totalRoomsInCart} / ${limit}`}
-												</p>
-											)}
-											{roomMax && (
-												<p class="text-xs text-gray-400">
-													{lang === "es"
-														? `Capacidad máx: ${roomMax}`
-														: `Max capacity: ${roomMax}`}
-												</p>
-											)}
-										</div>
-										<div class="flex flex-col items-center gap-2">
-											<button
-												type="button"
-												class={`text-xs px-3 py-2 rounded-md transition ${
-													!canSelect
-														? "bg-gray-200 text-gray-400 cursor-not-allowed"
-														: "bg-primary text-white hover:bg-accent"
-												}`}
-												onClick={() => addRoom(room)}
-												disabled={!canSelect}
-											>
-												{lang === "es" ? "Agregar" : "Add"}
-											</button>
-											<button
-												type="button"
-												class="text-xs text-gray-500 hover:text-red-500"
-												onClick={() => removeRoom(room)}
-											>
-												{lang === "es" ? "Quitar" : "Remove"}
-											</button>
-										</div>
-									</>
-								);
-							})()}
-						</div>
-					))}
+												{promo && (
+													<p class="text-xs text-emerald-600">
+														{lang === "es" ? "Promo" : "Promo"}: $
+														{promo.perNight}
+													</p>
+												)}
+												{available !== null && (
+													<p
+														class={`text-xs ${isSoldOut ? "text-red-500" : "text-gray-400"}`}
+													>
+														{lang === "es"
+															? `Disponibles: ${available}`
+															: `Available: ${available}`}
+													</p>
+												)}
+												{limit && (
+													<p class="text-xs text-gray-400">
+														{lang === "es"
+															? `Seleccionadas: ${totalRoomsInCart} / ${limit}`
+															: `Selected: ${totalRoomsInCart} / ${limit}`}
+													</p>
+												)}
+												{roomMax && (
+													<p class="text-xs text-gray-400">
+														{lang === "es"
+															? `Capacidad máx: ${roomMax}`
+															: `Max capacity: ${roomMax}`}
+													</p>
+												)}
+											</div>
+											<div class="flex flex-col items-center gap-2">
+												<button
+													type="button"
+													class={`text-xs px-3 py-2 rounded-md transition ${
+														!canSelect
+															? "bg-gray-200 text-gray-400 cursor-not-allowed"
+															: "bg-primary text-white hover:bg-accent"
+													}`}
+													onClick={() => addRoom(room)}
+													disabled={!canSelect}
+												>
+													{lang === "es" ? "Agregar" : "Add"}
+												</button>
+												<button
+													type="button"
+													class="text-xs text-gray-500 hover:text-red-500"
+													onClick={() => removeRoom(room)}
+												>
+													{lang === "es" ? "Quitar" : "Remove"}
+												</button>
+											</div>
+										</>
+									);
+								})()}
+							</div>
+						))}
 				</div>
 			</div>
 			<aside class="lg:col-span-1">
@@ -544,7 +583,9 @@ export default function BookingCart({
 						<li class="flex items-center justify-between">
 							<span>{lang === "es" ? "Capacidad" : "Capacity"}</span>
 							<span class="text-gray-400">
-								{requiredPeople > 0 ? `${selectedCapacity} / ${requiredPeople}` : "—"}
+								{requiredPeople > 0
+									? `${selectedCapacity} / ${requiredPeople}`
+									: "—"}
 							</span>
 						</li>
 						<li class="flex items-center justify-between">
@@ -561,10 +602,7 @@ export default function BookingCart({
 								<li class="text-gray-400">—</li>
 							) : (
 								cart.map((item) => (
-									<li
-										key={item.id}
-										class="flex items-center justify-between"
-									>
+									<li key={item.id} class="flex items-center justify-between">
 										<span>
 											{item.name} x{item.qty}
 										</span>

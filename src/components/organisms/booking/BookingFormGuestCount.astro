@@ -1,0 +1,79 @@
+---
+// src/components/organisms/booking/BookingFormGuestCount.astro
+import { Translations } from "@/i18n/translation.ts";
+import Row from "@/layouts/Row.astro";
+
+interface Props {
+	lang: string;
+	adults: number;
+	children: number;
+	teens: number;
+	groupLabel: string;
+}
+
+const { lang, adults, children, teens, groupLabel } = Astro.props;
+const t = Translations(lang);
+
+const MAX = 8;
+const years = Array.from({ length: MAX }, (_, i) => i + 1);
+---
+
+<script>
+	// Representación de edad: { id, label, langKey }
+	const { adults, children, teens, groupLabel } = Astro.props;
+	const MAX = 8;
+	const years = Array.from({ length: MAX }, (_, i) => i + 1);
+</script>
+
+<!-- Group Fields (solo visible cuando adultos=group / 8+) -->
+<div id="group-fields" class="space-y-4" hidden>
+	<p class="text-sm text-red-600 dark:text-red-400 font-medium">
+		{t("booking.group.title")}
+	</p>
+
+	<!-- Teens 12-17 -->
+	<Row>
+		<label for="teens" class="text-sm">{t("booking.group.teens")}</label>
+		<select
+			id="teens"
+			name="teens"
+			class="w-full rounded-md border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800"
+		>
+			{years.map((y) => (
+				<option value={y} selected={teens >= y}>
+					{y}
+				</option>
+			))}
+		</select>
+	</Row>
+
+	<!-- Children 5-11 -->
+	<Row>
+		<label for="children" class="text-sm">{t("booking.group.kids")}</label>
+		<select
+			id="children"
+			name="children"
+			class="w-full rounded-md border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800"
+		>
+			{years.map((y) => (
+				<option value={y} selected={children >= y}>
+					{y}
+				</option>
+			))}
+		</select>
+	</Row>
+
+	<!-- Infants 0-4 -->
+	<Row>
+		<label for="infants" class="text-sm">{t("booking.group.infants")}</label>
+		<select
+			id="infants"
+			name="infants"
+			class="w-full rounded-md border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800"
+		>
+			{years.map((y) => (
+				<option value={y}>{y}</option>
+			))}
+		</select>
+	</Row>
+</div>

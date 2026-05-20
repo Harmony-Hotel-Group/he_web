@@ -1,0 +1,25 @@
+---
+import Switch from "@/components/atoms/Switch.astro";
+// src/components/organisms/booking/BookingFormVehicleToggle.astro
+import { Translations } from "@/i18n/translation.ts";
+
+interface Props {
+	lang: string;
+	hasVehicles?: boolean;
+}
+
+const { lang, hasVehicles = true } = Astro.props;
+const t = Translations(lang);
+---
+<div class="flex items-center justify-between py-2">
+	<Row>
+		<h4 class="text-sm font-medium">{t("booking.vehicles.include")}</h4>
+		<p class="text-xs text-gray-500">{t("booking.vehicles.optional")}</p>
+	</Row>
+	<Switch
+		id="vehicle-toggle"
+		name="hasVehicle"
+		checked={hasVehicles}
+		aria-label={t("booking.vehicles.include")}
+	/>
+</div>

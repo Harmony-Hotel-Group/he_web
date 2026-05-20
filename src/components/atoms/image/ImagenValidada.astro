@@ -1,7 +1,7 @@
 ---
-import ImagenBase from "./ImagenBase.astro";
-import { validateImageSource } from "@/adapters/image/image.adapter";
 import type { ImageMetadata } from "astro";
+import { validateImageSource } from "@/adapters/image/image.adapter";
+import ImagenBase from "./ImagenBase.astro";
 
 interface Props {
 	src: string | ImageMetadata;

@@ -1,0 +1,54 @@
+---
+// src/components/organisms/booking/BookingFormVehicleFields.astro
+import { Translations } from "@/i18n/translation.ts";
+import Grid from "@/layouts/GridLayout.astro";
+import type { SiteConfig } from "@/types/config";
+
+interface Props {
+	lang: string;
+	config?: SiteConfig;
+}
+
+const { lang, config } = Astro.props;
+const t = Translations(lang);
+
+const vehicleTypeOptions = (config?.vehicleTypeOptions ?? []) as Array<{
+	value: string;
+	label: string;
+}>;
+---
+
+<!-- Vehicle Fields -->
+<div id="vehicle-fields" class="p-4 border rounded-md space-y-3">
+	<Grid cols={2} gap="gap-3">
+		<!-- Vehicle Type -->
+		<div>
+			<label for="vehicleType" class="block text-xs font-medium mb-1">
+				{t("booking.vehicles.type")}
+			</label>
+			<select
+				id="vehicleType"
+				name="vehicleType"
+				class="w-full rounded-md border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800"
+			>
+				{vehicleTypeOptions.map((v) => (
+					<option value={v.value}>{v.label}</option>
+				))}
+			</select>
+		</div>
+
+		<!-- Plate -->
+		<div>
+			<label for="vehiclePlate" class="block text-xs font-medium mb-1">
+				{t("booking.vehicles.plate")}
+			</label>
+			<input
+				id="vehiclePlate"
+				name="vehiclePlate"
+				type="text"
+				placeholder={t("booking.vehicles.plate")}
+				class="w-full rounded-md border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800"
+			/>
+		</div>
+	</Grid>
+</div>

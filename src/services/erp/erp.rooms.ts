@@ -1,5 +1,5 @@
 import type { Room } from "@/types/rooms";
-import { erpClient, type ErpClient } from "./erp.client";
+import { type ErpClient, erpClient } from "./erp.client";
 
 export interface ErpRoomContract {
 	id: string;
@@ -68,11 +68,12 @@ export function mapErpRoomToDomain(item: ErpRoomContract): Room {
 	};
 }
 
-export async function fetchErpRooms(client: ErpClient = erpClient): Promise<ErpRoomsResponse> {
-	const data = await client.get<{ items: ErpRoomContract[] }>(
-		"/erp/rooms",
-		{ items: ERP_ROOMS_MOCK },
-	);
+export async function fetchErpRooms(
+	client: ErpClient = erpClient,
+): Promise<ErpRoomsResponse> {
+	const data = await client.get<{ items: ErpRoomContract[] }>("/erp/rooms", {
+		items: ERP_ROOMS_MOCK,
+	});
 
 	const items = Array.isArray(data?.items) ? data.items : ERP_ROOMS_MOCK;
 
@@ -81,4 +82,74 @@ export async function fetchErpRooms(client: ErpClient = erpClient): Promise<ErpR
 		total: items.length,
 		source: client.getMode(),
 	};
+}
+
+// ============== Tipos para Disponibilidad y Precios ==============
+
+export interface AvailabilityPrice {
+	perNight: number;
+	total: number;
+	label?: string;
+	discountPercent?: number;
+}
+
+export interface AvailabilityRoom {
+	id: string;
+	name?: string;
+	available: number;
+	prices: {
+		base: AvailabilityPrice;
+		withBreakfast: AvailabilityPrice;
+		promo?: AvailabilityPrice;
+	};
+}
+
+export interface AvailabilityResponse {
+	checkin: string;
+	checkout: string;
+	nights: number;
+	currency: string;
+	rooms: AvailabilityRoom[];
+	source?: "mock" | "real";
+}
+
+// Precio de desayuno (mock)
+const BREAKFAST_PRICE_PER_NIGHT = 8;
+
+/**
+ * Construye AvailabilityRoom[] a partir de habitaciones del ERP.
+ * Centraliza la lógica de cálculo de precios por noche y totales.
+ * @param rooms - Lista de habitaciones del ERP (mock o real)
+ * @param nights - Número de noches
+ * @param currencyOverride - Moneda forzada (opcional)
+ * @returns Array de AvailabilityRoom listo para exponer por API
+ */
+export function buildAvailabilityRooms(
+	rooms: ErpRoomContract[],
+	nights: number,
+	currencyOverride?: string,
+): AvailabilityRoom[] {
+	return rooms.map((room) => {
+		const currency = currencyOverride ?? room.currency;
+		const basePerNight = Number(room.pricePerNight ?? 0);
+		const withBreakfastPerNight = basePerNight + BREAKFAST_PRICE_PER_NIGHT;
+
+		const avail: AvailabilityRoom = {
+			id: String(room.id),
+			name: room.name,
+			available: 1, // mock: todas disponibles; el ERP real provee availability
+			prices: {
+				base: {
+					perNight: basePerNight,
+					total: basePerNight * nights,
+				},
+				withBreakfast: {
+					perNight: withBreakfastPerNight,
+					total: withBreakfastPerNight * nights,
+				},
+			},
+		};
+
+		return avail;
+	});
 }

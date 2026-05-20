@@ -34,11 +34,7 @@ const {
 	wrapperClasses = "",
 } = Astro.props;
 
-function getInlinePlaceholder(
-	w: number,
-	h: number,
-	text: string,
-): string {
+function getInlinePlaceholder(w: number, h: number, text: string): string {
 	const safeW = Number.isFinite(w) && w > 0 ? Math.round(w) : 600;
 	const safeH = Number.isFinite(h) && h > 0 ? Math.round(h) : 400;
 	const safeText = (text || "Imagen no disponible").slice(0, 40);

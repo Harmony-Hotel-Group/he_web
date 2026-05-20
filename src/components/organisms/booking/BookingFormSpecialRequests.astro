@@ -1,0 +1,22 @@
+---
+// src/components/organisms/booking/BookingFormSpecialRequests.astro
+import TextAreaInput from "@/components/atoms/TextAreaInput.astro";
+import { Translations } from "@/i18n/translation.ts";
+
+interface Props {
+	lang: string;
+	value?: string;
+}
+
+const { lang, value = "" } = Astro.props;
+const t = Translations(lang);
+---
+<div>
+	<TextAreaInput
+		id="special-requests"
+		name="specialRequests"
+		rows={3}
+		placeholder={t("booking.specialRequests.placeholder")}
+		value={value}
+	/>
+</div>

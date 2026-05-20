@@ -6,39 +6,39 @@
 import { formatPrice } from "@/utils/currency";
 
 interface Props {
-  backgroundImage: string;
-  fallbackImage?: string;
-  title: string;
-  subtitle?: string;
-  badge?: string;
-  priceInfo?: {
-    amount: number;
-    currency: string;
-    period: string;
-  };
-  height?: "sm" | "md" | "lg";
-  overlayOpacity?: number;
-  lang?: "es" | "en";
-  animated?: boolean;
+	backgroundImage: string;
+	fallbackImage?: string;
+	title: string;
+	subtitle?: string;
+	badge?: string;
+	priceInfo?: {
+		amount: number;
+		currency: string;
+		period: string;
+	};
+	height?: "sm" | "md" | "lg";
+	overlayOpacity?: number;
+	lang?: "es" | "en";
+	animated?: boolean;
 }
 
 const {
-  backgroundImage,
-  fallbackImage,
-  title,
-  subtitle,
-  badge,
-  priceInfo,
-  height = "md",
-  overlayOpacity = 40,
-  lang = "es",
-  animated = false,
+	backgroundImage,
+	fallbackImage,
+	title,
+	subtitle,
+	badge,
+	priceInfo,
+	height = "md",
+	overlayOpacity = 40,
+	lang = "es",
+	animated = false,
 } = Astro.props;
 
 const heightClasses = {
-  sm: "h-[40vh] min-h-[300px]",
-  md: "h-[50vh] min-h-[400px]",
-  lg: "h-[60vh] min-h-[500px]",
+	sm: "h-[40vh] min-h-[300px]",
+	md: "h-[50vh] min-h-[400px]",
+	lg: "h-[60vh] min-h-[500px]",
 };
 ---
 
@@ -49,7 +49,7 @@ const heightClasses = {
     alt={title}
     class={`absolute inset-0 w-full h-full object-cover ${animated ? 'transition-transform duration-1000 animate-slow-zoom' : ''}`}
     onerror={fallbackImage ? `this.src='${fallbackImage}'` : undefined}
-  />
+   loading="lazy" />
   
   <div class={`absolute ${badge ? 'bottom-0 left-0 right-0' : 'inset-0 flex items-center justify-center'} z-20 p-${badge ? '8 md:p-12 lg:p-20' : '4'}`}>
     <div class={`${badge ? 'max-w-7xl mx-auto' : 'text-center max-w-4xl mx-auto'}`}>

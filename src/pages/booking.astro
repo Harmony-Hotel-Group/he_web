@@ -1,14 +1,15 @@
 ---
 // pages/booking.astro
 
-import BaseLayout from "@/layouts/BaseLayout.astro";
+import BookingCart from "@/components/islands/BookingCart";
+import BookingForm from "@/components/organisms/booking/BookingForm.astro";
 import { Translations } from "@/i18n/translation.ts";
+import BaseLayout from "@/layouts/BaseLayout.astro";
 import { api } from "@/services/api.ts";
 import type { SiteConfig } from "@/types/config";
 import type { Room } from "@/types/rooms";
-import BookingForm from "@/components/organisms/booking/BookingForm.astro";
-import BookingCart from "@/components/islands/BookingCart";
 import { validateResource } from "@/utils/visual-resource-utils.ts";
+
 const lang = Astro.url.pathname.startsWith("/en") ? "en" : "es";
 const t = Translations(lang);
 

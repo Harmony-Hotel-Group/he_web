@@ -53,7 +53,10 @@ export const bookingGroup = defineAction({
 		if (match) {
 			[, checkin, checkout, nights] = match;
 		} else {
-			log.warn("No se encontraron coincidencias en dateRangeGroup:", dateRangeGroup);
+			log.warn(
+				"No se encontraron coincidencias en dateRangeGroup:",
+				dateRangeGroup,
+			);
 		}
 
 		// Procesar vehículos si están incluidos

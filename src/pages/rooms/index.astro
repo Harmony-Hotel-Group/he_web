@@ -1,10 +1,10 @@
 ---
+import ImageResource from "@/components/molecules/media/ImageResource.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { api } from "@/services/api";
 import type { SiteConfig } from "@/types/config";
 import type { Room } from "@/types/rooms";
 import { formatPrice } from "@/utils/currency";
-import ImageResource from "@/components/molecules/media/ImageResource.astro";
 
 // Determinar idioma basado en URL
 const lang = Astro.url.pathname.startsWith("/en") ? "en" : "es";
@@ -12,8 +12,8 @@ const lang = Astro.url.pathname.startsWith("/en") ? "en" : "es";
 // Multi-fetch de configuración y habitaciones
 // Se hace cast del resultado para tener tipado fuerte en el destructuring
 const { config, rooms } = (await api.multiFetch({
-  config: { params: { lang } },
-  rooms: { params: { lang } },
+	config: { params: { lang } },
+	rooms: { params: { lang } },
 })) as { config: SiteConfig; rooms: Room[] | Error | null };
 
 // Validación de seguridad para habitaciones

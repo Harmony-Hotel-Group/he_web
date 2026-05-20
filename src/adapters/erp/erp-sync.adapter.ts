@@ -15,12 +15,12 @@
  */
 
 import type {
-	ERPRoom,
-	ERPTour,
+	ERPConfig,
 	ERPDestination,
 	ERPGastronomy,
 	ERPHotelData,
-	ERPConfig,
+	ERPRoom,
+	ERPTour,
 } from "@/contracts/erp.contract";
 import { api } from "@/services/api";
 import { logger } from "@/services/logger";

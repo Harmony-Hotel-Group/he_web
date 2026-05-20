@@ -1,10 +1,12 @@
 // astro.config.mjs
-import vercel from "@astrojs/vercel";
-import tailwindcss from "@tailwindcss/vite";
+
+import preact from "@astrojs/preact";
 import sitemap from "@astrojs/sitemap";
+import vercel from "@astrojs/vercel";
+import sentry from "@sentry/astro";
+import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "astro/config";
 import icon from "astro-icon";
-import preact from "@astrojs/preact";
 
 const isDevEnvironment = process.env.NODE_ENV === "development";
 

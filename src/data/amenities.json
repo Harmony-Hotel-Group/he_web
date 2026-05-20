@@ -1,398 +1,398 @@
 {
-  "categories": [
-    {
-      "id": "room_amenities",
-      "name": {
-        "es": "En la Habitación",
-        "en": "In the Room"
-      },
-      "icon": "room",
-      "items": [
-        {
-          "id": "wifi",
-          "name": {
-            "es": "WiFi de Alta Velocidad",
-            "en": "High-Speed WiFi"
-          },
-          "description": {
-            "es": "Conexión gratuita en todas las habitaciones",
-            "en": "Free connection in all rooms"
-          },
-          "icon": "wifi"
-        },
-        {
-          "id": "tv_cable",
-          "name": {
-            "es": "TV por Cable",
-            "en": "Cable TV"
-          },
-          "description": {
-            "es": "Más de 50 canales internacionales",
-            "en": "More than 50 international channels"
-          },
-          "icon": "tv"
-        },
-        {
-          "id": "agua_caliente",
-          "name": {
-            "es": "Agua Caliente 24/7",
-            "en": "24/7 Hot Water"
-          },
-          "description": {
-            "es": "Disponibilidad continua de agua caliente",
-            "en": "Continuous hot water availability"
-          },
-          "icon": "shower"
-        },
-        {
-          "id": "ropa_cama",
-          "name": {
-            "es": "Ropa de Cama Premium",
-            "en": "Premium Bedding"
-          },
-          "description": {
-            "es": "Sábanas de alta calidad y almohadas confortables",
-            "en": "High-quality sheets and comfortable pillows"
-          },
-          "icon": "bed"
-        },
-        {
-          "id": "toallas",
-          "name": {
-            "es": "Toallas y Artículos de Aseo",
-            "en": "Towels and Toiletries"
-          },
-          "description": {
-            "es": "Toallas limpias y productos de baño incluidos",
-            "en": "Clean towels and bath products included"
-          },
-          "icon": "towel"
-        },
-        {
-          "id": "escritorio",
-          "name": {
-            "es": "Escritorio de Trabajo",
-            "en": "Work Desk"
-          },
-          "description": {
-            "es": "Espacio cómodo para trabajar",
-            "en": "Comfortable workspace"
-          },
-          "icon": "desk"
-        }
-      ]
-    },
-    {
-      "id": "hotel_services",
-      "name": {
-        "es": "Servicios del Hotel",
-        "en": "Hotel Services"
-      },
-      "icon": "hotel",
-      "items": [
-        {
-          "id": "recepcion_24h",
-          "name": {
-            "es": "Recepción 24 Horas",
-            "en": "24-Hour Reception"
-          },
-          "description": {
-            "es": "Atención personalizada en cualquier momento",
-            "en": "Personalized attention at any time"
-          },
-          "icon": "reception"
-        },
-        {
-          "id": "consiergerie",
-          "name": {
-            "es": "Servicio de Concierge",
-            "en": "Concierge Service"
-          },
-          "description": {
-            "es": "Ayuda con tours, reservas y recomendaciones",
-            "en": "Help with tours, reservations and recommendations"
-          },
-          "icon": "concierge"
-        },
-        {
-          "id": "consigna",
-          "name": {
-            "es": "Consigna de Equipaje",
-            "en": "Luggage Storage"
-          },
-          "description": {
-            "es": "Guarda tu equipaje antes del check-in o después del check-out",
-            "en": "Store your luggage before check-in or after check-out"
-          },
-          "icon": "luggage"
-        },
-        {
-          "id": "seguridad",
-          "name": {
-            "es": "Seguridad 24/7",
-            "en": "24/7 Security"
-          },
-          "description": {
-            "es": "Personal de seguridad y cámaras de vigilancia",
-            "en": "Security staff and surveillance cameras"
-          },
-          "icon": "security"
-        },
-        {
-          "id": "limpieza",
-          "name": {
-            "es": "Servicio de Limpieza Diario",
-            "en": "Daily Housekeeping"
-          },
-          "description": {
-            "es": "Limpieza diaria de habitaciones incluida",
-            "en": "Daily room cleaning included"
-          },
-          "icon": "cleaning"
-        },
-        {
-          "id": "lavanderia",
-          "name": {
-            "es": "Servicio de Lavandería",
-            "en": "Laundry Service"
-          },
-          "description": {
-            "es": "Lavado y planchado de ropa (con costo adicional)",
-            "en": "Clothes washing and ironing (additional cost)"
-          },
-          "icon": "laundry"
-        }
-      ]
-    },
-    {
-      "id": "food_beverage",
-      "name": {
-        "es": "Alimentos y Bebidas",
-        "en": "Food & Beverage"
-      },
-      "icon": "restaurant",
-      "items": [
-        {
-          "id": "desayuno",
-          "name": {
-            "es": "Desayuno Continental",
-            "en": "Continental Breakfast"
-          },
-          "description": {
-            "es": "Desayuno incluido con opciones locales e internacionales",
-            "en": "Breakfast included with local and international options"
-          },
-          "icon": "breakfast"
-        },
-        {
-          "id": "bar",
-          "name": {
-            "es": "Bar/Restaurante",
-            "en": "Bar/Restaurant"
-          },
-          "description": {
-            "es": "Bebidas y snacks disponibles en el hotel",
-            "en": "Drinks and snacks available at the hotel"
-          },
-          "icon": "bar"
-        },
-        {
-          "id": "cafe",
-          "name": {
-            "es": "Café y Té Gratuitos",
-            "en": "Free Coffee & Tea"
-          },
-          "description": {
-            "es": "Disponibles en el lobby durante todo el día",
-            "en": "Available in the lobby all day"
-          },
-          "icon": "coffee"
-        }
-      ]
-    },
-    {
-      "id": "common_areas",
-      "name": {
-        "es": "Áreas Comunes",
-        "en": "Common Areas"
-      },
-      "icon": "lobby",
-      "items": [
-        {
-          "id": "lobby",
-          "name": {
-            "es": "Lobby Acogedor",
-            "en": "Cozy Lobby"
-          },
-          "description": {
-            "es": "Espacio cómodo para relajarse y socializar",
-            "en": "Comfortable space to relax and socialize"
-          },
-          "icon": "lobby"
-        },
-        {
-          "id": "terraza",
-          "name": {
-            "es": "Terraza con Vistas",
-            "en": "Terrace with Views"
-          },
-          "description": {
-            "es": "Disfruta de las vistas al centro histórico",
-            "en": "Enjoy views of the historic center"
-          },
-          "icon": "terrace"
-        },
-        {
-          "id": "lounge",
-          "name": {
-            "es": "Sala Lounge",
-            "en": "Lounge Area"
-          },
-          "description": {
-            "es": "Área de estar con decoración colonial",
-            "en": "Seating area with colonial decor"
-          },
-          "icon": "lounge"
-        }
-      ]
-    },
-    {
-      "id": "accessibility",
-      "name": {
-        "es": "Accesibilidad",
-        "en": "Accessibility"
-      },
-      "icon": "accessibility",
-      "items": [
-        {
-          "id": "ascensor",
-          "name": {
-            "es": "Ascensor",
-            "en": "Elevator"
-          },
-          "description": {
-            "es": "Acceso a todos los pisos",
-            "en": "Access to all floors"
-          },
-          "icon": "elevator"
-        },
-        {
-          "id": "acceso_sillas",
-          "name": {
-            "es": "Acceso para Sillas de Ruedas",
-            "en": "Wheelchair Access"
-          },
-          "description": {
-            "es": "Entrada y áreas comunes accesibles",
-            "en": "Accessible entrance and common areas"
-          },
-          "icon": "wheelchair"
-        }
-      ]
-    },
-    {
-      "id": "additional",
-      "name": {
-        "es": "Servicios Adicionales",
-        "en": "Additional Services"
-      },
-      "icon": "additional",
-      "items": [
-        {
-          "id": "tours",
-          "name": {
-            "es": "Reserva de Tours",
-            "en": "Tour Booking"
-          },
-          "description": {
-            "es": "Organizamos tours por la ciudad y alrededores",
-            "en": "We organize city and surrounding tours"
-          },
-          "icon": "tour"
-        },
-        {
-          "id": "transporte",
-          "name": {
-            "es": "Servicio de Transporte",
-            "en": "Transportation Service"
-          },
-          "description": {
-            "es": "Traslado desde/hacia el aeropuerto (con costo)",
-            "en": "Airport transfer (additional cost)"
-          },
-          "icon": "transport"
-        },
-        {
-          "id": "estacionamiento",
-          "name": {
-            "es": "Estacionamiento Cercano",
-            "en": "Nearby Parking"
-          },
-          "description": {
-            "es": "Estacionamiento público cerca del hotel",
-            "en": "Public parking near the hotel"
-          },
-          "icon": "parking"
-        },
-        {
-          "id": "mascotas",
-          "name": {
-            "es": "Mascotas (Bajo Consulta)",
-            "en": "Pets (On Request)"
-          },
-          "description": {
-            "es": "Consulta por nuestra política de mascotas",
-            "en": "Ask about our pet policy"
-          },
-          "icon": "pets"
-        }
-      ]
-    }
-  ],
-  "highlights": [
-    {
-      "title": {
-        "es": "WiFi Gratuito",
-        "en": "Free WiFi"
-      },
-      "description": {
-        "es": "En todas las habitaciones y áreas comunes",
-        "en": "In all rooms and common areas"
-      },
-      "icon": "wifi"
-    },
-    {
-      "title": {
-        "es": "Ubicación Premium",
-        "en": "Premium Location"
-      },
-      "description": {
-        "es": "En el corazón del centro histórico de Cuenca",
-        "en": "In the heart of Cuenca's historic center"
-      },
-      "icon": "location"
-    },
-    {
-      "title": {
-        "es": "Atención 24/7",
-        "en": "24/7 Service"
-      },
-      "description": {
-        "es": "Personal disponible en cualquier momento",
-        "en": "Staff available at any time"
-      },
-      "icon": "service"
-    },
-    {
-      "title": {
-        "es": "Desayuno Incluido",
-        "en": "Breakfast Included"
-      },
-      "description": {
-        "es": "Con opciones locales e internacionales",
-        "en": "With local and international options"
-      },
-      "icon": "breakfast"
-    }
-  ]
+	"categories": [
+		{
+			"id": "room_amenities",
+			"name": {
+				"es": "En la Habitación",
+				"en": "In the Room"
+			},
+			"icon": "room",
+			"items": [
+				{
+					"id": "wifi",
+					"name": {
+						"es": "WiFi de Alta Velocidad",
+						"en": "High-Speed WiFi"
+					},
+					"description": {
+						"es": "Conexión gratuita en todas las habitaciones",
+						"en": "Free connection in all rooms"
+					},
+					"icon": "wifi"
+				},
+				{
+					"id": "tv_cable",
+					"name": {
+						"es": "TV por Cable",
+						"en": "Cable TV"
+					},
+					"description": {
+						"es": "Más de 50 canales internacionales",
+						"en": "More than 50 international channels"
+					},
+					"icon": "tv"
+				},
+				{
+					"id": "agua_caliente",
+					"name": {
+						"es": "Agua Caliente 24/7",
+						"en": "24/7 Hot Water"
+					},
+					"description": {
+						"es": "Disponibilidad continua de agua caliente",
+						"en": "Continuous hot water availability"
+					},
+					"icon": "shower"
+				},
+				{
+					"id": "ropa_cama",
+					"name": {
+						"es": "Ropa de Cama Premium",
+						"en": "Premium Bedding"
+					},
+					"description": {
+						"es": "Sábanas de alta calidad y almohadas confortables",
+						"en": "High-quality sheets and comfortable pillows"
+					},
+					"icon": "bed"
+				},
+				{
+					"id": "toallas",
+					"name": {
+						"es": "Toallas y Artículos de Aseo",
+						"en": "Towels and Toiletries"
+					},
+					"description": {
+						"es": "Toallas limpias y productos de baño incluidos",
+						"en": "Clean towels and bath products included"
+					},
+					"icon": "towel"
+				},
+				{
+					"id": "escritorio",
+					"name": {
+						"es": "Escritorio de Trabajo",
+						"en": "Work Desk"
+					},
+					"description": {
+						"es": "Espacio cómodo para trabajar",
+						"en": "Comfortable workspace"
+					},
+					"icon": "desk"
+				}
+			]
+		},
+		{
+			"id": "hotel_services",
+			"name": {
+				"es": "Servicios del Hotel",
+				"en": "Hotel Services"
+			},
+			"icon": "hotel",
+			"items": [
+				{
+					"id": "recepcion_24h",
+					"name": {
+						"es": "Recepción 24 Horas",
+						"en": "24-Hour Reception"
+					},
+					"description": {
+						"es": "Atención personalizada en cualquier momento",
+						"en": "Personalized attention at any time"
+					},
+					"icon": "reception"
+				},
+				{
+					"id": "consiergerie",
+					"name": {
+						"es": "Servicio de Concierge",
+						"en": "Concierge Service"
+					},
+					"description": {
+						"es": "Ayuda con tours, reservas y recomendaciones",
+						"en": "Help with tours, reservations and recommendations"
+					},
+					"icon": "concierge"
+				},
+				{
+					"id": "consigna",
+					"name": {
+						"es": "Consigna de Equipaje",
+						"en": "Luggage Storage"
+					},
+					"description": {
+						"es": "Guarda tu equipaje antes del check-in o después del check-out",
+						"en": "Store your luggage before check-in or after check-out"
+					},
+					"icon": "luggage"
+				},
+				{
+					"id": "seguridad",
+					"name": {
+						"es": "Seguridad 24/7",
+						"en": "24/7 Security"
+					},
+					"description": {
+						"es": "Personal de seguridad y cámaras de vigilancia",
+						"en": "Security staff and surveillance cameras"
+					},
+					"icon": "security"
+				},
+				{
+					"id": "limpieza",
+					"name": {
+						"es": "Servicio de Limpieza Diario",
+						"en": "Daily Housekeeping"
+					},
+					"description": {
+						"es": "Limpieza diaria de habitaciones incluida",
+						"en": "Daily room cleaning included"
+					},
+					"icon": "cleaning"
+				},
+				{
+					"id": "lavanderia",
+					"name": {
+						"es": "Servicio de Lavandería",
+						"en": "Laundry Service"
+					},
+					"description": {
+						"es": "Lavado y planchado de ropa (con costo adicional)",
+						"en": "Clothes washing and ironing (additional cost)"
+					},
+					"icon": "laundry"
+				}
+			]
+		},
+		{
+			"id": "food_beverage",
+			"name": {
+				"es": "Alimentos y Bebidas",
+				"en": "Food & Beverage"
+			},
+			"icon": "restaurant",
+			"items": [
+				{
+					"id": "desayuno",
+					"name": {
+						"es": "Desayuno Continental",
+						"en": "Continental Breakfast"
+					},
+					"description": {
+						"es": "Desayuno incluido con opciones locales e internacionales",
+						"en": "Breakfast included with local and international options"
+					},
+					"icon": "breakfast"
+				},
+				{
+					"id": "bar",
+					"name": {
+						"es": "Bar/Restaurante",
+						"en": "Bar/Restaurant"
+					},
+					"description": {
+						"es": "Bebidas y snacks disponibles en el hotel",
+						"en": "Drinks and snacks available at the hotel"
+					},
+					"icon": "bar"
+				},
+				{
+					"id": "cafe",
+					"name": {
+						"es": "Café y Té Gratuitos",
+						"en": "Free Coffee & Tea"
+					},
+					"description": {
+						"es": "Disponibles en el lobby durante todo el día",
+						"en": "Available in the lobby all day"
+					},
+					"icon": "coffee"
+				}
+			]
+		},
+		{
+			"id": "common_areas",
+			"name": {
+				"es": "Áreas Comunes",
+				"en": "Common Areas"
+			},
+			"icon": "lobby",
+			"items": [
+				{
+					"id": "lobby",
+					"name": {
+						"es": "Lobby Acogedor",
+						"en": "Cozy Lobby"
+					},
+					"description": {
+						"es": "Espacio cómodo para relajarse y socializar",
+						"en": "Comfortable space to relax and socialize"
+					},
+					"icon": "lobby"
+				},
+				{
+					"id": "terraza",
+					"name": {
+						"es": "Terraza con Vistas",
+						"en": "Terrace with Views"
+					},
+					"description": {
+						"es": "Disfruta de las vistas al centro histórico",
+						"en": "Enjoy views of the historic center"
+					},
+					"icon": "terrace"
+				},
+				{
+					"id": "lounge",
+					"name": {
+						"es": "Sala Lounge",
+						"en": "Lounge Area"
+					},
+					"description": {
+						"es": "Área de estar con decoración colonial",
+						"en": "Seating area with colonial decor"
+					},
+					"icon": "lounge"
+				}
+			]
+		},
+		{
+			"id": "accessibility",
+			"name": {
+				"es": "Accesibilidad",
+				"en": "Accessibility"
+			},
+			"icon": "accessibility",
+			"items": [
+				{
+					"id": "ascensor",
+					"name": {
+						"es": "Ascensor",
+						"en": "Elevator"
+					},
+					"description": {
+						"es": "Acceso a todos los pisos",
+						"en": "Access to all floors"
+					},
+					"icon": "elevator"
+				},
+				{
+					"id": "acceso_sillas",
+					"name": {
+						"es": "Acceso para Sillas de Ruedas",
+						"en": "Wheelchair Access"
+					},
+					"description": {
+						"es": "Entrada y áreas comunes accesibles",
+						"en": "Accessible entrance and common areas"
+					},
+					"icon": "wheelchair"
+				}
+			]
+		},
+		{
+			"id": "additional",
+			"name": {
+				"es": "Servicios Adicionales",
+				"en": "Additional Services"
+			},
+			"icon": "additional",
+			"items": [
+				{
+					"id": "tours",
+					"name": {
+						"es": "Reserva de Tours",
+						"en": "Tour Booking"
+					},
+					"description": {
+						"es": "Organizamos tours por la ciudad y alrededores",
+						"en": "We organize city and surrounding tours"
+					},
+					"icon": "tour"
+				},
+				{
+					"id": "transporte",
+					"name": {
+						"es": "Servicio de Transporte",
+						"en": "Transportation Service"
+					},
+					"description": {
+						"es": "Traslado desde/hacia el aeropuerto (con costo)",
+						"en": "Airport transfer (additional cost)"
+					},
+					"icon": "transport"
+				},
+				{
+					"id": "estacionamiento",
+					"name": {
+						"es": "Estacionamiento Cercano",
+						"en": "Nearby Parking"
+					},
+					"description": {
+						"es": "Estacionamiento público cerca del hotel",
+						"en": "Public parking near the hotel"
+					},
+					"icon": "parking"
+				},
+				{
+					"id": "mascotas",
+					"name": {
+						"es": "Mascotas (Bajo Consulta)",
+						"en": "Pets (On Request)"
+					},
+					"description": {
+						"es": "Consulta por nuestra política de mascotas",
+						"en": "Ask about our pet policy"
+					},
+					"icon": "pets"
+				}
+			]
+		}
+	],
+	"highlights": [
+		{
+			"title": {
+				"es": "WiFi Gratuito",
+				"en": "Free WiFi"
+			},
+			"description": {
+				"es": "En todas las habitaciones y áreas comunes",
+				"en": "In all rooms and common areas"
+			},
+			"icon": "wifi"
+		},
+		{
+			"title": {
+				"es": "Ubicación Premium",
+				"en": "Premium Location"
+			},
+			"description": {
+				"es": "En el corazón del centro histórico de Cuenca",
+				"en": "In the heart of Cuenca's historic center"
+			},
+			"icon": "location"
+		},
+		{
+			"title": {
+				"es": "Atención 24/7",
+				"en": "24/7 Service"
+			},
+			"description": {
+				"es": "Personal disponible en cualquier momento",
+				"en": "Staff available at any time"
+			},
+			"icon": "service"
+		},
+		{
+			"title": {
+				"es": "Desayuno Incluido",
+				"en": "Breakfast Included"
+			},
+			"description": {
+				"es": "Con opciones locales e internacionales",
+				"en": "With local and international options"
+			},
+			"icon": "breakfast"
+		}
+	]
 }

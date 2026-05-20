@@ -1,35 +1,13 @@
-import type { APIContext } from "astro";
-import { json200 } from "@/utils/apiHelpers";
-import { erpClient } from "@/services/erp/erp.client";
-import { loadData } from "@/utils/apiHelpers";
 import path from "node:path";
-
-interface AvailabilityPrice {
-	perNight: number;
-	total: number;
-	label?: string;
-	discountPercent?: number;
-}
-
-interface AvailabilityRoom {
-	id: string;
-	name?: string;
-	available: number;
-	prices: {
-		base: AvailabilityPrice;
-		withBreakfast: AvailabilityPrice;
-		promo?: AvailabilityPrice;
-	};
-}
-
-interface AvailabilityResponse {
-	checkin: string;
-	checkout: string;
-	nights: number;
-	currency: string;
-	rooms: AvailabilityRoom[];
-	source?: "mock" | "real";
-}
+import type { APIContext } from "astro";
+import { erpClient } from "@/services/erp/erp.client";
+import {
+	type AvailabilityPrice,
+	type AvailabilityResponse,
+	type AvailabilityRoom,
+	buildAvailabilityRooms,
+} from "@/services/erp/erp.rooms";
+import { json200, loadData } from "@/utils/apiHelpers";
 
 const ROOMS_FILE = path.resolve(process.cwd(), "src", "data", "rooms.json");
 
@@ -69,22 +47,7 @@ async function buildMockResponse(
 		? safeRooms.filter((room) => String(room.id) === String(roomId))
 		: safeRooms;
 
-	const rooms: AvailabilityRoom[] = filtered.map((room) => {
-		const basePerNight = Number(room.pricePerNight ?? 0);
-		const withBreakfastPerNight = basePerNight + 8; // mock: desayuno +$8
-		return {
-			id: String(room.id),
-			name: room.name?.es || room.name?.en,
-			available: 1,
-			prices: {
-				base: { perNight: basePerNight, total: basePerNight * nights },
-				withBreakfast: {
-					perNight: withBreakfastPerNight,
-					total: withBreakfastPerNight * nights,
-				},
-			},
-		};
-	});
+	const rooms = buildAvailabilityRooms(filtered, nights, "USD");
 
 	return {
 		checkin,
@@ -109,7 +72,10 @@ export async function GET(ctx: APIContext) {
 	if (!checkinDate || !checkoutDate) {
 		return new Response(
 			JSON.stringify({ error: "Fechas inválidas. Usa YYYY-MM-DD." }),
-			{ status: 400, headers: { "Content-Type": "application/json; charset=utf-8" } },
+			{
+				status: 400,
+				headers: { "Content-Type": "application/json; charset=utf-8" },
+			},
 		);
 	}
 
@@ -117,7 +83,10 @@ export async function GET(ctx: APIContext) {
 	if (nights <= 0) {
 		return new Response(
 			JSON.stringify({ error: "checkout debe ser mayor a checkin." }),
-			{ status: 400, headers: { "Content-Type": "application/json; charset=utf-8" } },
+			{
+				status: 400,
+				headers: { "Content-Type": "application/json; charset=utf-8" },
+			},
 		);
 	}
 
@@ -136,5 +105,9 @@ export async function GET(ctx: APIContext) {
 		},
 	);
 
-	return json200(data, false);
+	return json200(data, false, {
+		headers: {
+			"Cache-Control": "max-age=120, public, stale-while-revalidate=60",
+		},
+	});
 }

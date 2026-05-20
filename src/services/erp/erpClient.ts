@@ -32,7 +32,9 @@ const MOCK_ROOMS: ErpRoomRecord[] = [
 	},
 ];
 
-export function getErpConfig(overrides: Partial<ErpClientConfig> = {}): ErpClientConfig {
+export function getErpConfig(
+	overrides: Partial<ErpClientConfig> = {},
+): ErpClientConfig {
 	return {
 		...DEFAULT_ERP_CONFIG,
 		...overrides,

@@ -4,7 +4,7 @@
  */
 export async function getGeolocation() {
 	try {
-		const respuesta = await fetch('http://ip-api.com/json');
+		const respuesta = await fetch("http://ip-api.com/json");
 
 		if (!respuesta.ok) {
 			throw new Error(`Error al obtener geolocalización: ${respuesta.status}`);
@@ -19,16 +19,16 @@ export async function getGeolocation() {
 			country,
 			countryCode,
 			regionName,
-			city
+			city,
 		};
 	} catch (error) {
-		console.error('Error al obtener datos de geolocalización:', error);
+		console.error("Error al obtener datos de geolocalización:", error);
 		// Puedes devolver valores por defecto o null en caso de error
 		return {
 			country: null,
 			countryCode: null,
 			regionName: null,
-			city: null
+			city: null,
 		};
 	}
 }

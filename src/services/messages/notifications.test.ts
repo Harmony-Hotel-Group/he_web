@@ -1,25 +1,25 @@
 // Tests para el servicio de notificaciones multi-canal
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 // Mock de los módulos de canales antes de importar
-vi.mock('@/services/messages/whatsapp', () => ({
+vi.mock("@/services/messages/whatsapp", () => ({
 	sendWhatsappMessage: vi.fn().mockResolvedValue({ ok: true, skipped: true }),
 }));
 
-vi.mock('@/services/messages/email', () => ({
+vi.mock("@/services/messages/email", () => ({
 	sendEmail: vi.fn().mockResolvedValue({ ok: true }),
 	sendAdminEmail: vi.fn().mockResolvedValue({ ok: true, skipped: true }),
 }));
 
-vi.mock('@/services/messages/telegram', () => ({
+vi.mock("@/services/messages/telegram", () => ({
 	sendTelegramMessage: vi.fn().mockResolvedValue({ ok: true, skipped: true }),
 }));
 
-vi.mock('@/services/messages/webhooks', () => ({
+vi.mock("@/services/messages/webhooks", () => ({
 	postWebhook: vi.fn().mockResolvedValue({ ok: true }),
 }));
 
-vi.mock('@/services/logger', () => ({
+vi.mock("@/services/logger", () => ({
 	logger: () => ({
 		info: vi.fn(),
 		warn: vi.fn(),
@@ -27,47 +27,50 @@ vi.mock('@/services/logger', () => ({
 	}),
 }));
 
-import { notifyBooking, notifyAllChannels } from '@/services/messages/notifications';
-import { sendTelegramMessage } from '@/services/messages/telegram';
-import { sendAdminEmail } from '@/services/messages/email';
+import { sendAdminEmail } from "@/services/messages/email";
+import {
+	notifyAllChannels,
+	notifyBooking,
+} from "@/services/messages/notifications";
+import { sendTelegramMessage } from "@/services/messages/telegram";
 
-describe('notifications', () => {
+describe("notifications", () => {
 	beforeEach(() => {
 		vi.clearAllMocks();
 	});
 
-	describe('notifyBooking', () => {
-		it('debería enviar a los canales especificados', async () => {
+	describe("notifyBooking", () => {
+		it("debería enviar a los canales especificados", async () => {
 			const results = await notifyBooking(
 				{
-					type: 'standard',
-					checkin: '2026-04-01',
-					checkout: '2026-04-05',
-					adults: '2',
+					type: "standard",
+					checkin: "2026-04-01",
+					checkout: "2026-04-05",
+					adults: "2",
 				},
-				{ channels: ['telegram'] },
+				{ channels: ["telegram"] },
 			);
 
 			expect(results).toHaveLength(1);
-			expect(results[0].channel).toBe('telegram');
+			expect(results[0].channel).toBe("telegram");
 			expect(sendTelegramMessage).toHaveBeenCalled();
 		});
 
-		it('debería enviar a email', async () => {
+		it("debería enviar a email", async () => {
 			const results = await notifyBooking(
-				{ type: 'standard' },
-				{ channels: ['email'] },
+				{ type: "standard" },
+				{ channels: ["email"] },
 			);
 
 			expect(results).toHaveLength(1);
-			expect(results[0].channel).toBe('email');
+			expect(results[0].channel).toBe("email");
 			expect(sendAdminEmail).toHaveBeenCalled();
 		});
 
-		it('debería manejar canales sin configurar', async () => {
+		it("debería manejar canales sin configurar", async () => {
 			const results = await notifyBooking(
-				{ type: 'standard' },
-				{ channels: ['telegram', 'email'] },
+				{ type: "standard" },
+				{ channels: ["telegram", "email"] },
 			);
 
 			expect(results).toHaveLength(2);
@@ -78,12 +81,12 @@ describe('notifications', () => {
 		});
 	});
 
-	describe('notifyAllChannels', () => {
-		it('debería enviar a telegram y email por defecto', async () => {
+	describe("notifyAllChannels", () => {
+		it("debería enviar a telegram y email por defecto", async () => {
 			const results = await notifyAllChannels({
-				type: 'group',
-				groupAdults: '10',
-				groupNotes: 'Evento corporativo',
+				type: "group",
+				groupAdults: "10",
+				groupNotes: "Evento corporativo",
 			});
 
 			expect(results.length).toBeGreaterThanOrEqual(2);

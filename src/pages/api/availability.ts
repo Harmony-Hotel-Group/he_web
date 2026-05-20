@@ -1,20 +1,15 @@
 import path from "node:path";
 import type { APIContext } from "astro";
 import { erpClient } from "@/services/erp/erp.client";
-import {
-	type AvailabilityPrice,
-	type AvailabilityResponse,
-	type AvailabilityRoom,
-	buildAvailabilityRooms,
-} from "@/services/erp/erp.rooms";
 import { json200, loadData } from "@/utils/apiHelpers";
-import { json200, loadData } from "@/utils/apiHelpers";
+
 interface AvailabilityPrice {
 	perNight: number;
 	total: number;
 	label?: string;
 	discountPercent?: number;
 }
+
 interface AvailabilityRoom {
 	id: string;
 	name?: string;
@@ -25,6 +20,7 @@ interface AvailabilityRoom {
 		promo?: AvailabilityPrice;
 	};
 }
+
 interface AvailabilityResponse {
 	checkin: string;
 	checkout: string;
@@ -72,7 +68,22 @@ async function buildMockResponse(
 		? safeRooms.filter((room) => String(room.id) === String(roomId))
 		: safeRooms;
 
-	const rooms = buildAvailabilityRooms(filtered, nights, "USD");
+	const rooms: AvailabilityRoom[] = filtered.map((room) => {
+		const basePerNight = Number(room.pricePerNight ?? 0);
+		const withBreakfastPerNight = basePerNight + 8; // mock: desayuno +$8
+		return {
+			id: String(room.id),
+			name: room.name?.es || room.name?.en,
+			available: 1,
+			prices: {
+				base: { perNight: basePerNight, total: basePerNight * nights },
+				withBreakfast: {
+					perNight: withBreakfastPerNight,
+					total: withBreakfastPerNight * nights,
+				},
+			},
+		};
+	});
 
 	return {
 		checkin,
@@ -130,9 +141,5 @@ export async function GET(ctx: APIContext) {
 		},
 	);
 
-	return json200(data, false, {
-		headers: {
-			"Cache-Control": "max-age=120, public, stale-while-revalidate=60",
-		},
-	});
+	return json200(data, false);
 }

@@ -13,8 +13,6 @@ import type { SiteConfig } from "@/types/config";
 import "@glidejs/glide/dist/css/glide.core.min.css";
 import "@glidejs/glide/dist/css/glide.theme.min.css";
 import "@/styles/global.css";
-import * as Sentry from "@sentry/astro";
-import Analytics from "@vercel/analytics/astro";
 
 const {
 	titleKey,
@@ -174,8 +172,6 @@ const siteKeywords =
                 record_sessions_percent: 100,
             })
         </script>
-  <Analytics />
-  <Sentry />
     </head>
     <body class="min-w-[850px] flex flex-col min-h-screen overflow-x-hidden">
         <Header

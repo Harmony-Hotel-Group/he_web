@@ -3,7 +3,6 @@
 import preact from "@astrojs/preact";
 import sitemap from "@astrojs/sitemap";
 import vercel from "@astrojs/vercel";
- import sentry from "@sentry/astro";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "astro/config";
 import icon from "astro-icon";

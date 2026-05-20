@@ -2,33 +2,7 @@ import path from "node:path";
 import type { APIContext } from "astro";
 import { erpClient } from "@/services/erp/erp.client";
 import { json200, loadData } from "@/utils/apiHelpers";
-
-interface AvailabilityPrice {
-	perNight: number;
-	total: number;
-	label?: string;
-	discountPercent?: number;
-}
-
-interface AvailabilityRoom {
-	id: string;
-	name?: string;
-	available: number;
-	prices: {
-		base: AvailabilityPrice;
-		withBreakfast: AvailabilityPrice;
-		promo?: AvailabilityPrice;
-	};
-}
-
-interface AvailabilityResponse {
-	checkin: string;
-	checkout: string;
-	nights: number;
-	currency: string;
-	rooms: AvailabilityRoom[];
-	source?: "mock" | "real";
-}
+import { buildMockAvailabilityFromJson } from "@/domain/booking/availability.utils";
 
 const ROOMS_FILE = path.resolve(process.cwd(), "src", "data", "rooms.json");
 
@@ -49,50 +23,6 @@ function toUtcDate(value: string): Date | null {
 function diffNights(checkin: Date, checkout: Date): number {
 	const MS_PER_DAY = 24 * 60 * 60 * 1000;
 	return Math.floor((checkout.getTime() - checkin.getTime()) / MS_PER_DAY);
-}
-
-async function buildMockResponse(
-	checkin: string,
-	checkout: string,
-	nights: number,
-	roomId?: string | null,
-): Promise<AvailabilityResponse> {
-	const roomsData = await loadData<any[]>(
-		"api.rooms",
-		ROOMS_FILE,
-		undefined,
-		"api/availability",
-	);
-	const safeRooms = Array.isArray(roomsData) ? roomsData : [];
-	const filtered = roomId
-		? safeRooms.filter((room) => String(room.id) === String(roomId))
-		: safeRooms;
-
-	const rooms: AvailabilityRoom[] = filtered.map((room) => {
-		const basePerNight = Number(room.pricePerNight ?? 0);
-		const withBreakfastPerNight = basePerNight + 8; // mock: desayuno +$8
-		return {
-			id: String(room.id),
-			name: room.name?.es || room.name?.en,
-			available: 1,
-			prices: {
-				base: { perNight: basePerNight, total: basePerNight * nights },
-				withBreakfast: {
-					perNight: withBreakfastPerNight,
-					total: withBreakfastPerNight * nights,
-				},
-			},
-		};
-	});
-
-	return {
-		checkin,
-		checkout,
-		nights,
-		currency: "USD",
-		rooms,
-		source: "mock",
-	};
 }
 
 export async function GET(ctx: APIContext) {
@@ -126,9 +56,16 @@ export async function GET(ctx: APIContext) {
 		);
 	}
 
-	const mock = await buildMockResponse(checkin, checkout, nights, roomId);
+	// Mock response centralizado en dominio
+	const roomsData = await loadData<any[]>(
+		"api.rooms",
+		ROOMS_FILE,
+		undefined,
+		"api/availability",
+	);
+	const mock = buildMockAvailabilityFromJson(roomsData, checkin, checkout, roomId);
 
-	const data = await erpClient.get<AvailabilityResponse>(
+	const data = await erpClient.get<typeof mock>(
 		"/availability",
 		mock,
 		{

@@ -130,7 +130,7 @@ export function buildAvailabilityRooms(
 	currencyOverride?: string,
 ): AvailabilityRoom[] {
 	return rooms.map((room) => {
-		const currency = currencyOverride ?? room.currency;
+		const _currency = currencyOverride ?? room.currency;
 		const basePerNight = Number(room.pricePerNight ?? 0);
 		const withBreakfastPerNight = basePerNight + BREAKFAST_PRICE_PER_NIGHT;
 

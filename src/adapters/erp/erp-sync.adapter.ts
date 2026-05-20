@@ -25,7 +25,7 @@ import type {
 import { api } from "@/services/api";
 import { logger } from "@/services/logger";
 
-const log = logger("erp:sync");
+const _log = logger("erp:sync");
 
 const erpConfig: ERPConfig = {
 	baseUrl: import.meta.env.PUBLIC_ERP_BASE_URL || "",

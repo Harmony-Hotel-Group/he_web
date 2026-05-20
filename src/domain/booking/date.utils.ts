@@ -51,7 +51,7 @@ export function calculateNights(checkin: string, checkout: string): number {
 	const start = new Date(checkin);
 	const end = new Date(checkout);
 
-	if (isNaN(start.getTime()) || isNaN(end.getTime())) {
+	if (Number.isNaN(start.getTime()) || Number.isNaN(end.getTime())) {
 		return 0;
 	}
 
@@ -71,7 +71,7 @@ export function isValidDateRange(checkin: string, checkout: string): boolean {
 	const end = new Date(checkout);
 
 	// Verificar que las fechas sean válidas
-	if (isNaN(start.getTime()) || isNaN(end.getTime())) {
+	if (Number.isNaN(start.getTime()) || Number.isNaN(end.getTime())) {
 		return false;
 	}
 
@@ -104,7 +104,7 @@ export function isValidDateRange(checkin: string, checkout: string): boolean {
 export function isValidCheckin(checkin: string): boolean {
 	// Extraer YYYY-MM-DD en UTC para evitar desfases de zona horaria
 	const date = new Date(checkin);
-	if (isNaN(date.getTime())) return false;
+	if (Number.isNaN(date.getTime())) return false;
 	const dateStr = date.toISOString().split("T")[0];
 	const todayStr = new Date().toISOString().split("T")[0];
 	return dateStr >= todayStr;
@@ -146,7 +146,7 @@ export function parseDateRange(dateRange: string): ParsedDateRange | null {
 export function formatDate(dateStr: string, locale: string = "es-EC"): string {
 	const date = new Date(dateStr);
 
-	if (isNaN(date.getTime())) {
+	if (Number.isNaN(date.getTime())) {
 		return dateStr;
 	}
 

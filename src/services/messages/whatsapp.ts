@@ -69,7 +69,7 @@ function formatBookingMessage(
 		}
 
 		if (vehicles.length > 0) {
-			message += vehicles.join("\n") + "\n";
+			message += `${vehicles.join("\n")}\n`;
 		} else {
 			message += "  - No se agregaron vehículos.\n";
 		}

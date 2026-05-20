@@ -54,7 +54,7 @@ export const CURRENCY_NAMES: Record<Currency, string> = {
 export function getPreferredCurrency(
 	cookies: Record<string, unknown>,
 ): Currency {
-	const currencyCookie = cookies["currency"] as string | undefined;
+	const currencyCookie = cookies.currency as string | undefined;
 
 	if (currencyCookie && isValidCurrency(currencyCookie)) {
 		return currencyCookie as Currency;
@@ -110,7 +110,7 @@ export function convertCurrency(
 export function formatMoney(
 	amount: number,
 	currency: Currency = "USD",
-	locale: string = "es-EC",
+	_locale: string = "es-EC",
 ): string {
 	const symbol = CURRENCY_SYMBOLS[currency];
 	const formattedAmount = amount.toFixed(2);
@@ -183,5 +183,5 @@ export function isValidAmount(amount: unknown): boolean {
 		return false;
 	}
 
-	return !isNaN(amount) && amount >= 0;
+	return !Number.isNaN(amount) && amount >= 0;
 }

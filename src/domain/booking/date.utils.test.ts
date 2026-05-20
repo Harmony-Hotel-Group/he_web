@@ -4,8 +4,6 @@
 import { describe, expect, it } from "vitest";
 import {
 	calculateNights,
-	DATE_RANGE_REGEX,
-	DATE_REGEX,
 	formatDate,
 	formatDateRange,
 	getToday,

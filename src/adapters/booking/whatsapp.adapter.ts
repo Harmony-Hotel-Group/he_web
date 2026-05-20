@@ -63,7 +63,7 @@ export interface WhatsAppMessageOptions {
  */
 function formatDate(dateStr: string): string {
 	const date = new Date(dateStr);
-	if (isNaN(date.getTime())) return dateStr;
+	if (Number.isNaN(date.getTime())) return dateStr;
 
 	return date.toLocaleDateString("es-EC", {
 		day: "numeric",
@@ -194,7 +194,6 @@ export function buildWhatsAppMessage(options: WhatsAppMessageOptions): string {
 		case "vehicle":
 			return buildVehicleMessage(data, vehicleCount, vehicleNotes);
 
-		case "standard":
 		default:
 			if (includeVehicle) {
 				return buildVehicleMessage(data, vehicleCount, vehicleNotes);

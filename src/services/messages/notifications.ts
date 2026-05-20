@@ -13,10 +13,9 @@
  */
 
 import { logger } from "@/services/logger";
-import { sendAdminEmail, sendEmail } from "./email";
+import { sendAdminEmail } from "./email";
 import { sendTelegramMessage } from "./telegram";
 import { postWebhook } from "./webhooks";
-import { sendWhatsappMessage } from "./whatsapp";
 
 const log = logger("messages:notifications");
 
@@ -137,7 +136,7 @@ async function dispatchToEmail(
 ): Promise<NotificationResult> {
 	try {
 		const result = await sendAdminEmail(subject, text);
-		if (result.skipped) {
+		if ("skipped" in result && result.skipped) {
 			log.info("Email: no configurado, omitido");
 			return { channel: "email", ok: false, skipped: true };
 		}

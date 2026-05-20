@@ -14,7 +14,7 @@ function parseDateRange(dateRangeRaw: string): {
 		checkIn = parts[0];
 		const rightPart = parts[1];
 
-		if (rightPart && rightPart.includes("(")) {
+		if (rightPart?.includes("(")) {
 			const subParts = rightPart.split("(").map((p) => p.trim());
 			checkOut = subParts[0];
 			nightsCount = subParts[1]

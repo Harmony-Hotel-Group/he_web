@@ -160,12 +160,12 @@ async function validateLocalFile(src: string): Promise<ValidationResult> {
 
 	// Asegurar slash inicial
 	if (!src.startsWith("/")) {
-		normalizedPath = "/" + src;
+		normalizedPath = `/${src}`;
 	}
 
 	// Manejar alias o rutas relativas comunes
 	if (normalizedPath.startsWith("/assets/")) {
-		normalizedPath = "/src" + normalizedPath;
+		normalizedPath = `/src${normalizedPath}`;
 	}
 
 	// 1. Intento de coincidencia exacta

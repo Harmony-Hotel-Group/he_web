@@ -74,7 +74,7 @@ export class ErpClient {
 			return deepClone(mockData);
 		}
 
-		consturl = new URL(path, this.baseUrl);
+		const url = new URL(path, this.baseUrl);
 		for (const [key, value] of Object.entries(options.params ?? {})) {
 			if (value !== undefined && value !== null) {
 				url.searchParams.set(key, String(value));

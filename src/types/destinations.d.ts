@@ -1,5 +1,3 @@
-import type { Resource } from "./resource";
-
 export interface Destination {
 	id: string;
 	name: LocalizedText;

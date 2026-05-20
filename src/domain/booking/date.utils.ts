@@ -102,17 +102,11 @@ export function isValidDateRange(checkin: string, checkout: string): boolean {
  * @returns true si el check-in es válido (hoy o futuro)
  */
 export function isValidCheckin(checkin: string): boolean {
+	// Extraer YYYY-MM-DD en UTC para evitar desfases de zona horaria
 	const date = new Date(checkin);
-	const today = new Date();
-
-	if (isNaN(date.getTime())) {
-		return false;
-	}
-
-	// Extraer YYYY-MM-DD para evitar problemas de zona horaria en comparación de timestamps
+	if (isNaN(date.getTime())) return false;
 	const dateStr = date.toISOString().split("T")[0];
-	const todayStr = today.toISOString().split("T")[0];
-
+	const todayStr = new Date().toISOString().split("T")[0];
 	return dateStr >= todayStr;
 }
 
@@ -159,7 +153,7 @@ export function formatDate(dateStr: string, locale: string = "es-EC"): string {
 	return date.toLocaleDateString(locale, {
 		weekday: "short",
 		day: "numeric",
-		month: "long",
+		month: "short",
 		year: "numeric",
 		timeZone: "UTC",
 	});
@@ -188,7 +182,9 @@ export function formatDateRange(
  */
 export function getToday(): string {
 	const today = new Date();
-	return today.toISOString().split("T")[0];
+	return new Date(today.getTime() - today.getTimezoneOffset() * 60000)
+		.toISOString()
+		.split("T")[0];
 }
 
 /**

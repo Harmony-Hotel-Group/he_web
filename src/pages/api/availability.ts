@@ -8,6 +8,31 @@ import {
 	buildAvailabilityRooms,
 } from "@/services/erp/erp.rooms";
 import { json200, loadData } from "@/utils/apiHelpers";
+import { json200, loadData } from "@/utils/apiHelpers";
+interface AvailabilityPrice {
+	perNight: number;
+	total: number;
+	label?: string;
+	discountPercent?: number;
+}
+interface AvailabilityRoom {
+	id: string;
+	name?: string;
+	available: number;
+	prices: {
+		base: AvailabilityPrice;
+		withBreakfast: AvailabilityPrice;
+		promo?: AvailabilityPrice;
+	};
+}
+interface AvailabilityResponse {
+	checkin: string;
+	checkout: string;
+	nights: number;
+	currency: string;
+	rooms: AvailabilityRoom[];
+	source?: "mock" | "real";
+}
 
 const ROOMS_FILE = path.resolve(process.cwd(), "src", "data", "rooms.json");
 

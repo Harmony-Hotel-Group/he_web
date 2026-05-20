@@ -61,7 +61,7 @@ export interface AvailabilityQuery {
 }
 
 /**
- * Resultado crudo de sede Central con alojamiento tipo
+ * Resultado crudo de Sede Central con alojamiento tipo
  * para el servicio existente
  */
 export interface ErpAvailabilityRecord {

@@ -1,4 +1,5 @@
 import type { BuildBookingMessageInput } from "@/domain/booking/types";
+import { calculateNights } from "@/domain/booking/date.utils";
 
 /**
  * src/adapters/booking/whatsapp.adapter.ts
@@ -217,15 +218,7 @@ function formatDate(dateStr: string): string {
 	});
 }
 
-/**
- * Calcula el número de noches entre dos fechas
- */
-function calculateNights(checkin: string, checkout: string): number {
-	const start = new Date(checkin);
-	const end = new Date(checkout);
-	const diffTime = Math.abs(end.getTime() - start.getTime());
-	return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-}
+
 
 /**
  * Construye el mensaje de WhatsApp para una reservación estándar

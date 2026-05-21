@@ -1,4 +1,4 @@
-import type { Tour } from "@/types/tour";
+import type { Tour } from "@/types/resources";
 import { adaptImageSource } from "./image";
 
 export function adaptTour(raw: any): Tour {

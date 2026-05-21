@@ -4,7 +4,7 @@
 
 import type { AstroGlobal } from "astro";
 import { api } from "@/services/api.ts";
-import type { SiteConfig } from "@/types/config";
+import type { SiteConfig } from "@/types/config-site";
 
 /**
  * Determina el idioma basado en la URL de Astro

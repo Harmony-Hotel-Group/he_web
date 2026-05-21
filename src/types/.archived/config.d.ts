@@ -1,6 +1,6 @@
 // src/types/config.d.ts
 
-import type { Resource } from "@/types/resource";
+import type { Resource } from "@/types/resources";
 
 interface Category {
 	id: string;

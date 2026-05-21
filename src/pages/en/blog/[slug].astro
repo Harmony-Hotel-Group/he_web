@@ -5,7 +5,7 @@
 import { Translations } from "@/i18n/translation.ts";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { api } from "@/services/api.ts";
-import type { SiteConfig } from "@/types/config";
+import type { SiteConfig } from "@/types/config-site";
 
 const lang = Astro.url.pathname.startsWith("/en") ? "en" : "es";
 const t = Translations(lang);

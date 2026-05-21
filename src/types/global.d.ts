@@ -38,12 +38,7 @@ declare global {
 			clearGroup: (syncGroup?: string) => void;
 		};
 	}
-
-	interface LocalizedText {
-		es: string;
-		en: string;
-		[lang: string]: string;
-	}
 }
 
 export {}; // Ensure this is treated as a module
+

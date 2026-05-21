@@ -1,4 +1,4 @@
-import type { Room } from "@/types/rooms";
+import type { Room } from "@/types/resources";
 import { type ErpClient, erpClient } from "./erp.client";
 
 export interface ErpRoomContract {

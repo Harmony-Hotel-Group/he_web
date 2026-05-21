@@ -12,7 +12,7 @@
  * - Toggle entre modo estándar y grupo
  */
 
-import type { SiteConfig } from "@/types/config";
+import type { SiteConfig } from "@/types/config-site";
 import { initBookingValidation } from "./useBookingValidation";
 import { initBookingSubmit } from "./useBookingSubmit";
 

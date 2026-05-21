@@ -388,7 +388,7 @@ git push origin dev
 
 ## ✅ Checklist de finalización
 
-- [ ] `useWhatsAppButton.ts` creado y WhatsAppButton simplificado
+- [x] `useWhatsAppButton.ts` creado y WhatsAppButton simplificado
 - [ ] `useBookingOptions.ts` creado y BookingForm limpio de lógica de opciones
 - [ ] `formatContactMessage` y `formatContactEmail` movidos a `whatsapp.adapter.ts`
 - [ ] `notifications.ts` limpio, delega al adapter
@@ -401,3 +401,236 @@ git push origin dev
 ---
 
 *Generado: 2025-05-20 | Proyecto: he_web |
+
+---
+
+## 📌 Plan Complementario — Análisis Arquitectura + Frontend
+
+> Objetivo: cerrar deudas técnicas detectadas en auditoría del 2025-05-21.
+> Las tareas se priorizan por impacto: Medias (M) primero, Mejoras (L) después.
+
+---
+
+### 🟡 Tareas Medias (próximo sprint)
+
+#### M-1: Resolver `src/utils/date.ts` residual
+
+**Fuente:** Análisis arquitectónico — archivo es obligatorio para el build aunque no tenga imports activos. Probablemente un plugin de Astro lo escanea por convención de rutas.
+
+**Opciones:**
+- A) Mover a `src/domain/date.utils.ts` y dejar un re-export con `/* @keep */` en la ruta antigua
+- B) Agregar comentario `/* biome-ignore lint: reason */` explicando por qué se conserva
+- C) Agregar `vite.config.mjs` ignore: `['src/utils/date.ts']` si se confirma que es falsa dependencia
+
+**Comandos de diagnóstico:**
+```bash
+grep -rn "src/utils/date" vite.config.mjs astro.config.mjs tsconfig*.json 2>/dev/null
+```
+
+**Criterio de aceptación:** `src/utils/date.ts` eliminado o documentado con `@keep`.
+
+---
+
+#### M-2: Estabilizar useBookingForm — mezcla de responsabilidades
+
+`useBookingForm.ts` tiene 415 líneas. Mezcla:
+- Validación de campos
+- Lectura de DOM
+- Cálculo de noches
+- Formateo de mensajes
+- Envío a WhatsApp
+
+**Solución:** Dividir en:
+```
+src/composables/
+├── useBookingValidation.ts   # Validación de campos + mensajes de error
+├── useBookingSubmit.ts       # Envío a servicios (notifications, WhatsApp)
+└── useBookingForm.ts         # Orquestador: delega a los dos anteriores + DOM
+```
+
+Requiere análisis previo de límites de `validateBookingData` vs funciones en adapter.
+
+---
+
+#### M-3: Desacoplar `useWhatsAppButton` de `config`
+
+Actualmente extrae `phoneNumber` de `config.contactInfo` internamente:
+
+```ts
+// ❌ Acoplado
+const { whatsapp } = opts.config.contactInfo;
+const phoneNumber = whatsapp.replace(/\+/g, "");
+
+// ✅ Correcto
+export function useWhatsAppButton(opts: { phoneNumber: string; ... })
+```
+
+Modificar interface y mover la extracción de `config` al caller (componente o composable orquestador).
+
+**Archivos:**
+- Modificar: `src/composables/useWhatsAppButton.ts`
+- Modificar: `src/components/atoms/WhatsAppButton.astro`
+- Modificar: cualquier componente que lo use
+
+---
+
+#### M-4: Marcar `calculateNights` en `availability.utils.ts` como DEPRECATED
+
+Ya movido a `src/domain/booking/date.utils.ts`, pero la versión antigua sigue en `availability.utils.ts:87`.
+
+**Cambio:**
+```typescript
+/** @deprecated Usar calculateNights de src/domain/booking/date.utils.ts */
+export function calculateNights(startISO: string, endISO: string): number { ... }
+```
+
+Agregar `TODO: migrar llamadores y eliminar esta función en próxima versión`.
+
+**Archivo:** `src/domain/booking/availability.utils.ts`
+
+---
+
+### 🟢 Tareas de Mejora (largo plazo)
+
+#### L-1: Reorganizar `src/domain/`
+
+Mover utilidades generales fuera de `domain/booking/`:
+
+```
+src/domain/
+├── date.utils.ts          ← desde domain/booking/
+├── currency.utils.ts      ← desde domain/booking/
+├── availability.utils.ts  ← desde domain/booking/
+└── booking/
+    ├── types.ts
+    └── (solo lógica de reserva)
+```
+
+Actualizar todos los imports (8–10 archivos dependen de estas rutas).
+
+---
+
+#### L-2: Dividir `types/` por dominio
+
+```
+src/types/
+├── config-site.ts          ← SiteConfig (de config.d.ts)
+├── config-resource.ts      ← Resource, ImageResource, CarouselResource
+├── config-destinations.ts  ← tipos de destinos
+├── booking.ts              ← ya existe, mantener
+├── common.ts               ← ya existe, mantener
+└── global.d.ts             ← declaraciones ambientales
+```
+
+Actualizar todos los imports que apunten a `@/types/config` y `@/types/resource`.
+
+---
+
+#### L-3: Reducir `useBookingForm.ts` de 415 a ~200 líneas
+
+Extraer a `useBookingValidation.ts`:
+- `validateField()` y mapeos de error
+- Funciones puras de validación
+
+Extraer a `useBookingSubmit.ts`:
+- `handleSubmit()` y envío a servicios
+- `showSummaryModal()` y gestión del modal
+
+`useBookingForm.ts` se convierte en orquestador (~80 líneas):
+```ts
+export function initBookingForm(opts) {
+  const form = opts.form;
+  const validation = initBookingValidation({ form, t });
+  const submit = initBookingSubmit({ config, lang, ... });
+  // Ensamblar eventos y estado compartido
+}
+```
+
+---
+
+#### L-4: Agregar `tsconfig.json` en `src/`
+
+Resolver falso positivo `TS2307: Cannot find module '@/i18n/translation.ts'` en checker aislado.
+
+```json
+// src/tsconfig.json
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./*"]
+    }
+  },
+  "include": ["**/*.ts", "**/*.astro"],
+  "exclude": ["node_modules", "dist"]
+}
+```
+
+---
+
+#### L-5: Agregar tests para composables
+
+Cobertura actual: dominio + adapter. Faltan:
+- `useBookingForm.test.ts`
+- `useDatePicker.test.ts`
+- `notifications.test.ts` (ampliar)
+
+Patrón: Vitest + `happy-dom` para simulación de DOM.
+
+---
+
+#### L-6: Agregar `tsconfig.json` en `src/` con paths `@/`
+
+Ya cubierto en L-4 (son la misma tarea).
+
+---
+
+#### L-7: Verificar `src/adapters/booking/booking.adapter.ts`
+
+En el análisis se detectó que este archivo **no aparece** en la lista de adaptadores. Verificar si es:
+- Un archivo legacy obsoleto → eliminar
+- Un adapter futuro en progreso → documentar en README
+
+```bash
+find src/ -name "booking.adapter.ts" -o -name "booking*.adapter.ts"
+git log -- src/adapters/booking/booking.adapter.ts
+```
+
+---
+
+### 🔍 Auditoría de Accesibilidad (pendiente de ejecución)
+
+Verificar en componentes interactivos:
+
+| Componente | aria-label | for/id | aria-describedby | focus-visible |
+|------------|------------|--------|------------------|---------------|
+| WhatsAppButton.astro | ❓ | N/A | N/A | ❓ |
+| BookingForm.astro | ❓ | ❓ | ❓ | ❓ |
+| DateRangePicker.astro | ❓ | ❓ | ❓ | ❓ |
+| Switch.astro | ✅ | ✅ | ❓ | ✅ |
+
+---
+
+## 📊 Matriz de Priorización
+
+```
+Inmediato (esta sesión):
+├─ M-3  Desacoplar useWhatsAppButton de config      ← código pequeño, impacto alto
+├─ M-4  Marcar calculateNights como @deprecated     ← 2 líneas, cero riesgo
+└─ M-1  Investigar/resolver utils/date.ts           ← diagnóstico primero
+
+Próximo sprint:
+├─ L-4/src/tsconfig.json                          ← desbloquea checker aislado
+├─ M-2  Dividir useBookingForm (415 líneas)        ← trabajo de diseño
+└─ L-2  Reorganizar types/                        ← afecta muchos imports
+
+Largo plazo:
+├─ L-1  Reorganizar domain/                       ← refactor grande
+├─ L-3  Reducción useBookingForm                  ← después de M-2
+└─ L-5  Tests de composables                      ← ampliar cobertura
+```
+
+---
+
+*Generado: 2025-05-21 | Proyecto: he_web | Estado: complementario a plan.md original*

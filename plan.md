@@ -558,4 +558,4 @@ Largo plazo:
 
 ---
 
-*Generado: 2025-05-21 | Proyecto: he_web | Estado: complementario a plan.md original*
+*Generado: 2025-05-21 | Proyecto: he_web | Estado: complementario a plan.md original | Actualizado: 2025-05-21*

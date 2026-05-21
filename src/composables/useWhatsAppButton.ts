@@ -8,28 +8,27 @@
  *   - Construcción de la URL wa.me
  *
  * Uso:
- *   const { whatsappUrl, phoneNumber, message } = useWhatsAppButton({ config });
+ *   const { whatsappUrl } = useWhatsAppButton({ phoneNumber: config.contactInfo.whatsapp });
  */
 
 import {
 	buildContactMessage,
 	buildWhatsAppUrl,
 } from "@/adapters/booking/whatsapp.adapter";
-import type { SiteConfig } from "@/types/config";
 
 export interface UseWhatsAppButtonOptions {
-	config: SiteConfig;
+	phoneNumber: string;
 }
 
 /**
  * Construye los datos necesarios para renderizar el botón de WhatsApp.
+ * El caller es responsable de extraer el número de config.contactInfo.whatsapp.
  *
- * @param opts.opts — Configuración del sitio (contactInfo.whatsapp)
+ * @param opts.opts — phoneNumber crudo (puede incluir +)
  * @returns Objeto con `phoneNumber`, `message` y `whatsappUrl`
  */
 export function useWhatsAppButton(opts: UseWhatsAppButtonOptions) {
-	const { whatsapp } = opts.config.contactInfo;
-	const phoneNumber = whatsapp.replace(/\+/g, "");
+	const phoneNumber = opts.phoneNumber.replace(/\+/g, "");
 	const message = buildContactMessage();
 	const whatsappUrl = buildWhatsAppUrl(phoneNumber, message);
 

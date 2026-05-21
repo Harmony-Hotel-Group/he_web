@@ -2,7 +2,8 @@
 import { useWhatsAppButton } from "@/composables/useWhatsAppButton";
 import config from "@/data/config.json";
 
-const { whatsappUrl } = useWhatsAppButton({ config });
+const phoneNumber = config?.contactInfo?.whatsapp ?? "";
+const { whatsappUrl } = useWhatsAppButton({ phoneNumber });
 ---
 
 <a

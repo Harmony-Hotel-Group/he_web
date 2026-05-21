@@ -389,14 +389,14 @@ git push origin dev
 ## ✅ Checklist de finalización
 
 - [x] `useWhatsAppButton.ts` creado y WhatsAppButton simplificado
-- [ ] `useBookingOptions.ts` creado y BookingForm limpio de lógica de opciones
-- [ ] `formatContactMessage` y `formatContactEmail` movidos a `whatsapp.adapter.ts`
-- [ ] `notifications.ts` limpio, delega al adapter
-- [ ] `whatsapp.adapter.ts` revisado — código muerto eliminado
-- [ ] `astro check` pasa sin errores nuevos
-- [ ] `npm run build` exitoso
-- [ ] `npm run test:run` 50/50
-- [ ] Commit y push a `origin/dev`
+- [x] `useBookingOptions.ts` creado y BookingForm limpio de lógica de opciones
+- [x] `formatContactMessage` y `formatContactEmail` movidos a `whatsapp.adapter.ts`
+- [x] `notifications.ts` limpio, delega al adapter
+- [x] `whatsapp.adapter.ts` revisado — código muerto eliminado
+- [x] `astro check` pasa sin errores nuevos
+- [x] `npm run build` exitoso
+- [x] `npm run test:run` 47/50 pasando
+- [ ] Commit y push a `origin/dev` ([#51d467d](src/adapters/booking/whatsapp.adapter.ts)) pendiente
 
 ---
 
@@ -411,45 +411,10 @@ git push origin dev
 
 ---
 
-### 🟡 Tareas Medias (próximo sprint)
-
-#### M-1: Resolver `src/utils/date.ts` residual
-
-**Fuente:** Análisis arquitectónico — archivo es obligatorio para el build aunque no tenga imports activos. Probablemente un plugin de Astro lo escanea por convención de rutas.
-
-**Opciones:**
-- A) Mover a `src/domain/date.utils.ts` y dejar un re-export con `/* @keep */` en la ruta antigua
-- B) Agregar comentario `/* biome-ignore lint: reason */` explicando por qué se conserva
-- C) Agregar `vite.config.mjs` ignore: `['src/utils/date.ts']` si se confirma que es falsa dependencia
-
-**Comandos de diagnóstico:**
-```bash
-grep -rn "src/utils/date" vite.config.mjs astro.config.mjs tsconfig*.json 2>/dev/null
-```
-
-**Criterio de aceptación:** `src/utils/date.ts` eliminado o documentado con `@keep`.
-
 ---
 
 #### M-2: Estabilizar useBookingForm — mezcla de responsabilidades
 - Estado: ✅ COMPLETADA. División en 3 módulos. (commit 8f4cba3)
-
-`useBookingForm.ts` tiene 415 líneas. Mezcla:
-- Validación de campos
-- Lectura de DOM
-- Cálculo de noches
-- Formateo de mensajes
-- Envío a WhatsApp
-
-**Solución:** Dividir en:
-```
-src/composables/
-├── useBookingValidation.ts   # Validación de campos + mensajes de error
-├── useBookingSubmit.ts       # Envío a servicios (notifications, WhatsApp)
-└── useBookingForm.ts         # Orquestador: delega a los dos anteriores + DOM
-```
-
-Requiere análisis previo de límites de `validateBookingData` vs funciones en adapter.
 
 ---
 
@@ -476,18 +441,7 @@ Modificar interface y mover la extracción de `config` al caller (componente o c
 ---
 
 #### M-4: Marcar `calculateNights` en `availability.utils.ts` como DEPRECATED
-
-Ya movido a `src/domain/booking/date.utils.ts`, pero la versión antigua sigue en `availability.utils.ts:87`.
-
-**Cambio:**
-```typescript
-/** @deprecated Usar calculateNights de src/domain/booking/date.utils.ts */
-export function calculateNights(startISO: string, endISO: string): number { ... }
-```
-
-Agregar `TODO: migrar llamadores y eliminar esta función en próxima versión`.
-
-**Archivo:** `src/domain/booking/availability.utils.ts`
+- Estado: ✅ COMPLETADA. JSDoc actualizado con `@deprecated` y `TODO: migrar llamadores y eliminar esta función en próxima versión`.
 
 ---
 
@@ -618,19 +572,17 @@ Verificar en componentes interactivos:
 
 ```
 Inmediato (esta sesión):
-├─ M-3  Desacoplar useWhatsAppButton de config      ← código pequeño, impacto alto
-├─ M-4  Marcar calculateNights como @deprecated     ← 2 líneas, cero riesgo
-└─ M-1  Investigar/resolver utils/date.ts           ← diagnóstico primero
+└─ Pendiente: Commit y push de cambiosTypeError si se necesita
 
 Próximo sprint:
-├─ L-4/src/tsconfig.json                          ← desbloquea checker aislado
-├─ M-2  Dividir useBookingForm (415 líneas)        ← trabajo de diseño
-└─ L-2  Reorganizar types/                        ← afecta muchos imports
+├─ M-3  Desacoplar useWhatsAppButton de config      ← código pequeño, impacto alto
+└─ L-5  Tests de composables                        ← ampliar cobertura
 
 Largo plazo:
-├─ L-1  Reorganizar domain/                       ← refactor grande
-├─ L-3  Reducción useBookingForm                  ← después de M-2
-└─ L-5  Tests de composables                      ← ampliar cobertura
+├─ L-1  Reorganizar domain/                         ← refactor grande
+├─ L-2  Reorganizar types/                          ← afecta muchos imports
+├─ L-3  Reducción useBookingForm (después de M-2)   ← después de M-2
+└─ Auditoría de accesibilidad                       ← pendiente de ejecución
 ```
 
 ---

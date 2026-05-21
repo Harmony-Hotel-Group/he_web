@@ -80,7 +80,7 @@ export interface ErpAvailabilityRecord {
 
 /**
  * @deprecated Usar calculateNights de src/domain/booking/date.utils.ts
- * TODO: migrar llamadores internos y eliminar esta función
+ * TODO: migrar llamadores internos y eliminar esta función en próxima versión
  * Calcula el número de noches entre dos fechas
  * @param checkin Fecha de check-in (YYYY-MM-DD)
  * @param checkout Fecha de check-out (YYYY-MM-DD)

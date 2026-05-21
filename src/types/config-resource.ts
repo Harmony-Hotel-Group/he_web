@@ -1,5 +1,6 @@
-// src/types/resources.ts
-// Tipos de recursos compartidos: imágenes, habitaciones, tours, gastronomía, destinos
+// src/types/config-resource.ts
+// Tipos de recursos configurables: imágenes, habitaciones, tours, gastronomía
+// Consolida Resource de resources.ts + tipos específicos de dominio
 
 import type { ImageMetadata } from "astro";
 import type { ImageSource } from "./image";

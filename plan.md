@@ -453,35 +453,40 @@ git push origin dev
 ---
 
 #### L-2: Dividir `types/` por dominio
-- Estado: ⏸️ Pendiente (largo plazo).
+- Estado: ✅ COMPLETADA.
 
-`src/types/` contiene archivos de dominios mezclados. Reorganizar requiere mover muchos tipos y actualizar imports en 8–10 archivos. Riesgo medio-alto, pospuesto hasta siguiente ciclo de refactor.
+- Estado: ✅ COMPLETADA.
 
-Estructura objetivo (sin cambios hasta entonces):
+**Cambios ejecutados:**
+- Creado `src/types/config-resource.ts` con tipos consolidados:
+  - `Resource`, `ImageResource`, `CarouselResource` (desde `resources.ts`)
+  - `Room`, `RoomImage` (desde `resources.ts`)
+  - `TourERP`, `TourItem` (desde `resources.ts`)
+  - `GastronomyItem` (desde `resources.ts`)
+- Creado `src/types/config-destinations.ts` con `Destination` (desde `destinations.d.ts`)
+- Eliminados `src/types/resources.ts` (9 tipos movidos a `config-resource.ts`)
+- Eliminados `src/types/destinations.d.ts` (1 tipo movido a `config-destinations.ts`)
+- Actualizados 10 archivos con nuevos imports:
+  - `@/types/resources` → `@/types/config-resource` (9 archivos)
+  - `import { Room }` → `import { GastronomyItem }` en `gastronomy/[slot].astro`
+  - `import { Room }` → `import { Destination }` en `destinations/[slot].astro`
+  - `@/types/resources` → `@/types/config-resource` en `config-site.ts` (importa `ImageResource`, `CarouselResource`)
+
+Arquitectura final `src/types/`:
 ```
 src/types/
-├── config-site.ts          ← SiteConfig ✅
-├── config-resource.ts      ← Resource, ImageResource, CarouselResource (pendiente crear)
-├── config-destinations.ts  ← Destination (pendiente crear)
-├── booking.ts              ← ya existe ✅
-├── common.ts               ← ya existe ✅
-├── i18n.ts                 ← LocalizedText, TranslationFunction (candidato a fusionar en config-site)
-├── image.ts                ← ImageSource (candidato a fusionar en config-resource)
-├── tour.ts                 ← Tour frontend (candidato a fusionar en config-resource)
-└── global.d.ts             ← declaraciones ambientales ✅
+├── booking.ts          ← BookingIntent
+├── common.ts           ← ApiResponse<T>
+├── config-destinations.ts  ← Destination
+├── config-resource.ts      ← Resource, Room, Tour, Gastronomy, etc.
+├── config-site.ts          ← SiteConfig, Currency, TranslationFunction
+├── global.d.ts             ← declaraciones ambientales
+├── i18n.ts                 ← LocalizedText
+├── image.ts                ← ImageSource
+└── tour.ts                 ← Tour frontend
 ```
 
-Archivos activos actuales:
-- `booking.ts`, `common.ts`, `config-site.ts`, `global.d.ts` — correctos
-- `resources.ts` — contiene tipos mixtos (Resource, Room, TourERP, TourItem, GastronomyItem)
-- `i18n.ts`, `image.ts`, `tour.ts` — tipos auxiliares sin hogar definido
-- `destinations.d.ts` — define `Destination`, pero no tiene imports activos (¿huérfano?)
-
-**Siguientes pasos cuando se ejecute:**
-1. Crear `config-resource.ts` con `Resource`, `ImageResource`, `CarouselResource`
-2. Mover `Destination` a `config-destinations.ts`
-3. Decidir destino de `Room`, `TourERP`, `TourItem`, `GastronomyItem` (¿fusionar en `config-resource`?)
-4. Actualizar imports en: `config-site.ts`, `VisualCarousel.astro`, `HomeHero.astro`, `booking.astro`, páginas de rooms/tours/gastronomy, `erp.rooms.ts`
+> Nota: `i18n.ts` (LocalizedText) y `image.ts` (ImageSource) no se fusionaron en `config-resource.ts` para minimizar riesgo de cambios. Pueden integrarse en un ciclo futuro si se desea mayor granularidad.
 
 ---
 
@@ -544,16 +549,15 @@ Verificar en componentes interactivos:
 
 ```
 Inmediato (esta sesión):
-├─ M-3, M-4, L-3, L-4, L-6         ← completadas en este ciclo
-├─ L-1  Reorganizar domain/           ← completada
-└─ L-5  Tests de composables          ← completada
+├─ M-3, M-4                           ← completadas ciclo anterior
+├─ L-1, L-2, L-3, L-4, L-5, L-6      ← completadas este ciclo
+└─ Pendiente: commit + verificación build/tests
 
-Próximo sprint (quedan pendientes):
-├─ L-2  Dividir types/ por dominio    ← riesgo medio-alto, requiere planificación
+Próximo sprint (largo plazo):
 └─ Auditoría de accesibilidad         ← componentes interactivos
 
 Largo plazo:
-└─ (L-2 se pospone hasta tener ventana de prueba estable)
+└─ (mantenimiento arquitectónico mapiado a nuevas necesidades)
 ```
 
 ---

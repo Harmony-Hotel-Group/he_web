@@ -10,7 +10,7 @@ import { calculateNights } from "@/domain/date.utils";
  * Ahora expone también buildBookingMessage() para compatibilidad con código legacy.
  */
 
-// ============== Tipos legacy (compatibilidad) ==============
+// ============== Funciones legacy (usadas por buildBookingMessage) ==============
 
 /**
  * Parsea un rango de fechas en formato "YYYY-MM-DD ➜ YYYY-MM-DD (N noches)"
@@ -53,6 +53,7 @@ function parseDateRangeLegacy(dateRangeRaw: string): {
 
 /**
  * Mapea BuildBookingMessageInput → BookingData (formato del adapter)
+ * Usado solo por buildBookingMessage; forma parte del bloque legacy.
  */
 function _mapLegacyToBookingData(input: BuildBookingMessageInput): BookingData {
 	const isGroup = input.isGroupMode;
@@ -60,20 +61,17 @@ function _mapLegacyToBookingData(input: BuildBookingMessageInput): BookingData {
 	// Extraer fechas del processing o del dateRangeRaw
 	let checkin = "";
 	let checkout = "";
-	let _nights = 0;
+	let nights = 0;
 
-	if (isGroup && input.dateRangeRaw) {
+	if (input.isGroupMode && input.dateRangeRaw) {
 		const parsed = parseDateRangeLegacy(input.dateRangeRaw);
 		checkin = parsed.checkIn;
 		checkout = parsed.checkOut;
-		_nights = Number(parsed.nightsCount) || 0;
+		nights = Number(parsed.nightsCount) || 0;
 	} else if (input.processing) {
-		checkin = String(input.processing.checkin || "");
-		checkout = String(input.processing.checkout || "");
-		_nights =
-			typeof input.processing.nights === "number"
-				? input.processing.nights
-				: Number(input.processing.nights) || 0;
+		checkin = typeof input.processing.checkin === "string" ? input.processing.checkin : "";
+		checkout = typeof input.processing.checkout === "string" ? input.processing.checkout : "";
+		nights = Number(input.processing.nights) || 0;
 	}
 
 	// Mapear huéspedes
@@ -94,37 +92,42 @@ function _mapLegacyToBookingData(input: BuildBookingMessageInput): BookingData {
 				: Number(input.processing.children) || 0;
 	}
 
-	// Mapear habitaciones
-	const rooms = input.processing
-		? typeof input.processing.rooms === "number"
-			? input.processing.rooms
-			: Number(input.processing.rooms) || 0
-		: 0;
-
-	// Desayuno
-	const breakfast = input.processing?.breakfast === "true";
-
-	// Notas
-	const notes = isGroup ? String(input.groupNotes || "") : "";
-
-	// Construir objeto BookingData
 	return {
 		checkin,
 		checkout,
-		rooms,
+		rooms: isGroup ? 1 : Number(input.processing?.rooms) || 1,
 		adults,
-		children: children > 0 ? children : undefined,
-		breakfast,
-		notes: notes || undefined,
+		children: children || undefined,
+		breakfast: input.processing?.breakfast === "on" || input.processing?.breakfast === "true",
+		notes: input.groupNotes || undefined,
+		vehicleType: isGroup ? undefined : input.vehicleItems?.[0]?.type,
+		vehiclePlate: isGroup ? undefined : input.vehicleItems?.[0]?.plate,
+		phone: undefined,
 	};
 }
 
 /**
- * Construye el mensaje de WhatsApp en formato legacy.
- * Usa buildWhatsAppMessage internamente pero adapta el formato.
+ * Valida que los datos de la reservación tengan los campos requeridos
  *
- * @param input - Datos en formato BuildBookingMessageInput (legacy)
- * @returns Mensaje formateado para WhatsApp
+ * @param data - Datos de la reservación
+ * @returns true si los datos son válidos
+ */
+export function validateBookingData(data: BookingData): boolean {
+	if (!data.checkin || !data.checkout) return false;
+	if (data.rooms < 1 || data.adults < 1) return false;
+
+	// Validar formato de fecha
+	const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+	if (!dateRegex.test(data.checkin) || !dateRegex.test(data.checkout))
+		return false;
+
+	return true;
+}
+
+// ============== Fin funciones legacy ==============
+
+/**
+ * Construye el mensaje de WhatsApp en formato legacy.
  */
 export function buildBookingMessage(input: BuildBookingMessageInput): string {
 	if (input.isGroupMode) {
@@ -217,8 +220,6 @@ function formatDate(dateStr: string): string {
 		year: "numeric",
 	});
 }
-
-
 
 /**
  * Construye el mensaje de WhatsApp para una reservación estándar
@@ -356,24 +357,6 @@ export function buildContactMessage(
 	hotelName: string = "Hotel Ensueños",
 ): string {
 	return `Hola, estoy interesado en reservar una habitación en ${hotelName}.`;
-}
-
-/**
- * Valida que los datos de la reservación tengan los campos requeridos
- *
- * @param data - Datos de la reservación
- * @returns true si los datos son válidos
- */
-export function validateBookingData(data: BookingData): boolean {
-	if (!data.checkin || !data.checkout) return false;
-	if (data.rooms < 1 || data.adults < 1) return false;
-
-	// Validar formato de fecha
-	const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
-	if (!dateRegex.test(data.checkin) || !dateRegex.test(data.checkout))
-		return false;
-
-	return true;
 }
 
 // ============== Re-export helpers para src/services/messages/whatsapp.ts ==============

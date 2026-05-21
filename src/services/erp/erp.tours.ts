@@ -1,4 +1,4 @@
-import type { Tour } from "@/types/resources";
+import type { Tour } from "@/types/tour";
 import { type ErpClient, erpClient } from "./erp.client";
 
 export interface ErpTourContract {

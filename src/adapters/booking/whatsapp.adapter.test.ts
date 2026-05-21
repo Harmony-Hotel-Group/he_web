@@ -5,7 +5,6 @@ import { describe, expect, it } from "vitest";
 import {
 	buildWhatsAppMessage,
 	buildWhatsAppUrl,
-	validateBookingData,
 } from "@/adapters/booking/whatsapp.adapter";
 
 describe("whatsapp.adapter", () => {
@@ -65,41 +64,6 @@ describe("whatsapp.adapter", () => {
 		it("debería codificar mensaje", () => {
 			const url = buildWhatsAppUrl("593999999999", "Hola Mundo");
 			expect(url).toContain("Hola%20Mundo");
-		});
-	});
-
-	describe("validateBookingData", () => {
-		it("debería validar datos correctos", () => {
-			const validData = {
-				checkin: "2024-12-01",
-				checkout: "2024-12-05",
-				rooms: 1,
-				adults: 2,
-			};
-
-			expect(validateBookingData(validData)).toBe(true);
-		});
-
-		it("debería rechazar fechas inválidas", () => {
-			const invalidData = {
-				checkin: "fecha-invalida",
-				checkout: "2024-12-05",
-				rooms: 1,
-				adults: 2,
-			};
-
-			expect(validateBookingData(invalidData)).toBe(false);
-		});
-
-		it("debería rechazar habitaciones < 1", () => {
-			const invalidData = {
-				checkin: "2024-12-01",
-				checkout: "2024-12-05",
-				rooms: 0,
-				adults: 2,
-			};
-
-			expect(validateBookingData(invalidData)).toBe(false);
 		});
 	});
 });

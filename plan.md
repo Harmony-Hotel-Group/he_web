@@ -549,6 +549,7 @@ export function initBookingForm(opts) {
 ---
 
 #### L-4: Agregar `tsconfig.json` en `src/`
+- Estado: ✅ Resuelto indirectamente por M-1. `src/utils/date.ts` eliminado → TS2307 = 0 en `astro check`. `src/tsconfig.json` no es necesario por ahora.
 
 Resolver falso positivo `TS2307: Cannot find module '@/i18n/translation.ts'` en checker aislado.
 

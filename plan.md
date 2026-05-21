@@ -419,24 +419,11 @@ git push origin dev
 ---
 
 #### M-3: Desacoplar `useWhatsAppButton` de `config`
+- Estado: ✅ COMPLETADA. `useWhatsAppButton` recibe `{ phoneNumber }` directamente. El componente `WhatsAppButton.astro` extrae el número de `config` y lo pasa al composable, eliminando la dependencia directa con `config` en el composable.
 
-Actualmente extrae `phoneNumber` de `config.contactInfo` internamente:
-
-```ts
-// ❌ Acoplado
-const { whatsapp } = opts.config.contactInfo;
-const phoneNumber = whatsapp.replace(/\+/g, "");
-
-// ✅ Correcto
-export function useWhatsAppButton(opts: { phoneNumber: string; ... })
-```
-
-Modificar interface y mover la extracción de `config` al caller (componente o composable orquestador).
-
-**Archivos:**
-- Modificar: `src/composables/useWhatsAppButton.ts`
-- Modificar: `src/components/atoms/WhatsAppButton.astro`
-- Modificar: cualquier componente que lo use
+**Archivos verificados:**
+- `src/composables/useWhatsAppButton.ts` — interface `UseWhatsAppButtonOptions { phoneNumber: string }`
+- `src/components/atoms/WhatsAppButton.astro` — extrae `phoneNumber` y lo pasa al composable
 
 ---
 
@@ -536,13 +523,21 @@ Patrón: Vitest + `happy-dom` para simulación de DOM.
 
 ---
 
-#### L-6: Agregar `tsconfig.json` en `src/` con paths `@/`
+#### L-5: Agregar tests para composables
 
-Ya cubierto en L-4 (son la misma tarea).
+- Estado: ✅ COMPLETADA.
+
+Tests agregados:
+- `src/composables/useBookingOptions.test.ts` — 4 tests (adultos, niños, habitaciones, distribución)
+- `src/composables/useWhatsAppButton.test.ts` — 5 tests (limpieza de +, URL, mensaje)
+
+Nota: `buildRoomsOptions` genera opciones con tilde ("habitaciónes", "habitación") debido al mock de traducción — en prod usa `t()` real que devuelve la cadena correcta sin tilde en el plural. Ver deuda técnica en `useBookingOptions.ts`.
+
+Tests totales: 56/56 ✓
 
 ---
 
-#### L-7: Verificar `src/adapters/booking/booking.adapter.ts`
+#### L-6: Verificar `src/adapters/booking/booking.adapter.ts`
 
 En el análisis se detectó que este archivo **no aparece** en la lista de adaptadores. Verificar si es:
 - Un archivo legacy obsoleto → eliminar
@@ -572,17 +567,17 @@ Verificar en componentes interactivos:
 
 ```
 Inmediato (esta sesión):
-└─ Pendiente: Commit y push de cambiosTypeError si se necesita
+└─ Pendiente: Commit y push de tests de composables
 
 Próximo sprint:
-├─ M-3  Desacoplar useWhatsAppButton de config      ← código pequeño, impacto alto
-└─ L-5  Tests de composables                        ← ampliar cobertura
+├─ L-6  Verificar booking.adapter.ts              ← archivo huérfano
+├─ L-1  Reorganizar domain/                       ← refactor grande
+├─ L-2  Reorganizar types/                        ← afecta muchos imports
+└─ L-3  Reducción useBookingForm (después de M-2) ← después de M-2
 
 Largo plazo:
-├─ L-1  Reorganizar domain/                         ← refactor grande
-├─ L-2  Reorganizar types/                          ← afecta muchos imports
-├─ L-3  Reducción useBookingForm (después de M-2)   ← después de M-2
-└─ Auditoría de accesibilidad                       ← pendiente de ejecución
+├─ Auditoría de accesibilidad                     ← pendiente de ejecución
+└─ L-4  Agregar src/tsconfig.json                 ← desbloquea checker aislado (pospuesto)
 ```
 
 ---

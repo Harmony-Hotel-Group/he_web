@@ -3,27 +3,11 @@ import type { APIContext } from "astro";
 import { buildMockAvailabilityFromJson } from "@/domain/booking/availability.utils";
 import { erpClient } from "@/services/erp/erp.client";
 import { json200, loadData } from "@/utils/apiHelpers";
+import { toUtcDate, diffNights } from "@/domain/booking/date.utils";
 
 const ROOMS_FILE = path.resolve(process.cwd(), "src", "data", "rooms.json");
 
 export const prerender = false; // SSR runtime
-
-function isValidDateString(value: string): boolean {
-	return /^\d{4}-\d{2}-\d{2}$/.test(value);
-}
-
-function toUtcDate(value: string): Date | null {
-	if (!isValidDateString(value)) return null;
-	const [y, m, d] = value.split("-").map(Number);
-	if (!y || !m || !d) return null;
-	const date = new Date(Date.UTC(y, m - 1, d));
-	return Number.isNaN(date.getTime()) ? null : date;
-}
-
-function diffNights(checkin: Date, checkout: Date): number {
-	const MS_PER_DAY = 24 * 60 * 60 * 1000;
-	return Math.floor((checkout.getTime() - checkin.getTime()) / MS_PER_DAY);
-}
 
 export async function GET(ctx: APIContext) {
 	const { searchParams } = ctx.url;

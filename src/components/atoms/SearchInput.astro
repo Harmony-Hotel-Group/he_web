@@ -63,65 +63,7 @@ const dropdownId = `${uniqueId}-dropdown`;
 </div>
 
 <script is:inline define:vars={{ uniqueId, inputId, dropdownId, options }}>
-  function setupSearchInput() {
-    const inputElement = document.getElementById(inputId);
-    const dropdownElement = document.getElementById(dropdownId);
-
-    if (!inputElement || !dropdownElement) return;
-
-    let filteredOptions = [];
-
-    const renderDropdown = () => {
-      dropdownElement.innerHTML = '';
-      if (filteredOptions.length === 0 || inputElement.value.trim() === '') {
-        dropdownElement.classList.add('hidden');
-        return;
-      }
-
-      dropdownElement.classList.remove('hidden');
-      filteredOptions.forEach(option => {
-        const item = document.createElement('div');
-        item.classList.add('px-3', 'py-2', 'text-sm', 'text-primary', 'cursor-pointer', 'hover:bg-accent/20');
-        item.textContent = option.label;
-        item.addEventListener('click', () => {
-          inputElement.value = option.label;
-          dropdownElement.classList.add('hidden');
-          // You might want to dispatch a custom event here to notify parent components
-          // inputElement.dispatchEvent(new CustomEvent('select', { detail: option.value }));
-        });
-        dropdownElement.appendChild(item);
-      });
-    };
-
-    inputElement.addEventListener('input', () => {
-      const query = inputElement.value.toLowerCase();
-      filteredOptions = options.filter(option => 
-        option.label.toLowerCase().includes(query)
-      );
-      renderDropdown();
-    });
-
-    // Close dropdown when clicking outside
-    document.addEventListener('click', (event) => {
-      if (!inputElement.contains(event.target) && !dropdownElement.contains(event.target)) {
-        dropdownElement.classList.add('hidden');
-      }
-    });
-
-    // Show dropdown on focus if there's content
-    inputElement.addEventListener('focus', () => {
-      if (inputElement.value.trim() !== '') {
-        const query = inputElement.value.toLowerCase();
-        filteredOptions = options.filter(option => 
-          option.label.toLowerCase().includes(query)
-        );
-        renderDropdown();
-      } else {
-        filteredOptions = options; // Show all options on focus if input is empty
-        renderDropdown();
-      }
-    });
-  }
-
-  document.addEventListener('astro:page-load', setupSearchInput);
+  import { setupSearchInput } from "@/composables/useSearchInput";
+  
+  setupSearchInput(inputId, dropdownId, options);
 </script>

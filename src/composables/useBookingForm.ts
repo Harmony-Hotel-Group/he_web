@@ -9,7 +9,7 @@
  */
 
 import { actions } from "astro:actions";
-import { buildBookingMessage } from "@/domain/booking/buildBookingMessage";
+import { buildBookingMessage } from "@/adapters/booking/whatsapp.adapter";
 import type { SiteConfig } from "@/types/config";
 
 export interface UseBookingFormOptions {
@@ -230,7 +230,7 @@ export function initBookingForm(opts: UseBookingFormOptions) {
 			isVehicleChecked,
 			vehicleItems = [],
 			distributionLabel,
-		} = bookingData;
+		} = bookingData as Parameters<typeof buildBookingMessage>[0];
 
 		// Dates
 		const datesEl = document.getElementById("summary-dates");

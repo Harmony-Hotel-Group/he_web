@@ -270,7 +270,7 @@ const email = config?.contactInfo?.email ?? "";
 
 <script>
 	import { initBookingForm } from '@/composables/useBookingForm';
-	import { buildBookingMessage } from '@/domain/booking/buildBookingMessage';
+	import { buildBookingMessage } from '@/adapters/booking/whatsapp.adapter';
 	import { Translations } from '@/i18n/translation.ts';
 
 	document.addEventListener('DOMContentLoaded', () => {

@@ -11,7 +11,6 @@ import {
 describe("whatsapp.adapter", () => {
 	describe("buildWhatsAppMessage", () => {
 		const baseData = {
-			guestName: "Juan Pérez",
 			checkin: "2024-12-01",
 			checkout: "2024-12-05",
 			rooms: 2,
@@ -27,7 +26,6 @@ describe("whatsapp.adapter", () => {
 			});
 
 			expect(message).toContain("NUEVA RESERVACIÓN");
-			expect(message).toContain("Juan Pérez");
 			expect(message).toContain("*Noches:* 4");
 			expect(message).toContain("*Habitaciones:* 2");
 		});
@@ -73,7 +71,6 @@ describe("whatsapp.adapter", () => {
 	describe("validateBookingData", () => {
 		it("debería validar datos correctos", () => {
 			const validData = {
-				guestName: "Juan",
 				checkin: "2024-12-01",
 				checkout: "2024-12-05",
 				rooms: 1,
@@ -83,21 +80,8 @@ describe("whatsapp.adapter", () => {
 			expect(validateBookingData(validData)).toBe(true);
 		});
 
-		it("debería rechazar nombre vacío", () => {
-			const invalidData = {
-				guestName: "",
-				checkin: "2024-12-01",
-				checkout: "2024-12-05",
-				rooms: 1,
-				adults: 2,
-			};
-
-			expect(validateBookingData(invalidData)).toBe(false);
-		});
-
 		it("debería rechazar fechas inválidas", () => {
 			const invalidData = {
-				guestName: "Juan",
 				checkin: "fecha-invalida",
 				checkout: "2024-12-05",
 				rooms: 1,
@@ -109,7 +93,6 @@ describe("whatsapp.adapter", () => {
 
 		it("debería rechazar habitaciones < 1", () => {
 			const invalidData = {
-				guestName: "Juan",
 				checkin: "2024-12-01",
 				checkout: "2024-12-05",
 				rooms: 0,

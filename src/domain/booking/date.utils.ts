@@ -102,12 +102,14 @@ export function isValidDateRange(checkin: string, checkout: string): boolean {
  * @returns true si el check-in es válido (hoy o futuro)
  */
 export function isValidCheckin(checkin: string): boolean {
-	// Extraer YYYY-MM-DD en UTC para evitar desfases de zona horaria
-	const date = new Date(checkin);
-	if (Number.isNaN(date.getTime())) return false;
-	const dateStr = date.toISOString().split("T")[0];
-	const todayStr = new Date().toISOString().split("T")[0];
-	return dateStr >= todayStr;
+	const DATE_REGEX = /^\d{4}-\d{2}-\d{2}$/;
+
+	// Rechazar formatos inválidos
+	if (!DATE_REGEX.test(checkin)) return false;
+
+	// Comparación directa de cadenas ISO (YYYY-MM-DD): orden lexicográfico = orden cronológico
+	const today = getToday(); // ya devuelve YYYY-MM-DD en zona local
+	return checkin >= today;
 }
 
 /**
@@ -181,10 +183,12 @@ export function formatDateRange(
  * @returns Fecha de hoy
  */
 export function getToday(): string {
-	const today = new Date();
-	return new Date(today.getTime() - today.getTimezoneOffset() * 60000)
-		.toISOString()
-		.split("T")[0];
+	// Devuelve la fecha local (sin desfase UTC)
+	const d = new Date();
+	const y = d.getFullYear();
+	const m = String(d.getMonth() + 1).padStart(2, "0");
+	const day = String(d.getDate()).padStart(2, "0");
+	return `${y}-${m}-${day}`;
 }
 
 /**
@@ -236,4 +240,37 @@ export function validateDates(checkin: string, checkout: string): string[] {
 	}
 
 	return errors;
+}
+
+/**
+ * Valida que un string tenga formato de fecha YYYY-MM-DD
+ * @param value String a validar
+ * @returns true si el formato es válido
+ */
+export function isValidDateString(value: string): boolean {
+  return /^\d{4}-\d{2}-\d{2}$/.test(value);
+}
+
+/**
+ * Convierte un string de fecha YYYY-MM-DD a Date en UTC
+ * @param value Fecha en formato YYYY-MM-DD
+ * @returns Date en UTC o null si es inválido
+ */
+export function toUtcDate(value: string): Date | null {
+  if (!isValidDateString(value)) return null;
+  const [y, m, d] = value.split("-").map(Number);
+  if (!y || !m || !d) return null;
+  const date = new Date(Date.UTC(y, m - 1, d));
+  return Number.isNaN(date.getTime()) ? null : date;
+}
+
+/**
+ * Calcula el número de noches entre dos fechas Date
+ * @param checkin Fecha de check-in
+ * @param checkout Fecha de check-out
+ * @returns Número de noches
+ */
+export function diffNights(checkin: Date, checkout: Date): number {
+  const MS_PER_DAY = 24 * 60 * 60 * 1000;
+  return Math.floor((checkout.getTime() - checkin.getTime()) / MS_PER_DAY);
 }

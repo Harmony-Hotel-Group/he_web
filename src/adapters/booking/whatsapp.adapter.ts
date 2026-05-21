@@ -1,28 +1,173 @@
+import type { BuildBookingMessageInput } from "@/domain/booking/types";
+
 /**
  * src/adapters/booking/whatsapp.adapter.ts
  *
  * Adapter centralizado para construir mensajes de WhatsApp.
  * Este módulo es la única fuente de verdad para construir mensajes de reserva.
  *
- * Uso:
- * import { buildWhatsAppMessage } from '@/adapters/booking/whatsapp.adapter';
- *
- * const message = buildWhatsAppMessage({
- *   type: 'booking',
- *   guestName: 'Juan Pérez',
- *   checkin: '2024-12-01',
- *   checkout: '2024-12-05',
- *   rooms: 2,
- *   adults: 4,
- *   children: 1
- * });
+ * Ahora expone también buildBookingMessage() para compatibilidad con código legacy.
  */
+
+// ============== Tipos legacy (compatibilidad) ==============
+
+/**
+ * Parsea un rango de fechas en formato "YYYY-MM-DD ➜ YYYY-MM-DD (N noches)"
+ */
+function parseDateRangeLegacy(dateRangeRaw: string): {
+	checkIn: string;
+	checkOut: string;
+	nightsCount: string;
+} {
+	let checkIn = "N/A";
+	let checkOut = "N/A";
+	let nightsCount = "N/A";
+
+	if (dateRangeRaw.includes("➜")) {
+		const parts = dateRangeRaw.split("➜").map((p) => p.trim());
+		checkIn = parts[0];
+		const rightPart = parts[1];
+
+		if (rightPart?.includes("(")) {
+			const subParts = rightPart.split("(").map((p) => p.trim());
+			checkOut = subParts[0];
+			nightsCount = subParts[1]
+				.replace(")", "")
+				.replace("noches", "")
+				.replace("noche", "")
+				.trim();
+		} else {
+			checkOut = rightPart;
+		}
+	} else if (dateRangeRaw.includes(" to ")) {
+		const parts = dateRangeRaw.split(" to ");
+		checkIn = parts[0];
+		checkOut = parts[1] || "N/A";
+	} else {
+		checkIn = dateRangeRaw;
+	}
+
+	return { checkIn, checkOut, nightsCount };
+}
+
+/**
+ * Mapea BuildBookingMessageInput → BookingData (formato del adapter)
+ */
+function mapLegacyToBookingData(input: BuildBookingMessageInput): BookingData {
+	const isGroup = input.isGroupMode;
+
+	// Extraer fechas del processing o del dateRangeRaw
+	let checkin = "";
+	let checkout = "";
+	let nights = 0;
+
+	if (isGroup && input.dateRangeRaw) {
+		const parsed = parseDateRangeLegacy(input.dateRangeRaw);
+		checkin = parsed.checkIn;
+		checkout = parsed.checkOut;
+		nights = Number(parsed.nightsCount) || 0;
+	} else if (input.processing) {
+		checkin = String(input.processing.checkin || "");
+		checkout = String(input.processing.checkout || "");
+		nights =
+			typeof input.processing.nights === "number"
+				? input.processing.nights
+				: Number(input.processing.nights) || 0;
+	}
+
+	// Mapear huéspedes
+	let adults = 0;
+	let children = 0;
+
+	if (isGroup) {
+		adults = Number(input.groupAdults) || 0;
+		// No hay children en grupo legacy, se ignora
+	} else if (input.processing) {
+		adults =
+			typeof input.processing.adults === "number"
+				? input.processing.adults
+				: Number(input.processing.adults) || 0;
+		children =
+			typeof input.processing.children === "number"
+				? input.processing.children
+				: Number(input.processing.children) || 0;
+	}
+
+	// Mapear habitaciones
+	const rooms = input.processing
+		? typeof input.processing.rooms === "number"
+			? input.processing.rooms
+			: Number(input.processing.rooms) || 0
+		: 0;
+
+	// Desayuno
+	const breakfast = input.processing?.breakfast === "true";
+
+	// Notas
+	const notes = isGroup ? String(input.groupNotes || "") : "";
+
+	// Construir objeto BookingData
+	return {
+		checkin,
+		checkout,
+		rooms,
+		adults,
+		children: children > 0 ? children : undefined,
+		breakfast,
+		notes: notes || undefined,
+	};
+}
+
+/**
+ * Construye el mensaje de WhatsApp en formato legacy.
+ * Usa buildWhatsAppMessage internamente pero adapta el formato.
+ *
+ * @param input - Datos en formato BuildBookingMessageInput (legacy)
+ * @returns Mensaje formateado para WhatsApp
+ */
+export function buildBookingMessage(input: BuildBookingMessageInput): string {
+	if (input.isGroupMode) {
+		const parsed = parseDateRangeLegacy(input.dateRangeRaw || "");
+		return `
+*Estimado Hotel Ensueños por favor necesito que me ayude con una reserva de GRUPO:*
+
+➢ Check In: ${parsed.checkIn}
+➢ Check Out: ${parsed.checkOut}
+➢ Cantidad de Noches: ${parsed.nightsCount}
+➢ Adultos: ${input.groupAdults}
+➢ Adolescentes: ${input.groupTeens}
+➢ Niños: ${input.groupKids}
+➢ Infantes: ${input.groupInfants}
+➢ Distribución: ${input.distributionLabel}
+➢ Desayuno incluido: ${input.processing?.breakfast === "on" ? "Sí" : "No"}
+`;
+	} else {
+		const type = input.isVehicleChecked ? "VEHÍCULO" : "RESERVACIÓN";
+		const vehicleSection = input.isVehicleChecked
+			? input.vehicleItems
+				? `\n➢ *Vehículos:*\n${input.vehicleItems.map((item, idx) => `   ${idx + 1}. ${item.type}, Placa: ${item.plate || "N/A"}`).join("\n")}`
+				: ""
+			: "";
+
+		return `
+*Estimado Hotel Ensueños por favor necesito que me ayude con una reserva de ${type}:*
+
+➢ Check In: ${input.processing?.checkin}
+➢ Check Out: ${input.processing?.checkout}
+➢ Cantidad de Noches: ${input.processing?.nights}
+➢ Adultos: ${input.processing?.adults}
+➢ Niños: ${input.processing?.children}
+➢ Habitaciones: ${input.processing?.rooms}
+➢ Desayuno incluido: ${input.processing?.breakfast === "true" ? "Sí" : "No"}${vehicleSection}
+`;
+	}
+}
+
+// ============== Fin compatibilidad ==============
 
 export type BookingType = "standard" | "group" | "vehicle";
 
 export interface BookingData {
-	/** Nombre del huésped */
-	guestName: string;
 	/** Fecha de check-in (YYYY-MM-DD) */
 	checkin: string;
 	/** Fecha de checkout (YYYY-MM-DD) */
@@ -90,7 +235,6 @@ function buildStandardMessage(data: BookingData): string {
 	const breakfastText = data.breakfast ? "✅ Incluido" : "❌ No incluido";
 
 	let message = `🏨 *NUEVA RESERVACIÓN - Hotel Ensueños*\n\n`;
-	message += `👤 *Huésped:* ${data.guestName}\n`;
 	message += `📅 *Check-in:* ${formatDate(data.checkin)}\n`;
 	message += `📅 *Check-out:* ${formatDate(data.checkout)}\n`;
 	message += `🌙 *Noches:* ${nights}\n`;
@@ -119,7 +263,6 @@ function buildGroupMessage(data: BookingData): string {
 	const nights = calculateNights(data.checkin, data.checkout);
 
 	let message = `🏨 *NUEVA RESERVACIÓN GRUPAL - Hotel Ensueños*\n\n`;
-	message += `👤 *Huésped:* ${data.guestName}\n`;
 	message += `📅 *Check-in:* ${formatDate(data.checkin)}\n`;
 	message += `📅 *Check-out:* ${formatDate(data.checkout)}\n`;
 	message += `🌙 *Noches:* ${nights}\n`;
@@ -149,7 +292,6 @@ function buildVehicleMessage(
 	const nights = calculateNights(data.checkin, data.checkout);
 
 	let message = `🏨 *NUEVA RESERVACIÓN CON VEHÍCULO - Hotel Ensueños*\n\n`;
-	message += `👤 *Huésped:* ${data.guestName}\n`;
 	message += `📅 *Check-in:* ${formatDate(data.checkin)}\n`;
 	message += `📅 *Check-out:* ${formatDate(data.checkout)}\n`;
 	message += `🌙 *Noches:* ${nights}\n`;
@@ -230,7 +372,6 @@ export function buildContactMessage(
  * @returns true si los datos son válidos
  */
 export function validateBookingData(data: BookingData): boolean {
-	if (!data.guestName || data.guestName.trim() === "") return false;
 	if (!data.checkin || !data.checkout) return false;
 	if (data.rooms < 1 || data.adults < 1) return false;
 
@@ -240,4 +381,106 @@ export function validateBookingData(data: BookingData): boolean {
 		return false;
 
 	return true;
+}
+
+// ============== Re-export helpers para src/services/messages/whatsapp.ts ==============
+
+/**
+ * Formats the booking data from a FormData object into a readable string.
+ * Ahora vive en el adapter para centralizar la lógica de mensajes WhatsApp.
+ */
+export function formatBookingMessageFromFormData(
+	formData: FormData,
+	bookingType: "group" | "vehicle",
+): string {
+	// Contenido compartido con el endpoint de notifications
+	return buildBookingMessage({
+		isGroupMode: bookingType === "group",
+		dateRangeRaw:
+			(formData.get("dateRangeGroup") as string | null) ||
+			(formData.get("dateRange") as string | null) ||
+			undefined,
+		groupAdults: formData.get("groupAdults"),
+		groupTeens: formData.get("groupTeens"),
+		groupKids: formData.get("groupKids"),
+		groupInfants: formData.get("groupInfants"),
+		distributionLabel: formData.get("distributionType")?.toString(),
+		groupNotes: formData.get("groupNotes"),
+		isVehicleChecked:
+			(formData.get("vehicle") as string | null) === "on",
+		vehicleItems: Array.from({ length: 6 }, (_, i) => {
+			const type = formData.get(`vehicleType${i + 1}`) as string | null;
+			const plate = formData.get(`vehiclePlate${i + 1}`) as string | null;
+			return type ? { type, plate: plate || undefined } : null;
+		}).filter(Boolean) as { type: string; plate?: string }[],
+	});
+}
+// ============== Re-export helpers para src/services/messages/notifications.ts ==============
+
+/**
+ * Formato compartido de reserva para canales de notificación multi-canal.
+ * Ahora vive en el adapter para centralizar la lógica de mensajes.
+ *
+ * @param data — Datos de la reserva en formato plano
+ * @returns Mensaje formateado para Telegram + Email
+ */
+export function buildBookingNotificationMessage(data: {
+	type: "standard" | "group" | "vehicle";
+	checkin?: string | null;
+	checkout?: string | null;
+	nights?: string | null;
+	adults?: string;
+	children?: string;
+	rooms?: string;
+	breakfast?: string;
+	groupAdults?: string;
+	groupTeens?: string;
+	groupKids?: string;
+	groupInfants?: string;
+	groupNotes?: string;
+	vehicles?: { type: string; plate: string }[];
+	vehicleNotes?: string;
+}): string {
+	const lines: string[] = [];
+
+	lines.push("🏨 *Nueva solicitud de reserva — Hotel Ensueños*");
+	lines.push("");
+
+	if (data.type === "group") {
+		lines.push("📋 *Tipo:* Reserva grupal");
+	} else if (data.type === "vehicle") {
+		lines.push("📋 *Tipo:* Reserva con vehículo");
+	} else {
+		lines.push("📋 *Tipo:* Reserva estándar");
+	}
+
+	if (data.checkin) lines.push(`📅 Check-in: ${data.checkin}`);
+	if (data.checkout) lines.push(`📅 Check-out: ${data.checkout}`);
+	if (data.nights) lines.push(`🌙 Noches: ${data.nights}`);
+
+	if (data.adults) lines.push(`👤 Adultos: ${data.adults}`);
+	if (data.children) lines.push(`👶 Niños: ${data.children}`);
+	if (data.rooms) lines.push(`🚪 Habitaciones: ${data.rooms}`);
+	if (data.breakfast)
+		lines.push(`🍳 Desayuno: ${data.breakfast === "true" ? "Sí" : "No"}`);
+
+	if (data.groupAdults) lines.push(`👤 Adultos (grupo): ${data.groupAdults}`);
+	if (data.groupTeens) lines.push(`👦 Adolescentes: ${data.groupTeens}`);
+	if (data.groupKids) lines.push(`🧒 Niños: ${data.groupKids}`);
+	if (data.groupInfants) lines.push(`🍼 Infantes: ${data.groupInfants}`);
+	if (data.groupNotes) lines.push(`📝 Notas: ${data.groupNotes}`);
+
+	if (data.vehicles?.length) {
+		lines.push("");
+		lines.push("🚗 *Vehículos:*");
+		data.vehicles.forEach((v, i) => {
+			lines.push(`  ${i + 1}. ${v.type} — Placa: ${v.plate}`);
+		});
+	}
+	if (data.vehicleNotes) lines.push(`📝 Notas vehículo: ${data.vehicleNotes}`);
+
+	lines.push("");
+	lines.push("_Enviado desde hotelensuenos.com_");
+
+	return lines.join("\n");
 }

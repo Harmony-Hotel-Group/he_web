@@ -16,6 +16,9 @@ import { logger } from "@/services/logger";
 import { sendAdminEmail } from "./email";
 import { sendTelegramMessage } from "./telegram";
 import { postWebhook } from "./webhooks";
+import {
+	buildBookingNotificationMessage,
+} from "@/adapters/booking/whatsapp.adapter";
 
 const log = logger("messages:notifications");
 
@@ -30,30 +33,14 @@ export interface NotificationResult {
 	error?: string;
 }
 
-export interface BookingNotificationData {
-	type: "standard" | "group" | "vehicle";
-	checkin?: string | null;
-	checkout?: string | null;
-	nights?: string | null;
-	adults?: string;
-	children?: string;
-	rooms?: string;
-	breakfast?: string;
-	groupAdults?: string;
-	groupTeens?: string;
-	groupKids?: string;
-	groupInfants?: string;
-	groupNotes?: string;
-	vehicles?: { type: string; plate: string }[];
-	vehicleNotes?: string;
-}
+export type BookingNotificationData = Parameters<
+	typeof buildBookingNotificationMessage
+>[0];
 
 interface NotifyOptions {
 	channels?: NotificationChannel[];
 	webhookUrl?: string;
 }
-
-// ============== Config ==============
 
 const ENV = {
 	TELEGRAM_CHAT_ID: import.meta.env.TELEGRAM_CHAT_ID as string | undefined,
@@ -63,57 +50,6 @@ const ENV = {
 		| undefined,
 	DEV: import.meta.env.DEV as boolean,
 };
-
-// ============== Formateo de mensaje ==============
-
-function formatBookingMessage(data: BookingNotificationData): string {
-	const lines: string[] = [];
-
-	lines.push("🏨 *Nueva solicitud de reserva — Hotel Ensueños*");
-	lines.push("");
-
-	if (data.type === "group") {
-		lines.push("📋 *Tipo:* Reserva grupal");
-	} else if (data.type === "vehicle") {
-		lines.push("📋 *Tipo:* Reserva con vehículo");
-	} else {
-		lines.push("📋 *Tipo:* Reserva estándar");
-	}
-
-	if (data.checkin) lines.push(`📅 Check-in: ${data.checkin}`);
-	if (data.checkout) lines.push(`📅 Check-out: ${data.checkout}`);
-	if (data.nights) lines.push(`🌙 Noches: ${data.nights}`);
-
-	if (data.adults) lines.push(`👤 Adultos: ${data.adults}`);
-	if (data.children) lines.push(`👶 Niños: ${data.children}`);
-	if (data.rooms) lines.push(`🚪 Habitaciones: ${data.rooms}`);
-	if (data.breakfast)
-		lines.push(`🍳 Desayuno: ${data.breakfast === "true" ? "Sí" : "No"}`);
-
-	if (data.groupAdults) lines.push(`👤 Adultos (grupo): ${data.groupAdults}`);
-	if (data.groupTeens) lines.push(`👦 Adolescentes: ${data.groupTeens}`);
-	if (data.groupKids) lines.push(`🧒 Niños: ${data.groupKids}`);
-	if (data.groupInfants) lines.push(`🍼 Infantes: ${data.groupInfants}`);
-	if (data.groupNotes) lines.push(`📝 Notas: ${data.groupNotes}`);
-
-	if (data.vehicles?.length) {
-		lines.push("");
-		lines.push("🚗 *Vehículos:*");
-		data.vehicles.forEach((v, i) => {
-			lines.push(`  ${i + 1}. ${v.type} — Placa: ${v.plate}`);
-		});
-	}
-	if (data.vehicleNotes) lines.push(`📝 Notas vehículo: ${data.vehicleNotes}`);
-
-	lines.push("");
-	lines.push("_Enviado desde hotelensuenos.com_");
-
-	return lines.join("\n");
-}
-
-function formatPlainMessage(data: BookingNotificationData): string {
-	return formatBookingMessage(data).replace(/\*/g, "").replace(/_/g, "");
-}
 
 // ============== Despacho por canal ==============
 
@@ -129,6 +65,7 @@ async function dispatchToTelegram(text: string): Promise<NotificationResult> {
 		return { channel: "telegram", ok: false, error: String(e) };
 	}
 }
+// ============== Despacho por canal ==============
 
 async function dispatchToEmail(
 	subject: string,
@@ -145,6 +82,7 @@ async function dispatchToEmail(
 		return { channel: "email", ok: false, error: String(e) };
 	}
 }
+// ============== Despacho por canal ==============
 
 async function dispatchToWebhook(
 	url: string,
@@ -175,8 +113,8 @@ export async function notifyBooking(
 	data: BookingNotificationData,
 	options: NotifyOptions = {},
 ): Promise<NotificationResult[]> {
-	const text = formatBookingMessage(data);
-	const plainText = formatPlainMessage(data);
+	const text = buildBookingNotificationMessage(data);
+	const plainText = buildBookingNotificationMessage(data).replace(/\*/g, "").replace(/_/g, "");
 	const subject = `Nueva reserva ${data.type} — Hotel Ensueños`;
 
 	const channels = options.channels ?? ["telegram", "email"];

@@ -1,3 +1,7 @@
+// Logger
+import { logger } from "@/services/logger";
+const log = logger("utils:storage");
+
 // src/utils/storage.ts
 
 /**
@@ -17,7 +21,7 @@ export function setItem(key: string, value: any): void {
 		const serializedValue = JSON.stringify(value);
 		window.localStorage.setItem(key, serializedValue);
 	} catch (error) {
-		console.error(`Error al guardar en Local Storage (key: ${key}):`, error);
+		log.error(`Error al guardar en Local Storage (key: ${key}):`, error);
 	}
 }
 
@@ -40,7 +44,7 @@ export function getItem<T>(key: string): T | null {
 		}
 		return JSON.parse(serializedValue) as T;
 	} catch (error) {
-		console.error(`Error al leer de Local Storage (key: ${key}):`, error);
+		log.error(`Error al leer de Local Storage (key: ${key}):`, error);
 		return null;
 	}
 }

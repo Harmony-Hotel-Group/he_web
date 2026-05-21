@@ -126,21 +126,27 @@ export async function notifyBooking(
 
 	const results: NotificationResult[] = [];
 
+	const dispatchMap: Record<string, () => Promise<NotificationResult>> = {
+		telegram: () => dispatchToTelegram(text),
+		email: () =>
+			dispatchToEmail(
+				`Nueva reserva ${data.type} — Hotel Ensueños`,
+				buildBookingNotificationMessage(data).replace(/\*/g, "").replace(/_/g, ""),
+			),
+		webhook: () =>
+			webhookUrl
+				? dispatchToWebhook(webhookUrl, data)
+				: Promise.resolve({
+						channel: "webhook",
+						ok: false,
+						skipped: true,
+				  } as NotificationResult),
+	};
+
 	for (const channel of channels) {
-		switch (channel) {
-			case "telegram":
-				results.push(await dispatchToTelegram(text));
-				break;
-			case "email":
-				results.push(await dispatchToEmail(subject, plainText));
-				break;
-			case "webhook":
-				if (webhookUrl) {
-					results.push(await dispatchToWebhook(webhookUrl, data));
-				} else {
-					results.push({ channel: "webhook", ok: false, skipped: true });
-				}
-				break;
+		const dispatch = dispatchMap[channel];
+		if (dispatch) {
+			results.push(await dispatch());
 		}
 	}
 
@@ -189,26 +195,26 @@ export async function notifyContactForm(
 
 	const results: NotificationResult[] = [];
 
+	const contactDispatchMap: Record<string, () => Promise<NotificationResult>> = {
+		telegram: () => dispatchToTelegram(text),
+		email: () => dispatchToEmail(subject, plainText),
+		webhook: () =>
+			webhookUrl
+				? dispatchToWebhook(webhookUrl, {
+						type: "standard",
+						...data,
+				  } as BookingNotificationData)
+				: Promise.resolve({
+						channel: "webhook",
+						ok: false,
+						skipped: true,
+				  } as NotificationResult),
+	};
+
 	for (const channel of channels) {
-		switch (channel) {
-			case "telegram":
-				results.push(await dispatchToTelegram(text));
-				break;
-			case "email":
-				results.push(await dispatchToEmail(subject, plainText));
-				break;
-			case "webhook":
-				if (webhookUrl) {
-					results.push(
-						await dispatchToWebhook(webhookUrl, {
-							type: "standard",
-							...data,
-						} as BookingNotificationData),
-					);
-				} else {
-					results.push({ channel: "webhook", ok: false, skipped: true });
-				}
-				break;
+		const dispatch = contactDispatchMap[channel];
+		if (dispatch) {
+			results.push(await dispatch());
 		}
 	}
 

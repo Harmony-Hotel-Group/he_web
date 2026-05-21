@@ -5,9 +5,11 @@ import { Translations } from "@/i18n/translation.ts";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { api } from "@/services/api.ts";
 import type { SiteConfig } from "@/types/config-site";
+import { logger } from "@/services/logger";
 
 const lang = Astro.url.pathname.startsWith("/en") ? "en" : "es";
 const t = Translations(lang);
+const log = logger("contact");
 
 const config = (await api.fetch("config", { params: { lang } })) as SiteConfig;
 ---
@@ -172,6 +174,13 @@ const config = (await api.fetch("config", { params: { lang } })) as SiteConfig;
 								/>
 							</svg>
 							<span>{t("contact.form.submit")}</span>
+							<!-- Spinner oculto, se muestra durante envío -->
+							<span id="contact-spinner" class="hidden items-center justify-center">
+								<svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+									<circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+									<path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+								</svg>
+							</span>
 						</button>
 
 						<!-- Success/Error Messages -->
@@ -581,15 +590,12 @@ const config = (await api.fetch("config", { params: { lang } })) as SiteConfig;
 
 				if (!validateForm()) return;
 
-				const originalBtnHTML = submitBtn!.innerHTML;
+				// Mostrar spinner independiente — sin innerHTML, sin XSS
+				const btnLabel = submitBtn!.querySelector("span") as HTMLSpanElement | null;
+				const spinner = document.getElementById("contact-spinner") as HTMLSpanElement | null;
+				if (btnLabel) btnLabel.classList.add("hidden");
+				if (spinner) spinner.classList.remove("hidden");
 				(submitBtn! as HTMLButtonElement).disabled = true;
-				submitBtn!.innerHTML = `
-					<svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-						<circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-						<path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-					</svg>
-					${lang === "es" ? "Enviando..." : "Sending..."}
-				`;
 
 				successMsg?.classList.add("hidden");
 				errorMsg?.classList.add("hidden");
@@ -609,12 +615,14 @@ const config = (await api.fetch("config", { params: { lang } })) as SiteConfig;
 					form.reset();
 					successMsg?.scrollIntoView({ behavior: "smooth", block: "center" });
 				} catch (err) {
-					console.error("Contact form error:", err);
+					log.error("Contact form error:", err);
 					errorMsg?.classList.remove("hidden");
 					errorMsg?.scrollIntoView({ behavior: "smooth", block: "center" });
 				} finally {
 					(submitBtn! as HTMLButtonElement).disabled = false;
-					submitBtn!.innerHTML = originalBtnHTML;
+					// Restaurar botón original (sin innerHTML)
+					if (btnLabel) btnLabel.classList.remove("hidden");
+					if (spinner) spinner.classList.add("hidden");
 				}
 			});
 		});

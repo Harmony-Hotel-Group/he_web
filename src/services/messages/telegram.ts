@@ -1,3 +1,6 @@
+import { logger } from "@/services/logger";
+const log = logger("messages:telegram");
+
 // src/services/messages/telegram.ts
 // Telegram Bot API sender (safe no-op if not configured)
 

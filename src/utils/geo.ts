@@ -1,3 +1,6 @@
+import { logger } from "@/services/logger";
+const log = logger("utils:geo");
+
 /**
  * Obtiene información de geolocalización basada en la IP del usuario
  * @returns Promesa con datos de país, código de país, región y ciudad
@@ -22,7 +25,7 @@ export async function getGeolocation() {
 			city,
 		};
 	} catch (error) {
-		console.error("Error al obtener datos de geolocalización:", error);
+		log.error("Error al obtener datos de geolocalización:", error);
 		// Puedes devolver valores por defecto o null en caso de error
 		return {
 			country: null,

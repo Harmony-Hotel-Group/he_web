@@ -16,6 +16,8 @@
 
 import { actions } from "astro:actions";
 import { buildBookingMessage } from "@/adapters/booking/whatsapp.adapter";
+import { logger } from "@/services/logger";
+import { escapeHTML } from "@/utils/security";
 
 export interface SubmitConfig {
 	whatsappNumber: string;
@@ -28,6 +30,31 @@ export interface SubmitConfig {
  * @param opts Configuración de envío
  * @returns Objeto con `handleSubmit`, `showBookingSummary`, `closeSummaryModal`
  */
+const log = logger("composables:useBookingSubmit");
+
+
+
+// === Summary helpers (SR: cada una <30 líneas) ===
+
+function _updateSummaryVehicle(
+	vehicleItems: string[],
+	vehicleSummarySection: HTMLElement | null,
+	vehicleList: HTMLElement | null,
+) {
+	if (
+		vehicleItems.length > 0 &&
+		vehicleSummarySection &&
+		vehicleList
+	) {
+		vehicleSummarySection.classList.remove("hidden");
+		vehicleList.innerHTML = vehicleItems
+			.map((item) => `<li>${escapeHTML(String(item))}</li>`)
+			.join("");
+	} else if (vehicleSummarySection) {
+		vehicleSummarySection.classList.add("hidden");
+	}
+}
+
 export function initBookingSubmit(opts: SubmitConfig) {
 	const { whatsappNumber, lang, form } = opts;
 
@@ -65,7 +92,7 @@ export function initBookingSubmit(opts: SubmitConfig) {
 		setTimeout(() => modal.classList.add("hidden"), 300);
 	}
 
-	// fillSummaryData necesita acceder a buildBookingMessage y a WhatsApp
+	// fillSummaryData — orquestador SR (cada helper <30 líneas)
 	function fillSummaryData(bookingData: unknown) {
 		const {
 			processing = {},
@@ -75,18 +102,32 @@ export function initBookingSubmit(opts: SubmitConfig) {
 			distributionLabel,
 		} = bookingData as Parameters<typeof buildBookingMessage>[0];
 
-		// Dates
+		_updateSummaryDates(processing);
+		_updateSummaryNights(processing);
+		_updateSummaryGuests(processing);
+		_updateSummaryGroup(bookingData as Parameters<typeof _updateSummaryGroup>[0]);
+		_updateSummaryRooms(processing);
+		_updateSummaryDistribution(distributionLabel);
+		_updateSummaryVehicle(vehicleItems);
+		_updateSummaryTotal(processing);
+	}
+
+	// === Summary helpers (cada uno <30 líneas — SR) ===
+
+	function _updateSummaryDates(processing: Parameters<typeof buildBookingMessage>[0]["processing"]) {
 		const datesEl = document.getElementById("summary-dates");
 		if (datesEl) datesEl.textContent = processing.dateRange ?? "—";
+	}
 
-		// Nights
+	function _updateSummaryNights(processing: Parameters<typeof buildBookingMessage>[0]["processing"]) {
 		const nightsEl = document.getElementById("summary-nights");
 		if (nightsEl) {
 			const nights = processing.nights ?? 0;
 			nightsEl.textContent = `${nights} ${nights === 1 ? "noche" : "noches"}`;
 		}
+	}
 
-		// Guests
+	function _updateSummaryGuests(processing: Parameters<typeof buildBookingMessage>[0]["processing"]) {
 		["adults", "children", "infants", "teens"].forEach((key) => {
 			const el = document.getElementById(
 				`summary-${key}`,
@@ -96,8 +137,12 @@ export function initBookingSubmit(opts: SubmitConfig) {
 					processing[key as keyof typeof processing] ?? 0,
 				);
 		});
+	}
 
-		// Group info
+	function _updateSummaryGroup(
+		bookingData: Parameters<typeof buildBookingMessage>[0],
+	) {
+		const { isGroupMode, processing } = bookingData;
 		const groupSection = document.getElementById("summary-group-section");
 		if (isGroupMode && groupSection) {
 			groupSection.classList.remove("hidden");
@@ -124,40 +169,43 @@ export function initBookingSubmit(opts: SubmitConfig) {
 		} else if (groupSection) {
 			groupSection.classList.add("hidden");
 		}
+	}
 
-		// Room info
+	function _updateSummaryRooms(processing: Parameters<typeof buildBookingMessage>[0]["processing"]) {
 		const roomsEl = document.getElementById("summary-rooms");
 		const breakfastEl = document.getElementById("summary-breakfast");
 		if (roomsEl)
 			roomsEl.textContent = `${processing.rooms ?? 0} habitación${(processing.rooms ?? 0) === 1 ? "" : "es"}`;
 		if (breakfastEl)
 			breakfastEl.textContent = processing.breakfast ? "Sí" : "No";
+	}
 
-		// Distribution label
+	function _updateSummaryDistribution(distributionLabel: string | undefined) {
 		const distributionEl = document.getElementById("summary-distribution");
 		if (distributionEl && distributionLabel)
 			distributionEl.textContent = distributionLabel;
+	}
 
-		// Vehicle
+	function _updateSummaryVehicle(vehicleItems: string[]) {
 		const vehicleSummarySection = document.getElementById(
 			"summary-vehicle-section",
 		);
 		const vehicleList = document.getElementById("summary-vehicle-list");
 		if (
-			isVehicleChecked &&
 			vehicleItems.length > 0 &&
 			vehicleSummarySection &&
 			vehicleList
 		) {
 			vehicleSummarySection.classList.remove("hidden");
 			vehicleList.innerHTML = vehicleItems
-				.map((item) => `<li>${item}</li>`)
+				.map((item) => `<li>${escapeHTML(String(item))}</li>`)
 				.join("");
 		} else if (vehicleSummarySection) {
 			vehicleSummarySection.classList.add("hidden");
 		}
+	}
 
-		// Total
+	function _updateSummaryTotal(processing: Parameters<typeof buildBookingMessage>[0]["processing"]) {
 		const totalEl = document.getElementById("summary-total");
 		if (totalEl) totalEl.textContent = processing.total ?? "—";
 	}
@@ -172,7 +220,7 @@ export function initBookingSubmit(opts: SubmitConfig) {
 		} = bookingData;
 
 		if (!whatsappNumber) {
-			console.error("No se ha configurado el número de WhatsApp.");
+			log.error("No se ha configurado el número de WhatsApp.");
 			return;
 		}
 
@@ -202,7 +250,7 @@ export function initBookingSubmit(opts: SubmitConfig) {
 			const { data, error } = await actions.booking(formData);
 
 			if (error) {
-				console.error("Error en actions.booking:", error);
+				log.error("Error en actions.booking:", error);
 				btn.innerHTML = originalHTML;
 				btn.disabled = false;
 				return;
@@ -243,7 +291,7 @@ export function initBookingSubmit(opts: SubmitConfig) {
 
 			showBookingSummary(bookingData);
 		} catch (err) {
-			console.error("Error inesperado al enviar la reserva:", err);
+			log.error("Error inesperado al enviar la reserva:", err);
 		} finally {
 			btn.disabled = false;
 			btn.innerHTML = originalHTML;

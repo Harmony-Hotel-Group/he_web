@@ -5,6 +5,7 @@ import CurrencySelector from "@/components/core/CurrencySelector.astro";
 import LangSelector from "@/components/core/LangSelector.astro";
 import { Translations } from "@/i18n/translation.ts";
 import type { SiteConfig } from "@/types/config-site";
+import { logger } from "@/services/logger";
 
 interface Props {
 	lang: string;
@@ -13,9 +14,11 @@ interface Props {
 }
 
 const { config, lang, headerBgClass = "" } = Astro.props;
+const log = logger("components:Header");
 
 const t = Translations(lang);
 
+type LocalizedText = { es: string; en: string };
 type CategoryLike = {
 	id: string;
 	category?: LocalizedText;
@@ -701,10 +704,11 @@ const uniqueTours =
 <script>
     (function() {
         // Use IIFE for better scope isolation
-        let mobileMenuButton = null;
-        let mobileMenu = null;
-        let mobileMenuClose = null;
-        let mobileSubmenus = [];
+        let mobileMenuButton: HTMLElement | null = null;
+        let mobileMenu: HTMLElement | null = null;
+        let mobileMenuClose: HTMLElement | null = null;
+        let mobileSubmenus: NodeListOf<HTMLElement> | null = null;
+        const log = logger("components:Header");
 
         // Initialize when DOM is ready
         function init() {
@@ -712,23 +716,23 @@ const uniqueTours =
             mobileMenuButton = document.getElementById("mobile-menu-button");
             mobileMenu = document.getElementById("mobile-menu");
             mobileMenuClose = document.getElementById("mobile-menu-close");
-            mobileSubmenus = document.querySelectorAll("[data-submenu]");
+            mobileSubmenus = document.querySelectorAll<HTMLElement>("[data-submenu]");
 
             // Debug log
-            console.log("Mobile menu init:", {
+            log.debug("Mobile menu init:", {
                 button: !!mobileMenuButton,
                 menu: !!mobileMenu,
                 close: !!mobileMenuClose
             });
 
             if (!mobileMenu || !mobileMenuButton) {
-                console.error("Mobile menu elements not found!");
+                log.error("Mobile menu elements not found!");
                 return;
             }
 
             // Open menu
             function openMenu() {
-                console.log("Opening mobile menu");
+                log.debug("Opening mobile menu");
                 mobileMenu.classList.remove("translate-x-full", "opacity-0", "invisible");
                 mobileMenu.classList.add("menu-open");
                 document.body.classList.add("menu-open");
@@ -737,14 +741,14 @@ const uniqueTours =
 
             // Close menu
             function closeMenu() {
-                console.log("Closing mobile menu");
+                log.debug("Closing mobile menu");
                 mobileMenu.classList.add("translate-x-full", "opacity-0", "invisible");
                 mobileMenu.classList.remove("menu-open");
                 document.body.classList.remove("menu-open");
                 mobileMenu.setAttribute("aria-hidden", "true");
                 
                 // Close all submenus
-                mobileSubmenus.forEach(btn => {
+                mobileSubmenus?.forEach(btn => {
                     const submenuId = `mobile-${btn.getAttribute("data-submenu")}-submenu`;
                     const submenu = document.getElementById(submenuId);
                     if (submenu) {
@@ -755,22 +759,22 @@ const uniqueTours =
             }
 
             // Toggle menu on hamburger click - use touchstart for better mobile support
-            mobileMenuButton.addEventListener("click", function(e) {
+            mobileMenuButton!.addEventListener("click", function(e) {
                 e.preventDefault();
                 e.stopPropagation();
                 openMenu();
             });
             
             // Also support touchstart
-            mobileMenuButton.addEventListener("touchstart", function(e) {
+            mobileMenuButton!.addEventListener("touchstart", function(e) {
                 e.preventDefault();
                 openMenu();
             }, { passive: true });
 
             // Close on X button
             if (mobileMenuClose) {
-                mobileMenuClose.addEventListener("click", closeMenu);
-                mobileMenuClose.addEventListener("touchstart", closeMenu, { passive: true });
+                mobileMenuClose!.addEventListener("click", closeMenu);
+                mobileMenuClose!.addEventListener("touchstart", closeMenu, { passive: true });
             }
 
             // Close on escape key
@@ -781,14 +785,14 @@ const uniqueTours =
             });
 
             // Close on backdrop click
-            mobileMenu.addEventListener("click", function onClick(e) {
+            mobileMenu!.addEventListener("click", function onClick(e) {
                 if (e.target === mobileMenu) {
                     closeMenu();
                 }
             });
 
             // Submenu toggle
-            mobileSubmenus.forEach(btn => {
+            mobileSubmenus?.forEach(btn => {
                 btn.addEventListener("click", function onSubmenuClick(e) {
                     e.preventDefault();
                     const submenuId = `mobile-${btn.getAttribute("data-submenu")}-submenu`;

@@ -1,3 +1,7 @@
+// Logger
+import { logger } from "@/services/logger";
+const log = logger("utils:date-picker-sync");
+
 // src/utils/date-picker-sync.ts
 /**
  * Sistema de sincronización para DatePickers
@@ -67,10 +71,10 @@ class DatePickerSyncManager {
 				}
 
 				if (import.meta.env.DEV) {
-					console.log(`[DatePickerSync] Synced ${sourceId} → ${pickerId}`);
+					log.debug(`Synced ${sourceId} → ${pickerId}`);
 				}
 			} catch (error) {
-				console.error(`[DatePickerSync] Error syncing ${pickerId}:`, error);
+				log.error(`Error syncing ${pickerId}:`, error);
 			}
 		});
 	}
@@ -83,7 +87,7 @@ class DatePickerSyncManager {
 		this.syncGroups.get(syncGroup)?.delete(pickerId);
 
 		if (import.meta.env.DEV) {
-			console.log(`[DatePickerSync] Unregistered: ${pickerId}`);
+			log.debug(`Unregistered: ${pickerId}`);
 		}
 	}
 
@@ -109,7 +113,7 @@ class DatePickerSyncManager {
 		});
 
 		if (import.meta.env.DEV) {
-			console.log(`[DatePickerSync] Cleared group: ${syncGroup}`);
+			log.debug(`Cleared group: ${syncGroup}`);
 		}
 	}
 }

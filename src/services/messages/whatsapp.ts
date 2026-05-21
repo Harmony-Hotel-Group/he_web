@@ -1,3 +1,6 @@
+import { logger } from "@/services/logger";
+const log = logger("messages:whatsapp");
+
 // src/services/messages/whatsapp.ts
 
 import { formatBookingMessageFromFormData } from "@/adapters/booking/whatsapp.adapter";

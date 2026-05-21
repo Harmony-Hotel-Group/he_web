@@ -1,3 +1,6 @@
+import { logger } from "@/services/logger";
+const log = logger("messages:email");
+
 // src/services/messages/email.ts
 // Thin email sender module (Mailgun-compatible). Safe no-op when not configured.
 
@@ -28,7 +31,7 @@ function getBasicAuth(apiKey: string) {
 async function doMailgunSend(params: URLSearchParams) {
 	if (!ENV.MAILGUN_API_KEY || !ENV.MAILGUN_DOMAIN) {
 		if (ENV.DEV)
-			console.warn("[messages/email] Mailgun not configured, skipping send");
+			log.warn("Mailgun not configured, skipping send");
 		return { ok: false, skipped: true } as const;
 	}
 	const url = `https://api.mailgun.net/v3/${ENV.MAILGUN_DOMAIN}/messages`;
@@ -56,11 +59,11 @@ export async function sendEmail(input: SendEmailInput) {
 
 	try {
 		const result = await doMailgunSend(params);
-		if (ENV.DEV) console.log("[messages/email] send result:", result);
+		if (ENV.DEV) log.debug("send result:", result);
 		return result;
 	} catch (e) {
 		const errorMessage = e instanceof Error ? e.message : String(e);
-		console.error("[messages/email] send error:", errorMessage);
+		log.error("send error:", errorMessage);
 		return { ok: false, error: e } as const;
 	}
 }

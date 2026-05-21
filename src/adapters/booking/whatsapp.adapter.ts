@@ -484,3 +484,55 @@ export function buildBookingNotificationMessage(data: {
 
 	return lines.join("\n");
 }
+
+// ============== Mensajes de Contacto (formulario contacto) ==============
+
+/**
+ * Datos del formulario de contacto.
+ * Coincide con ContactFormData en notifications.ts.
+ */
+export interface ContactFormData {
+	name: string;
+	email: string;
+	phone: string;
+	subject: string;
+	message: string;
+}
+
+/**
+ * Formatea el mensaje de contacto para WhatsApp (formato Markdown para WA).
+ */
+export function formatContactMessage(data: ContactFormData): string {
+	const lines: string[] = [];
+	lines.push("📧 *Nuevo mensaje de contacto — Hotel Ensueños*");
+	lines.push("");
+	lines.push(`👤 *Nombre:* ${data.name}`);
+	lines.push(`📧 *Email:* ${data.email}`);
+	lines.push(`📱 *Teléfono:* ${data.phone}`);
+	lines.push(`📝 *Asunto:* ${data.subject}`);
+	lines.push("");
+	lines.push("💬 *Mensaje:*");
+	lines.push(data.message);
+	lines.push("");
+	lines.push("_Enviado desde hotelensuenos.com_");
+	return lines.join("\n");
+}
+
+/**
+ * Formatea el mensaje de contacto para Email (texto plano).
+ */
+export function formatContactEmail(data: ContactFormData): string {
+	const lines: string[] = [];
+	lines.push("Nuevo mensaje de contacto desde el sitio web:");
+	lines.push("");
+	lines.push(`Nombre: ${data.name}`);
+	lines.push(`Email: ${data.email}`);
+	lines.push(`Teléfono: ${data.phone}`);
+	lines.push(`Asunto: ${data.subject}`);
+	lines.push("");
+	lines.push("Mensaje:");
+	lines.push(data.message);
+	lines.push("");
+	lines.push("Enviado desde hotelensuenos.com");
+	return lines.join("\n");
+}

@@ -18,6 +18,8 @@ import { sendTelegramMessage } from "./telegram";
 import { postWebhook } from "./webhooks";
 import {
 	buildBookingNotificationMessage,
+	formatContactMessage,
+	formatContactEmail,
 } from "@/adapters/booking/whatsapp.adapter";
 
 const log = logger("messages:notifications");
@@ -168,44 +170,9 @@ export interface ContactFormData {
 	message: string;
 }
 
-function formatContactMessage(data: ContactFormData): string {
-	const lines: string[] = [];
-
-	lines.push("📧 *Nuevo mensaje de contacto — Hotel Ensueños*");
-	lines.push("");
-	lines.push(`👤 *Nombre:* ${data.name}`);
-	lines.push(`📧 *Email:* ${data.email}`);
-	lines.push(`📱 *Teléfono:* ${data.phone}`);
-	lines.push(`📝 *Asunto:* ${data.subject}`);
-	lines.push("");
-	lines.push(`💬 *Mensaje:*`);
-	lines.push(data.message);
-	lines.push("");
-	lines.push("_Enviado desde hotelensuenos.com_");
-
-	return lines.join("\n");
-}
-
-function formatContactEmail(data: ContactFormData): string {
-	const lines: string[] = [];
-
-	lines.push("Nuevo mensaje de contacto desde el sitio web:");
-	lines.push("");
-	lines.push(`Nombre: ${data.name}`);
-	lines.push(`Email: ${data.email}`);
-	lines.push(`Teléfono: ${data.phone}`);
-	lines.push(`Asunto: ${data.subject}`);
-	lines.push("");
-	lines.push("Mensaje:");
-	lines.push(data.message);
-	lines.push("");
-	lines.push("Enviado desde hotelensuenos.com");
-
-	return lines.join("\n");
-}
-
 /**
  * Envía una notificación de formulario de contacto a los canales configurados.
+ * Los formatos de mensaje (WhatsApp y email) se importan desde el adapter.
  */
 export async function notifyContactForm(
 	data: ContactFormData,

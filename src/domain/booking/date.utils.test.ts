@@ -11,7 +11,7 @@ import {
 	isValidDateRange,
 	parseDateRange,
 	validateDates,
-} from "@/domain/booking/date.utils";
+} from "@/domain/date.utils";
 
 describe("date.utils", () => {
 	describe("calculateNights", () => {

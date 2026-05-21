@@ -432,6 +432,7 @@ grep -rn "src/utils/date" vite.config.mjs astro.config.mjs tsconfig*.json 2>/dev
 ---
 
 #### M-2: Estabilizar useBookingForm — mezcla de responsabilidades
+- Estado: ✅ COMPLETADA. División en 3 módulos. (commit 8f4cba3)
 
 `useBookingForm.ts` tiene 415 líneas. Mezcla:
 - Validación de campos

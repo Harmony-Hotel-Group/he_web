@@ -1,7 +1,7 @@
 import path from "node:path";
 import type { APIContext } from "astro";
-import { buildMockAvailabilityFromJson } from "@/domain/booking/availability.utils";
-import { diffNights, toUtcDate } from "@/domain/booking/date.utils";
+import { buildMockAvailabilityFromJson } from "@/domain/availability.utils";
+import { diffNights, toUtcDate } from "@/domain/date.utils";
 import { erpClient } from "@/services/erp/erp.client";
 import { json200, loadData } from "@/utils/apiHelpers";
 

@@ -12,7 +12,7 @@ import {
 	formatDateRange,
 	isSameDay,
 	nightsLabel,
-} from "@/domain/booking/date.utils";
+} from "@/domain/date.utils";
 import { datePickerSync } from "@/utils/date-picker-sync";
 
 const log = logger("composables:useDatePicker");

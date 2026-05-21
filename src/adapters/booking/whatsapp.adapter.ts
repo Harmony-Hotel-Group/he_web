@@ -1,5 +1,5 @@
 import type { BuildBookingMessageInput } from "@/domain/booking/types";
-import { calculateNights } from "@/domain/booking/date.utils";
+import { calculateNights } from "@/domain/date.utils";
 
 /**
  * src/adapters/booking/whatsapp.adapter.ts

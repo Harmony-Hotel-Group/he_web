@@ -11,7 +11,7 @@ import {
 	getExchangeRate,
 	isValidAmount,
 	isValidCurrency,
-} from "@/domain/booking/currency.utils";
+} from "@/domain/currency.utils";
 
 describe("currency.utils", () => {
 	describe("isValidCurrency", () => {

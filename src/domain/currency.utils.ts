@@ -1,5 +1,5 @@
 /**
- * src/domain/booking/currency.utils.ts
+ * src/domain/currency.utils.ts
  *
  * Utilidades para el manejo de monedas y precios.
  * Esta lógica estaba previamente en InfoCard.astro y ahora

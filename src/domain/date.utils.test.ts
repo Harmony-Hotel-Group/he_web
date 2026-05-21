@@ -1,5 +1,5 @@
 /**
- * Tests para src/domain/booking/date.utils.ts
+ * Tests para src/domain/date.utils.ts
  */
 import { describe, expect, it } from "vitest";
 import {

@@ -1,5 +1,5 @@
 /**
- * Tests para src/domain/booking/currency.utils.ts
+ * Tests para src/domain/currency.utils.ts
  */
 import { describe, expect, it } from "vitest";
 import {

@@ -1,5 +1,5 @@
 /**
- * src/domain/booking/availability.utils.ts
+ * src/domain/availability.utils.ts
  *
  * Utilidades centralizadas para cálculo de disponibilidad y precios.
  * Reemplaza la lógica duplicada que existía en api/availability.ts.
@@ -79,7 +79,7 @@ export interface ErpAvailabilityRecord {
 }
 
 /**
- * @deprecated Usar calculateNights de src/domain/booking/date.utils.ts
+ * @deprecated Usar calculateNights de src/domain/date.utils.ts
  * TODO: migrar llamadores internos y eliminar esta función en próxima versión
  * Calcula el número de noches entre dos fechas
  * @param checkin Fecha de check-in (YYYY-MM-DD)

@@ -1,5 +1,5 @@
 /**
- * src/domain/booking/date.utils.ts
+ * src/domain/date.utils.ts
  *
  * Utilidades para el manejo de fechas en reservas.
  * Esta lógica estaba previamente en DateRangePicker.astro y ahora

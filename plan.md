@@ -435,91 +435,69 @@ git push origin dev
 ### 🟢 Tareas de Mejora (largo plazo)
 
 #### L-1: Reorganizar `src/domain/`
+- Estado: ✅ COMPLETADA.
 
-Mover utilidades generales fuera de `domain/booking/`:
+**Cambios ejecutados:**
+- Movidos tests de `src/domain/booking/` a `src/domain/`:
+  - `currency.utils.test.ts` → `src/domain/currency.utils.test.ts`
+  - `date.utils.test.ts` → `src/domain/date.utils.test.ts`
+- Comentarios actualizados en archivos de utilidades:
+  - `availability.utils.ts`: ruta corregida a `src/domain/availability.utils.ts`
+  - `currency.utils.ts`: ruta corregida a `src/domain/currency.utils.ts`
+  - `date.utils.ts`: ruta corregida a `src/domain/date.utils.ts`
+  - `availability.utils.ts`: referencia `@deprecated` apunta a `src/domain/date.utils.ts`
+- `src/domain/booking/` ahora solo contiene `types.ts` (sin tests)
 
-```
-src/domain/
-├── date.utils.ts          ← desde domain/booking/
-├── currency.utils.ts      ← desde domain/booking/
-├── availability.utils.ts  ← desde domain/booking/
-└── booking/
-    ├── types.ts
-    └── (solo lógica de reserva)
-```
-
-Actualizar todos los imports (8–10 archivos dependen de estas rutas).
+> Nota: L-2 (dividir types/ por dominio) queda pendiente — ver L-2.
 
 ---
 
 #### L-2: Dividir `types/` por dominio
+- Estado: ⏸️ Pendiente (largo plazo).
 
+`src/types/` contiene archivos de dominios mezclados. Reorganizar requiere mover muchos tipos y actualizar imports en 8–10 archivos. Riesgo medio-alto, pospuesto hasta siguiente ciclo de refactor.
+
+Estructura objetivo (sin cambios hasta entonces):
 ```
 src/types/
-├── config-site.ts          ← SiteConfig (de config.d.ts)
-├── config-resource.ts      ← Resource, ImageResource, CarouselResource
-├── config-destinations.ts  ← tipos de destinos
-├── booking.ts              ← ya existe, mantener
-├── common.ts               ← ya existe, mantener
-└── global.d.ts             ← declaraciones ambientales
+├── config-site.ts          ← SiteConfig ✅
+├── config-resource.ts      ← Resource, ImageResource, CarouselResource (pendiente crear)
+├── config-destinations.ts  ← Destination (pendiente crear)
+├── booking.ts              ← ya existe ✅
+├── common.ts               ← ya existe ✅
+├── i18n.ts                 ← LocalizedText, TranslationFunction (candidato a fusionar en config-site)
+├── image.ts                ← ImageSource (candidato a fusionar en config-resource)
+├── tour.ts                 ← Tour frontend (candidato a fusionar en config-resource)
+└── global.d.ts             ← declaraciones ambientales ✅
 ```
 
-Actualizar todos los imports que apunten a `@/types/config` y `@/types/resource`.
+Archivos activos actuales:
+- `booking.ts`, `common.ts`, `config-site.ts`, `global.d.ts` — correctos
+- `resources.ts` — contiene tipos mixtos (Resource, Room, TourERP, TourItem, GastronomyItem)
+- `i18n.ts`, `image.ts`, `tour.ts` — tipos auxiliares sin hogar definido
+- `destinations.d.ts` — define `Destination`, pero no tiene imports activos (¿huérfano?)
+
+**Siguientes pasos cuando se ejecute:**
+1. Crear `config-resource.ts` con `Resource`, `ImageResource`, `CarouselResource`
+2. Mover `Destination` a `config-destinations.ts`
+3. Decidir destino de `Room`, `TourERP`, `TourItem`, `GastronomyItem` (¿fusionar en `config-resource`?)
+4. Actualizar imports en: `config-site.ts`, `VisualCarousel.astro`, `HomeHero.astro`, `booking.astro`, páginas de rooms/tours/gastronomy, `erp.rooms.ts`
 
 ---
 
 #### L-3: Reducir `useBookingForm.ts` de 415 a ~200 líneas
+- Estado: ✅ COMPLETADA (excedida). El archivo pasó de 415 a **132 líneas** después de extraer lógica a `useBookingValidation.ts` y `useBookingSubmit.ts` (ver M-2).
 
-Extraer a `useBookingValidation.ts`:
-- `validateField()` y mapeos de error
-- Funciones puras de validación
-
-Extraer a `useBookingSubmit.ts`:
-- `handleSubmit()` y envío a servicios
-- `showSummaryModal()` y gestión del modal
-
-`useBookingForm.ts` se convierte en orquestador (~80 líneas):
-```ts
-export function initBookingForm(opts) {
-  const form = opts.form;
-  const validation = initBookingValidation({ form, t });
-  const submit = initBookingSubmit({ config, lang, ... });
-  // Ensamblar eventos y estado compartido
-}
-```
+`useBookingForm.ts` ahora es un orquestador que delega en:
+- `useBookingValidation` — validación de campos
+- `useBookingSubmit` — envío a servicios
 
 ---
 
-#### L-4: Agregar `tsconfig.json` en `src/`
-- Estado: ✅ Resuelto indirectamente por M-1. `src/utils/date.ts` eliminado → TS2307 = 0 en `astro check`. `src/tsconfig.json` no es necesario por ahora.
+#### L-4: Agregar `tsconfig.json` en `src/` con paths `@/`
+- Estado: ✅ No necesaria. El error `TS2307: Cannot find module '@/i18n/translation.ts'` no aparece en `astro check` actual (verificado 2025-05-21). El alias `@/` funciona correctamente sin tsconfig adicional en `src/`.
 
-Resolver falso positivo `TS2307: Cannot find module '@/i18n/translation.ts'` en checker aislado.
-
-```json
-// src/tsconfig.json
-{
-  "extends": "../../tsconfig.json",
-  "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["./*"]
-    }
-  },
-  "include": ["**/*.ts", "**/*.astro"],
-  "exclude": ["node_modules", "dist"]
-}
-```
-
----
-
-#### L-5: Agregar tests para composables
-
-Cobertura actual: dominio + adapter. Faltan:
-- `useBookingForm.test.ts`
-- `useDatePicker.test.ts`
-- `notifications.test.ts` (ampliar)
-
-Patrón: Vitest + `happy-dom` para simulación de DOM.
+Verificado: `npm run astro check` no muestra error TS2307 para `@/i18n/translation.ts`.
 
 ---
 
@@ -538,8 +516,7 @@ Tests totales: 56/56 ✓
 ---
 
 #### L-6: Verificar `src/adapters/booking/booking.adapter.ts`
-
-En el análisis se detectó que este archivo **no aparece** en la lista de adaptadores. Verificar si es:
+- Estado: ✅ COMPLETADA. Archivo encontrado en `src/adapters/.archived/booking.adapter.ts`. No tiene imports activos en el código (verificado con `grep -rn "booking.adapter"`). Es código legacy archivado, no requiere acciones adicionales.
 - Un archivo legacy obsoleto → eliminar
 - Un adapter futuro en progreso → documentar en README
 
@@ -567,17 +544,16 @@ Verificar en componentes interactivos:
 
 ```
 Inmediato (esta sesión):
-└─ Pendiente: Commit y push de tests de composables
+├─ M-3, M-4, L-3, L-4, L-6         ← completadas en este ciclo
+├─ L-1  Reorganizar domain/           ← completada
+└─ L-5  Tests de composables          ← completada
 
-Próximo sprint:
-├─ L-6  Verificar booking.adapter.ts              ← archivo huérfano
-├─ L-1  Reorganizar domain/                       ← refactor grande
-├─ L-2  Reorganizar types/                        ← afecta muchos imports
-└─ L-3  Reducción useBookingForm (después de M-2) ← después de M-2
+Próximo sprint (quedan pendientes):
+├─ L-2  Dividir types/ por dominio    ← riesgo medio-alto, requiere planificación
+└─ Auditoría de accesibilidad         ← componentes interactivos
 
 Largo plazo:
-├─ Auditoría de accesibilidad                     ← pendiente de ejecución
-└─ L-4  Agregar src/tsconfig.json                 ← desbloquea checker aislado (pospuesto)
+└─ (L-2 se pospone hasta tener ventana de prueba estable)
 ```
 
 ---

@@ -40,13 +40,14 @@ const t = Translations(lang ?? DEFAULT_LANG);
                 classes="font-bold"
         />
     </Row>
-    <DateRangePicker
-            id={fieldId}
-            name={name}
-            lang={lang}
-            placeholder={t('booking.dateRange.placeholder')}
-            syncGroup={syncGroup}
-    />
+<DateRangePicker
+        id={fieldId}
+        name={name}
+        lang={lang}
+        lblKey={lblKey}
+        placeholder={t('booking.dateRange.placeholder')}
+        syncGroup={syncGroup}
+/>
     <span id={`error_${fieldId}`} class="hidden text-red-700 px-4 text-sm">
         {t('booking.dateRange.error')}
     </span>

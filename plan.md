@@ -562,4 +562,24 @@ Largo plazo:
 
 ---
 
+### 🔍 Auditoría de Accesibilidad (completada 2025-05-21)
+
+Hallazgos detectados y corregidos:
+
+| # | Archivo | Problema | Severidad | Corrección |
+|---|---------|----------|-----------|------------|
+| A1 | `WhatsAppButton.astro` | SVG sin `aria-hidden` | 🔴 Alto | Agregado `aria-hidden="true" role="img" aria-label="WhatsApp"` |
+| A2 | `WhatsAppButton.astro` | Tooltip sin `aria-describedby` | 🔴 Alto | Agregado `id="whatsapp-tooltip" role="tooltip"` y `aria-describedby` en el botón |
+| A3 | `BookingForm.astro` | Botón submit con `type="button"` — Enter no envía | 🔴 Alto | Cambiado a `type="submit"` + keydown listener en formulario |
+| A4 | `DateRangePicker.astro` | `<label>` vacío sin texto | 🟡 Medio | Agregado `lblKey` prop + `sr-only` label con `placeholder` |
+| A5 | `DatePickerField.astro` | No pasaba `lblKey` a `DateRangePicker` | 🟡 Medio | Prop `lblKey` agregada y pasada al componente base |
+| A6 | `BookingForm.astro` | Botón "Cancelar Grupo" sin `aria-label` | 🟢 Bajo | Agregado `aria-label="Cancelar grupo"` |
+| A7 | `WhatsAppButton.astro` | Sin `focus-visible` estilos | 🟢 Bajo | Agregado `focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2` |
+
+**Componentes revisados:** `WhatsAppButton`, `BookingForm`, `DateRangePicker`, `DatePickerField`, `Switch`, `Select`, `DropdownField`
+
+Nota: `Switch.astro`, `Select.astro`, `Label.astro` ya cumplían con criterios básicos de accesibilidad.
+
+---
+
 *Generado: 2025-05-21 | Proyecto: he_web | Estado: complementario a plan.md original | Actualizado: 2025-05-21*

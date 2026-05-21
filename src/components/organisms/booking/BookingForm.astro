@@ -92,6 +92,7 @@ const email = config?.contactInfo?.email ?? "";
         type="button"
         id="btn-cancel-group"
         class="text-sm text-red-500 hover:text-red-700 font-medium"
+        aria-label="Cancelar grupo"
       >
         ✕ Cancelar Grupo
       </button>
@@ -203,7 +204,7 @@ const email = config?.contactInfo?.email ?? "";
   <div class="text-center pt-4">
     <Button
       _id="btnSubmit"
-      type="button"
+      type="submit"
       lblKey="booking.btn.search"
       lang={lang}
       variant="accent"
@@ -243,12 +244,21 @@ const email = config?.contactInfo?.email ?? "";
 		// Cargar config desde localStorage / head
 		const config: any = {};
 
-		initBookingForm({
+		const bookingApi = initBookingForm({
 			form,
 			lang,
 			config,
 			buildBookingMessage,
 			whatsappNumber: config?.contactInfo?.whatsapp || form.dataset.whatsapp || '',
+		});
+
+		// Enviar formulario con tecla Enter en campos de texto
+		form.addEventListener('keydown', (e) => {
+			if (e.key === 'Enter' && !(e.target instanceof HTMLTextAreaElement)) {
+				e.preventDefault();
+				const submitEvent = new Event('submit', { bubbles: true, cancelable: true });
+				form.dispatchEvent(submitEvent);
+			}
 		});
 	});
 </script>

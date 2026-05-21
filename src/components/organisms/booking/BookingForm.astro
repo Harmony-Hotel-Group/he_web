@@ -9,11 +9,11 @@ import DatePickerField from "@/components/molecules/forms/DatePickerField.astro"
 import DropDownField from "@/components/molecules/forms/DropdownField.astro";
 import NumberField from "@/components/molecules/forms/NumberField.astro";
 import SwitchField from "@/components/molecules/forms/SwitchField.astro";
+import { useBookingOptions } from "@/composables/useBookingOptions";
 import { Translations } from "@/i18n/translation.ts";
 import Grid from "@/layouts/GridLayout.astro";
 import Row from "@/layouts/Row.astro";
 import type { SiteConfig } from "@/types/config";
-import { useBookingOptions } from "@/composables/useBookingOptions";
 import BookingVehicleSection from "./BookingVehicleSection.astro";
 
 interface Props {
@@ -23,12 +23,8 @@ interface Props {
 const { lang, config } = Astro.props;
 
 const t = Translations(lang);
-const {
-	adultsOptions,
-	childrenOptions,
-	roomsOptions,
-	distributionOptions,
-} = useBookingOptions(t);
+const { adultsOptions, childrenOptions, roomsOptions, distributionOptions } =
+	useBookingOptions(t);
 
 const whatsappNumber = config?.contactInfo?.whatsapp ?? "";
 const email = config?.contactInfo?.email ?? "";

@@ -1,9 +1,7 @@
 // src/services/messages/whatsapp.ts
+
+import { formatBookingMessageFromFormData } from "@/adapters/booking/whatsapp.adapter";
 import { logger } from "@/services/logger";
-import {
-	buildWhatsAppUrl,
-	formatBookingMessageFromFormData,
-} from "@/adapters/booking/whatsapp.adapter";
 
 const log = logger("messages:whatsapp");
 

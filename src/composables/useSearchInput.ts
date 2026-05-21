@@ -27,35 +27,48 @@ export function setupSearchInput(
 	options: SearchOption[],
 	config: UseSearchInputConfig = {},
 ) {
-	const inputElement = document.getElementById(inputId) as HTMLInputElement | null;
-	const dropdownElement = document.getElementById(dropdownId) as HTMLDivElement | null;
+	const inputElement = document.getElementById(
+		inputId,
+	) as HTMLInputElement | null;
+	const dropdownElement = document.getElementById(
+		dropdownId,
+	) as HTMLDivElement | null;
 
 	if (!inputElement || !dropdownElement) return;
 
 	let filteredOptions: SearchOption[] = [];
 
 	const renderDropdown = () => {
-		dropdownElement.innerHTML = '';
-		if (filteredOptions.length === 0 || inputElement.value.trim() === '') {
-			dropdownElement.classList.add('hidden');
+		dropdownElement.innerHTML = "";
+		if (filteredOptions.length === 0 || inputElement.value.trim() === "") {
+			dropdownElement.classList.add("hidden");
 			return;
 		}
 
-		dropdownElement.classList.remove('hidden');
+		dropdownElement.classList.remove("hidden");
 		filteredOptions.forEach((option) => {
-			const item = document.createElement('div');
-			item.classList.add('px-3', 'py-2', 'text-sm', 'text-primary', 'cursor-pointer', 'hover:bg-accent/20');
+			const item = document.createElement("div");
+			item.classList.add(
+				"px-3",
+				"py-2",
+				"text-sm",
+				"text-primary",
+				"cursor-pointer",
+				"hover:bg-accent/20",
+			);
 			item.textContent = option.label;
-			item.addEventListener('click', () => {
+			item.addEventListener("click", () => {
 				inputElement.value = option.label;
-				dropdownElement.classList.add('hidden');
+				dropdownElement.classList.add("hidden");
 				config.onSelect?.(option);
 
 				// Disparar evento personalizado para que componentes padres reaccionen
-				inputElement.dispatchEvent(new CustomEvent('search:select', {
-					detail: option,
-					bubbles: true,
-				}));
+				inputElement.dispatchEvent(
+					new CustomEvent("search:select", {
+						detail: option,
+						bubbles: true,
+					}),
+				);
 			});
 			dropdownElement.appendChild(item);
 		});
@@ -64,25 +77,28 @@ export function setupSearchInput(
 	const filterOptions = (query: string) => {
 		const lowerQuery = query.toLowerCase();
 		return options.filter((option) =>
-			option.label.toLowerCase().includes(lowerQuery)
+			option.label.toLowerCase().includes(lowerQuery),
 		);
 	};
 
-	inputElement.addEventListener('input', () => {
+	inputElement.addEventListener("input", () => {
 		filteredOptions = filterOptions(inputElement.value);
 		renderDropdown();
 	});
 
 	// Cerrar dropdown al hacer clic fuera
-	document.addEventListener('click', (event) => {
-		if (!inputElement.contains(event.target as Node) && !dropdownElement.contains(event.target as Node)) {
-			dropdownElement.classList.add('hidden');
+	document.addEventListener("click", (event) => {
+		if (
+			!inputElement.contains(event.target as Node) &&
+			!dropdownElement.contains(event.target as Node)
+		) {
+			dropdownElement.classList.add("hidden");
 		}
 	});
 
 	// Mostrar dropdown al focus si hay contenido o mostrar todas las opciones
-	inputElement.addEventListener('focus', () => {
-		if (inputElement.value.trim() !== '') {
+	inputElement.addEventListener("focus", () => {
+		if (inputElement.value.trim() !== "") {
 			filteredOptions = filterOptions(inputElement.value);
 		} else {
 			filteredOptions = [...options]; // Mostrar todas las opciones en focus
@@ -94,7 +110,13 @@ export function setupSearchInput(
 /**
  * Inicializa múltiples inputs de búsqueda en la página.
  */
-export function initAllSearchInputs(selectors: Array<{ inputId: string; dropdownId: string; options: SearchOption[] }>) {
+export function initAllSearchInputs(
+	selectors: Array<{
+		inputId: string;
+		dropdownId: string;
+		options: SearchOption[];
+	}>,
+) {
 	selectors.forEach(({ inputId, dropdownId, options }) => {
 		setupSearchInput(inputId, dropdownId, options);
 	});

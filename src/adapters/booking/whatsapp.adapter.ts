@@ -53,23 +53,23 @@ function parseDateRangeLegacy(dateRangeRaw: string): {
 /**
  * Mapea BuildBookingMessageInput → BookingData (formato del adapter)
  */
-function mapLegacyToBookingData(input: BuildBookingMessageInput): BookingData {
+function _mapLegacyToBookingData(input: BuildBookingMessageInput): BookingData {
 	const isGroup = input.isGroupMode;
 
 	// Extraer fechas del processing o del dateRangeRaw
 	let checkin = "";
 	let checkout = "";
-	let nights = 0;
+	let _nights = 0;
 
 	if (isGroup && input.dateRangeRaw) {
 		const parsed = parseDateRangeLegacy(input.dateRangeRaw);
 		checkin = parsed.checkIn;
 		checkout = parsed.checkOut;
-		nights = Number(parsed.nightsCount) || 0;
+		_nights = Number(parsed.nightsCount) || 0;
 	} else if (input.processing) {
 		checkin = String(input.processing.checkin || "");
 		checkout = String(input.processing.checkout || "");
-		nights =
+		_nights =
 			typeof input.processing.nights === "number"
 				? input.processing.nights
 				: Number(input.processing.nights) || 0;
@@ -406,8 +406,7 @@ export function formatBookingMessageFromFormData(
 		groupInfants: formData.get("groupInfants"),
 		distributionLabel: formData.get("distributionType")?.toString(),
 		groupNotes: formData.get("groupNotes"),
-		isVehicleChecked:
-			(formData.get("vehicle") as string | null) === "on",
+		isVehicleChecked: (formData.get("vehicle") as string | null) === "on",
 		vehicleItems: Array.from({ length: 6 }, (_, i) => {
 			const type = formData.get(`vehicleType${i + 1}`) as string | null;
 			const plate = formData.get(`vehiclePlate${i + 1}`) as string | null;

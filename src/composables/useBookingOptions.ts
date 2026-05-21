@@ -10,8 +10,8 @@
  *       useBookingOptions(t);
  */
 
-import { range } from '@/utils/math';
-import type { Translations } from '@/i18n/translation';
+import type { Translations } from "@/i18n/translation";
+import { range } from "@/utils/math";
 
 /**
  * Genera las opciones del dropdown de adultos.
@@ -21,15 +21,15 @@ function buildAdultsOptions(t: Translations) {
 	return range(1, 9).map((i, index, array) => {
 		if (index === array.length - 1) {
 			return {
-				value: 'group',
-				label: t('booking.dropdown.optGroup'),
+				value: "group",
+				label: t("booking.dropdown.optGroup"),
 			};
 		}
 		return {
 			value: `${i}`,
-			label: `${t('booking.dropdown.optAdults', {
+			label: `${t("booking.dropdown.optAdults", {
 				i,
-				s: i > 1 ? 's' : '',
+				s: i > 1 ? "s" : "",
 			})}`,
 		};
 	});
@@ -40,11 +40,11 @@ function buildAdultsOptions(t: Translations) {
  */
 function buildChildrenOptions(t: Translations) {
 	return range(0, 8).map((i) => {
-		const s = i === 0 ? 's' : i > 1 ? 's' : '';
+		const s = i === 0 ? "s" : i > 1 ? "s" : "";
 		return {
 			value: `${i}`,
-			label: `${t('booking.dropdown.optChildren', {
-				i: i === 0 ? 'Sin' : i,
+			label: `${t("booking.dropdown.optChildren", {
+				i: i === 0 ? "Sin" : i,
 				s,
 			})}`,
 		};
@@ -57,9 +57,9 @@ function buildChildrenOptions(t: Translations) {
 function buildRoomsOptions(t: Translations) {
 	return range(1, 5).map((i) => ({
 		value: `${i}`,
-		label: `${t('booking.dropdown.optRooms', {
+		label: `${t("booking.dropdown.optRooms", {
 			i,
-			s: i > 1 ? 'es' : '',
+			s: i > 1 ? "es" : "",
 		})}`,
 	}));
 }
@@ -69,7 +69,7 @@ export interface UseBookingOptionsReturn {
 	childrenOptions: ReturnType<typeof buildChildrenOptions>;
 	roomsOptions: ReturnType<typeof buildRoomsOptions>;
 	distributionOptions: readonly {
-		value: 'shared_beds' | 'shared_rooms' | 'individual_rooms';
+		value: "shared_beds" | "shared_rooms" | "individual_rooms";
 		label: string;
 	}[];
 }
@@ -83,9 +83,9 @@ export function useBookingOptions(t: Translations): UseBookingOptionsReturn {
 		childrenOptions: buildChildrenOptions(t),
 		roomsOptions: buildRoomsOptions(t),
 		distributionOptions: [
-			{ value: 'shared_beds', label: 'Camas Compartidas' },
-			{ value: 'shared_rooms', label: 'Habitaciones Compartidas' },
-			{ value: 'individual_rooms', label: 'Habitaciones Individuales' },
+			{ value: "shared_beds", label: "Camas Compartidas" },
+			{ value: "shared_rooms", label: "Habitaciones Compartidas" },
+			{ value: "individual_rooms", label: "Habitaciones Individuales" },
 		] as const,
 	};
 }

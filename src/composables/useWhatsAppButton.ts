@@ -11,8 +11,11 @@
  *   const { whatsappUrl, phoneNumber, message } = useWhatsAppButton({ config });
  */
 
-import type { SiteConfig } from '@/types/config';
-import { buildContactMessage, buildWhatsAppUrl } from '@/adapters/booking/whatsapp.adapter';
+import {
+	buildContactMessage,
+	buildWhatsAppUrl,
+} from "@/adapters/booking/whatsapp.adapter";
+import type { SiteConfig } from "@/types/config";
 
 export interface UseWhatsAppButtonOptions {
 	config: SiteConfig;
@@ -26,7 +29,7 @@ export interface UseWhatsAppButtonOptions {
  */
 export function useWhatsAppButton(opts: UseWhatsAppButtonOptions) {
 	const { whatsapp } = opts.config.contactInfo;
-	const phoneNumber = whatsapp.replace(/\+/g, '');
+	const phoneNumber = whatsapp.replace(/\+/g, "");
 	const message = buildContactMessage();
 	const whatsappUrl = buildWhatsAppUrl(phoneNumber, message);
 

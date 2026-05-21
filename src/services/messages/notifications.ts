@@ -12,15 +12,15 @@
  *   await notify.booking({ ... });
  */
 
+import {
+	buildBookingNotificationMessage,
+	formatContactEmail,
+	formatContactMessage,
+} from "@/adapters/booking/whatsapp.adapter";
 import { logger } from "@/services/logger";
 import { sendAdminEmail } from "./email";
 import { sendTelegramMessage } from "./telegram";
 import { postWebhook } from "./webhooks";
-import {
-	buildBookingNotificationMessage,
-	formatContactMessage,
-	formatContactEmail,
-} from "@/adapters/booking/whatsapp.adapter";
 
 const log = logger("messages:notifications");
 
@@ -116,7 +116,9 @@ export async function notifyBooking(
 	options: NotifyOptions = {},
 ): Promise<NotificationResult[]> {
 	const text = buildBookingNotificationMessage(data);
-	const plainText = buildBookingNotificationMessage(data).replace(/\*/g, "").replace(/_/g, "");
+	const plainText = buildBookingNotificationMessage(data)
+		.replace(/\*/g, "")
+		.replace(/_/g, "");
 	const subject = `Nueva reserva ${data.type} — Hotel Ensueños`;
 
 	const channels = options.channels ?? ["telegram", "email"];

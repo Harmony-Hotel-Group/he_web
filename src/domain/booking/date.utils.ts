@@ -248,7 +248,7 @@ export function validateDates(checkin: string, checkout: string): string[] {
  * @returns true si el formato es válido
  */
 export function isValidDateString(value: string): boolean {
-  return /^\d{4}-\d{2}-\d{2}$/.test(value);
+	return /^\d{4}-\d{2}-\d{2}$/.test(value);
 }
 
 /**
@@ -257,11 +257,11 @@ export function isValidDateString(value: string): boolean {
  * @returns Date en UTC o null si es inválido
  */
 export function toUtcDate(value: string): Date | null {
-  if (!isValidDateString(value)) return null;
-  const [y, m, d] = value.split("-").map(Number);
-  if (!y || !m || !d) return null;
-  const date = new Date(Date.UTC(y, m - 1, d));
-  return Number.isNaN(date.getTime()) ? null : date;
+	if (!isValidDateString(value)) return null;
+	const [y, m, d] = value.split("-").map(Number);
+	if (!y || !m || !d) return null;
+	const date = new Date(Date.UTC(y, m - 1, d));
+	return Number.isNaN(date.getTime()) ? null : date;
 }
 
 /**
@@ -271,6 +271,6 @@ export function toUtcDate(value: string): Date | null {
  * @returns Número de noches
  */
 export function diffNights(checkin: Date, checkout: Date): number {
-  const MS_PER_DAY = 24 * 60 * 60 * 1000;
-  return Math.floor((checkout.getTime() - checkin.getTime()) / MS_PER_DAY);
+	const MS_PER_DAY = 24 * 60 * 60 * 1000;
+	return Math.floor((checkout.getTime() - checkin.getTime()) / MS_PER_DAY);
 }

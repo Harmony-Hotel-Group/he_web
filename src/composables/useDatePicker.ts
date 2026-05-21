@@ -5,15 +5,15 @@
  * Extraído de DateRangePicker.astro para mantener átomos presentacionales.
  */
 
-import { datePickerSync } from "@/utils/date-picker-sync";
+import type { Translations } from "@/i18n/translation.ts";
+import { logger } from "@/services/logger";
 import {
 	calculateNights,
-	isSameDay,
 	formatDateRange,
+	isSameDay,
 	nightsLabel,
 } from "@/utils/date";
-import { Translations } from "@/i18n/translation.ts";
-import { logger } from "@/services/logger";
+import { datePickerSync } from "@/utils/date-picker-sync";
 
 const log = logger("composables:useDatePicker");
 
@@ -28,7 +28,10 @@ export interface DatePickerConfig {
  * @param inputElement Input DOM element
  * @param config Configuración del date picker
  */
-export function initDatePicker(inputElement: HTMLInputElement, config: DatePickerConfig = {}) {
+export function initDatePicker(
+	inputElement: HTMLInputElement,
+	config: DatePickerConfig = {},
+) {
 	const { lang, syncGroup = "booking", t } = config;
 
 	if (!inputElement || inputElement.dataset.flatpickrInitialized) {
@@ -59,7 +62,10 @@ export function initDatePicker(inputElement: HTMLInputElement, config: DatePicke
 
 					if (isSameDay(start, end)) {
 						(flatpickr(inputElement) as any).clear();
-						alert(t?.(`booking.dateRange.sameDayError`) || "Debes seleccionar al menos 2 días diferentes.");
+						alert(
+							t?.(`booking.dateRange.sameDayError`) ||
+								"Debes seleccionar al menos 2 días diferentes.",
+						);
 						return;
 					}
 
@@ -72,10 +78,18 @@ export function initDatePicker(inputElement: HTMLInputElement, config: DatePicke
 
 					datePickerSync.sync(pickerId, text, selectedDates, syncGroupName);
 
-					inputElement.dispatchEvent(new CustomEvent("datepicker:change", {
-						detail: { pickerId, value: text, dates: selectedDates, nights, syncGroup: syncGroupName },
-						bubbles: true,
-					}));
+					inputElement.dispatchEvent(
+						new CustomEvent("datepicker:change", {
+							detail: {
+								pickerId,
+								value: text,
+								dates: selectedDates,
+								nights,
+								syncGroup: syncGroupName,
+							},
+							bubbles: true,
+						}),
+					);
 				},
 
 				onReady: (_selectedDates: Date[], _dateStr: string, instance: any) => {
@@ -108,7 +122,9 @@ export function initDatePicker(inputElement: HTMLInputElement, config: DatePicke
  * Inicializa todos los date pickers en la página.
  */
 export function initAllDatePickers() {
-	const inputs = document.querySelectorAll<HTMLInputElement>(".date-range-picker-input");
+	const inputs = document.querySelectorAll<HTMLInputElement>(
+		".date-range-picker-input",
+	);
 	inputs.forEach((input) => {
 		initDatePicker(input);
 	});

@@ -274,3 +274,30 @@ export function diffNights(checkin: Date, checkout: Date): number {
 	const MS_PER_DAY = 24 * 60 * 60 * 1000;
 	return Math.floor((checkout.getTime() - checkin.getTime()) / MS_PER_DAY);
 }
+
+
+/**
+ * Verifica si dos fechas son el mismo día (solo fecha, sin hora).
+ * @param a Primera fecha
+ * @param b Segunda fecha
+ * @returns true si son el mismo día
+ */
+export function isSameDay(a: Date, b: Date): boolean {
+	return a.toDateString() === b.toDateString();
+}
+
+/**
+ * Genera la etiqueta de noches para mostrar al usuario.
+ * @param nights Número de noches (>= 0)
+ * @param t Función de traducción opcional (Translations)
+ * @returns Texto como "1 noche", "3 noches", etc.
+ */
+export function nightsLabel(
+	nights: number,
+	t?: (key: string, params?: Record<string, string | number>) => string,
+): string {
+	if (t) {
+		return t("components.dateRangePicker", { n: nights, s: nights === 1 ? "" : "s" });
+	}
+	return `${nights} noche${nights === 1 ? "" : "s"}`;
+}

@@ -4,7 +4,7 @@
 >
 > Sprint anterior cerrado: 2025-05-21 — ver `plan.md` para histórico completo.
 >
-> **Rama activa:** `dev` — último commit: `fa380d6`
+> **Rama activa:** `dev` — último commit: `c9e3d81`
 
 ---
 
@@ -77,7 +77,7 @@ src/
 
 ---
 
-### 🟡 Tarea 2: Resolver deuda técnica en `useBookingOptions.test.ts` (tilde en mock)
+### ✅ Tarea 2: Resolver deuda técnica en `useBookingOptions.test.ts` (tilde en mock)
 
 **Objetivo:** Eliminar la generación de opciones con tilde "habitaciónes" causada por el mock de traducción en tests.
 
@@ -85,15 +85,15 @@ src/
 - Modificar: `src/composables/useBookingOptions.test.ts`
 
 **Criterio de aceptación:**
-- [ ] Tests usan traducciones sin tilde ("habitaciones", no "habitaciónes")
-- [ ] Suite 56/56 sigue pasando (o 56/56 tras ajuste)
-- [ ] No hay warnings de traducción en consola de tests
+- [x] Tests usan traducciones sin tilde ("habitaciones", no "habitaciónes")
+- [x] Suite 56/56 sigue pasando (o 56/56 tras ajuste)
+- [x] No hay warnings de traducción en consola de tests
 
-**Pasos:**
-1. Leer test actual y localizar el mock de `Translations`
-2. Ajustar el mock para devolver cadenas sin tilde o usar la función de traducción real con diccionario mínimo
-3. Ejecutar `npm run test:run` para verificar
-4. Commit
+**Pasos ejecutados:**
+1. Leer test actual y localizar el mock de `Translations` ✓
+2. Ajustar el mock para devolver cadenas sin tilde ✓
+3. Ejecutar `npm run test:run` para verificar ✓ (56/56 ✓)
+4. Commit `c9e3d81` ✓ — push origin/dev ✓
 
 **Riesgo:** Bajo — cambios solo en tests, sin afectar funcionalidad.
 
@@ -167,7 +167,7 @@ Opcional (cuando haya tiempo):
 ## ✅ Checklist de cierre (sprint 2)
 
 - [x] Tarea 1: `aria-live` + `aria-invalid` implementados en campos de formulario — commit `fa380d6`
-- [ ] Tarea 2: Resuelta — usar opciones sin tilde en mock de traducción (media)
+- [x] Tarea 2: Resuelta — opciones sin tilde en mock de traducción (media) — commit `c9e3d81`
 - [ ] Tarea 3 (opcional): `scripts/accessibility-scan.sh` funcional + `npm run a11y:scan` (baja)
 - [ ] Tarea 4 (opcional): Preparar DRY adicional en mensajes de contacto (baja)
 - [ ] `npm run build` exitoso

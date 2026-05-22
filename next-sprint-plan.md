@@ -4,7 +4,7 @@
 >
 > Sprint anterior cerrado: 2025-05-21 — ver `plan.md` para histórico completo.
 >
-> **Rama activa:** `dev` — último commit: `6413b75`
+> **Rama activa:** `dev` — último commit: `fa380d6`
 
 ---
 
@@ -60,18 +60,18 @@ src/
 - Modificar: `src/composables/useBookingValidation.ts` (agregar `aria-invalid` al estado de validación)
 
 **Criterio de aceptación:**
-- [ ] Cada `<span>` de error tiene `role="alert" aria-live="polite"`
-- [ ] Cuando un campo tenga error, el componente recibe `aria-invalid={hasError}`
-- [ ] El foco no se pierde al aparecer el error
-- [ ] Screen reader anuncia el error sin necesidad de mover el foco
+- [x] Cada `<span>` de error tiene `role="alert" aria-live="polite"`
+- [x] Cuando un campo tenga error, el componente recibe `aria-invalid={hasError}`
+- [x] El foco no se pierde al aparecer el error
+- [x] Screen reader anuncia el error sin necesidad de mover el foco
 
 **Pasos:**
-1. Leer `useBookingValidation.ts` para identificar cómo se marca `error` en el estado
-2. Modificar DatePickerField: agregar `role="alert"` al `<span id="error_...">` y pasar `aria-invalid` al input de flatpickr
-3. Modificar DropdownField: mismo patrón, `aria-invalid` en `<select>`
-4. Modificar NumberField: mismo patrón, `aria-invalid` en `<input type="number">`
-5. Verificar que `aria-invalid` se actualice cuando el error se limpia
-6. Ejecutar tests, build, commit
+1. leído `useBookingValidation.ts` ✓
+2. `DatePickerField.astro: role="alert" aria-live="polite"` + `aria-invalid` en input ✓
+3. `DropdownField.astro: role="alert" aria-live="polite"` + `aria-invalid` en select ✓
+4. `NumberField.astro: role="alert" aria-live="polite"` + `aria-invalid` en input ✓
+5. `aria-invalid` se limpia en `clearValidationErrors()` ✓
+6. `npm run build: ✓ | npm run test:run: 56/56 ✓ | commit: fa380d6` ✓
 
 **Riesgo:** Bajo — cambios solo en atributos ARIA, sin lógica funcional.
 
@@ -166,9 +166,10 @@ Opcional (cuando haya tiempo):
 
 ## ✅ Checklist de cierre (sprint 2)
 
-- [ ] Tarea 1: `aria-live` + `aria-invalid` implementados en campos de formulario
-- [ ] Tarea 2: Deuda técnica `useBookingOptions.test.ts` resuelta
-- [ ] Tarea 3 (opcional): `scripts/accessibility-scan.sh` funcional + `npm run a11y:scan`
+- [x] Tarea 1: `aria-live` + `aria-invalid` implementados en campos de formulario — commit `fa380d6`
+- [ ] Tarea 2: Resuelta — usar opciones sin tilde en mock de traducción (media)
+- [ ] Tarea 3 (opcional): `scripts/accessibility-scan.sh` funcional + `npm run a11y:scan` (baja)
+- [ ] Tarea 4 (opcional): Preparar DRY adicional en mensajes de contacto (baja)
 - [ ] `npm run build` exitoso
 - [ ] `npm run test:run` 56/56 (o más si se agregan tests) pasando
 - [ ] `astro check` sin errores nuevos

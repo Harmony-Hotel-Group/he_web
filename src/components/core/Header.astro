@@ -702,15 +702,13 @@ const uniqueTours =
 </style>
 
 <script>
-    (function() {
-        // Use IIFE for better scope isolation
+    // Initialize on DOMContentLoaded (no IIFE needed — log comes from module scope)
+    document.addEventListener("DOMContentLoaded", () => {
         let mobileMenuButton: HTMLElement | null = null;
         let mobileMenu: HTMLElement | null = null;
         let mobileMenuClose: HTMLElement | null = null;
         let mobileSubmenus: NodeListOf<HTMLElement> | null = null;
-        const log = logger("components:Header");
 
-        // Initialize when DOM is ready
         function init() {
             // Get elements
             mobileMenuButton = document.getElementById("mobile-menu-button");
@@ -865,5 +863,5 @@ const uniqueTours =
                 console.log(`Currency changed to: ${currency} (${symbol})`);
             });
         });
-    })();
+    });
 </script>

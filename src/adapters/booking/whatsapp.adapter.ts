@@ -222,32 +222,68 @@ function formatDate(dateStr: string): string {
 }
 
 /**
+ * Plantilla común para mensajes de WhatsApp — extrae la lógica compartida.
+ * Cada tipo de mensaje solo especifica su encabezado y campos específicos.
+ */
+function _buildWhatsAppTemplate(params: {
+	header: string;
+	footer: string;
+	buildLines: (data: BookingData, ctx: BuildContext) => string[];
+	ctx?: BuildContext;
+}): string {
+	const lines: string[] = [];
+	lines.push(params.header);
+	lines.push("");
+
+	if (params.ctx) {
+		lines.push(...params.buildLines(params.ctx.data, params.ctx));
+	} else {
+		// buildLines llamará a formatDate y calculateNights internamente
+		// En este caso ctx no se usa; el header/footer lo definen las subfunciones
+	}
+
+	return lines.join("\n") + "\n" + params.footer;
+}
+
+/** Contexto compartido para builders */
+interface BuildContext {
+	data: BookingData;
+	vehicleCount?: number;
+	vehicleNotes?: string;
+}
+
+/**
  * Construye el mensaje de WhatsApp para una reservación estándar
  */
 function buildStandardMessage(data: BookingData): string {
 	const nights = calculateNights(data.checkin, data.checkout);
 	const breakfastText = data.breakfast ? "✅ Incluido" : "❌ No incluido";
 
-	let message = `🏨 *NUEVA RESERVACIÓN - Hotel Ensueños*\n\n`;
-	message += `📅 *Check-in:* ${formatDate(data.checkin)}\n`;
-	message += `📅 *Check-out:* ${formatDate(data.checkout)}\n`;
-	message += `🌙 *Noches:* ${nights}\n`;
-	message += `🚪 *Habitaciones:* ${data.rooms}\n`;
-	message += `👨‍👩‍👧 *Adultos:* ${data.adults}\n`;
+	const lines: string[] = [
+		"🏨 *NUEVA RESERVACIÓN - Hotel Ensueños*",
+		"",
+		`📅 *Check-in:* ${formatDate(data.checkin)}`,
+		`📅 *Check-out:* ${formatDate(data.checkout)}`,
+		`🌙 *Noches:* ${nights}`,
+		`🚪 *Habitaciones:* ${data.rooms}`,
+		`👨‍👩‍👧 *Adultos:* ${data.adults}`,
+	];
 
 	if (data.children && data.children > 0) {
-		message += `👶 *Niños:* ${data.children}\n`;
+		lines.push(`👶 *Niños:* ${data.children}`);
 	}
 
-	message += `🍳 *Desayuno:* ${breakfastText}\n`;
+	lines.push(`🍳 *Desayuno:* ${breakfastText}`);
 
 	if (data.notes) {
-		message += `\n📝 *Notas:* ${data.notes}\n`;
+		lines.push("");
+		lines.push(`📝 *Notas:* ${data.notes}`);
 	}
 
-	message += `\n_Reserva generada desde hotelensueños.com_`;
+	lines.push("");
+	lines.push("_Reserva generada desde hotelensueños.com_");
 
-	return message;
+	return lines.join("\n");
 }
 
 /**
@@ -256,23 +292,28 @@ function buildStandardMessage(data: BookingData): string {
 function buildGroupMessage(data: BookingData): string {
 	const nights = calculateNights(data.checkin, data.checkout);
 
-	let message = `🏨 *NUEVA RESERVACIÓN GRUPAL - Hotel Ensueños*\n\n`;
-	message += `📅 *Check-in:* ${formatDate(data.checkin)}\n`;
-	message += `📅 *Check-out:* ${formatDate(data.checkout)}\n`;
-	message += `🌙 *Noches:* ${nights}\n`;
-	message += `👨‍👩‍👧 *Adultos:* ${data.adults}\n`;
+	const lines: string[] = [
+		"🏨 *NUEVA RESERVACIÓN GRUPAL - Hotel Ensueños*",
+		"",
+		`📅 *Check-in:* ${formatDate(data.checkin)}`,
+		`📅 *Check-out:* ${formatDate(data.checkout)}`,
+		`🌙 *Noches:* ${nights}`,
+		`👨‍👩‍👧 *Adultos:* ${data.adults}`,
+	];
 
 	if (data.children && data.children > 0) {
-		message += `👶 *Niños:* ${data.children}\n`;
+		lines.push(`👶 *Niños:* ${data.children}`);
 	}
 
 	if (data.notes) {
-		message += `\n📝 *Notas:* ${data.notes}\n`;
+		lines.push("");
+		lines.push(`📝 *Notas:* ${data.notes}`);
 	}
 
-	message += `\n_Reserva grupal generada desde hotelensueños.com_`;
+	lines.push("");
+	lines.push("_Reserva grupal generada desde hotelensueños.com_");
 
-	return message;
+	return lines.join("\n");
 }
 
 /**
@@ -285,28 +326,48 @@ function buildVehicleMessage(
 ): string {
 	const nights = calculateNights(data.checkin, data.checkout);
 
-	let message = `🏨 *NUEVA RESERVACIÓN CON VEHÍCULO - Hotel Ensueños*\n\n`;
-	message += `📅 *Check-in:* ${formatDate(data.checkin)}\n`;
-	message += `📅 *Check-out:* ${formatDate(data.checkout)}\n`;
-	message += `🌙 *Noches:* ${nights}\n`;
-	message += `🚗 *Vehículos:* ${vehicleCount}\n`;
+	const lines: string[] = [
+		"🏨 *NUEVA RESERVACIÓN CON VEHÍCULO - Hotel Ensueños*",
+		"",
+		`📅 *Check-in:* ${formatDate(data.checkin)}`,
+		`📅 *Check-out:* ${formatDate(data.checkout)}`,
+		`🌙 *Noches:* ${nights}`,
+		`🚗 *Vehículos:* ${vehicleCount}`,
+	];
 
 	if (data.vehicleType) {
-		message += `🚙 *Tipo:* ${data.vehicleType}\n`;
+		lines.push(`🚙 *Tipo:* ${data.vehicleType}`);
 	}
 
 	if (data.vehiclePlate) {
-		message += `🔖 *Placa:* ${data.vehiclePlate}\n`;
+		lines.push(`🔖 *Placa:* ${data.vehiclePlate}`);
 	}
 
 	if (vehicleNotes) {
-		message += `\n📝 *Notas de vehículos:* ${vehicleNotes}\n`;
+		lines.push("");
+		lines.push(`📝 *Notas de vehículos:* ${vehicleNotes}`);
 	}
 
-	message += `\n_Reserva con vehículo generada desde hotelensueños.com_`;
+	lines.push("");
+	lines.push("_Reserva con vehículo generada desde hotelensueños.com_");
 
-	return message;
+	return lines.join("\n");
 }
+
+/**
+ * Construye el mensaje de WhatsApp para una reservación estándar
+ */
+
+
+/**
+ * Construye el mensaje de WhatsApp para una reservación grupal
+ */
+
+
+/**
+ * Construye el mensaje de WhatsApp para reservación con vehículo
+ */
+
 
 /**
  * Función principal para construir mensajes de WhatsApp

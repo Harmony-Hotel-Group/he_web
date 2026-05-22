@@ -48,7 +48,7 @@ const t = Translations(lang ?? DEFAULT_LANG);
         placeholder={t('booking.dateRange.placeholder')}
         syncGroup={syncGroup}
 />
-    <span id={`error_${fieldId}`} class="hidden text-red-700 px-4 text-sm">
+    <span id={`error_${fieldId}`} class="hidden text-red-700 px-4 text-sm" role="alert" aria-live="polite">
         {t('booking.dateRange.error')}
     </span>
 </div>

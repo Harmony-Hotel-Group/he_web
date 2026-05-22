@@ -15,6 +15,13 @@ export function initBookingValidation(opts: ValidationDOM) {
 		form.querySelectorAll('[id^="error_"]:not(.hidden)').forEach((el) => {
 			el.classList.add("hidden");
 		});
+		// Limpiar aria-invalid y borde rojo en todos los inputs
+		form.querySelectorAll('[id]').forEach((el) => {
+			if (el instanceof HTMLInputElement || el instanceof HTMLSelectElement) {
+				el.removeAttribute("aria-invalid");
+				el.classList.remove("border-red-500");
+			}
+		});
 	}
 
 	function _handleValidationErrors(
@@ -24,7 +31,10 @@ export function initBookingValidation(opts: ValidationDOM) {
 			const fieldName = error.path[0];
 			const inputElement = document.getElementById(fieldName) as HTMLElement | null;
 			const errorElement = document.getElementById("error_" + fieldName) as HTMLElement | null;
-			if (inputElement) inputElement.classList.add("border-red-500");
+			if (inputElement && (inputElement instanceof HTMLInputElement || inputElement instanceof HTMLSelectElement)) {
+				inputElement.classList.add("border-red-500");
+				inputElement.setAttribute("aria-invalid", "true");
+			}
 			if (errorElement) {
 				errorElement.textContent = error.message;
 				errorElement.classList.remove("hidden");
@@ -44,7 +54,10 @@ export function initBookingValidation(opts: ValidationDOM) {
 					errorElement.textContent = "Por favor, selecciona las fechas de tu grupo.";
 					errorElement.classList.remove("hidden");
 				}
-				dateInput?.classList.add("border-red-500");
+				if (dateInput) {
+					dateInput.classList.add("border-red-500");
+					dateInput.setAttribute("aria-invalid", "true");
+				}
 				return false;
 			}
 		}
@@ -61,7 +74,10 @@ export function initBookingValidation(opts: ValidationDOM) {
 					errorElement.textContent = "El grupo debe tener al menos 8 adultos.";
 					errorElement.classList.remove("hidden");
 				}
-				groupAdults.classList.add("border-red-500");
+				if (groupAdults) {
+					groupAdults.classList.add("border-red-500");
+					groupAdults.setAttribute("aria-invalid", "true");
+				}
 				return false;
 			}
 		}
@@ -74,7 +90,10 @@ export function initBookingValidation(opts: ValidationDOM) {
 					errorElement.textContent = "Por favor, selecciona las fechas.";
 					errorElement.classList.remove("hidden");
 				}
-				dateRange?.classList.add("border-red-500");
+				if (dateRange) {
+					dateRange.classList.add("border-red-500");
+					dateRange.setAttribute("aria-invalid", "true");
+				}
 				return false;
 			}
 		}

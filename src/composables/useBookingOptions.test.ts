@@ -8,7 +8,7 @@ function mockTranslations(overrides: Record<string, string> = {}): any {
 			"booking.dropdown.optGroup": "Grupo (+10)",
 			"booking.dropdown.optAdults": "{i} adulto{s}",
 			"booking.dropdown.optChildren": "{i} niño{s}", // usa "niño" base para que la s quede bien
-			"booking.dropdown.optRooms": "{i} habitación{s}",
+			"booking.dropdown.optRooms": "{i} habitacion{s}",
 			...overrides,
 		};
 		let text = base[key] || key;
@@ -48,9 +48,9 @@ describe("useBookingOptions", () => {
 		const { roomsOptions } = useBookingOptions(t);
 
 		expect(roomsOptions).toHaveLength(5);
-		expect(roomsOptions[0]).toEqual({ value: "1", label: "1 habitación" });
-		expect(roomsOptions[1]).toEqual({ value: "2", label: "2 habitaciónes" }) // nota: tilde por mock
-		expect(roomsOptions[4]).toEqual({ value: "5", label: "5 habitaciónes" }) // nota: tilde por mock;
+		expect(roomsOptions[0]).toEqual({ value: "1", label: "1 habitacion" });
+		expect(roomsOptions[1]).toEqual({ value: "2", label: "2 habitaciones" });
+		expect(roomsOptions[4]).toEqual({ value: "5", label: "5 habitaciones" });
 	});
 
 	it("genera 3 opciones de distribución fijas", () => {

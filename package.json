@@ -33,6 +33,7 @@
 	"devDependencies": {
 		"@astrojs/check": "^0.9.6",
 		"@axe-core/cli": "^4.11.3",
+		"@axe-core/puppeteer": "^4.11.3",
 		"@biomejs/biome": "2.2.7",
 		"@playwright/test": "^1.50.1",
 		"@sentry/astro": "^10.53.1",

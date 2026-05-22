@@ -50,7 +50,7 @@ echo "   Tags: ${TAGS}"
 echo ""
 
 set +e
-pnpm exec @axe-core/cli "${URL}" --tags "${TAGS}"
+pnpm exec node scripts/accessibility-scan.mjs "${URL}"
 AXE_EXIT_CODE=$?
 set -e
 

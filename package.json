@@ -12,7 +12,8 @@
 		"test": "vitest",
 		"test:run": "vitest run",
 		"test:coverage": "vitest run --coverage",
-		"test:e2e": "playwright test"
+		"test:e2e": "playwright test",
+		"a11y:scan": "bash scripts/accessibility-scan.sh"
 	},
 	"dependencies": {
 		"@astrojs/node": "^9.5.4",
@@ -31,6 +32,7 @@
 	},
 	"devDependencies": {
 		"@astrojs/check": "^0.9.6",
+		"@axe-core/cli": "^4.11.3",
 		"@biomejs/biome": "2.2.7",
 		"@playwright/test": "^1.50.1",
 		"@sentry/astro": "^10.53.1",

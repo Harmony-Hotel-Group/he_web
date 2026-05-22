@@ -127,7 +127,11 @@ src/
 6. Documentar lectura en README sección "Calidad" o similar — pendiente
 7. Ejecutar build + tests, commit `082e3eb` ✓ — push origin/dev ✓
 
-**Nota sobre "ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL":** El binario de axe-core/cli se expone como `axe` (no @axe-core/cli). Solución: usar `pnpm exec axe` en el script. Build y tests confirmados ✓ (56/56).
+**Nota sobre estrategia axe-core:**
+
+Inicialmente se usó `@axe-core/cli` (binario `axe`), pero en WSL falla por ausencia de Chrome del sistema. Solución adoptada: `@axe-core/puppeteer` en un script Node.js (`scripts/accessibility-scan.mjs`) que descarga Chromium automáticamente como dependencia. Dependencias agregadas: `puppeteer` y `@axe-core/puppeteer`.
+
+**Nota sobre `ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL`:** En v4.11.3 el binario `axe` no resolvía bien en pnpm; reemplazado por ejecución directa de Node con puppeteer.
 
 **Riesgo:** Medio — requiere levantar servidor en脚本, manejo de timeouts.
 

@@ -41,6 +41,7 @@
 		"@types/node": "^24.6.2",
 		"@vercel/analytics": "^2.0.1",
 		"astro": "^5.18.0",
+		"puppeteer": "^25.0.4",
 		"tailwindcss": "^4.1.16",
 		"typescript": "^5.9.3",
 		"vitest": "^3.0.0"

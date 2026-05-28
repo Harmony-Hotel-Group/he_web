@@ -28,15 +28,16 @@ const {
 	id,
 	fieldId,
 	lblKey,
+	name,
 	icon = "default",
 	lang,
 	options,
 	required,
 	className,
+	onChange,
 	initialValue,
 	hasError = false,
 } = Astro.props;
-
 const t = Translations(lang ?? DEFAULT_LANG);
 ---
 

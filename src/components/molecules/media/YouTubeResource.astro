@@ -278,9 +278,9 @@ const embedUrl = videoId
                                 );
                             }
                         }
-                    } catch (e) {
-                        log.error(e);
-                    }
+} catch (e) {
+                                console.error("[YouTubeResource-Client] Parse error:", e);
+                            }
                 }
             };
 

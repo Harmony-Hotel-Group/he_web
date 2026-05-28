@@ -6,7 +6,7 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import { api } from "@/services/api";
 
 interface Props {
-	titleHead: string;
+	titleKey: string;
 	title: string;
 	message: string;
 	btnBackLabel: string;
@@ -15,13 +15,13 @@ interface Props {
 
 // export const prerender = false;
 
-const { titleHead, title, message, btnBackLabel, lang } = Astro.props;
+const { titleKey, title, message, btnBackLabel, lang } = Astro.props;
 
 const config = await api.fetch("config");
 ---
 
 <BaseLayout
-    titleKey={titleHead}
+    titleKey={titleKey}
     lang={lang}
     config={config}
     headerBgClass="bg-gradient-to-b from-gray-800 to-white shadow-md"

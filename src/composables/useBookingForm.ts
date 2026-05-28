@@ -52,6 +52,7 @@ export function initBookingForm(opts: UseBookingFormOptions) {
 	const dateRangeGroup = document.getElementById(
 		"dateRangeGroup",
 	) as HTMLInputElement | null;
+	const childrenAgeContainer = document.getElementById("children-age-container");
 
 	// --- Vehicle Section Observer ---
 	if (vehicleSwitchButton && vehicleSection) {
@@ -112,18 +113,41 @@ export function initBookingForm(opts: UseBookingFormOptions) {
 		});
 	}
 
-	// --- Children dropdown observer for age inputs ---
-	const childrenAgeContainer = document.getElementById("children-age-container");
+	// --- Children age inputs (dynamic like vehicles) ---
+	const createChildAgeHTML = (index: number) => {
+		return `
+			<div class="child-age-item flex flex-col gap-2">
+				<label class="text-sm font-medium">Edad del Niño ${index}</label>
+				<input
+					type="number"
+					name="childAge${index}"
+					min="1"
+					max="17"
+					placeholder="Años"
+					class="w-full px-3 py-2 text-sm border border-gray-300 rounded-md"
+				/>
+			</div>`;
+	};
+
 	if (childrenDropdown && childrenAgeContainer) {
-		childrenDropdown.addEventListener("change", (e) => {
-			const target = e.target as HTMLSelectElement;
-			const numChildren = parseInt(target.value, 10) || 0;
+		const renderChildAges = () => {
+			const numChildren = parseInt(childrenDropdown.value, 10) || 0;
+			childrenAgeContainer.innerHTML = "";
+
 			if (numChildren > 0) {
 				childrenAgeContainer.classList.remove("hidden");
+				for (let i = 1; i <= numChildren; i++) {
+					childrenAgeContainer.insertAdjacentHTML(
+						"beforeend",
+						createChildAgeHTML(i),
+					);
+				}
 			} else {
 				childrenAgeContainer.classList.add("hidden");
 			}
-		});
+		};
+
+		childrenDropdown.addEventListener("change", renderChildAges);
 	}
 
 	// --- Cancel Group Button ---

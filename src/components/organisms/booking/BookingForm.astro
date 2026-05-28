@@ -68,6 +68,20 @@ const email = config?.contactInfo?.email ?? "";
         options={childrenOptions}
       />
 
+      <!-- Children age inputs (shown when children > 0) -->
+      <div id="children-age-container" class="hidden col-span-5">
+        <Row classes="items-center gap-2">
+          <Label lblKey="booking.group.kids" lang={lang} forId="childAges" />
+          <input
+            type="text"
+            id="childAges"
+            name="childAges"
+            placeholder={t("booking.group.notesPlaceholder") ?? t("booking.group.notesPlaceholder")}
+            class="flex-1 px-3 py-2 text-sm border border-gray-300 rounded-md"
+          />
+        </Row>
+      </div>
+
       <DropDownField
         fieldId="rooms"
         name="rooms"

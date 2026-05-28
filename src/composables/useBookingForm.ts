@@ -39,6 +39,9 @@ export function initBookingForm(opts: UseBookingFormOptions) {
 	const adultsDropdown = document.getElementById(
 		"adults",
 	) as HTMLSelectElement | null;
+	const childrenDropdown = document.getElementById(
+		"children",
+	) as HTMLSelectElement | null;
 	const btnCancelGroup = document.getElementById("btn-cancel-group");
 	const specialRequestSection = document.getElementById(
 		"special_request-section",
@@ -109,10 +112,29 @@ export function initBookingForm(opts: UseBookingFormOptions) {
 		});
 	}
 
+	// --- Children dropdown observer for age inputs ---
+	const childrenAgeContainer = document.getElementById("children-age-container");
+	if (childrenDropdown && childrenAgeContainer) {
+		childrenDropdown.addEventListener("change", (e) => {
+			const target = e.target as HTMLSelectElement;
+			const numChildren = parseInt(target.value, 10) || 0;
+			if (numChildren > 0) {
+				childrenAgeContainer.classList.remove("hidden");
+			} else {
+				childrenAgeContainer.classList.add("hidden");
+			}
+		});
+	}
+
 	// --- Cancel Group Button ---
 	if (btnCancelGroup) {
 		btnCancelGroup.addEventListener("click", () => {
 			_toggleGroupMode(false);
+			if (adultsDropdown) adultsDropdown.value = "1";
+			// Reset children dropdown to 0
+			if (childrenDropdown) childrenDropdown.value = "0";
+			// Hide children age inputs
+			if (childrenAgeContainer) childrenAgeContainer.classList.add("hidden");
 		});
 	}
 

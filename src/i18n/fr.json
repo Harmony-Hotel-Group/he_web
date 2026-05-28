@@ -66,7 +66,8 @@
 			"error": "Aucune date sélectionnée"
 		},
 		"number": {
-			"error": "Veuillez choisir un numéro valide"
+			"error": "Veuillez choisir un numéro valide",
+			"placeholder": "Entrez une quantité"
 		},
 		"vehicles": {
 			"title": "Réserver un véhicule",

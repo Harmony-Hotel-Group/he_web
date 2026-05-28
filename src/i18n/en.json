@@ -53,7 +53,8 @@
 			"sameDayError": "You must select at least 2 different days."
 		},
 		"number": {
-			"error": "Please choose a valid number"
+			"error": "Please choose a valid number",
+			"placeholder": "Enter an amount"
 		},
 		"vehicles": {
 			"title": "Book a Vehicle",

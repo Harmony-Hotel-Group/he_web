@@ -23,6 +23,7 @@ export interface SubmitConfig {
 	whatsappNumber: string;
 	lang: string;
 	form: HTMLFormElement;
+	groupFields: HTMLElement | null;
 }
 
 /**
@@ -56,7 +57,7 @@ function _updateSummaryVehicle(
 }
 
 export function initBookingSubmit(opts: SubmitConfig) {
-	const { whatsappNumber, lang, form } = opts;
+	const { whatsappNumber, lang, form, groupFields } = opts;
 
 	// --- Modal helpers ---
 	function showBookingSummary(bookingData: unknown) {

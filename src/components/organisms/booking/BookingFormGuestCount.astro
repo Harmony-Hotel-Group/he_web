@@ -33,14 +33,14 @@ const years = Array.from({ length: MAX }, (_, i) => i + 1);
 
 	<!-- Teens 12-17 -->
 	<Row>
-		<label for="teens" class="text-sm">{t("booking.group.teens")}</label>
+		<label for="groupAdults" class="text-sm">{t("booking.group.adults")}</label>
 		<select
-			id="teens"
-			name="teens"
+			id="groupAdults"
+			name="groupAdults"
 			class="w-full rounded-md border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800"
 		>
 			{years.map((y) => (
-				<option value={y} selected={teens >= y}>
+				<option value={y}>
 					{y}
 				</option>
 			))}
@@ -49,14 +49,14 @@ const years = Array.from({ length: MAX }, (_, i) => i + 1);
 
 	<!-- Children 5-11 -->
 	<Row>
-		<label for="children" class="text-sm">{t("booking.group.kids")}</label>
+		<label for="kids" class="text-sm">{t("booking.group.kids")}</label>
 		<select
-			id="children"
-			name="children"
+			id="kids"
+			name="kids"
 			class="w-full rounded-md border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800"
 		>
 			{years.map((y) => (
-				<option value={y} selected={children >= y}>
+				<option value={y}>
 					{y}
 				</option>
 			))}

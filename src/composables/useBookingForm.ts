@@ -127,6 +127,7 @@ export function initBookingForm(opts: UseBookingFormOptions) {
 		form,
 		whatsappNumber,
 		lang,
+		groupFields,
 	});
 
 	// --- Submit Handler orquestado ---

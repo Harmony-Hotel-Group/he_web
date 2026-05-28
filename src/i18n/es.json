@@ -160,7 +160,8 @@
 			"error": "No hay fecha seleccionada"
 		},
 		"number": {
-			"error": "Eliga un numero valido"
+			"error": "Elige un número válido",
+			"placeholder": "Ingresa una cantidad"
 		},
 		"vehicles": {
 			"title": "Reservar Vehiculo",

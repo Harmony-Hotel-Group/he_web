@@ -4,7 +4,7 @@ import DatePickerField from "@/components/molecules/forms/DatePickerField.astro"
 import DropDownField from "@/components/molecules/forms/DropdownField.astro";
 import { Translations } from "@/i18n/translation.ts";
 import Grid from "@/layouts/GridLayout.astro";
-import Row from "@/layouts/Row.astro";
+import { useBookingOptions } from "@/composables/useBookingOptions";
 import type { SiteConfig } from "@/types/config-site";
 
 interface Props {
@@ -15,24 +15,8 @@ interface Props {
 const { lang, config } = Astro.props;
 const t = Translations(lang);
 
-const adultsOptions = Array.from({ length: 8 }, (_, i) => {
-	const val = String(i + 1);
-	return val === "8"
-		? { value: "group", label: t("booking.dropdown.optGroup") }
-		: {
-				value: val,
-				label: `${t("booking.dropdown.optAdults", { i: i + 1 })} ${i + 1 > 1 ? t("booking.dropdown.plural") : ""}`,
-			};
-});
-
-const childrenOptions = Array.from({ length: 8 }, (_, i) => {
-	const val = String(i);
-	return { value: val, label: `${t("booking.dropdown.optChildren")} ${i}` };
-});
-
-const roomsOptions = [1, 2, 3, 4].map((i) => {
-	return { value: String(i), label: `${t("booking.dropdown.optRooms")} ${i}` };
-});
+// Usar el composable centralizado para generar opciones
+const { adultsOptions, childrenOptions, roomsOptions } = useBookingOptions(t);
 ---
 <!-- Standard Fields: dates + guest counts -->
 <div id="standard-fields" class="space-y-4">

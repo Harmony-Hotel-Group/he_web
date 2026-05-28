@@ -5,19 +5,23 @@
  * Centraliza el mapeo de opciones para que BookingForm.astro sea
  * presentacional puro (sin lógica de generación de opciones inline).
  *
+ * Usa claves separadas _one para singular y genérica para plural.
+ *
  * Uso:
  *   const { adultsOptions, childrenOptions, roomsOptions, distributionOptions } =
  *       useBookingOptions(t);
  */
 
-import type { Translations } from "@/i18n/translation";
+import type { TranslationParams } from "@/i18n/translation";
 import { range } from "@/utils/math";
+
+type TFunc = (key: string, params?: TranslationParams) => string;
 
 /**
  * Genera las opciones del dropdown de adultos.
  * Rango 1–9; el último valor ("group") activa modo grupo.
  */
-function buildAdultsOptions(t: Translations) {
+function buildAdultsOptions(t: TFunc) {
 	return range(1, 9).map((i, index, array) => {
 		if (index === array.length - 1) {
 			return {
@@ -27,40 +31,36 @@ function buildAdultsOptions(t: Translations) {
 		}
 		return {
 			value: `${i}`,
-			label: `${t("booking.dropdown.optAdults", {
-				i,
-				s: i > 1 ? "s" : "",
-			})}`,
+			label: t(i === 1 ? "booking.dropdown.optAdults_one" : "booking.dropdown.optAdults", { i }),
 		};
 	});
 }
 
 /**
- * Genera las opciones del dropdown de niños (0–7).
+ * Genera las opciones del dropdown de niños (0–8).
  */
-function buildChildrenOptions(t: Translations) {
+function buildChildrenOptions(t: TFunc) {
 	return range(0, 8).map((i) => {
-		const s = i === 0 ? "s" : i > 1 ? "s" : "";
+		if (i === 0) {
+			return {
+				value: `${i}`,
+				label: t("booking.dropdown.optChildren_none"),
+			};
+		}
 		return {
 			value: `${i}`,
-			label: `${t("booking.dropdown.optChildren", {
-				i: i === 0 ? "Sin" : i,
-				s,
-			})}`,
+			label: t(i === 1 ? "booking.dropdown.optChildren_one" : "booking.dropdown.optChildren", { i }),
 		};
 	});
 }
 
 /**
- * Genera las opciones del dropdown de habitaciones (1–4).
+ * Genera las opciones del dropdown de habitaciones (1–5).
  */
-function buildRoomsOptions(t: Translations) {
+function buildRoomsOptions(t: TFunc) {
 	return range(1, 5).map((i) => ({
 		value: `${i}`,
-		label: `${t("booking.dropdown.optRooms", {
-			i,
-			s: i > 1 ? "es" : "",
-		})}`,
+		label: t(i === 1 ? "booking.dropdown.optRooms_one" : "booking.dropdown.optRooms", { i }),
 	}));
 }
 
@@ -77,7 +77,7 @@ export interface UseBookingOptionsReturn {
 /**
  * Export principal: genera todas las opciones de los dropdowns del booking form.
  */
-export function useBookingOptions(t: Translations): UseBookingOptionsReturn {
+export function useBookingOptions(t: TFunc): UseBookingOptionsReturn {
 	return {
 		adultsOptions: buildAdultsOptions(t),
 		childrenOptions: buildChildrenOptions(t),

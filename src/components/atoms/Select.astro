@@ -37,16 +37,11 @@ const {
         ]}
     >
         {
-            options.map((i, index) => {
-                if (typeof value === 'number' && index === value - 1) {
-                    return (
-                        <option value={i.value} selected>
-                            {i.label}
-                        </option>
-                    );
-                }
-                return <option value={i.value}>{i.label}</option>;
-            })
+            options.map((i) => (
+                <option value={i.value} selected={String(i.value) === String(value)}>
+                    {i.label}
+                </option>
+            ))
         }
     </select>
 </div>

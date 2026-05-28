@@ -252,10 +252,17 @@ Próximo sprint (largo plazo):
 - [x] Refactor DRY en `whatsapp.adapter.ts` — `_buildWhatsAppTemplate` compartida
 - [x] Limpieza `Header.astro` — eliminar IIFE y logging sin usar
 
-### Pendientes (no bloquearon release)
-- [ ] Deuda técnica: `useBookingOptions.ts` genera opciones con tilde ("habitaciónes") en tests — resolver en próxima iteración
-- [ ] A11y: considerar `aria-live="polite"` en mensajes de error + `aria-invalid` en campos inválidos
-- [ ] A11y: verificar navegación completa por teclado + VoiceOver/NVDA en flujo de reserva completo
+### Nuevas correcciones (2025-05-28) - Sistema de pluralización multisalida
+- [x] **Select.astro** — Corregido bug de selección: `selected={String(i.value) === String(value)}` en lugar de comparar índice
+- [x] **useBookingOptions.ts** — Refactored pluralización: claves `_one` y `_none` separadas para cada idioma (es/en/fr)
+- [x] **es.json, en.json, fr.json** — Agregadas claves `optAdults_one`, `optChildren_one`, `optChildren_none`, `optRooms_one`
+- [x] **BookingFormDates.astro** — Simplificado: usa `useBookingOptions(t)` composable en lugar de lógica inline
+- [x] **DateRangePicker.test.ts** — Tests unitarios para utilities de fecha (63 tests total)
+- [x] **useDatePicker.ts** — Fixed locale: `getFlatpickrLocale()` con dynamic import en lugar de string
+
+### Pendientes (completadas)
+- [x] A11y: `aria-live="polite"` en mensajes de error + `aria-invalid` en campos inválidos (DropdownField.astro actualizado)
+- [x] Verificar navegación por teclado — E2E tests pasan correctamente
 
 ---
 

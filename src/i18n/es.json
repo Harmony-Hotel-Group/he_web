@@ -134,12 +134,16 @@
 		"subtitle": "Encuentra y asegura tu lugar para la próxima gran experiencia.",
 		"dropdown": {
 			"lblAdults": "Adultos",
-			"optAdults": "{{i}} Adulto{{s}}",
+			"optAdults": "{{i}} Adultos",
+			"optAdults_one": "1 Adulto",
 			"optGroup": "Grupo",
 			"lblChildren": "Niños",
-			"optChildren": "{{i}} Niño{{s}}",
+			"optChildren": "{{i}} Niños",
+			"optChildren_one": "1 Niño",
+			"optChildren_none": "Sin niños",
 			"lblRooms": "Habitaciones",
-			"optRooms": "{{i}} Habitación{{s}}",
+			"optRooms": "{{i}} Habitaciones",
+			"optRooms_one": "1 Habitación",
 			"error": "Falta seleccionar una opción"
 		},
 		"switch": {

@@ -21,19 +21,20 @@ interface Props {
 
 	onChange?: (value: string | number) => void;
 	initialValue?: number;
+	hasError?: boolean;
 }
 
 const {
 	id,
 	fieldId,
 	lblKey,
-	name,
 	icon = "default",
 	lang,
 	options,
 	required,
 	className,
 	initialValue,
+	hasError = false,
 } = Astro.props;
 
 const t = Translations(lang ?? DEFAULT_LANG);
@@ -55,6 +56,8 @@ const t = Translations(lang ?? DEFAULT_LANG);
 		options={options}
 		required={required}
 		value={initialValue}
+		aria-invalid={hasError}
+		aria-describedby={hasError ? `error_${fieldId ?? id ?? name}` : undefined}
 	/>
 	<span id={`error_${fieldId ?? id ?? name}`} class="hidden text-red-700 px-4" role="alert" aria-live="polite"
 		>{t("booking.dropdown.error")}</span

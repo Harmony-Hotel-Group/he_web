@@ -6,15 +6,19 @@ function mockTranslations(overrides: Record<string, string> = {}): any {
 	return (key: string, params?: Record<string, any>): string => {
 		const base: Record<string, string> = {
 			"booking.dropdown.optGroup": "Grupo (+10)",
-			"booking.dropdown.optAdults": "{i} adulto{s}",
-			"booking.dropdown.optChildren": "{i} niño{s}", // usa "niño" base para que la s quede bien
-			"booking.dropdown.optRooms": "{i} habitacion{s}",
+			"booking.dropdown.optAdults": "{{i}} Adultos",
+			"booking.dropdown.optAdults_one": "1 Adulto",
+			"booking.dropdown.optChildren": "{{i}} Niños",
+			"booking.dropdown.optChildren_one": "1 Niño",
+			"booking.dropdown.optChildren_none": "Sin niños",
+			"booking.dropdown.optRooms": "{{i}} Habitaciones",
+			"booking.dropdown.optRooms_one": "1 Habitación",
 			...overrides,
 		};
 		let text = base[key] || key;
 		if (params) {
 			Object.entries(params).forEach(([k, v]) => {
-				text = text.replace(`{${k}}`, String(v));
+				text = text.replace(new RegExp(`{{${k}}}`, "g"), String(v));
 			});
 		}
 		return text;
@@ -27,8 +31,8 @@ describe("useBookingOptions", () => {
 		const { adultsOptions } = useBookingOptions(t);
 
 		expect(adultsOptions).toHaveLength(9);
-		expect(adultsOptions[0]).toEqual({ value: "1", label: "1 adulto" });
-		expect(adultsOptions[1]).toEqual({ value: "2", label: "2 adultos" });
+		expect(adultsOptions[0]).toEqual({ value: "1", label: "1 Adulto" });
+		expect(adultsOptions[1]).toEqual({ value: "2", label: "2 Adultos" });
 		expect(adultsOptions[8]).toEqual({ value: "group", label: "Grupo (+10)" });
 	});
 
@@ -37,10 +41,10 @@ describe("useBookingOptions", () => {
 		const { childrenOptions } = useBookingOptions(t);
 
 		expect(childrenOptions).toHaveLength(9);
-		expect(childrenOptions[0]).toEqual({ value: "0", label: "Sin niños" }) // bug: en prod sale "Sin niñoss";
-		expect(childrenOptions[1]).toEqual({ value: "1", label: "1 niño" }) // bug: en prod sale "1 niños";
-		expect(childrenOptions[3]).toEqual({ value: "3", label: "3 niños" }) // prod sale "3 niños" ✓;
-		expect(childrenOptions[8]).toEqual({ value: "8", label: "8 niños" }) // prod sale "8 niños" ✓;
+		expect(childrenOptions[0]).toEqual({ value: "0", label: "Sin niños" });
+		expect(childrenOptions[1]).toEqual({ value: "1", label: "1 Niño" });
+		expect(childrenOptions[3]).toEqual({ value: "3", label: "3 Niños" });
+		expect(childrenOptions[8]).toEqual({ value: "8", label: "8 Niños" });
 	});
 
 	it("genera 4 opciones de habitaciones (1–4)", () => {
@@ -48,9 +52,9 @@ describe("useBookingOptions", () => {
 		const { roomsOptions } = useBookingOptions(t);
 
 		expect(roomsOptions).toHaveLength(5);
-		expect(roomsOptions[0]).toEqual({ value: "1", label: "1 habitacion" });
-		expect(roomsOptions[1]).toEqual({ value: "2", label: "2 habitaciones" });
-		expect(roomsOptions[4]).toEqual({ value: "5", label: "5 habitaciones" });
+		expect(roomsOptions[0]).toEqual({ value: "1", label: "1 Habitación" });
+		expect(roomsOptions[1]).toEqual({ value: "2", label: "2 Habitaciones" });
+		expect(roomsOptions[4]).toEqual({ value: "5", label: "5 Habitaciones" });
 	});
 
 	it("genera 3 opciones de distribución fijas", () => {

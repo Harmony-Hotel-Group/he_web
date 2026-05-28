@@ -99,6 +99,23 @@ export function initBookingForm(opts: UseBookingFormOptions) {
 		if (isGroup && adultsDropdown) adultsDropdown.value = "group";
 	}
 
+	// --- Adults dropdown observer for group mode ---
+	if (adultsDropdown) {
+		adultsDropdown.addEventListener("change", (e) => {
+			const target = e.target as HTMLSelectElement;
+			if (target.value === "group") {
+				_toggleGroupMode(true);
+			}
+		});
+	}
+
+	// --- Cancel Group Button ---
+	if (btnCancelGroup) {
+		btnCancelGroup.addEventListener("click", () => {
+			_toggleGroupMode(false);
+		});
+	}
+
 	// --- Delegación a sub-modulos ---
 	const validation = initBookingValidation({
 		form,

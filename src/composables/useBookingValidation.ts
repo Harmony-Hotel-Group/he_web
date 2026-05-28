@@ -6,6 +6,7 @@
 export interface ValidationDOM {
 	form: HTMLFormElement;
 	groupFields: HTMLElement | null;
+	standardFields: HTMLElement | null;
 }
 
 export function initBookingValidation(opts: ValidationDOM) {

@@ -2,7 +2,7 @@
 
 @theme {
 	--color-primary: #29333b;
-	--color-accent: #bf953d;
+	--color-accent: #bf953d; /* Dorado original — con text-gray-900 alcanza 6.4:1 */
 	--color-background: #ffffff;
 }
 

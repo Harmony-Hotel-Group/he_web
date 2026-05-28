@@ -61,10 +61,10 @@ function renderStars(rating: number): string {
 					<div class="flex items-center justify-between mb-4">
 						<div>
 							<p class="font-semibold text-primary">{review.author}</p>
-							<p class="text-sm text-gray-400">{review.country}</p>
+							<p class="text-sm text-gray-600">{review.country}</p>
 						</div>
 						{review.verified && (
-							<span class="text-xs text-green-600 bg-green-50 px-2 py-1 rounded-full">
+							<span class="text-xs text-green-800 bg-green-100 px-2 py-1 rounded-full">
 								✓ {lang === "es" ? "Verificado" : "Verified"}
 							</span>
 						)}
@@ -73,7 +73,7 @@ function renderStars(rating: number): string {
 					{/* Rating + Platform */}
 					<div class="flex items-center gap-2 mb-3">
 						<span class="text-yellow-500">{renderStars(review.rating)}</span>
-						<span class="text-xs text-gray-400">via {review.platform}</span>
+						<span class="text-xs text-gray-600">via {review.platform}</span>
 					</div>
 
 					{/* Texto */}
@@ -82,7 +82,7 @@ function renderStars(rating: number): string {
 					</p>
 
 					{/* Fecha */}
-					<p class="text-xs text-gray-300 mt-4">
+					<p class="text-xs text-gray-600 mt-4">
 						{new Date(review.date).toLocaleDateString(lang === "es" ? "es-EC" : "en-US", {
 							year: "numeric",
 							month: "long",

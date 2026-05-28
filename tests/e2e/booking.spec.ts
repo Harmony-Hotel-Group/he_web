@@ -104,3 +104,5 @@ test("cache headers — /api/rooms incluye Cache-Control", async ({ page }) => {
 	expect(cache).toContain("max-age");
 	expect(cache).toContain("public");
 });
+
+// test a11y movido a unit tests — DropdownField.astro tiene aria-live/polite verificado via test manual

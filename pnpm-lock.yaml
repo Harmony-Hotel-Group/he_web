@@ -54,6 +54,9 @@ importers:
       '@axe-core/cli':
         specifier: ^4.11.3
         version: 4.11.3
+      '@axe-core/playwright':
+        specifier: ^4.11.3
+        version: 4.11.3(playwright-core@1.60.0)
       '@axe-core/puppeteer':
         specifier: ^4.11.3
         version: 4.11.3(puppeteer@25.0.4(proxy-agent@8.0.1)(typescript@5.9.3))
@@ -78,6 +81,9 @@ importers:
       astro:
         specifier: ^5.18.0
         version: 5.18.0(@types/node@24.9.1)(@vercel/functions@2.2.13)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.52.5)(typescript@5.9.3)(yaml@2.8.1)
+      playwright-core:
+        specifier: ^1.60.0
+        version: 1.60.0
       puppeteer:
         specifier: ^25.0.4
         version: 25.0.4(proxy-agent@8.0.1)(typescript@5.9.3)
@@ -164,6 +170,11 @@ packages:
     resolution: {integrity: sha512-l6cbHsawKr8G0taTfFNKHghZr703cVGQ5+o53CmCoAW53x4KIuQ6T6bXFwW/8odh92JVMqHzBJi84QH0ne+paw==}
     engines: {node: '>=8'}
     hasBin: true
+
+  '@axe-core/playwright@4.11.3':
+    resolution: {integrity: sha512-h/kfksv4F0cVIDlKpT4700OehdRgpvuVskuQ2nb7/JmtWUXpe9ftHAPtwyXGvVSsa6SJ64A9ER7Zrzc/sIvC4w==}
+    peerDependencies:
+      playwright-core: '>= 1.0.0'
 
   '@axe-core/puppeteer@4.11.3':
     resolution: {integrity: sha512-ftQOYpDc9loAamK8nZ4ccc/f2V3/KsEp4SlbrAcbXLVXYJKbbRBvEkcPZpPkzTYOQydp4Ft+1gw2ceA/Y3kLBw==}
@@ -3329,6 +3340,11 @@ packages:
     engines: {node: '>=18'}
     hasBin: true
 
+  playwright-core@1.60.0:
+    resolution: {integrity: sha512-9bW6zvX/m0lEbgTKJ6YppOKx8H3VOPBMOCFh2irXFOT4BbHgrx5hPjwJYLT40Lu+4qtD36qKc/Hn56StUW57IA==}
+    engines: {node: '>=18'}
+    hasBin: true
+
   playwright@1.58.2:
     resolution: {integrity: sha512-vA30H8Nvkq/cPBnNw4Q8TWz1EJyqgpuinBcHET0YVJVFldr8JDNiU9LaWAE1KqSkRYazuaBhTpB5ZzShOezQ6A==}
     engines: {node: '>=18'}
@@ -4442,6 +4458,11 @@ snapshots:
       - debug
       - supports-color
       - utf-8-validate
+
+  '@axe-core/playwright@4.11.3(playwright-core@1.60.0)':
+    dependencies:
+      axe-core: 4.11.4
+      playwright-core: 1.60.0
 
   '@axe-core/puppeteer@4.11.3(puppeteer@25.0.4(proxy-agent@8.0.1)(typescript@5.9.3))':
     dependencies:
@@ -7757,6 +7778,8 @@ snapshots:
       pathe: 2.0.3
 
   playwright-core@1.58.2: {}
+
+  playwright-core@1.60.0: {}
 
   playwright@1.58.2:
     dependencies:

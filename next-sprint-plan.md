@@ -4,7 +4,7 @@
 >
 > Sprint anterior cerrado: 2025-05-21 — ver `plan.md` para histórico completo.
 >
-> **Rama activa:** `dev` — último commit: `082e3eb`
+> **Rama activa:** `dev` — último commit: `f0b09e0`
 
 ---
 
@@ -173,7 +173,7 @@ Opcional (cuando haya tiempo):
 
 - [x] Tarea 1: `aria-live` + `aria-invalid` implementados en campos de formulario — commit `fa380d6`
 - [x] Tarea 2: Resuelta — opciones sin tilde en mock de traducción (media) — commit `c9e3d81`
-- [x] Tarea 3: axe-core pipeline (`a11y:scan` funcional, baja) — commit `082e3eb`
+- [x] Tarea 3: axe-core pipeline (`a11y:scan` funcional, baja) — commit `f0b09e0`
 - [ ] Tarea 4 (opcional): DRY adicional en mensajes de contacto (baja)
 - [x] `npm run build` exitoso
 - [x] `npm run test:run` 56/56 pasando

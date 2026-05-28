@@ -24,6 +24,31 @@ export interface DatePickerConfig {
 }
 
 /**
+ * Helper: convierte Date a string YYYY-MM-DD (ISO, sin timezone)
+ */
+function dateToYMD(date: Date): string {
+	return date.toISOString().split("T")[0];
+}
+
+/**
+ * Mapeo de idiomas soportados a locales de flatpickr
+ */
+async function getFlatpickrLocale(lang: string): Promise<any> {
+	// Lazy import de locales de flatpickr
+	switch (lang) {
+		case "es":
+			const es = await import("flatpickr/dist/l10n/es");
+			return es.Spanish;
+		case "fr":
+			const fr = await import("flatpickr/dist/l10n/fr");
+			return fr.French;
+		case "en":
+		default:
+			return undefined; // default locale is English
+	}
+}
+
+/**
  * Inicializa un flatpickr en un elemento input.
  * @param inputElement Input DOM element
  * @param config Configuración del date picker
@@ -41,17 +66,20 @@ export function initDatePicker(
 	const pickerId = inputElement.id;
 	const syncGroupName = inputElement.dataset.syncGroup || syncGroup;
 
-	// Import dinámico de flatpickr para no forzarlo en el bundle si no se usa
+	// Import dinámico de flatpickr y locale para no forzarlo en el bundle si no se usa
 	// En Astro islands, esto se ejecuta en el cliente
 	import("flatpickr")
-		.then((module) => {
+		.then(async (module) => {
 			const flatpickr = module.default || module;
+
+			// Cargar locale apropiado
+			const locale = await getFlatpickrLocale(lang || "es");
 
 			flatpickr(inputElement, {
 				mode: "range",
 				minDate: "today",
 				dateFormat: "Y/m/d",
-				locale: (lang as "es") || "es",
+				locale,
 				showMonths: 1,
 				enableTime: false,
 
@@ -63,15 +91,18 @@ export function initDatePicker(
 					if (isSameDay(start, end)) {
 						(flatpickr(inputElement) as any).clear();
 						alert(
-							t?.(`booking.dateRange.sameDayError`) ||
+							t?.("booking.dateRange.sameDayError") ||
 								"Debes seleccionar al menos 2 días diferentes.",
 						);
 						return;
 					}
 
-					const nights = calculateNights(start, end);
-					const label = nightsLabel(nights, t);
-					const text = formatDateRange(start, end, label);
+					const nights = calculateNights(dateToYMD(start), dateToYMD(end));
+					const text = formatDateRange(
+						dateToYMD(start),
+						dateToYMD(end),
+						nights,
+					);
 
 					inputElement.value = text;
 					inputElement.title = text;
@@ -139,8 +170,8 @@ export function setupDatePickerObserver() {
 		for (const mutation of mutations) {
 			if (mutation.type === "childList" && mutation.target instanceof Element) {
 				const newPickers = mutation.target.querySelectorAll(
-					".date-range-picker-input:not([data-flatpickr-initialized])",
-				);
+						".date-range-picker-input:not([data-flatpickr-initialized])",
+					);
 				if (newPickers.length > 0) {
 					initAllDatePickers();
 					break;

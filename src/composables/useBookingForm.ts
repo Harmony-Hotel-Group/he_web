@@ -124,7 +124,7 @@ export function initBookingForm(opts: UseBookingFormOptions) {
 					min="1"
 					max="17"
 					placeholder="Años"
-					class="w-full px-3 py-2 text-sm border border-gray-300 rounded-md"
+					class="px-3 py-2 text-sm border border-gray-300 rounded-md"
 				/>
 			</div>`;
 	};
@@ -135,7 +135,8 @@ export function initBookingForm(opts: UseBookingFormOptions) {
 			childrenAgeContainer.innerHTML = "";
 
 			if (numChildren > 0) {
-				childrenAgeContainer.classList.remove("hidden");
+				childrenAgeContainer.classList.remove("hidden", "grid");
+				childrenAgeContainer.classList.add("grid");
 				for (let i = 1; i <= numChildren; i++) {
 					childrenAgeContainer.insertAdjacentHTML(
 						"beforeend",

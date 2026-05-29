@@ -114,17 +114,17 @@ export function initBookingForm(opts: UseBookingFormOptions) {
 	}
 
 	// --- Children age inputs (dynamic like vehicles) ---
-	const createChildAgeHTML = (index: number) => {
+	const createChildAgeHTML = (index: number, t: (key: string) => string) => {
 		return `
-			<div class="child-age-item flex flex-col gap-2">
-				<label class="text-sm font-medium">Edad del Niño ${index}</label>
+			<div class="child-age-item bg-amber-50 dark:bg-gray-800 border border-amber-200 dark:border-gray-700 rounded-lg p-3">
+				<label class="text-xs font-semibold text-amber-800 dark:text-amber-300 mb-1 block">Niño ${index}</label>
 				<input
 					type="number"
 					name="childAge${index}"
 					min="1"
 					max="17"
-					placeholder="Años"
-					class="px-3 py-2 text-sm border border-gray-300 rounded-md"
+					placeholder="Edad"
+					class="w-full px-2 py-1.5 text-sm border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-900 text-center"
 				/>
 			</div>`;
 	};
@@ -135,12 +135,12 @@ export function initBookingForm(opts: UseBookingFormOptions) {
 			childrenAgeContainer.innerHTML = "";
 
 			if (numChildren > 0) {
-				childrenAgeContainer.classList.remove("hidden", "grid");
-				childrenAgeContainer.classList.add("grid");
+				childrenAgeContainer.classList.remove("hidden");
+				childrenAgeContainer.classList.add("grid", "grid-cols-2", "md:grid-cols-4", "gap-2");
 				for (let i = 1; i <= numChildren; i++) {
 					childrenAgeContainer.insertAdjacentHTML(
 						"beforeend",
-						createChildAgeHTML(i),
+						createChildAgeHTML(i, () => ""),
 					);
 				}
 			} else {

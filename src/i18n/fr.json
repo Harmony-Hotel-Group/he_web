@@ -95,10 +95,10 @@
 				"title": "R\u00e9servation de groupe",
 				"cancel": "Annuler",
 				"confirm": "Confirmer"
-			},
-			"childrenAges": {
-				"title": "\u00c2ges des Enfants"
 			}
+		},
+		"childrenAges": {
+			"title": "\u00c2ges des Enfants"
 		}
 	}
 }

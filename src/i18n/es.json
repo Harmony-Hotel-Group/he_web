@@ -193,10 +193,10 @@
 				"cancel": "Cancelar",
 				"confirm": "Confirmar",
 				"includeVehicles": "\u00bfIncluir informaci\u00f3n de veh\u00edculos?"
-			},
-			"childrenAges": {
-				"title": "Edades de Ni\u00f1os"
 			}
+		},
+		"childrenAges": {
+			"title": "Edades de Ni\u00f1os"
 		}
 	},
 	"underConstruction": {

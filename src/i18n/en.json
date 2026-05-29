@@ -83,10 +83,10 @@
 				"cancel": "Cancel",
 				"confirm": "Confirm",
 				"includeVehicles": "Include vehicle information?"
-			},
-			"childrenAges": {
-				"title": "Children Ages"
 			}
+		},
+		"childrenAges": {
+			"title": "Children Ages"
 		}
 	},
 	"components": {

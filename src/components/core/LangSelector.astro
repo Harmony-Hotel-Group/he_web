@@ -69,9 +69,6 @@ function getUrlForLang(langCode: string) {
 
 <script is:inline>
 	function initLangSelector() {
-		// Guard contra duplicados en SPA navigation
-		if (document.body.dataset.langSelectorInitialized) return;
-		document.body.dataset.langSelectorInitialized = "true";
 		const button = document.getElementById("lang-switcher-button");
 		const dropdown = document.getElementById("lang-switcher-dropdown");
 
@@ -89,6 +86,19 @@ function getUrlForLang(langCode: string) {
 
 	// Initial load
 	document.addEventListener("DOMContentLoaded", initLangSelector);
+	// SPA navigation
+	document.addEventListener("astro:page-load", initLangSelector);
+	
+	});
+
+	// Initial load - esperar a DOM ready
+	if (document.readyState === 'loading') {
+		document.addEventListener("DOMContentLoaded", initLangSelector);
+	} else {
+		// DOM ya está listo (SPA navigation)
+		initLangSelector();
+	}
+	
 	// SPA navigation
 	document.addEventListener("astro:page-load", initLangSelector);
 	

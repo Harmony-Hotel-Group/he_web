@@ -2,10 +2,7 @@
 // src/components/organisms/booking/BookingVehicleSection.astro
 import { Translations } from "@/i18n/translation.ts";
 import Grid from "@/layouts/GridLayout.astro";
-import { logger } from "@/services/logger.ts";
 import type { SiteConfig } from "@/types/config-site";
-
-const log = logger("BookingVehicleSection");
 
 interface Props {
 	lang: string;
@@ -19,17 +16,11 @@ const vehicleTypeOptions = (config?.vehicleTypeOptions ?? []) as Array<{
 }>;
 const t = Translations(lang);
 
-if (vehicleTypeOptions.length === 0) {
-	log.warn(
-		"No se proporcionaron 'vehicleTypeOptions'. Los selectores de tipo de vehículo estarán deshabilitados.",
-	);
-}
-
 // Clases CSS reutilizables
 const inputClasses =
-	"w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-amber-500 focus:border-transparent";
+	"w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-400 rounded-md bg-white dark:bg-gray-100 text-gray-900 dark:text-gray-800 focus:ring-2 focus:ring-amber-500 focus:border-transparent";
 const labelClasses =
-	"block text-xs font-medium text-gray-600 dark:text-gray-400";
+	"block text-xs font-medium text-gray-700 dark:text-gray-600";
 ---
 
 <div
@@ -40,14 +31,74 @@ const labelClasses =
     data-t-plate-title={t("booking.vehicles.plate.title")}
     data-t-plate-placeholder={t("booking.vehicles.plate.placeholder")}
 >
-    <div
-        class="dark:bg-gray-900/20 border border-gray-200 dark:border-gray-800 rounded-lg p-4"
-    >
-        <h3
-            class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-3 flex items-center gap-2"
+    {
+        vehicleTypeOptions.length === 0 && (
+            <div class="text-sm text-gray-800 dark:text-gray-600 bg-gray-100/60 dark:bg-gray-200/30 border border-gray-200 dark:border-gray-300 rounded-md p-3">
+                {t("components.errors.missingVehicleOptions")}
+            </div>
+        )
+    }
+
+    <Grid cols={3} _id="vehicles-container">
+        <!-- Template del primer vehículo -->
+        <div
+            class="vehicle-item bg-white dark:bg-gray-100 border border-gray-200 dark:border-gray-300 rounded-lg p-3"
+        >
+            <div class="flex justify-between items-center mb-2">
+                <span
+                    class="text-sm font-medium text-gray-800 dark:text-gray-700"
+                >
+                    {t("booking.vehicles.vehicle")} 1
+                </span>
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+                <label for="vehicleType1" class={labelClasses}>
+                    {t("booking.vehicles.type")}
+                    <select
+                        name="vehicleType1"
+                        class={inputClasses}
+                        disabled={vehicleTypeOptions.length === 0}
+                    >
+                        {
+                            vehicleTypeOptions.length > 0 ? (
+                                vehicleTypeOptions.map((option) => (
+                                    <option value={option.value}>
+                                        {option[lang] ??
+                                            option.label ??
+                                            option.value}
+                                    </option>
+                                ))
+                            ) : (
+                                <option value="" disabled selected>
+                                    — {t("booking.vehicles.type")} —
+                                </option>
+                            )
+                        }
+                    </select>
+                </label>
+                <label class={labelClasses}>
+                    {t("booking.vehicles.plate.title")}
+                    <input
+                        type="text"
+                        name="vehiclePlate1"
+                        placeholder={t(
+                            "booking.vehicles.plate.placeholder",
+                        )}
+                        class={`${inputClasses} uppercase`}
+                    />
+                </label>
+            </div>
+        </div>
+    </Grid>
+
+    <div class="flex gap-2 mt-3">
+        <button
+            type="button"
+            id="addVehicleBtn"
+            class="px-4 py-2 text-sm bg-amber-600 hover:bg-amber-700 text-white rounded-md transition-colors duration-200 flex items-center gap-2"
         >
             <svg
-                class="w-5 h-5"
+                class="w-4 h-4"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -56,112 +107,31 @@ const labelClasses =
                     stroke-linecap="round"
                     stroke-linejoin="round"
                     stroke-width="2"
-                    d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0"
+                    d="M12 4v16m8-8H4"
                 ></path>
             </svg>
-            {t("booking.vehicles.title")}
-        </h3>
-
-        {
-            vehicleTypeOptions.length === 0 && (
-                <div class="mb-3 text-sm text-gray-800 dark:text-gray-200 bg-gray-100/60 dark:bg-gray-900/30 border border-gray-200 dark:border-gray-800 rounded-md p-3">
-                    {t("components.errors.missingVehicleOptions")}
-                </div>
-            )
-        }
-
-        <Grid cols={3} _id="vehicles-container">
-            <!-- Template del primer vehículo -->
-            <div
-                class="vehicle-item bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-3"
+            {t("booking.vehicles.add")}
+        </button>
+        <button
+            type="button"
+            id="removeVehicleBtn"
+            class="px-4 py-2 text-sm bg-red-600 hover:bg-red-700 text-white rounded-md transition-colors duration-200 flex items-center gap-2 hidden"
+        >
+            <svg
+                class="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
             >
-                <div class="flex justify-between items-center mb-2">
-                    <span
-                        class="text-sm font-medium text-gray-700 dark:text-gray-300"
-                    >
-                        {t("booking.vehicles.vehicle")} 1
-                    </span>
-                </div>
-                <div class="grid grid-cols-2 gap-3">
-                    <label for="vehicleType1" class={labelClasses}>
-                        {t("booking.vehicles.type")}
-                        <select
-                            name="vehicleType1"
-                            class={inputClasses}
-                            disabled={vehicleTypeOptions.length === 0}
-                        >
-                            {
-                                vehicleTypeOptions.length > 0 ? (
-                                    vehicleTypeOptions.map((option) => (
-                                        <option value={option.value}>
-                                            {option[lang] ??
-                                                option.label ??
-                                                option.value}
-                                        </option>
-                                    ))
-                                ) : (
-                                    <option value="" disabled selected>
-                                        — {t("booking.vehicles.type")} —
-                                    </option>
-                                )
-                            }
-                        </select>
-                    </label>
-                    <label class={labelClasses}>
-                        {t("booking.vehicles.plate.title")}
-                        <input
-                            type="text"
-                            name="vehiclePlate1"
-                            placeholder={t(
-                                "booking.vehicles.plate.placeholder",
-                            )}
-                            class={`${inputClasses} uppercase`}
-                        />
-                    </label>
-                </div>
-            </div>
-        </Grid>
-
-        <div class="flex gap-2 mt-3">
-            <button
-                type="button"
-                id="addVehicleBtn"
-                class="px-4 py-2 text-sm bg-amber-600 hover:bg-amber-700 text-white rounded-md transition-colors duration-200 flex items-center gap-2"
-            >
-                <svg
-                    class="w-4 h-4"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                >
-                    <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M12 4v16m8-8H4"></path>
-                </svg>
-                {t("booking.vehicles.add")}
-            </button>
-            <button
-                type="button"
-                id="removeVehicleBtn"
-                class="px-4 py-2 text-sm bg-red-600 hover:bg-red-700 text-white rounded-md transition-colors duration-200 flex items-center gap-2 hidden"
-            >
-                <svg
-                    class="w-4 h-4"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                >
-                    <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M20 12H4"></path>
-                </svg>
-                {t("booking.vehicles.remove")}
-            </button>
-        </div>
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M20 12H4"
+                ></path>
+            </svg>
+            {t("booking.vehicles.remove")}
+        </button>
     </div>
 </div>
 
@@ -201,11 +171,11 @@ const labelClasses =
         const t_platePlaceholder =
             component.dataset.tPlatePlaceholder || "ABC-1234";
 
-        // Clases CSS compartidas
+        // Clases CSS compartidas (tema claro)
         const inputClasses =
-            "w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-amber-500 focus:border-transparent";
+            "w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-400 rounded-md bg-white dark:bg-gray-100 text-gray-900 dark:text-gray-800 focus:ring-2 focus:ring-amber-500 focus:border-transparent";
         const labelClasses =
-            "block text-xs font-medium text-gray-600 dark:text-gray-400";
+            "block text-xs font-medium text-gray-700 dark:text-gray-600";
 
         // Función helper para generar el HTML del vehículo
         const createVehicleHTML = (index) => {
@@ -220,9 +190,9 @@ const labelClasses =
                     : "";
 
             return `
-				<div class="vehicle-item bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-3">
+				<div class="vehicle-item bg-white dark:bg-gray-100 border border-gray-200 dark:border-gray-300 rounded-lg p-3">
 					<div class="flex justify-between items-center mb-2">
-						<span class="text-sm font-medium text-gray-700 dark:text-gray-300">${t_vehicle} ${index}</span>
+						<span class="text-sm font-medium text-gray-800 dark:text-gray-700">${t_vehicle} ${index}</span>
 					</div>
 					<div class="grid grid-cols-2 gap-3">
 						<label class="${labelClasses}">

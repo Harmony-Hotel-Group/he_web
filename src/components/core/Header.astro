@@ -867,4 +867,10 @@ const uniqueTours =
             });
         });
     });
+
+    // Re-init on SPA navigation
+    document.addEventListener('astro:page-load', () => {
+        init();
+        window.addEventListener('resize', handleResize);
+    });
 </script>

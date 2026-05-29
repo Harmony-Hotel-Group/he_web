@@ -18,7 +18,7 @@ const t = Translations(lang);
 
 // Clases CSS reutilizables
 const inputClasses =
-	"w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-400 rounded-md bg-white dark:bg-gray-100 text-gray-900 dark:text-gray-800 focus:ring-2 focus:ring-amber-500 focus:border-transparent";
+	"w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-400 rounded-md bg-white dark:bg-gray-50 text-gray-900 dark:text-gray-800 focus:ring-2 focus:ring-amber-500 focus:border-transparent";
 const labelClasses =
 	"block text-xs font-medium text-gray-700 dark:text-gray-600";
 ---
@@ -42,7 +42,7 @@ const labelClasses =
     <Grid cols={3} _id="vehicles-container">
         <!-- Template del primer vehículo -->
         <div
-            class="vehicle-item bg-white dark:bg-gray-100 border border-gray-200 dark:border-gray-300 rounded-lg p-3"
+            class="vehicle-item bg-white dark:bg-gray-50 border border-gray-200 dark:border-gray-300 rounded-lg p-3"
         >
             <div class="flex justify-between items-center mb-2">
                 <span
@@ -173,7 +173,7 @@ const labelClasses =
 
         // Clases CSS compartidas (tema claro)
         const inputClasses =
-            "w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-400 rounded-md bg-white dark:bg-gray-100 text-gray-900 dark:text-gray-800 focus:ring-2 focus:ring-amber-500 focus:border-transparent";
+            "w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-400 rounded-md bg-white dark:bg-gray-50 text-gray-900 dark:text-gray-800 focus:ring-2 focus:ring-amber-500 focus:border-transparent";
         const labelClasses =
             "block text-xs font-medium text-gray-700 dark:text-gray-600";
 
@@ -190,7 +190,7 @@ const labelClasses =
                     : "";
 
             return `
-				<div class="vehicle-item bg-white dark:bg-gray-100 border border-gray-200 dark:border-gray-300 rounded-lg p-3">
+				<div class="vehicle-item bg-white dark:bg-gray-50 border border-gray-200 dark:border-gray-300 rounded-lg p-3">
 					<div class="flex justify-between items-center mb-2">
 						<span class="text-sm font-medium text-gray-800 dark:text-gray-700">${t_vehicle} ${index}</span>
 					</div>

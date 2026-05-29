@@ -69,8 +69,8 @@ const email = config?.contactInfo?.email ?? "";
       />
 
       <!-- Children age inputs (shown when children > 0) -->
-      <div id="children-age-container" class="hidden col-span-5">
-        <p class="text-xs font-semibold text-amber-700 dark:text-amber-300 mb-2">
+      <div id="children-age-container" class="hidden col-span-5 bg-amber-50/50 dark:bg-gray-800/50 border border-amber-200 dark:border-gray-700 rounded-lg p-3 mt-2">
+        <p class="text-xs font-semibold text-amber-800 dark:text-amber-300 mb-2">
           Ingresa la edad de cada niño:
         </p>
         <!-- Los inputs se generan dinámicamente vía useBookingForm.ts -->
@@ -190,16 +190,22 @@ const email = config?.contactInfo?.email ?? "";
   </Row>
 
   <!-- Sección de Vehículos (oculta inicialmente) -->
-  <div id="vehicle-section" class="hidden">
+  <div
+    id="vehicle-section"
+    class="hidden bg-amber-50/50 dark:bg-gray-800/50 border border-amber-200 dark:border-gray-700 rounded-lg p-4 mt-3"
+  >
     <BookingVehicleSection lang={lang} config={config} />
   </div>
 
-  <div id="special_request-section" class="hidden">
+  <div
+    id="special_request-section"
+    class="hidden bg-amber-50/50 dark:bg-gray-800/50 border border-amber-200 dark:border-gray-700 rounded-lg p-4 mt-3"
+  >
     <Label
       forId="groupNotes"
       lang={lang}
       lblKey="booking.group.notes"
-      classes="pr-5"
+      classes="pr-5 text-amber-800 dark:text-amber-300"
     />
     <TextAreaInput
       id="groupNotes"

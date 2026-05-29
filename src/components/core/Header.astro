@@ -841,6 +841,9 @@ const uniqueTours =
             }
         });
 
+        // Re-init on SPA navigation (astro:page-load)
+        document.addEventListener("astro:page-load", init);
+
         // Currency selector functionality
         const currencyOptions = document.querySelectorAll(".mobile-currency-option");
         currencyOptions.forEach(option => {

@@ -50,7 +50,7 @@ const {
     <input type="hidden" name={name} value={checked.toString()}/>
 
     <script is:inline define:vars={{onChange}}>
-        (() => {
+        document.addEventListener('DOMContentLoaded', () => {
             const script = document.currentScript;
             const root = script?.closest('div');
             if (!root) return;
@@ -91,6 +91,6 @@ const {
                     toggle();
                 }
             });
-        })();
+        });
     </script>
 </div>

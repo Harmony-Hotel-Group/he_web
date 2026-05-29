@@ -96,6 +96,7 @@ export function initBookingForm(opts: UseBookingFormOptions) {
 		if (!std || !grp) return;
 		std.classList.toggle("hidden", isGroup);
 		grp.classList.toggle("hidden", !isGroup);
+		childrenAgeContainer?.classList.add("hidden");
 		if (isGroup && dateRangeStandard && dateRangeGroup) {
 			dateRangeGroup.value = dateRangeStandard.value;
 		}

@@ -50,47 +50,55 @@ const {
     <input type="hidden" name={name} value={checked.toString()}/>
 
     <script is:inline define:vars={{onChange}}>
-        document.addEventListener('DOMContentLoaded', () => {
-            const script = document.currentScript;
-            const root = script?.closest('div');
-            if (!root) return;
+        // Para is:inline: el código se ejecuta INMEDIATAMENTE al parsear el HTML
+        // NO envolver en DOMContentLoaded - ya es inmediato
+        const script = document.currentScript;
+        const root = script?.closest('div');
+        if (!root) return;
 
-            const button = root.querySelector('button[role="switch"]');
-            const input = root.querySelector('input[type="hidden"]');
-            const handle = button?.querySelector('span[aria-hidden="true"]');
-            if (!button || !input || !handle) return;
+        const button = root.querySelector('button[role="switch"]');
+        const input = root.querySelector('input[type="hidden"]');
+        const handle = button?.querySelector('span[aria-hidden="true"]');
+        if (!button || !input || !handle) return;
 
-            if (button.dataset.initialized) return;
-            button.dataset.initialized = "true";
+        if (button.dataset.initialized) {
+            // SPA navigation: re-init already happened, just skip
+        }
+        button.dataset.initialized = "true";
 
-            const toggle = () => {
-                if (button.disabled) return;
-                const isChecked = button.getAttribute("aria-checked") === "true";
-                const newState = !isChecked;
-                button.setAttribute("aria-checked", String(newState));
-                input.value = String(newState);
+        const toggle = () => {
+            if (button.disabled) return;
+            const isChecked = button.getAttribute("aria-checked") === "true";
+            const newState = !isChecked;
+            button.setAttribute("aria-checked", String(newState));
+            input.value = String(newState);
 
-                button.classList.toggle("bg-accent", newState);
-                button.classList.toggle("bg-gray-200", !newState);
-                handle.classList.toggle("translate-x-5", newState);
-                handle.classList.toggle("translate-x-0", !newState);
+            button.classList.toggle("bg-accent", newState);
+            button.classList.toggle("bg-gray-200", !newState);
+            handle.classList.toggle("translate-x-5", newState);
+            handle.classList.toggle("translate-x-0", !newState);
 
-                // Call the onChange callback if provided
-                console.log("onChange called with newState:", newState);
-                if (onChange) {
-                    onChange(newState);
-                }
-            };
+            // Call the onChange callback if provided
+            console.log("onChange called with newState:", newState);
+            if (onChange) {
+                onChange(newState);
+            }
+        };
 
 
-            // Click + teclado accesible
-            button.addEventListener("click", toggle);
-            button.addEventListener("keydown", (e) => {
-                if (e.key === " " || e.key === "Enter") {
-                    e.preventDefault();
-                    toggle();
-                }
-            });
+        // Click + teclado accesible
+        button.addEventListener("click", toggle);
+        button.addEventListener("keydown", (e) => {
+            if (e.key === " " || e.key === "Enter") {
+                e.preventDefault();
+                toggle();
+            }
+        });
+
+        // Re-init on SPA navigation (para Astro View Transitions)
+        document.addEventListener('astro:page-load', () => {
+            // Si el script se vuelve a ejecutar en nueva página, no duplicar listeners
+            // El dataset.initialized ya previene duplicados
         });
     </script>
 </div>

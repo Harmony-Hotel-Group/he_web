@@ -109,81 +109,58 @@ log.info(
         image: string;
     };
 
-    // Esta función se ejecutará cuando el DOM esté listo
-    document.addEventListener("DOMContentLoaded", async () => {
-        // Importación dinámica: La clave para que funcione con un solo archivo.
-        const { logger } = await import("@/services/logger.ts");
-        const log = logger("CurrencySelector:Client");
+    function getStoredCurrency(): string {
+        if (typeof localStorage === "undefined") return "USD";
+        return localStorage.getItem("currency") || "USD";
+    }
 
-        log.info("🟢 [CLIENT] CurrencySelector montado");
+    function storeCurrency(currencyCode: string): void {
+        if (typeof localStorage === "undefined") return;
+        localStorage.setItem("currency", currencyCode);
+    }
 
-        // Función para obtener moneda desde localStorage
-        function getStoredCurrency(): string {
-            if (typeof localStorage === "undefined") return "USD";
-            return localStorage.getItem("currency") || "USD";
+    function getCurrencyData(code: string): Currency | null {
+        const button = document.querySelector(
+            `.currency-option[data-currency-code="${code}"]`,
+        ) as HTMLButtonElement | null;
+
+        if (!button) return null;
+
+        return {
+            code: button.dataset.currencyCode || "USD",
+            symbol: button.dataset.currencySymbol || "$",
+            image: button.dataset.currencyImage || "",
+        };
+    }
+
+    function updateCurrencyUI(currency: Currency): void {
+        const flagEl = document.getElementById(
+            "currency-switcher-flag",
+        ) as HTMLImageElement | null;
+        const codeEl = document.getElementById(
+            "currency-switcher-code",
+        ) as HTMLSpanElement | null;
+
+        if (flagEl && currency.image) {
+            flagEl.src = currency.image;
+            flagEl.alt = `${currency.code} symbol`;
         }
 
-        function storeCurrency(currencyCode: string): void {
-            if (typeof localStorage === "undefined") return;
-            localStorage.setItem("currency", currencyCode);
-            log.info(
-                "🟢 [CLIENT] Moneda guardada en localStorage:",
-                currencyCode,
-            );
+        if (codeEl) {
+            codeEl.textContent = currency.code;
         }
+    }
 
-        // Función para obtener datos de moneda desde el DOM
-        function getCurrencyData(code: string): Currency | null {
-            const button = document.querySelector(
-                `.currency-option[data-currency-code="${code}"]`,
-            ) as HTMLButtonElement | null;
+    function updatePrices(newCurrencyCode: string): void {
+        const event = new CustomEvent("currencyChanged", {
+            detail: { currency: newCurrencyCode },
+            bubbles: true,
+            composed: true,
+        });
+        document.dispatchEvent(event);
+    }
 
-            if (!button) return null;
-
-            return {
-                code: button.dataset.currencyCode || "USD",
-                symbol: button.dataset.currencySymbol || "$",
-                image: button.dataset.currencyImage || "",
-            };
-        }
-
-        // Función para actualizar la UI con la moneda seleccionada
-        function updateCurrencyUI(currency: Currency): void {
-            const flagEl = document.getElementById(
-                "currency-switcher-flag",
-            ) as HTMLImageElement | null;
-            const codeEl = document.getElementById(
-                "currency-switcher-code",
-            ) as HTMLSpanElement | null;
-
-            if (flagEl && currency.image) {
-                flagEl.src = currency.image;
-                flagEl.alt = `${currency.code} symbol`;
-            }
-
-            if (codeEl) {
-                codeEl.textContent = currency.code;
-            }
-
-            log.info("🟢 [CLIENT] UI actualizada con moneda:", currency.code);
-        }
-
-        // Función para actualizar todos los precios en la página
-        function updatePrices(newCurrencyCode: string): void {
-            // Dispatch custom event para que otros componentes escuchen
-            const event = new CustomEvent("currencyChanged", {
-                detail: { currency: newCurrencyCode },
-                bubbles: true,
-                composed: true,
-            });
-            document.dispatchEvent(event);
-
-            log.info(
-                "🟢 [CLIENT] Evento currencyChanged disparado:",
-                newCurrencyCode,
-            );
-        }
-
+    function initCurrencySelector() {
         const container = document.getElementById(
             "currency-switcher-container",
         );
@@ -191,9 +168,6 @@ log.info(
         const dropdown = document.getElementById("currency-switcher-dropdown");
 
         if (!container || !button || !dropdown) {
-            log.error(
-                "🔴 [CLIENT] Elementos del CurrencySwitcher no encontrados",
-            );
             return;
         }
 
@@ -203,7 +177,6 @@ log.info(
 
         if (storedCurrency) {
             updateCurrencyUI(storedCurrency);
-            // Disparar evento inicial para que los precios se actualicen
             updatePrices(storedCurrency.code);
         }
 
@@ -212,17 +185,15 @@ log.info(
             e.stopPropagation();
             const isHidden = dropdown.classList.toggle("hidden");
             button.setAttribute("aria-expanded", String(!isHidden));
-            log.info("🟠 Toggle dropdown:", !isHidden ? "abierto" : "cerrado");
         });
 
         // Cerrar dropdown al hacer click fuera
-        document.addEventListener("click", (e) => {
+        document.addEventListener("click", (e: Event) => {
             const target = e.target as HTMLElement;
             if (!container.contains(target)) {
                 if (!dropdown.classList.contains("hidden")) {
                     dropdown.classList.add("hidden");
                     button.setAttribute("aria-expanded", "false");
-                    log.info("🟠 Dropdown cerrado por click externo");
                 }
             }
         });
@@ -236,50 +207,24 @@ log.info(
             currencyButton.addEventListener("click", () => {
                 const newCurrencyCode = currencyButton.dataset.currencyCode;
 
-                if (!newCurrencyCode) {
-                    log.warn("⚠️ Código de moneda inválido");
-                    return;
-                }
-
-                log.info("🟠 Moneda seleccionada:", newCurrencyCode);
+                if (!newCurrencyCode) return;
 
                 const newCurrency = getCurrencyData(newCurrencyCode);
 
-                if (!newCurrency) {
-                    log.error("🔴 No se pudieron obtener datos de la moneda");
-                    return;
-                }
+                if (!newCurrency) return;
 
-                // Actualizar UI inmediatamente
                 updateCurrencyUI(newCurrency);
-
-                // Guardar en localStorage
                 storeCurrency(newCurrencyCode);
-
-                // Cerrar dropdown
                 dropdown.classList.add("hidden");
                 button.setAttribute("aria-expanded", "false");
-
-                // Actualizar precios
                 updatePrices(newCurrencyCode);
 
-                // Opcional: Recargar la página si necesitas refrescar todo
-                // Descomenta la siguiente línea si prefieres recargar
                 window.location.reload();
             });
         });
+    }
 
-        // Re-init on SPA navigation (dropdown toggle)
-        document.addEventListener("astro:page-load", () => {
-            const btn = document.getElementById("currency-switcher-button");
-            const drop = document.getElementById("currency-switcher-dropdown");
-            if (btn && drop) {
-                btn.addEventListener("click", (e) => {
-                    e.stopPropagation();
-                    const isHidden = drop.classList.toggle("hidden");
-                    btn.setAttribute("aria-expanded", String(!isHidden));
-                });
-            }
-        });
-    });
+    // Initial load + SPA navigation
+    document.addEventListener("DOMContentLoaded", initCurrencySelector);
+    document.addEventListener("astro:page-load", initCurrencySelector);
 </script>

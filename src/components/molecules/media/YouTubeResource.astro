@@ -294,4 +294,10 @@ const embedUrl = videoId
             wrapper.classList.add("allow-interaction");
         }
     });
+
+    // Re-init on SPA navigation
+    document.addEventListener('astro:page-load', () => {
+        // El script ya está ejecutado, no se necesita re-inicializar
+        // porque YouTubeResource se renderiza individualmente
+    });
 </script>

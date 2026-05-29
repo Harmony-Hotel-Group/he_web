@@ -68,43 +68,34 @@ function getUrlForLang(langCode: string) {
 </div>
 
 <script>
-	document.addEventListener("DOMContentLoaded", async () => {
-	const { logger } = await import('@/services/logger.ts');
-	const log = logger("LangSelector:Client");
+	function initLangSelector() {
+		const button = document.getElementById("lang-switcher-button");
+		const dropdown = document.getElementById("lang-switcher-dropdown");
 
-	log.info("🟢 [CLIENT] LangSelector montado");
+		if (!button || !dropdown) {
+			console.error("LangSelector: Elementos no encontrados");
+			return;
+		}
 
-	const button = document.getElementById("lang-switcher-button");
-	const dropdown = document.getElementById("lang-switcher-dropdown");
-
-	if (!button || !dropdown) {
-		log.error("🔴 [CLIENT] Elementos del LangSelector no encontrados");
-		return;
+		button.addEventListener("click", (e) => {
+			e.stopPropagation();
+			dropdown.classList.toggle("hidden");
+			button.setAttribute("aria-expanded", String(!dropdown.classList.contains("hidden")));
+		});
 	}
 
-	button.addEventListener("click", (e) => {
-		e.stopPropagation();
-		dropdown.classList.toggle("hidden");
-		button.setAttribute("aria-expanded", String(!dropdown.classList.contains("hidden")));
-	});
-
+	// Initial load
+	document.addEventListener("DOMContentLoaded", initLangSelector);
+	// SPA navigation
+	document.addEventListener("astro:page-load", initLangSelector);
+	
+	// Close dropdown on outside click (always active)
 	document.addEventListener("click", () => {
-		if (!dropdown.classList.contains("hidden")) {
+		const dropdown = document.getElementById("lang-switcher-dropdown");
+		const button = document.getElementById("lang-switcher-button");
+		if (dropdown && button && !dropdown.classList.contains("hidden")) {
 			dropdown.classList.add("hidden");
 			button.setAttribute("aria-expanded", "false");
 		}
-	});
-
-	document.addEventListener("astro:page-load", () => {
-		const btn = document.getElementById("lang-switcher-button");
-		const drop = document.getElementById("lang-switcher-dropdown");
-		if (btn && drop) {
-			btn.addEventListener("click", (e) => {
-				e.stopPropagation();
-				drop.classList.toggle("hidden");
-				btn.setAttribute("aria-expanded", String(!drop.classList.contains("hidden")));
-			});
-		}
-	});
 	});
 </script>

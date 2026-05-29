@@ -116,15 +116,15 @@ export function initBookingForm(opts: UseBookingFormOptions) {
 	// --- Children age inputs (dynamic like vehicles) ---
 	const createChildAgeHTML = (index: number, t: (key: string) => string) => {
 		return `
-			<div class="child-age-item bg-amber-50 dark:bg-gray-800 border border-amber-200 dark:border-gray-700 rounded-lg p-3">
-				<label class="text-xs font-semibold text-amber-800 dark:text-amber-300 mb-1 block">Niño ${index}</label>
+			<div class="child-age-item bg-white dark:bg-gray-50 border border-gray-200 dark:border-gray-300 rounded-lg p-3">
+				<label class="text-xs font-semibold text-amber-800 dark:text-amber-900 mb-1 block">Niño ${index}</label>
 				<input
 					type="number"
 					name="childAge${index}"
 					min="1"
 					max="17"
 					placeholder="Edad"
-					class="w-full px-2 py-1.5 text-sm border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-900 text-center"
+					class="w-full px-2 py-1.5 text-sm border border-gray-300 dark:border-gray-400 rounded bg-white dark:bg-gray-50 text-center placeholder-gray-500 dark:placeholder-gray-600"
 				/>
 			</div>`;
 	};

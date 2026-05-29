@@ -68,14 +68,6 @@ const email = config?.contactInfo?.email ?? "";
         options={childrenOptions}
       />
 
-      <!-- Children age inputs (shown when children > 0) -->
-      <div id="children-age-container" class="hidden col-span-5 bg-amber-50/50 dark:bg-gray-800/50 border border-amber-200 dark:border-gray-700 rounded-lg p-3 mt-2">
-        <p class="text-xs font-semibold text-amber-800 dark:text-amber-300 mb-2">
-          Ingresa la edad de cada niño:
-        </p>
-        <!-- Los inputs se generan dinámicamente vía useBookingForm.ts -->
-      </div>
-
       <DropDownField
         fieldId="rooms"
         name="rooms"
@@ -85,6 +77,17 @@ const email = config?.contactInfo?.email ?? "";
         options={roomsOptions}
       />
     </Grid>
+  </div>
+
+  <!-- Children age inputs (shown when children > 0, positioned above vehicles) -->
+  <div
+    id="children-age-container"
+    class="hidden w-full bg-amber-50 dark:bg-gray-100 border border-amber-200 dark:border-gray-300 rounded-lg p-4 mt-2"
+  >
+    <p class="text-xs font-semibold text-amber-800 dark:text-amber-900 mb-3">
+      Ingresa la edad de cada niño:
+    </p>
+    <!-- Los inputs se generan dinámicamente vía useBookingForm.ts -->
   </div>
 
   <!-- Group Fields Container (Hidden by default) -->
@@ -192,20 +195,20 @@ const email = config?.contactInfo?.email ?? "";
   <!-- Sección de Vehículos (oculta inicialmente) -->
   <div
     id="vehicle-section"
-    class="hidden bg-amber-50/50 dark:bg-gray-800/50 border border-amber-200 dark:border-gray-700 rounded-lg p-4 mt-3"
+    class="hidden bg-amber-50 dark:bg-gray-100 border border-amber-200 dark:border-gray-300 rounded-lg p-4 mt-2 w-full"
   >
     <BookingVehicleSection lang={lang} config={config} />
   </div>
 
   <div
     id="special_request-section"
-    class="hidden bg-amber-50/50 dark:bg-gray-800/50 border border-amber-200 dark:border-gray-700 rounded-lg p-4 mt-3"
+    class="hidden bg-amber-50 dark:bg-gray-100 border border-amber-200 dark:border-gray-300 rounded-lg p-4 mt-2 w-full"
   >
     <Label
       forId="groupNotes"
       lang={lang}
       lblKey="booking.group.notes"
-      classes="pr-5 text-amber-800 dark:text-amber-300"
+      classes="pr-5 text-amber-800 dark:text-amber-900"
     />
     <TextAreaInput
       id="groupNotes"

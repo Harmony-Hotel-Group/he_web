@@ -180,6 +180,10 @@ log.info(
             updatePrices(storedCurrency.code);
         }
 
+        // Guard contra duplicados
+        if (container.dataset.currencyInited === "true") return;
+        container.dataset.currencyInited = "true";
+
         // Toggle del dropdown
         button.addEventListener("click", (e) => {
             e.stopPropagation();

@@ -31,6 +31,9 @@ export function initBookingForm(opts: UseBookingFormOptions) {
 	const { form, config, whatsappNumber, lang } = opts;
 
 	// --- DOM References ---
+	if (form.dataset.initialized) return;
+	form.dataset.initialized = "true";
+	
 	const bookingBar = form.closest("#booking-bar");
 	const vehicleSection = document.getElementById("vehicle-section-component");
 	const vehicleSwitchButton = form.querySelector("button#vehicle");

@@ -192,13 +192,7 @@ const email = config?.contactInfo?.email ?? "";
     <!-- Los inputs se generan dinámicamente vía useBookingForm.ts -->
   </div>
 
-  <!-- Vehicle Section (before special_request, shown when vehicle switch ON) -->
-  <div
-    id="vehicle-section"
-    class="hidden w-full bg-white dark:bg-gray-50 border border-amber-200 dark:border-gray-300 rounded-lg p-4 mt-2"
-  >
-    <BookingVehicleSection lang={lang} config={config} />
-  </div>
+  <BookingVehicleSection lang={lang} config={config} />
 
   <div
     id="special_request-section"

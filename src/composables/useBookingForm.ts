@@ -32,7 +32,7 @@ export function initBookingForm(opts: UseBookingFormOptions) {
 
 	// --- DOM References ---
 	const bookingBar = form.closest("#booking-bar");
-	const vehicleSection = document.getElementById("vehicle-section");
+	const vehicleSection = document.getElementById("vehicle-section-component");
 	const vehicleSwitchButton = form.querySelector("button#vehicle");
 	const standardFields = document.getElementById("standard-fields");
 	const groupFields = document.getElementById("group-fields");

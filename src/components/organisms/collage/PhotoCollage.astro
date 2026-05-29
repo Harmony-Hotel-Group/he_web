@@ -436,6 +436,11 @@ const imageConfigs = getImageConfigs(imagesToDisplay.length);
             });
         }
     });
+
+    // Re-init on SPA navigation
+    document.addEventListener('astro:page-load', () => {
+        initCollage();
+    });
 </script>
 
 <style>

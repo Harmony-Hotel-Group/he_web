@@ -215,5 +215,10 @@ const validatedResources = (
         }
 
         new VisualCarouselManager(carouselId, autoplayInterval);
+
+    // Re-init on SPA navigation
+    document.addEventListener('astro:page-load', () => {
+        new VisualCarouselManager(carouselId, autoplayInterval);
     });
+});
 </script>

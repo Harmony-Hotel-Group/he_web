@@ -66,36 +66,3 @@ function getUrlForLang(langCode: string) {
 		))}
 	</div>
 </div>
-
-<script is:inline>
-	function initLangSelector() {
-		if (typeof document === "undefined" || typeof window === "undefined") return;
-		const button = document.getElementById("lang-switcher-button");
-		const dropdown = document.getElementById("lang-switcher-dropdown");
-
-		if (!button || !dropdown) return;
-
-		button.addEventListener("click", (e) => {
-			e.stopPropagation();
-			dropdown.classList.toggle("hidden");
-			button.setAttribute("aria-expanded", String(!dropdown.classList.contains("hidden")));
-		});
-	}
-
-	// Wait for DOM ready
-	if (document.readyState === 'loading') {
-		document.addEventListener("DOMContentLoaded", initLangSelector);
-	} else {
-		initLangSelector();
-	}
-
-	// Close dropdown on outside click
-	document.addEventListener("click", () => {
-		const dropdown = document.getElementById("lang-switcher-dropdown");
-		const button = document.getElementById("lang-switcher-button");
-		if (dropdown && button && !dropdown.classList.contains("hidden")) {
-			dropdown.classList.add("hidden");
-			button.setAttribute("aria-expanded", "false");
-		}
-	});
-</script>

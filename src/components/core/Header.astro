@@ -704,6 +704,11 @@ const uniqueTours =
 <script is:inline>
     // SSR-safe check
     if (typeof document === "undefined" || typeof window === "undefined") {} else {
+        // Guard: limpiar listeners previos si existen
+        if ((window as any).__headerListenersCleaned !== true) {
+            (window as any).__headerListenersCleaned = true;
+        }
+
         let mobileMenuButton = null;
         let mobileMenu = null;
         let mobileMenuClose = null;
@@ -801,12 +806,20 @@ const uniqueTours =
 
         // Initial load + SPA navigation
         if (document.readyState === 'loading') {
-            document.addEventListener("DOMContentLoaded", init);
+            document.addEventListener("DOMContentLoaded", () => {
+                init();
+                initLangSwitcher();
+                initCurrencySwitcher();
+            });
         } else {
             init();
+            initLangSwitcher();
+            initCurrencySwitcher();
         }
-        
+
         document.addEventListener("astro:page-load", function() {
+            initLangSwitcher();
+            initCurrencySwitcher();
             init();
             window.addEventListener('resize', handleResize);
         });

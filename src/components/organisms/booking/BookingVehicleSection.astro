@@ -254,3 +254,10 @@ const labelClasses =
         updateRemoveButton();
     });
 </script>
+
+<script is:inline>
+    // Re-init on SPA navigation
+    document.addEventListener('astro:page-load', () => {
+        document.dispatchEvent(new CustomEvent('re-init-vehicles'));
+    });
+</script>

@@ -69,32 +69,42 @@ function getUrlForLang(langCode: string) {
 
 <script>
 	document.addEventListener("DOMContentLoaded", async () => {
-        // Importación dinámica para el cliente
-        const { logger } = await import('@/services/logger.ts');
-        const log = logger("LangSelector:Client");
+	const { logger } = await import('@/services/logger.ts');
+	const log = logger("LangSelector:Client");
 
-        log.info("🟢 [CLIENT] LangSelector montado");
+	log.info("🟢 [CLIENT] LangSelector montado");
 
-		const container = document.getElementById("lang-switcher-container");
-		const button = document.getElementById("lang-switcher-button");
-		const dropdown = document.getElementById("lang-switcher-dropdown");
+	const button = document.getElementById("lang-switcher-button");
+	const dropdown = document.getElementById("lang-switcher-dropdown");
 
-		if (!container || !button || !dropdown) {
-            log.error("🔴 [CLIENT] Elementos del LangSelector no encontrados");
-            return;
-        }
+	if (!button || !dropdown) {
+		log.error("🔴 [CLIENT] Elementos del LangSelector no encontrados");
+		return;
+	}
 
-		button.addEventListener("click", (e) => {
-			e.stopPropagation();
-			dropdown.classList.toggle("hidden");
-			button.setAttribute("aria-expanded", String(!dropdown.classList.contains("hidden")));
-		});
+	button.addEventListener("click", (e) => {
+		e.stopPropagation();
+		dropdown.classList.toggle("hidden");
+		button.setAttribute("aria-expanded", String(!dropdown.classList.contains("hidden")));
+	});
 
-		document.addEventListener("click", () => {
-			if (!dropdown.classList.contains("hidden")) {
-				dropdown.classList.add("hidden");
-				button.setAttribute("aria-expanded", "false");
-			}
-		});
+	document.addEventListener("click", () => {
+		if (!dropdown.classList.contains("hidden")) {
+			dropdown.classList.add("hidden");
+			button.setAttribute("aria-expanded", "false");
+		}
+	});
+
+	document.addEventListener("astro:page-load", () => {
+		const btn = document.getElementById("lang-switcher-button");
+		const drop = document.getElementById("lang-switcher-dropdown");
+		if (btn && drop) {
+			btn.addEventListener("click", (e) => {
+				e.stopPropagation();
+				drop.classList.toggle("hidden");
+				btn.setAttribute("aria-expanded", String(!drop.classList.contains("hidden")));
+			});
+		}
+	});
 	});
 </script>

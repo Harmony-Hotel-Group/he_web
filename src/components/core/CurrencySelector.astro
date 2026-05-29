@@ -101,7 +101,14 @@ log.info(
     </div>
 </div>
 
-<script>
+<script is:inline>
+    // Guard contra duplicados
+    if (document.body.dataset.currencySelectorInitialized) {
+        // Solo actualizar precios para nueva moneda
+        updatePrices(getStoredCurrency());
+    }
+    document.body.dataset.currencySelectorInitialized = "true";
+
     // Definición de tipos
     type Currency = {
         code: string;

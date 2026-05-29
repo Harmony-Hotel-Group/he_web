@@ -67,8 +67,11 @@ function getUrlForLang(langCode: string) {
 	</div>
 </div>
 
-<script>
+<script is:inline>
 	function initLangSelector() {
+		// Guard contra duplicados en SPA navigation
+		if (document.body.dataset.langSelectorInitialized) return;
+		document.body.dataset.langSelectorInitialized = "true";
 		const button = document.getElementById("lang-switcher-button");
 		const dropdown = document.getElementById("lang-switcher-dropdown");
 

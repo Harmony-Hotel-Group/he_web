@@ -798,6 +798,78 @@ const uniqueTours =
             });
         }
 
+        // === Desktop Language Selector ===
+        function initLangSwitcher() {
+            const button = document.getElementById("lang-switcher-button");
+            const dropdown = document.getElementById("lang-switcher-dropdown");
+
+            if (!button || !dropdown) return;
+
+            // Guard contra duplicados
+            if (button.dataset.langInited === "true") return;
+            button.dataset.langInited = "true";
+
+            button.addEventListener("click", (e) => {
+                e.stopPropagation();
+                dropdown.classList.toggle("hidden");
+                button.setAttribute("aria-expanded", String(!dropdown.classList.contains("hidden")));
+            });
+
+            // Close on outside click
+            document.addEventListener("click", (e) => {
+                const target = e.target;
+                const container = document.getElementById("lang-switcher-container");
+                if (container && !container.contains(target)) {
+                    if (!dropdown.classList.contains("hidden")) {
+                        dropdown.classList.add("hidden");
+                        button.setAttribute("aria-expanded", "false");
+                    }
+                }
+            });
+        }
+
+        // === Desktop Currency Selector ===
+        function initCurrencySwitcher() {
+            const container = document.getElementById("currency-switcher-container");
+            const button = document.getElementById("currency-switcher-button");
+            const dropdown = document.getElementById("currency-switcher-dropdown");
+
+            if (!container || !button || !dropdown) return;
+
+            // Guard contra duplicados
+            if (container.dataset.currencyInited === "true") return;
+            container.dataset.currencyInited = "true";
+
+            button.addEventListener("click", (e) => {
+                e.stopPropagation();
+                dropdown.classList.toggle("hidden");
+                button.setAttribute("aria-expanded", String(!dropdown.classList.contains("hidden")));
+            });
+
+            // Currency option buttons
+            const currencyButtons = dropdown.querySelectorAll(".currency-option");
+            currencyButtons.forEach(currencyButton => {
+                currencyButton.addEventListener("click", () => {
+                    const newCurrencyCode = currencyButton.getAttribute("data-currency-code");
+                    const newCurrencySymbol = currencyButton.getAttribute("data-currency-symbol");
+                    
+                    if (!newCurrencyCode) return;
+
+                    // Update UI
+                    const flagEl = document.getElementById("currency-switcher-flag");
+                    if (flagEl) {
+                        flagEl.src = currencyButton.getAttribute("data-currency-image") || flagEl.src;
+                    }
+
+                    dropdown.classList.add("hidden");
+                    button.setAttribute("aria-expanded", "false");
+                    
+                    localStorage.setItem("currency", newCurrencyCode);
+                    window.location.reload();
+                });
+            });
+        }
+
         function handleResize() {
             if (mobileMenu && !mobileMenu.classList.contains("translate-x-full")) {
                 // Menu is open, adjust for screen size changes if needed

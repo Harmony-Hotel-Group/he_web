@@ -298,7 +298,7 @@ const imageConfigs = getImageConfigs(imagesToDisplay.length);
 </div>
 
 <script is:inline>
-    document.addEventListener("DOMContentLoaded", function () {
+    function initCollage() {
         // Esperar a que todas las animaciones terminen antes de activar el drag
         const totalImages = document.querySelectorAll(".photo-throw-in").length;
 
@@ -435,12 +435,22 @@ const imageConfigs = getImageConfigs(imagesToDisplay.length);
                 }
             });
         }
-    });
+    }
 
-    // Re-init on SPA navigation
-    document.addEventListener('astro:page-load', () => {
-        initCollage();
-    });
+    // El script se ejecuta inmediatamente con is:inline
+    // Esperar a que las animaciones terminen
+    const totalImages = document.querySelectorAll(".photo-throw-in").length;
+    if (totalImages > 0) {
+        const totalAnimationTime = ((totalImages - 1) * 0.2 + 1.5) * 1000;
+        setTimeout(() => {
+            initCollage();
+            
+            // Re-init on SPA navigation
+            document.addEventListener('astro:page-load', () => {
+                initCollage();
+            });
+        }, totalAnimationTime);
+    }
 </script>
 
 <style>

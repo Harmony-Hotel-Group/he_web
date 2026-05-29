@@ -30,7 +30,6 @@ const labelClasses =
     data-t-type={t("booking.vehicles.type")}
     data-t-plate-title={t("booking.vehicles.plate.title")}
     data-t-plate-placeholder={t("booking.vehicles.plate.placeholder")}>
-
     <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-700 mb-3 flex items-center gap-2">
         <svg
             class="w-5 h-5"
@@ -152,112 +151,116 @@ const labelClasses =
 </div>
 
 <script is:inline define:vars={{ lang, vehicleTypeOptions }}>
-    document.addEventListener("DOMContentLoaded", () => {
-        const log = {
-            info: (m, ...a) =>
-                console.log(`[UI:BookingVehicleSection] INFO: ${m}`, ...a),
-            warn: (m, ...a) =>
-                console.warn(`[UI:BookingVehicleSection] WARN: ${m}`, ...a),
-            error: (m, ...a) =>
-                console.error(`[UI:BookingVehicleSection] ERROR: ${m}`, ...a),
-        };
+    // [he_web Debug] is:inline scripts ejecutan INMEDIATAMENTE - no usar DOMContentLoaded
+    const log = {
+        info: (m, ...a) =>
+            console.log(`[UI:BookingVehicleSection] INFO: ${m}`, ...a),
+        warn: (m, ...a) =>
+            console.warn(`[UI:BookingVehicleSection] WARN: ${m}`, ...a),
+        error: (m, ...a) =>
+            console.error(`[UI:BookingVehicleSection] ERROR: ${m}`, ...a),
+    };
 
-        const component = document.getElementById("vehicle-section-component");
-        if (!component || component.dataset.initialized) return;
+    const component = document.getElementById("vehicle-section-component");
+    if (!component || component.dataset.initialized) {
+        // Ya está inicializado o no existe - salir
+    } else {
         component.dataset.initialized = "true";
+    }
 
-        const addVehicleBtn = component.querySelector("#addVehicleBtn");
-        const removeVehicleBtn = component.querySelector("#removeVehicleBtn");
-        const vehiclesContainer = component.querySelector(
-            "#vehicles-container",
+    const addVehicleBtn = component?.querySelector("#addVehicleBtn");
+    const removeVehicleBtn = component?.querySelector("#removeVehicleBtn");
+    const vehiclesContainer = component?.querySelector(
+        "#vehicles-container",
+    );
+
+    const getVehicleCount = () =>
+        vehiclesContainer?.querySelectorAll(".vehicle-item").length || 0;
+
+    const updateRemoveButton = () => {
+        removeVehicleBtn?.classList.toggle("hidden", getVehicleCount() <= 1);
+        removeVehicleBtn?.classList.toggle("flex", getVehicleCount() > 1);
+    };
+
+    // Traducciones inyectadas desde data-attributes
+    const t_vehicle = component?.dataset.tVehicle || "Vehículo";
+    const t_type = component?.dataset.tType || "Tipo";
+    const t_plateTitle = component?.dataset.tPlateTitle || "Placa";
+    const t_platePlaceholder =
+        component?.dataset.tPlatePlaceholder || "ABC-1234";
+
+    // Clases CSS compartidas (tema claro)
+    const inputClasses =
+        "w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-400 rounded-md bg-white dark:bg-gray-50 text-gray-900 dark:text-gray-800 focus:ring-2 focus:ring-amber-500 focus:border-transparent";
+    const labelClasses =
+        "block text-xs font-medium text-gray-700 dark:text-gray-600";
+
+    // Función helper para generar el HTML del vehículo
+    const createVehicleHTML = (index) => {
+        const optionsHTML =
+            vehicleTypeOptions && vehicleTypeOptions.length > 0
+                ? vehicleTypeOptions
+                      .map(
+                          (opt) =>
+                              `<option value="${opt.value}">${opt[lang] ?? opt.label ?? opt.value}</option>`,
+                      )
+                      .join("")
+                : "";
+
+        return `
+            <div class="vehicle-item bg-white dark:bg-gray-50 border border-gray-200 dark:border-gray-300 rounded-lg p-3">
+                <div class="flex justify-between items-center mb-2">
+                    <span class="text-sm font-medium text-gray-800 dark:text-gray-700">${t_vehicle} ${index}</span>
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <label class="${labelClasses}">
+                        ${t_type}
+                        <select name="vehicleType${index}" class="${inputClasses}">
+                            ${optionsHTML}
+                        </select>
+                    </label>
+                    <label class="${labelClasses}">
+                        ${t_plateTitle}
+                        <input 
+                            type="text" 
+                            name="vehiclePlate${index}" 
+                            placeholder="${t_platePlaceholder}" 
+                            class="${inputClasses} uppercase" 
+                        />
+                    </label>
+                </div>
+            </div>`;
+    };
+
+    addVehicleBtn?.addEventListener("click", () => {
+        const currentCount = getVehicleCount();
+        log.info(`Añadiendo vehículo. Actual: ${currentCount}`);
+        if (currentCount >= 6) return;
+
+        vehiclesContainer?.insertAdjacentHTML(
+            "beforeend",
+            createVehicleHTML(currentCount + 1),
         );
-
-        const getVehicleCount = () =>
-            vehiclesContainer.querySelectorAll(".vehicle-item").length;
-
-        const updateRemoveButton = () => {
-            removeVehicleBtn.classList.toggle("hidden", getVehicleCount() <= 1);
-            removeVehicleBtn.classList.toggle("flex", getVehicleCount() > 1);
-        };
-
-        // Traducciones inyectadas desde data-attributes
-        const t_vehicle = component.dataset.tVehicle || "Vehículo";
-        const t_type = component.dataset.tType || "Tipo";
-        const t_plateTitle = component.dataset.tPlateTitle || "Placa";
-        const t_platePlaceholder =
-            component.dataset.tPlatePlaceholder || "ABC-1234";
-
-        // Clases CSS compartidas (tema claro)
-        const inputClasses =
-            "w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-400 rounded-md bg-white dark:bg-gray-50 text-gray-900 dark:text-gray-800 focus:ring-2 focus:ring-amber-500 focus:border-transparent";
-        const labelClasses =
-            "block text-xs font-medium text-gray-700 dark:text-gray-600";
-
-        // Función helper para generar el HTML del vehículo
-        const createVehicleHTML = (index) => {
-            const optionsHTML =
-                vehicleTypeOptions && vehicleTypeOptions.length > 0
-                    ? vehicleTypeOptions
-                          .map(
-                              (opt) =>
-                                  `<option value="${opt.value}">${opt[lang] ?? opt.label ?? opt.value}</option>`,
-                          )
-                          .join("")
-                    : "";
-
-            return `
-				<div class="vehicle-item bg-white dark:bg-gray-50 border border-gray-200 dark:border-gray-300 rounded-lg p-3">
-					<div class="flex justify-between items-center mb-2">
-						<span class="text-sm font-medium text-gray-800 dark:text-gray-700">${t_vehicle} ${index}</span>
-					</div>
-					<div class="grid grid-cols-2 gap-3">
-						<label class="${labelClasses}">
-							${t_type}
-							<select name="vehicleType${index}" class="${inputClasses}">
-								${optionsHTML}
-							</select>
-						</label>
-						<label class="${labelClasses}">
-							${t_plateTitle}
-							<input 
-								type="text" 
-								name="vehiclePlate${index}" 
-								placeholder="${t_platePlaceholder}" 
-								class="${inputClasses} uppercase" 
-							/>
-						</label>
-					</div>
-				</div>`;
-        };
-
-        addVehicleBtn?.addEventListener("click", () => {
-            const currentCount = getVehicleCount();
-            log.info(`Añadiendo vehículo. Actual: ${currentCount}`);
-            if (currentCount >= 6) return;
-
-            vehiclesContainer.insertAdjacentHTML(
-                "beforeend",
-                createVehicleHTML(currentCount + 1),
-            );
-            updateRemoveButton();
-        });
-
-        removeVehicleBtn?.addEventListener("click", () => {
-            const items = vehiclesContainer.querySelectorAll(".vehicle-item");
-            log.info(`Eliminando vehículo. Actual: ${items.length}`);
-            if (items.length > 1) {
-                items[items.length - 1].remove();
-                updateRemoveButton();
-            }
-        });
-
         updateRemoveButton();
     });
-</script>
 
-<script is:inline>
-    // Re-init on SPA navigation
+    removeVehicleBtn?.addEventListener("click", () => {
+        const items = vehiclesContainer?.querySelectorAll(".vehicle-item");
+        log.info(`Eliminando vehículo. Actual: ${items?.length}`);
+        if (items && items.length > 1) {
+            items[items.length - 1]?.remove();
+            updateRemoveButton();
+        }
+    });
+
+    updateRemoveButton();
+
+    // Re-init on SPA navigation - re-registrar listeners en nueva página
     document.addEventListener('astro:page-load', () => {
-        document.dispatchEvent(new CustomEvent('re-init-vehicles'));
+        // Escuchar evento para re-inicializar desde BookingForm
+        document.addEventListener('re-init-vehicles', () => {
+            // Los elementos existen pero los listeners pueden perderse
+            // El dataset.initialized previene duplicados en el mismo componente
+        });
     });
 </script>

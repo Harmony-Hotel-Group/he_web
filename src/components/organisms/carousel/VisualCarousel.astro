@@ -127,7 +127,8 @@ const validatedResources = (
 </div>
 
 <script is:inline define:vars={{autoplayInterval, carouselId}}>
-    document.addEventListener('DOMContentLoaded', () => {
+    // is:inline se ejecuta inmediatamente - no usar DOMContentLoaded
+    class VisualCarouselManager {
         class VisualCarouselManager {
             constructor(carouselId, interval) {
                 this.container = null;

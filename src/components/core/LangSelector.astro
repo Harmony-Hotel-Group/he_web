@@ -84,13 +84,6 @@ function getUrlForLang(langCode: string) {
 		});
 	}
 
-	// Initial load
-	document.addEventListener("DOMContentLoaded", initLangSelector);
-	// SPA navigation
-	document.addEventListener("astro:page-load", initLangSelector);
-	
-	});
-
 	// Initial load - esperar a DOM ready
 	if (document.readyState === 'loading') {
 		document.addEventListener("DOMContentLoaded", initLangSelector);
@@ -98,10 +91,10 @@ function getUrlForLang(langCode: string) {
 		// DOM ya está listo (SPA navigation)
 		initLangSelector();
 	}
-	
+
 	// SPA navigation
 	document.addEventListener("astro:page-load", initLangSelector);
-	
+
 	// Close dropdown on outside click (always active)
 	document.addEventListener("click", () => {
 		const dropdown = document.getElementById("lang-switcher-dropdown");

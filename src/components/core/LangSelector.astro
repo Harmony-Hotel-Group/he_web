@@ -69,6 +69,8 @@ function getUrlForLang(langCode: string) {
 
 <script is:inline>
 	function initLangSelector() {
+		// SSR-safe: document only exists in browser
+		if (typeof document === "undefined" || typeof window === "undefined") return;
 		const button = document.getElementById("lang-switcher-button");
 		const dropdown = document.getElementById("lang-switcher-dropdown");
 

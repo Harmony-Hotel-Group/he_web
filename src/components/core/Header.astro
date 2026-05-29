@@ -701,51 +701,38 @@ const uniqueTours =
     }
 </style>
 
-<script>
-    // Initialize on DOMContentLoaded (no IIFE needed — log comes from module scope)
-    document.addEventListener("DOMContentLoaded", () => {
-        let mobileMenuButton: HTMLElement | null = null;
-        let mobileMenu: HTMLElement | null = null;
-        let mobileMenuClose: HTMLElement | null = null;
-        let mobileSubmenus: NodeListOf<HTMLElement> | null = null;
+<script is:inline>
+    // SSR-safe check
+    if (typeof document === "undefined" || typeof window === "undefined") {} else {
+        let mobileMenuButton = null;
+        let mobileMenu = null;
+        let mobileMenuClose = null;
+        let mobileSubmenus = null;
 
         function init() {
-            // Get elements
             mobileMenuButton = document.getElementById("mobile-menu-button");
             mobileMenu = document.getElementById("mobile-menu");
             mobileMenuClose = document.getElementById("mobile-menu-close");
-            mobileSubmenus = document.querySelectorAll<HTMLElement>("[data-submenu]");
-
-            // Debug log
-            log.debug("Mobile menu init:", {
-                button: !!mobileMenuButton,
-                menu: !!mobileMenu,
-                close: !!mobileMenuClose
-            });
+            mobileSubmenus = document.querySelectorAll("[data-submenu]");
 
             if (!mobileMenu || !mobileMenuButton) {
-                log.error("Mobile menu elements not found!");
+                console.error("Mobile menu elements not found!");
                 return;
             }
 
-            // Open menu
             function openMenu() {
-                log.debug("Opening mobile menu");
                 mobileMenu.classList.remove("translate-x-full", "opacity-0", "invisible");
                 mobileMenu.classList.add("menu-open");
                 document.body.classList.add("menu-open");
                 mobileMenu.setAttribute("aria-hidden", "false");
             }
 
-            // Close menu
             function closeMenu() {
-                log.debug("Closing mobile menu");
                 mobileMenu.classList.add("translate-x-full", "opacity-0", "invisible");
                 mobileMenu.classList.remove("menu-open");
                 document.body.classList.remove("menu-open");
                 mobileMenu.setAttribute("aria-hidden", "true");
                 
-                // Close all submenus
                 mobileSubmenus?.forEach(btn => {
                     const submenuId = `mobile-${btn.getAttribute("data-submenu")}-submenu`;
                     const submenu = document.getElementById(submenuId);
@@ -756,121 +743,45 @@ const uniqueTours =
                 });
             }
 
-            // Toggle menu on hamburger click - use touchstart for better mobile support
-            mobileMenuButton!.addEventListener("click", function(e) {
+            mobileMenuButton.addEventListener("click", function(e) {
                 e.preventDefault();
                 e.stopPropagation();
                 openMenu();
             });
             
-            // Also support touchstart
-            mobileMenuButton!.addEventListener("touchstart", function(e) {
+            mobileMenuButton.addEventListener("touchstart", function(e) {
                 e.preventDefault();
                 openMenu();
             }, { passive: true });
 
-            // Close on X button
             if (mobileMenuClose) {
-                mobileMenuClose!.addEventListener("click", closeMenu);
-                mobileMenuClose!.addEventListener("touchstart", closeMenu, { passive: true });
+                mobileMenuClose.addEventListener("click", closeMenu);
+                mobileMenuClose.addEventListener("touchstart", closeMenu, { passive: true });
             }
 
-            // Close on escape key
             document.addEventListener("keydown", function onKeydown(e) {
                 if (e.key === "Escape" && !mobileMenu.classList.contains("translate-x-full")) {
                     closeMenu();
                 }
             });
-
-            // Close on backdrop click
-            mobileMenu!.addEventListener("click", function onClick(e) {
-                if (e.target === mobileMenu) {
-                    closeMenu();
-                }
-            });
-
-            // Submenu toggle
-            mobileSubmenus?.forEach(btn => {
-                btn.addEventListener("click", function onSubmenuClick(e) {
-                    e.preventDefault();
-                    const submenuId = `mobile-${btn.getAttribute("data-submenu")}-submenu`;
-                    const submenu = document.getElementById(submenuId);
-                    const parent = btn.parentElement;
-
-                    if (submenu && parent) {
-                        const isHidden = submenu.classList.contains("hidden");
-                        
-                        // Close other submenus
-                        document.querySelectorAll(".mobile-nav-group").forEach(group => {
-                            const otherSubmenu = group.querySelector("[id^='mobile-'][id$='-submenu']");
-                            if (otherSubmenu && otherSubmenu.id !== submenuId) {
-                                otherSubmenu.classList.add("hidden");
-                                group.classList.remove("active");
-                            }
-                        });
-
-                        // Toggle current submenu
-                        submenu.classList.toggle("hidden", !isHidden);
-                        parent.classList.toggle("active", isHidden);
-                    }
-                });
-            });
-
-            // Close menu when clicking a link
-            document.querySelectorAll("#mobile-menu a[href^='/']").forEach(link => {
-                link.addEventListener("click", function onLinkClick() {
-                    // Don't close if it's a submenu toggle button
-                    if (!link.hasAttribute("data-submenu")) {
-                        setTimeout(closeMenu, 200);
-                    }
-                });
-            });
         }
 
-        // Try to initialize immediately if DOM is ready
-        if (document.readyState === "loading") {
+        function handleResize() {
+            if (mobileMenu && !mobileMenu.classList.contains("translate-x-full")) {
+                // Menu is open, adjust for screen size changes if needed
+            }
+        }
+
+        // Initial load + SPA navigation
+        if (document.readyState === 'loading') {
             document.addEventListener("DOMContentLoaded", init);
         } else {
             init();
         }
         
-        // Also initialize on pageshow (for back/forward navigation)
-        window.addEventListener("pageshow", function() {
-            if (!mobileMenuButton) {
-                setTimeout(init, 100);
-            }
+        document.addEventListener("astro:page-load", function() {
+            init();
+            window.addEventListener('resize', handleResize);
         });
-
-        // Re-init on SPA navigation (astro:page-load)
-        document.addEventListener("astro:page-load", init);
-
-        // Currency selector functionality
-        const currencyOptions = document.querySelectorAll(".mobile-currency-option");
-        currencyOptions.forEach(option => {
-            option.addEventListener("click", function() {
-                const currency = this.getAttribute("data-currency");
-                const symbol = this.getAttribute("data-symbol");
-                
-                // Update active state
-                currencyOptions.forEach(opt => opt.classList.remove("active"));
-                this.classList.add("active");
-                
-                // Store in localStorage
-                localStorage.setItem("selectedCurrency", JSON.stringify({ code: currency, symbol: symbol }));
-                
-                // Dispatch event for other components to listen
-                window.dispatchEvent(new CustomEvent("currencyChanged", { 
-                    detail: { code: currency, symbol: symbol } 
-                }));
-                
-                console.log(`Currency changed to: ${currency} (${symbol})`);
-            });
-        });
-    });
-
-    // Re-init on SPA navigation
-    document.addEventListener('astro:page-load', () => {
-        init();
-        window.addEventListener('resize', handleResize);
-    });
+    }
 </script>

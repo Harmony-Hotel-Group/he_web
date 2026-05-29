@@ -1,6 +1,6 @@
 {
 	"site": {
-		"title": "Hotel Ensueños by HHG"
+		"title": "Hotel Ensue\u00f1os by HHG"
 	},
 	"nav": {
 		"home": "Home",
@@ -83,6 +83,9 @@
 				"cancel": "Cancel",
 				"confirm": "Confirm",
 				"includeVehicles": "Include vehicle information?"
+			},
+			"childrenAges": {
+				"title": "Children Ages"
 			}
 		}
 	},
@@ -117,7 +120,7 @@
 		"explore_category": "Explore category"
 	},
 	"meta": {
-		"description": "Hotel Ensueños by HHG - Your home away from home in the heart of Cuenca, Ecuador."
+		"description": "Hotel Ensue\u00f1os by HHG - Your home away from home in the heart of Cuenca, Ecuador."
 	},
 	"underConstruction": {
 		"404": {

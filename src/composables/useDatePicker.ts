@@ -190,8 +190,10 @@ export function setupDatePickerObserver() {
  * 2. Configura el observer para futuros
  */
 export function bootstrapDatePicker() {
-	document.addEventListener("DOMContentLoaded", () => {
+	function init() {
 		setTimeout(initAllDatePickers, 100);
 		setupDatePickerObserver();
-	});
+	}
+	document.addEventListener("DOMContentLoaded", init);
+	document.addEventListener("astro:page-load", init);
 }

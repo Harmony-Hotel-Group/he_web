@@ -1,6 +1,6 @@
 {
 	"site": {
-		"title": "Hotel Ensueños by HHG"
+		"title": "Hotel Ensue\u00f1os by HHG"
 	},
 	"nav": {
 		"home": "Inicio",
@@ -8,13 +8,13 @@
 		"contact": "Contacto",
 		"rooms": "Habitaciones",
 		"destinations": "Destinos",
-		"gastronomy": "Gastronomía",
+		"gastronomy": "Gastronom\u00eda",
 		"tours": "Tours",
 		"booking": "Reservar Ahora",
 		"cancellation": "Politica de Cancelaciones",
-		"gallery": "Galería de Fotos",
-		"privacy": "Política de Privacidad",
-		"terms": "Términos y Condiciones",
+		"gallery": "Galer\u00eda de Fotos",
+		"privacy": "Pol\u00edtica de Privacidad",
+		"terms": "T\u00e9rminos y Condiciones",
 		"faq": "Preguntas Frecuentes",
 		"404": "Pagina no Encontrada",
 		"500": "Error de Servidor",
@@ -22,24 +22,24 @@
 		"amenities": "Servicios"
 	},
 	"contact": {
-		"title": "Contáctanos",
-		"subtitle": "Estamos aquí para ayudarte. Envíanos un mensaje y te responderemos lo antes posible.",
+		"title": "Cont\u00e1ctanos",
+		"subtitle": "Estamos aqu\u00ed para ayudarte. Env\u00edanos un mensaje y te responderemos lo antes posible.",
 		"form": {
-			"title": "Envíanos un mensaje",
+			"title": "Env\u00edanos un mensaje",
 			"name": {
 				"label": "Nombre completo",
-				"placeholder": "Ej: Juan Pérez",
+				"placeholder": "Ej: Juan P\u00e9rez",
 				"error": "Ingresa tu nombre completo"
 			},
 			"email": {
-				"label": "Correo electrónico",
+				"label": "Correo electr\u00f3nico",
 				"placeholder": "Ej: juan@ejemplo.com",
-				"error": "Ingresa un correo electrónico válido"
+				"error": "Ingresa un correo electr\u00f3nico v\u00e1lido"
 			},
 			"phone": {
-				"label": "Teléfono (opcional)",
+				"label": "Tel\u00e9fono (opcional)",
 				"placeholder": "Ej: +593 99 123 4567",
-				"error": "Ingresa un número de teléfono válido"
+				"error": "Ingresa un n\u00famero de tel\u00e9fono v\u00e1lido"
 			},
 			"subject": {
 				"label": "Asunto",
@@ -48,23 +48,23 @@
 			},
 			"message": {
 				"label": "Mensaje",
-				"placeholder": "Escribe tu mensaje aquí...",
+				"placeholder": "Escribe tu mensaje aqu\u00ed...",
 				"error": "Ingresa tu mensaje"
 			},
 			"submit": "Enviar mensaje",
 			"sending": "Enviando...",
-			"success": "¡Mensaje enviado! Te responderemos pronto.",
+			"success": "\u00a1Mensaje enviado! Te responderemos pronto.",
 			"error": "Error al enviar. Por favor intenta de nuevo."
 		},
 		"info": {
-			"title": "Información de contacto",
-			"address": "Dirección",
-			"phone": "Teléfono",
-			"email": "Correo electrónico",
+			"title": "Informaci\u00f3n de contacto",
+			"address": "Direcci\u00f3n",
+			"phone": "Tel\u00e9fono",
+			"email": "Correo electr\u00f3nico",
 			"whatsapp": "WhatsApp",
 			"hours": {
-				"title": "Horarios de atención",
-				"reception": "Recepción",
+				"title": "Horarios de atenci\u00f3n",
+				"reception": "Recepci\u00f3n",
 				"reservations": "Reservas",
 				"support": "Soporte",
 				"247": "24/7"
@@ -72,84 +72,84 @@
 		},
 		"faq": {
 			"title": "Preguntas frecuentes",
-			"q1": "¿Cuál es el tiempo de respuesta?",
-			"a1": "Respondemos todos los mensajes dentro de las 2-4 horas hábiles.",
-			"q2": "¿Puedo reservar por este medio?",
-			"a2": "Sí, puedes enviarnos tu consulta y te guiaremos en el proceso de reserva.",
-			"q3": "¿Aceptan tarjetas de crédito?",
-			"a3": "Sí, aceptamos todas las tarjetas principales. También aceptamos efectivo.",
-			"q4": "¿Cómo puedo cancelar una reserva?",
-			"a4": "Puedes cancelar enviándonos un correo o WhatsApp. Consulta nuestra política de cancelación."
+			"q1": "\u00bfCu\u00e1l es el tiempo de respuesta?",
+			"a1": "Respondemos todos los mensajes dentro de las 2-4 horas h\u00e1biles.",
+			"q2": "\u00bfPuedo reservar por este medio?",
+			"a2": "S\u00ed, puedes enviarnos tu consulta y te guiaremos en el proceso de reserva.",
+			"q3": "\u00bfAceptan tarjetas de cr\u00e9dito?",
+			"a3": "S\u00ed, aceptamos todas las tarjetas principales. Tambi\u00e9n aceptamos efectivo.",
+			"q4": "\u00bfC\u00f3mo puedo cancelar una reserva?",
+			"a4": "Puedes cancelar envi\u00e1ndonos un correo o WhatsApp. Consulta nuestra pol\u00edtica de cancelaci\u00f3n."
 		},
 		"map": {
-			"title": "Nuestra ubicación",
-			"directions": "Cómo llegar"
+			"title": "Nuestra ubicaci\u00f3n",
+			"directions": "C\u00f3mo llegar"
 		}
 	},
 	"amenities": {
 		"title": "Servicios y Amenidades",
-		"subtitle": "Todo lo que necesitas para una estancia cómoda y placentera",
+		"subtitle": "Todo lo que necesitas para una estancia c\u00f3moda y placentera",
 		"highlights_title": "Nuestros Servicios Destacados",
 		"all_amenities": "Todas las Amenidades",
-		"cta_title": "¿Listo para reservar?",
-		"cta_subtitle": "Disfruta de todos nuestros servicios y más",
+		"cta_title": "\u00bfListo para reservar?",
+		"cta_subtitle": "Disfruta de todos nuestros servicios y m\u00e1s",
 		"cta_button": "Reservar Ahora"
 	},
 	"header": {},
 	"home": {
-		"explore_category": "Explorar categoría"
+		"explore_category": "Explorar categor\u00eda"
 	},
 	"buttons": {
-		"see_more": "Ver más"
+		"see_more": "Ver m\u00e1s"
 	},
 	"meta": {
-		"description": "Hotel Ensueños by HHG - Tu hogar lejos de casa en el corazón de Cuenca, Ecuador."
+		"description": "Hotel Ensue\u00f1os by HHG - Tu hogar lejos de casa en el coraz\u00f3n de Cuenca, Ecuador."
 	},
 	"components": {
 		"dateRangePicker": "{{n}} noche{{s}}",
 		"errors": {
 			"dateRangePicker": "Falta seleccionar un rango de fechas",
-			"missingVehicleOptions": "No hay tipos de vehículo configurados aún. Continúa con tu reserva o contacta al administrador."
+			"missingVehicleOptions": "No hay tipos de veh\u00edculo configurados a\u00fan. Contin\u00faa con tu reserva o contacta al administrador."
 		}
 	},
 	"footer": {
-		"description": "Disfruta una estadía cómoda y acogedora en nuestro hotel, ubicado en una zona privilegiada de la ciudad. Ofrecemos habitaciones confortables, atención personalizada y servicios pensados para tu descanso. Nuestro equipo está listo para ayudarte con recomendaciones y experiencias locales que harán tu visita aún más especial.",
-		"navigation": "Navegación",
-		"interest": "Información",
+		"description": "Disfruta una estad\u00eda c\u00f3moda y acogedora en nuestro hotel, ubicado en una zona privilegiada de la ciudad. Ofrecemos habitaciones confortables, atenci\u00f3n personalizada y servicios pensados para tu descanso. Nuestro equipo est\u00e1 listo para ayudarte con recomendaciones y experiencias locales que har\u00e1n tu visita a\u00fan m\u00e1s especial.",
+		"navigation": "Navegaci\u00f3n",
+		"interest": "Informaci\u00f3n",
 		"legal": "Legal",
-		"social": "Síguenos",
+		"social": "S\u00edguenos",
 		"rights": "Todos los derechos reservados",
 		"developed": "Desarrollado por",
 		"about": "Sobre Nosotros",
-		"gallery": "Galería",
+		"gallery": "Galer\u00eda",
 		"contact": "Contacto",
 		"booking": "Reservar",
-		"privacy": "Política de Privacidad",
-		"terms": "Términos y Condiciones",
-		"cancellation": "Política de Cancelación",
+		"privacy": "Pol\u00edtica de Privacidad",
+		"terms": "T\u00e9rminos y Condiciones",
+		"cancellation": "Pol\u00edtica de Cancelaci\u00f3n",
 		"faq": "Preguntas Frecuentes"
 	},
 	"booking": {
 		"title": "Reserva tu Aventura",
-		"subtitle": "Encuentra y asegura tu lugar para la próxima gran experiencia.",
+		"subtitle": "Encuentra y asegura tu lugar para la pr\u00f3xima gran experiencia.",
 		"dropdown": {
 			"lblAdults": "Adultos",
 			"optAdults": "{{i}} Adultos",
 			"optAdults_one": "1 Adulto",
 			"optGroup": "Grupo",
-			"lblChildren": "Niños",
-			"optChildren": "{{i}} Niños",
-			"optChildren_one": "1 Niño",
-			"optChildren_none": "Sin niños",
+			"lblChildren": "Ni\u00f1os",
+			"optChildren": "{{i}} Ni\u00f1os",
+			"optChildren_one": "1 Ni\u00f1o",
+			"optChildren_none": "Sin ni\u00f1os",
 			"lblRooms": "Habitaciones",
 			"optRooms": "{{i}} Habitaciones",
-			"optRooms_one": "1 Habitación",
-			"error": "Falta seleccionar una opción"
+			"optRooms_one": "1 Habitaci\u00f3n",
+			"error": "Falta seleccionar una opci\u00f3n"
 		},
 		"switch": {
 			"breakfast": "Incluir Desayuno",
 			"vehicle": "Voy con vehiculo",
-			"special_request": "Petición Especial"
+			"special_request": "Petici\u00f3n Especial"
 		},
 		"btn": {
 			"search": "Reservar con un Asesor"
@@ -160,14 +160,14 @@
 			"error": "No hay fecha seleccionada"
 		},
 		"number": {
-			"error": "Elige un número válido",
+			"error": "Elige un n\u00famero v\u00e1lido",
 			"placeholder": "Ingresa una cantidad"
 		},
 		"vehicles": {
 			"title": "Reservar Vehiculo",
 			"vehicle": "Vehiculo",
 			"vehicles": {
-				"notesPlaceholder": "Información adicional sobre estacionamiento, horarios de llegada, etc."
+				"notesPlaceholder": "Informaci\u00f3n adicional sobre estacionamiento, horarios de llegada, etc."
 			},
 			"type": "Tipo",
 			"add": "Agregar Vehiculo",
@@ -183,64 +183,67 @@
 			"title": "Informacion de grupo",
 			"adults": "Cant. Adultos +18",
 			"teens": "Cant. Adolescentes +12",
-			"kids": "Cant. Niños +5",
+			"kids": "Cant. Ni\u00f1os +5",
 			"infants": "Cant. Infantes -5",
-			"notes": "Petición Especial",
-			"notesPlaceholder": "Describa si desea alguna información adicional",
+			"notes": "Petici\u00f3n Especial",
+			"notesPlaceholder": "Describa si desea alguna informaci\u00f3n adicional",
 			"vehicle": "Vamos con vehiculos",
 			"modal": {
 				"title": "Reserva Grupal",
 				"cancel": "Cancelar",
 				"confirm": "Confirmar",
-				"includeVehicles": "¿Incluir información de vehículos?"
+				"includeVehicles": "\u00bfIncluir informaci\u00f3n de veh\u00edculos?"
+			},
+			"childrenAges": {
+				"title": "Edades de Ni\u00f1os"
 			}
 		}
 	},
 	"underConstruction": {
 		"back": "Volver al inicio",
 		"404": {
-			"title": "Página no encontrada",
-			"message": "Estamos recopilando las preguntas más habituales para ayudarte. Pronto estará disponible."
+			"title": "P\u00e1gina no encontrada",
+			"message": "Estamos recopilando las preguntas m\u00e1s habituales para ayudarte. Pronto estar\u00e1 disponible."
 		},
 		"500": {
-			"title": "Página no encontrada",
-			"message": "Lo sentimos, algo salió mal en nuestro servidor. Por favor, intenta nuevamente más tarde."
+			"title": "P\u00e1gina no encontrada",
+			"message": "Lo sentimos, algo sali\u00f3 mal en nuestro servidor. Por favor, intenta nuevamente m\u00e1s tarde."
 		},
 		"about": {
 			"title": "Sobre nosotros",
-			"message": "Estamos actualizando nuestras políticas para ofrecerte mayor flexibilidad. Pronto estarán disponibles."
+			"message": "Estamos actualizando nuestras pol\u00edticas para ofrecerte mayor flexibilidad. Pronto estar\u00e1n disponibles."
 		},
 		"booking": {
 			"title": "Reservas",
-			"message": "Estamos construyendo nuestra pagina para facilitar tus reservas. Pronto estará disponible."
+			"message": "Estamos construyendo nuestra pagina para facilitar tus reservas. Pronto estar\u00e1 disponible."
 		},
 		"cancellation": {
 			"title": "Politica de Cancelaciones",
-			"message": "Estamos construyendo nuestras pagina de politicas de cancelacion. Pronto estará disponible."
+			"message": "Estamos construyendo nuestras pagina de politicas de cancelacion. Pronto estar\u00e1 disponible."
 		},
 		"contact": {
 			"title": "Contacto",
-			"message": "Estamos construyendo nuestra pagina de contacto. Pronto estará disponible."
+			"message": "Estamos construyendo nuestra pagina de contacto. Pronto estar\u00e1 disponible."
 		},
 		"faq": {
 			"title": "Preguntas Frecuentes",
-			"message": "Estamos recopilando las preguntas más habituales para ayudarte. Pronto estará disponible."
+			"message": "Estamos recopilando las preguntas m\u00e1s habituales para ayudarte. Pronto estar\u00e1 disponible."
 		},
 		"gallery": {
-			"title": "Galería",
-			"message": "Estamos construyendo nuestra pagina de galeria. Pronto estará disponible."
+			"title": "Galer\u00eda",
+			"message": "Estamos construyendo nuestra pagina de galeria. Pronto estar\u00e1 disponible."
 		},
 		"privacy": {
-			"title": "Política de Privacidad",
-			"message": "Estamos construyendo nuestra pagina de privacidad. Pronto estará disponible."
+			"title": "Pol\u00edtica de Privacidad",
+			"message": "Estamos construyendo nuestra pagina de privacidad. Pronto estar\u00e1 disponible."
 		},
 		"terms": {
-			"title": "Términos y Condiciones",
-			"message": "Estamos construyendo nuestra pagina de términos y condiciones. Pronto estará disponible."
+			"title": "T\u00e9rminos y Condiciones",
+			"message": "Estamos construyendo nuestra pagina de t\u00e9rminos y condiciones. Pronto estar\u00e1 disponible."
 		},
 		"tours": {
 			"title": "Lista de Tours",
-			"message": "Estamos construyendo nuestra pagina de tours. Pronto estará disponible"
+			"message": "Estamos construyendo nuestra pagina de tours. Pronto estar\u00e1 disponible"
 		}
 	}
 }

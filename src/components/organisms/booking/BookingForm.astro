@@ -274,7 +274,7 @@ const email = config?.contactInfo?.email ?? "";
 	import { buildBookingMessage } from '@/adapters/booking/whatsapp.adapter';
 	import { Translations } from '@/i18n/translation.ts';
 
-	document.addEventListener('DOMContentLoaded', () => {
+	async function initBooking() {
 		const form = document.getElementById('booking-form') as HTMLFormElement;
 		if (!form) return;
 
@@ -300,7 +300,10 @@ const email = config?.contactInfo?.email ?? "";
 				form.dispatchEvent(submitEvent);
 			}
 		});
-	});
+	}
+
+	document.addEventListener('DOMContentLoaded', initBooking);
+	document.addEventListener('astro:page-load', initBooking);
 </script>
 
 </form>

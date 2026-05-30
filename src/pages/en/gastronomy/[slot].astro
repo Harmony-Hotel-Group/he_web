@@ -3,7 +3,7 @@ import ImageResource from "@/components/molecules/media/ImageResource.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { api } from "@/services/api";
 import type { SiteConfig } from "@/types/config-site";
-import type { Room } from "@/types/config-resource";
+import type { GastronomyItem } from "@/types/config-resource";
 import { formatPrice } from "@/utils/currency";
 
 export const prerender = false;
@@ -211,7 +211,7 @@ if (!room) {
 						</div>
 
 						<a
-							href={`/booking?room=${room.id}`}
+							href="/booking"
 							class="block w-full bg-accent text-white text-center py-4 font-bold uppercase tracking-widest hover:bg-primary transition-colors duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
 						>
 							{

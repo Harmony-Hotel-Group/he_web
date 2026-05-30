@@ -1,4 +1,30 @@
 ---
-import Page500 from "../500.astro";
+//pages/500.astro
+
+// export const prerender = false;
+
+import { Translations } from "@/i18n/translation.ts";
+import { logger } from "@/services/logger.ts";
+
+interface Props {
+	lang: string;
+}
+
+const { lang = "es" } = Astro.props;
+
+const log = logger("500");
+
+import UnderConstructionPage from "@/components/pages/UnderConstructionPage.astro";
+
+const t = Translations(lang);
+log.info(`Rendering 500 page with language: ${lang}`);
 ---
-<Page500 lang="en"/>
+
+<UnderConstructionPage
+	titleHead={t("nav.500")}
+	title={t("underConstruction.500.title")}
+	message={t("underConstruction.500.message")}
+	btnBackLabel={t("underConstruction.back")}
+	lang={lang}
+/>
+

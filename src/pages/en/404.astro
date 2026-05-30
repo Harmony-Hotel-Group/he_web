@@ -1,4 +1,29 @@
 ---
-import Page404 from "../404.astro";
+//pages/404.astro
+
+// export const prerender = false;
+
+import { Translations } from "@/i18n/translation.ts";
+import { logger } from "@/services/logger.ts";
+
+interface Props {
+	lang: string;
+}
+
+const { lang = "es" } = Astro.props;
+
+const log = logger("404");
+
+import UnderConstructionPage from "@/components/pages/UnderConstructionPage.astro";
+
+const t = Translations(lang);
+log.info(`Rendering 404 page with language: ${lang}`);
 ---
-<Page404 lang="en"/>
+
+<UnderConstructionPage
+	titleKey="nav.404"
+	title={t("underConstruction.404.title")}
+	message={t("underConstruction.404.message")}
+	btnBackLabel={t("underConstruction.back")}
+	lang={lang}
+/>

@@ -1,12 +1,29 @@
 ---
+//pages/cancellation.astro
+
+// export const prerender = false;
+
+import { Translations } from "@/i18n/translation.ts";
+import { logger } from "@/services/logger.ts";
+
+interface Props {
+	lang: string;
+}
+
+const { lang = "es" } = Astro.props;
+
+const log = logger("cancellation");
+
 import UnderConstructionPage from "@/components/pages/UnderConstructionPage.astro";
 
-export const prerender = false;
+const t = Translations(lang);
+log.info(`Rendering cancellation page with language: ${lang}`);
 ---
 
 <UnderConstructionPage
 	titleKey="nav.cancellation"
-	title="Cancellation Policy"
-	message="We're updating our policies to offer more flexibility. Coming soon."
-	lang="en"
+	title={t("underConstruction.cancellation.title")}
+	message={t("underConstruction.cancellation.message")}
+	btnBackLabel={t("underConstruction.back")}
+	lang={lang}
 />

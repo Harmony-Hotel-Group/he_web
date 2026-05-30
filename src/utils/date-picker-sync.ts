@@ -71,7 +71,7 @@ class DatePickerSyncManager {
 				}
 
 				if (import.meta.env.DEV) {
-					log.debug(`Synced ${sourceId} → ${pickerId}`);
+					console.log(`[DatePickerSync] Synced ${sourceId} → ${pickerId}`);
 				}
 			} catch (error) {
 				log.error(`Error syncing ${pickerId}:`, error);
@@ -87,7 +87,7 @@ class DatePickerSyncManager {
 		this.syncGroups.get(syncGroup)?.delete(pickerId);
 
 		if (import.meta.env.DEV) {
-			log.debug(`Unregistered: ${pickerId}`);
+			console.log(`[DatePickerSync] Unregistered: ${pickerId}`);
 		}
 	}
 
@@ -113,7 +113,7 @@ class DatePickerSyncManager {
 		});
 
 		if (import.meta.env.DEV) {
-			log.debug(`Cleared group: ${syncGroup}`);
+			console.log(`[DatePickerSync] Cleared group: ${syncGroup}`);
 		}
 	}
 }

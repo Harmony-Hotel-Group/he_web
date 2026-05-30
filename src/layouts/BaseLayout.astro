@@ -186,5 +186,77 @@ const siteKeywords =
         <Footer t={t} config={config as SiteConfig} lang={lang} />
         <ToastContainer />
         <SizeIndicator />
+
+        <script is:inline>
+            // Dropdown event delegation - funciona en SPA navigation
+            function initDropdowns() {
+                // Lenguaje
+                var langButton = document.getElementById("lang-switcher-button");
+                var langDropdown = document.getElementById("lang-switcher-dropdown");
+                var langContainer = document.getElementById("lang-switcher-container");
+
+                if (langButton && langDropdown && !langButton.dataset.bound) {
+                    langButton.dataset.bound = "true";
+                    langButton.addEventListener("click", function(e) {
+                        e.stopPropagation();
+                        langDropdown.classList.toggle("hidden");
+                        langButton.setAttribute("aria-expanded", !langDropdown.classList.contains("hidden"));
+                    });
+                }
+
+                // Moneda
+                var currButton = document.getElementById("currency-switcher-button");
+                var currDropdown = document.getElementById("currency-switcher-dropdown");
+                var currContainer = document.getElementById("currency-switcher-container");
+
+                if (currButton && currDropdown && !currButton.dataset.bound) {
+                    currButton.dataset.bound = "true";
+                    currButton.addEventListener("click", function(e) {
+                        e.stopPropagation();
+                        currDropdown.classList.toggle("hidden");
+                        currButton.setAttribute("aria-expanded", !currDropdown.classList.contains("hidden"));
+                    });
+                }
+
+                // Opciones de moneda
+                document.querySelectorAll(".currency-option").forEach(function(opt) {
+                    if (opt.dataset.bound) return;
+                    opt.dataset.bound = "true";
+
+                    opt.addEventListener("click", function() {
+                        var code = opt.dataset.currencyCode;
+                        var image = opt.dataset.currencyImage;
+
+                        if (code && image) {
+                            var flagEl = document.getElementById("currency-switcher-flag");
+                            var codeEl = document.getElementById("currency-switcher-code");
+
+                            if (flagEl) flagEl.src = image;
+                            if (codeEl) codeEl.textContent = code;
+
+                            localStorage.setItem("currency", code);
+                            if (currDropdown) currDropdown.classList.add("hidden");
+                            document.dispatchEvent(new CustomEvent("currencyChanged", { detail: { currency: code } }));
+                        }
+                    });
+                });
+            }
+
+            // Click fuera - cerrar dropdowns
+            document.addEventListener("click", function(e) {
+                if (langContainer && !langContainer.contains(e.target)) {
+                    if (langDropdown) langDropdown.classList.add("hidden");
+                    if (langButton) langButton.setAttribute("aria-expanded", "false");
+                }
+                if (currContainer && !currContainer.contains(e.target)) {
+                    if (currDropdown) currDropdown.classList.add("hidden");
+                    if (currButton) currButton.setAttribute("aria-expanded", "false");
+                }
+            });
+
+            // Init
+            initDropdowns();
+            document.addEventListener("astro:page-load", initDropdowns);
+        </script>
     </body>
 </html>

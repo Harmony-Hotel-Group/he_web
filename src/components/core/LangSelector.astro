@@ -101,6 +101,7 @@ if (!button || !dropdown) {
 
 	// SPA navigation
 	document.addEventListener("astro:page-load", initLangSelector);
+	document.addEventListener("astro:after-swap", initLangSelector);
 
 	// Close dropdown on outside click (only once, via global guard)
 	window.__headerDocClickListener ||= (() => {

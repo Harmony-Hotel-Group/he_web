@@ -242,8 +242,15 @@ const siteKeywords =
                 });
             }
 
-            // Click fuera - cerrar dropdowns
+            // Click fuera - cerrar dropdowns (busca elementos en cada click)
             document.addEventListener("click", function(e) {
+                var langContainer = document.getElementById("lang-switcher-container");
+                var langButton = document.getElementById("lang-switcher-button");
+                var langDropdown = document.getElementById("lang-switcher-dropdown");
+                var currContainer = document.getElementById("currency-switcher-container");
+                var currButton = document.getElementById("currency-switcher-button");
+                var currDropdown = document.getElementById("currency-switcher-dropdown");
+
                 if (langContainer && !langContainer.contains(e.target)) {
                     if (langDropdown) langDropdown.classList.add("hidden");
                     if (langButton) langButton.setAttribute("aria-expanded", "false");

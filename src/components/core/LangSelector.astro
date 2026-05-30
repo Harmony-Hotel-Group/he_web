@@ -19,7 +19,6 @@ log.info("🟢 [SSR] Langs uiLanguages:", uiLanguages);
 
 const selectedLang =
 	uiLanguages.find((lang) => lang.code === currentLangCode) || uiLanguages[0];
-
 function getUrlForLang(langCode: string) {
 	const currentPath = Astro.url.pathname;
 	const currentPathWithoutLang = currentPath.replace(/^\/(en|fr)/, "");
@@ -67,66 +66,29 @@ function getUrlForLang(langCode: string) {
 	</div>
 </div>
 
-<script is:inline>
-function initLangSelector() {
-    // SSR-safe: document only exists in browser
-    if (typeof document === "undefined" || typeof window === "undefined") return;
-    
-    const button = document.getElementById("lang-switcher-button");
-    const dropdown = document.getElementById("lang-switcher-dropdown");
+<script>
+	function initLangSelector() {
+		const button = document.getElementById("lang-switcher-button");
+		const dropdown = document.getElementById("lang-switcher-dropdown");
 
-    if (!button || !dropdown) {
-        console.error("LangSelector: Elementos no encontrados");
-        return;
-    }
+		if (!button || !dropdown) {
+			console.error("LangSelector: Elementos no encontrados");
+			return;
+		}
 
-    // Guard contra listeners duplicados - usar window guard global
-    if (!window.__headerInited) window.__headerInited = {};
-    if (window.__headerInited.langButton) return;
-    window.__headerInited.langButton = true;
+		// Guard contra listeners duplicados
+		if (!window.__headerInited) window.__headerInited = {};
+		if (window.__headerInited.langButton) return;
+		window.__headerInited.langButton = true;
 
-    button.addEventListener("click", (e) => {
-        e.stopPropagation();
-        dropdown.classList.toggle("hidden");
-        button.setAttribute("aria-expanded", String(!dropdown.classList.contains("hidden")));
-    });
-}
+		button.addEventListener("click", (e) => {
+			e.stopPropagation();
+			dropdown.classList.toggle("hidden");
+			button.setAttribute("aria-expanded", String(!dropdown.classList.contains("hidden")));
+		});
+	}
 
-// Initial load - esperar a DOM ready
-if (document.readyState === 'loading') {
-    document.addEventListener("DOMContentLoaded", initLangSelector);
-} else {
-    // DOM ya está listo (SPA navigation)
-    initLangSelector();
-}
-
-// SPA navigation
-document.addEventListener("astro:page-load", initLangSelector);
-document.addEventListener("astro:after-swap", initLangSelector);
-
-// Close dropdown on outside click (only once, via global guard)
-window.__headerDocClickListener ||= (() => {
-    document.addEventListener("click", (e) => {
-        const target = e.target;
-        
-        // Handle LangSelector
-        const langDropdown = document.getElementById("lang-switcher-dropdown");
-        const langButton = document.getElementById("lang-switcher-button");
-        const langContainer = document.getElementById("lang-switcher-container");
-        if (langContainer && langButton && langDropdown && !langContainer.contains(target)) {
-            langDropdown.classList.add("hidden");
-            langButton.setAttribute("aria-expanded", "false");
-        }
-        
-        // Handle CurrencySelector
-        const currDropdown = document.getElementById("currency-switcher-dropdown");
-        const currButton = document.getElementById("currency-switcher-button");
-        const currContainer = document.getElementById("currency-switcher-container");
-        if (currContainer && currButton && currDropdown && !currContainer.contains(target)) {
-            currDropdown.classList.add("hidden");
-            currButton.setAttribute("aria-expanded", "false");
-        }
-    });
-    return true;
-})();
+	// SPA navigation - script bundleado se re-ejecuta automáticamente
+	document.addEventListener("astro:page-load", initLangSelector);
+	document.addEventListener("DOMContentLoaded", initLangSelector);
 </script>

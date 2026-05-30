@@ -66,3 +66,44 @@ function getUrlForLang(langCode: string) {
 		))}
 	</div>
 </div>
+
+<script is:inline>
+	function initLangSelector() {
+		// SSR-safe: document only exists in browser
+		if (typeof document === "undefined" || typeof window === "undefined") return;
+		const button = document.getElementById("lang-switcher-button");
+		const dropdown = document.getElementById("lang-switcher-dropdown");
+
+		if (!button || !dropdown) {
+			console.error("LangSelector: Elementos no encontrados");
+			return;
+		}
+
+		button.addEventListener("click", (e) => {
+			e.stopPropagation();
+			dropdown.classList.toggle("hidden");
+			button.setAttribute("aria-expanded", String(!dropdown.classList.contains("hidden")));
+		});
+	}
+
+	// Initial load - esperar a DOM ready
+	if (document.readyState === 'loading') {
+		document.addEventListener("DOMContentLoaded", initLangSelector);
+	} else {
+		// DOM ya está listo (SPA navigation)
+		initLangSelector();
+	}
+
+	// SPA navigation
+	document.addEventListener("astro:page-load", initLangSelector);
+
+	// Close dropdown on outside click (always active)
+	document.addEventListener("click", () => {
+		const dropdown = document.getElementById("lang-switcher-dropdown");
+		const button = document.getElementById("lang-switcher-button");
+		if (dropdown && button && !dropdown.classList.contains("hidden")) {
+			dropdown.classList.add("hidden");
+			button.setAttribute("aria-expanded", "false");
+		}
+	});
+</script>

@@ -700,78 +700,88 @@ const uniqueTours =
         background: rgb(255 255 255 / 0.3);
     }
 </style>
+
 <script is:inline>
-    // Header selectors - ejecutar inmediatamente en cliente
-    if (typeof document !== "undefined" && typeof window !== "undefined") {
-        // Guard global para evitar listeners duplicados de document
-        window.__headerListeners = window.__headerListeners || {
-            langDocClick: false,
-            currencyDocClick: false
-        };
-        
-        function initHeaderSelectors() {
-            // === Language Selector ===
-            const langButton = document.getElementById("lang-switcher-button");
-            const langDropdown = document.getElementById("lang-switcher-dropdown");
-            
-            if (langButton && langDropdown && !langButton.dataset.inited) {
-                langButton.dataset.inited = "true";
-                langButton.addEventListener("click", (e) => {
-                    e.stopPropagation();
-                    langDropdown.classList.toggle("hidden");
-                    langButton.setAttribute("aria-expanded", String(!langDropdown.classList.contains("hidden")));
-                });
+    // SSR-safe check
+    if (typeof document === "undefined" || typeof window === "undefined") {} else {
+        let mobileMenuButton = null;
+        let mobileMenu = null;
+        let mobileMenuClose = null;
+        let mobileSubmenus = null;
+
+        function init() {
+            mobileMenuButton = document.getElementById("mobile-menu-button");
+            mobileMenu = document.getElementById("mobile-menu");
+            mobileMenuClose = document.getElementById("mobile-menu-close");
+            mobileSubmenus = document.querySelectorAll("[data-submenu]");
+
+            if (!mobileMenu || !mobileMenuButton) {
+                console.error("Mobile menu elements not found!");
+                return;
             }
-            
-            // === Currency Selector ===
-            const currencyButton = document.getElementById("currency-switcher-button");
-            const currencyDropdown = document.getElementById("currency-switcher-dropdown");
-            
-            if (currencyButton && currencyDropdown && !currencyButton.dataset.inited) {
-                currencyButton.dataset.inited = "true";
-                currencyButton.addEventListener("click", (e) => {
-                    e.stopPropagation();
-                    currencyDropdown.classList.toggle("hidden");
-                    currencyButton.setAttribute("aria-expanded", String(!currencyDropdown.classList.contains("hidden")));
-                });
+
+            function openMenu() {
+                mobileMenu.classList.remove("translate-x-full", "opacity-0", "invisible");
+                mobileMenu.classList.add("menu-open");
+                document.body.classList.add("menu-open");
+                mobileMenu.setAttribute("aria-hidden", "false");
             }
-            
-            // Close dropdowns - registrar listener solo una vez
-            if (!window.__headerListeners.langDocClick) {
-                window.__headerListeners.langDocClick = true;
-                document.addEventListener("click", (e) => {
-                    const target = e.target;
-                    const langContainer = document.getElementById("lang-switcher-container");
-                    const langDrop = document.getElementById("lang-switcher-dropdown");
-                    const langBtn = document.getElementById("lang-switcher-button");
-                    if (langContainer && langBtn && langDrop && target && !langContainer.contains(target)) {
-                        langDrop.classList.add("hidden");
-                        langBtn.setAttribute("aria-expanded", "false");
+
+            function closeMenu() {
+                mobileMenu.classList.add("translate-x-full", "opacity-0", "invisible");
+                mobileMenu.classList.remove("menu-open");
+                document.body.classList.remove("menu-open");
+                mobileMenu.setAttribute("aria-hidden", "true");
+                
+                mobileSubmenus?.forEach(btn => {
+                    const submenuId = `mobile-${btn.getAttribute("data-submenu")}-submenu`;
+                    const submenu = document.getElementById(submenuId);
+                    if (submenu) {
+                        submenu.classList.add("hidden");
+                        btn.parentElement?.classList.remove("active");
                     }
                 });
             }
+
+            mobileMenuButton.addEventListener("click", function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                openMenu();
+            });
             
-            if (!window.__headerListeners.currencyDocClick) {
-                window.__headerListeners.currencyDocClick = true;
-                document.addEventListener("click", (e) => {
-                    const target = e.target;
-                    const currContainer = document.getElementById("currency-switcher-container");
-                    const currDrop = document.getElementById("currency-switcher-dropdown");
-                    const currBtn = document.getElementById("currency-switcher-button");
-                    if (currContainer && currBtn && currDrop && target && !currContainer.contains(target)) {
-                        currDrop.classList.add("hidden");
-                        currBtn.setAttribute("aria-expanded", "false");
-                    }
-                });
+            mobileMenuButton.addEventListener("touchstart", function(e) {
+                e.preventDefault();
+                openMenu();
+            }, { passive: true });
+
+            if (mobileMenuClose) {
+                mobileMenuClose.addEventListener("click", closeMenu);
+                mobileMenuClose.addEventListener("touchstart", closeMenu, { passive: true });
+            }
+
+            document.addEventListener("keydown", function onKeydown(e) {
+                if (e.key === "Escape" && !mobileMenu.classList.contains("translate-x-full")) {
+                    closeMenu();
+                }
+            });
+        }
+
+        function handleResize() {
+            if (mobileMenu && !mobileMenu.classList.contains("translate-x-full")) {
+                // Menu is open, adjust for screen size changes if needed
             }
         }
-        
-        // Ejecutar inmediatamente (is:inline se ejecuta al parsear)
-        if (document.readyState === "loading") {
-            document.addEventListener("DOMContentLoaded", initHeaderSelectors);
+
+        // Initial load + SPA navigation
+        if (document.readyState === 'loading') {
+            document.addEventListener("DOMContentLoaded", init);
         } else {
-            initHeaderSelectors();
+            init();
         }
+        
+        document.addEventListener("astro:page-load", function() {
+            init();
+            window.addEventListener('resize', handleResize);
+        });
     }
 </script>
-</header>

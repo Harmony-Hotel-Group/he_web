@@ -67,8 +67,8 @@ function getUrlForLang(langCode: string) {
 	</div>
 </div>
 
-<script is:inline>
-	function initLangSelector() {
+<script is:inline data-astro-temporary>
+function initLangSelector() {
 		// SSR-safe: document only exists in browser
 		if (typeof document === "undefined" || typeof window === "undefined") return;
 		const button = document.getElementById("lang-switcher-button");

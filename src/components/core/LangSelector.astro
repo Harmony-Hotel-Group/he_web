@@ -74,12 +74,17 @@ function initLangSelector() {
 		const button = document.getElementById("lang-switcher-button");
 		const dropdown = document.getElementById("lang-switcher-dropdown");
 
-		if (!button || !dropdown) {
-			console.error("LangSelector: Elementos no encontrados");
-			return;
-		}
+if (!button || !dropdown) {
+		console.error("LangSelector: Elementos no encontrados");
+		return;
+	}
 
-		button.addEventListener("click", (e) => {
+	// Guard contra listeners duplicados - usar window guard global
+	if (!window.__headerInited) window.__headerInited = {};
+	if (window.__headerInited.langButton) return;
+	window.__headerInited.langButton = true;
+
+	button.addEventListener("click", (e) => {
 			e.stopPropagation();
 			dropdown.classList.toggle("hidden");
 			button.setAttribute("aria-expanded", String(!dropdown.classList.contains("hidden")));

@@ -171,6 +171,11 @@ log.info(
             return;
         }
 
+        // Guard contra listeners duplicados
+        if (!window.__headerInited) window.__headerInited = {};
+        if (window.__headerInited.currencyButton) return;
+        window.__headerInited.currencyButton = true;
+
         // Cargar moneda guardada y actualizar UI
         const storedCurrencyCode = getStoredCurrency();
         const storedCurrency = getCurrencyData(storedCurrencyCode);

@@ -700,5 +700,78 @@ const uniqueTours =
         background: rgb(255 255 255 / 0.3);
     }
 </style>
-
-
+<script is:inline>
+    // Header selectors - ejecutar inmediatamente en cliente
+    if (typeof document !== "undefined" && typeof window !== "undefined") {
+        // Guard global para evitar listeners duplicados de document
+        window.__headerListeners = window.__headerListeners || {
+            langDocClick: false,
+            currencyDocClick: false
+        };
+        
+        function initHeaderSelectors() {
+            // === Language Selector ===
+            const langButton = document.getElementById("lang-switcher-button");
+            const langDropdown = document.getElementById("lang-switcher-dropdown");
+            
+            if (langButton && langDropdown && !langButton.dataset.inited) {
+                langButton.dataset.inited = "true";
+                langButton.addEventListener("click", (e) => {
+                    e.stopPropagation();
+                    langDropdown.classList.toggle("hidden");
+                    langButton.setAttribute("aria-expanded", String(!langDropdown.classList.contains("hidden")));
+                });
+            }
+            
+            // === Currency Selector ===
+            const currencyButton = document.getElementById("currency-switcher-button");
+            const currencyDropdown = document.getElementById("currency-switcher-dropdown");
+            
+            if (currencyButton && currencyDropdown && !currencyButton.dataset.inited) {
+                currencyButton.dataset.inited = "true";
+                currencyButton.addEventListener("click", (e) => {
+                    e.stopPropagation();
+                    currencyDropdown.classList.toggle("hidden");
+                    currencyButton.setAttribute("aria-expanded", String(!currencyDropdown.classList.contains("hidden")));
+                });
+            }
+            
+            // Close dropdowns - registrar listener solo una vez
+            if (!window.__headerListeners.langDocClick) {
+                window.__headerListeners.langDocClick = true;
+                document.addEventListener("click", (e) => {
+                    const target = e.target;
+                    const langContainer = document.getElementById("lang-switcher-container");
+                    const langDrop = document.getElementById("lang-switcher-dropdown");
+                    const langBtn = document.getElementById("lang-switcher-button");
+                    if (langContainer && langBtn && langDrop && target && !langContainer.contains(target)) {
+                        langDrop.classList.add("hidden");
+                        langBtn.setAttribute("aria-expanded", "false");
+                    }
+                });
+            }
+            
+            if (!window.__headerListeners.currencyDocClick) {
+                window.__headerListeners.currencyDocClick = true;
+                document.addEventListener("click", (e) => {
+                    const target = e.target;
+                    const currContainer = document.getElementById("currency-switcher-container");
+                    const currDrop = document.getElementById("currency-switcher-dropdown");
+                    const currBtn = document.getElementById("currency-switcher-button");
+                    if (currContainer && currBtn && currDrop && target && !currContainer.contains(target)) {
+                        currDrop.classList.add("hidden");
+                        currBtn.setAttribute("aria-expanded", "false");
+                    }
+                });
+            }
+        }
+        
+        // Ejecutar inmediatamente (is:inline se ejecuta al parsear)
+        if (document.readyState === "loading") {
+            document.addEventListener("DOMContentLoaded", initHeaderSelectors);
+        } else {
+            initHeaderSelectors();
+        }
+    }
+</script>
+</header>

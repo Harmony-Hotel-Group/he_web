@@ -14,7 +14,11 @@ log.info("🟢 [SSR] Lang para selector:", currentLangCode);
 
 const uiLanguages = languages.filter((l) =>
 	SUPPORTED_LANGS.includes(l.code as SupportedLang),
-);
+).map((l) => ({
+	code: l.code,
+	name: l.name,
+	flag: l.flag || `/flags/${l.code}.svg`
+}));
 log.info("🟢 [SSR] Langs uiLanguages:", uiLanguages);
 
 const selectedLang =

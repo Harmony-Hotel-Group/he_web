@@ -187,17 +187,6 @@ log.info(
             button.setAttribute("aria-expanded", String(!isHidden));
         });
 
-        // Cerrar dropdown al hacer click fuera
-        document.addEventListener("click", (e: Event) => {
-            const target = e.target as HTMLElement;
-            if (!container.contains(target)) {
-                if (!dropdown.classList.contains("hidden")) {
-                    dropdown.classList.add("hidden");
-                    button.setAttribute("aria-expanded", "false");
-                }
-            }
-        });
-
         // Manejar cambio de moneda
         const currencyButtons = dropdown.querySelectorAll(
             ".currency-option",

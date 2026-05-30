@@ -97,13 +97,29 @@ function getUrlForLang(langCode: string) {
 	// SPA navigation
 	document.addEventListener("astro:page-load", initLangSelector);
 
-	// Close dropdown on outside click (always active)
-	document.addEventListener("click", () => {
-		const dropdown = document.getElementById("lang-switcher-dropdown");
-		const button = document.getElementById("lang-switcher-button");
-		if (dropdown && button && !dropdown.classList.contains("hidden")) {
-			dropdown.classList.add("hidden");
-			button.setAttribute("aria-expanded", "false");
-		}
-	});
+	// Close dropdown on outside click (only once, via global guard)
+	window.__headerDocClickListener ||= (() => {
+		document.addEventListener("click", (e: Event) => {
+			const target = e.target as HTMLElement;
+			
+			// Handle LangSelector
+			const langDropdown = document.getElementById("lang-switcher-dropdown");
+			const langButton = document.getElementById("lang-switcher-button");
+			const langContainer = document.getElementById("lang-switcher-container");
+			if (langContainer && langButton && langDropdown && !langContainer.contains(target)) {
+				langDropdown.classList.add("hidden");
+				langButton.setAttribute("aria-expanded", "false");
+			}
+			
+			// Handle CurrencySelector
+			const currDropdown = document.getElementById("currency-switcher-dropdown");
+			const currButton = document.getElementById("currency-switcher-button");
+			const currContainer = document.getElementById("currency-switcher-container");
+			if (currContainer && currButton && currDropdown && !currContainer.contains(target)) {
+				currDropdown.classList.add("hidden");
+				currButton.setAttribute("aria-expanded", "false");
+			}
+		});
+		return true;
+	})();
 </script>

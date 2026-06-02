@@ -39,10 +39,10 @@ function renderStars(rating: number): string {
 		{/* Rating promedio */}
 		{reviews.length > 0 && (
 			<div class="text-center mb-10">
-				<span class="text-5xl font-bold text-accent">
-					{(reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length).toFixed(1)}
-				</span>
-				<span class="text-yellow-500 text-2xl ml-2">
+			<span class="text-5xl font-bold text-accent">
+				{(reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length).toFixed(1)}
+			</span>
+			<span class="text-yellow-600 text-2xl ml-2">
 					{renderStars(Math.round(reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length))}
 				</span>
 				<p class="text-gray-500 mt-1">

@@ -275,7 +275,6 @@ export function diffNights(checkin: Date, checkout: Date): number {
 	return Math.floor((checkout.getTime() - checkin.getTime()) / MS_PER_DAY);
 }
 
-
 /**
  * Verifica si dos fechas son el mismo día (solo fecha, sin hora).
  * @param a Primera fecha
@@ -297,7 +296,10 @@ export function nightsLabel(
 	t?: (key: string, params?: Record<string, string | number>) => string,
 ): string {
 	if (t) {
-		return t("components.dateRangePicker", { n: nights, s: nights === 1 ? "" : "s" });
+		return t("components.dateRangePicker", {
+			n: nights,
+			s: nights === 1 ? "" : "s",
+		});
 	}
 	return `${nights} noche${nights === 1 ? "" : "s"}`;
 }

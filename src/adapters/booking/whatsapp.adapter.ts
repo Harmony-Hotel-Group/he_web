@@ -69,8 +69,14 @@ function _mapLegacyToBookingData(input: BuildBookingMessageInput): BookingData {
 		checkout = parsed.checkOut;
 		nights = Number(parsed.nightsCount) || 0;
 	} else if (input.processing) {
-		checkin = typeof input.processing.checkin === "string" ? input.processing.checkin : "";
-		checkout = typeof input.processing.checkout === "string" ? input.processing.checkout : "";
+		checkin =
+			typeof input.processing.checkin === "string"
+				? input.processing.checkin
+				: "";
+		checkout =
+			typeof input.processing.checkout === "string"
+				? input.processing.checkout
+				: "";
 		nights = Number(input.processing.nights) || 0;
 	}
 
@@ -98,7 +104,9 @@ function _mapLegacyToBookingData(input: BuildBookingMessageInput): BookingData {
 		rooms: isGroup ? 1 : Number(input.processing?.rooms) || 1,
 		adults,
 		children: children || undefined,
-		breakfast: input.processing?.breakfast === "on" || input.processing?.breakfast === "true",
+		breakfast:
+			input.processing?.breakfast === "on" ||
+			input.processing?.breakfast === "true",
 		notes: input.groupNotes || undefined,
 		vehicleType: isGroup ? undefined : input.vehicleItems?.[0]?.type,
 		vehiclePlate: isGroup ? undefined : input.vehicleItems?.[0]?.plate,
@@ -358,16 +366,13 @@ function buildVehicleMessage(
  * Construye el mensaje de WhatsApp para una reservación estándar
  */
 
-
 /**
  * Construye el mensaje de WhatsApp para una reservación grupal
  */
 
-
 /**
  * Construye el mensaje de WhatsApp para reservación con vehículo
  */
-
 
 /**
  * Función principal para construir mensajes de WhatsApp

@@ -18,11 +18,11 @@
  */
 export function escapeHTML(text: string): string {
 	const map: Record<string, string> = {
-		'&': '&amp;',
-		'<': '&lt;',
-		'>': '&gt;',
-		'"': '&quot;',
-		"'": '&#39;',
+		"&": "&amp;",
+		"<": "&lt;",
+		">": "&gt;",
+		'"': "&quot;",
+		"'": "&#39;",
 	};
 	return text.replace(/[&<>"']/g, (char) => map[char] ?? char);
 }
@@ -35,10 +35,7 @@ export function escapeHTML(text: string): string {
  * @param allowedTags Tags permitidos sin escapar (por defecto vacío)
  * @returns Cadena segura para innerHTML
  */
-export function sanitizeHTML(
-	text: string,
-	allowedTags: string[] = [],
-): string {
+export function sanitizeHTML(text: string, allowedTags: string[] = []): string {
 	// Si no hay tags permitidos, escapar todo
 	if (allowedTags.length === 0) {
 		return escapeHTML(text);

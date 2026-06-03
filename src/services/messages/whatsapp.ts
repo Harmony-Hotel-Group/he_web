@@ -1,4 +1,5 @@
 import { logger } from "@/services/logger";
+
 const log = logger("messages:whatsapp");
 
 // src/services/messages/whatsapp.ts

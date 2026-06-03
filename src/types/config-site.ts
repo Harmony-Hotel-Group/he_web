@@ -1,7 +1,8 @@
 // src/types/config-site.ts
 // Tipos de configuración del sitio: SiteConfig y auxiliares directos
+
+import type { CarouselResource, ImageResource } from "./config-resource";
 import type { LocalizedText } from "./i18n";
-import type { ImageResource, CarouselResource } from "./config-resource";
 
 export type Currency = {
 	code: string;

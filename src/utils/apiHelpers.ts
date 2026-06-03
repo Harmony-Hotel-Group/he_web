@@ -117,13 +117,10 @@ function json200<T>(data: T, _fromCache: boolean) {
 }
 
 function jsonError(message: string, status = 400): Response {
-	return new Response(
-		JSON.stringify({ error: message }),
-		{
-			status,
-			headers: { "Content-Type": "application/json; charset=utf-8" },
-		},
-	);
+	return new Response(JSON.stringify({ error: message }), {
+		status,
+		headers: { "Content-Type": "application/json; charset=utf-8" },
+	});
 }
 
 async function safeReadLocal<T>(

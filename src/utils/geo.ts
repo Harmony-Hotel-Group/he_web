@@ -1,4 +1,5 @@
 import { logger } from "@/services/logger";
+
 const log = logger("utils:geo");
 
 /**

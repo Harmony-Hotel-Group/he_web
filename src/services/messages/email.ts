@@ -1,4 +1,5 @@
 import { logger } from "@/services/logger";
+
 const log = logger("messages:email");
 
 // src/services/messages/email.ts
@@ -30,8 +31,7 @@ function getBasicAuth(apiKey: string) {
 
 async function doMailgunSend(params: URLSearchParams) {
 	if (!ENV.MAILGUN_API_KEY || !ENV.MAILGUN_DOMAIN) {
-		if (ENV.DEV)
-			log.warn("Mailgun not configured, skipping send");
+		if (ENV.DEV) log.warn("Mailgun not configured, skipping send");
 		return { ok: false, skipped: true } as const;
 	}
 	const url = `https://api.mailgun.net/v3/${ENV.MAILGUN_DOMAIN}/messages`;

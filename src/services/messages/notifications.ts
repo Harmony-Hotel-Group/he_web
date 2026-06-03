@@ -131,7 +131,9 @@ export async function notifyBooking(
 		email: () =>
 			dispatchToEmail(
 				`Nueva reserva ${data.type} — Hotel Ensueños`,
-				buildBookingNotificationMessage(data).replace(/\*/g, "").replace(/_/g, ""),
+				buildBookingNotificationMessage(data)
+					.replace(/\*/g, "")
+					.replace(/_/g, ""),
 			),
 		webhook: () =>
 			webhookUrl
@@ -140,7 +142,7 @@ export async function notifyBooking(
 						channel: "webhook",
 						ok: false,
 						skipped: true,
-				  } as NotificationResult),
+					} as NotificationResult),
 	};
 
 	for (const channel of channels) {
@@ -195,21 +197,22 @@ export async function notifyContactForm(
 
 	const results: NotificationResult[] = [];
 
-	const contactDispatchMap: Record<string, () => Promise<NotificationResult>> = {
-		telegram: () => dispatchToTelegram(text),
-		email: () => dispatchToEmail(subject, plainText),
-		webhook: () =>
-			webhookUrl
-				? dispatchToWebhook(webhookUrl, {
-						type: "standard",
-						...data,
-				  } as BookingNotificationData)
-				: Promise.resolve({
-						channel: "webhook",
-						ok: false,
-						skipped: true,
-				  } as NotificationResult),
-	};
+	const contactDispatchMap: Record<string, () => Promise<NotificationResult>> =
+		{
+			telegram: () => dispatchToTelegram(text),
+			email: () => dispatchToEmail(subject, plainText),
+			webhook: () =>
+				webhookUrl
+					? dispatchToWebhook(webhookUrl, {
+							type: "standard",
+							...data,
+						} as BookingNotificationData)
+					: Promise.resolve({
+							channel: "webhook",
+							ok: false,
+							skipped: true,
+						} as NotificationResult),
+		};
 
 	for (const channel of channels) {
 		const dispatch = contactDispatchMap[channel];

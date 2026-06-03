@@ -3,8 +3,8 @@
 // Consolida Resource de resources.ts + tipos específicos de dominio
 
 import type { ImageMetadata } from "astro";
-import type { ImageSource } from "./image";
 import type { LocalizedText } from "./i18n";
+import type { ImageSource } from "./image";
 
 // === Base Resource ===
 export type ResourceType = "image" | "video" | "youtube" | "auto";

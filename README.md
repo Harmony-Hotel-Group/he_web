@@ -13,14 +13,20 @@ Hotel Ensueños is a boutique hotel website built with modern web technologies. 
 ## Technical Stack
 
 ### Core Framework
-- **Astro 5.14.1**: Modern static site generator with server-side rendering
-- **Preact 10.19.6**: Lightweight React alternative for interactive components
+- **Astro 5.18.x**: Modern static site generator with server-side rendering
+- **Preact 10.26.x**: Lightweight React alternative for interactive components
 - **TypeScript 5.9.3**: Type-safe JavaScript development
 
 ### Styling & UI
-- **Tailwind CSS 3.4.1**: Utility-first CSS framework
+- **Tailwind CSS v4.1.16**: Utility-first CSS framework
 - **PostCSS**: CSS post-processing
 - **Custom Icons**: SVG icon system with astro-icon integration
+
+### Testing & Quality
+- **Vitest 3**: Unit testing framework
+- **Playwright 1.50**: End-to-end testing
+- **Biome**: Code formatter, linter, and analyzer
+- **axe-core**: Accessibility testing engine
 
 ### Development Tools
 - **Vite**: Fast build tool (via Astro)

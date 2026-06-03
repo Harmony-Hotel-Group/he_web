@@ -1,7 +1,7 @@
 # CI/CD Pipeline — Hotel Ensueños (he_web)
 #
 # Ejecuta en: push a main/dev/qa, pull requests
-# Pasos: install → lint → typecheck → test → build
+# Pasos: install → lint-and-check → test:run → build → a11y:scan → playwright
 
 name: CI
 
@@ -16,8 +16,41 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  install:
+    name: Install Dependencies
+    runs-on: ubuntu-latest
+    outputs:
+      node-modules-cache: ${{ steps.cache.outputs.cache-primary-key }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PNPM
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        id: install
+        run: pnpm install --frozen-lockfile
+
+      - name: Cache node_modules
+        id: cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
+
   lint-and-check:
     name: Lint & Type Check
+    needs: install
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -31,7 +64,8 @@ jobs:
           node-version: 22
           cache: pnpm
 
-      - run: pnpm install --frozen-lockfile
+      - name: Install dependencies (from cache)
+        run: pnpm install --frozen-lockfile
 
       - name: Biome Lint
         run: pnpm biome check src/
@@ -39,8 +73,9 @@ jobs:
       - name: Astro Check
         run: pnpm check
 
-  test:
+  test:run:
     name: Unit Tests
+    needs: install
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -54,15 +89,16 @@ jobs:
           node-version: 22
           cache: pnpm
 
-      - run: pnpm install --frozen-lockfile
+      - name: Install dependencies (from cache)
+        run: pnpm install --frozen-lockfile
 
       - name: Run Vitest
         run: pnpm test:run
 
   build:
     name: Build
+    needs: [lint-and-check, test:run]
     runs-on: ubuntu-latest
-    needs: [lint-and-check, test]
     steps:
       - uses: actions/checkout@v4
 
@@ -75,7 +111,8 @@ jobs:
           node-version: 22
           cache: pnpm
 
-      - run: pnpm install --frozen-lockfile
+      - name: Install dependencies (from cache)
+        run: pnpm install --frozen-lockfile
 
       - name: Build
         run: pnpm build
@@ -88,10 +125,33 @@ jobs:
           path: dist/
           retention-days: 7
 
-  e2e:
-    name: E2E Tests
+  a11y:scan:
+    name: Accessibility Scan
+    needs: build
     runs-on: ubuntu-latest
-    needs: [build]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies (from cache)
+        run: pnpm install --frozen-lockfile
+
+      - name: Run Accessibility Scan
+        # Reuse the existing script that starts the dev server and runs axe
+        run: bash scripts/accessibility-scan.sh
+
+  playwright:
+    name: Playwright E2E Tests
+    needs: build
+    runs-on: ubuntu-latest
     if: github.event_name == 'pull_request' || github.ref == 'refs/heads/main'
     steps:
       - uses: actions/checkout@v4
@@ -105,10 +165,27 @@ jobs:
           node-version: 22
           cache: pnpm
 
-      - run: pnpm install --frozen-lockfile
+      - name: Install dependencies (from cache)
+        run: pnpm install --frozen-lockfile
 
-      - name: Install Playwright
+      - name: Install Playwright Browsers
         run: pnpm exec playwright install --with-deps chromium
 
-      - name: Run Playwright
+      - name: Run Playwright Tests
         run: pnpm test:e2e
+
+      - name: Upload Playwright Report
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7
+
+      - name: Upload Trace Files
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: trace-files
+          path: **/trace-*
+          retention-days: 7

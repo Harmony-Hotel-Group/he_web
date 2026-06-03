@@ -13,8 +13,8 @@
  */
 
 import type { SiteConfig } from "@/types/config-site";
-import { initBookingValidation } from "./useBookingValidation";
 import { initBookingSubmit } from "./useBookingSubmit";
+import { initBookingValidation } from "./useBookingValidation";
 
 export interface UseBookingFormOptions {
 	form: HTMLFormElement;
@@ -33,7 +33,7 @@ export function initBookingForm(opts: UseBookingFormOptions) {
 	// --- DOM References ---
 	if (form.dataset.initialized) return;
 	form.dataset.initialized = "true";
-	
+
 	const bookingBar = form.closest("#booking-bar");
 	const vehicleSection = document.getElementById("vehicle-section-component");
 	const vehicleSwitchButton = form.querySelector("button#vehicle");
@@ -55,7 +55,9 @@ export function initBookingForm(opts: UseBookingFormOptions) {
 	const dateRangeGroup = document.getElementById(
 		"dateRangeGroup",
 	) as HTMLInputElement | null;
-	const childrenAgeContainer = document.getElementById("children-age-container");
+	const childrenAgeContainer = document.getElementById(
+		"children-age-container",
+	);
 
 	// --- Vehicle Section Observer ---
 	if (vehicleSwitchButton && vehicleSection) {
@@ -140,7 +142,12 @@ export function initBookingForm(opts: UseBookingFormOptions) {
 
 			if (numChildren > 0) {
 				childrenAgeContainer.classList.remove("hidden");
-				childrenAgeContainer.classList.add("grid", "grid-cols-2", "md:grid-cols-4", "gap-2");
+				childrenAgeContainer.classList.add(
+					"grid",
+					"grid-cols-2",
+					"md:grid-cols-4",
+					"gap-2",
+				);
 				for (let i = 1; i <= numChildren; i++) {
 					childrenAgeContainer.insertAdjacentHTML(
 						"beforeend",

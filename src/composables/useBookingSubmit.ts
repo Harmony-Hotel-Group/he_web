@@ -33,8 +33,6 @@ export interface SubmitConfig {
  */
 const log = logger("composables:useBookingSubmit");
 
-
-
 // === Summary helpers (SR: cada una <30 líneas) ===
 
 function _updateSummaryVehicle(
@@ -42,11 +40,7 @@ function _updateSummaryVehicle(
 	vehicleSummarySection: HTMLElement | null,
 	vehicleList: HTMLElement | null,
 ) {
-	if (
-		vehicleItems.length > 0 &&
-		vehicleSummarySection &&
-		vehicleList
-	) {
+	if (vehicleItems.length > 0 && vehicleSummarySection && vehicleList) {
 		vehicleSummarySection.classList.remove("hidden");
 		vehicleList.innerHTML = vehicleItems
 			.map((item) => `<li>${escapeHTML(String(item))}</li>`)
@@ -106,7 +100,9 @@ export function initBookingSubmit(opts: SubmitConfig) {
 		_updateSummaryDates(processing);
 		_updateSummaryNights(processing);
 		_updateSummaryGuests(processing);
-		_updateSummaryGroup(bookingData as Parameters<typeof _updateSummaryGroup>[0]);
+		_updateSummaryGroup(
+			bookingData as Parameters<typeof _updateSummaryGroup>[0],
+		);
 		_updateSummaryRooms(processing);
 		_updateSummaryDistribution(distributionLabel);
 		_updateSummaryVehicle(vehicleItems);
@@ -115,12 +111,16 @@ export function initBookingSubmit(opts: SubmitConfig) {
 
 	// === Summary helpers (cada uno <30 líneas — SR) ===
 
-	function _updateSummaryDates(processing: Parameters<typeof buildBookingMessage>[0]["processing"]) {
+	function _updateSummaryDates(
+		processing: Parameters<typeof buildBookingMessage>[0]["processing"],
+	) {
 		const datesEl = document.getElementById("summary-dates");
 		if (datesEl) datesEl.textContent = processing.dateRange ?? "—";
 	}
 
-	function _updateSummaryNights(processing: Parameters<typeof buildBookingMessage>[0]["processing"]) {
+	function _updateSummaryNights(
+		processing: Parameters<typeof buildBookingMessage>[0]["processing"],
+	) {
 		const nightsEl = document.getElementById("summary-nights");
 		if (nightsEl) {
 			const nights = processing.nights ?? 0;
@@ -128,7 +128,9 @@ export function initBookingSubmit(opts: SubmitConfig) {
 		}
 	}
 
-	function _updateSummaryGuests(processing: Parameters<typeof buildBookingMessage>[0]["processing"]) {
+	function _updateSummaryGuests(
+		processing: Parameters<typeof buildBookingMessage>[0]["processing"],
+	) {
 		["adults", "children", "infants", "teens"].forEach((key) => {
 			const el = document.getElementById(
 				`summary-${key}`,
@@ -172,7 +174,9 @@ export function initBookingSubmit(opts: SubmitConfig) {
 		}
 	}
 
-	function _updateSummaryRooms(processing: Parameters<typeof buildBookingMessage>[0]["processing"]) {
+	function _updateSummaryRooms(
+		processing: Parameters<typeof buildBookingMessage>[0]["processing"],
+	) {
 		const roomsEl = document.getElementById("summary-rooms");
 		const breakfastEl = document.getElementById("summary-breakfast");
 		if (roomsEl)
@@ -192,11 +196,7 @@ export function initBookingSubmit(opts: SubmitConfig) {
 			"summary-vehicle-section",
 		);
 		const vehicleList = document.getElementById("summary-vehicle-list");
-		if (
-			vehicleItems.length > 0 &&
-			vehicleSummarySection &&
-			vehicleList
-		) {
+		if (vehicleItems.length > 0 && vehicleSummarySection && vehicleList) {
 			vehicleSummarySection.classList.remove("hidden");
 			vehicleList.innerHTML = vehicleItems
 				.map((item) => `<li>${escapeHTML(String(item))}</li>`)
@@ -206,7 +206,9 @@ export function initBookingSubmit(opts: SubmitConfig) {
 		}
 	}
 
-	function _updateSummaryTotal(processing: Parameters<typeof buildBookingMessage>[0]["processing"]) {
+	function _updateSummaryTotal(
+		processing: Parameters<typeof buildBookingMessage>[0]["processing"],
+	) {
 		const totalEl = document.getElementById("summary-total");
 		if (totalEl) totalEl.textContent = processing.total ?? "—";
 	}

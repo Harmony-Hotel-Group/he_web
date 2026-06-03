@@ -5,14 +5,14 @@
  * Extraído de DateRangePicker.astro para mantener átomos presentacionales.
  */
 
-import type { Translations } from "@/i18n/translation.ts";
-import { logger } from "@/services/logger";
 import {
 	calculateNights,
 	formatDateRange,
 	isSameDay,
 	nightsLabel,
 } from "@/domain/date.utils";
+import type { Translations } from "@/i18n/translation.ts";
+import { logger } from "@/services/logger";
 import { datePickerSync } from "@/utils/date-picker-sync";
 
 const log = logger("composables:useDatePicker");
@@ -36,12 +36,14 @@ function dateToYMD(date: Date): string {
 async function getFlatpickrLocale(lang: string): Promise<any> {
 	// Lazy import de locales de flatpickr
 	switch (lang) {
-		case "es":
+		case "es": {
 			const es = await import("flatpickr/dist/l10n/es");
 			return es.Spanish;
-		case "fr":
+		}
+		case "fr": {
 			const fr = await import("flatpickr/dist/l10n/fr");
 			return fr.French;
+		}
 		case "en":
 		default:
 			return undefined; // default locale is English
@@ -170,8 +172,8 @@ export function setupDatePickerObserver() {
 		for (const mutation of mutations) {
 			if (mutation.type === "childList" && mutation.target instanceof Element) {
 				const newPickers = mutation.target.querySelectorAll(
-						".date-range-picker-input:not([data-flatpickr-initialized])",
-					);
+					".date-range-picker-input:not([data-flatpickr-initialized])",
+				);
 				if (newPickers.length > 0) {
 					initAllDatePickers();
 					break;

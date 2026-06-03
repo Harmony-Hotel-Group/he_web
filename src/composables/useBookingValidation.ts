@@ -17,7 +17,7 @@ export function initBookingValidation(opts: ValidationDOM) {
 			el.classList.add("hidden");
 		});
 		// Limpiar aria-invalid y borde rojo en todos los inputs
-		form.querySelectorAll('[id]').forEach((el) => {
+		form.querySelectorAll("[id]").forEach((el) => {
 			if (el instanceof HTMLInputElement || el instanceof HTMLSelectElement) {
 				el.removeAttribute("aria-invalid");
 				el.classList.remove("border-red-500");
@@ -30,9 +30,17 @@ export function initBookingValidation(opts: ValidationDOM) {
 	) {
 		errors.forEach((error) => {
 			const fieldName = error.path[0];
-			const inputElement = document.getElementById(fieldName) as HTMLElement | null;
-			const errorElement = document.getElementById("error_" + fieldName) as HTMLElement | null;
-			if (inputElement && (inputElement instanceof HTMLInputElement || inputElement instanceof HTMLSelectElement)) {
+			const inputElement = document.getElementById(
+				fieldName,
+			) as HTMLElement | null;
+			const errorElement = document.getElementById(
+				"error_" + fieldName,
+			) as HTMLElement | null;
+			if (
+				inputElement &&
+				(inputElement instanceof HTMLInputElement ||
+					inputElement instanceof HTMLSelectElement)
+			) {
 				inputElement.classList.add("border-red-500");
 				inputElement.setAttribute("aria-invalid", "true");
 			}
@@ -48,11 +56,16 @@ export function initBookingValidation(opts: ValidationDOM) {
 		const isGroupMode = !groupFields?.classList.contains("hidden");
 
 		if (isGroupMode) {
-			const dateInput = document.getElementById("dateRangeGroup") as HTMLInputElement | null;
-			const errorElement = document.getElementById("error_dateRange") as HTMLElement | null;
+			const dateInput = document.getElementById(
+				"dateRangeGroup",
+			) as HTMLInputElement | null;
+			const errorElement = document.getElementById(
+				"error_dateRange",
+			) as HTMLElement | null;
 			if (!dateInput || !dateInput.value) {
 				if (errorElement) {
-					errorElement.textContent = "Por favor, selecciona las fechas de tu grupo.";
+					errorElement.textContent =
+						"Por favor, selecciona las fechas de tu grupo.";
 					errorElement.classList.remove("hidden");
 				}
 				if (dateInput) {
@@ -64,8 +77,12 @@ export function initBookingValidation(opts: ValidationDOM) {
 		}
 
 		if (isGroupMode) {
-			const groupAdults = document.getElementById("adults") as HTMLSelectElement | null;
-			const errorElement = document.getElementById("error_groupAdults") as HTMLElement | null;
+			const groupAdults = document.getElementById(
+				"adults",
+			) as HTMLSelectElement | null;
+			const errorElement = document.getElementById(
+				"error_groupAdults",
+			) as HTMLElement | null;
 			if (
 				groupAdults &&
 				groupAdults.value !== "group" &&
@@ -84,8 +101,12 @@ export function initBookingValidation(opts: ValidationDOM) {
 		}
 
 		if (!isGroupMode) {
-			const dateRange = document.getElementById("dateRange") as HTMLInputElement | null;
-			const errorElement = document.getElementById("error_dateRange") as HTMLElement | null;
+			const dateRange = document.getElementById(
+				"dateRange",
+			) as HTMLInputElement | null;
+			const errorElement = document.getElementById(
+				"error_dateRange",
+			) as HTMLElement | null;
 			if (!dateRange || !dateRange.value) {
 				if (errorElement) {
 					errorElement.textContent = "Por favor, selecciona las fechas.";

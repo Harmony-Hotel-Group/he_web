@@ -31,7 +31,12 @@ function buildAdultsOptions(t: TFunc) {
 		}
 		return {
 			value: `${i}`,
-			label: t(i === 1 ? "booking.dropdown.optAdults_one" : "booking.dropdown.optAdults", { i }),
+			label: t(
+				i === 1
+					? "booking.dropdown.optAdults_one"
+					: "booking.dropdown.optAdults",
+				{ i },
+			),
 		};
 	});
 }
@@ -49,7 +54,12 @@ function buildChildrenOptions(t: TFunc) {
 		}
 		return {
 			value: `${i}`,
-			label: t(i === 1 ? "booking.dropdown.optChildren_one" : "booking.dropdown.optChildren", { i }),
+			label: t(
+				i === 1
+					? "booking.dropdown.optChildren_one"
+					: "booking.dropdown.optChildren",
+				{ i },
+			),
 		};
 	});
 }
@@ -60,7 +70,10 @@ function buildChildrenOptions(t: TFunc) {
 function buildRoomsOptions(t: TFunc) {
 	return range(1, 5).map((i) => ({
 		value: `${i}`,
-		label: t(i === 1 ? "booking.dropdown.optRooms_one" : "booking.dropdown.optRooms", { i }),
+		label: t(
+			i === 1 ? "booking.dropdown.optRooms_one" : "booking.dropdown.optRooms",
+			{ i },
+		),
 	}));
 }
 

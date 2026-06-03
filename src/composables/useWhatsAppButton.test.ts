@@ -1,11 +1,12 @@
-import { describe, it, expect, vi, beforeEach } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { useWhatsAppButton } from "./useWhatsAppButton";
 
 // Mock del adapter
 vi.mock("@/adapters/booking/whatsapp.adapter", () => ({
 	buildContactMessage: vi.fn(() => "Mensaje de contacto mock"),
-	buildWhatsAppUrl: vi.fn((phone: string, message: string) =>
-		`https://wa.me/${phone}?text=${encodeURIComponent(message)}`,
+	buildWhatsAppUrl: vi.fn(
+		(phone: string, message: string) =>
+			`https://wa.me/${phone}?text=${encodeURIComponent(message)}`,
 	),
 }));
 

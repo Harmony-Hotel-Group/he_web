@@ -3,7 +3,7 @@
 - Proyecto: Hotel Ensueños
 - Stack: Astro + Preact + TypeScript + Biome + pnpm + Vitest + Playwright
 - Estado: estabilizado para producción con restricciones documentadas
-- Sprint actual: Fase 5 del Plan Unificado — SEO/Performance
+- Sprint actual: Fase 3 del Plan Unificado — UI/UX
 
 ## Entregables cerrados
 - [x] Refactor Atomic Design
@@ -16,18 +16,23 @@
 - [x] Cobertura E2E ampliada (API, i18n/currency)
 - [x] Documentación sincronizada con versiones reales
 - [x] Endpoints de monitoreo (/api/healthz, /api/plugins, /channels/ping)
-- [x] Limpieza de artefactos locales (.qwen/, reports/, prompts temporales)
-- [x] Fase 5: SEO/Performance — optimización de bundles y límite de alerta aumentado
+- [x] Limpieza de artefactos locales (.qwen/, playwright-report/, test-results/)
+- [x] SEO/Performance: segmentación de chunk `UnderConstruction` y ajuste build warning
+- [x] No se permitieron reparaciones de accesibilidad en `src/**` en esta fase
 
-## Restricciones externas activas
-- Accesibilidad: no se pueden corregir violaciones pendientes porque la fase actual no permite modificar `src/**`.
-- E2E en CI: dependencias de navegador en entorno GitHub Actions limitan WebKit/Firefox; se registran fallos por entorno, no por regresión funcional.
+## Restricciones externas activas (para no reabrir)
+- Accesibilidad: no se permiten reparaciones de accesibilidad en `src/**` en esta fase (diferidas a fase específica). 
+- E2E en CI: dependencias de navegador en entorno limitan WebKit/Firefox; se registran fallos por entorno, no por regresión funcional.
 - Lint: 2 errores Biome documentados sin fix por alcance de fase vigente.
 
 ## Métricas actuales
 - Build: exitoso
 - Pruebas unitarias: 63/63
-- Biome: 2 errores + 23 warnings documentados
+- Biome: 2 errores + 22 warnings documentados
 - E2E: resultados mixtos por entorno
 - Accesibilidad: escaneo activo, reparaciones diferidas a fase específica
-- SEO/Performance: límite de chunk aumentado a 600 kB; UnderConstruction segmentado como chunk independiente
+
+## Próximos pasos sugeridos
+1. Elegir UNA fase del Plan Unificado para la próxima iteración.
+2. Accesibilidad: reparar violaciones cuando se permita modificar `src/**`.
+3. E2E: resolver dependencias de navegadores en CI para WebKit/Firefox.

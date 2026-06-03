@@ -1,15 +1,15 @@
 # Prompt siguiente fase — he_web
 
-## Objetivo
-Avanzar por UNA sola línea del Plan Unificado, manteniendo `he_web` estable y sin reabrir fases anteriores.
-
-## Estado documentado
+## Estado actual
 - Rama: `dev`
 - Build: exitoso
 - Tests unitarios: 63/63
-- Biome: 2 errores + 23 warnings documentados como alcance vigente
+- Biome: 2 errores + 22 warnings documentados como alcance vigente
 - E2E: resultados mixtos por dependencias de entorno en CI
 - Accesibilidad: reparaciones diferidas por restricción de modificar `src/**` en esta fase
+
+## Objetivo
+Avanzar por UNA sola línea del Plan Unificado, manteniendo `he_web` estable y sin reabrir fases anteriores.
 
 ## Tareas
 1. Confirmar que el árbol está limpio y sin artefactos temporales.

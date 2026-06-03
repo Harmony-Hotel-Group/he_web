@@ -3,7 +3,7 @@
 - Proyecto: Hotel Ensueños
 - Stack: Astro + Preact + TypeScript + Biome + pnpm + Vitest + Playwright
 - Estado: estabilizado para producción con restricciones documentadas
-- Sprint actual: Fase 3 del Plan Unificado — UI/UX
+- Sprint actual: Fase 4 del Plan Unificado — Microinteracciones
 
 ## Entregables cerrados
 - [x] Refactor Atomic Design
@@ -18,21 +18,25 @@
 - [x] Endpoints de monitoreo (/api/healthz, /api/plugins, /channels/ping)
 - [x] Limpieza de artefactos locales (.qwen/, playwright-report/, test-results/)
 - [x] SEO/Performance: segmentación de chunk `UnderConstruction` y ajuste build warning
-- [x] No se permitieron reparaciones de accesibilidad en `src/**` en esta fase
+- [x] Fase 3 UI/UX cerrada (overlays homogeneizados)
+- [x] No se permitieron reparaciones de accesibilidad en `src/**` en Fase 3
+
+## Entregables pendientes (próxima fase)
+- [x] Fase 4 Microinteracciones — transiciones y microanimaciones seguras (Plan Unificado)
 
 ## Restricciones externas activas (para no reabrir)
-- Accesibilidad: no se permiten reparaciones de accesibilidad en `src/**` en esta fase (diferidas a fase específica). 
+- Accesibilidad: no se permiten reparaciones de accesibilidad en `src/**` en Fase 3 (diferidas a fase específica). 
 - E2E en CI: dependencias de navegador en entorno limitan WebKit/Firefox; se registran fallos por entorno, no por regresión funcional.
 - Lint: 2 errores Biome documentados sin fix por alcance de fase vigente.
 
 ## Métricas actuales
 - Build: exitoso
 - Pruebas unitarias: 63/63
-- Biome: 2 errores + 22 warnings documentados
+- Biome: 2 errores + 23 warnings documentados
 - E2E: resultados mixtos por entorno
-- Accesibilidad: escaneo activo, reparaciones diferidas a fase específica
+- Accesibilidad: escaneo activo, reparaciones diferidas
 
 ## Próximos pasos sugeridos
-1. Elegir UNA fase del Plan Unificado para la próxima iteración.
-2. Accesibilidad: reparar violaciones cuando se permita modificar `src/**`.
+1. Ejecutar Fase 4 Microinteracciones con cambios visuales pequeños y commits atómicos.
+2. Accesibilidad: reparar violaciones cuando se permita modificar `src/**` en fase designada.
 3. E2E: resolver dependencias de navegadores en CI para WebKit/Firefox.

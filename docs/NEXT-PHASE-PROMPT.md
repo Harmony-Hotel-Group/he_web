@@ -1,30 +1,31 @@
-# Prompt siguiente fase — he_web
+# Prompt siguiente fase — he_web (Fase 4 Microinteracciones)
 
 ## Estado actual
 - Rama: `dev`
+- Último commit Fase 3: `874a8f2` — overlay de `HomeHero` / `PageHero` actualizado
 - Build: exitoso
 - Tests unitarios: 63/63
-- Biome: 2 errores + 22 warnings documentados como alcance vigente
+- Biome: 2 errores + 23 warnings documentados como alcance vigente
 - E2E: resultados mixtos por dependencias de entorno en CI
-- Accesibilidad: reparaciones diferidas por restricción de modificar `src/**` en esta fase
+- Accesibilidad: reparaciones diferidas por restricción de modificar `src/**` en Fase 3
 
-## Objetivo
-Avanzar por UNA sola línea del Plan Unificado, manteniendo `he_web` estable y sin reabrir fases anteriores.
+## Fase vigente
+- Cerrada Fase 3 del Plan Unificado — UI/UX (homogeneización visual sin rediseño)
+- Siguiente: **Fase 4 — Microinteracciones** (animaciones y transiciones seguras)
 
 ## Tareas
-1. Confirmar que el árbol está limpio y sin artefactos temporales.
+1. Confirmar que el árbol sigue limpio y sin artefactos temporales.
 2. Ejecutar y registrar:
-   - `pnpm biome check src/`
-   - `pnpm vitest run`
-   - `pnpm astro build`
-3. Elegir UNA fase del Plan Unificado:
-   - Fase 1: adopción adapter
-   - Fase 2: atoms/molecules
-   - Fase 3: UI/UX
-   - Fase 4: Tour Intent
-   - Fase 5: SEO/Performance
-4. Proponer el primer commit atómico de esa fase, con mensaje en español.
-5. Actualizar `docs/PROJECT-STATE.md` con la fase elegida y el objetivo del próximo hito.
+   - `pnpm biome check src/` (2 errores + 23 warnings vigentes)
+   - `pnpm vitest run` (63/63)
+   - `pnpm astro build` (exitoso)
+   - `pnpm playwright test` si aplica
+3. Ejecutar Fase 4 Microinteracciones con commits atómicos sin tocar `src/**` a menos que el prompt lo pida expresamente.
+4. Si hay más trabajo de Fase 4, proponer commits atómicos mediante cambios pequeños en componentes visuales.
+5. Actualizar `docs/PROJECT-STATE.md` con:
+   - fase vigente
+   - commits aplicados
+   - estado de verificaciones
 
 ## Restricciones
 - No reabrir arquitectura vieja ni refactors ya aprobados.

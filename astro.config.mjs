@@ -19,6 +19,19 @@ export default defineConfig({
 				{ find: 'picocolors', replacement: '/src/polyfills/picocolors.js' },
 			],
 		},
+		build: {
+			chunkSizeWarningLimit: 600,
+			rollupOptions: {
+				output: {
+					manualChunks: (id) => {
+						if (id.endsWith("UnderConstruction.astro")) {
+							return "under-construction";
+						}
+						return undefined;
+					},
+				},
+			},
+		},
 	},
 	// Configurar i18n
 	i18n: {

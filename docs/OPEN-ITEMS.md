@@ -1,3 +1,4 @@
 # Open Items
-- Qwen delegation pending: prompt ready for E2E + CI/CD + README closure tasks.
-- Next action: rerun qwen once auth is configured (`qwen --auth-type ...`).
+- Accesibilidad: pendiente reparar violaciones cuando se permita modificar `src/**`.
+- E2E: pendiente resolver dependencias de navegadores en CI para WebKit/Firefox.
+- SEO/Performance: evaluar reducción real del tamaño del bundle UnderConstruction en próximas iteraciones.

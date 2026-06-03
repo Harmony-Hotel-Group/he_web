@@ -1,0 +1,151 @@
+---
+// src/components/core/seo/SeoHead.astro
+// Componente centralizado para todas las necesidades SEO: meta tags, OG/Twitter, JSON-LD, hreflang, canonical
+
+import { getCurrentLang, Translations } from "@/i18n/translation";
+import type { SiteConfig } from "@/types/config-site";
+import { generateHotelSchema } from "./schema/hotel.schema";
+import { generateBreadcrumbSchema } from "./schema/breadcrumb.schema";
+import { generateWebPageSchema } from "./schema/webpage.schema";
+import { getAbsoluteUrl, getOgImage, getSiteUrl } from "@/utils/seo/seo-meta";
+
+const {
+	title: titleProp = "",
+	description: descriptionProp = "",
+	lang: langProp,
+	config,
+	canonicalPath,
+	ogImage,
+	type = "website",
+	noindex = false,
+	publishedTime,
+	structuredData,
+	breadcrumbItems, // Array de { name: string; path: string } para generar BreadcrumbList
+} = Astro.props;
+
+// Determinar el idioma actual (puede venir de prop o de la URL)
+const currentLang = langProp ?? getCurrentLang(Astro.url);
+
+// Obtener traducciones
+const t = Translations(currentLang);
+
+// Usar los valores proporcionados o los de traducción por defecto
+const title = titleProp || t("meta.title"); // Asumimos que existe una clave meta.title en traducciones
+const description = descriptionProp || t("meta.description");
+
+// Construir URLs canónicas de forma segura (similar a BaseLayout.astro)
+let cleanPath = "/";
+let baseUrl = getSiteUrl(); // Usamos nuestro helper
+
+try {
+	if (Astro.url?.pathname) {
+		// Removemos el prefijo /en si existe para obtener la path base
+		cleanPath = Astro.url.pathname.replace(/^\/en/, "") || "/";
+	}
+	if (Astro.site) {
+		baseUrl = Astro.site.toString().replace(/\/$/, "");
+	}
+} catch (error) {
+	// Error al construir URLs — usar defaults (ya establecidos por getSiteUrl())
+}
+
+const esUrl = `${baseUrl}${cleanPath}`;
+const enUrl = `${baseUrl}/en${cleanPath}`;
+const canonicalUrl =
+	currentLang === "es" ? esUrl : enUrl; // Asumimos que el sitio está en es por defecto y en en la versión en inglés
+
+// SEO: título con separador (manteniendo el formato existente)
+const pageTitle = `${title} • Hotel Ensueños`;
+
+// SEO: imagen OG
+const socialImageURL = getOgImage(ogImage, config, baseUrl);
+
+// Preparar datos estructurados adicionales si se proporcionan
+const additionalStructuredData = Array.isArray(structuredData)
+	? structuredData
+	: structuredData
+	? [structuredData]
+	: []; // Aseguramos que sea un array
+
+// Generar el esquema principal (Hotel para homepage, WebPage para otras páginas)
+let jsonLdSchema: Record<string, unknown> = {};
+if (type === "hotel" || (canonicalPath === "/" && type === "website")) {
+	// Para la homepage o cuando se especifique explícitamente tipo hotel
+	jsonLdSchema = generateHotelSchema(config as SiteConfig, cleanPath);
+} else {
+	// Para otras páginas, usamos WebPage como base
+	const webPageProps: Record<string, unknown> = {
+		name: title,
+		description: description,
+		url: canonicalUrl,
+	};
+	if (publishedTime) {
+		//@ts-ignore
+		webPageProps["datePublished"] = publishedTime;
+	}
+	jsonLdSchema = generateWebPageSchema(webPageProps);
+}
+
+// Añadir datos estructurados adicionales (como BreadcrumbList) si existen
+const allStructuredData: Record<string, unknown>[] = [
+	jsonLdSchema,
+	...additionalStructuredData,
+];
+
+// Añadir BreadcrumbList si se proporcionaron los items
+if (breadcrumbItems && Array.isArray(breadcrumbItems) && breadcrumbItems.length > 0) {
+	const breadcrumbSchema = generateBreadcrumbSchema(breadcrumbItems);
+	allStructuredData.push(breadcrumbSchema);
+}
+--- <head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	<!-- Primary Meta Tags -->
+	<title>{pageTitle}</title>
+	<meta name="title" content={pageTitle} />
+	<meta name="description" content={description} />
+	<meta name="author" content="Hotel Ensueños" />
+	<meta name="generator" content={Astro.generator} />
+
+	<!-- Canonical -->
+	<link rel="canonical" href={canonicalUrl} />
+
+	<!-- Hreflang -->
+	<link rel="alternate" hreflang="es" href={esUrl} />
+	<link rel="alternate" hreflang="en" href={enUrl} />
+	<link rel="alternate" hreflang="x-default" href={esUrl} />
+
+	<!-- Sitemap -->
+	<link rel="sitemap" href="/sitemap-index.xml" />
+
+	<!-- Favicon -->
+	<link rel="icon" type="image/png" href="/favicon.png" />
+
+	<!-- Open Graph / Facebook -->
+	<meta property="og:type" content={type === "article" && publishedTime ? "article" : "website"} />
+	<meta property="og:url" content={canonicalUrl} />
+	<meta property="og:title" content={pageTitle} />
+	<meta property="og:description" content={description} />
+	<meta property="og:image" content={socialImageURL} />
+	<meta property="og:site_name" content="Hotel Ensueños" />
+	<meta property="og:locale" content="es_EC" />
+	{type === "article" && publishedTime && (
+		<>
+			<meta property="article:author" content="Hotel Ensueños" />
+			<meta property="article:published_time" content={publishedTime} />
+		 </>
+	)}
+
+	<!-- Twitter -->
+	<meta property="twitter:card" content="summary_large_image" />
+	<meta property="twitter:url" content={canonicalUrl} />
+	<meta property="twitter:title" content={pageTitle} />
+	<meta property="twitter:description" content={description} />
+	<meta property="twitter:image" content={socialImageURL} />
+
+	<!-- JSON-LD Structured Data -->
+	{allStructuredData.map((schema, index) => (
+		<script type="application/ld+json" set:html={JSON.stringify(schema)} />
+	))}
+</head>

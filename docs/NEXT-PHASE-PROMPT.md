@@ -12,6 +12,7 @@
 ## Fase vigente
 - Cerrada Fase 3 del Plan Unificado — UI/UX (homogeneización visual sin rediseño)
 - Siguiente: **Fase 4 — Microinteracciones** (animaciones y transiciones seguras)
+- Archivos cambiados en Fase 4 hasta la fecha: `src/components/molecules/cards/InfoCard.astro`.
 
 ## Tareas
 1. Confirmar que el árbol sigue limpio y sin artefactos temporales.

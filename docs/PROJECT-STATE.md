@@ -23,6 +23,7 @@
 
 ## Entregables pendientes (próxima fase)
 - [x] Fase 4 Microinteracciones — transiciones y microanimaciones seguras (Plan Unificado)
+- [~] Fase 4 Microinteracciones — en progreso (4.1 completada, 4.2/4.3/4.4 pendientes de habilitar `src/**`)
 
 ## Restricciones externas activas (para no reabrir)
 - Accesibilidad: no se permiten reparaciones de accesibilidad en `src/**` en Fase 3 (diferidas a fase específica). 

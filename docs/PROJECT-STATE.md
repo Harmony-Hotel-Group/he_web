@@ -2,8 +2,8 @@
 
 - Proyecto: Hotel Ensueños
 - Stack: Astro + Preact + TypeScript + Biome + pnpm + Vitest + Playwright
-- Estado: estabilizado para producción con restricciones documentadas
-- Sprint actual: Fase 4 del Plan Unificado — Microinteracciones
+- Estado: estabilizado para producción con restricciones documentadas, Fase 5 SEO/Performance completada
+- Sprint actual: Fase 5 del Plan Unificado — SEO/Performance (completada)
 
 ## Entregables cerrados
 - [x] Refactor Atomic Design
@@ -18,6 +18,10 @@
 - [x] Endpoints de monitoreo (/api/healthz, /api/plugins, /channels/ping)
 - [x] Limpieza de artefactos locales (.qwen/, playwright-report/, test-results/)
 - [x] SEO/Performance: segmentación de chunk `UnderConstruction` y ajuste build warning
+- [x] SEO/Performance: componente centralizado `SeoHead` para meta tags, OG/Twitter, JSON-LD, hreflang y canonical
+- [x] SEO/Performance: esquemas JSON-LD para Hotel, WebPage y BreadcrumbList
+- [x] SEO/Performance: utilidades para resolución de URLs y imágenes OG
+- [x] SEO/Performance: eliminación de duplicación de meta tags en layouts
 - [x] Fase 3 UI/UX cerrada (overlays homogeneizados)
 - [x] No se permitieron reparaciones de accesibilidad en `src/**` en Fase 3
 

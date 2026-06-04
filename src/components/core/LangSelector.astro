@@ -55,11 +55,10 @@ function getUrlForLang(langCode: string) {
 		class="absolute right-0 mt-2 w-36 bg-gray-700 rounded-md shadow-lg z-20 hidden"
 	>
 		{uiLanguages.map((lang) => (
-			<a
-				href={getUrlForLang(lang.code)}
-				class="flex items-center space-x-2 w-full text-left px-3 py-2 text-sm text-white hover:bg-gray-600"
-				data-astro-transition="forward"
-			>
+				<a
+					href={getUrlForLang(lang.code)}
+					class="flex items-center space-x-2 w-full text-left px-3 py-2 text-sm text-white hover:bg-gray-600"
+				>
 				<img
 					src={lang.flag}
 					alt={`Bandera de ${lang.name}`}

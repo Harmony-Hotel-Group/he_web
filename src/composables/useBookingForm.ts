@@ -60,35 +60,51 @@ export function initBookingForm(opts: UseBookingFormOptions) {
 	);
 
 	// --- Vehicle Section Observer ---
-	if (vehicleSwitchButton && vehicleSection) {
+	if (vehicleSection) {
 		const observer = new MutationObserver((mutations) => {
 			const mutation = mutations[0];
 			if (mutation.attributeName !== "aria-checked") return;
+			// Re-query the button each time to handle DOM updates
+			const vehicleSwitchButton = form.querySelector("button#vehicle");
+			if (!vehicleSwitchButton) return;
 			const isChecked =
 				vehicleSwitchButton.getAttribute("aria-checked") === "true";
 			vehicleSection.classList.toggle("hidden", !isChecked);
 			bookingBar?.classList.toggle("max-h-[80vh]", isChecked);
 			bookingBar?.classList.toggle("overflow-y-auto", isChecked);
 		});
-		observer.observe(vehicleSwitchButton, {
+		observer.observe(vehicleSection, {
 			attributes: true,
 			attributeFilter: ["aria-checked"],
 		});
+
+		// Also observe for when the button itself might change (though less likely)
+		const buttonObserver = new MutationObserver((mutations) => {
+			// Re-observe the button if it changes
+			const vehicleSwitchButton = form.querySelector("button#vehicle");
+			if (vehicleSwitchButton) {
+				// Re-setup observer on the button if needed
+				// For simplicity, we'll rely on the section observer which is more stable
+			}
+		});
+		// We could observe the form for button changes, but section observer is sufficient
 	}
 
 	// --- Special Request Observer ---
-	const specialRequestSwitchBtn = form.querySelector(
-		'button#special_request[role="switch"]',
-	);
-	if (specialRequestSwitchBtn && specialRequestSection) {
+	if (specialRequestSection) {
 		const specialObserver = new MutationObserver((mutations) => {
 			const mutation = mutations[0];
 			if (mutation.attributeName !== "aria-checked") return;
+			// Re-query the button each time
+			const specialRequestSwitchBtn = form.querySelector(
+				'button#special_request[role="switch"]',
+			);
+			if (!specialRequestSwitchBtn) return;
 			const isChecked =
 				specialRequestSwitchBtn.getAttribute("aria-checked") === "true";
 			specialRequestSection.classList.toggle("hidden", !isChecked);
 		});
-		specialObserver.observe(specialRequestSwitchBtn, {
+		specialObserver.observe(specialRequestSection, {
 			attributes: true,
 			attributeFilter: ["aria-checked"],
 		});

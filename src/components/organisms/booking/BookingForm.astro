@@ -281,8 +281,8 @@ const email = config?.contactInfo?.email ?? "";
 		const lang = form.dataset.lang || 'es';
 		const t = Translations(lang);
 
-		// Cargar config desde localStorage / head
-		const config: any = {};
+		// Obtener config desde Astro.props (disponible en window.__ASTRO__)
+		const config = window.__ASTRO__?.props?.config || {};
 
 		const bookingApi = initBookingForm({
 			form,

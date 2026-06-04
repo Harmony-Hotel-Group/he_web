@@ -1,8 +1,11 @@
 ---
 import { useWhatsAppButton } from "@/composables/useWhatsAppButton";
-import config from "@/data/config.json";
 
-const phoneNumber = config?.contactInfo?.whatsapp ?? "";
+interface Props {
+	phoneNumber?: string;
+}
+
+const { phoneNumber = "" } = Astro.props;
 const { whatsappUrl } = useWhatsAppButton({ phoneNumber });
 ---
 
